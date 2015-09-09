@@ -127,6 +127,11 @@ public class GenericController extends HttpServlet implements Serializable{
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();
 	}	
+	public List<User> getFrequenters(String from, String to)
+	{
+		UserService uService = new UserService();
+		return uService.frequenters(from, to);
+	}
 	public void logAttempt(String username)
 	{
 		UserService uService = new UserService();

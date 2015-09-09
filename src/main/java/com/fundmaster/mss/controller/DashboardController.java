@@ -116,13 +116,13 @@ public class DashboardController extends GenericController {
 					request.setAttribute("permissions", permissions);
 					request.getRequestDispatcher(REPO_FOLDER + "/locked_accounts.jsp").forward(request, response);	
 				}
-				else if(request.getParameter("report").equals("frequent_members"))
+				else if(request.getParameter("report").equals("frequent_users"))
 				{	
-					request.getRequestDispatcher(REPO_FOLDER + "/frequent_members.jsp").forward(request, response);	
+					request.getRequestDispatcher(REPO_FOLDER + "/frequent_users.jsp").forward(request, response);	
 				}
-				else if(request.getParameter("report").equals("non_frequent_members"))
+				else if(request.getParameter("report").equals("non_frequent_users"))
 				{	
-					request.getRequestDispatcher(REPO_FOLDER + "/non_frequent_members.jsp").forward(request, response);	
+					request.getRequestDispatcher(REPO_FOLDER + "/non_frequent_users.jsp").forward(request, response);	
 				}
 			}
 			else if(request.getParameter(REPO_FOLDER).equals("USER_ACCESS_REPORTS"))
