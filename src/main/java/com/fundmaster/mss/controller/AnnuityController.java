@@ -3,7 +3,6 @@ package com.fundmaster.mss.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +31,8 @@ import com.fundmaster.mss.service.GenderService;
 @WebServlet(name = "AnnuityController", urlPatterns = {"/annuity-quotation"})
 public class AnnuityController extends GenericController{
 
+	private static final String YYYY_MM_DD = "yyyy-MM-dd";
+	private static final String DD_MM_YYYY = "dd-MM-yyyy";
 	/**
 	 * 
 	 */
@@ -106,43 +107,18 @@ public class AnnuityController extends GenericController{
     	{
     		otherNames = "";
     	}
-    	String date_string = request.getParameter("purchaseDate");
-		DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat(DD_MM_YYYY, Locale.ENGLISH);
 		Date purchaseDate = null;
 		Date pensionStartDate = null;
 		Date dateOfBirth = null;
 		Date spouseDateOfBirth = null;
-		try {
-			purchaseDate = (Date) format.parse(date_string);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace(out);
-		}
 
-    	date_string = request.getParameter("commencementDate");
-		try {
-			pensionStartDate = (Date) format.parse(date_string);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace(out);
-		}
+    	purchaseDate = dateFromString(request.getParameter("purchaseDate"), DD_MM_YYYY);
+    	pensionStartDate = dateFromString(request.getParameter("commencementDate"), DD_MM_YYYY);
 
-    	date_string = request.getParameter("dateOfBirth");
-		try {
-			dateOfBirth = (Date) format.parse(date_string);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace(out);
-		}
-    	date_string = request.getParameter("spouseDateOfBirth");
-		try {
-			spouseDateOfBirth = (Date) format.parse(date_string);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			spouseDateOfBirth = new Date();
-		}
-
-		format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    	dateOfBirth = dateFromString(request.getParameter("dateOfBirth"), DD_MM_YYYY);
+		spouseDateOfBirth = dateFromString(request.getParameter("spouseDateOfBirth"), DD_MM_YYYY);
+		format = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
 		String calculationMode = request.getParameter("calculationMode");
 		String targetPension = request.getParameter("targetPension");
 		String spouseReversal = request.getParameter("spouseReversal");

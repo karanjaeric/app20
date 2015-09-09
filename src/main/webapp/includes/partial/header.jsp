@@ -105,7 +105,7 @@ body {
 }
 </style>
 </head>
-<body>
+<body oncontextmenu="return false">
 <input type="hidden" name="message" id="message" value="${ message }" />
 								<c:if test="${noMenu == 'FALSE'}">
 		<nav id="main-nav" class="navbar navbar-default navbar-fixed-top"

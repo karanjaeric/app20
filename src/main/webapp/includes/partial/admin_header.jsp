@@ -43,7 +43,7 @@
 	src="static/bootstrap-3.3.5/js/colorpicker-color.js"></script>
 </head>
 
-<body>
+<body oncontextmenu="return false">
 
 
 <!--  CHANGE PASSWORD -->

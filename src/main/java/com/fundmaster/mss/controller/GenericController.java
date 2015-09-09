@@ -120,17 +120,35 @@ public class GenericController extends HttpServlet implements Serializable{
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
+	public Date dateFromString(String date, String ft)
+	{
+
+		DateFormat format = new SimpleDateFormat(ft, Locale.ENGLISH);
+		try {
+			return (Date) format.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
 	public boolean isEmailAddress(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();
 	}	
-	public List<User> getFrequenters(String from, String to)
+	
+	public List<AuditTrail> getFrequenters(String from, String to)
 	{
-		UserService uService = new UserService();
-		return uService.frequenters(from, to);
+		AuditTrailService service = new AuditTrailService();
+		return service.frequenters(from, to);
+	}
+	public List<User> getDormants(String from, String to)
+	{
+		UserService service = new UserService();
+		return service.dormants(from, to);
 	}
 	public void logAttempt(String username)
 	{

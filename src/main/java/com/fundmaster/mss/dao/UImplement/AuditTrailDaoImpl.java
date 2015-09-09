@@ -28,6 +28,17 @@ public class AuditTrailDaoImpl extends GenericModelDaoImpl<AuditTrail> implement
 		return logs;
 	}
 
+	
+	public List<AuditTrail> frequenters(String from, String to) {
+		// TODO Auto-generated method stub
+		String query_string = "SELECT a FROM AuditTrail a WHERE DATE(datetime) >= '" + from + "' AND DATE(datetime) <= '" + to + "' GROUP BY username";
+		@SuppressWarnings("unchecked")
+		List<AuditTrail> entities = em.createQuery(query_string)
+		         .getResultList();
+		em.close();
+		return entities;
+	}
+	
 	public List<AuditTrail> findAll(String search, int offset, int limit) {
 		// TODO Auto-generated method stub
 		String query_string;

@@ -88,10 +88,11 @@ public class UserDaoImpl extends GenericModelDaoImpl<User> implements UserDao {
 
          }
 	}
+
 	
-	public List<User> frequenters(String from, String to) {
+	public List<User> dormants(String from, String to) {
 		// TODO Auto-generated method stub
-		String query_string = "SELECT u.username, u.userProfile, u.status FROM User u LEFT JOIN AuditTrail ON User.username = AuditTrail.username AND User.userProfile = AuditTrail.profile WHERE DATE(AuditTrail.datetime) >= '" + from + "' AND DATE(AuditTrail.datetime) <= '" + to + "'";
+		String query_string = "SELECT a FROM User a WHERE  username NOT IN (SELECT a.username FROM AuditTrail WHERE DATE(datetime) >= '" + from + "' AND DATE(datetime) <= '" + to + "')";
 		@SuppressWarnings("unchecked")
 		List<User> entities = em.createQuery(query_string)
 		         .getResultList();

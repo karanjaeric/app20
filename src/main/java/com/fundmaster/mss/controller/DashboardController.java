@@ -54,6 +54,9 @@ public class DashboardController extends GenericController {
 	String REPO_FOLDER = "dashboard";
 	int PER_PAGE = 20;
 	int BATCH = 20;
+
+	private static final String YYYY_MM_DD = "yyyy-MM-dd";
+	private static final String DD_MM_YYYY = "dd-MM-yyyy";
 	private static final long serialVersionUID = 1L;
 
 	public DashboardController() {
@@ -118,10 +121,16 @@ public class DashboardController extends GenericController {
 				}
 				else if(request.getParameter("report").equals("frequent_users"))
 				{	
+					SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
+					List<AuditTrail> auditTrails = getFrequenters(format.format(dateFromString(request.getParameter("from"), DD_MM_YYYY)), format.format(dateFromString(request.getParameter("to"), DD_MM_YYYY)));
+					request.setAttribute("users", auditTrails);
 					request.getRequestDispatcher(REPO_FOLDER + "/frequent_users.jsp").forward(request, response);	
 				}
 				else if(request.getParameter("report").equals("non_frequent_users"))
 				{	
+					SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
+					List<User> users = getDormants(format.format(dateFromString(request.getParameter("from"), DD_MM_YYYY)), format.format(dateFromString(request.getParameter("to"), DD_MM_YYYY)));
+					request.setAttribute("users", users);
 					request.getRequestDispatcher(REPO_FOLDER + "/non_frequent_users.jsp").forward(request, response);	
 				}
 			}
