@@ -24,6 +24,8 @@ public class ProfileLoginField extends GenericModel<ProfileLoginField> implement
 	
 	private String ordinal;
 	
+	private boolean published;
+	
 	public boolean isPublished() {
 		return published;
 	}
@@ -31,8 +33,6 @@ public class ProfileLoginField extends GenericModel<ProfileLoginField> implement
 	public void setPublished(boolean published) {
 		this.published = published;
 	}
-
-	private boolean published;
 
 	public ProfileLoginField() {
 		super();

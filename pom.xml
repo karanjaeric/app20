@@ -12,6 +12,9 @@
 		<org.aspectj-version>1.7.4</org.aspectj-version>
 		<org.slf4j-version>1.7.5</org.slf4j-version>
 		<hibernate.version>4.0.1.Final</hibernate.version>
+				<!-- JBoss dependency versions -->
+		<version.jboss.maven.plugin>7.3.Final</version.jboss.maven.plugin>
+		
 	</properties>
 	  <dependencies>
 	    <dependency>
@@ -130,6 +133,26 @@
 		   <artifactId>json</artifactId>
 		   <version>20080701</version>
 		</dependency>
+		
+		<!-- Deploying to JBOSS AS -->
+		<dependency>
+			<groupId>org.jboss.as</groupId>
+			<artifactId>jboss-as-controller-client</artifactId>
+			<version>7.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jboss-dmr</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>nl.captcha.simplecaptcha</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		
+		
 	  </dependencies>
   <build>
     <finalName>Mss</finalName>
@@ -149,6 +172,15 @@
 		          <target>1.7</target>
 		        </configuration>
 		    </plugin>
+		    
+		    	<!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
+			<!-- To use, run: mvn package jboss-as:deploy -->
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>${version.jboss.maven.plugin}</version>
+			</plugin>
+			
     </plugins>
   </build>
 </project>

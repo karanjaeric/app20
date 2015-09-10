@@ -20,9 +20,8 @@ public class ProfileLoginFieldDaoImpl extends GenericModelDaoImpl<ProfileLoginFi
 
 	public ProfileLoginField findByProfile(String profile) {
 		// TODO Auto-generated method stub
-		
 		@SuppressWarnings("unchecked")
-		List<ProfileLoginField> logs = em.createQuery("SELECT p FROM ProfileLoginField p WHERE profile=:profile").setParameter("profile", profile).setMaxResults(5).getResultList();
+		List<ProfileLoginField> logs = em.createQuery("SELECT p FROM ProfileLoginField p WHERE p.profile=:profile").setParameter("profile", profile).setMaxResults(5).getResultList();
 		em.close();
 		return logs.get(0);
 	}
