@@ -105,6 +105,7 @@ import com.fundmaster.mss.service.UserService;
 
 public class GenericController extends HttpServlet implements Serializable{
 
+	private static final int TIMEOUT = 300 * 1000;
 	private static final String ROWS = "rows";
 	private static final String BOTH = "BOTH";
 	private static final String MSS = "PORTAL";
@@ -274,7 +275,7 @@ public class GenericController extends HttpServlet implements Serializable{
 			if (httpConn != null)
 			{
 				httpConn.setRequestMethod(HTTP_GET);
-				httpConn.setReadTimeout(60 * 1000);
+				httpConn.setReadTimeout(TIMEOUT);
 				httpConn.setRequestProperty(USERNAME, settings.getUsername());
 				httpConn.setRequestProperty(PASSWORD, settings.getPassword());
 			}
@@ -342,7 +343,7 @@ public class GenericController extends HttpServlet implements Serializable{
 			if (httpConn != null)
 			{
 				httpConn.setRequestMethod(HTTP_GET);
-				httpConn.setReadTimeout(60 * 1000);
+				httpConn.setReadTimeout(TIMEOUT);
 				httpConn.setRequestProperty(USERNAME, settings.getUsername());
 				httpConn.setRequestProperty(PASSWORD, settings.getPassword());
 			}
@@ -518,7 +519,7 @@ public class GenericController extends HttpServlet implements Serializable{
 			{	
 				urlConn.setRequestMethod(HTTP_POST);
 				urlConn.setRequestProperty(CONTENT_TYPE, encoding);
-				urlConn.setReadTimeout(60 * 1000);
+				urlConn.setReadTimeout(TIMEOUT);
 				urlConn.setRequestProperty(USERNAME, settings.getUsername());
 				urlConn.setRequestProperty(PASSWORD, settings.getPassword());
 				urlConn.setDoOutput(true);
@@ -587,7 +588,7 @@ public class GenericController extends HttpServlet implements Serializable{
 			{	
 				urlConn.setRequestMethod(HTTP_POST);
 				urlConn.setRequestProperty(CONTENT_TYPE, encoding);
-				urlConn.setReadTimeout(60 * 1000);
+				urlConn.setReadTimeout(TIMEOUT);
 				urlConn.setRequestProperty(USERNAME, settings.getUsername());
 				urlConn.setRequestProperty(PASSWORD, settings.getPassword());
 				urlConn.setDoOutput(true);

@@ -4,7 +4,7 @@
 		<i class="glyphicon glyphicon-flash"></i>&nbsp;&nbsp;MEMBER OPERATIONS
 	</h3>
 	
-				<form class="form-inline" role="form" id="member-search">
+				<form class="form-inline" role="form" id="member-search" onsubmit="return false;">
 					<div class="col-md-8">
 						<fieldset>
 							<legend>SEARCH MEMBER</legend>

@@ -1,11 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid section">
-		<div class="col-md-6">
+		<div class="col-md-4">
 		<h3>
 			<i class="glyphicon glyphicon-gift"></i>&nbsp;&nbsp;BENEFIT PAYMENTS
 		</h3>		
 		</div>
-		<div class="col-md-6" align="right">
+		<div class="col-md-8" align="right">
 		<br/>
 			<form class="form-inline" id="form-search">
 				<input type="text" class="form-control datepicker" placeholder="Date From" readonly="readonly" name="dateFrom" id="dateFrom" value="${ dateFrom }"/>

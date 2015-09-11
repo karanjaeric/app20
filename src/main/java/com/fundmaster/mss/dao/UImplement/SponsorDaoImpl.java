@@ -34,7 +34,9 @@ public class SponsorDaoImpl extends GenericModelDaoImpl<Sponsor> implements Spon
 		{
 			 query = "WHERE name LIKE '%" + search + "%'";
 		}
-		query = "SELECT s FROM Sponsor s " + query;
+		else {
+			query = "SELECT s FROM Sponsor s";
+		}
 		@SuppressWarnings("unchecked")
 		List<Sponsor> entities = em.createQuery(query)
 		         .setFirstResult(offset) 
