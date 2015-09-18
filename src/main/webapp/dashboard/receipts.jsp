@@ -59,6 +59,12 @@ function load_dashboard(page, batch)
 }
 	$(document).ready(function(){
 		$('.datepicker').datepicker({format: 'dd-mm-yyyy'});
+		$('#dateFrom').on('changeDate', function(ev){
+		    $(this).datepicker('hide');
+		});
+		$('#dateTo').on('changeDate', function(ev){
+		    $(this).datepicker('hide');
+		});
 		$('#form-search').bootstrapValidator({
 	        message: 'This value is not valid',
 	        feedbackIcons: {
@@ -83,7 +89,7 @@ function load_dashboard(page, batch)
         		$.ajax({
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
-        	        data: {ACTION: 'SEARCH_RECEIPTS', dateFrom: $('#dateFrom').val(), dateTo: $('#dateTo').val()},
+        	        data: {ACTION: 'RECEIPT', dateFrom: $('#dateFrom').val(), dateTo: $('#dateTo').val()},
         	        dataType: 'json',
         	        success: function(json) {
         	            html = "<tr><th>DATE</th><th>RCPT #</th><th>PAYEE</th><th>TXN CATEGORY</th><th>TXN TYPE</th><th>MODE</th><th>REF.</th><th class=\"right\">AMOUNT</th></tr>";

@@ -39,7 +39,7 @@
 	</ul>
 </div>
 <script type="text/javascript">
-
+	
 	function load_dashboard(page, batch)
 	{
 		start_wait();
@@ -59,6 +59,13 @@
 	}
 	$(document).ready(function(){
 		$('.datepicker').datepicker({format: 'dd-mm-yyyy'});
+
+		$('#dateFrom').on('changeDate', function(ev){
+		    $(this).datepicker('hide');
+		});
+		$('#dateTo').on('changeDate', function(ev){
+		    $(this).datepicker('hide');
+		});
 		$('#form-search').bootstrapValidator({
 	        message: 'This value is not valid',
 	        feedbackIcons: {

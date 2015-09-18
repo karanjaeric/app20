@@ -32,6 +32,7 @@
 		<class>com.fundmaster.mss.model.AuditTrail</class>
 		<class>com.fundmaster.mss.model.Sponsor</class>
 		<class>com.fundmaster.mss.model.PasswordPolicy</class>
+		<class>com.fundmaster.mss.model.UsedPassword</class>
       <!-- <properties>
 	      <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform" />
          	<property name="hibernate.archive.autodetection" value="class" />

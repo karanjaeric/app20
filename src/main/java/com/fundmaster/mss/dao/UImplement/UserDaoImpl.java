@@ -68,7 +68,8 @@ public class UserDaoImpl extends GenericModelDaoImpl<User> implements UserDao {
 	public User findUser(String username, String password)
 	{
 		// TODO Auto-generated method stub
-		List<User> results = em.createQuery("SELECT u FROM User u WHERE u.username=:username and u.password=:password").setParameter("username", username)
+		/* 1. The email address should not be case sensitive while registering or login to Mss. */
+		List<User> results = em.createQuery("SELECT u FROM User u WHERE LOWER(u.username)=:username and u.password=:password").setParameter("username", username.toLowerCase())
 
                 .setParameter("password", password).getResultList();
 		em.close();

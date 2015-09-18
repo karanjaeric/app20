@@ -428,6 +428,7 @@ public class AdminController  extends GenericController{
 				{
 					ProfileLoginFieldService plfService = new ProfileLoginFieldService();
 					ProfileLoginField plf = getProfileLoginField(profiles[i]);
+					Logger.getAnonymousLogger().info("Profile: " + plf.getProfile() + ", value: " + request.getParameter(plf.getProfile()).toString());
 					plf.setOrdinal(request.getParameter(plf.getProfile()).toString());
 					plf.setPublished(request.getParameter(plf.getProfile() + "_PUBLISHED").equalsIgnoreCase("true"));
 					plfService.update(plf);
@@ -737,7 +738,8 @@ public class AdminController  extends GenericController{
 			else if(request.getParameter(REQUEST_ACTION).equals("PRE_CHANGE_PASSWORD"))
 			{
 				User u = findByUsernameAndProfile(session.getAttribute(Common.USER).toString(), session.getAttribute(Common.U_PROFILE).toString());
-				String securityCode = UUID.randomUUID().toString();
+				String securityCode = shorterUUID(UUID.randomUUID().toString());
+				/* Shorter code is more user friendly... the UUID was way too long :) */
 				u.setSecurityCode(securityCode);
 				UserService uService = new UserService();
 				uService.update(u);
@@ -766,7 +768,7 @@ public class AdminController  extends GenericController{
 					else
 					{
 						try {
-							out.write(result(true, "We are sorry, but we were unable to send you the change password instructions").toString());
+							out.write(result(true, "We are sorry, we were unable to send you the change password instructions").toString());
 						} catch (Exception ex)
 						{
 							ex.printStackTrace();
@@ -780,7 +782,19 @@ public class AdminController  extends GenericController{
 					}
 				} catch (JSONException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace(out);
+					try {
+						out.write(result(true, "We are sorry, we encountered a problem obtaining your email address. Please try again").toString());
+					} catch (Exception ex)
+					{
+						ex.printStackTrace();
+					}
+				} catch (NullPointerException npe) {
+					try {
+						out.write(result(true, "We are sorry, we encountered a problem obtaining your email address. Please try again").toString());
+					} catch (Exception ex)
+					{
+						ex.printStackTrace();
+					}
 				}
 				
 			}
@@ -790,16 +804,17 @@ public class AdminController  extends GenericController{
 				String securityCode = request.getParameter("securityCode");
 				String username = session.getAttribute(Common.USER).toString();
 				String password = request.getParameter("currentPassword");
+				String new_password = request.getParameter("newPassword").toString();
 				User u = login(username, password);
 				if(u != null) 
 				{
 					if(u.getSecurityCode().equalsIgnoreCase(securityCode))
 					{
-						if(!(isUsedPassword(password) && policy.isPassword_reuse()))
+						if(!(isUsedPassword(new_password) && policy.isPassword_reuse()))
 						{
 							try
 							{
-								u.setPassword(hash(request.getParameter("newPassword").toString()));
+								u.setPassword(hash(new_password));
 								Date password_expiry = addDays(new Date(), policy.getExpiry_days());
 								u.setPassword_expiry(password_expiry);
 								UserService uService = new UserService();

@@ -53,12 +53,14 @@ public class LoginController extends GenericController {
 		if(session != null)
 		{
 			try {
-				if(session.getAttribute("login").equals("1"))
+				if((session.getAttribute(Common.LOGIN).equals(true) && (isManagerial(session.getAttribute(Common.U_PROFILE).toString()) || isManager(request))))
 				{
 					response.sendRedirect(getServletContext().getContextPath() + "/admin");
 				}
 				else
 				{
+					request.setAttribute("noMenu", true);
+					request.getRequestDispatcher("admin_login.jsp").forward(request, response);	
 				}
 			}
 			catch (Exception e)

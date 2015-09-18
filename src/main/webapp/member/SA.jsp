@@ -33,6 +33,7 @@
             format: 'dd-mm-yyyy'
         })
         .on('changeDate', function(e) {
+		    $(this).datepicker('hide');
             // Revalidate the date field
             $('#sa-form').bootstrapValidator('revalidateField', 'asAt');
         });

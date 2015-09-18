@@ -2326,10 +2326,22 @@ public class GenericController extends HttpServlet implements Serializable{
 		}
 		return member_manager;
 	}
+	
+	public String shorterUUID(String uuid)
+	{
+		try {
+			String[] uuids = uuid.split("-");
+			return uuids[1];
+		} catch (IndexOutOfBoundsException iOOB) {
+			return uuid;
+		} catch (NullPointerException npe) {
+			return uuid;
+		}
+	}
 
 	public String[] listProfiles()
 	{
-		String profiles[] = {"ADMINISTRATOR", "SPONSOR", "TRUSTEE", "AGENT", "CUSTODIAN", "CUSTOMER_RELATIONSHIP_MANAGER", "CUSTOMER_RELATIONSHIP_EXECUTIVE", "FUND_MANAGER", "PENSIONER"};
+		String profiles[] = {"MEMBER", "ADMINISTRATOR", "SPONSOR", "TRUSTEE", "AGENT", "CUSTODIAN", "CUSTOMER_RELATIONSHIP_MANAGER", "CUSTOMER_RELATIONSHIP_EXECUTIVE", "FUND_MANAGER", "PENSIONER"};
 		return  profiles;
 	}
 	
