@@ -6,7 +6,7 @@
 	<table class="table table-responsive table-striped">
 		<tr><th>USERNAME</th><th>PROFILE</th><th>STATUS</th><th>ACTIONS</th></tr>
 		<c:forEach var="user" items="${users}">
-		<tr><td>${ user.username }</td><td>${ user.userProfile }</td><td><c:if test="${ user.status }">ACTIVE</c:if><c:if test="${ user.status == 'FALSE'}">INACTIVE</c:if> </td><td><c:if test="${ permissions.user_enable_disable }"><c:if test="${ user.status }"><button class="btn btn-sm btn-danger" onclick="toggle('${ user.id }');"><i class="glyphicon glyphicon-trash"></i>&nbsp;DISABLE</button></c:if><c:if test="${ user.status == 'FALSE' }"><button class="btn btn-sm btn-success" onclick="toggle('${ user.id }');"><i class="glyphicon glyphicon-trash"></i>&nbsp;ENABLE</button></c:if></c:if></td></tr>
+		<tr><td>${ user.username }</td><td>${ user.userProfile }</td><td><c:if test="${ user.status }">ACTIVE</c:if><c:if test="${ user.status == 'FALSE'}">INACTIVE</c:if> </td><td><c:if test="${ permissions.user_enable_disable }"><c:if test="${ user.status }"><button class="btn btn-sm btn-danger" onclick="toggle('${ user.id }');"><i class="glyphicon glyphicon-trash"></i>&nbsp;DISABLE</button></c:if><c:if test="${ user.status == 'FALSE' }"><button class="btn btn-sm btn-success" onclick="toggle('${ user.id }');"><i class="glyphicon glyphicon-trash"></i>&nbsp;ENABLE</button></c:if>&nbsp;<button class="btn btn-sm btn-warning" onclick="password_reset('${ user.id }');"><i class="glyphicon glyphicon-trash"></i>&nbsp;RESET PASSWORD</button></c:if></td></tr>
 		</c:forEach>
 	</table>
 	 <ul class="pagination pull-right">
@@ -65,5 +65,24 @@ function load_dashboard(page, batch)
 			}
 		});
 	}
-	
+
+	function password_reset(id)
+	{
+		bootbox.confirm("You are about to reset a user's password. Are you sure?", function(result){
+			if(result)
+			{
+				start_wait();
+				$.ajax({
+		            url: $('#base_url').val() + 'admin',
+		            type: 'post',
+		            data: {ACTION: 'ADMIN_PWD_RESET', userID: id},
+		            dataType: 'json',
+		            success: function(json) {
+		                stop_wait();
+		               bootbox.alert(json.message);
+		            }
+		        });
+			}
+		});
+	}
 </script>

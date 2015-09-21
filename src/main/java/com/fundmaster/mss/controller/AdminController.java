@@ -12,6 +12,8 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 
+
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -203,6 +205,112 @@ public class AdminController  extends GenericController{
 					} catch (JSONException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace(out);
+					}
+				}
+			}
+			else if(request.getParameter(REQUEST_ACTION).equals("ADMIN_PWD_RESET"))
+			{
+				String userID = request.getParameter("userID");
+				User u = getUser(Long.valueOf(userID).longValue());
+				if(u != null)
+				{
+					String password = shorterUUID(UUID.randomUUID().toString(), 0);
+					u.setPassword(hash(password));
+					UserService uService = new UserService();
+					String email_address = null;
+					String schemeId = null;
+					boolean proceed = false;
+					JSONObject res;
+					String memberID;
+					
+					try {
+						res = memberExists(u.getUserProfile(), u.getUsername(), false);
+						memberID = res.get("memberId").toString();
+						if(u.getUserProfile().equals(Common.MEMBER_PROFILE))
+						{
+							XiMember m = getMemberDetails(u.getProfileID().toString());
+							email_address = m.getEmailAddress();
+							schemeId = res.get("schemeId").toString();
+							proceed = isEmailAddress(email_address);
+						}
+						else
+						{
+							Logger.getAnonymousLogger().info("Not a member");
+							try {
+								JSONObject resp = getProviderDetails(u.getUserProfile(), memberID);
+								if(resp.get("success").equals(true))
+								{
+									Logger.getAnonymousLogger().info("We have the details");
+									try {
+										JSONArray json = (JSONArray) resp.get("rows");
+										JSONObject provider = json.getJSONObject(0);
+										email_address = provider.getString("email");
+										schemeId = provider.get("schemeId").toString();
+										proceed = isEmailAddress(email_address);
+										Logger.getAnonymousLogger().info("We have everything for the provider");
+									} catch (JSONException e)
+									{
+										Logger.getAnonymousLogger().info("We don't have a thing, so this is just a user");
+										try {
+											JSONArray json = (JSONArray) resp.get("rows");
+											JSONObject provider = json.getJSONObject(0);
+											email_address = provider.getString("user.email");
+											schemeId = provider.get("user.schemeId").toString();
+											proceed = isEmailAddress(email_address);
+											Logger.getAnonymousLogger().info("We have everything from the user");
+										} catch (JSONException ex)
+										{
+											proceed = false;
+										}
+									}
+								}
+							} catch (Exception e)
+							{
+								proceed = false;
+								
+							}
+						}
+						if(proceed)
+						{
+							Setting settings = getSettings();
+							try {
+								sendNotification("EMAIL", email_address, "MSS Portal Password Reset" , "Dear " + u.getUserProfile() + ",<br />" +
+										"Your password has been reset on the FundMaster Xi Member Self Service Portal. Your new password is " + password +
+										".<br />Please click this <a href='" + settings.getPortalBaseURL() + "sign-in'>link</a> to gain access to the Self Service Portal", schemeId, false, null);
+								
+								uService.update(u);
+								try {
+									out.write(result(true, "<strong>Password Reset Successful</strong><br /> Success! The user's password has been reset. An email has been sent to the user with the new password.").toString());
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									
+								} 
+							} catch (JSONException e1) {
+								try {
+									out.write(result(false, "We could not complete the requested action as we were unable to obtain the user's email address").toString());
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									
+								}
+							}
+						}
+						else
+						{
+							try {
+								out.write(result(false, "We could not complete the requested action as we were unable to obtain the user's email address").toString());
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								
+							}
+						}
+					} catch (JSONException je)
+					{
+						try {
+							out.write(result(false, "We could not complete the requested action as we were unable to obtain the user's email address").toString());
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							
+						}
 					}
 				}
 			}
@@ -738,7 +846,7 @@ public class AdminController  extends GenericController{
 			else if(request.getParameter(REQUEST_ACTION).equals("PRE_CHANGE_PASSWORD"))
 			{
 				User u = findByUsernameAndProfile(session.getAttribute(Common.USER).toString(), session.getAttribute(Common.U_PROFILE).toString());
-				String securityCode = shorterUUID(UUID.randomUUID().toString());
+				String securityCode = shorterUUID(UUID.randomUUID().toString(), 1);
 				/* Shorter code is more user friendly... the UUID was way too long :) */
 				u.setSecurityCode(securityCode);
 				UserService uService = new UserService();

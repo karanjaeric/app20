@@ -2327,11 +2327,11 @@ public class GenericController extends HttpServlet implements Serializable{
 		return member_manager;
 	}
 	
-	public String shorterUUID(String uuid)
+	public String shorterUUID(String uuid, int index)
 	{
 		try {
 			String[] uuids = uuid.split("-");
-			return uuids[1];
+			return uuids[index];
 		} catch (IndexOutOfBoundsException iOOB) {
 			return uuid;
 		} catch (NullPointerException npe) {
