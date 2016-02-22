@@ -2,6 +2,7 @@ package com.fundmaster.mss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Objects;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,7 +50,7 @@ import com.fundmaster.mss.model.Sponsor;
 import com.fundmaster.mss.model.User;
 import com.fundmaster.mss.model.XiMember;
 @WebServlet(name = "DashboardController", urlPatterns = {"/dashboard"})
-public class DashboardController extends GenericController {
+public class DashboardController extends HttpServlet implements Serializable {
 
 	private static final String PAGE_CONTENT = "PAGE_CONTENT";
 	private static final String SCHEME = "SCHEME";

@@ -2,6 +2,7 @@ package com.fundmaster.mss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Locale;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,7 +33,7 @@ import com.fundmaster.mss.model.Setting;
 import com.fundmaster.mss.model.Social;
 import com.fundmaster.mss.model.Theme;
 @WebServlet(name = "AnnuityController", urlPatterns = {"/annuity-quotation"})
-public class AnnuityController extends GenericController{
+public class AnnuityController extends HttpServlet implements Serializable {
 	@EJB
 	Helper helper;
 	private static final String YYYY_MM_DD = "yyyy-MM-dd";
@@ -116,30 +118,26 @@ public class AnnuityController extends GenericController{
     	PrintWriter out = response.getWriter();
     	String[] names = request.getParameter("fullName").split(" ");
     	String firstName, lastName, otherNames;
-    	try
-    	{
-    		firstName = names[0];
-    	}
-    	catch (Exception ex)
-    	{
-    		firstName = "";
-    	}
-    	try
-    	{
-    		lastName = names[1];
-    	}
-    	catch (Exception ex)
-    	{
-    		lastName = "";
-    	}
-    	try
-    	{
-    		otherNames = names[2];
-    	}
-    	catch (Exception ex)
-    	{
-    		otherNames = "";
-    	}
+        firstName = lastName = otherNames = null;
+		if(names.length > 0)
+		{
+			firstName = names[0];
+		}
+        if(names.length > 1)
+        {
+            lastName = names[1];
+        }
+        if(names.length > 2)
+        {
+            otherNames = names[2];
+        }
+        else if(names.length ==  0)
+        {
+            firstName = "";
+            lastName = "";
+            otherNames = "";
+        }
+
 		DateFormat format = new SimpleDateFormat(DD_MM_YYYY, Locale.ENGLISH);
 		Date purchaseDate;
 		Date pensionStartDate;
@@ -161,13 +159,9 @@ public class AnnuityController extends GenericController{
     		String result = helper.getAnnuityQuote(calculationMode, request.getParameter("annuityProduct"), lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, spouseGender.getName(), format.format(spouseDateOfBirth));
 			out.write(result);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			try {
+
 				out.write(helper.result(false, "An error was encountered processing your query. Please try again or contact the administrator").toString());
-			} catch (JSONException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace(out);
-			}
+
 		}
 		
 	}

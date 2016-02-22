@@ -40,9 +40,9 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	$('.datepicker').datepicker({format: 'dd-mm-yyyy'});
+	$('.datepicker').datetimepicker({format: 'dd-mm-yyyy'});
 	$('#dateTo')
-	.datepicker({
+	.datetimepicker({
 	    format: 'dd-mm-yyyy'
 	})
 	.on('changeDate', function(e) {

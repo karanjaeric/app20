@@ -1,12 +1,14 @@
 package com.fundmaster.mss.controller;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +28,7 @@ import com.fundmaster.mss.model.Social;
 import com.fundmaster.mss.model.Theme;
 
 @WebServlet(name = "DefaultController", urlPatterns = {"/index"})
-public class DefaultController extends GenericController {
+public class DefaultController extends HttpServlet implements Serializable {
 
 	public DefaultController() {
 		// TODO Auto-generated constructor stub
@@ -96,6 +98,7 @@ public class DefaultController extends GenericController {
 		request.setAttribute("noMenu", false);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
+
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
  

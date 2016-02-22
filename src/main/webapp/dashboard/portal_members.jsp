@@ -332,7 +332,7 @@ $(document).ready(function(){
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#dateOfBirth')
-	.datepicker({
+	.datetimepicker({
 	    format: 'dd-mm-yyyy'
 	})
 	.on('changeDate', function(e) {

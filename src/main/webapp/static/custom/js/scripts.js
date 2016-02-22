@@ -397,9 +397,9 @@ $(document).ready(function(){
     		            url: $('#base_url').val() + "admin",
     		            type: 'post',
     		            data: {ACTION: 'LOGOUT'},
-    		            dataType: 'html',
-    		            success: function(html) {
-    		                if(html == 'true')
+    		            dataType: 'json',
+    		            success: function(json) {
+    		                if(json.success)
 		                	{
     		                	bootbox.alert('<p class="text-center">You have been logged out successfully.<br />Redirecting...</p>');
     		                	location.reload();

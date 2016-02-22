@@ -122,9 +122,9 @@
 			        url: $('#base_url').val() + 'admin',
 			        type: 'post',
 			        data: {ACTION: 'HELP', ID: $('#id').val(), page: $('#page').val(), description: $('#description').val()},
-			        dataType: 'html',
-			        success: function(html) {
-			            if(html == 'true')
+			        dataType: 'json',
+			        success: function(json) {
+			            if(json.success)
 			            {
 			                $('#' + form)[0].reset();
 			                $('#' + modal).modal('hide');

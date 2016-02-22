@@ -474,10 +474,10 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {ACTION: 'PROFILE_LOGIN_FIELD', MEMBER: $('#MEMBER').val(), MEMBER_PUBLISHED: $('#MEMBER_published').val(), ADMINISTRATOR: $('#ADMINISTRATOR').val(), ADMINISTRATOR_PUBLISHED: $('#ADMINISTRATOR_published').val(), SPONSOR: $('#SPONSOR').val(), SPONSOR_PUBLISHED: $('#SPONSOR_published').val(), TRUSTEE: $('#TRUSTEE').val(), TRUSTEE_PUBLISHED: $('#TRUSTEE_published').val(), AGENT: $('#AGENT').val(), AGENT_PUBLISHED: $('#AGENT_published').val(), CUSTODIAN: $('#CUSTODIAN').val(), CUSTODIAN_PUBLISHED: $('#CUSTODIAN_published').val(), CUSTOMER_RELATIONSHIP_MANAGER: $('#CUSTOMER_RELATIONSHIP_MANAGER').val(), CUSTOMER_RELATIONSHIP_MANAGER_PUBLISHED: $('#CUSTOMER_RELATIONSHIP_MANAGER_published').val(), CUSTOMER_RELATIONSHIP_EXECUTIVE: $('#CUSTOMER_RELATIONSHIP_EXECUTIVE').val(), CUSTOMER_RELATIONSHIP_EXECUTIVE_PUBLISHED: $("#CUSTOMER_RELATIONSHIP_EXECUTIVE_published").val(), FUND_MANAGER: $('#FUND_MANAGER').val(), FUND_MANAGER_PUBLISHED: $('#FUND_MANAGER_published').val(), PENSIONER: $('#PENSIONER').val(), PENSIONER_PUBLISHED: $("#PENSIONER_published").val()},
-        	        dataType: 'html',
-        	        success: function(html) {
+        	        dataType: 'json',
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
@@ -518,10 +518,10 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {ACTION: 'PROFILE_NAMES', MEMBER: $('#MEMBER_NAME').val(), ADMINISTRATOR: $('#ADMINISTRATOR_NAME').val(), SPONSOR: $('#SPONSOR_NAME').val(), TRUSTEE: $('#TRUSTEE_NAME').val(), AGENT: $('#AGENT_NAME').val(), CUSTODIAN: $('#CUSTODIAN_NAME').val(), CUSTOMER_RELATIONSHIP_MANAGER: $('#CUSTOMER_RELATIONSHIP_MANAGER_NAME').val(), CUSTOMER_RELATIONSHIP_EXECUTIVE: $('#CUSTOMER_RELATIONSHIP_EXECUTIVE_NAME').val(), FUND_MANAGER: $('#FUND_MANAGER_NAME').val(), PENSIONER: $('#PENSIONER_NAME').val()},
-        	        dataType: 'html',
-        	        success: function(html) {
+        	        dataType: 'json',
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
@@ -608,10 +608,10 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {member_permission_id: $('#member_permission_id').val(), ACTION: 'MEMBER_PERMISSION', city: $('#city').prop('checked'), country: $('#country').prop('checked'), dateOfBirth: $('#dateOfBirth').prop('checked'), emailAddress: $('#emailAddress').prop('checked'), gender: $('#gender').prop('checked'), idNumber: $('#idNumber').prop('checked'), maritalStatus: $('#maritalStatus').prop('checked'), name: $('#name').prop('checked'), phoneNumber: $('#phoneNumber').prop('checked'), postalAddress: $('#postalAddress').prop('checked'), annualPensionableSalary: $('#annualPensionableSalary').prop('checked'), memberNo: $('#memberNo').prop('checked'), membershipNo: $('#membershipNo').prop('checked'), partyRefNo: $('#partyRefNo').prop('checked'), pinNo: $('#pinNo').prop('checked'), policyNo: $('#policyNo').prop('checked'), staffNo: $('#staffNo').prop('checked'), town: $('#city').prop('checked'), partnerNo: $('#partnerNo').prop('checked') },
-        	        dataType: 'html',
-        	        success: function(html) {
+        	        dataType: 'json',
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');

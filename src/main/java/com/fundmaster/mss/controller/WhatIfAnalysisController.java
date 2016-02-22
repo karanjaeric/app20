@@ -2,10 +2,12 @@ package com.fundmaster.mss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +24,7 @@ import com.fundmaster.mss.model.Setting;
 import com.fundmaster.mss.model.Social;
 import com.fundmaster.mss.model.Theme;
 @WebServlet(name = "WhatIfAnalysisController", urlPatterns = {"/what-if-analysis"})
-public class WhatIfAnalysisController extends GenericController {
+public class WhatIfAnalysisController extends HttpServlet implements Serializable {
 
 	/**
 	 * 
@@ -82,13 +84,9 @@ public class WhatIfAnalysisController extends GenericController {
     		String result = helper.queryWhatIfAnalysis(request.getParameter("yearsToProject"), request.getParameter("contributions"), request.getParameter("rateOfReturn"), request.getParameter("salaryEscalationRate"), request.getParameter("inflationRate"));
 			out.write(result);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			try {
+
 				out.write(helper.result(false, "An error was encountered processing your query. Please try again or contact the administrator").toString());
-			} catch (JSONException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace(out);
-			}
+
 		}
 	}
 }

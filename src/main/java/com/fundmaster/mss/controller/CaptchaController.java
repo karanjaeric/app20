@@ -30,8 +30,7 @@ public class CaptchaController extends HttpServlet{
 	    if ( !sImgType.equalsIgnoreCase("png") && !sImgType.equalsIgnoreCase("jpg") &&
 	    !sImgType.equalsIgnoreCase("jpeg") )
 	    {
-	      sImgType = "png";
-	    }
+		}
 	  }
 
 	  protected void doGet( HttpServletRequest request, HttpServletResponse response ) 

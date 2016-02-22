@@ -292,7 +292,7 @@ $(document).ready(function(){
 </div>
 <script type="text/javascript">
 $('#companyApplicationDate')
-.datepicker({
+.datetimepicker({
     format: 'dd-mm-yyyy'
 })
 .on('changeDate', function(e) {

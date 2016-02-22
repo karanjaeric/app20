@@ -1,9 +1,6 @@
 package com.fundmaster.mss.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,13 +14,11 @@ import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 
 import com.fundmaster.mss.beans.ejbInterface.*;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.LOGGER;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,13 +54,15 @@ import com.fundmaster.mss.model.User;
 import com.fundmaster.mss.model.XiMember;
 @WebServlet(name = "AdminController", urlPatterns = {"/admin"})
 @MultipartConfig
-public class AdminController  extends GenericController{
+public class AdminController  extends HttpServlet implements Serializable {
 	private static final String REQUEST_ACTION = "ACTION";
 	private static final String LOGO_DIR = "static" + File.separator + "images";
 	private static final String BANNER_DIR = "static" + File.separator + "images" + File.separator + "banner";
-    @EJB
+    LOGGER logger = new LOGGER(this.getClass());
+	@EJB
     Helper helper;
-
+	@EJB
+	MediaEJB mediaEJB;
 	@EJB
 	CompanyEJB companyEJB;
 	@EJB
@@ -78,6 +75,8 @@ public class AdminController  extends GenericController{
     ProfileLoginFieldEJB profileLoginFieldEJB;
     @EJB
     UserEJB userEJB;
+	@EJB
+	MemberPermissionEJB memberPermissionEJB;
     @EJB
     PermissionEJB permissionEJB;
     @EJB
@@ -132,7 +131,11 @@ public class AdminController  extends GenericController{
 					request.setAttribute("company", company);
 					List<Scheme> schemes;
 					if(session.getAttribute(Constants.U_PROFILE).equals(Constants.ADMIN_PROFILE))
-						schemes = helper.getSchemes(0, 10000);
+						try {
+							schemes = helper.getSchemes(0, 10000);
+						} catch(JSONException je) {
+							schemes = null;
+						}
 					else
 						schemes = helper.getProfileSchemes(session.getAttribute(Constants.USER).toString(), session.getAttribute(Constants.U_PROFILE).toString());
 					request.setAttribute("schemes", schemes);
@@ -214,8 +217,12 @@ public class AdminController  extends GenericController{
 						request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
 					else
 					{
-						List<XiMember> due4retirement = helper.due4Retirement(session.getAttribute(Constants.SCHEME_ID).toString());
-						request.setAttribute("retirement", due4retirement);
+						try {
+							List<XiMember> due4retirement = helper.due4Retirement(session.getAttribute(Constants.SCHEME_ID).toString());
+							request.setAttribute("retirement", due4retirement);
+						} catch (JSONException je) {
+							logger.e("Json Exception detected: " + je.getMessage());
+						}
 						request.getRequestDispatcher("admin.jsp").forward(request, response);
 					}
 				}
@@ -223,9 +230,8 @@ public class AdminController  extends GenericController{
 			else
 				response.sendRedirect(getServletContext().getContextPath() + "/login");
 		}
-		catch (Exception e)
+		catch (NullPointerException jnpe)
 		{
-			e.printStackTrace();
 			response.sendRedirect(getServletContext().getContextPath() + "/login");			
 		} 
 	}
@@ -237,11 +243,7 @@ public class AdminController  extends GenericController{
 			if (request.getParameter(REQUEST_ACTION).equals("SWITCH_SCHEME"))
 			{
 				session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
-				try {
-					out.write(helper.result(true, "success").toString());
-				} catch (JSONException je) {
-					je.printStackTrace();
-				}
+				out.write(helper.result(true, "success").toString());
 			}
 			else if (request.getParameter(REQUEST_ACTION).equals("COMPANY"))
 			{
@@ -250,20 +252,14 @@ public class AdminController  extends GenericController{
 				Country country = countryEJB.findById(helper.toLong(request.getParameter("country")));
 				Company company = new Company(Long.valueOf(request.getParameter("company_id")).longValue(), request.getParameter("companyName"), request.getParameter("streetAddress"), request.getParameter("telephone"), request.getParameter("fax"), request.getParameter("emailAddress"), request.getParameter("email"), request.getParameter("city"), country, request.getParameter("geolocation"));
 
-				try {
-					companyEJB.edit(company);
-					helper.audit(session, "Updated company details");
-					out.write(helper.result(true, "success").toString());
-				}
-				catch (Exception e)
-				{
-					try {
-						out.write(helper.result(false, "failed").toString());
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					if(companyEJB.edit(company) != null)
+					{
+						helper.audit(session, "Updated company details");
+						out.write(helper.result(true, "success").toString());
 					}
-				}
+					else
+						out.write(helper.result(false, "failed").toString());
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("SC"))
 			{
@@ -272,26 +268,28 @@ public class AdminController  extends GenericController{
 					out.write(result);
 
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					try {
+
 						out.write(helper.result(false, "Sorry, an error was encountered loading the scheme contribution history, please try again" + e.getMessage()).toString());
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace(out);
-					}
+
 				}
 			}
 
 			else if(request.getParameter(REQUEST_ACTION).equals("PROFILE_NAMES"))
 			{
 				List<ProfileName> pNames = profileNameEJB.find();
+				boolean status = true;
 				for(ProfileName pName : pNames)
 				{
 					pName.setName(request.getParameter(pName.getProfile()));
-					profileNameEJB.edit(pName);
+					status = status && profileNameEJB.edit(pName) != null;
 				}
-				helper.audit(session, "Updated profile name settings");
-				out.write("true");
+				if(status)
+				{
+					helper.audit(session, "Updated profile name settings");
+					out.write(helper.result(true, "Profile name settings successfully saved").toString());
+				}
+				else
+					out.write(helper.result(true, "Profile name settings could not be saved").toString());
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("ADMIN_PWD_RESET"))
 			{
@@ -352,44 +350,25 @@ public class AdminController  extends GenericController{
 						if(proceed)
 						{
 							Setting settings = helper.getSettings();
-							try {
 								helper.sendNotification(email_address, "MSS Portal Password Reset", "Dear " + u.getUserProfile() + ",<br />" +
 										"Your password has been reset on the FundMaster Xi Member Self Service Portal. Your new password is " + password +
 										".<br />Please click this <a href='" + settings.getPortalBaseURL() + "sign-in'>link</a> to gain access to the Self Service Portal", schemeId, false, null);
 								
-								userEJB.edit(u);
-								try {
+								if(userEJB.edit(u) != null)
 									out.write(helper.result(true, "<strong>Password Reset Successful</strong><br /> Success! The user's password has been reset. An email has been sent to the user with the new password.").toString());
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									
-								} 
-							} catch (JSONException e1) {
-								try {
+								else
 									out.write(helper.result(false, "We could not complete the requested action as we were unable to obtain the user's email address").toString());
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									
-								}
-							}
+
 						}
 						else
 						{
-							try {
 								out.write(helper.result(false, "We could not complete the requested action as we were unable to obtain the user's email address").toString());
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								
-							}
+
 						}
 					} catch (JSONException je)
 					{
-						try {
 							out.write(helper.result(false, "We could not complete the requested action as we were unable to obtain the user's email address").toString());
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							
-						}
+
 					}
 				}
 			}
@@ -450,13 +429,8 @@ public class AdminController  extends GenericController{
 						out.write(helper.result(false, "Sorry, something didn't work out right. Couldn't save the beneficiary details").toString());
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					try {
 						out.write(helper.result(false, "Sorry, something didn't work out right. Couldn't save the beneficiary details").toString());
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace(out);
-					}
+
 				}
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("UPDATE_MEMBER"))
@@ -506,13 +480,8 @@ public class AdminController  extends GenericController{
 						out.write(helper.result(false, "Sorry, something didn't work out right. Couldn't save the member details").toString());
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					try {
 						out.write(helper.result(false, "Sorry, something didn't work out right. Couldn't save the member details").toString());
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace(out);
-					}
+
 				}
 			}
 			
@@ -587,13 +556,11 @@ public class AdminController  extends GenericController{
 				perm.setPortal_sponsors(request.getParameter("portal_sponsors").equalsIgnoreCase("true"));
 				perm.setPassword_policy(request.getParameter("password_policy").equalsIgnoreCase("true"));
 
-                permissionEJB.edit(perm);
-				try {
+                if(permissionEJB.edit(perm) != null)
 					out.write(helper.result(true, "Permissions successfully saved").toString());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace(out);
-				}
+				else
+					out.write(helper.result(false, "Permissions could not be saved").toString());
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("SET_PASSWORD_POLICY"))
 			{
@@ -605,36 +572,31 @@ public class AdminController  extends GenericController{
 				p.setNumbers(request.getParameter("numbers").equalsIgnoreCase("true"));
 				p.setPassword_reuse(request.getParameter("password_reuse").equalsIgnoreCase("true"));
 				p.setUppercase(request.getParameter("uppercase").equalsIgnoreCase("true"));
-				try {
-					passwordPolicyEJB.edit(p);
-					try {
+
+					if(passwordPolicyEJB.edit(p) != null)
 						out.write(helper.result(true, "Password policy successfully saved").toString());
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace(out);
-					}
-				} catch (Exception ex)
-				{
-					try {
-						out.write(helper.result(true, "Password policy could not be saved").toString());
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace(out);
-					}
-				}
+					else
+						out.write(helper.result(false, "Password policy could not be saved").toString());
+
 				
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("PROFILE_LOGIN_FIELD"))
 			{
 				String[] profiles = helper.listProfiles();
+				boolean status = true;
 				for (String profile : profiles) {
 					ProfileLoginField plf = profileLoginFieldEJB.findByProfile(profile);
 					plf.setOrdinal(request.getParameter(plf.getProfile()));
 					plf.setPublished(request.getParameter(plf.getProfile() + "_PUBLISHED").equalsIgnoreCase("true"));
-					profileLoginFieldEJB.edit(plf);
-					helper.audit(session, "Updated profile login settings");
+					status = status && profileLoginFieldEJB.edit(plf) != null;
 				}
-				out.write("true");
+				if(status)
+				{
+					helper.audit(session, "Updated profile login settings");
+					out.write(helper.result(true, "Profile login settings successfully saved").toString());
+				}
+				else
+					out.write(helper.result(false, "Profile login settings could not be saved").toString());
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("FRONTPAGE_ACCESS"))
 			{
@@ -643,26 +605,19 @@ public class AdminController  extends GenericController{
 					out.write(result);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace(out);
+
 				}
 				
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("DELETE_PORTAL_SPONSOR"))
 			{
 				Sponsor s = sponsorEJB.findById(helper.toLong(request.getParameter("id")));
-				try {
-					sponsorEJB.delete(s);
-					out.write(helper.result(true, "Potential sponsor record successfully deleted").toString());
-				} catch (Exception ex)
-				{
 
-					try {
+					if(sponsorEJB.delete(s))
+						out.write(helper.result(true, "Potential sponsor record successfully deleted").toString());
+					else
 						out.write(helper.result(false, "Potential sponsor record could not be deleted").toString());
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace(out);
-					}
-				}
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("ADD_MEMBER"))
 			{
@@ -691,19 +646,12 @@ public class AdminController  extends GenericController{
 			else if(request.getParameter(REQUEST_ACTION).equals("DELETE_PORTAL_MEMBER"))
 			{
 				Member m = memberEJB.findById(helper.toLong(request.getParameter("id")));
-				try {
-					memberEJB.delete(m);
-					out.write(helper.result(true, "Potential member record successfully deleted").toString());
-				} catch (Exception ex)
-				{
-					ex.printStackTrace();
-					try {
+
+					if(memberEJB.delete(m))
+						out.write(helper.result(true, "Potential member record successfully deleted").toString());
+					else
 						out.write(helper.result(false, "Potential member record could not be deleted").toString());
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace(out);
-					}
-				}
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("SEARCH_MEMBER"))
 			{
@@ -719,7 +667,7 @@ public class AdminController  extends GenericController{
 					out.write(result);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace(out);
+
 				}
 				
 			}
@@ -748,25 +696,20 @@ public class AdminController  extends GenericController{
 			else if(request.getParameter(REQUEST_ACTION).equals("USER_TOGGLE"))
 			{
 				User u = userEJB.findById(helper.toLong(request.getParameter("userID")));
-				try {
+
 					u.setStatus(!u.isStatus());
-					userEJB.edit(u);
-					helper.audit(session, "Updated user status for " + u.getUserProfile() + " " + u.getUsername());
-					try {
-						out.write(helper.result(false, "The user status was successfully changed").toString());
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace(out);
+					u = userEJB.edit(u);
+					if(u != null)
+					{
+						helper.audit(session, "Updated user status for " + u.getUserProfile() + " " + u.getUsername());
+
+						out.write(helper.result(true, "The user status was successfully changed").toString());
 					}
-				} catch (Exception e)
-				{
-					try {
+					else
+
 						out.write(helper.result(false, "We are sorry, the user status could not be changed").toString());
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace(out);
-					}
-				}
+
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("NEW"))
 			{
@@ -793,17 +736,7 @@ public class AdminController  extends GenericController{
 			{
 				helper.audit(session, "Switched between schemes from scheme #" + session.getAttribute(Constants.SCHEME_ID) + " to scheme #" + request.getParameter("schemeID"));
 				session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
-				try {
-					out.write(helper.result(true, "Scheme changed successfully").toString());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					try {
-						out.write(helper.result(true, "Scheme could not be changed").toString());
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
+				out.write(helper.result(true, "Scheme changed successfully").toString());
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("GET_MEMBER"))
 			{
@@ -812,7 +745,7 @@ public class AdminController  extends GenericController{
 					xm = helper.getMemberDetails(request.getParameter("memberID"));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.e("JSONException was detected: " + e.getMessage());
 				}
 				List<Country> countries = helper.getCountries();
 				request.setAttribute("countries",  countries);
@@ -831,7 +764,7 @@ public class AdminController  extends GenericController{
 					schemes = helper.getSchemes(0, 10000);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.e("JSONException was detected: " + e.getMessage());
 				}
 				request.setAttribute("schemes", schemes);
 				MemberPermission memberPermission = helper.getMemberPermissions();
@@ -844,55 +777,42 @@ public class AdminController  extends GenericController{
 			{
 
 				SchemeMemberManager smm = schemeManagerEJB.findById(helper.toLong(request.getParameter("id")));
-				try {
-					schemeManagerEJB.delete(smm);
+
+				if(schemeManagerEJB.delete(smm))
+				{
 					helper.audit(session, "De-linked scheme manager #" + smm.getName());
 					out.write(helper.result(true, "Scheme member successfully delinked from scheme managers").toString());
-				} catch (Exception ex)
+				}
+				else
 				{
-					try {
-						out.write(helper.result(true, "Scheme member could not be delinked from scheme managers").toString());
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace(out);
-					}						
+						out.write(helper.result(false, "Scheme member could not be delinked from scheme managers").toString());
 				}
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("ADD_SCHEME_MANAGER"))
 			{
 				String profile = request.getParameter("profile");
 				String email = request.getParameter("email");
-				try {
-					String ordinal = helper.getLoginField(profile);
-					String ordinal_key = helper.getOrdinalKey(ordinal);
-					JSONObject res = helper.searchProfilesJSON(email, "EMAIL", profile, session.getAttribute(Constants.SCHEME_ID).toString());
-					String username;
-					try
-					{
-						JSONArray json_arr = (JSONArray) res.get("rows");
-							
-						JSONObject obj = json_arr.getJSONObject(0);
-						
-						username = obj.getString(ordinal_key);
-						
-						User u = helper.findByUsernameAndProfile(username, profile);
-						SchemeMemberManager smm = new SchemeMemberManager(Long.valueOf("0").longValue(), u.getId().longValue(), profile, session.getAttribute(Constants.SCHEME_ID).toString(), obj.get("name").toString(), session.getAttribute(Constants.SCHEME_NAME).toString());
-						schemeManagerEJB.add(smm);
-						helper.audit(session, "Added a new scheme manager " + smm.getName());
-						out.write(helper.result(true, "Scheme member successfully added as scheme manager").toString());
-					}
-					catch (Exception ex)
-					{
-						out.write(helper.result(false, "Scheme member could not be added as a scheme manager").toString());
-					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					try {
-						out.write(helper.result(false, "Scheme member could not be added as a scheme manager").toString());
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace(out);
-					}
+				String ordinal = helper.getLoginField(profile);
+				String ordinal_key = helper.getOrdinalKey(ordinal);
+				JSONObject res = helper.searchProfilesJSON(email, "EMAIL", profile, session.getAttribute(Constants.SCHEME_ID).toString());
+				String username;
+				try
+				{
+					JSONArray json_arr = (JSONArray) res.get("rows");
+
+					JSONObject obj = json_arr.getJSONObject(0);
+
+					username = obj.getString(ordinal_key);
+
+					User u = helper.findByUsernameAndProfile(username, profile);
+					SchemeMemberManager smm = new SchemeMemberManager(Long.valueOf("0").longValue(), u.getId().longValue(), profile, session.getAttribute(Constants.SCHEME_ID).toString(), obj.get("name").toString(), session.getAttribute(Constants.SCHEME_NAME).toString());
+					schemeManagerEJB.add(smm);
+					helper.audit(session, "Added a new scheme manager " + smm.getName());
+					out.write(helper.result(true, "Scheme member successfully added as scheme manager").toString());
+				}
+				catch (JSONException je)
+				{
+					out.write(helper.result(false, "Scheme member could not be added as a scheme manager").toString());
 				}
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("VIEW_MEMBER"))
@@ -902,7 +822,7 @@ public class AdminController  extends GenericController{
 					xm = helper.getMemberDetails(request.getParameter("memberID"));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+
 				}
 				MemberPermission memberPermission = helper.getMemberPermissions();
 				request.setAttribute("memberPermission", memberPermission);
@@ -949,30 +869,18 @@ public class AdminController  extends GenericController{
 							"\nYou will require it to be able to change your password", session.getAttribute(Constants.SCHEME_ID).toString(), false, "");
 					if(resp.get("success").equals(true))
 					{
-						try {
 							out.write(helper.result(true, "The change password instructions have been sent to your email address").toString());
-						} catch (Exception ex)
-						{
-							ex.printStackTrace();
-						}
+
 					}
 					else
 					{
-						try {
 							out.write(helper.result(false, "We are sorry, we were unable to send you the change password instructions").toString());
-						} catch (Exception ex)
-						{
-							ex.printStackTrace();
-						}
+
 					}
 				} catch (JSONException | NullPointerException e1) {
-					// TODO Auto-generated catch block
-					try {
+
 						out.write(helper.result(false, "We are sorry, we encountered a problem obtaining your email address. Please try again").toString());
-					} catch (Exception ex)
-					{
-						ex.printStackTrace();
-					}
+
 				}
 
 			}
@@ -1001,42 +909,24 @@ public class AdminController  extends GenericController{
 							}
 							catch(Exception e)
 							{
-								try {
 									out.write(helper.result(false, "Sorry, your password could not be changed").toString());
-								} catch (JSONException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace(out);
-								}
+
 							}
 						}
 						else
 						{
-							try {
 								out.write(helper.result(false, "Sorry, the new password entered has already been used once. You cannot re-use the password.").toString());
-							} catch (JSONException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace(out);
-							}
+
 						}
 					}
 					else
 					{
-						try {
 							out.write(helper.result(false, "Sorry, your security code is invalid. Please enter a valid security code.").toString());
-						} catch (JSONException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace(out);
-						}
 					}
 				}
 				else
 				{
-					try {
 						out.write(helper.result(false, "The current password you entered is wrong. Please try again.").toString());
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace(out);
-					}
 				}
 				
 			}
@@ -1058,34 +948,19 @@ public class AdminController  extends GenericController{
 				Help h = helpEJB.findById(helper.toLong(request.getParameter("ID")));
                     h.setPage(request.getParameter("page"));
                 h.setDescription(request.getParameter("description"));
-				try
-				{
-					helpEJB.edit(h);
-					helper.audit(session, "Updated portal help content for page " + request.getParameter("page"));
-					out.write("true");
-				}
-				catch (Exception e)
-				{
-					out.write("false");
-				}
+				helpEJB.edit(h);
+				helper.audit(session, "Updated portal help content for page " + request.getParameter("page"));
+				out.write(helper.result(true, "content edited").toString());
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("REMOVE_BANNER"))
 			{
 				Banner b = bannerEJB.findById(helper.toLong(request.getParameter("id")));
-				try {
-						bannerEJB.delete(b);
-						out.write(helper.result(true, "Banner image successfully deleted").toString());
 
-				} catch (Exception ex)
-				{
+						if(bannerEJB.delete(b))
+							out.write(helper.result(true, "Banner image successfully deleted").toString());
+						else
+							out.write(helper.result(false, "Banner image could not be deleted").toString());
 
-					try {
-						out.write(helper.result(false, "Banner image could not be deleted").toString());
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace(out);
-					}
-				}
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("PAGE_CONTENT"))
 			{
@@ -1095,16 +970,13 @@ public class AdminController  extends GenericController{
                 pc.setText(request.getParameter("description"));
                 pc.setPosition(request.getParameter("position"));
                 pc.setPublish(request.getParameter("publish").equalsIgnoreCase("true"));
-				try
-				{
-					pageContentEJB.edit(pc);
-					helper.audit(session, "Updated portal page content for page " + request.getParameter("page"));
-					out.write("true");
-				}
-				catch (Exception e)
-				{
-					out.write("false");
-				}
+					if(pageContentEJB.edit(pc) != null)
+					{
+						helper.audit(session, "Updated portal page content for page " + request.getParameter("page"));
+						out.write(helper.result(true, "Content was successfully updated").toString());
+					}
+					else
+						out.write(helper.result(true, "Content could not be updated").toString());
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("THEME"))
 			{
@@ -1117,16 +989,13 @@ public class AdminController  extends GenericController{
                 theme.setHeader(request.getParameter("header"));
                 theme.setContent(request.getParameter("content"));
                 theme.setFooter(request.getParameter("footer"));
-				try
+				if(themeEJB.edit(theme) != null)
 				{
-					themeEJB.edit(theme);
 					helper.audit(session, "Updated portal theme settings");
-					out.write("true");
+					out.write(helper.result(true, "Theme settings saved").toString());
 				}
-				catch (Exception e)
-				{
-					out.write("false");
-				}
+				else
+					out.write(helper.result(false, "Theme settings not saved").toString());
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("INTEREST_RATE_COLUMNS"))
 			{
@@ -1150,15 +1019,14 @@ public class AdminController  extends GenericController{
                 irc.setPensionDrawDownText(request.getParameter("pensionDrawDownText"));
                 irc.setAccountingPeriodText(request.getParameter("accountingPeriodText"));
 
-				try {
-					interestRateColumnEJB.edit(irc);
-					helper.audit(session, "Updated interest rate column settings");
-					out.write("true");
-				}
-				catch (Exception e)
-				{
-					out.write("false");
-				}
+					if(interestRateColumnEJB.edit(irc) != null)
+					{
+						helper.audit(session, "Updated interest rate column settings");
+						out.write(helper.result(true, "Interest rate settings successfully saved").toString());
+					}
+					else
+						out.write(helper.result(false, "Interest rate settings could not be saved").toString());
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("SETTINGS"))
 			{
@@ -1186,15 +1054,15 @@ public class AdminController  extends GenericController{
 				settings.setMemberOnboarding(request.getParameter("memberOnboarding"));
 				settings.setSponsorOnboading(request.getParameter("sponsorOnboarding"));
 				settings.setEncrypt(request.getParameter("encrypt").equalsIgnoreCase("true"));
-				try {
-					settingEJB.edit(settings);
-					helper.audit(session, "Updated other portal settings and configurations");
-					out.write("true");
-				}
-				catch (Exception e)
-				{
-					out.write("false");
-				}
+
+					if(settingEJB.edit(settings) != null)
+					{
+						helper.audit(session, "Updated other portal settings and configurations");
+						out.write(helper.result(true, "Portal Settings & Configurations successfully saved").toString());
+					}
+					else
+						out.write(helper.result(true, "Portal Settings & Configurations could not be saved").toString());
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("MENU"))
 			{
@@ -1212,30 +1080,23 @@ public class AdminController  extends GenericController{
                 menu.setInterestRatesName(request.getParameter("interestRatesName"));
                 menu.setWhatIfAnalysisName(request.getParameter("whatIfAnalysisName"));
                 menu.setContactUsName(request.getParameter("contactUsName"));
-				try {
-					menuEJB.edit(menu);
-					helper.audit(session, "Updated portal menu configuration settings");
-					out.write("true");
-				}
-				catch (Exception e)
+				if(menuEJB.edit(menu) != null)
 				{
-					out.write("false");
+					helper.audit(session, "Updated portal menu configuration settings");
+					out.write(helper.result(true, "Portal menu configurations successfully saved").toString());
 				}
+				else
+					out.write(helper.result(true, "Portal menu configurations could not be saved").toString());
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("LOGOUT"))
 			{
 				/* Logout Request */
-				try {
 					helper.logActivity("", "logged out", session.getAttribute(Constants.UID).toString(), null, session.getAttribute(Constants.U_PROFILE).toString());
 					helper.audit(session, "Logged out of the portal");
 					session.invalidate();
-					out.write("true");
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(out);
-					out.write("false");
-				}
+					out.write(helper.result(true, "You have been successfully logged out").toString());
+
 			}
 			else if (request.getParameter(REQUEST_ACTION).equals("SOCIAL"))
 			{
@@ -1247,57 +1108,69 @@ public class AdminController  extends GenericController{
                 social.setGoogle(request.getParameter("google"));
                 social.setYoutube(request.getParameter("youtube"));
                 social.setPinterest(request.getParameter("pinterest"));
-				try {
-					socialEJB.edit(social);
-					helper.audit(session, "Updated portal social network settings");
-					out.write("true");
-				}
-				catch (Exception e)
+				if(socialEJB.edit(social) != null)
 				{
-					out.write("false");
+					helper.audit(session, "Updated portal social network settings");
+					out.write(helper.result(true, "Social network details successfully saved").toString());
 				}
+				else
+					out.write(helper.result(false, "Social network details could not be saved").toString());
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("REMOVE_CONTACT_REASON"))
 			{
 				ContactCategory cc = contactCategoryEJB.findById(helper.toLong(request.getParameter("id")));
-				contactCategoryEJB.delete(cc);
-				helper.audit(session, "Deleted a contact category: " + cc.getName());
-				try {
+				if(contactCategoryEJB.delete(cc))
+				{
+					helper.audit(session, "Deleted a contact category: " + cc.getName());
+
 					out.write(helper.result(true, "Contact category was successfully deleted").toString());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace(out);
 				}
+				else
+					out.write(helper.result(false, "Contact category could not be deleted").toString());
+
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("REMOVE_MEDIA"))
 			{
 				Media m = helper.getMediaById(helper.toLong(request.getParameter("id")));
-				helper.deleteMedia(m);
-				helper.audit(session, "Deleted a media/file: " + m.getName());
-				try {
+				if(mediaEJB.delete(m))
+				{
+					helper.audit(session, "Deleted a media/file: " + m.getName());
 					out.write(helper.result(true, "Media/File was successfully deleted").toString());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace(out);
 				}
+				else
+					out.write(helper.result(true, "Media/File could not be deleted").toString());
+
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("MEMBER_PERMISSION"))
 			{
 				MemberPermission mp = new MemberPermission(Long.valueOf(request.getParameter("member_permission_id")).longValue(), request.getParameter("memberNo").equalsIgnoreCase("true"), request.getParameter("partyRefNo").equalsIgnoreCase("true"), request.getParameter("partnerNo").equalsIgnoreCase("true"), request.getParameter("policyNo").equalsIgnoreCase("true"), request.getParameter("staffNo").equalsIgnoreCase("true"), request.getParameter("name").equalsIgnoreCase("true"), request.getParameter("idNumber").equalsIgnoreCase("true"), request.getParameter("pinNo").equalsIgnoreCase("true"), request.getParameter("postalAddress").equalsIgnoreCase("true"), request.getParameter("phoneNumber").equalsIgnoreCase("true"), request.getParameter("emailAddress").equalsIgnoreCase("true"), request.getParameter("gender").equalsIgnoreCase("true"), request.getParameter("dateOfBirth").equalsIgnoreCase("true"), request.getParameter("maritalStatus").equalsIgnoreCase("true"), request.getParameter("country").equalsIgnoreCase("true") , request.getParameter("town").equalsIgnoreCase("true"), request.getParameter("annualPensionableSalary").equalsIgnoreCase("true"));
-				helper.audit(session, "Updated member edit permissions");
-				helper.mergeMemberPermission(mp);
-				out.write("true");
+
+				if(memberPermissionEJB.edit(mp) != null)
+				{
+					helper.audit(session, "Updated member edit permissions");
+					out.write(helper.result(true, "Member edit permissions successfully saved").toString());
+				}
+				else
+					out.write(helper.result(false, "Member edit permissions could not be saved").toString());
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("PLF"))
 			{
 				List<ProfileLoginField> pfs = helper.getProfileLoginFields();
+				boolean status = true;
 				for(ProfileLoginField plf: pfs)
 				{
 					plf.setOrdinal(request.getParameter(String.valueOf(plf.getId())));
-					helper.audit(session, "Updated the profile unique login fields for the various user profiles");
-					helper.mergeProfileLoginField(plf);
+					status = status && profileLoginFieldEJB.edit(plf) != null;
 				}
-				out.write("true");
+				if(status)
+				{
+					helper.audit(session, "Updated the profile unique login fields for the various user profiles");
+					out.write(helper.result(true, "Profile login ordinals successfully saved").toString());
+				}
+				else
+					out.write(helper.result(true, "Profile login ordinals could not be saved").toString());
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("ADD_CONTACT_REASON"))
 			{
@@ -1305,179 +1178,188 @@ public class AdminController  extends GenericController{
 				{
 					ContactCategory cc = new ContactCategory();
 					cc.setName(request.getParameter("name"));
-					helper.mergeContactCategory(cc);
-					helper.audit(session, "Added a new contact category " + request.getParameter("name"));
+					if(contactCategoryEJB.add(cc) != null)
+					{
+						helper.audit(session, "Added a new contact category " + request.getParameter("name"));
+						out.write(helper.result(true, "Contact category successfully saved").toString());
+					}
+					else
+						out.write(helper.result(true, "Contact category could not be saved").toString());
 				}
 				else
 				{
 					ContactCategory cc = helper.findConcactCategoryById(helper.toLong(request.getParameter("id")));
 					cc.setName(request.getParameter("name"));
-					helper.mergeContactCategory(cc);
-					helper.audit(session, "Updated a contact category " + request.getParameter("name"));
+					if(contactCategoryEJB.edit(cc) != null)
+					{
+						helper.audit(session, "Updated a contact category " + request.getParameter("name"));
+						out.write(helper.result(true, "Contact category successfully saved").toString());
+					}
+					else
+						out.write(helper.result(true, "Contact category could not be saved").toString());
 				}
-				out.write("true");
 			}
 			else if (request.getParameter(REQUEST_ACTION).equals("LOGO"))
 			{
-	            try {
 					 for (Part part : request.getParts()) {
 				            String fileName = extractFileName(part);
 				            if(!fileName.equals(""))
 				            {
                                 String fullpath = request.getServletContext().getRealPath("") + File.separator + LOGO_DIR + File.separator + fileName;
-                                File file = new File(fullpath);
-                                byte[] bFile = new byte[(int) file.length()];
-                                FileInputStream fileInputStream = new FileInputStream(file);
-                                fileInputStream.read(bFile);
-                                fileInputStream.close();
-				            	part.write(fullpath);
+                                part.write(fullpath);
 				            	Setting settings = settingEJB.find();
+								File file = new File(fullpath);
+								logger.i("File: " + file);
+								byte[] bFile = new byte[(int) file.length()];
+								FileInputStream fileInputStream = new FileInputStream(file);
+								fileInputStream.read(bFile);
+								fileInputStream.close();
 				            	settings.setLogoFile(fullpath);
                                 settings.setLogo(bFile);
-				            	helper.mergeSettings(settings);
-								helper.audit(session, "Uploaded portal logo");
-								out.write("true");
+				            	if(settingEJB.edit(settings) != null)
+								{
+									logger.i("Logo has been uploaded");
+									helper.audit(session, "Uploaded portal logo");
+									out.write(helper.result(true, "Logo was successfully uploaded").toString());
+								}
+								else {
+
+									logger.i("Logo has not been uploaded: " + settings.getId());
+									out.write(helper.result(false, "Logo could not be uploaded").toString());
+								}
 				            }
 				        }
-				 
-	            } catch (Exception ex) {
-	            	ex.printStackTrace();
-	            	out.write("false");
-	            } 
 			}
 			else if (request.getParameter(REQUEST_ACTION).equals("BANNER"))
 			{
-		            try {
-						 for (Part part : request.getParts()) {
-					            String fileName = extractFileName(part);
-					            if(!fileName.equals(""))
-					            {
-                                    String fullpath = request.getServletContext().getRealPath("") + File.separator + BANNER_DIR + File.separator + fileName;
-					            	part.write(fullpath);
-                                    File file = new File(fullpath);
+			 for (Part part : request.getParts()) {
+					String fileName = extractFileName(part);
+					if(!fileName.equals(""))
+					{
+						String fullpath = request.getServletContext().getRealPath("") + File.separator + BANNER_DIR + File.separator + fileName;
+						part.write(fullpath);
+						File file = new File(fullpath);
 
-                                    byte[] bFile = new byte[(int) file.length()];
-                                    FileInputStream fileInputStream = new FileInputStream(file);
-                                    fileInputStream.read(bFile);
-                                    fileInputStream.close();
-						            Banner banner = new Banner();
-                                    banner.setName(fileName);
-                                    banner.setPath(fullpath);
-                                    banner.setImage(bFile);
-						            bannerEJB.add(banner);
-									helper.audit(session, "Uploaded a banner for the portal");
-									out.write("true");
-					            }
-					        }
-					 
-		            } catch (Exception ex) {
-		            	ex.printStackTrace(out);
-		            	out.write("false");
-		            } 
+						byte[] bFile = new byte[(int) file.length()];
+						FileInputStream fileInputStream = new FileInputStream(file);
+						fileInputStream.read(bFile);
+						fileInputStream.close();
+						Banner banner = new Banner();
+						banner.setName(fileName);
+						banner.setPath(fullpath);
+						banner.setImage(bFile);
+						if(bannerEJB.add(banner) != null)
+						{
+							helper.audit(session, "Uploaded a banner for the portal");
+							out.write(helper.result(true, "Banner image was successfully uploaded").toString());
+						}
+						else
+							out.write(helper.result(true, "Banner image could not be uploaded").toString());
+
+					}
+				}
 			}
 			else if (request.getParameter(REQUEST_ACTION).equals("MEDIA"))
 			{
-		            try {
-						 for (Part part : request.getParts()) {
-					            String fileName = extractFileName(part);
-					            if(!fileName.equals(""))
-					            {
-                                    String fullpath = request.getServletContext().getRealPath("") + File.separator + MEDIA_DIR + File.separator + fileName;
-						            part.write(fullpath);
-                                    File file = new File(fullpath);
-                                    byte[] bFile = new byte[(int) file.length()];
-                                    FileInputStream fileInputStream = new FileInputStream(file);
-                                    fileInputStream.read(bFile);
-                                    fileInputStream.close();
-						            Date date = new Date();
-						            Media media = new Media(fileName, session.getAttribute(Constants.SCHEME_ID).toString(), request.getParameter("description"), request.getParameter("access"), date);
-                                    media.setFile(bFile);
-                                    media.setPath(fullpath);
-						            boolean administrator;
-						            try {
-						            	administrator  = request.getParameter(Constants.ADMIN_PROFILE).equals("on");
-						            } catch (NullPointerException npe) {
-						            	administrator = false;
-						            }
-						            boolean member;
-						            try {
-						            	member  = request.getParameter(Constants.MEMBER_PROFILE).equals("on");
-						            } catch (NullPointerException npe) {
-						            	member = false;
-						            }
-						            boolean agent;
-						            try {
-						            	 agent = request.getParameter(Constants.AGENT_PROFILE).equals("on");
-						            } catch (NullPointerException npe) {
-						            	agent = false;
-						            }
-						            boolean sponsor;
-						            try {
-						            	 sponsor = request.getParameter("SPONSOR").equals("on");
-						            } catch (NullPointerException npe) {
-						            	sponsor = false;
-						            }
-						            boolean trustee;
-						            try {
-						            	 trustee = request.getParameter("TRUSTEE").equals("on");
-						            } catch (NullPointerException npe) {
-						            	trustee = false;
-						            }
-						            boolean custodian;
-						            try {
-						            	custodian = request.getParameter("CUSTODIAN").equals("on");
-						            } catch (NullPointerException npe) {
-						            	custodian = false;
-						            }
-						            boolean crm;
-						            try {
-						            	crm = request.getParameter("CUSTOMER_RELATIONSHIP_MANAGER").equals("on");
-						            } catch (NullPointerException npe) {
-						            	crm = false;
-						            }
-						            boolean cre;
-						            try {
-						            	cre = request.getParameter("CUSTOMER_RELATIONSHIP_EXECUTIVE").equals("on");
-						            } catch (NullPointerException npe) {
-						            	cre = false;
-						            }
-						            boolean fm;
-						            try {
-						            	fm  = request.getParameter("FUND_MANAGER").equals("on");
-						            } catch (NullPointerException npe) {
-						            	fm = false;
-						            }
-						            boolean pensioner;
-						            try {
-						            	pensioner = request.getParameter("PENSIONER").equals("on");
-						            } catch (NullPointerException npe) {
-						            	pensioner = false;
-						            }
-						            media.setAdministrator(administrator);
-						            media.setAgent(agent);
-						            media.setCre(cre);
-						            media.setCrm(crm);
-						            media.setFundManager(fm);
-						            media.setCustodian(custodian);
-						            media.setPensioner(pensioner);
-						            media.setSponsor(sponsor);
-						            media.setMember(member);
-						            media.setTrustee(trustee);
-						            try {
-							            media.setMemberId(Long.valueOf(request.getParameter("member_id")));
-						            } catch (NullPointerException | NumberFormatException npe) {
-						            	media.setMemberId(Long.valueOf("0"));
-						            }
-									helper.persistMedia(media);
-									helper.audit(session, "Uploaded a downloadable media/file");
-									out.write("true");
-					            }
-					        }
-					 
-		            } catch (Exception ex) {
-		            	ex.printStackTrace(out);
-		            	out.write("false");
-		            } 
+			 for (Part part : request.getParts()) {
+					String fileName = extractFileName(part);
+					if(!fileName.equals(""))
+					{
+						String fullpath = request.getServletContext().getRealPath("") + File.separator + MEDIA_DIR + File.separator + fileName;
+						part.write(fullpath);
+						File file = new File(fullpath);
+						byte[] bFile = new byte[(int) file.length()];
+						FileInputStream fileInputStream = new FileInputStream(file);
+						fileInputStream.read(bFile);
+						fileInputStream.close();
+						Date date = new Date();
+						Media media = new Media(fileName, session.getAttribute(Constants.SCHEME_ID).toString(), request.getParameter("description"), request.getParameter("access"), date);
+						media.setFile(bFile);
+						media.setPath(fullpath);
+						boolean administrator;
+						try {
+							administrator  = request.getParameter(Constants.ADMIN_PROFILE).equals("on");
+						} catch (NullPointerException npe) {
+							administrator = false;
+						}
+						boolean member;
+						try {
+							member  = request.getParameter(Constants.MEMBER_PROFILE).equals("on");
+						} catch (NullPointerException npe) {
+							member = false;
+						}
+						boolean agent;
+						try {
+							 agent = request.getParameter(Constants.AGENT_PROFILE).equals("on");
+						} catch (NullPointerException npe) {
+							agent = false;
+						}
+						boolean sponsor;
+						try {
+							 sponsor = request.getParameter("SPONSOR").equals("on");
+						} catch (NullPointerException npe) {
+							sponsor = false;
+						}
+						boolean trustee;
+						try {
+							 trustee = request.getParameter("TRUSTEE").equals("on");
+						} catch (NullPointerException npe) {
+							trustee = false;
+						}
+						boolean custodian;
+						try {
+							custodian = request.getParameter("CUSTODIAN").equals("on");
+						} catch (NullPointerException npe) {
+							custodian = false;
+						}
+						boolean crm;
+						try {
+							crm = request.getParameter("CUSTOMER_RELATIONSHIP_MANAGER").equals("on");
+						} catch (NullPointerException npe) {
+							crm = false;
+						}
+						boolean cre;
+						try {
+							cre = request.getParameter("CUSTOMER_RELATIONSHIP_EXECUTIVE").equals("on");
+						} catch (NullPointerException npe) {
+							cre = false;
+						}
+						boolean fm;
+						try {
+							fm  = request.getParameter("FUND_MANAGER").equals("on");
+						} catch (NullPointerException npe) {
+							fm = false;
+						}
+						boolean pensioner;
+						try {
+							pensioner = request.getParameter("PENSIONER").equals("on");
+						} catch (NullPointerException npe) {
+							pensioner = false;
+						}
+						media.setAdministrator(administrator);
+						media.setAgent(agent);
+						media.setCre(cre);
+						media.setCrm(crm);
+						media.setFundManager(fm);
+						media.setCustodian(custodian);
+						media.setPensioner(pensioner);
+						media.setSponsor(sponsor);
+						media.setMember(member);
+						media.setTrustee(trustee);
+						try {
+							media.setMemberId(Long.valueOf(request.getParameter("member_id")));
+						} catch (NullPointerException | NumberFormatException npe) {
+							media.setMemberId(Long.valueOf("0"));
+						}
+						if(mediaEJB.add(media) != null)
+						{
+							helper.audit(session, "Uploaded a media file");
+							out.write(helper.result(true, "Media file successfully uploaded").toString());
+						}
+						else
+							out.write(helper.result(true, "Media file successfully uploaded").toString());
+					}
+				}
 			}
 			else if (request.getParameter(REQUEST_ACTION).equals("EMAIL"))
 			{
@@ -1501,29 +1383,16 @@ public class AdminController  extends GenericController{
 						 JSONObject resp = helper.sendNotification(company.getEmail(), subject, message, session.getAttribute(Constants.SCHEME_ID).toString(), attachment, attachment_url);
 						 if(resp.get("success").equals(true))
 							{
-								try {
 									out.write(helper.result(true, "The email was successfully sent").toString());
-								} catch (Exception ex)
-								{
-									ex.printStackTrace();
-								}
+
 							}
 							else
 							{
-								try {
 									out.write(helper.result(true, "We are sorry, but we were unable to send the email address").toString());
-								} catch (Exception ex)
-								{
-									ex.printStackTrace();
-								}
+
 							}
-		            } catch (Exception ex) {
-		            	try {
+		            } catch (JSONException je) {
 							out.write(helper.result(false, "Email could not be sent").toString());
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace(out);
-						}
 		            } 
 			}
 	}

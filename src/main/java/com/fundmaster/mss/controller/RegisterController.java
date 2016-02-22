@@ -2,12 +2,14 @@ package com.fundmaster.mss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,7 +42,7 @@ import com.fundmaster.mss.model.Theme;
 import com.fundmaster.mss.model.User;
 import com.fundmaster.mss.model.XiMember;
 @WebServlet(name = "RegisterController", urlPatterns = {"/register"})
-public class RegisterController extends GenericController {
+public class RegisterController extends HttpServlet implements Serializable {
 	private static final String INDIVIDUAL_PENSION_FUND = "INDIVIDUAL_PENSION_FUND";
 	private static final String UMBRELLA = "UMBRELLA";
 	@EJB
@@ -252,47 +254,32 @@ public class RegisterController extends GenericController {
 								helper.sendNotification(email_address, "MSS Portal Account Activation Instructions", "Dear " + u.getUserProfile() + ",<br />" +
 										"Your account has been created on the FundMaster Xi Member Self Service Portal. " +
 										"Please click this <a href='" + settings.getPortalBaseURL() + "activate?" + securityCode + "'>link</a> to complete the activation process", schemeId, false, null);
-								try {
+
 									out.write(helper.result(true, "<strong>Registration Successful</strong><br /> Congratulations! Your account has been created on the portal. An email has been sent to your email address with account activation instructions.").toString());
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace(out);
-								} 
+
 							}
 							else
 							{
-								try {
 									out.write(helper.result(true, "<strong>Registration Successful</strong><br /> Congratulations! Your account has been created on the portal. We were however unable to send the activation instructions to your email. Please contact the administrator").toString());
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-								} 
+
 							}
 							
 						}
 						else
 						{
-							try {
 								out.write(helper.result(false, "<strong>Registration Failed!</strong><br /> You are already registered to use the portal").toString());
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-							} 
+
 						}
 					}
 					else
 					{
-						try {
 							out.write(helper.result(false, "<strong>Registration Failed!</strong><br /> You are not an existing " + request.getParameter("category").toLowerCase() + ". Please contact the administrator.").toString());
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-						} 
+
 					}
 				} catch (IOException | JSONException | NullPointerException ex) {
-					// TODO Auto-generated catch block
-					try {
+
 						out.write(helper.result(false, "<strong>Registration Failed!</strong><br /> You are not an existing " + request.getParameter("category").toLowerCase() + ". Please contact the administrator.").toString());
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-					} 
+
 				}
 				
 			}

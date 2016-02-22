@@ -2,16 +2,19 @@ package com.fundmaster.mss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fundmaster.mss.beans.ejbInterface.*;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.LOGGER;
 import org.json.JSONException;
 
 import com.fundmaster.mss.common.Constants;
@@ -24,7 +27,7 @@ import com.fundmaster.mss.model.Setting;
 import com.fundmaster.mss.model.Social;
 import com.fundmaster.mss.model.Theme;
 @WebServlet(name = "InterestRateController", urlPatterns = {"/interest-rates"})
-public class InterestRateController extends GenericController {
+public class InterestRateController extends HttpServlet implements Serializable {
 
 	/**
 	 * 
@@ -62,7 +65,7 @@ public class InterestRateController extends GenericController {
 	BannerEJB bannerEJB;
 	@EJB
 	PermissionEJB permissionEJB;
-
+	LOGGER logger = new LOGGER(this.getClass());
 	public InterestRateController() {
 		// TODO Auto-generated constructor stub
 	}
@@ -77,9 +80,9 @@ public class InterestRateController extends GenericController {
 		List<Scheme> schemes = null;
 		try {
 			schemes = helper.getSchemes(0, 10000);
-		} catch (JSONException e) {
+		} catch (JSONException je) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.i("JSON Exception was detected: " + je.getMessage());
 		}
 		request.setAttribute("schemes", schemes);
 		Menu menu = menuEJB.find();
@@ -111,16 +114,12 @@ public class InterestRateController extends GenericController {
 				e.printStackTrace();
 			}
 			try {
-				out.write(interestRates != null ? interestRates : null);
+				out.write(interestRates);
 			}
-			catch (Exception ex)
+			catch (NullPointerException npe)
 			{
-				try {
 					out.write(helper.result(false, "Failed to obtain interest rates history").toString());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 			}
 		}
 		

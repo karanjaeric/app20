@@ -176,10 +176,12 @@ public class Helper {
     private JSONObject URLGet(String link) throws JSONException {
 
         JSONObject json;
+        logger.i("Getting...\n Network link: " + link);
         if(isHttps(link))
             json = HttpsGet(link);
         else
             json = HttpGet(link);
+        logger.i("Response: \n" + json);
         return json;
     }
 
@@ -405,10 +407,12 @@ public class Helper {
 
     private JSONObject URLPost(String link, String params, String encoding) throws JSONException {
         JSONObject json;
+        logger.i("Posting...\n Network link: " + link + "\n Params: " + params + "\n Encoding: " + encoding);
         if(isHttps(link))
             json = HttpsPost(link, params, encoding);
         else
             json = HttpPost(link, params, encoding);
+        logger.i("Response: \n" + json);
         return json;
     }
 
@@ -589,11 +593,15 @@ public class Helper {
         return dao.find();
     }
 
-    public JSONObject result(boolean status, String message) throws JSONException
+    public JSONObject result(boolean status, String message)
     {
         JSONObject obj = new JSONObject();
-        obj.put(Helper.SUCCESS, status);
-        obj.put(Helper.MESSAGE, message);
+        try {
+            obj.put(Helper.SUCCESS, status);
+            obj.put(Helper.MESSAGE, message);
+        } catch (JSONException je) {
+
+        }
         return obj;
     }
 
@@ -949,12 +957,7 @@ public class Helper {
                 result = result(true, "Sponsor details have been successfully saved.");
             } catch (Exception ex)
             {
-                try {
-                    result = result(false, "Sponsor details could not be saved. We apologise for the inconvenience.");
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                result = result(false, "Sponsor details could not be saved. We apologise for the inconvenience.");
             }
         }
         if(settings.getSponsorOnboading().equals(Helper.XI) || settings.getSponsorOnboading().equals(Helper.BOTH))
@@ -2503,12 +2506,6 @@ public class Helper {
     {
         MediaDAO dao = new MediaDAO(entityManager);
         return dao.findById(id);
-    }
-
-    public void deleteMedia(Media m)
-    {
-        MediaDAO dao = new MediaDAO(entityManager);
-        dao.remove(m);
     }
 
     public List<Media> getMedia(String schemeID, String profile, String memberId)

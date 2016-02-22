@@ -112,10 +112,10 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {ACTION: 'ADD_CONTACT_REASON', name: $('#name').val(), type: $('#type').val(), id: $('#item_id').val()},
-        	        dataType: 'html',
-        	        success: function(html) {
+        	        dataType: 'json',
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');

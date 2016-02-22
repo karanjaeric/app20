@@ -30,6 +30,7 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 	@Column (name = "username", nullable = false)
 	private
 	String username;
+	@Column (columnDefinition = "longblob")
 	byte[] logo;
 
     public static long getSerialVersionUID() {

@@ -181,18 +181,16 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'POST',
         	        data: formData,
+					dataType: 'json',
         	        async: false,
-        	        success: function(html) {
+        	        success: function(json) {
         	            stop_wait();
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
-        	                html = 'Media file successfully uploaded';
         	            }
-        	            else
-        	                html = 'Media file was not uploaded';
-        	            bootbox.alert(html);
+        	            bootbox.alert(json.message);
 						load_dashboard("MF");
         	        },
         	        cache: false,

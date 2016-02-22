@@ -2,15 +2,18 @@ package com.fundmaster.mss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fundmaster.mss.beans.ejbInterface.*;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.LOGGER;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,7 +21,7 @@ import com.fundmaster.mss.model.Help;
 import com.fundmaster.mss.model.PageContent;
 
 @WebServlet(name = "DataController", urlPatterns = {"/data"})
-public class DataController extends GenericController {
+public class DataController extends HttpServlet implements Serializable {
 
 	/**
 	 * 
@@ -56,6 +59,7 @@ public class DataController extends GenericController {
 	BannerEJB bannerEJB;
 	@EJB
 	PermissionEJB permissionEJB;
+	LOGGER logger = new LOGGER(this.getClass());
 	public DataController() {
 		// TODO Auto-generated constructor stub
 	}
@@ -67,22 +71,12 @@ public class DataController extends GenericController {
         		Help h = helpEJB.findById(helper.toLong(request.getParameter("ID")));
         		JSONObject obj = new JSONObject();
         		try {
-					obj.put("id", h.getId());
-				} catch (JSONException e2) {
+					obj.put("id", h.getId())
+					.put("page", h.getPage())
+							.put("description", h.getDescription());
+				} catch (JSONException je) {
 					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-        		try {
-					obj.put("page", h.getPage());
-				} catch (JSONException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-        		try {
-					obj.put("description", h.getDescription());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.i("JSON Exception was detected: " + je.getMessage());
 				}
         		out.write(obj.toString());
         	}
@@ -91,34 +85,14 @@ public class DataController extends GenericController {
         		PageContent h = pageContentEJB.findById(helper.toLong(request.getParameter("ID")));
         		JSONObject obj = new JSONObject();
         		try {
-					obj.put("id", h.getId());
-				} catch (JSONException e2) {
+					obj.put("id", h.getId())
+							.put("page", h.getPage())
+							.put("text", h.getText())
+							.put("position", h.getPosition())
+							.put("publish", h.isPublish());
+				} catch (JSONException je) {
 					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-        		try {
-					obj.put("page", h.getPage());
-				} catch (JSONException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-        		try {
-					obj.put("text", h.getText());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        		try {
-					obj.put("position", h.getPosition());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        		try {
-					obj.put("publish", h.isPublish());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.i("JSON Exception was detected: " + je.getMessage());
 				}
         		out.write(obj.toString());
         	}

@@ -2,12 +2,14 @@ package com.fundmaster.mss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.List;
 
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,7 +32,7 @@ import com.fundmaster.mss.model.User;
 
 
 @WebServlet(name = "SignInController", urlPatterns = {"/sign-in"})
-public class SignInController extends GenericController {
+public class SignInController extends HttpServlet implements Serializable {
 
 	/**
 	 * 
@@ -146,67 +148,45 @@ public class SignInController extends GenericController {
 							helper.logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
 							SchemeMemberManager smm = helper.getSchemeManager(u.getId());
 							String link = "member";
-							try {
-								if(smm != null)
-								{
-									session.setAttribute(Constants.MANAGER_PROFILE, Constants.MANAGER);
-									link = "admin";
-								}
-							}
-							catch (Exception ex)
+							if(smm != null)
 							{
-								
+								session.setAttribute(Constants.MANAGER_PROFILE, Constants.MANAGER);
+								link = "admin";
 							}
-							try {
-								out.write(helper.result(true, link).toString());
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace(out);
-							}
+							out.write(helper.result(true, link).toString());
+
 							
 						}
 						else
 							{
 								helper.logActivity(Constants.ML, "login attempt", "0", null, null);
-								try {
+
 									out.write(helper.result(false, "Login Failed!<br />Sorry, but we could not establish your existence in Xi").toString());
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace(out);
-								}
+
 								
 							}
 					}
 					else
 					{
 						helper.logActivity(Constants.ML, "login attempt", "0", null, null);
-						try {
+
 							out.write(helper.result(false, "Login Failed!<br />Invalid username and/or password<br />Please try again").toString());
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace(out);
-						}
+
 					}
-				} catch (Exception e1) {
+				} catch (NullPointerException | JSONException npje) {
 					// TODO Auto-generated catch block
 					helper.logActivity(Constants.ML, "login attempt", "0", null, null);
-					try {
+
 						out.write(helper.result(false, "Login Failed!<br />Invalid username and/or password<br />Please try again").toString());
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace(out);
-					}
+
 				}
 			}
 			else
 			{
 				helper.logAttempt(request.getParameter("username"));
-				try {
+
 					out.write(helper.result(false, "Login Failed!<br />You account has been locked or de-activated. Contact the administrator").toString());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace(out);
-				}
+
 			}
 			
 		}
@@ -214,12 +194,9 @@ public class SignInController extends GenericController {
 		{
 			helper.logActivity(Constants.ML, "login attempt", "0", null, null);
 			helper.logAttempt(request.getParameter("username"));
-			try {
+
 				out.write(helper.result(false, "Login Failed!<br />Invalid username and/or password<br />Please try again").toString());
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace(out);
-			}
+
 			
 		}
 	}

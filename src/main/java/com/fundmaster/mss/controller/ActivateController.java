@@ -1,11 +1,13 @@
 package com.fundmaster.mss.controller;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +28,7 @@ import com.fundmaster.mss.model.Theme;
 import com.fundmaster.mss.model.User;
 
 @WebServlet(name = "ActivateController", urlPatterns = {"/activate/*"})
-public class ActivateController extends GenericController {
+public class ActivateController extends HttpServlet implements Serializable {
 	/**
 	 * 
 	 */

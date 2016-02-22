@@ -2,6 +2,7 @@ package com.fundmaster.mss.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,12 +14,14 @@ import java.util.UUID;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fundmaster.mss.beans.ejbInterface.*;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.LOGGER;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +34,7 @@ import com.fundmaster.mss.model.Scheme;
 import com.fundmaster.mss.model.User;
 import com.fundmaster.mss.model.XiMember;
 @WebServlet(name = "MemberController", urlPatterns = {"/member"})
-public class MemberController extends GenericController{
+public class MemberController extends HttpServlet implements Serializable {
 	/**
 	 * 
 	 */
@@ -64,6 +67,7 @@ public class MemberController extends GenericController{
 	ProfileLoginFieldEJB profileLoginFieldEJB;
 	@EJB
 	BannerEJB bannerEJB;
+	LOGGER logger = new LOGGER(this.getClass());
 	public MemberController() {
 		// TODO Auto-generated constructor stub
 	}
@@ -107,10 +111,10 @@ public class MemberController extends GenericController{
 								request.setAttribute("scheme_id", session.getAttribute(Constants.SCHEME_ID));
 								session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
 							}
-						} catch(Exception ex)
+						} catch(NullPointerException npe)
 						{
-							ex.printStackTrace(out);
-								session.setAttribute(Constants.SCHEME_ID, String.valueOf(schemes.get(0).getId()));
+                            logger.e("NullPointerException was detected: " + npe.getMessage());
+                            session.setAttribute(Constants.SCHEME_ID, String.valueOf(schemes.get(0).getId()));
 						}
 					}
 
@@ -133,10 +137,10 @@ public class MemberController extends GenericController{
 										request.setAttribute("scheme_id", session.getAttribute(Constants.SCHEME_ID));
 										session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
 									}
-								} catch(Exception ex)
+								} catch(NullPointerException npe)
 								{
-									ex.printStackTrace(out);
-										session.setAttribute(Constants.SCHEME_ID, String.valueOf(scheme.getId()));
+									logger.e("NullPointerException was detected: " + npe.getMessage());
+									session.setAttribute(Constants.SCHEME_ID, String.valueOf(scheme.getId()));
 								}
 							}
 						}
@@ -156,9 +160,9 @@ public class MemberController extends GenericController{
 			else
 				response.sendRedirect(getServletContext().getContextPath() + "/sign-in");
 		}
-		catch (Exception e)
+		catch (JSONException | NullPointerException npe)
 		{
-			e.printStackTrace(out);
+			logger.e("NullPointerException or JSONException was detected: " + npe.getMessage());
 			response.sendRedirect(getServletContext().getContextPath() + "/sign-in");			
 		} 
 	}
@@ -172,11 +176,9 @@ public class MemberController extends GenericController{
 		if (request.getParameter("ACTION").equals("SWITCH_SCHEME"))
 		{
 			session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
-			try {
+
 				out.write(helper.result(true, "success").toString());
-			} catch (JSONException je) {
-				je.printStackTrace();
-			}
+
 		}
 		else if(request.getParameter("ACTION").equals("CH"))
 		{
@@ -185,13 +187,9 @@ public class MemberController extends GenericController{
 				out.write(result);
 				
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				try {
+
 					out.write(helper.result(false, "Sorry, an error was encountered loading your contribution history, please try again" + e.getMessage()).toString());
-				} catch (JSONException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace(out);
-				}
+
 			}
 		}
 		else if(request.getParameter("ACTION").equals("PRE_CHANGE_PASSWORD"))
@@ -204,9 +202,9 @@ public class MemberController extends GenericController{
 			XiMember m = null;
 			try {
 				m = helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString());
-			} catch (JSONException e2) {
+			} catch (JSONException je) {
 				// TODO Auto-generated catch block
-				e2.printStackTrace();
+				logger.e("JSONException was detected: " + je.getMessage());
 			}
 			try {
 				JSONObject resp = helper.sendNotification(m != null ? m.getEmailAddress() : null, "Change Password Request", "Dear " + u.getUsername() + ", " +
@@ -216,46 +214,31 @@ public class MemberController extends GenericController{
 						"You will require it to be able to change your password", session.getAttribute(Constants.SCHEME_ID).toString(), false, "");
 				if(resp.get("success").equals(true))
 				{
-					try {
 						out.write(helper.result(true, "The change password instructions have been sent to your email address").toString());
-					} catch (Exception ex)
-					{
-						ex.printStackTrace();
-					}
+
 				}
 				else
 				{
-					try {
 						out.write(helper.result(false, "We are sorry, we were unable to send you the change password instructions").toString());
-					} catch (Exception ex)
-					{
-						ex.printStackTrace();
-					}
+
 				}
-			} catch (JSONException | NullPointerException e1) {
-				// TODO Auto-generated catch block
-				try {
+			} catch (JSONException | NullPointerException jnpe) {
+
 					out.write(helper.result(false, "We are sorry, we encountered a problem obtaining your email address. Please try again").toString());
-				} catch (Exception ex)
-				{
-					ex.printStackTrace();
-				}
+
 			}
 
 		}
 		else if(request.getParameter("ACTION").equals("LOGOUT"))
 		{
-			/* Logout Request */
-			try {
-				helper.logActivity("", "logged out", session.getAttribute(Constants.UID).toString(), null, session.getAttribute(Constants.U_PROFILE).toString());
-				session.invalidate();
-				out.write("true");
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace(out);
-				out.write("false");
-			}
+
+				try {
+					helper.logActivity("", "logged out", session.getAttribute(Constants.UID).toString(), null, session.getAttribute(Constants.U_PROFILE).toString());
+					session.invalidate();
+					out.write(helper.result(true, "Logout was successful").toString());
+				} catch (NullPointerException npe) {
+					out.write(helper.result(true, "Logout was successful").toString());
+				}
 		}
 		else if(request.getParameter("ACTION").equals("REASON"))
 		{
@@ -273,9 +256,9 @@ public class MemberController extends GenericController{
 			Date date = null;
 			try {
 				date = format_from.parse(date_string);
-			} catch (ParseException e) {
+			} catch (ParseException pe) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.e("ParseException was detected: " + pe.getMessage());
 			}
 			String result = helper.getAccountingPeriod(format.format(date), session.getAttribute(Constants.SCHEME_ID).toString());
 			out.write(result);
@@ -285,11 +268,12 @@ public class MemberController extends GenericController{
 			String result = null;
 			try {
 				result = helper.getMemberBalances(session.getAttribute(Constants.PROFILE_ID).toString());
-			} catch (JSONException e) {
+				out.write(result);
+			} catch (JSONException je) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.e("JSONException was detected: " + je.getMessage());
 			}
-			out.write(result != null ? result : null);
+
 		}
 		else if(request.getParameter("ACTION").equals("CURR"))
 		{

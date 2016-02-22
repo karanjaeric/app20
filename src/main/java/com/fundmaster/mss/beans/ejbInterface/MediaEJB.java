@@ -14,5 +14,5 @@ public interface MediaEJB {
     Media add(Media media);
     Media edit(Media media);
     List<Media> findAll(String schemeID, String profile, String memberId);
-
+    boolean delete(Media media);
 }

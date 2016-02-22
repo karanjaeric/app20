@@ -39,4 +39,10 @@ public class MediaBean implements MediaEJB {
         MediaDAO dao = new MediaDAO(entityManager);
         return dao.findAll();
     }
+
+    @Override
+    public boolean delete(Media media) {
+        MediaDAO dao = new MediaDAO(entityManager);
+        return dao.remove(media);
+    }
 }

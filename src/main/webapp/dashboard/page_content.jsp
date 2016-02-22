@@ -147,9 +147,9 @@
 			        url: $('#base_url').val() + 'admin',
 			        type: 'post',
 			        data: {ACTION: 'PAGE_CONTENT', ID: $('#id').val(), page: $('#page').val(), description: $('#description').val(), position: $('#position').val(), publish: $('#publish').val()},
-			        dataType: 'html',
-			        success: function(html) {
-			            if(html == 'true')
+			        dataType: 'json',
+			        success: function(json) {
+			            if(json.success)
 			            {
 			                $('#' + form)[0].reset();
 			                $('#' + modal).modal('hide');

@@ -755,10 +755,10 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {menu_id: $('#menu_id').val(), annuityQuotationName: $('#annuityQuotationName').val(), interestRatesName: $('#interestRatesName').val(), whatIfAnalysisName: $('#whatIfAnalysisName').val(), contactUsName: $('#contactUsName').val(), annuityQuotationActive: $('#annuityQuotationActive').prop('checked'), interestRatesActive: $('#interestRatesActive').prop('checked'), whatIfAnalysisActive: $('#whatIfAnalysisActive').prop('checked'), contactUsActive: $('#contactUsActive').prop('checked'), ACTION: 'MENU'},
-        	        dataType: 'html',
-        	        success: function(html) {
+        	        dataType: 'json',
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
@@ -840,10 +840,10 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {ACTION: 'INTEREST_RATE_COLUMNS', id: $('#interestRateColumns_id').val(),accountingPeriod: $('#accountingPeriod').prop('checked'), contributions: $('#contributions').prop('checked'), dateDeclared: $('#dateDeclared').prop('checked'), openingBalances: $('#openingBalances').prop('checked'), pensionDrawDown: $('#pensionDrawDown').prop('checked'), year: $('#year').prop('checked'), accountingPeriodText: $('#accountingPeriodText').val(), contributionsText: $('#contributionsText').val(), dateDeclaredText: $('#dateDeclaredText').val(), openingBalancesText: $('#openingBalancesText').val(), pensionDrawDownText: $('#pensionDrawDownText').val(), yearText: $('#yearText').val()},
-        	        dataType: 'html',
-        	        success: function(html) {
+        	        dataType: 'json',
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
@@ -986,10 +986,10 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {ACTION: $('#THEME_ACTION').val(), theme_id: $('#theme_id').val(), major: $('#major').val(), minor: $('#minor').val(), font: $('#font').val(), other: $('#other').val(), header: $('#header').val(), content: $('#content').val(), footer: $('#footer').val()},
-        	        dataType: 'html',
-        	        success: function(html) {
+        	        dataType: 'json',
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
@@ -1035,10 +1035,10 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {social_id: $('#social_id').val(), twitter: $('#twitter').val(), facebook: $('#facebook').val(), linkedin: $('#linkedin').val(), google: $('#google').val(), youtube: $('#youtube').val(), pinterest: $('#pinterest').val(), ACTION: 'SOCIAL'},
-        	        dataType: 'html',
-        	        success: function(html) {
+        	        dataType: 'json',
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
@@ -1112,10 +1112,10 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {portalBaseURL: $('#portalBaseURL').val(), memberOnboarding: $('#memberOnboarding').val(), sponsorOnboarding: $('#sponsorOnboarding').val(), setting_id: $('#setting_id').val(), xiReportPath: $('#xiReportPath').val(), loginField: $('#loginField').val(), fundmasterXi: $('#fundmasterXi').val(), username: $('#xiUsername').val(), password: $('#xiPassword').val(), encrypt: $('#encrypt').prop('checked'), ACTION: 'SETTINGS', xiReportUsername: $('#xiReportUsername').val(), xiReportPassword: $('#xiReportPassword').val()},
-        	        dataType: 'html',
-        	        success: function(html) {
+        	        dataType: 'json',
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
@@ -1166,9 +1166,9 @@
         	        type: 'POST',
         	        data: formData,
         	        async: false,
-        	        success: function(html) {
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
@@ -1221,10 +1221,11 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'POST',
         	        data: formData,
+                    dataType: 'json',
         	        async: false,
-        	        success: function(html) {
+        	        success: function(json) {
         	            $('#' + btn).val('Done');
-        	            if(html == 'true')
+        	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
