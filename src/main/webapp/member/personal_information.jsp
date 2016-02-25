@@ -23,8 +23,8 @@
 									<label for="surname" class="col-sm-6 control-label">Surname:</label>
 									<div class="col-sm-6">
 									<input
-										type="text" name="surname" class="form-control  input-sm" id="surName"
-										placeholder="Surname" value="${ member.firstname }"  ${memberPermission.name == 'TRUE' ? '' : 'disabled'}>
+										type="text" name="surname" class="form-control  input-sm" id="surname"
+										placeholder="Surname" value="${ member.surname }"  ${memberPermission.name == 'TRUE' ? '' : 'disabled'}>
 									</div>
 								</div>
 								<div class="form-group">
@@ -387,7 +387,7 @@
 														'#member_id').val(),
 												firstname : $('#firstname')
 														.val(),
-												surname : $('#surName')
+												surname : $('#surname')
 														.val(),
 												othernames : $('#otherNames')
 														.val(),
