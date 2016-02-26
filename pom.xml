@@ -14,7 +14,8 @@
 		<hibernate.version>4.0.1.Final</hibernate.version>
 				<!-- JBoss dependency versions -->
 		<version.jboss.maven.plugin>7.3.Final</version.jboss.maven.plugin>
-		
+	<!-- Wildfly dependency versions -->
+	<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>	
 	</properties>
 	  <dependencies>
 	    <dependency>
@@ -180,7 +181,11 @@
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<version>${version.jboss.maven.plugin}</version>
 			</plugin>
-			
+			<plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.maven.plugin}</version>
+            </plugin>	
     </plugins>
   </build>
 </project>
