@@ -1560,10 +1560,10 @@ public class Helper {
         return null;
     }
 
-    public String listMembers(String schemeID) throws JSONException
+    public String listMembers(String schemeID, String profileID) throws JSONException
     {
         Setting settings = getSettings();
-        JSONObject response = URLGet(settings.getXiPath() + "member/statistics/statusdistribution/" + schemeID);
+        JSONObject response = URLGet(settings.getXiPath() + "member/statistics/statusdistribution/" + schemeID+"/"+profileID);
         try {
             if(response.get(Helper.SUCCESS).equals(true))
             {
@@ -2026,11 +2026,11 @@ public class Helper {
 
     }
 
-    public String getNewMembersInYear(String schemeID)
+    public String getNewMembersInYear(String schemeID,String profileID)
     {
         Setting settings = getSettings();
         try {
-            JSONObject response = URLPost(settings.getXiPath() + "newMemberListingWithinYear/" + schemeID, "", "application/x-www-form-urlencoded");
+            JSONObject response = URLPost(settings.getXiPath() + "newMemberListingWithinYear/" + schemeID+"/"+profileID, "", "application/x-www-form-urlencoded");
 
             return response.toString();
         }
@@ -2247,12 +2247,12 @@ public class Helper {
             return null;
         }
     }
-    public String getFundValue(String accountinPeriodId, String schemeID)
+    public String getFundValue(String accountinPeriodId, String schemeID,String profileID)
     {
         Setting settings = getSettings();
         try
         {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getfundvalue/" + accountinPeriodId + "/" + schemeID);
+            JSONObject response = URLGet(settings.getXiPath() + "scheme/getfundvalue/" + accountinPeriodId + "/" + schemeID+"/"+profileID);
             return response.toString();
         }
         catch (Exception ex)

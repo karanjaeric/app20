@@ -1,5 +1,19 @@
 package com.fundmaster.mss.controller;
 
+import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.model.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,50 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-
-
-import javax.ejb.EJB;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-
-import com.fundmaster.mss.beans.ejbInterface.*;
-import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.LOGGER;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.model.ActivityLog;
-import com.fundmaster.mss.model.Banner;
-import com.fundmaster.mss.model.Beneficiary;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.ContactCategory;
-import com.fundmaster.mss.model.Country;
-import com.fundmaster.mss.model.Gender;
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.InterestRateColumns;
-import com.fundmaster.mss.model.MaritalStatus;
-import com.fundmaster.mss.model.Media;
-import com.fundmaster.mss.model.Member;
-import com.fundmaster.mss.model.MemberPermission;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.PageContent;
-import com.fundmaster.mss.model.PasswordPolicy;
-import com.fundmaster.mss.model.Permission;
-import com.fundmaster.mss.model.ProfileLoginField;
-import com.fundmaster.mss.model.ProfileName;
-import com.fundmaster.mss.model.Scheme;
-import com.fundmaster.mss.model.SchemeMemberManager;
-import com.fundmaster.mss.model.Sector;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Sponsor;
-import com.fundmaster.mss.model.Theme;
-import com.fundmaster.mss.model.User;
-import com.fundmaster.mss.model.XiMember;
 @WebServlet(name = "AdminController", urlPatterns = {"/admin"})
 @MultipartConfig
 public class AdminController  extends HttpServlet implements Serializable {
@@ -713,7 +683,7 @@ public class AdminController  extends HttpServlet implements Serializable {
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("NEW"))
 			{
-				String res = helper.getNewMembersInYear(session.getAttribute(Constants.SCHEME_ID).toString());
+				String res = helper.getNewMembersInYear(session.getAttribute(Constants.SCHEME_ID).toString(),session.getAttribute(Constants.PROFILE_ID).toString());
 				out.write(res);
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("AGENT_COMMISSION"))
@@ -839,7 +809,7 @@ public class AdminController  extends HttpServlet implements Serializable {
 			{
 				String result = null;
 				try {
-					result = helper.listMembers(session.getAttribute(Constants.SCHEME_ID).toString());
+					result = helper.listMembers(session.getAttribute(Constants.SCHEME_ID).toString(),session.getAttribute(Constants.PROFILE_ID).toString());
 					helper.audit(session, "Accessed scheme member listing");
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -940,7 +910,7 @@ public class AdminController  extends HttpServlet implements Serializable {
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("FV"))
 			{
-				String result = helper.getFundValue(request.getParameter("accountingPeriodId"), session.getAttribute(Constants.SCHEME_ID).toString());
+				String result = helper.getFundValue(request.getParameter("accountingPeriodId"), session.getAttribute(Constants.SCHEME_ID).toString(),session.getAttribute(Constants.PROFILE_ID).toString());
 				out.write(result);
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("HELP"))
