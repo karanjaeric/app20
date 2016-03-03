@@ -431,13 +431,14 @@ public class AdminController  extends HttpServlet implements Serializable {
 				try {
 					member.put("member.surname", surname)
 					.put("member.firstname", firstname)
+					
 					.put("member.othernames", othernames)
 					.put("member.person.biodata.town", city)
 					.put("member.dob", format_.format(dob))
 					.put("member.id", memberID)
 					.put("member.gender", gender)
 					.put("member.mbshipStatus", status)
-					.put("member.person.biodata.email", emailAddress)
+					.put("member.address.email", emailAddress)
 					.put("member.person.biodata.cellPhone", phoneNumber)
 					.put("member.currentAnnualPensionableSalary", salary)
 					.put("member.person.biodata.postalAddress", postalAddress)
