@@ -1775,7 +1775,7 @@ public class Helper {
     {
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebenefitpaymentswithinyear/" + schemeID);
+            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebenefitswithinyear/" + schemeID);
 
             return response.toString();
         }
@@ -2092,10 +2092,10 @@ public class Helper {
         long tmp = Math.round(value);
         return (double) tmp / factor;
     }
-    public String getSchemeContributions(String schemeID) throws JSONException{
+    public String getSchemeContributions(String schemeID ,String profileID) throws JSONException{
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/gettotalschemecontributions/" + schemeID);
+            JSONObject response = URLGet(settings.getXiPath() + "scheme/gettotalschemecontributions/" + schemeID+"/"+profileID);
             return response.toString();
         } catch (JSONException je) {
 
@@ -2260,6 +2260,20 @@ public class Helper {
             return null;
         }
     }
+    public String getFundValueAsAt(String date,String accountinPeriodId, String schemeID,String profileID)
+    {
+        Setting settings = getSettings();
+        try
+        {
+            JSONObject response = URLGet(settings.getXiPath() + "scheme/getfundvalueasat/"+date+"/" + accountinPeriodId + "/" + schemeID+"/"+profileID);
+            return response.toString();
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
     public String getSchemeCurrency(String schemeID)
     {
         Setting settings = getSettings();

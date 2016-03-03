@@ -234,7 +234,7 @@ public class AdminController  extends HttpServlet implements Serializable {
 			else if(request.getParameter(REQUEST_ACTION).equals("SC"))
 			{
 				try {
-					String result = helper.getSchemeContributions(session.getAttribute(Constants.SCHEME_ID).toString());
+					String result = helper.getSchemeContributions(session.getAttribute(Constants.SCHEME_ID).toString(),session.getAttribute(Constants.PROFILE_ID).toString());
 					out.write(result);
 
 				} catch (JSONException e) {
@@ -910,7 +910,10 @@ public class AdminController  extends HttpServlet implements Serializable {
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("FV"))
 			{
-				String result = helper.getFundValue(request.getParameter("accountingPeriodId"), session.getAttribute(Constants.SCHEME_ID).toString(),session.getAttribute(Constants.PROFILE_ID).toString());
+				DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+				Date date = new Date();
+				//String result = helper.getFundValue(request.getParameter("accountingPeriodId"), session.getAttribute(Constants.SCHEME_ID).toString(),session.getAttribute(Constants.PROFILE_ID).toString());
+				String result = helper.getFundValueAsAt(format.format(date),request.getParameter("accountingPeriodId"), session.getAttribute(Constants.SCHEME_ID).toString(),session.getAttribute(Constants.PROFILE_ID).toString());
 				out.write(result);
 			}
 			else if(request.getParameter(REQUEST_ACTION).equals("HELP"))
