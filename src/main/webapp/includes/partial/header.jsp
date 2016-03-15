@@ -27,7 +27,7 @@
 <style type="text/css">
 body {
 	font-family: '${theme.font}';
-	font-size: 12px;
+	font-size: 11px;
 }
 <c:if test="${theme.header != ''}">
 .navbar-default {
@@ -51,7 +51,7 @@ body {
 }
 .tabs-left > li.active > a, .nav > li > a:focus {
 	color: #ffffff;
-	font-weight:bold;
+	font-weight:Semibold;
 	font-style: italic;
 	background: ${theme.major};
 }
@@ -118,7 +118,7 @@ body {
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<img src="static/images/${ settings.logoFile }" alt="logo" width="220" />
+					<img src="static/images/${ settings.logoFile }" alt="logo" width="100"/>
 				</div>
 				<div class="collapse navbar-collapse navbar-right">
 				
@@ -187,7 +187,7 @@ body {
 							<a class="btn btn-sm btn-warning"
 								href="<%=request.getContextPath()%>/sign-in"><strong>Sign
 									In</strong></a> <a class="btn btn-sm btn-success"
-								href="<%=request.getContextPath()%>/register"><strong>Registration</strong></a>
+								href="<%=request.getContextPath()%>/register"><strong>Register</strong></a>
 						</div>
 					</div>
 				</div>
