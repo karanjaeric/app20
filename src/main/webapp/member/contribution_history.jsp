@@ -34,13 +34,13 @@
 				<div class="col-md-12" id="ch-results">
 					
 				</div>
-</div>
+		
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#dateFrom').on('changeDate', function(ev){
 		    $(this).datepicker('hide');
 		});
-		$('.datepicker').datepicker({format: 'dd-mm-yyyy'});
+		$('.datepicker').datepicker(
 		$('#dateTo')
         .datepicker({
             format: 'dd-mm-yyyy'
@@ -49,7 +49,7 @@
 		    $(this).datepicker('hide');
             // Revalidate the date field
             $('#ch-form').bootstrapValidator('revalidateField', 'dateTo');
-        });
+        }));
 		$('#ch-form').bootstrapValidator({
 	        message: 'This value is not valid',
 	        feedbackIcons: {
