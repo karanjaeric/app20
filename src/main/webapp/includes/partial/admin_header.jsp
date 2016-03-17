@@ -39,6 +39,7 @@
 <link rel="icon" href="static/images/favicon.ico">
 <script src="static/custom/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 <script type="text/javascript" src="static/jquery/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="static/jquery/datePicker.js"></script>
 <script type="text/javascript"
 	src="static/bootstrap-3.3.5/js/colorpicker-color.js"></script>
 </head>
