@@ -710,7 +710,29 @@ public class Helper {
 
         Setting settings = getSettings();
 
-        return URLGet(settings.getXiPath() + "DAOprovider/get/" + profile + "/" + identifier);
+      //  return URLGet(settings.getXiPath() + "DAOprovider/get/" + profile + "/" + identifier);
+        String ordinal =getLoginField(profile);// "MEMBER_ID";//
+
+         JSONObject response = URLPost(settings.getXiPath() + "checkMemberExists/" + ordinal  + "/" + identifier + "/" + profile, "", "application/x-www-form-urlencoded");
+
+        try {
+            if(response.get(Helper.SUCCESS).equals(true))
+            {
+                return response;
+            }
+            else
+            {
+                return null;
+            }
+        } catch (JSONException je) {
+
+            throw new JSONException("JSON Exeption found");
+
+        } catch (NullPointerException npe)
+        {
+            return null;
+        }
+
 
     }
 

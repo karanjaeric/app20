@@ -1,10 +1,13 @@
 package com.fundmaster.mss.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.*;
+import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.model.*;
+import nl.captcha.Captcha;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,34 +16,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.fundmaster.mss.beans.ejbInterface.*;
-import com.fundmaster.mss.common.Helper;
-import nl.captcha.Captcha;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.Country;
-import com.fundmaster.mss.model.Gender;
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.MaritalStatus;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.PageContent;
-import com.fundmaster.mss.model.PasswordPolicy;
-import com.fundmaster.mss.model.PensionProduct;
-import com.fundmaster.mss.model.ProfileLoginField;
-import com.fundmaster.mss.model.ProfileName;
-import com.fundmaster.mss.model.Scheme;
-import com.fundmaster.mss.model.Sector;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Theme;
-import com.fundmaster.mss.model.User;
-import com.fundmaster.mss.model.XiMember;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.*;
 @WebServlet(name = "RegisterController", urlPatterns = {"/register"})
 public class RegisterController extends HttpServlet implements Serializable {
 	private static final String INDIVIDUAL_PENSION_FUND = "INDIVIDUAL_PENSION_FUND";
@@ -217,17 +197,18 @@ public class RegisterController extends HttpServlet implements Serializable {
 							else
 							{
 								try {
-									JSONObject resp = helper.getProviderDetails(u.getUserProfile(), memberID);
+									JSONObject resp = helper.getProviderDetails(u.getUserProfile(), request.getParameter("idNumber"));
 									if(resp.get("success").equals(true))
 									{
 										try {
-											JSONArray json = (JSONArray) resp.get("rows");
-											JSONObject provider = json.getJSONObject(0);
+											//JSONArray json = (JSONArray) resp.get("rows");
+											JSONObject provider = resp;//json.getJSONObject(0);
 											email_address = provider.getString("email");
-											schemeId = provider.get("schemeId").toString();
+											try{schemeId = provider.get("schemeId").toString();}catch (Exception e){e.printStackTrace();}
 											proceed = helper.isEmailAddress(email_address);
 										} catch (JSONException e)
 										{
+											e.printStackTrace();
 											try {
 												JSONArray json = (JSONArray) resp.get("rows");
 												JSONObject provider = json.getJSONObject(0);
@@ -236,12 +217,14 @@ public class RegisterController extends HttpServlet implements Serializable {
 												proceed = helper.isEmailAddress(email_address);
 											} catch (JSONException ex)
 											{
+												e.printStackTrace();
 												proceed = false;
 											}
 										}
 									}
 								} catch (Exception e)
 								{
+									e.printStackTrace();
 									proceed = false;
 									
 								}
@@ -249,8 +232,10 @@ public class RegisterController extends HttpServlet implements Serializable {
 								
 								
 							}
+							System.out.println("Email "+email_address);
 							if(proceed)
 							{
+								System.out.println("Trying to send mail");
 								helper.sendNotification(email_address, "MSS Portal Account Activation Instructions", "Dear " + u.getUserProfile() + ",<br />" +
 										"Your account has been created on the FundMaster Xi Member Self Service Portal. " +
 										"Please click this <a href='" + settings.getPortalBaseURL() + "activate?" + securityCode + "'>link</a> to complete the activation process", schemeId, false, null);

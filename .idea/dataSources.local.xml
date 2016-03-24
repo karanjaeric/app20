@@ -12,5 +12,11 @@
       <first-sync>true</first-sync>
       <user-name>fm</user-name>
     </data-source>
+    <data-source name="MySQL - mss@localhost" uuid="66441ae4-b64d-4ec5-92d6-a21b22f9b115">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>mss.*</schema-pattern>
+      <default-schemas>mss.*</default-schemas>
+    </data-source>
   </component>
 </project>
