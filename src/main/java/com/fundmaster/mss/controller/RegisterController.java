@@ -203,10 +203,17 @@ public class RegisterController extends HttpServlet implements Serializable {
 										try {
 											//JSONArray json = (JSONArray) resp.get("rows");
 											JSONObject provider = resp;//json.getJSONObject(0);
-											email_address = provider.getString("email");
+											try {
+												email_address = provider.getString("email");
+											}
+											catch(Exception e1)
+											{
+												e1.getStackTrace();
+												email_address=request.getParameter("idNumber");
+											}
 											try{schemeId = provider.get("schemeId").toString();}catch (Exception e){e.printStackTrace();}
 											proceed = helper.isEmailAddress(email_address);
-										} catch (JSONException e)
+										} catch (Exception e)
 										{
 											e.printStackTrace();
 											try {
