@@ -3,11 +3,13 @@ package com.fundmaster.mss.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 @Entity
 @Table (name = "tbl_media")
@@ -20,21 +22,24 @@ public class Media extends GenericModel<Media>  implements Serializable {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private
-	Long id;
+	private Long id;
+	
 	@Column (name = "name", nullable = false)
-	private
-	String name;
+	private String name;
+	
 	@Column (name = "scheme", nullable = false)
-	private
-	String schemeID;
+	private String schemeID;
+	
 	@Column (name="description", nullable = false)
-	private
-	String description;
+	private String description;
+	
 	@Column (name = "access", nullable = false)
-	private
-	String access;
+	private String access;
+	
+	@Lob
+	@Column (name = "file", columnDefinition = "BLOB NOT NULL")
 	byte[] file;
+	
 	String path;
 
 	public String getPath() {
@@ -57,6 +62,7 @@ public class Media extends GenericModel<Media>  implements Serializable {
 	private boolean fundManager;
 	private boolean pensioner;
 	private long memberId;
+	
 	public Media() {
 		// TODO Auto-generated constructor stub
 	}

@@ -1239,17 +1239,43 @@ public class AdminController  extends HttpServlet implements Serializable {
 					String fileName = extractFileName(part);
 					if(!fileName.equals(""))
 					{
-						String fullpath = request.getServletContext().getRealPath("") + File.separator + MEDIA_DIR + File.separator + fileName;
-						part.write(fullpath);
-						File file = new File(fullpath);
+						//Get absolute path (fullpath)
+						String fullpath = request.getServletContext().getRealPath("");
+						
+						String savePath = fullpath + File.separator + MEDIA_DIR;
+						System.out.println("full path is:" + savePath);
+						
+						
+						
+						File fileSaveDir = new File(savePath);
+						if(!fileSaveDir.exists()) {
+							fileSaveDir.mkdir();
+						}
+						
+						savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
+						part.write(savePath);
+						System.out.println("Complete file path is: " + savePath);
+						
+						//Save image into database
+						
+						File file = new File(savePath);
 						byte[] bFile = new byte[(int) file.length()];
-						FileInputStream fileInputStream = new FileInputStream(file);
-						fileInputStream.read(bFile);
-						fileInputStream.close();
+						
+						try {
+							FileInputStream fileInputStream = new FileInputStream(file);
+							//Convert file into array of bytes
+							fileInputStream.read(bFile);
+							fileInputStream.close();		
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						
+						
 						Date date = new Date();
 						Media media = new Media(fileName, session.getAttribute(Constants.SCHEME_ID).toString(), request.getParameter("description"), request.getParameter("access"), date);
 						media.setFile(bFile);
-						media.setPath(fullpath);
+						media.setPath(savePath);
+						
 						boolean administrator;
 						try {
 							administrator  = request.getParameter(Constants.ADMIN_PROFILE).equals("on");

@@ -166,9 +166,12 @@
 		        }
 			})
 			.on('success.form.bv', function(e) {
+				
                 start_wait();
+                
                 // Prevent form submission
                 e.preventDefault();
+                
                 var btn = "btn-media";
                 var form = "form-media";
                 var modal = "modal-media";
