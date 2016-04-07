@@ -87,6 +87,7 @@ function load_dashboard(page, batch)
 }
 function edit_member(id)
 {
+	alert(id);
 	start_wait();
 	$.ajax({
         url: $('#base_url').val() + 'admin',

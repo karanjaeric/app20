@@ -696,6 +696,8 @@ public class DashboardController extends HttpServlet implements Serializable {
 		{
 			if(request.getParameter(REPO_FOLDER).equals("PI"))
 			{
+				
+				//System.out.println("request.getParameter  "+request.getParameter("memberID") +" Alt: "+ session.getAttribute(Constants.PROFILE_ID));
 				List<Country> countries = helper.getCountries();
 				request.setAttribute("countries",  countries);
 				List<Gender> genders = helper.getGenders();
@@ -722,6 +724,10 @@ public class DashboardController extends HttpServlet implements Serializable {
 				String member_id;
 				try {
 					member_id = request.getParameter("memberID");
+					if(member_id==null)
+					{
+						member_id=session.getAttribute(Constants.PROFILE_ID).toString();
+					}
 				}
 				catch (Exception ex)
 				{
