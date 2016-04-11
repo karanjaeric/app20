@@ -37,7 +37,7 @@ public class Media extends GenericModel<Media>  implements Serializable {
 	private String access;
 	
 	@Lob
-	@Column (name = "file", columnDefinition = "BLOB NOT NULL")
+	@Column (name = "file", columnDefinition = "MEDIUMBLOB")
 	byte[] file;
 	
 	String path;
