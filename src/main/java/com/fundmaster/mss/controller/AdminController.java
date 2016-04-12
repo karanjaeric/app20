@@ -668,6 +668,8 @@ public class AdminController extends HttpServlet implements Serializable {
 				// TODO Auto-generated catch block
 				logger.e("JSONException was detected: " + e.getMessage());
 			}
+			List<Beneficiary> beneficiaries = helper.getBeneficiaries(request.getParameter("memberID"));
+			request.setAttribute("beneficiaries", beneficiaries);
 			request.setAttribute("schemes", schemes);
 			MemberPermission memberPermission = helper.getMemberPermissions();
 			request.setAttribute("memberPermission", memberPermission);
@@ -717,6 +719,8 @@ public class AdminController extends HttpServlet implements Serializable {
 				// TODO Auto-generated catch block
 
 			}
+			List<Beneficiary> beneficiaries = helper.getBeneficiaries(request.getParameter("memberID"));
+			request.setAttribute("beneficiaries", beneficiaries);
 			MemberPermission memberPermission = helper.getMemberPermissions();
 			request.setAttribute("memberPermission", memberPermission);
 			request.setAttribute("member", xm);
