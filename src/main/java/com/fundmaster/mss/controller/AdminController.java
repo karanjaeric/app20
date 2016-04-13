@@ -1106,6 +1106,7 @@ public class AdminController extends HttpServlet implements Serializable {
 				}
 			}
 		} else if (request.getParameter(REQUEST_ACTION).equals("MEDIA")) {
+			
 			for (Part part : request.getParts()) {
 				String fileName = extractFileName(part);
 				if (!fileName.equals("")) {
@@ -1113,7 +1114,7 @@ public class AdminController extends HttpServlet implements Serializable {
 					String fullpath = request.getServletContext().getRealPath("");
 
 					String savePath = fullpath + File.separator + MEDIA_DIR;
-					System.out.println("full path is:" + savePath);
+					//System.out.println("full path is:" + savePath);
 
 					File fileSaveDir = new File(savePath);
 					if (!fileSaveDir.exists()) {
@@ -1230,14 +1231,32 @@ public class AdminController extends HttpServlet implements Serializable {
 			String url = request.getRequestURL().toString();
 			String baseURL = url.substring(0, url.length() - request.getRequestURI().length())
 					+ request.getContextPath() + "/";
+			
 			boolean attachment = false;
 			String attachment_url = null;
+			
 			try {
 				for (Part part : request.getParts()) {
 					String fileName = extractFileName(part);
+					
 					if (!fileName.equals("")) {
-						part.write(request.getServletContext().getRealPath("") + File.separator + MEDIA_DIR
-								+ File.separator + fileName);
+						
+						//Get absolute path
+						String fullpath = request.getServletContext().getRealPath("");
+						
+						String savePath = fullpath + File.separator + MEDIA_DIR;
+						System.out.println("full path is:" + savePath);
+						
+						File fileSaveDir = new File(savePath);
+						if (!fileSaveDir.exists()) {
+							fileSaveDir.mkdir();
+						}
+						
+						savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
+						part.write(savePath);
+						System.out.println("Complete file path is: " + savePath);
+						
+						//part.write(request.getServletContext().getRealPath("") + File.separator + MEDIA_DIR + File.separator + fileName);
 						attachment_url = baseURL + MEDIA_DIR + File.separator + fileName;
 						attachment = true;
 					}
