@@ -1675,15 +1675,19 @@ public class Helper {
 
     public Permission getPermissions(HttpServletRequest request)
     {
-        HttpSession session = request.getSession(false);
+    	HttpSession session = request.getSession(false);
         Permission permissions;
-        if(isManager(request))
-        {
-            permissions = getPermissions(Constants.MANAGER);
-        }
-        else
-            permissions = getPermissions(session.getAttribute(Constants.U_PROFILE).toString());
-        return permissions;
+       
+    	 if(isManager(request))
+	        {
+	            permissions = getPermissions(Constants.MANAGER);
+	        }
+    
+	        else 
+	        	
+	        	permissions = getPermissions(session.getAttribute(Constants.U_PROFILE).toString());
+    	 
+		 return permissions;
     }
     public List<Beneficiary> getBeneficiaries(String memberID)
     {

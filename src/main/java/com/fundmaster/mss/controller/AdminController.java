@@ -91,10 +91,10 @@ public class AdminController extends HttpServlet implements Serializable {
 
 		try {
 			if (session != null) {
-				if (!(session.getAttribute(Constants.LOGIN).equals(true)
-						&& (helper.isManagerial(session.getAttribute(Constants.U_PROFILE).toString())
-								|| helper.isManager(request)))) {
+				if (!(session.getAttribute(Constants.LOGIN).equals(true) && (helper.isManagerial(session.getAttribute(Constants.U_PROFILE).toString()) || helper.isManager(request))))
+				{
 					response.sendRedirect(getServletContext().getContextPath() + "/login");
+					
 				} else {
 					Company company = helper.getCompany();
 					List<ActivityLog> activityLogs = helper

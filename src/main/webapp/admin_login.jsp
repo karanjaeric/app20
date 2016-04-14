@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="includes/partial/header.jsp" />
 
 <div class="main-content">

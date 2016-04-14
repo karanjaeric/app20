@@ -77,6 +77,7 @@ public class SignInController extends HttpServlet implements Serializable {
 			throws ServletException, IOException {  
 			HttpSession session = request.getSession(false);
 			boolean proceed;
+			
 			if(session != null)
 			{
 				try {
@@ -126,6 +127,7 @@ public class SignInController extends HttpServlet implements Serializable {
 		/* On Successful Authentication */
 		HttpSession session = request.getSession();
     	PrintWriter out = response.getWriter();
+    	
 		User u = helper.login(request.getParameter("username"), request.getParameter("password"));
 		if(u != null)
 		{
