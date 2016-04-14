@@ -243,9 +243,9 @@ public class RegisterController extends HttpServlet implements Serializable {
 							if(proceed)
 							{
 								System.out.println("Trying to send mail");
-								helper.sendNotification(email_address, "MSS Portal Account Activation Instructions", "Dear " + u.getUserProfile() + ",<br />" +
+								helper.sendNotification(email_address, "MSS Portal Account Activation Instructions", "Dear " + u.getUserProfile() + ", " +
 										"Your account has been created on the FundMaster Xi Member Self Service Portal. " +
-										"Please click this <a href='" + settings.getPortalBaseURL() + "activate?" + securityCode + "'>link</a> to complete the activation process", schemeId, false, null);
+										"Please click this link '" + settings.getPortalBaseURL() + "activate?" + securityCode + "' to complete the activation process", schemeId, false, null);
 
 									out.write(helper.result(true, "<strong>Registration Successful</strong><br /> Congratulations! Your account has been created on the portal. An email has been sent to your email address with account activation instructions.").toString());
 
