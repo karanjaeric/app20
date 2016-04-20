@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar"%>
+<% pageContext.setAttribute("currentYear", java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)); %>
 <c:if test="${ help.description != '' }">
 <button class="btn btn-warning btn-sm help-btn"  data-toggle="modal" href="#modal-help">NEED HELP?</button>
 </c:if>
@@ -51,7 +53,7 @@
 		</form>
 	</div>
 <div class="container-fluid footer">
-	<p>&copy; Copyright 2015. All Rights Reserved. ${ company.name }.</p>
+	<p>&copy; Copyright <c:out value="${currentYear}" />. All Rights Reserved. Systech Ltd.</p>
 </div>
 <div class="modal fade" id="wait-dialog" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-body">

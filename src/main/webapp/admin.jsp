@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar"%>
+<% pageContext.setAttribute("currentYear", java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)); %>
 <jsp:include page="includes/partial/admin_header.jsp" />
 <input type="hidden" id="switch_to" value="member"/>
 <input type="hidden" name="schemeID" id="schemeID" value="${ scheme_id }" />
@@ -142,7 +144,7 @@
 </div>
 <hr>
 <footer>
-	<p>&copy; Copyright 2015. All Rights Reserved. Systech Africa Ltd.</p>
+	<p>&copy; Copyright  <c:out value="${currentYear}" />. All Rights Reserved. Systech Ltd.</p>
 </footer>
 <!--/.fluid-container-->
 <jsp:include page="includes/partial/admin_footer.jsp" />
