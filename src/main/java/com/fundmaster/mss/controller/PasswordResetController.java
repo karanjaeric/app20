@@ -140,10 +140,10 @@ public class PasswordResetController extends HttpServlet implements Serializable
 				u.setSecurityCode(securityCode);
 				try {
 					XiMember m = helper.getMemberDetails(u.getProfileID().toString());
-					JSONObject res = helper.sendNotification(m.getEmailAddress(), "Password Reset Instructions", "Dear " + u.getUserProfile() + ",<br />" +
-							"You recently requested to change your password.<br />" +
+					JSONObject res = helper.sendNotification(m.getEmailAddress(), "Password Reset Instructions", "Dear " + u.getUserProfile() + ", " +
+							"You recently requested to change your password. " +
 							"Your security code is: " + securityCode +
-							" Please click this <a href='" + settings.getPortalBaseURL() + "password-reset'>link</a> to complete your request", null, false, null);
+							" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);
 					if(res.get("success").equals(true))
 					{
 						if(userEJB.edit(u) != null)
