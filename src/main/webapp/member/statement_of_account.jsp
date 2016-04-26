@@ -65,7 +65,7 @@
 		            if(json.success)
 	   	            {
 		            	var url;
-		            	if($('#unitization').val() == 'TRUE')
+		            	if($('#unitization').val() == 'YES')
 		            	{
 		            	    url = $('#reportPath').val() + 'members/ETL Member Statement.xdo?_xpf=~_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FETL%20Member%20Statement.xdo&_xmode=3&_xt=ETL%20Member%20Statement%20(Tier%202)&_xf=analyze&_xana=view&_paramsBASE=' + $('#xiRootPath').val() + 'Xi&_paramsmember_id=' + $('#member_id').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsadmin=1&_paramsap_id=' + json.accountingPeriodId + '&_paramsadmin=1&id=' + $('#username').val() + '&passwd=' + $('#password').val() + '';
 		            	}
@@ -74,6 +74,7 @@
 		            	    url = $('#reportPath').val() + 'members/combinedToDate.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FcombinedToDate.xdo&_xmode=3&_paramsBASE=' + $('#xiRootPath').val() + 'Xi&_paramsmember_id=' + $('#member_id').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsadmin=1&_paramsap_id=' + json.accountingPeriodId + '&_paramsadmin=1&id=' + $('#username').val() + '&passwd=' + $('#password').val() + '';
 		            		 
 		            	}
+		            	console.log('unitization check::' + ('#unitization').val());
 		   			 $("#sa-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 			            stop_wait();
 	   	            }
