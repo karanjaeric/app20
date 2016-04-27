@@ -94,7 +94,7 @@ public class AdminController extends HttpServlet implements Serializable {
 				if (!(session.getAttribute(Constants.LOGIN).equals(true) && (helper.isManagerial(session.getAttribute(Constants.U_PROFILE).toString()) || helper.isManager(request))))
 				{
 					response.sendRedirect(getServletContext().getContextPath() + "/login");
-					
+
 				} else {
 					Company company = helper.getCompany();
 					List<ActivityLog> activityLogs = helper
@@ -348,6 +348,7 @@ public class AdminController extends HttpServlet implements Serializable {
 			try {
 				if (request.getParameter("type").equalsIgnoreCase("EDIT")) {
 					b.put("ben.memberId", memberID).put("ben.relationship", relationship)
+							.put("beneficiary.id", beneficiary_id)
 							.put("ben.relShipCategory", relationshipCategory).put("ben.surname", surname)
 							.put("ben.firstname", firstname).put("ben.othernames", othernames).put("ben.dob", "")
 							.put("ben.gender", gender).put("ben.monthlyEntitlement", 0)
@@ -1106,7 +1107,7 @@ public class AdminController extends HttpServlet implements Serializable {
 				}
 			}
 		} else if (request.getParameter(REQUEST_ACTION).equals("MEDIA")) {
-			
+
 			for (Part part : request.getParts()) {
 				String fileName = extractFileName(part);
 				if (!fileName.equals("")) {
@@ -1231,31 +1232,31 @@ public class AdminController extends HttpServlet implements Serializable {
 			String url = request.getRequestURL().toString();
 			String baseURL = url.substring(0, url.length() - request.getRequestURI().length())
 					+ request.getContextPath() + "/";
-			
+
 			boolean attachment = false;
 			String attachment_url = null;
-			
+
 			try {
 				for (Part part : request.getParts()) {
 					String fileName = extractFileName(part);
-					
+
 					if (!fileName.equals("")) {
-						
+
 						//Get absolute path
 						String fullpath = request.getServletContext().getRealPath("");
-						
+
 						String savePath = fullpath + File.separator + MEDIA_DIR;
 						System.out.println("full path is:" + savePath);
-						
+
 						File fileSaveDir = new File(savePath);
 						if (!fileSaveDir.exists()) {
 							fileSaveDir.mkdir();
 						}
-						
+
 						savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
 						part.write(savePath);
 						System.out.println("Complete file path is: " + savePath);
-						
+
 						//part.write(request.getServletContext().getRealPath("") + File.separator + MEDIA_DIR + File.separator + fileName);
 						attachment_url = baseURL + MEDIA_DIR + File.separator + fileName;
 						attachment = true;

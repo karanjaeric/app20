@@ -221,13 +221,13 @@
 								<table class="table table-responsive table-striped">
 									<tr><th>NAME</th><th>RELATIONSHIP</th><th>ENTITLEMENT</th><th>ACTIONS</th></tr>
 									<c:forEach var="beneficiary" items="${ beneficiaries }">
-										<tr><td>${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td><td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td><td><a class="btn btn-warning btn-sm" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')"><i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</a></td></tr>
+										<tr><td> ${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td><td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td><td><a class="btn btn-warning btn-sm" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')"><i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</a></td></tr>
 									</c:forEach>
 								</table>
 								<a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="add_beneficiary();">ADD BENEFICIARY</a>
 							</fieldset>
-						</div>	
-				</div>			
+						</div>
+				</div>
 				<button class="btn btn-primary">UPDATE DETAILS</button>
 			</form>
 			</div>
@@ -244,7 +244,7 @@
 							stop_wait();
 							$('#modal-edit-beneficiary').modal('show');
 							$('#beneficiary-content').html(html);
-							
+
 				        }
 					});
 				}
@@ -260,10 +260,11 @@
 							stop_wait();
 							$('#modal-edit-beneficiary').modal('show');
 							$('#beneficiary-content').html(html);
-							
+
 				        }
 					});
 				}
+
 				$(document).ready(function(){
 					$('#pi-form')
 					.bootstrapValidator(
@@ -378,8 +379,7 @@
 								// Get the form instance
 								$
 										.ajax({
-											url : $('#base_url').val()
-													+ 'admin',
+											url : $('#base_url').val() + 'admin',
 											type : 'post',
 											data : {
 												ACTION: 'UPDATE_MEMBER',
@@ -484,26 +484,36 @@
 												message : 'Please select the status'
 											}
 										}
-									}
+									},
+									/* file: {
+										 validators : {
+					                        extension: 'jpeg,jpg,png,doc,docx,pdf,xls,txt',
+					                        type: 'image/jpeg,image/png,application/msword,application/pdf,application/vnd.ms-excel,',
+					                        maxSize: 2097152,   // 2048 * 1024
+					                        message: 'The selected file is not valid'
+					                    }
+									 }*/
 								}
 							})
-					.on(
-							'success.form.bv',
-							function(e) {
-								start_wait();
-								// Prevent form submission
-								e.preventDefault();
-								// Get the form instance
+
+					.on( 'success.form.bv', function(e) {
+						start_wait();
+							// Prevent form submission
+							e.preventDefault();
+
+							// Get the form instance
 								var modal = "modal-edit-beneficiary";
-								$
-										.ajax({
-											url : $('#base_url').val()
-													+ 'admin',
+
+							//	var formData = new FormData($(this)[0]);
+
+										$.ajax({
+											url : $('#base_url').val() + 'admin',
 											type : 'post',
 											data : {
 												ACTION: 'EDIT_BENEFICIARY',
 												type: $('#type').val(),
-												beneficiary_id: $('#beneficiary_id').val(),
+												beneficiary_id: $(
+														'#beneficiary_id').val(),
 												memberID: $(
 														'#member_id').val(),
 												firstname : $(
@@ -515,7 +525,8 @@
 												othernames : $(
 														'#othernames')
 														.val(),
-												lumpsum: $('#lumpsum').val(),
+												lumpsum: $('#lumpsum')
+														.val(),
 												gender : $(
 														'#gender')
 														.val(),
@@ -531,6 +542,9 @@
 												status : $(
 														'#status')
 														.val()
+												/*attachment: $(
+														'#attachment')
+														.val(),*/
 											},
 											dataType : 'json',
 											success : function(json) {
@@ -560,9 +574,9 @@
 					</h4>
 				</div>
 				<div class="modal-body" id="beneficiary-content">
-					
+
 				</div>
-				    
+
 				<div class="modal-footer">
 					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
 					<input class="btn btn-primary" type="submit"

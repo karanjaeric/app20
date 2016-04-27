@@ -4,7 +4,8 @@
 <c:if test="${ type == 'EDIT' }">
 <c:forEach var="ben" items="${ beneficiaries }">
 	<c:if test="${ben.id == beneficiary_id }">
-		<input type="hidden" id="beneficiary_id" value="0"/>
+		<input type="hidden" id="beneficiary_id" value="${ ben.id }"/>
+
 		<div class="form-group">
 			<label for="firstName" class="col-sm-5 control-label">First Name:</label>
 			<div class="col-sm-7">
@@ -14,9 +15,9 @@
 		<div class="form-group">
 			<label for="surname" class="col-sm-5 control-label">Surname:</label>
 			<div class="col-sm-7">
-				<input type="text" name="surname" id="surname" placeholder="Surname" class="form-control  input-sm" value="${ beny.surname }" />
+				<input type="text" name="surname" id="surname" placeholder="Surname" class="form-control  input-sm" value="${ ben.surname }" />
 			</div>
-		</div>	
+		</div>
 		<div class="form-group">
 			<label for="othernames" class="col-sm-5 control-label">Other Names:</label>
 			<div class="col-sm-7">
@@ -24,7 +25,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="lumpsum" class="col-sm-5 control-label">Other Names:</label>
+			<label for="lumpsum" class="col-sm-5 control-label">Lumpsum Entitlement:</label>
 			<div class="col-sm-7">
 				<input type="text" name="lumpsum" id="lumpsum" placeholder="Lumpsum Entitlement" class="form-control  input-sm" value="${ ben.lumpsumEntitlement }" />
 			</div>
@@ -33,8 +34,8 @@
 			<label for="gender" class="col-sm-5 control-label">Gender:</label>
 			<div class="col-sm-7">
 				<select name="gender" id="gender" class="form-control input-sm">
-					<option ${ ben.gender == 'MALE' ? 'selected="selected"' : '' }>MALE</option>		
-					<option ${ ben.gender == 'FEMALE' ? 'selected="selected"' : '' }>FEMALE</option>		
+					<option ${ ben.gender == 'MALE' ? 'selected="selected"' : '' }>MALE</option>
+					<option ${ ben.gender == 'FEMALE' ? 'selected="selected"' : '' }>FEMALE</option>
 				</select>
 			</div>
 		</div>
@@ -90,6 +91,12 @@
 				</select>
 			</div>
 		</div>
+		<div class="form-group">
+    		<label for="attachment" class="col-sm-5 control-label">Upload File:</label>
+    		<div class="col-sm-7">
+    			<input type="file" id="attachment" name="attachment" class="form-control  input-sm">
+    		</div>
+  		</div>
 	</c:if>
 </c:forEach>
 </c:if>
@@ -106,7 +113,7 @@
 			<div class="col-sm-7">
 				<input type="text" name="surname" id="surname" placeholder="Surname" class="form-control  input-sm" />
 			</div>
-		</div>	
+		</div>
 		<div class="form-group">
 			<label for="othernames" class="col-sm-5 control-label">Other Names:</label>
 			<div class="col-sm-7">
@@ -123,8 +130,8 @@
 			<label for="gender" class="col-sm-5 control-label">Gender:</label>
 			<div class="col-sm-7">
 				<select name="gender" id="gender" class="form-control input-sm">
-						<option>MALE</option>					
-						<option>FEMALE</option>			
+						<option>MALE</option>
+						<option>FEMALE</option>
 				</select>
 			</div>
 		</div>
@@ -180,5 +187,11 @@
 				</select>
 			</div>
 		</div>
+	<!--<div class="form-group">
+    		<label for="attachment" class="col-sm-5 control-label">Upload File:</label>
+    		<div class="col-sm-7">
+    			<input type="file" id="attachment" name="attachment" class="form-control  input-sm">
+    		</div>
+  		</div> -->
 </c:if>
 </div>
