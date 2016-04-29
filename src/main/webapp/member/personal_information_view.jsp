@@ -18,7 +18,7 @@
 					<tr><th colspan="3"><h4 class="text-center">BENEFICIARIES</h4></th></tr>
 					<tr><th>NAME</th><th>RELATIONSHIP</th><th>ENTITLEMENT</th></tr>
 					<c:forEach var="beneficiary" items="${ beneficiaries }">
-						<tr><td>${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td><td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td></tr>
+						<tr><td> ${ beneficiary.name } </td><td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td></tr>
 					</c:forEach>
 				</table>
 			</div>

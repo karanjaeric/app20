@@ -15,7 +15,7 @@
 		<div class="form-group">
 			<label for="surname" class="col-sm-5 control-label">Surname:</label>
 			<div class="col-sm-7">
-				<input type="text" name="surname" id="surname" placeholder="Surname" class="form-control  input-sm" value="${ ben.surname }" />
+				<input type="text" name="surname" id="ben_surname" placeholder="Surname" class="form-control  input-sm" value="${ ben.surname }" />
 			</div>
 		</div>
 		<div class="form-group">
@@ -111,7 +111,7 @@
 		<div class="form-group">
 			<label for="surname" class="col-sm-5 control-label">Surname:</label>
 			<div class="col-sm-7">
-				<input type="text" name="surname" id="surname" placeholder="Surname" class="form-control  input-sm" />
+				<input type="text" name="surname" id="ben_surname" placeholder="Surname" class="form-control  input-sm" />
 			</div>
 		</div>
 		<div class="form-group">

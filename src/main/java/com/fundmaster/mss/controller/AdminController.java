@@ -355,7 +355,7 @@ public class AdminController extends HttpServlet implements Serializable {
 							.put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
 							.put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
 							.put("ben.physicalCondition", "").put("ben.status", status);
-				} else if (request.getParameter("type").equalsIgnoreCase("ADD")) {
+				} else if (request.getParameter("type").equalsIgnoreCase("ADD")){
 					b.put("ben.memberId", memberID).put("beneficiary.id", beneficiary_id)
 							.put("ben.relationship", relationship).put("ben.relShipCategory", relationshipCategory)
 							.put("ben.surname", surname).put("ben.firstname", firstname)

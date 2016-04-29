@@ -383,23 +383,32 @@
 											type : 'post',
 											data : {
 												ACTION: 'UPDATE_MEMBER',
-												memberID: $(
-														'#member_id').val(),
+												memberID: $('#member_id')
+														.val(),
 												firstname : $('#firstname')
 														.val(),
 												surname : $('#surname')
 														.val(),
 												othernames : $('#otherNames')
 														.val(),
-												gender: $('#gender').val(),
-												idNumber: $('#idNumber').val(),
-												dateOfBirth: $('#dateOfBirth').val(),
-												emailAddres: $('#emailAddress').val(),
-												maritalStatus: $("#maritalStatus").val(),
-												phoneNumber: $('#phoneNumber').val(),
-												postalAddress: $('#residentialAddress').val(),
-												city: $('#city').val(),
-												currentAnnualPensionableSalary: $('#currentAnnualPensionableSalary').val()
+												gender: $('#gender')
+														.val(),
+												idNumber: $('#idNumber')
+														.val(),
+												dateOfBirth: $('#dateOfBirth')
+														.val(),
+												emailAddres: $('#emailAddress')
+														.val(),
+												maritalStatus: $("#maritalStatus")
+														.val(),
+												phoneNumber: $('#phoneNumber')
+														.val(),
+												postalAddress: $('#residentialAddress')
+														.val(),
+												city: $('#city')
+														.val(),
+												currentAnnualPensionableSalary: $('#currentAnnualPensionableSalary')
+														.val()
 											},
 											dataType : 'json',
 											success : function(json) {
@@ -484,7 +493,7 @@
 												message : 'Please select the status'
 											}
 										}
-									},
+									}
 									/* file: {
 										 validators : {
 					                        extension: 'jpeg,jpg,png,doc,docx,pdf,xls,txt',
@@ -520,7 +529,7 @@
 														'#firstName')
 														.val(),
 												surname : $(
-														'#surname')
+														'#ben_surname')
 														.val(),
 												othernames : $(
 														'#othernames')

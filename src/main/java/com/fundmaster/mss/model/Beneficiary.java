@@ -16,6 +16,7 @@ public class Beneficiary implements Serializable{
 	private String surname;
 	private String firstname;
 	private String othernames;
+	private String name;
 	private String dob;
 	private String gender;
 	private String monthlyEntitlement;
@@ -35,7 +36,7 @@ public class Beneficiary implements Serializable{
 	private String guardianRelation;
 	public Beneficiary(long id, long memberId, String relationship,
 			String relShipCategory, String surname, String firstname,
-			String othernames, String dob, String gender,
+			String othernames, String name,String dob, String gender,
 			String monthlyEntitlement, String lumpsumEntitlement, String idNo,
 			String postalAddress, String mstatus, String physicalCondition,
 			String dateOfAppointment, String birthCert, String guardianSn,
@@ -49,6 +50,7 @@ public class Beneficiary implements Serializable{
 		this.surname = surname;
 		this.firstname = firstname;
 		this.othernames = othernames;
+		this.name = name;
 		this.dob = dob;
 		this.gender = gender;
 		this.monthlyEntitlement = monthlyEntitlement;
@@ -112,6 +114,12 @@ public class Beneficiary implements Serializable{
 	}
 	public void setOthernames(String othernames) {
 		this.othernames = othernames;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getDob() {
 		return dob;

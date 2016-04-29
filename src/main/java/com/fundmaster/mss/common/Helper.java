@@ -1700,17 +1700,16 @@ public class Helper {
 
                 List<Beneficiary> beneficiaries = new ArrayList<>();
 
-                for(int i = 0; i < res.length(); i ++)
+               for(int i = 0; i < res.length(); i ++)
 
                 {
 
                     JSONObject obj = res.getJSONObject(i);
-                    Beneficiary ben = new Beneficiary(obj.getLong("id"), obj.getLong("memberNo"), obj.getString("relationship"), obj.getString("category"), obj.getString("surname"), obj.getString("name"), obj.getString("surname"), obj.getString("dob"), obj.getString("gender"), obj.get("monthlyEntitlement").toString(), obj.get("lumpsumEntitlement").toString(), obj.getString("idNo"), obj.getString("address"), obj.getString("mstatus"), obj.getString("physicalCondition"), obj.getString("dateOfAppointment"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"));
-
+                    Beneficiary ben = new Beneficiary(obj.getLong("id"), obj.getLong("memberNo"), obj.getString("relationship"), obj.getString("category"), obj.getString("surname"), obj.getString("firstname"), obj.getString("othernames"),obj.getString("name"), obj.getString("dob"), obj.getString("gender"), obj.get("monthlyEntitlement").toString(), obj.get("lumpsumEntitlement").toString(), obj.getString("idNo"), obj.getString("address"), obj.getString("mstatus"), obj.getString("physicalCondition"), obj.getString("dateOfAppointment"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"));
                     beneficiaries.add(ben);
-
+                  
                 }
-
+                
                 return beneficiaries;
 
             }
