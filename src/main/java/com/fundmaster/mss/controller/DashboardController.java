@@ -1,8 +1,16 @@
 package com.fundmaster.mss.controller;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,6 +19,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -72,7 +81,8 @@ public class DashboardController extends HttpServlet implements Serializable {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
-
+		
+		String DOWNLOAD_DIR = "download";
     	PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(false);
 		/*

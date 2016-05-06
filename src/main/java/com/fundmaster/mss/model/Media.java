@@ -1,6 +1,7 @@
 package com.fundmaster.mss.model;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+
+import org.hibernate.type.BlobType;
 @Entity
 @Table (name = "tbl_media")
 public class Media extends GenericModel<Media>  implements Serializable {
@@ -37,8 +40,10 @@ public class Media extends GenericModel<Media>  implements Serializable {
 	private String access;
 	
 	@Lob
-	@Column (name = "file", columnDefinition = "MEDIUMBLOB")
-	byte[] file;
+	@Column (name = "file", columnDefinition = "LONGBLOB")
+	//private byte[] file;
+	private Blob file;
+	
 	
 	String path;
 
@@ -81,11 +86,19 @@ public class Media extends GenericModel<Media>  implements Serializable {
 		return serialVersionUID;
 	}
 
-	public byte[] getFile() {
+	/*public byte[] getFile() {
 		return file;
 	}
 
 	public void setFile(byte[] file) {
+		this.file = file;
+	}*/
+
+	public Blob getFile() {
+		return file;
+	}
+
+	public void setFile(Blob file) {
 		this.file = file;
 	}
 
