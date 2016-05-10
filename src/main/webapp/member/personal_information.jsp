@@ -493,15 +493,15 @@
 												message : 'Please select the status'
 											}
 										}
-									},
-									attachment: {
+									}
+									/* file: {
 										 validators : {
 					                        extension: 'jpeg,jpg,png,doc,docx,pdf,xls,txt',
 					                        type: 'image/jpeg,image/png,application/msword,application/pdf,application/vnd.ms-excel,',
 					                        maxSize: 2097152,   // 2048 * 1024
 					                        message: 'The selected file is not valid'
 					                    }
-									 }
+									 }*/
 								}
 							})
 
@@ -511,69 +511,50 @@
 							e.preventDefault();
 
 							// Get the form instance
-							
 								var modal = "modal-edit-beneficiary";
 
-								/*var formData = new FormData();
-								
-								formData.append( 'beneficiary_id', $('#beneficiary_id').val());
-								formData.append( 'memberID', $('#member_id').val());
-								formData.append( 'firstname', $('#firstName').val());
-								formData.append( 'surname', $('#ben_surname').val());
-								formData.append( 'othernames', $('#othernames').val());
-								formData.append( 'lumpsum', $('#lumpsum').val());
-								formData.append( 'gender', $('#gender').val());
-								formData.append( 'relationship', $('#relationship').val());
-								formData.append( 'relationshipCategory', $('#relShipCategory').val());
-								formData.append( 'maritalStatus', $('#mStatus').val());
-								formData.append( 'status', $('#status').val());
-								formData.append( 'attachment', $('attachment')[0].files[0]);*/
-					             
+							//	var formData = new FormData($(this)[0]);
 
 										$.ajax({
 											url : $('#base_url').val() + 'admin',
 											type : 'post',
 											data : {
-												
 												ACTION: 'EDIT_BENEFICIARY',
 												type: $('#type').val(),
 												beneficiary_id: $(
-												'#beneficiary_id').val(),
+														'#beneficiary_id').val(),
 												memberID: $(
-												'#member_id').val(),
+														'#member_id').val(),
 												firstname : $(
-												'#firstName')
-												.val(),
+														'#firstName')
+														.val(),
 												surname : $(
-												'#ben_surname')
-												.val(),
+														'#ben_surname')
+														.val(),
 												othernames : $(
-												'#othernames')
-												.val(),
+														'#othernames')
+														.val(),
 												lumpsum: $('#lumpsum')
-												.val(),
+														.val(),
 												gender : $(
-												'#gender')
-												.val(),
+														'#gender')
+														.val(),
 												relationship : $(
-												'#relationship')
-												.val(),
+														'#relationship')
+														.val(),
 												relationshipCategory : $(
-												'#relShipCategory')
-												.val(),
+														'#relShipCategory')
+														.val(),
 												maritalStatus : $(
-												'#mStatus')
-												.val(),
+														'#mStatus')
+														.val(),
 												status : $(
-												'#status')
-												.val(),
-												attachment: $(
-												'#attachment')[0].files[0],
-												
-												
+														'#status')
+														.val()
+												/*attachment: $(
+														'#attachment')
+														.val(),*/
 											},
-											processData: false,
-								            contentType: false,
 											dataType : 'json',
 											success : function(json) {
 												stop_wait();
@@ -592,7 +573,7 @@
 				});
 			</script>
 <div class="modal fade" id="modal-edit-beneficiary" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEditBeneficiary" aria-hidden="true">
-	<form enctype="multipart/form-data" role="form" id="form-edit-beneficiary">
+	<form role="form" id="form-edit-beneficiary">
 		<div class="modal-dialog large-modal">
 			<div class="modal-content">
 				<div class="modal-header">

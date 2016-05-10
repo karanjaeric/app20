@@ -10,7 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +30,6 @@ import java.util.UUID;
 @WebServlet(name = "AdminController", urlPatterns = { "/admin" })
 @MultipartConfig
 public class AdminController extends HttpServlet implements Serializable {
-	private static final int BUFFER_SIZE = 4096;
 	private static final String REQUEST_ACTION = "ACTION";
 	private static final String LOGO_DIR = "static" + File.separator + "images";
 	private static final String BANNER_DIR = "static" + File.separator + "images" + File.separator + "banner";
@@ -92,7 +90,7 @@ public class AdminController extends HttpServlet implements Serializable {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		/* Check if user is already authenticated */
-		//PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(false);
 
 		try {
@@ -139,7 +137,7 @@ public class AdminController extends HttpServlet implements Serializable {
 								request.setAttribute("scheme_id", session.getAttribute(Constants.SCHEME_ID));
 							}
 						} catch (Exception ex) {
-							ex.printStackTrace(response.getWriter());
+							ex.printStackTrace(out);
 							session.setAttribute(Constants.SCHEME_ID, String.valueOf(schemes.get(0).getId()));
 							session.setAttribute(Constants.SCHEME_NAME, schemes.get(0).getName());
 						}
@@ -167,7 +165,7 @@ public class AdminController extends HttpServlet implements Serializable {
 										request.setAttribute("scheme_id", session.getAttribute(Constants.SCHEME_ID));
 									}
 								} catch (Exception ex) {
-									ex.printStackTrace(response.getWriter());
+									ex.printStackTrace(out);
 									session.setAttribute(Constants.SCHEME_ID, String.valueOf(scheme.getId()));
 									session.setAttribute(Constants.SCHEME_NAME, scheme.getName());
 								}
@@ -204,14 +202,12 @@ public class AdminController extends HttpServlet implements Serializable {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
 		HttpSession session = request.getSession(false);
-		//PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
 		String MEDIA_DIR = "media";
-		
 		if (request.getParameter(REQUEST_ACTION).equals("SWITCH_SCHEME")) {
 			session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
-			response.getWriter().write(helper.result(true, "success").toString());
+			out.write(helper.result(true, "success").toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("COMPANY")) {
 
 			/* Company Details Update Request */
@@ -224,19 +220,19 @@ public class AdminController extends HttpServlet implements Serializable {
 
 			if (companyEJB.edit(company) != null) {
 				helper.audit(session, "Updated company details");
-				response.getWriter().write(helper.result(true, "success").toString());
+				out.write(helper.result(true, "success").toString());
 			} else
-				response.getWriter().write(helper.result(false, "failed").toString());
+				out.write(helper.result(false, "failed").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("SC")) {
 			try {
 				String result = helper.getSchemeContributions(session.getAttribute(Constants.SCHEME_ID).toString(),
 						session.getAttribute(Constants.PROFILE_ID).toString());
-				response.getWriter().write(result);
+				out.write(result);
 
 			} catch (JSONException e) {
 
-				response.getWriter().write(helper.result(false,
+				out.write(helper.result(false,
 						"Sorry, an error was encountered loading the scheme contribution history, please try again"
 								+ e.getMessage())
 						.toString());
@@ -253,9 +249,9 @@ public class AdminController extends HttpServlet implements Serializable {
 			}
 			if (status) {
 				helper.audit(session, "Updated profile name settings");
-				response.getWriter().write(helper.result(true, "Profile name settings successfully saved").toString());
+				out.write(helper.result(true, "Profile name settings successfully saved").toString());
 			} else
-				response.getWriter().write(helper.result(true, "Profile name settings could not be saved").toString());
+				out.write(helper.result(true, "Profile name settings could not be saved").toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("ADMIN_PWD_RESET")) {
 			String userID = request.getParameter("userID");
 			User u = userEJB.findById(helper.toLong(userID));
@@ -315,25 +311,25 @@ public class AdminController extends HttpServlet implements Serializable {
 								schemeId, false, null);
 
 						if (userEJB.edit(u) != null)
-							response.getWriter().write(helper
+							out.write(helper
 									.result(true,
 											"<strong>Password Reset Successful</strong><br /> Success! The user's password has been reset. An email has been sent to the user with the new password.")
 									.toString());
 						else
-							response.getWriter().write(helper
+							out.write(helper
 									.result(false,
 											"We could not complete the requested action as we were unable to obtain the user's email address")
 									.toString());
 
 					} else {
-						response.getWriter().write(helper
+						out.write(helper
 								.result(false,
 										"We could not complete the requested action as we were unable to obtain the user's email address")
 								.toString());
 
 					}
 				} catch (JSONException je) {
-					response.getWriter().write(helper
+					out.write(helper
 							.result(false,
 									"We could not complete the requested action as we were unable to obtain the user's email address")
 							.toString());
@@ -341,9 +337,6 @@ public class AdminController extends HttpServlet implements Serializable {
 				}
 			}
 		} else if (request.getParameter(REQUEST_ACTION).equals("EDIT_BENEFICIARY")) {
-			
-			
-			
 			JSONObject b = new JSONObject();
 			String beneficiary_id = request.getParameter("beneficiary_id");
 			String memberID = request.getParameter("memberID");
@@ -356,9 +349,6 @@ public class AdminController extends HttpServlet implements Serializable {
 			String status = request.getParameter("status");
 			String othernames = request.getParameter("othernames");
 			String relationship = request.getParameter("relationship");
-			
-			
-			
 			try {
 				if (request.getParameter("type").equalsIgnoreCase("EDIT")) {
 					b.put("ben.memberId", memberID).put("ben.relationship", relationship)
@@ -380,16 +370,16 @@ public class AdminController extends HttpServlet implements Serializable {
 				}
 				try {
 					String res = helper.saveOrUpdateBeneficiary(b.toString());
-					response.getWriter().write(res);
+					out.write(res);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					response.getWriter().write(helper
+					out.write(helper
 							.result(false,
 									"Sorry, something didn't work out right. Couldn't save the beneficiary details")
 							.toString());
 				}
 			} catch (JSONException e) {
-				response.getWriter().write(helper
+				out.write(helper
 						.result(false, "Sorry, something didn't work out right. Couldn't save the beneficiary details")
 						.toString());
 
@@ -430,15 +420,15 @@ public class AdminController extends HttpServlet implements Serializable {
 						.put("member.maritalStatus", maritalStatus);
 				try {
 					JSONObject res = helper.saveOrUpdateMember(member.toString());
-					response.getWriter().write(res.toString());
+					out.write(res.toString());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					response.getWriter().write(helper
+					out.write(helper
 							.result(false, "Sorry, something didn't work out right. Couldn't save the member details")
 							.toString());
 				}
 			} catch (JSONException e) {
-				response.getWriter().write(
+				out.write(
 						helper.result(false, "Sorry, something didn't work out right. Couldn't save the member details")
 								.toString());
 
@@ -515,9 +505,9 @@ public class AdminController extends HttpServlet implements Serializable {
 			perm.setPassword_policy(request.getParameter("password_policy").equalsIgnoreCase("true"));
 
 			if (permissionEJB.edit(perm) != null)
-				response.getWriter().write(helper.result(true, "Permissions successfully saved").toString());
+				out.write(helper.result(true, "Permissions successfully saved").toString());
 			else
-				response.getWriter().write(helper.result(false, "Permissions could not be saved").toString());
+				out.write(helper.result(false, "Permissions could not be saved").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("SET_PASSWORD_POLICY")) {
 			PasswordPolicy p = passwordPolicyEJB.find();
@@ -530,9 +520,9 @@ public class AdminController extends HttpServlet implements Serializable {
 			p.setUppercase(request.getParameter("uppercase").equalsIgnoreCase("true"));
 
 			if (passwordPolicyEJB.edit(p) != null)
-				response.getWriter().write(helper.result(true, "Password policy successfully saved").toString());
+				out.write(helper.result(true, "Password policy successfully saved").toString());
 			else
-				response.getWriter().write(helper.result(false, "Password policy could not be saved").toString());
+				out.write(helper.result(false, "Password policy could not be saved").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("PROFILE_LOGIN_FIELD")) {
 			String[] profiles = helper.listProfiles();
@@ -545,13 +535,13 @@ public class AdminController extends HttpServlet implements Serializable {
 			}
 			if (status) {
 				helper.audit(session, "Updated profile login settings");
-				response.getWriter().write(helper.result(true, "Profile login settings successfully saved").toString());
+				out.write(helper.result(true, "Profile login settings successfully saved").toString());
 			} else
-				response.getWriter().write(helper.result(false, "Profile login settings could not be saved").toString());
+				out.write(helper.result(false, "Profile login settings could not be saved").toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("FRONTPAGE_ACCESS")) {
 			try {
 				String result = helper.frontPageAccessByPage();
-				response.getWriter().write(result);
+				out.write(result);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 
@@ -561,33 +551,33 @@ public class AdminController extends HttpServlet implements Serializable {
 			Sponsor s = sponsorEJB.findById(helper.toLong(request.getParameter("id")));
 
 			if (sponsorEJB.delete(s))
-				response.getWriter().write(helper.result(true, "Potential sponsor record successfully deleted").toString());
+				out.write(helper.result(true, "Potential sponsor record successfully deleted").toString());
 			else
-				response.getWriter().write(helper.result(false, "Potential sponsor record could not be deleted").toString());
+				out.write(helper.result(false, "Potential sponsor record could not be deleted").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("ADD_MEMBER")) {
 			JSONObject result = helper.createMember(request);
-			response.getWriter().write(result.toString());
+			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("ADD_SPONSOR")) {
 			JSONObject result = helper.createSponsor(request);
-			response.getWriter().write(result.toString());
+			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("SUBMIT_PORTAL_MEMBER")) {
 			String memberID = request.getParameter("id");
 			Member m = helper.getMemberByID(memberID);
 			JSONObject result = helper.postMemberToXi(m);
-			response.getWriter().write(result.toString());
+			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("SUBMIT_PORTAL_SPONSOR")) {
 			String sponsorID = request.getParameter("id");
 			Sponsor s = helper.getSponsor(sponsorID);
 			JSONObject result = helper.postSponsorToXi(s);
-			response.getWriter().write(result.toString());
+			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("DELETE_PORTAL_MEMBER")) {
 			Member m = memberEJB.findById(helper.toLong(request.getParameter("id")));
 
 			if (memberEJB.delete(m))
-				response.getWriter().write(helper.result(true, "Potential member record successfully deleted").toString());
+				out.write(helper.result(true, "Potential member record successfully deleted").toString());
 			else
-				response.getWriter().write(helper.result(false, "Potential member record could not be deleted").toString());
+				out.write(helper.result(false, "Potential member record could not be deleted").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("SEARCH_MEMBER")) {
 			JSONObject result = helper.searchProfilesJSON(request.getParameter("search"),
@@ -595,11 +585,11 @@ public class AdminController extends HttpServlet implements Serializable {
 					session.getAttribute(Constants.SCHEME_ID).toString());
 
 			helper.audit(session, "Searched members with search parameter " + request.getParameter("search"));
-			response.getWriter().write(result.toString());
+			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("PROFILE_ACCESS")) {
 			try {
 				String result = helper.profileAccess();
-				response.getWriter().write(result);
+				out.write(result);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 
@@ -608,19 +598,19 @@ public class AdminController extends HttpServlet implements Serializable {
 		} else if (request.getParameter(REQUEST_ACTION).equals("MOST_BY_MANAGER")) {
 			try {
 				String result = helper.mostAccesssedByManagers();
-				response.getWriter().write(result);
+				out.write(result);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace(response.getWriter());
+				e.printStackTrace(out);
 			}
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("MOST_BY_MEMBER")) {
 			try {
 				String result = helper.mostAccessedByMembers();
-				response.getWriter().write(result);
+				out.write(result);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace(response.getWriter());
+				e.printStackTrace(out);
 			}
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("USER_TOGGLE")) {
@@ -631,30 +621,30 @@ public class AdminController extends HttpServlet implements Serializable {
 			if (u != null) {
 				helper.audit(session, "Updated user status for " + u.getUserProfile() + " " + u.getUsername());
 
-				response.getWriter().write(helper.result(true, "The user status was successfully changed").toString());
+				out.write(helper.result(true, "The user status was successfully changed").toString());
 			} else
 
-				response.getWriter().write(helper.result(false, "We are sorry, the user status could not be changed").toString());
+				out.write(helper.result(false, "We are sorry, the user status could not be changed").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("NEW")) {
 			String res = helper.getNewMembersInYear(session.getAttribute(Constants.SCHEME_ID).toString(),
 					session.getAttribute(Constants.PROFILE_ID).toString());
-			response.getWriter().write(res);
+			out.write(res);
 		} else if (request.getParameter(REQUEST_ACTION).equals("AGENT_COMMISSION")) {
 			String res = helper.getAgentCommission(session.getAttribute(Constants.PROFILE_ID).toString());
-			response.getWriter().write(res);
+			out.write(res);
 		} else if (request.getParameter(REQUEST_ACTION).equals("EXITS")) {
 			String res = helper.getExitsInYear(session.getAttribute(Constants.SCHEME_ID).toString());
-			response.getWriter().write(res);
+			out.write(res);
 		} else if (request.getParameter(REQUEST_ACTION).equals("SEARCH_SCHEMES")) {
 			String res = helper.searchSchemes(request.getParameter("search"));
 			helper.audit(session, "Searched schemes with parameter " + request.getParameter("search"));
-			response.getWriter().write(res);
+			out.write(res);
 		} else if (request.getParameter(REQUEST_ACTION).equals("CHANGE_SCHEME")) {
 			helper.audit(session, "Switched between schemes from scheme #" + session.getAttribute(Constants.SCHEME_ID)
 					+ " to scheme #" + request.getParameter("schemeID"));
 			session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
-			response.getWriter().write(helper.result(true, "Scheme changed successfully").toString());
+			out.write(helper.result(true, "Scheme changed successfully").toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("GET_MEMBER")) {
 			XiMember xm = null;
 			try {
@@ -697,9 +687,9 @@ public class AdminController extends HttpServlet implements Serializable {
 
 			if (schemeManagerEJB.delete(smm)) {
 				helper.audit(session, "De-linked scheme manager #" + smm.getName());
-				response.getWriter().write(helper.result(true, "Scheme member successfully delinked from scheme managers").toString());
+				out.write(helper.result(true, "Scheme member successfully delinked from scheme managers").toString());
 			} else {
-				response.getWriter().write(helper.result(false, "Scheme member could not be delinked from scheme managers").toString());
+				out.write(helper.result(false, "Scheme member could not be delinked from scheme managers").toString());
 			}
 		} else if (request.getParameter(REQUEST_ACTION).equals("ADD_SCHEME_MANAGER")) {
 			String profile = request.getParameter("profile");
@@ -722,9 +712,9 @@ public class AdminController extends HttpServlet implements Serializable {
 						session.getAttribute(Constants.SCHEME_NAME).toString());
 				schemeManagerEJB.add(smm);
 				helper.audit(session, "Added a new scheme manager " + smm.getName());
-				response.getWriter().write(helper.result(true, "Scheme member successfully added as scheme manager").toString());
+				out.write(helper.result(true, "Scheme member successfully added as scheme manager").toString());
 			} catch (JSONException je) {
-				response.getWriter().write(helper.result(false, "Scheme member could not be added as a scheme manager").toString());
+				out.write(helper.result(false, "Scheme member could not be added as a scheme manager").toString());
 			}
 		} else if (request.getParameter(REQUEST_ACTION).equals("VIEW_MEMBER")) {
 			XiMember xm = null;
@@ -743,7 +733,7 @@ public class AdminController extends HttpServlet implements Serializable {
 			request.getRequestDispatcher("member/personal_information_view.jsp").forward(request, response);
 		} else if (request.getParameter(REQUEST_ACTION).equals("CURR")) {
 			String result = helper.getSchemeCurrency(session.getAttribute(Constants.SCHEME_ID).toString());
-			response.getWriter().write(result);
+			out.write(result);
 		} else if (request.getParameter(REQUEST_ACTION).equals("ML")) {
 			String result = null;
 			try {
@@ -754,7 +744,7 @@ public class AdminController extends HttpServlet implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			response.getWriter().write(result);
+			out.write(result);
 		} else if (request.getParameter(REQUEST_ACTION).equals("PRE_CHANGE_PASSWORD")) {
 			User u = userEJB.find(session.getAttribute(Constants.USER).toString(),
 					session.getAttribute(Constants.U_PROFILE).toString());
@@ -779,19 +769,19 @@ public class AdminController extends HttpServlet implements Serializable {
 								+ "\nYou will require it to be able to change your password",
 						session.getAttribute(Constants.SCHEME_ID).toString(), false, "");
 				if (resp.get("success").equals(true)) {
-					response.getWriter().write(
+					out.write(
 							helper.result(true, "The change password instructions have been sent to your email address")
 									.toString());
 
 				} else {
-					response.getWriter().write(helper
+					out.write(helper
 							.result(false, "We are sorry, we were unable to send you the change password instructions")
 							.toString());
 
 				}
 			} catch (JSONException | NullPointerException e1) {
 
-				response.getWriter().write(helper
+				out.write(helper
 						.result(false,
 								"We are sorry, we encountered a problem obtaining your email address. Please try again")
 						.toString());
@@ -814,25 +804,25 @@ public class AdminController extends HttpServlet implements Serializable {
 							u.setPassword_expiry(password_expiry);
 							userEJB.edit(u);
 							helper.audit(session, "Changed password");
-							response.getWriter().write(helper.result(true, "Your password was changed successfully").toString());
+							out.write(helper.result(true, "Your password was changed successfully").toString());
 						} catch (Exception e) {
-							response.getWriter().write(helper.result(false, "Sorry, your password could not be changed").toString());
+							out.write(helper.result(false, "Sorry, your password could not be changed").toString());
 
 						}
 					} else {
-						response.getWriter().write(helper
+						out.write(helper
 								.result(false,
 										"Sorry, the new password entered has already been used once. You cannot re-use the password.")
 								.toString());
 
 					}
 				} else {
-					response.getWriter().write(helper
+					out.write(helper
 							.result(false, "Sorry, your security code is invalid. Please enter a valid security code.")
 							.toString());
 				}
 			} else {
-				response.getWriter().write(helper.result(false, "The current password you entered is wrong. Please try again.")
+				out.write(helper.result(false, "The current password you entered is wrong. Please try again.")
 						.toString());
 			}
 
@@ -842,7 +832,7 @@ public class AdminController extends HttpServlet implements Serializable {
 			Date date = new Date();
 			String result = helper.getAccountingPeriod(format.format(date),
 					session.getAttribute(Constants.SCHEME_ID).toString());
-			response.getWriter().write(result);
+			out.write(result);
 		} else if (request.getParameter(REQUEST_ACTION).equals("FV")) {
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 			Date date = new Date();
@@ -852,21 +842,21 @@ public class AdminController extends HttpServlet implements Serializable {
 			String result = helper.getFundValueAsAt(format.format(date), request.getParameter("accountingPeriodId"),
 					session.getAttribute(Constants.SCHEME_ID).toString(),
 					session.getAttribute(Constants.PROFILE_ID).toString());
-			response.getWriter().write(result);
+			out.write(result);
 		} else if (request.getParameter(REQUEST_ACTION).equals("HELP")) {
 			Help h = helpEJB.findById(helper.toLong(request.getParameter("ID")));
 			h.setPage(request.getParameter("page"));
 			h.setDescription(request.getParameter("description"));
 			helpEJB.edit(h);
 			helper.audit(session, "Updated portal help content for page " + request.getParameter("page"));
-			response.getWriter().write(helper.result(true, "content edited").toString());
+			out.write(helper.result(true, "content edited").toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("REMOVE_BANNER")) {
 			Banner b = bannerEJB.findById(helper.toLong(request.getParameter("id")));
 
 			if (bannerEJB.delete(b))
-				response.getWriter().write(helper.result(true, "Banner image successfully deleted").toString());
+				out.write(helper.result(true, "Banner image successfully deleted").toString());
 			else
-				response.getWriter().write(helper.result(false, "Banner image could not be deleted").toString());
+				out.write(helper.result(false, "Banner image could not be deleted").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("PAGE_CONTENT")) {
 
@@ -877,9 +867,9 @@ public class AdminController extends HttpServlet implements Serializable {
 			pc.setPublish(request.getParameter("publish").equalsIgnoreCase("true"));
 			if (pageContentEJB.edit(pc) != null) {
 				helper.audit(session, "Updated portal page content for page " + request.getParameter("page"));
-				response.getWriter().write(helper.result(true, "Content was successfully updated").toString());
+				out.write(helper.result(true, "Content was successfully updated").toString());
 			} else
-				response.getWriter().write(helper.result(true, "Content could not be updated").toString());
+				out.write(helper.result(true, "Content could not be updated").toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("THEME")) {
 
 			Theme theme = themeEJB.findById(helper.toLong(request.getParameter("theme_id")));
@@ -892,9 +882,9 @@ public class AdminController extends HttpServlet implements Serializable {
 			theme.setFooter(request.getParameter("footer"));
 			if (themeEJB.edit(theme) != null) {
 				helper.audit(session, "Updated portal theme settings");
-				response.getWriter().write(helper.result(true, "Theme settings saved").toString());
+				out.write(helper.result(true, "Theme settings saved").toString());
 			} else
-				response.getWriter().write(helper.result(false, "Theme settings not saved").toString());
+				out.write(helper.result(false, "Theme settings not saved").toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("INTEREST_RATE_COLUMNS")) {
 			boolean accountingPeriod = request.getParameter("accountingPeriod").equalsIgnoreCase("true");
 			boolean contributions = request.getParameter("contributions").equalsIgnoreCase("true");
@@ -918,9 +908,9 @@ public class AdminController extends HttpServlet implements Serializable {
 
 			if (interestRateColumnEJB.edit(irc) != null) {
 				helper.audit(session, "Updated interest rate column settings");
-				response.getWriter().write(helper.result(true, "Interest rate settings successfully saved").toString());
+				out.write(helper.result(true, "Interest rate settings successfully saved").toString());
 			} else
-				response.getWriter().write(helper.result(false, "Interest rate settings could not be saved").toString());
+				out.write(helper.result(false, "Interest rate settings could not be saved").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("SETTINGS")) {
 			Setting settings = settingEJB.find();
@@ -947,9 +937,9 @@ public class AdminController extends HttpServlet implements Serializable {
 
 			if (settingEJB.edit(settings) != null) {
 				helper.audit(session, "Updated other portal settings and configurations");
-				response.getWriter().write(helper.result(true, "Portal Settings & Configurations successfully saved").toString());
+				out.write(helper.result(true, "Portal Settings & Configurations successfully saved").toString());
 			} else
-				response.getWriter().write(helper.result(true, "Portal Settings & Configurations could not be saved").toString());
+				out.write(helper.result(true, "Portal Settings & Configurations could not be saved").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("MENU")) {
 			/* Menu Update Request */
@@ -968,9 +958,9 @@ public class AdminController extends HttpServlet implements Serializable {
 			menu.setContactUsName(request.getParameter("contactUsName"));
 			if (menuEJB.edit(menu) != null) {
 				helper.audit(session, "Updated portal menu configuration settings");
-				response.getWriter().write(helper.result(true, "Portal menu configurations successfully saved").toString());
+				out.write(helper.result(true, "Portal menu configurations successfully saved").toString());
 			} else
-				response.getWriter().write(helper.result(true, "Portal menu configurations could not be saved").toString());
+				out.write(helper.result(true, "Portal menu configurations could not be saved").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("LOGOUT")) {
 			/* Logout Request */
@@ -978,7 +968,7 @@ public class AdminController extends HttpServlet implements Serializable {
 					session.getAttribute(Constants.U_PROFILE).toString());
 			helper.audit(session, "Logged out of the portal");
 			session.invalidate();
-			response.getWriter().write(helper.result(true, "You have been successfully logged out").toString());
+			out.write(helper.result(true, "You have been successfully logged out").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("SOCIAL")) {
 			/* Social Media Links Update Request */
@@ -991,28 +981,28 @@ public class AdminController extends HttpServlet implements Serializable {
 			social.setPinterest(request.getParameter("pinterest"));
 			if (socialEJB.edit(social) != null) {
 				helper.audit(session, "Updated portal social network settings");
-				response.getWriter().write(helper.result(true, "Social network details successfully saved").toString());
+				out.write(helper.result(true, "Social network details successfully saved").toString());
 			} else
-				response.getWriter().write(helper.result(false, "Social network details could not be saved").toString());
+				out.write(helper.result(false, "Social network details could not be saved").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("REMOVE_CONTACT_REASON")) {
 			ContactCategory cc = contactCategoryEJB.findById(helper.toLong(request.getParameter("id")));
 			if (contactCategoryEJB.delete(cc)) {
 				helper.audit(session, "Deleted a contact category: " + cc.getName());
 
-				response.getWriter().write(helper.result(true, "Contact category was successfully deleted").toString());
+				out.write(helper.result(true, "Contact category was successfully deleted").toString());
 			} else
-				response.getWriter().write(helper.result(false, "Contact category could not be deleted").toString());
+				out.write(helper.result(false, "Contact category could not be deleted").toString());
 
 		} else if (request.getParameter(REQUEST_ACTION).equals("REMOVE_MEDIA")) {
 			Media m = helper.getMediaById(helper.toLong(request.getParameter("id")));
 			if (mediaEJB.delete(m)) {
 				helper.audit(session, "Deleted a media/file: " + m.getName());
-				response.getWriter().write(helper.result(true, "Media/File was successfully deleted").toString());
+				out.write(helper.result(true, "Media/File was successfully deleted").toString());
 			} else
-				response.getWriter().write(helper.result(true, "Media/File could not be deleted").toString());
+				out.write(helper.result(true, "Media/File could not be deleted").toString());
 
-		}else if (request.getParameter(REQUEST_ACTION).equals("MEMBER_PERMISSION")) {
+		} else if (request.getParameter(REQUEST_ACTION).equals("MEMBER_PERMISSION")) {
 			MemberPermission mp = new MemberPermission(
 					Long.valueOf(request.getParameter("member_permission_id")).longValue(),
 					request.getParameter("memberNo").equalsIgnoreCase("true"),
@@ -1035,9 +1025,9 @@ public class AdminController extends HttpServlet implements Serializable {
 
 			if (memberPermissionEJB.edit(mp) != null) {
 				helper.audit(session, "Updated member edit permissions");
-				response.getWriter().write(helper.result(true, "Member edit permissions successfully saved").toString());
+				out.write(helper.result(true, "Member edit permissions successfully saved").toString());
 			} else
-				response.getWriter().write(helper.result(false, "Member edit permissions could not be saved").toString());
+				out.write(helper.result(false, "Member edit permissions could not be saved").toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("PLF")) {
 			List<ProfileLoginField> pfs = helper.getProfileLoginFields();
 			boolean status = true;
@@ -1047,26 +1037,26 @@ public class AdminController extends HttpServlet implements Serializable {
 			}
 			if (status) {
 				helper.audit(session, "Updated the profile unique login fields for the various user profiles");
-				response.getWriter().write(helper.result(true, "Profile login ordinals successfully saved").toString());
+				out.write(helper.result(true, "Profile login ordinals successfully saved").toString());
 			} else
-				response.getWriter().write(helper.result(true, "Profile login ordinals could not be saved").toString());
+				out.write(helper.result(true, "Profile login ordinals could not be saved").toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("ADD_CONTACT_REASON")) {
 			if (request.getParameter("type").equalsIgnoreCase("ADD")) {
 				ContactCategory cc = new ContactCategory();
 				cc.setName(request.getParameter("name"));
 				if (contactCategoryEJB.add(cc) != null) {
 					helper.audit(session, "Added a new contact category " + request.getParameter("name"));
-					response.getWriter().write(helper.result(true, "Contact category successfully saved").toString());
+					out.write(helper.result(true, "Contact category successfully saved").toString());
 				} else
-					response.getWriter().write(helper.result(true, "Contact category could not be saved").toString());
+					out.write(helper.result(true, "Contact category could not be saved").toString());
 			} else {
 				ContactCategory cc = helper.findConcactCategoryById(helper.toLong(request.getParameter("id")));
 				cc.setName(request.getParameter("name"));
 				if (contactCategoryEJB.edit(cc) != null) {
 					helper.audit(session, "Updated a contact category " + request.getParameter("name"));
-					response.getWriter().write(helper.result(true, "Contact category successfully saved").toString());
+					out.write(helper.result(true, "Contact category successfully saved").toString());
 				} else
-					response.getWriter().write(helper.result(true, "Contact category could not be saved").toString());
+					out.write(helper.result(true, "Contact category could not be saved").toString());
 			}
 		} else if (request.getParameter(REQUEST_ACTION).equals("LOGO")) {
 			for (Part part : request.getParts()) {
@@ -1087,11 +1077,11 @@ public class AdminController extends HttpServlet implements Serializable {
 					if (settingEJB.edit(settings) != null) {
 						logger.i("Logo has been uploaded");
 						helper.audit(session, "Uploaded portal logo");
-						response.getWriter().write(helper.result(true, "Logo was successfully uploaded").toString());
+						out.write(helper.result(true, "Logo was successfully uploaded").toString());
 					} else {
 
 						logger.i("Logo has not been uploaded: " + settings.getId());
-						response.getWriter().write(helper.result(false, "Logo could not be uploaded").toString());
+						out.write(helper.result(false, "Logo could not be uploaded").toString());
 					}
 				}
 			}
@@ -1114,9 +1104,9 @@ public class AdminController extends HttpServlet implements Serializable {
 					banner.setImage(bFile);
 					if (bannerEJB.add(banner) != null) {
 						helper.audit(session, "Uploaded a banner for the portal");
-						response.getWriter().write(helper.result(true, "Banner image was successfully uploaded").toString());
+						out.write(helper.result(true, "Banner image was successfully uploaded").toString());
 					} else
-						response.getWriter().write(helper.result(true, "Banner image could not be uploaded").toString());
+						out.write(helper.result(true, "Banner image could not be uploaded").toString());
 
 				}
 			}
@@ -1245,9 +1235,9 @@ public class AdminController extends HttpServlet implements Serializable {
 						}
 						if (mediaEJB.add(media) != null) {
 							helper.audit(session, "Uploaded a media file");
-							response.getWriter().write(helper.result(true, "Media file successfully uploaded").toString());
+							out.write(helper.result(true, "Media file successfully uploaded").toString());
 						} else
-							response.getWriter().write(helper.result(true, "Media file successfully uploaded").toString());
+							out.write(helper.result(true, "Media file successfully uploaded").toString());
 					} catch (SerialException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -1299,19 +1289,18 @@ public class AdminController extends HttpServlet implements Serializable {
 				JSONObject resp = helper.sendNotification(company.getEmail(), subject, message,
 						session.getAttribute(Constants.SCHEME_ID).toString(), attachment, attachment_url);
 				if (resp.get("success").equals(true)) {
-					response.getWriter().write(helper.result(true, "The email was successfully sent").toString());
+					out.write(helper.result(true, "The email was successfully sent").toString());
 
 				} else {
-					response.getWriter().write(helper.result(true, "We are sorry, but we were unable to send the email address")
+					out.write(helper.result(true, "We are sorry, but we were unable to send the email address")
 							.toString());
 
 				}
 			} catch (JSONException je) {
-				response.getWriter().write(helper.result(false, "Email could not be sent").toString());
+				out.write(helper.result(false, "Email could not be sent").toString());
 			}
 		}
 	}
-	
 
 	/**
 	 * Extracts file name from HTTP header content-disposition

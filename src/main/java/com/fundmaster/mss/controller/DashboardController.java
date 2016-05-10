@@ -82,7 +82,6 @@ public class DashboardController extends HttpServlet implements Serializable {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
 		
-		String DOWNLOAD_DIR = "download";
     	PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(false);
 		/*
