@@ -1,9 +1,12 @@
 package com.fundmaster.mss.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Serializable;
-
+import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.model.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,22 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.fundmaster.mss.beans.ejbInterface.*;
-import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.LOGGER;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.SchemeMemberManager;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Theme;
-import com.fundmaster.mss.model.User;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Serializable;
 
 
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
@@ -192,7 +182,9 @@ public class LoginController extends HttpServlet implements Serializable {
 			if(u.isStatus())
 			{
 				try {
-					if(u.getUserProfile().equals(Constants.ADMIN_PROFILE))
+					if(u.getUserProfile().equals(Constants.ADMIN_PROFILE)  || u.getUserProfile().equals(Constants.SPONSOR) || u.getUserProfile().equals(Constants.AGENT_PROFILE)
+							|| u.getUserProfile().equals("TRUSTEE") || u.getUserProfile().equals(Constants.MANAGER)
+							)
 					{
 						JSONObject res = helper.memberExists(u.getUserProfile(), u.getUsername());
 						if(res.get("success").equals(true) && Long.valueOf(res.get("memberId").toString()) != 0)
