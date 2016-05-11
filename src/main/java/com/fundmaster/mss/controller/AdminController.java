@@ -303,7 +303,8 @@ public class AdminController extends HttpServlet implements Serializable {
 					}
 					if (proceed) {
 						Setting settings = helper.getSettings();
-						helper.sendNotification(email_address, "MSS Portal Password Reset",
+						Company company = helper.getCompany();
+						helper.sendNotification(email_address,company.getEmail(), "MSS Portal Password Reset",
 								"Dear " + u.getUserProfile() + ",<br />"
 										+ "Your password has been reset on the FundMaster Xi Member Self Service Portal. Your new password is "
 										+ password + ".<br />Please click this <a href='" + settings.getPortalBaseURL()
@@ -763,7 +764,8 @@ public class AdminController extends HttpServlet implements Serializable {
 				e2.printStackTrace();
 			}
 			try {
-				JSONObject resp = helper.sendNotification(m.getEmailAddress(), "Change Password Request",
+				Company company = helper.getCompany();
+				JSONObject resp = helper.sendNotification(m.getEmailAddress(),company.getEmail(), "Change Password Request",
 						"Dear " + u.getUsername() + ", " + "You recently requested to change your password. "
 								+ "Here is your security code:" + "" + securityCode
 								+ "\nYou will require it to be able to change your password",
@@ -1286,7 +1288,9 @@ public class AdminController extends HttpServlet implements Serializable {
 				String subject = request.getParameter("subject") + " [" + request.getParameter("category") + "]";
 				String message = request.getParameter("message");
 				Company company = helper.getCompany();
-				JSONObject resp = helper.sendNotification(company.getEmail(), subject, message,
+				//User us = helper.findByUsernameAndProfile(request.getParameter("email"), Constants.MEMBER_PROFILE);
+				//XiMember m = helper.getMemberDetails(us.getProfileID().toString());
+				JSONObject resp = helper.sendNotification(company.getEmail(),session.getAttribute(Constants.USER).toString(), subject, message,
 						session.getAttribute(Constants.SCHEME_ID).toString(), attachment, attachment_url);
 				if (resp.get("success").equals(true)) {
 					out.write(helper.result(true, "The email was successfully sent").toString());
