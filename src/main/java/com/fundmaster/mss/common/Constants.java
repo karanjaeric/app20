@@ -33,6 +33,7 @@ public class Constants implements Serializable {
 	public static final String MANAGER_PROFILE = "MANAGER_PROFILE";
 	public static final String MANAGER = "MANAGER";
 	public static final String AGENT_PROFILE = "AGENT";
+	public static final String SPONSOR = "SPONSOR";
 	public static int RECORD_COUNT = 0;
 	public static String BASE_URL;
 
