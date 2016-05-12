@@ -2521,6 +2521,12 @@ public class Helper {
         BannerDAO dao = new BannerDAO(entityManager);
         return dao.findAll();
     }
+    
+    public Banner getBannerById(Long id)
+    {
+        BannerDAO dao = new BannerDAO(entityManager);
+        return dao.findById(id);
+    }
 
     public List<Sector> getSectors()
     {

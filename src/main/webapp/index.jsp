@@ -7,18 +7,20 @@
   <div class="carousel-inner" role="listbox">
   <c:set var="count" value="0" scope="page" />
   <c:forEach var="banner" items="${banners}">
-  <c:if test="${ count == 0 }">  
+  
+  <c:if test="${ count == 0 }">
     <div class="item active">
-      <img src="<%=request.getContextPath()%>/static/images/banner/${ banner.name }" style="float:center;">
+     <img src= "${pageContext.request.contextPath}/banners/${ banner.id }"style="float:center;">
+      <c:set var="count" value="${count + 1}" scope="page"/>
+    </div>
+     </c:if>
+  <c:if test="${ count > 0 }">  
+   <div class="item">
+      <img src="${pageContext.request.contextPath}/banners/${ banner.id }" style="float:center;">
       <c:set var="count" value="${count + 1}" scope="page"/>
     </div>
   </c:if>
-   <c:if test="${ count > 0 }">  
-    <div class="item">
-      <img src="<%=request.getContextPath()%>/static/images/banner/${ banner.name }" style="float:center;">
-      <c:set var="count" value="${count + 1}" scope="page"/>
-    </div>
-  </c:if>
+  
   </c:forEach>
   </div>
 </div>

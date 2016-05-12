@@ -60,7 +60,8 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
 
     public boolean remove(T entity) {
         try {
-            em.remove(entity);
+        	em.remove(em.contains(entity) ? entity : em.merge(entity));
+          //em.remove(entity);
             return true;
         } catch (PersistenceException pe) {
             logger.e("We found a persistence exception executing remove" + pe.getMessage());

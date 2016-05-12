@@ -32,7 +32,6 @@ import java.util.UUID;
 public class AdminController extends HttpServlet implements Serializable {
 	private static final String REQUEST_ACTION = "ACTION";
 	private static final String LOGO_DIR = "static" + File.separator + "images";
-	private static final String BANNER_DIR = "static" + File.separator + "images" + File.separator + "banner";
 	LOGGER logger = new LOGGER(this.getClass());
 	@EJB
 	Helper helper;
@@ -205,6 +204,8 @@ public class AdminController extends HttpServlet implements Serializable {
 		HttpSession session = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		String MEDIA_DIR = "media";
+		String BANNER_DIR = "banner";
+		
 		if (request.getParameter(REQUEST_ACTION).equals("SWITCH_SCHEME")) {
 			session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
 			out.write(helper.result(true, "success").toString());
@@ -1091,24 +1092,61 @@ public class AdminController extends HttpServlet implements Serializable {
 			for (Part part : request.getParts()) {
 				String fileName = extractFileName(part);
 				if (!fileName.equals("")) {
-					String fullpath = request.getServletContext().getRealPath("") + File.separator + BANNER_DIR
-							+ File.separator + fileName;
-					part.write(fullpath);
-					File file = new File(fullpath);
+					
+					//Save banner to directory
+					String fullpath = request.getServletContext().getRealPath("");
+					
+					String savePath = fullpath + File.separator + BANNER_DIR;
+					
+					System.out.println("full path is:" + savePath);
+					
+					
+					File fileSaveDir = new File(savePath);
+					if (!fileSaveDir.exists()) {
+						fileSaveDir.mkdir();
+					}
+					
+					savePath = fullpath + File.separator + BANNER_DIR + File.separator + fileName;
+					part.write(savePath);
+					System.out.println("Where the banner is saved ================>  " + savePath);
+					
+					//Save banner to database as blob
 
+					File file = new File(savePath);
 					byte[] bFile = new byte[(int) file.length()];
-					FileInputStream fileInputStream = new FileInputStream(file);
-					fileInputStream.read(bFile);
-					fileInputStream.close();
-					Banner banner = new Banner();
-					banner.setName(fileName);
-					banner.setPath(fullpath);
-					banner.setImage(bFile);
-					if (bannerEJB.add(banner) != null) {
-						helper.audit(session, "Uploaded a banner for the portal");
-						out.write(helper.result(true, "Banner image was successfully uploaded").toString());
-					} else
-						out.write(helper.result(true, "Banner image could not be uploaded").toString());
+
+					try {
+						FileInputStream fileInputStream = new FileInputStream(file);
+
+						// Convert file into array of bytes
+						fileInputStream.read(bFile);
+						fileInputStream.close();
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					//convert to blob
+					Blob fileBlob;
+					
+					try {
+						
+						fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
+						Banner banner = new Banner();
+						banner.setPath(savePath);		
+						banner.setName(fileName);						
+						banner.setImage(fileBlob);
+						
+						if (bannerEJB.add(banner) != null) {
+							helper.audit(session, "Uploaded a banner for the portal");
+							out.write(helper.result(true, "Banner image was successfully uploaded").toString());
+						} else
+							out.write(helper.result(true, "Banner image could not be uploaded").toString());
+
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 
 				}
 			}
@@ -1155,8 +1193,7 @@ public class AdminController extends HttpServlet implements Serializable {
 						fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
 
 						Date date = new Date();
-						Media media = new Media(fileName, session.getAttribute(Constants.SCHEME_ID).toString(),
-								request.getParameter("description"), request.getParameter("access"), date);
+						Media media = new Media(fileName, session.getAttribute(Constants.SCHEME_ID).toString(),request.getParameter("description"), request.getParameter("access"), date);
 						media.setFile(fileBlob);
 						media.setPath(savePath);		
 
@@ -1239,7 +1276,7 @@ public class AdminController extends HttpServlet implements Serializable {
 							helper.audit(session, "Uploaded a media file");
 							out.write(helper.result(true, "Media file successfully uploaded").toString());
 						} else
-							out.write(helper.result(true, "Media file successfully uploaded").toString());
+							out.write(helper.result(true, "Media file was not uploaded").toString());
 					} catch (SerialException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

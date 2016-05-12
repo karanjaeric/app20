@@ -49,6 +49,7 @@
 				class="fa fa-chevron-right"></i> CONTACT REASONS</a></li>
 		</c:if>
 	</ul>
+	
 <!-- BANNERS -->
 <div class="modal fade" id="modal-banner" tabindex="-1" role="dialog" aria-labelledby="myModalLabelBanner" aria-hidden="true">
 		<form role="form" id="form-banner">
@@ -63,7 +64,7 @@
 						<table class="table table-responsive">
 						<tr><th>IMAGE</th><th>ACTION</th></tr>
 						<c:forEach var="banner" items="${banners}">
-						<tr><td><img src="<%=request.getContextPath()%>/static/images/banner/${ banner.name }" width="100" /></td><td><a class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="remove_banner('${ banner.id}');"><i class="glyphicon glyphicon-trash"></i>&nbsp;REMOVE</a></td></tr>
+						<tr><td><img src="${pageContext.request.contextPath}/banners/${ banner.id }" width="100" /></td><td><a class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="remove_banner('${ banner.id}');"><i class="glyphicon glyphicon-trash"></i>&nbsp;REMOVE</a></td></tr>
 						</c:forEach>
 						</table>
 						<input type="hidden" name="ACTION" id="ACTION" value="BANNER" />
@@ -1142,8 +1143,8 @@
 
 		            	extension: 'png,gif,jpg,jpeg',
 		                type: 'image/png,image/gif,image/jpg,image/jpeg',
-		                maxSize: 10*1024*1024,   // 10 MB
-		                message: 'The selected file is not valid, it should be (png,gif,jpg,jpeg) and 5 MB at maximum.'
+		                maxSize: 100*1024*1024,   // 100 MB
+		                message: 'The selected file is not valid, it should be (png,gif,jpg,jpeg) and 20 MB at maximum.'
 
 					}
 		        }
@@ -1167,18 +1168,23 @@
         	        data: formData,
         	        async: false,
         	        success: function(json) {
-        	            $('#' + btn).val('Done');
+        	        	 stop_wait();
+        	           // $('#' + btn).val('Done');
         	            if(json.success)
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
-        	                html = 'Company banner successfully uploaded';
+        	
         	            }
-        	            else
+        	            
+        	            html = 'Company banner successfully uploaded';
+        	            bootbox.alert(html);
+        	            /*else
         	                html = 'Company banner was not uploaded';
         	            bootbox.alert(html);
-        	            $('#' + btn).val(btn_text);
+        	            $('#' + btn).val(btn_text);*/
         	        },
+        	        
         	        cache: false,
         	        contentType: false,
         	        processData: false
