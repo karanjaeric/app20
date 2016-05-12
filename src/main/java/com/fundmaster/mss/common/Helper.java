@@ -1287,6 +1287,7 @@ public class Helper {
     public String getSchemeInterestRates(String schemeID) throws JSONException {
         Setting settings = getSettings();
         JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemeinterestrates/" + schemeID);
+        logger.i("response.get(Helper.SUCCESS) "+response.get(Helper.SUCCESS));
         if(response.get(Helper.SUCCESS).equals(true))
         {
 
@@ -1302,7 +1303,7 @@ public class Helper {
             jsonarray.put(temp);
 
 
-            for(int i = 0; i < res.length(); i += 2){
+            for(int i = 0; i < res.length(); i ++){
 
                 JSONObject jsonobj = res.getJSONObject(i);
 
@@ -1335,14 +1336,14 @@ public class Helper {
 
                 if(irc.isYear())
                 {
-                    obj.put("year", jsonobj.get("year"));
+                    obj.put("ap", jsonobj.get("ap"));
                 }
 
                 if(jsonobj.getString("status").equals("Registered"))
                 {
                     obj.put("registered", jsonobj.get("contributions"));
 
-                    JSONObject jsonobj_ = res.getJSONObject(i + 1);
+                    JSONObject jsonobj_ = res.getJSONObject(i/* + 1*/);
 
                     obj.put("unRegistered", jsonobj_.get("contributions"));
                 }
@@ -1350,7 +1351,7 @@ public class Helper {
                 {
                     obj.put("unRegistered", jsonobj.get("contributions"));
 
-                    JSONObject jsonobj_ = res.getJSONObject(i + 1);
+                    JSONObject jsonobj_ = res.getJSONObject(i /*+ 1*/);
 
                     obj.put("registered", jsonobj_.get("contributions"));
                 }

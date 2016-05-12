@@ -183,7 +183,8 @@ public class LoginController extends HttpServlet implements Serializable {
 			{
 				try {
 					if(u.getUserProfile().equals(Constants.ADMIN_PROFILE)  || u.getUserProfile().equals(Constants.SPONSOR) || u.getUserProfile().equals(Constants.AGENT_PROFILE)
-							|| u.getUserProfile().equals("TRUSTEE") || u.getUserProfile().equals(Constants.MANAGER)
+							|| u.getUserProfile().equals("TRUSTEE") || u.getUserProfile().equals(Constants.MANAGER) || u.getUserProfile().equals("CUSTOMER_RELATIONSHIP_EXECUTIVE")
+							|| u.getUserProfile().equals("CUSTOMER_RELATIONSHIP_MANAGER")
 							)
 					{
 						JSONObject res = helper.memberExists(u.getUserProfile(), u.getUsername());

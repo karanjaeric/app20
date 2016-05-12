@@ -77,12 +77,12 @@ $(document)
 														var message = 'Oops! We are sorry, but something unexpected just happend and we were unable to process your request. Please try again';
 														if (json.success == true) {
 															var fields = [
-																	"year",
+																	"ap",
 																	"openingBalances",
 																	"pensionDrawDown",
 																	"registered",
 																	"unRegistered" ];
-															var html = '<tr><th>YEAR</th><th>OPENING BALANCES(%)</th><th>PENSION DRAW DOWN(%)</th><th>REGISTERED</th><th>UNREGISTERED</th></tr>';
+															var html = '<tr><th>Acccounting Period</th><th>OPENING BALANCES(%)</th><th>PENSION DRAW DOWN(%)</th><th>REGISTERED</th><th>UNREGISTERED</th></tr>';
 															for ( var i = 0; i < json.rows.length; i++) {
 																var row = json.rows[i];
 																html = html
