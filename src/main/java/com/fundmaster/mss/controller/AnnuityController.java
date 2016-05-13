@@ -1,5 +1,17 @@
 package com.fundmaster.mss.controller;
 
+import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.model.*;
+import org.json.JSONException;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -8,30 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import javax.ejb.EJB;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.fundmaster.mss.beans.ejbInterface.*;
-import com.fundmaster.mss.common.Helper;
-import org.json.JSONException;
-
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.model.AnnuityProduct;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.Country;
-import com.fundmaster.mss.model.Gender;
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.MaritalStatus;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.PageContent;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Theme;
 @WebServlet(name = "AnnuityController", urlPatterns = {"/annuity-quotation"})
 public class AnnuityController extends HttpServlet implements Serializable {
 	@EJB
@@ -156,7 +144,7 @@ public class AnnuityController extends HttpServlet implements Serializable {
 		Gender gender = helper.genderById(Long.valueOf(request.getParameter("gender")));
 		Gender spouseGender = helper.genderById(Long.valueOf(request.getParameter("gender")));
     	try {
-    		String result = helper.getAnnuityQuote(calculationMode, request.getParameter("annuityProduct"), lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, spouseGender.getName(), format.format(spouseDateOfBirth));
+    		String result = helper.getAnnuityQuote(calculationMode, request.getParameter("annuityProduct"), lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, spouseGender.getName(), format.format(spouseDateOfBirth==null?new Date():spouseDateOfBirth));
 			out.write(result);
 		} catch (JSONException e) {
 
