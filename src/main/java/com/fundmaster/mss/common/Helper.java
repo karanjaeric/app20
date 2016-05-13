@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -1268,9 +1269,28 @@ public class Helper {
         return response.toString();
 
     }
-    public String queryWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate, String inflationRate) throws JSONException {
+    public String queryWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate, String inflationRate,String email,String phone,String yourAge) throws JSONException {
         Setting settings = getSettings();
         //JSONObject response = URLPost(settings.getXiPath() + "whatifanalysis.json", "");
+        try
+        {
+            BenefitCalculationsDao dao = new BenefitCalculationsDao(entityManager);
+            BenefitCalculation benefitCalculation=new BenefitCalculation();
+            benefitCalculation.setAge(new BigDecimal(yourAge==null?"0.00":yourAge));
+            benefitCalculation.setEmail(email);
+            benefitCalculation.setInflationrate(new BigDecimal(inflationRate==null?"0.00":inflationRate));
+            benefitCalculation.setMothnlycontrib(new BigDecimal(contributions==null?"0.00":contributions));
+            //benefitCalculation.setOpeningbal(new BigDecimal(op==null?"0.00":contributions));
+            benefitCalculation.setRequestdate(new Date());
+            benefitCalculation.setPhone(phone);
+            benefitCalculation.setProjectedage(new BigDecimal(yearsToProject==null?"0.00":yearsToProject));
+            benefitCalculation.setReturnrate(new BigDecimal(rateOfReturn==null?"0.00":rateOfReturn));
+            benefitCalculation.setSalarygrowth(new BigDecimal(salaryEscalationRate==null?"0.00":salaryEscalationRate));
+            dao.save(benefitCalculation);
+
+        }
+        catch(Exception e)
+        {e.printStackTrace();}
         JSONObject response = URLPost(settings.getXiPath() + "whatifanalysis/" + yearsToProject + "/" + contributions + "/" + rateOfReturn + "/" + salaryEscalationRate + "/" + inflationRate, "", "application/x-www-form-urlencoded");
         if(response.get(Helper.SUCCESS).equals(true))
         {
@@ -2410,6 +2430,39 @@ public class Helper {
         {
             return null;
         }
+    }
+    public List<BenefitCalculation> getCalclogs(int start, int count) throws JSONException {
+        Constants.RECORD_COUNT = 0;
+        try
+        {
+            Setting settings = getSettings();
+            List<BenefitCalculation> calclogs = new ArrayList<>();
+
+            try
+            {
+               /* BenefitCalculationsDao dao= new BenefitCalculationsDao(entityManager);
+                calclogs=dao.findAll();*/
+                String query = "SELECT bc from BenefitCalculation bc";
+                        calclogs = entityManager.createQuery(query).getResultList();
+
+
+
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+                Constants.RECORD_COUNT = calclogs.size();
+
+
+                return calclogs;
+
+        } catch (Exception je) {
+
+            throw new JSONException("JSON Exeption found");
+
+        }
+
     }
     public List<Scheme> getProfileSchemes(String user, String profile) {
         try

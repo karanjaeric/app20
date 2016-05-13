@@ -7,6 +7,20 @@
 					<legend>Calculation Parameters</legend>
 					<div class="col-md-3">
 						<div class="form-group">
+							<label for="openingBalance" class="control-label">Email</label> <input
+								type="text" name="emailAddress" class="form-control" id="emailAddress"
+								placeholder="Email Address">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="monthlyContributions" class="control-label">Phone</label> <input
+								type="text" name="phoneNumber" class="form-control" id="phoneNumber"
+								placeholder="Phone Number">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
 									<label for="openingBalance" class="control-label">Opening Balance:</label> <input
 										type="text" name="openingBalance" class="form-control" id="openingBalance"
 										placeholder="0.00">
@@ -100,6 +114,23 @@
 									}
 								}
 							},
+							emailAddress : {
+								validators : {
+									notEmpty : {
+										message : 'Sorry, your email address is required'
+									},
+									emailAddress : {
+										message : 'Oops! This doesn\'t look like a valid email address'
+									}
+								}
+							},
+							phoneNumber : {
+								validators : {
+									notEmpty : {
+										message : 'Sorry, your phone number is required'
+									}
+								}
+							},
 							annualGrowthRate : {
 								validators : {
 									notEmpty : {
@@ -166,6 +197,15 @@
 												.val(),
 										inflationRate : $(
 												'#inflationRate')
+												.val(),
+										emailAddress: $(
+												'#emailAddress')
+												.val(),
+										phoneNumber: $(
+												'#phoneNumber')
+												.val(),
+										yourAge: $(
+												'#yourAge')
 												.val(),
 										yearsToProject : parseFloat($(
 												'#ageTo').val())

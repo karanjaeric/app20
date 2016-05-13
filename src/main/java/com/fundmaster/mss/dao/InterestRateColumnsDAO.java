@@ -17,6 +17,7 @@ public class InterestRateColumnsDAO extends GenericDAOImpl<InterestRateColumns, 
 
     public InterestRateColumns find()
     {
+
         List<InterestRateColumns> interestRateColumnsList = this.findAll();
         return interestRateColumnsList.size() > 0 ? interestRateColumnsList.get(0) : null;
     }

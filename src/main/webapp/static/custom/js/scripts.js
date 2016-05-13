@@ -175,16 +175,25 @@ $(document).ready(function(){
 		
     });
 	
+
 	$('#scheme-main-li').click(function(){
-		
+
 		$('#main-menu.nav li').removeClass('active');
-		
+
 		$('#scheme-main-li').addClass('active');
-		
+
 		switch_page('SCHEME');
-		
-    });
-	
+
+	});
+	$('#calc-log').click(function(){
+
+		$('#calc-log li').removeClass('active');
+
+		$('#calc-log').addClass('active');
+
+		switch_page('CALC-LOG');
+
+	});
 	$('#member-main-li').click(function(){
 		
 		$('#main-menu.nav li').removeClass('active');

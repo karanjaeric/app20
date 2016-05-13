@@ -187,6 +187,23 @@ $(document)
 											}
 										}
 									},
+									emailAddress : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your email address is required'
+											},
+											emailAddress : {
+												message : 'Oops! This doesn\'t look like a valid email address'
+											}
+										}
+									},
+									phoneNumber : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your phone number is required'
+											}
+										}
+									},
 									inflationRate : {
 										validators : {
 											notEmpty : {
@@ -241,6 +258,12 @@ $(document)
 												salaryEscalationRate : $(
 														'#annualGrowthRate')
 														.val(),
+												emailAddress: $(
+													'#emailAddress')
+													.val(),
+												phoneNumber: $(
+													'#phoneNumber')
+													.val(),
 												inflationRate : $(
 														'#inflationRate')
 														.val(),

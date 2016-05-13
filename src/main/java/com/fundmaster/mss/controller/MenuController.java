@@ -1,8 +1,8 @@
 package com.fundmaster.mss.controller;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.List;
+import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.model.*;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -10,23 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fundmaster.mss.beans.ejbInterface.*;
-import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.model.Banner;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.Country;
-import com.fundmaster.mss.model.InterestRateColumns;
-import com.fundmaster.mss.model.MemberPermission;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.Ordinal;
-import com.fundmaster.mss.model.PasswordPolicy;
-import com.fundmaster.mss.model.Permission;
-import com.fundmaster.mss.model.ProfileLoginField;
-import com.fundmaster.mss.model.ProfileName;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Theme;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 @WebServlet(name = "MenuController", urlPatterns = {"/menu"})
 public class MenuController extends HttpServlet implements Serializable {
 	public MenuController() {
@@ -96,6 +82,8 @@ public class MenuController extends HttpServlet implements Serializable {
 		}
 		else if(request.getParameter(REPO_FOLDER).toUpperCase().equals("SCHEME".toUpperCase()))
 			request.getRequestDispatcher(REPO_FOLDER + "/scheme.jsp").forward(request, response);
+		else if(request.getParameter(REPO_FOLDER).toUpperCase().equals("CALC-LOG".toUpperCase()))
+			request.getRequestDispatcher(REPO_FOLDER + "/calc-log.jsp").forward(request, response);
 		else if(request.getParameter(REPO_FOLDER).toUpperCase().equals("CONTENT".toUpperCase()))
 		{
 			Permission permissions = helper.getPermissions(request);

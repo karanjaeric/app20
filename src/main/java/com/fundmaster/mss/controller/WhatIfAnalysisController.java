@@ -1,8 +1,10 @@
 package com.fundmaster.mss.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Serializable;
+import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.model.*;
+import org.json.JSONException;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -10,19 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fundmaster.mss.beans.ejbInterface.*;
-import com.fundmaster.mss.common.Helper;
-import org.json.JSONException;
-
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.PageContent;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Theme;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Serializable;
 @WebServlet(name = "WhatIfAnalysisController", urlPatterns = {"/what-if-analysis"})
 public class WhatIfAnalysisController extends HttpServlet implements Serializable {
 
@@ -81,7 +73,7 @@ public class WhatIfAnalysisController extends HttpServlet implements Serializabl
     	PrintWriter out = response.getWriter();
     	
     	try {
-    		String result = helper.queryWhatIfAnalysis(request.getParameter("yearsToProject"), request.getParameter("contributions"), request.getParameter("rateOfReturn"), request.getParameter("salaryEscalationRate"), request.getParameter("inflationRate"));
+    		String result = helper.queryWhatIfAnalysis(request.getParameter("yearsToProject"), request.getParameter("contributions"), request.getParameter("rateOfReturn"), request.getParameter("salaryEscalationRate"), request.getParameter("inflationRate"),request.getParameter("emailAddress"),request.getParameter("phoneNumber"),request.getParameter("yourAge"));
 			out.write(result);
 		} catch (JSONException e) {
 

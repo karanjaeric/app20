@@ -1,5 +1,19 @@
 package com.fundmaster.mss.controller;
 
+import com.fundmaster.mss.beans.ejbInterface.AuditTrailEJB;
+import com.fundmaster.mss.beans.ejbInterface.UserEJB;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.model.*;
+import org.json.JSONException;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -9,46 +23,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
-import javax.ejb.EJB;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.fundmaster.mss.beans.ejbInterface.AuditTrailEJB;
-import com.fundmaster.mss.beans.ejbInterface.UserEJB;
-import com.fundmaster.mss.common.Helper;
-import org.json.JSONException;
-
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.model.AuditTrail;
-import com.fundmaster.mss.model.Beneficiary;
-import com.fundmaster.mss.model.BenefitPayment;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.ContactCategory;
-import com.fundmaster.mss.model.Country;
-import com.fundmaster.mss.model.Gender;
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.MaritalStatus;
-import com.fundmaster.mss.model.Media;
-import com.fundmaster.mss.model.Member;
-import com.fundmaster.mss.model.MemberPermission;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.Ordinal;
-import com.fundmaster.mss.model.PageContent;
-import com.fundmaster.mss.model.Permission;
-import com.fundmaster.mss.model.Scheme;
-import com.fundmaster.mss.model.SchemeMemberManager;
-import com.fundmaster.mss.model.SchemeReceipt;
-import com.fundmaster.mss.model.Sector;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Sponsor;
-import com.fundmaster.mss.model.User;
-import com.fundmaster.mss.model.XiMember;
 @WebServlet(name = "DashboardController", urlPatterns = {"/dashboard"})
 public class DashboardController extends HttpServlet implements Serializable {
 
@@ -93,6 +67,62 @@ public class DashboardController extends HttpServlet implements Serializable {
 				helper.logActivity("SETUP", "Accessed setup menu and details", session.getAttribute(Constants.UID).toString(), session.getAttribute(Constants.SCHEME_ID).toString(), session.getAttribute(Constants.U_PROFILE).toString());
 				helper.audit(session, "Accessed setup menu and details");
 				request.getRequestDispatcher(REPO_FOLDER + "/setup.jsp").forward(request, response);
+			}
+			else if(request.getParameter(REPO_FOLDER).toUpperCase().equals("CALC-LOG".toUpperCase()))
+			{
+				/*Company company = helper.getCompany();
+				request.setAttribute("company", company);
+				Menu menu = helper.getMenu();
+				request.setAttribute("menu", menu);
+				helper.logActivity("CALC-LOG", "Accessed calculator log menu and details", session.getAttribute(Constants.UID).toString(), session.getAttribute(Constants.SCHEME_ID).toString(), session.getAttribute(Constants.U_PROFILE).toString());
+				helper.audit(session, "Accessed calculator log menu and details");
+				request.getRequestDispatcher(REPO_FOLDER + "/calc-log.jsp").forward(request, response);*/
+				List<BenefitCalculation> calclogs = null;
+				int page;
+				try {
+					page = Integer.parseInt(request.getParameter("page"));
+				} catch (Exception ex)
+				{
+					ex.printStackTrace(out);
+					page = 1;
+				}
+				String search;
+				try {
+					search = request.getParameter("search");
+				} catch (Exception ex)
+				{
+					search = null;
+				}
+				int batch;
+				try {
+					batch = Integer.parseInt(request.getParameter("batch"));
+				}
+				catch (Exception ex)
+				{
+					batch = 1;
+				}
+				int start = (PER_PAGE * (page - 1)) * (batch - 1);
+				int begin = ((batch * BATCH) - BATCH) + 1;
+				if(begin < 1)
+					begin = 1;
+				request.setAttribute("begin", begin);
+				request.setAttribute("batch", batch);
+				request.setAttribute("page", page);
+				request.setAttribute("per_page", PER_PAGE);
+				request.setAttribute("search", search);
+				try {
+					calclogs = helper.getCalclogs(start, PER_PAGE);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace(out);
+				}
+				int count = Constants.RECORD_COUNT;
+				int pages = (count / PER_PAGE);
+				request.setAttribute("pages", pages);
+				request.setAttribute("calclogs", calclogs);
+				helper.logActivity("CALC-LOG", "Viewed Schemes", session.getAttribute(Constants.UID).toString(), session.getAttribute(Constants.SCHEME_ID).toString(), session.getAttribute(Constants.U_PROFILE).toString());
+				helper.audit(session, "Viewed Schemes");
+				request.getRequestDispatcher(REPO_FOLDER + "/calc-log.jsp").forward(request, response);
 			}
 			else if(request.getParameter(REPO_FOLDER).toUpperCase().equals("HELP".toUpperCase()))
 			{

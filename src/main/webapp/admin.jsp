@@ -80,7 +80,12 @@
 								class="glyphicon glyphicon-flash"></i>&nbsp;<i
 								class="fa fa-chevron-right"></i> ANALYTICS &amp; REPORTING</a></li>
 						</c:if>
-					
+
+						<li id="calc-log"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-flash"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i>Calculator log</a></li>
+
+
 				</ul>
 			</div>
 		</div>
