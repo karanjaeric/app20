@@ -76,8 +76,18 @@
 		        success: function(json) {
 		            if(json.success)
 	   	            {
-						var url = $('#reportPath').val() + 'members/contributionHistoryDated.xdo?&_paramsBASE=' + $('#xiRootPath').val() + 'Xi&_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FcontributionHistoryDated.xdo&_xmode=3&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsmember_id=' + $('#member_id').val() + '&_xt=Contribution%20History%20(Detailed)&_xf=analyze&_xana=view&_paramsap_id=81&admin=3347&_paramsadmin=3347&id=' + $('#username').val() + '&passwd=' + $('#password').val() + '';
-						 $("#ch-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
+		                var fromDate = (document.getElementById('dateFrom').value).split("-").join("/");
+		                var toDate = (document.getElementById('dateTo').value).split("-").join("/");
+						var url = //$('#reportPath').val() + 'members/contributionHistoryDated.xdo?&_paramsBASE=' + $('#xiRootPath').val() + 'Xi&_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FcontributionHistoryDated.xdo&_xmode=3&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsmember_id=' + $('#member_id').val() + '&_xt=Contribution%20History%20(Detailed)&_xf=analyze&_xana=view&_paramsap_id=81&admin=3347&_paramsadmin=3347&id=' + $('#username').val() + '&passwd=' + $('#password').val() + '';
+						    $('#reportPath').val() +"members/ContributionHistoryRange.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FContributionHistoryRange.xdo&_xmode=3&_paramsdateTo=" + toDate
+									        + "&_paramsdateFrom=" + fromDate
+									        +  "&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id=" 
+									        + $('#scheme_id').val() + "&_paramsmember_id=" + $('#member_id').val() + "&_xt=Contribution%20History%20(Detailed)&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+						
+						    $("#ch-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
+						 
+						 console.log('>>>' + json);
+						 
 						 stop_wait();
 	   	            }
 		        }
