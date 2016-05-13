@@ -5,11 +5,18 @@
 
 package com.fundmaster.mss.dao;
 
-import com.fundmaster.mss.common.LOGGER;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
-import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.model.Logo;
 
 /**
  * Created by bryanitur on 9/16/15.
@@ -39,6 +46,16 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
             em.persist(entity);
             return entity;
         } catch (PersistenceException pe) {
+            logger.e("We found a persistence exception executing persist" + pe.getMessage());
+            return null;
+        }
+    }
+    
+    public T update(T entity) {
+    	try {
+    		em.merge(entity);
+    		return entity;
+    	} catch (PersistenceException pe) {
             logger.e("We found a persistence exception executing persist" + pe.getMessage());
             return null;
         }

@@ -20,6 +20,7 @@ import com.fundmaster.mss.model.Company;
 import com.fundmaster.mss.model.Country;
 import com.fundmaster.mss.model.Gender;
 import com.fundmaster.mss.model.Help;
+import com.fundmaster.mss.model.Logo;
 import com.fundmaster.mss.model.MaritalStatus;
 import com.fundmaster.mss.model.Menu;
 import com.fundmaster.mss.model.PageContent;
@@ -67,6 +68,8 @@ public class DefaultController extends HttpServlet implements Serializable {
 	@EJB
 	BannerEJB bannerEJB;
 	@EJB
+	LogoEJB logoEJB;
+	@EJB
 	PermissionEJB permissionEJB;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -89,8 +92,16 @@ public class DefaultController extends HttpServlet implements Serializable {
 		request.setAttribute("menu", menu);
 		List<Banner> banners = bannerEJB.find();
 		request.setAttribute("banners", banners);
+	
 		Theme theme = themeEJB.find();
 		request.setAttribute("theme", theme);
+		
+		/*List<Logo> logos = logoEJB.find();
+		request.setAttribute("logos", logos);*/
+		
+		List<Logo> logos = logoEJB.find();
+		request.setAttribute("logos", logos);
+		
 		Help help = helpEJB.findHelp(Constants.PAGE_HOME);
 		request.setAttribute("help", help);
 		PageContent content = pageContentEJB.findPageContent(Constants.PAGE_HOME);

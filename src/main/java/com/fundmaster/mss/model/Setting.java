@@ -1,12 +1,14 @@
 package com.fundmaster.mss.model;
 
 import java.io.Serializable;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 @Entity
 @Table (name = "tbl_settings")
@@ -22,38 +24,61 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 	}
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private
-	Long id;
+	private Long id;
+	
 	@Column (name = "xiPath", nullable = false)
-	private
-	String xiPath;
+	private String xiPath;
+	
 	@Column (name = "username", nullable = false)
-	private
-	String username;
-	@Column (columnDefinition = "longblob")
-	byte[] logo;
+	private String username;
+	
+	
+	@Lob
+	@Column (name = "logo", columnDefinition = "LONGBLOB")
+	private Blob logo;
+	
+	//private String logo_path;
+	
+	/*@Column (columnDefinition = "longblob")
+	byte[] logo;*/
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public byte[] getLogo() {
+    /*public byte[] getLogo() {
         return logo;
     }
 
     public void setLogo(byte[] logo) {
         this.logo = logo;
-    }
+    }*/
 
-    public String getLoginField() {
+    /*public String getLogo_path() {
+		return logo_path;
+	}
+
+	public void setLogo_path(String logo_path) {
+		this.logo_path = logo_path;
+	}*/
+
+	public Blob getLogo() {
+		return logo;
+	}
+
+	public void setLogo(Blob logo) {
+		this.logo = logo;
+	}
+
+	public String getLoginField() {
 		return loginField;
 	}
 	public void setLoginField(String loginField) {
 		this.loginField = loginField;
 	}
+	
 	@Column (name = "password", nullable = false)
-	private
-	String password;
+	private String password;
 	private String loginField;
 	private boolean encrypt;
 	public boolean isEncrypt() {

@@ -72,6 +72,8 @@ public class AdminController extends HttpServlet implements Serializable {
 	@EJB
 	BannerEJB bannerEJB;
 	@EJB
+	LogoEJB logoEJB;
+	@EJB
 	ThemeEJB themeEJB;
 	@EJB
 	InterestRateColumnEJB interestRateColumnEJB;
@@ -205,6 +207,7 @@ public class AdminController extends HttpServlet implements Serializable {
 		PrintWriter out = response.getWriter();
 		String MEDIA_DIR = "media";
 		String BANNER_DIR = "banner";
+		String LOGO_DIR = "logo";
 		
 		if (request.getParameter(REQUEST_ACTION).equals("SWITCH_SCHEME")) {
 			session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
@@ -1065,26 +1068,64 @@ public class AdminController extends HttpServlet implements Serializable {
 			for (Part part : request.getParts()) {
 				String fileName = extractFileName(part);
 				if (!fileName.equals("")) {
-					String fullpath = request.getServletContext().getRealPath("") + File.separator + LOGO_DIR
-							+ File.separator + fileName;
-					part.write(fullpath);
-					Setting settings = settingEJB.find();
-					File file = new File(fullpath);
-					logger.i("File: " + file);
-					byte[] bFile = new byte[(int) file.length()];
-					FileInputStream fileInputStream = new FileInputStream(file);
-					fileInputStream.read(bFile);
-					fileInputStream.close();
-					settings.setLogoFile(fullpath);
-					settings.setLogo(bFile);
-					if (settingEJB.edit(settings) != null) {
-						logger.i("Logo has been uploaded");
-						helper.audit(session, "Uploaded portal logo");
-						out.write(helper.result(true, "Logo was successfully uploaded").toString());
-					} else {
+					
+					//Save banner to directory
+					String fullpath = request.getServletContext().getRealPath("");
+					
+					String savePath = fullpath + File.separator + LOGO_DIR;
+					
+					System.out.println("full path is:" + savePath);
+					
+					System.out.println("Filename is:" + fileName);
+					
+					
+					
+					File fileSaveDir = new File(savePath);
+					if (!fileSaveDir.exists()) {
+						fileSaveDir.mkdir();
+					}
+					
+					savePath = fullpath + File.separator + LOGO_DIR + File.separator + fileName;
+					part.write(savePath);
+					System.out.println("Where the banner is saved ================>  " + savePath);
+					
+					//Save banner to database as blob
 
-						logger.i("Logo has not been uploaded: " + settings.getId());
-						out.write(helper.result(false, "Logo could not be uploaded").toString());
+					File file = new File(savePath);
+					byte[] bFile = new byte[(int) file.length()];
+
+					try {
+						FileInputStream fileInputStream = new FileInputStream(file);
+
+						// Convert file into array of bytes
+						fileInputStream.read(bFile);
+						fileInputStream.close();
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					//convert to blob
+					Blob fileBlob;
+					
+					try {
+						
+						fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
+						
+						Logo logo = new Logo();
+						logo.setPath(savePath);
+						logo.setImage(fileBlob);
+						logo.setName(fileName);
+						
+						if (logoEJB.add(logo) != null) {
+							helper.audit(session, "Uploaded a logo for the portal");
+							out.write(helper.result(true, "Logo was successfully uploaded").toString());
+						} else
+							out.write(helper.result(true, "Logo could not be uploaded").toString());
+					
+						
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 			}

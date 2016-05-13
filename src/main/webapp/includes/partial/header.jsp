@@ -112,13 +112,16 @@ body {
 			role="banner">
 			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target=".navbar-collapse">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"data-target=".navbar-collapse">
 						<span class="sr-only">Toggle navigation</span> <span
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<img src="static/images/${ settings.logoFile }" alt="logo" width="100"/>
+					
+					<!--<c:forEach var="logo" items="${logos}">-->
+					<img src="${pageContext.request.contextPath}/logos/${ logo.id }" alt="logo" width="100" />
+					<!--</c:forEach>-->
+					
 				</div>
 				<div class="collapse navbar-collapse navbar-right">
 				

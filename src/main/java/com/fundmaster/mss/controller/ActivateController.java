@@ -19,6 +19,7 @@ import com.fundmaster.mss.model.Company;
 import com.fundmaster.mss.model.Country;
 import com.fundmaster.mss.model.Gender;
 import com.fundmaster.mss.model.Help;
+import com.fundmaster.mss.model.Logo;
 import com.fundmaster.mss.model.MaritalStatus;
 import com.fundmaster.mss.model.Menu;
 import com.fundmaster.mss.model.PageContent;
@@ -61,6 +62,9 @@ public class ActivateController extends HttpServlet implements Serializable {
     ProfileLoginFieldEJB profileLoginFieldEJB;
     @EJB
     BannerEJB bannerEJB;
+    @EJB
+    LogoEJB logoEJB;
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
 		User u = userEJB.findBySecurityCode(request.getQueryString());
@@ -97,6 +101,8 @@ public class ActivateController extends HttpServlet implements Serializable {
 		request.setAttribute("menu", menu);
 		List<Banner> banners = bannerEJB.find();
 		request.setAttribute("banners", banners);
+		/*List<Logo> logos = logoEJB.find();
+		request.setAttribute("logos", logos);*/
 		Theme theme = themeEJB.find();
 		request.setAttribute("theme", theme);
 		Help help = helpEJB.findHelp(Constants.PAGE_HOME);

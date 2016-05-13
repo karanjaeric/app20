@@ -2580,6 +2580,19 @@ public class Helper {
         BannerDAO dao = new BannerDAO(entityManager);
         return dao.findById(id);
     }
+    
+    public Logo getLogoById(Long id)
+    {
+        LogoDAO dao = new LogoDAO(entityManager);
+        return dao.findById(id);
+    }
+    
+    public List<Logo> getLogo()
+    {
+
+        LogoDAO dao = new LogoDAO(entityManager);
+        return dao.findAll();
+    }
 
     public List<Sector> getSectors()
     {
