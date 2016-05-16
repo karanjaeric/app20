@@ -85,13 +85,17 @@
 									        + $('#scheme_id').val() + "&_paramsmember_id=" + $('#member_id').val() + "&_xt=Contribution%20History%20(Detailed)&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 						
 						    $("#ch-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
-						 
-						 console.log('>>>' + json);
-						 
+						 						 
 						 stop_wait();
 	   	            }
 		        }
 			});
+			
+			
+			
+			
+			
+			
 		});
 	});
 </script>
