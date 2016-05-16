@@ -1,10 +1,11 @@
 package com.fundmaster.mss.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.UUID;
+import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.model.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,14 +13,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fundmaster.mss.beans.ejbInterface.*;
-import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.model.*;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.fundmaster.mss.common.Constants;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.UUID;
 
 @WebServlet(name = "PasswordResetController", urlPatterns = {"/password-reset"})
 public class PasswordResetController extends HttpServlet implements Serializable {
@@ -140,7 +138,7 @@ public class PasswordResetController extends HttpServlet implements Serializable
 				u.setSecurityCode(securityCode);
 				try {
 					Company company = helper.getCompany();
-					XiMember m = helper.getMemberDetails(u.getProfileID().toString());
+					XiMember m = helper.getMemberDetails(u.getProfileID().toString(),null);
 					JSONObject res = helper.sendNotification(m.getEmailAddress(),company.getEmail(), "Password Reset Instructions", "Dear " + u.getUserProfile() + ", " +
 							"You recently requested to change your password. " +
 							"Your security code is: " + securityCode +

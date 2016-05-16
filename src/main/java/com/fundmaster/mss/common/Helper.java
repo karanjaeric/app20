@@ -1666,10 +1666,20 @@ public class Helper {
         return sDAO.findById(Long.valueOf(sponsorID));
     }
 
-    public XiMember getMemberDetails(String memberID) throws JSONException{
+    public XiMember getMemberDetails(String memberID,String schemeId) throws JSONException{
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "getmemberdetails/" + memberID);
+            JSONObject response=null;
+            if(schemeId==null)
+            {
+                response = URLGet(settings.getXiPath() + "getmemberdetails/" + memberID);
+            }
+                else
+            {
+                 response = URLGet(settings.getXiPath() + "getmemberIdfromMail/"+memberID+"/" + schemeId);
+
+            }
+
             if(response.get(Helper.SUCCESS).equals(true))
             {
 

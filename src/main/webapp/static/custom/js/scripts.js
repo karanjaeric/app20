@@ -34,6 +34,25 @@
 	        });
 		}
 	}
+	function reloadmember()
+	{if($('#scheme_id').val() != '')
+	{
+		start_wait();
+		$.ajax({
+			url: $('#base_url').val() + 'member',
+			type: 'post',
+			data: {ACTION:'CHANGE_SCHEME', schemeID: $('#scheme_id').val()},
+			dataType: 'json',
+			success: function(json) {
+				console.log(json);
+				if(json.success)
+					setTimeout(function() {
+						window.location.href = $('#base_url').val() + "member";
+					}, 0);
+			}
+		});
+	}
+	}
 	function set_spouse_date_of_birth()
 	{
 		$('#spouseDateOfBirth').val($('#dateOfBirth').val());

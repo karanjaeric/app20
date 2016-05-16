@@ -189,7 +189,7 @@ public class RegisterController extends HttpServlet implements Serializable {
 							boolean proceed = false;
 							if(u.getUserProfile().equals(Constants.MEMBER_PROFILE))
 							{
-								XiMember m = helper.getMemberDetails(u.getProfileID().toString());
+								XiMember m = helper.getMemberDetails(u.getProfileID().toString(),null);
 								email_address = m.getEmailAddress();
 								schemeId = res.get("schemeId").toString();
 								proceed = helper.isEmailAddress(email_address);

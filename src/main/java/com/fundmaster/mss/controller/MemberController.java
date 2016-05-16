@@ -1,5 +1,20 @@
 package com.fundmaster.mss.controller;
 
+import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.model.*;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -10,29 +25,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-
-import javax.ejb.EJB;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.fundmaster.mss.beans.ejbInterface.*;
-import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.LOGGER;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.model.ActivityLog;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.ContactCategory;
-import com.fundmaster.mss.model.PasswordPolicy;
-import com.fundmaster.mss.model.Scheme;
-import com.fundmaster.mss.model.User;
-import com.fundmaster.mss.model.XiMember;
 @WebServlet(name = "MemberController", urlPatterns = {"/member"})
 public class MemberController extends HttpServlet implements Serializable {
 	/**
@@ -93,8 +85,25 @@ public class MemberController extends HttpServlet implements Serializable {
 					request.setAttribute("path", "member");
 					List<Scheme> schemes = helper.getProfileSchemes(session.getAttribute(Constants.USER).toString(), session.getAttribute(Constants.U_PROFILE).toString());
 					request.setAttribute("schemes", schemes);
-					XiMember m = helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString());
+					XiMember m= helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),null);
+					if(schemes != null && schemes.size() > 0) {
+						logger.i("Scheme is not null. email: "+session.getAttribute(Constants.USER).toString());
+						if(session.getAttribute(Constants.SCHEME_ID) == null)
+						{
+							m= helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),schemes.get(0).getId().toString());
+						}
+						else
+						{
+							m= helper.getMemberDetails(session.getAttribute(Constants.USER).toString(),session.getAttribute(Constants.SCHEME_ID).toString());
+						}
+
+					}
 					request.setAttribute("member", m);
+					try{
+						session.setAttribute(Constants.PROFILE_ID,m.getId());
+
+					}
+					catch(Exception e){e.printStackTrace();};
 
 					if(schemes != null && schemes.size() == 1)
 					{
@@ -201,7 +210,24 @@ public class MemberController extends HttpServlet implements Serializable {
 			helper.updateUser(u);
 			XiMember m = null;
 			try {
-				m = helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString());
+				List<Scheme> schemes = helper.getProfileSchemes(session.getAttribute(Constants.USER).toString(), session.getAttribute(Constants.U_PROFILE).toString());
+				m = helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),null);
+				if(schemes != null && schemes.size() == 1) {
+					if(session.getAttribute(Constants.SCHEME_ID) == null)
+					{
+						m= helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),schemes.get(0).getId().toString());
+					}
+					else
+					{
+						m= helper.getMemberDetails(session.getAttribute(Constants.USER).toString(),session.getAttribute(Constants.SCHEME_ID).toString());
+					}
+
+				}
+				try
+				{
+					session.setAttribute(Constants.PROFILE_ID,m.getId());
+				}
+				catch(Exception e){e.printStackTrace();}
 			} catch (JSONException je) {
 				// TODO Auto-generated catch block
 				logger.e("JSONException was detected: " + je.getMessage());
@@ -247,6 +273,14 @@ public class MemberController extends HttpServlet implements Serializable {
 			
 			out.write(res);
 			
+		}
+		else if (request.getParameter("ACTION").equals("CHANGE_SCHEME")) {
+			helper.audit(session, "Switched between schemes from scheme #" + session.getAttribute(Constants.SCHEME_ID)
+					+ " to scheme #" + request.getParameter("schemeID"));
+			logger.i("Switched between schemes from scheme #" + session.getAttribute(Constants.SCHEME_ID)
+					+ " to scheme #" + request.getParameter("schemeID"));
+			session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
+			out.write(helper.result(true, "Scheme changed successfully").toString());
 		}
 		else if(request.getParameter("ACTION").equals("AP"))
 		{

@@ -274,7 +274,10 @@ public class AdminController extends HttpServlet implements Serializable {
 
 					System.out.println("memberID " + memberID + " u.getProfileID() " + u.getProfileID());
 					if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
-						XiMember m = helper.getMemberDetails(u.getProfileID().toString());
+
+						XiMember m = helper.getMemberDetails(u.getProfileID().toString(),null);
+
+
 						email_address = m.getEmailAddress();
 						schemeId = res.get("schemeId").toString();
 						proceed = helper.isEmailAddress(email_address);
@@ -654,7 +657,7 @@ public class AdminController extends HttpServlet implements Serializable {
 			XiMember xm = null;
 			try {
 				logger.i("MemberId "+request.getParameter("memberID"));
-				xm = helper.getMemberDetails(request.getParameter("memberID"));
+				xm = helper.getMemberDetails(request.getParameter("memberID"),null);
 			} catch (JSONException  e) {
 				// TODO Auto-generated catch block
 				logger.e("JSONException was detected: " + e.getMessage());
@@ -724,7 +727,7 @@ public class AdminController extends HttpServlet implements Serializable {
 		} else if (request.getParameter(REQUEST_ACTION).equals("VIEW_MEMBER")) {
 			XiMember xm = null;
 			try {
-				xm = helper.getMemberDetails(request.getParameter("memberID"));
+				xm = helper.getMemberDetails(request.getParameter("memberID"),null);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 
@@ -762,7 +765,7 @@ public class AdminController extends HttpServlet implements Serializable {
 			userEJB.edit(u);
 			XiMember m = null;
 			try {
-				m = helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString());
+				m = helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),null);
 			} catch (JSONException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();

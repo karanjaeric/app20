@@ -764,7 +764,7 @@ public class DashboardController extends HttpServlet implements Serializable {
 					member_id = session.getAttribute(Constants.PROFILE_ID).toString();
 				}
 				try {
-					m = helper.getMemberDetails(member_id);
+					m = helper.getMemberDetails(member_id,null);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
