@@ -591,7 +591,16 @@ public class AdminController extends HttpServlet implements Serializable {
 			JSONObject result = helper.searchProfilesJSON(request.getParameter("search"),
 					request.getParameter("identifier"), request.getParameter("profile"),
 					session.getAttribute(Constants.SCHEME_ID).toString());
-
+			logger.i(result.toString());
+			try{
+			    JSONArray array = result.getJSONArray("rows");
+			    JSONObject unitObj =  array.getJSONObject(0);
+			    session.setAttribute("unitization", unitObj.get("unitization"));
+			    logger.i("found unitization:::" + unitObj.get("unitization"));
+			    request.setAttribute("unitization", unitObj.get("unitization"));
+			}catch(Exception x){
+			    logger.i("error extracting unitization:::" + x.toString());
+			}
 			helper.audit(session, "Searched members with search parameter " + request.getParameter("search"));
 			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("PROFILE_ACCESS")) {

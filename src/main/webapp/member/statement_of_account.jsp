@@ -19,7 +19,8 @@
 				<input type="hidden" id="password" value="${ settings.xiReportPassword }" />
 				<input type="hidden" id="scheme_id" value="${ scheme_id } "/>
 				<input type="hidden" id="member_id" value="${ member_id }" />
-				<input type="hidden" id="unitization" value="${ unitization }" />
+				<input type="hidden" id="unitization" value="<%=session.getValue("unitization")%>" />
+				<input type="hidden" id="unitization1" value="${ unitization }" />
 				<p>&nbsp;</p>
 				<div class="col-md-12" id="sa-results">
 					
@@ -74,7 +75,6 @@
 		            	    url = $('#reportPath').val() + 'members/combinedToDate.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FcombinedToDate.xdo&_xmode=3&_paramsBASE=' + $('#xiRootPath').val() + 'Xi&_paramsmember_id=' + $('#member_id').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsadmin=1&_paramsap_id=' + json.accountingPeriodId + '&_paramsadmin=1&id=' + $('#username').val() + '&passwd=' + $('#password').val() + '';
 		            		 
 		            	}
-		            	console.log('unitization check::' + ('#unitization').val());
 		   			 $("#sa-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 			            stop_wait();
 	   	            }
