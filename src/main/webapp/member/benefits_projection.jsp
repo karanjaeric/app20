@@ -45,6 +45,7 @@
 				</div>
 </div>
 <script type="text/javascript">
+var array = {};
 	$(document).ready(function(){
 		function initialize()
 		{
@@ -62,10 +63,11 @@
 		                   	{
 		                		for ( var i = 0; i < json.rows.length; i++) {
 		                    		var row = json.rows[i];
-		                    		console.log(row);
 		               				combo = combo + "<option>" + row['reason'] + "</option>";
+		               				array = json.rows;
 		                		}
 		                		combo = combo + "</select>";
+		                		
 		                   	}
 		        		});
 		        		$('#divReason').html(combo);
@@ -115,14 +117,19 @@
 		        success: function(json) {
 		            if(json.success)
 	   	            {
+		                var reasonId = getArray($('#reason').val());
+		                console.log('>>>>');
+		                console.log();
+		                console.log('<<<<');
 						if($('#planType').val() == 'Defined Benefit')
 						{
-							var url = $('#reportPath').val() + 'members/Member Projection (' + $('#option').val() + ').xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Projection%20(' + $('#option').val() + ').xdo&_xmode=3&_paramsprojdotinterestrate=PROVISIONAL&_paramsprojdotprojtype=Retirements%20Unreduced&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsschemeId=' + $('#scheme_id').val() + '&_paramsbendotdateOfCalculation=' + $('#dateTo').val() + '&_paramsbendotdateOfExit=' + $('#dateTo').val() + '&_paramsbendotmemberId=' + $('#member_id').val() + '&_paramsbendotreasonForExitId=' + $('#reason').val() + '&_xt=Member%20Projections%20(UnReduced)&_xf=analyze&_xana=view&_paramsap_id=81&admin=3347&_paramsadmin=3347&id=' + $('#username').val() + '&passwd=' + $('#password').val();
+							var url = $('#reportPath').val() + 'members/Member Projection (' + $('#option').val() + ').xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Projection%20(' + $('#option').val() + ').xdo&_xmode=3&_paramsprojdotinterestrate=PROVISIONAL&_paramsprojdotprojtype=Retirements%20Unreduced&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsschemeId=' + $('#scheme_id').val() + '&_paramsbendotdateOfCalculation=' + parseDate($('#dateTo').val()) + '&_paramsbendotdateOfExit=' + parseDate($('#dateTo').val()) + '&_paramsbendotmemberId=' + $('#member_id').val() + '&_paramsbendotreasonForExitId=' + reasonId + '&_xt=Member%20Projections%20(UnReduced)&_xf=analyze&_xana=view&_paramsap_id=81&admin=3347&_paramsadmin=3347&id=' + $('#username').val() + '&passwd=' + $('#password').val();
 							 $("#bh-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 						}
 						else if($('#planType').val() == 'Defined Contribution')
 						{
-							var url = $('#reportPath').val() + 'members/Member Projection (Surrender Value).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Projection%20(Surrender%20Value).xdo&_xmode=3&_paramsprojdotinterestrate=PROVISIONAL&_paramsprojdotprojtype=Retirements%20Unreduced&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsschemeId=' + $('#scheme_id').val() + '&_paramsbendotdateOfCalculation=' + $('#dateTo').val() + '&_paramsbendotdateOfExit=' + $('#dateTo').val() + '&_paramsbendotmemberId=' + $('#member_id').val() + '&_paramsbendotreasonForExitId=' + $('#reason').val() + '&_xt=Member%20Projections%20(Surrender%20Value)&_xf=analyze&_xana=view&_paramsap_id=81&admin=3347&_paramsadmin=3347&id=' + $('#username').val() + '&passwd=' + $('#password').val();
+							var url = $('#reportPath').val() + 'members/Member Projection (Surrender Value).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Projection%20(Surrender%20Value).xdo&_xmode=3&_paramsprojdotinterestrate=PROVISIONAL&_paramsprojdotprojtype=Retirements%20Unreduced&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsschemeId=' + $('#scheme_id').val() + '&_paramsbendotdateOfCalculation=' + parseDate($('#dateTo').val()) + '&_paramsbendotdateOfExit=' + parseDate($('#dateTo').val()) + '&_paramsbendotmemberId=' + $('#member_id').val() + '&_paramsbendotreasonForExitId=' + reasonId + '&_xt=Member%20Projections%20(Surrender%20Value)&_xf=analyze&_xana=view&_paramsap_id=81&admin=3347&_paramsadmin=3347&id=' + $('#username').val() + '&passwd=' + $('#password').val();
+							
 							 $("#bh-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 						}
 						stop_wait();
@@ -131,4 +138,27 @@
 			});
 		});
 	});
+	
+	function parseDate(str){
+        var parts = str.split("-");
+        var dt = new Date(parseInt(parts[2], 10),
+                          parseInt(parts[1], 10) - 1,
+                          parseInt(parts[0], 10));
+        str = dt.getMonth() + '/' + dt.getDate() + '/' + dt.getFullYear();
+        
+        return str;
+	}
+	
+	
+	function getArray(val){
+	    for ( var i = 0; i < array.length; i++) {
+    		var val = array[i].reason;
+			if(val == val){
+			    return array[i].id;
+			}
+		}
+	    return array;
+	}
+	
+	
 </script>
