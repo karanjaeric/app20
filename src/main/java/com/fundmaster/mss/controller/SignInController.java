@@ -140,7 +140,9 @@ public class SignInController extends HttpServlet implements Serializable {
 						JSONObject res = helper.memberExists(u.getUserProfile(), u.getUsername());
 						if(res.get("success").equals(true) && Long.valueOf(res.get("memberId").toString()) != 0)
 						{
+							
 							session.setAttribute(Constants.USER, u.getUsername());
+							
 							session.setAttribute(Constants.UID, u.getId());
 							session.setAttribute(Constants.PROFILE_ID, res.get("memberId"));
 							session.setAttribute(Constants.LOGIN, true);
@@ -176,6 +178,7 @@ public class SignInController extends HttpServlet implements Serializable {
 
 					}
 				} catch (NullPointerException | JSONException npje) {
+					npje.printStackTrace();
 					// TODO Auto-generated catch block
 					helper.logActivity(Constants.ML, "login attempt", "0", null, null);
 

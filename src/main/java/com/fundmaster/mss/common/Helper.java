@@ -1860,13 +1860,14 @@ public class Helper {
     }
 
 
-    public JSONObject sendNotification(String receipients, String sender,String subject, String message, String schemeID, boolean attachment, String attachment_url) throws JSONException
+    public JSONObject sendNotification(String receipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url) throws JSONException
     {
         Setting settings = getSettings();
         JSONObject params = new JSONObject();
         params.put("notificationPlatform", "EMAIL")
                 .put("recipients", receipients)
                 .put("mailSender", sender)
+                .put("senderName", senderName)
                 .put("subject", subject)
                 .put("msg", message)
                 .put("schemeId", schemeID);

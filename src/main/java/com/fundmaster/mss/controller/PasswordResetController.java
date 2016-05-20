@@ -139,7 +139,9 @@ public class PasswordResetController extends HttpServlet implements Serializable
 				try {
 					Company company = helper.getCompany();
 					XiMember m = helper.getMemberDetails(u.getProfileID().toString(),null);
-					JSONObject res = helper.sendNotification(m.getEmailAddress(),company.getEmail(), "Password Reset Instructions", "Dear " + u.getUserProfile() + ", " +
+					
+					JSONObject res = helper.sendNotification(m.getEmailAddress(),company.getEmail(), null, "Password Reset Instructions", "Dear " + u.getUserProfile() + ", " +
+
 							"You recently requested to change your password. " +
 							"Your security code is: " + securityCode +
 							" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);

@@ -234,7 +234,7 @@ public class MemberController extends HttpServlet implements Serializable {
 			}
 			try {
 				Company company = helper.getCompany();
-				JSONObject resp = helper.sendNotification(m != null ? m.getEmailAddress() : null,company.getEmail(), "Change Password Request", "Dear " + u.getUsername() + ", " +
+				JSONObject resp = helper.sendNotification(m != null ? m.getEmailAddress() : null,company.getEmail(), null,"Change Password Request", "Dear " + u.getUsername() + ", " +
 						"You recently requested to change your password. " +
 						"Here is your security code:" +
 						"" + securityCode +
