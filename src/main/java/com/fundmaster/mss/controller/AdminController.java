@@ -1403,7 +1403,7 @@ public class AdminController extends HttpServlet implements Serializable {
 				System.out.println("SENDER ID ========================> " +senderId);
 				
 			//	Member m = memberEJB.findById(helper.toLong(senderId));
-				XiMember mbr = helper.getMemberDetails(senderId.toString());
+				XiMember mbr = helper.getMemberDetails(senderId.toString(), null);
 				String senderName = mbr.getName();
 				System.out.println("SENDER NAME ======================> " + senderName);
 	
