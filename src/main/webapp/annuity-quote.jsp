@@ -35,18 +35,26 @@
 						            </c:forEach>
 								</select>
 							</div>
-							<div class="form-group">
-								<label for="maritalStatus" class="control-label">Marital
-									Status:</label> <select name="maritalStatus" id="maritalStatus" onchange="hide_or_show();"
-									class="form-control">
+							<!-- <div class="form-group">
+								<label for="maritalStatus" class="control-label">Marital Status:</label> 
+									<select name="maritalStatus" id="maritalStatus" onchange="hide_or_show();" class="form-control">
 									<option value="">Select marital status...</option>
 									<c:forEach var="maritalStatus" items="${maritalStatuses}">
-						                <option value="${maritalStatus.id}">
-						                    ${maritalStatus.name}
-						                </option>
+						                <option value="${maritalStatus.id}">  ${maritalStatus.name} </option>
 						            </c:forEach>
 								</select>
-							</div>
+							</div>  -->
+							
+		<div class="form-group">
+			<label for="maritalStatus" class="control-label">Marital Status:</label>
+		
+				<select name="maritalStatus" id="maritalStatus" onchange="hide_or_show();" class="form-control">
+					<option value="">Select marital status...</option>
+					<option ${ maritalStatus == 'SINGLE' ? 'selected="selected"' : '' }>Single</option>
+					<option ${ maritalStatus == 'MARRIED' ? 'selected="selected"' : '' }>Married</option>
+				</select>
+			
+		</div>			
 							<div class="form-group">
 								<label for="idNumber" class="control-label">ID/Passport
 									Number:</label> <input type="text" name="idNumber" class="form-control"
