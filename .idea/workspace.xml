@@ -3,14 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="bb972854-9642-4822-9ef8-855f116f8391" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/AdminController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/AdminController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DashboardController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DashboardController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PasswordResetController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PasswordResetController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/RegisterController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/RegisterController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/member.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/member.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/custom/js/scripts.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/custom/js/scripts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mss.iml" afterPath="$PROJECT_DIR$/Mss.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/dashboard.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/dashboard.jsp" />
     </list>
     <ignored path="Mss.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,7 +45,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="778" column="64" selection-start-line="778" selection-start-column="64" selection-end-line="778" selection-end-column="64" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/AdminController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="658" column="50" selection-start-line="658" selection-start-column="50" selection-end-line="658" selection-end-column="50" />
+              <caret line="758" column="37" selection-start-line="758" selection-start-column="37" selection-end-line="758" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -69,7 +65,7 @@
       <file leaf-file-name="admin.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/admin.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="19.291666">
+            <state vertical-scroll-proportion="0.0">
               <caret line="108" column="41" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
               <folding />
             </state>
@@ -79,8 +75,8 @@
       <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.206896">
-              <caret line="2162" column="40" selection-start-line="2162" selection-start-column="18" selection-end-line="2162" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1608" column="97" selection-start-line="1608" selection-start-column="79" selection-end-line="1608" selection-end-column="97" />
               <folding />
             </state>
           </provider>
@@ -96,11 +92,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="member.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="member.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/member.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33753943">
-              <caret line="60" column="33" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
+            <state vertical-scroll-proportion="-8.875">
+              <caret line="66" column="25" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/dashboard.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.9038461">
+              <caret line="227" column="31" selection-start-line="227" selection-start-column="31" selection-end-line="227" selection-end-column="31" />
+              <folding>
+                <marker date="1464096197399" expanded="true" signature="10441:10455" placeholder="..." />
+                <marker date="1464096197399" expanded="true" signature="10530:10549" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="persistence.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.3543307">
+              <caret line="13" column="20" selection-start-line="12" selection-start-column="62" selection-end-line="13" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -111,9 +130,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="47" column="32" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
-              <folding>
-                <marker date="1463401690692" expanded="true" signature="8115:8126" placeholder="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -123,27 +140,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="9" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
-              <folding>
-                <marker date="1463144932881" expanded="true" signature="2913:2976" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="3875:3938" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="4379:4436" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="8984:9038" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="11790:11847" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="14503:14560" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="16968:17021" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="25191:25251" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="33461:33521" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="41759:41819" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="50057:50117" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="58401:58461" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="66697:66757" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="75017:75077" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="83355:83415" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="92121:92181" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="100396:100456" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="108508:108568" placeholder="..." />
-                <marker date="1463144932881" expanded="true" signature="122827:122887" placeholder="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -170,7 +167,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejbInterface/CompanyEJB.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/ActivateController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/ContactUsController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/model/Banner.java" />
@@ -218,9 +214,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/RegisterController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/admin.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/member.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/custom/js/scripts.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/member.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/dashboard.jsp" />
       </list>
     </option>
   </component>
@@ -242,10 +239,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-4" />
-    <option name="y" value="27" />
-    <option name="width" value="1374" />
-    <option name="height" value="744" />
+    <option name="x" value="-208" />
+    <option name="y" value="299" />
+    <option name="width" value="1364" />
+    <option name="height" value="555" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -272,7 +269,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
@@ -295,6 +291,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -310,12 +307,12 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
-    <property name="SearchEverywhereHistoryKey" value="RegisterController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/RegisterController.java&#10;DashboardController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/DashboardController.java&#10;PasswordResetController&#9;PSI&#9;JAVA://com.fundmaster.mss.controller.PasswordResetController&#10;admincon&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AdminController.java&#10;dashboardc&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/DashboardController.java&#10;schemed&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.SchemeDAO&#10;memberdao&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.MemberDAO&#10;user&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.UserDAO&#10;calc-log&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/calc-log.jsp&#10;member&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/member.jsp&#10;adminco&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AdminController.java&#10;script&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/static/custom/js/scripts.js&#10;dash&#9;PSI&#9;JAVA://com.fundmaster.mss.controller.DashboardController&#10;scheme &#9;PSI&#9;JAVA://com.fundmaster.mss.model.Scheme&#10;dashboard.jsp&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard.jsp&#10;scheme&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/scheme.jsp&#10;egist&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/register.jsp&#10;AnnuityController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AnnuityController.java&#10;sign&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/SignInController.java&#10;Helper&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/common/Helper.java&#10;pers&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/resources/META-INF/persistence.xml&#10;PermissionDAO.java&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/dao/MemberPermissionDAO.java" />
+    <property name="SearchEverywhereHistoryKey" value="persis&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/resources/META-INF/persistence.xml&#10;RegisterController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/RegisterController.java&#10;DashboardController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/DashboardController.java&#10;PasswordResetController&#9;PSI&#9;JAVA://com.fundmaster.mss.controller.PasswordResetController&#10;admincon&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AdminController.java&#10;dashboardc&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/DashboardController.java&#10;schemed&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.SchemeDAO&#10;memberdao&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.MemberDAO&#10;user&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.UserDAO&#10;calc-log&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/calc-log.jsp&#10;member&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/member.jsp&#10;adminco&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AdminController.java&#10;script&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/static/custom/js/scripts.js&#10;dash&#9;PSI&#9;JAVA://com.fundmaster.mss.controller.DashboardController&#10;scheme &#9;PSI&#9;JAVA://com.fundmaster.mss.model.Scheme&#10;dashboard.jsp&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard.jsp&#10;scheme&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/scheme.jsp&#10;egist&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/register.jsp&#10;AnnuityController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AnnuityController.java&#10;sign&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/SignInController.java&#10;Helper&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/common/Helper.java&#10;pers&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/resources/META-INF/persistence.xml&#10;PermissionDAO.java&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/dao/MemberPermissionDAO.java" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="mss" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -607,45 +604,12 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
-      <method />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -725,37 +689,10 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
-      <node-options />
-      <working-directory>$PROJECT_DIR$</working-directory>
-      <pass-parent-env>true</pass-parent-env>
-      <envs />
-      <ui>bdd</ui>
-      <extra-mocha-options />
-      <test-kind>DIRECTORY</test-kind>
-      <test-directory />
-      <recursive>false</recursive>
-      <method />
-    </configuration>
     <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
       <method />
     </configuration>
     <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
-      <method />
-    </configuration>
-    <configuration default="true" type="uTestRunConfiguration" factoryName="utest">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
-      <envs />
       <method />
     </configuration>
     <configuration default="false" name="Jboss 7.1.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss 7.1.1.Final" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
@@ -871,47 +808,48 @@
       <workItem from="1463122654443" duration="3782000" />
       <workItem from="1463132236579" duration="10151000" />
       <workItem from="1463390519615" duration="8433000" />
+      <workItem from="1464091654521" duration="1915000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="135396000" />
+    <option name="totallyTimeSpent" value="137311000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="27" width="1374" height="744" extended-state="6" />
+    <frame x="-208" y="299" width="1364" height="555" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42433697" sideWeight="0.52122986" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917318" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17521994" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21815519" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5995526" sideWeight="0.47877014" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="EJB" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917318" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46356916" sideWeight="0.7239583" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1749634" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42433697" sideWeight="0.47877014" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="EJB" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3291536" sideWeight="0.47864506" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5723337" sideWeight="0.49583334" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46356916" sideWeight="0.7239583" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4726989" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -971,25 +909,26 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/member.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="87" selection-start-line="12" selection-start-column="87" selection-end-line="12" selection-end-column="87" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/2a932058-4dc9-41ab-ac80-48e96438d6f8/console.sql">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/custom/js/scripts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="1538" selection-start-line="0" selection-start-column="1538" selection-end-line="0" selection-end-column="1538" />
+          <caret line="47" column="32" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_60/src.zip!/java/lang/String.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/custom/js/form-scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5513866">
-          <caret line="132" column="58" selection-start-line="132" selection-start-column="58" selection-end-line="132" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="9" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -1073,18 +1012,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/66441ae4-b64d-4ec5-92d6-a21b22f9b115/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="68" selection-start-line="2" selection-start-column="68" selection-end-line="2" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/register.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5755518">
           <caret line="649" column="120" selection-start-line="649" selection-start-column="109" selection-end-line="649" selection-end-column="120" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1092,7 +1023,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.09059829">
           <caret line="10" column="4499" selection-start-line="10" selection-start-column="4499" selection-end-line="10" selection-end-column="4499" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1139,7 +1069,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.25466892">
           <caret line="10" column="62" selection-start-line="10" selection-start-column="62" selection-end-line="10" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1163,7 +1092,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.25">
           <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1179,7 +1107,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1196,17 +1123,6 @@
         <state vertical-scroll-proportion="0.17142858">
           <caret line="45" column="47" selection-start-line="45" selection-start-column="41" selection-end-line="45" selection-end-column="47" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/dashboard.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36502546">
-          <caret line="169" column="70" selection-start-line="169" selection-start-column="70" selection-end-line="169" selection-end-column="70" />
-          <folding>
-            <marker date="1462882676930" expanded="true" signature="10788:10802" placeholder="..." />
-            <marker date="1462882676930" expanded="true" signature="10877:10896" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1237,9 +1153,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1317,18 +1230,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.43066883">
           <caret line="89" column="5" selection-start-line="89" selection-start-column="5" selection-end-line="89" selection-end-column="5" />
-          <folding>
-            <element signature="e#1920#1921#0" expanded="false" />
-            <element signature="e#1936#1937#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.206896">
-          <caret line="2162" column="40" selection-start-line="2162" selection-start-column="18" selection-end-line="2162" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1336,27 +1237,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="9" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
-          <folding>
-            <marker date="1463144932881" expanded="true" signature="2913:2976" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="3875:3938" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="4379:4436" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="8984:9038" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="11790:11847" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="14503:14560" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="16968:17021" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="25191:25251" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="33461:33521" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="41759:41819" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="50057:50117" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="58401:58461" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="66697:66757" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="75017:75077" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="83355:83415" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="92121:92181" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="100396:100456" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="108508:108568" placeholder="..." />
-            <marker date="1463144932881" expanded="true" signature="122827:122887" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1364,9 +1245,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="47" column="32" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
-          <folding>
-            <marker date="1463401690692" expanded="true" signature="8115:8126" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1374,6 +1253,40 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="778" column="64" selection-start-line="778" selection-start-column="64" selection-end-line="778" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/admin.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="108" column="41" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/member.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.875">
+          <caret line="66" column="25" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/AdminController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="758" column="37" selection-start-line="758" selection-start-column="37" selection-end-line="758" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1608" column="97" selection-start-line="1608" selection-start-column="79" selection-end-line="1608" selection-end-column="97" />
           <folding />
         </state>
       </provider>
@@ -1386,26 +1299,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/AdminController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/dashboard.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="658" column="50" selection-start-line="658" selection-start-column="50" selection-end-line="658" selection-end-column="50" />
-          <folding />
+        <state vertical-scroll-proportion="-1.9038461">
+          <caret line="227" column="31" selection-start-line="227" selection-start-column="31" selection-end-line="227" selection-end-column="31" />
+          <folding>
+            <marker date="1464096197399" expanded="true" signature="10441:10455" placeholder="..." />
+            <marker date="1464096197399" expanded="true" signature="10530:10549" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/admin.jsp">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="19.291666">
-          <caret line="108" column="41" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/member.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33753943">
-          <caret line="60" column="33" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
+        <state vertical-scroll-proportion="1.3543307">
+          <caret line="13" column="20" selection-start-line="12" selection-start-column="62" selection-end-line="13" selection-end-column="20" />
           <folding />
         </state>
       </provider>

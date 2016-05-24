@@ -164,41 +164,39 @@
 						        success: function(json) {
 						            if(json.success)
 					   	            {
-						            	$.ajax({
-									        url: $('#base_url').val() + 'admin',
-									        type: 'post',
-									        data: {ACTION:'FV', schemeID: $('#schemeID').val(), accountingPeriodId: json.accountingPeriodId},
-									        dataType: 'json',
-									        success: function(json) {
-									            if(json.success)
-								   	            {
-									            	$('#fund-value').html(currency + ' ' + format_no(json.fundValue));
-									            	$.ajax({
-												        url: $('#base_url').val() + 'admin',
-												        type: 'post',
-												        data: {ACTION:'ML'},
-												        dataType: 'json',
-												        success: function(json) {
+										$.ajax({
+											url: $('#base_url').val() + 'admin',
+											type: 'post',
+											data: {ACTION:'ML'},
+											dataType: 'json',
+											success: function(json) {
+												if(json.success)
+												{
+													member_panel(json);
+													$.ajax({
+														url: $('#base_url').val() + 'admin',
+														type: 'post',
+														data: {ACTION:'FV', schemeID: $('#schemeID').val(), accountingPeriodId: json.accountingPeriodId},
+														dataType: 'json',
+														success: function(json) {
 															if(json.success)
-															{																										            	
-												            	member_panel(json);
+															{
+																$('#fund-value').html(currency + ' ' + format_no(json.fundValue));
+
 															}
-												        }
-									            	});
-								   	            }
-									            else
-								    	        {
-								    	            stop_wait();
-								    	            bootbox.alert('<p class="text-center">' + json.message + '</p>');
-								        	    }
-									        }
-									    });
+															else
+															{
+																stop_wait();
+																bootbox.alert('<p class="text-center">' + json.message + '</p>');
+															}
+														}
+													});
+												}
+											}
+										})
+
 					   	            }
-						            else
-					    	        {
-					    	            stop_wait();
-					    	            bootbox.alert('<p class="text-center">' + json.message + '</p>');
-					        	    }
+
 						        }
 						    });
 						}
@@ -218,6 +216,7 @@
 								$('#active_members').html(format_no(value['active']));
 								$('#deferred_members').html(format_no(value['defered']));
 								$('#pensioner_members').html(format_no(value['pensioners']));
+							     $('#exits_in_year').html(format_no(value['exits']));
 			           	}
 					});
 				}
