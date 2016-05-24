@@ -173,6 +173,12 @@ body {
 								<li><a
 									href="<%=request.getContextPath()%>/annuity-quotation">${ menu.annuityQuotationName }</a></li>
 								</c:if>
+								
+								<c:if test="${menu.potentialMemberActive == 'TRUE'}">
+								<li><a
+									href="<%=request.getContextPath()%>/potential-member">${ menu.potentialMemberName }</a></li>
+								</c:if>
+								
 								<c:if test="${menu.interestRatesActive == 'TRUE'}">
 								<li><a href="<%=request.getContextPath()%>/interest-rates">${ menu.interestRatesName }</a></li>
 								</c:if>

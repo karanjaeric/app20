@@ -964,15 +964,18 @@ public class AdminController extends HttpServlet implements Serializable {
 		} else if (request.getParameter(REQUEST_ACTION).equals("MENU")) {
 			/* Menu Update Request */
 			boolean annuityQuotationActive = request.getParameter("annuityQuotationActive").equalsIgnoreCase("true");
+			boolean potentialMemberActive = request.getParameter("potentialMemberActive").equalsIgnoreCase("true");
 			boolean interestRatesActive = request.getParameter("interestRatesActive").equalsIgnoreCase("true");
 			boolean whatIfAnalysisActive = request.getParameter("whatIfAnalysisActive").equalsIgnoreCase("true");
 			boolean contactUsActive = request.getParameter("contactUsActive").equalsIgnoreCase("true");
 			Menu menu = menuEJB.find();
 			menu.setAnnuityQuotationActive(annuityQuotationActive);
+			menu.setPotentialMemberActive(potentialMemberActive);
 			menu.setInterestRatesActive(interestRatesActive);
 			menu.setWhatIfAnalysisActive(whatIfAnalysisActive);
 			menu.setContactUsActive(contactUsActive);
 			menu.setAnnuityQuotationName(request.getParameter("annuityQuotationName"));
+			menu.setPotentialMemberName(request.getParameter("potentialMemberName"));
 			menu.setInterestRatesName(request.getParameter("interestRatesName"));
 			menu.setWhatIfAnalysisName(request.getParameter("whatIfAnalysisName"));
 			menu.setContactUsName(request.getParameter("contactUsName"));

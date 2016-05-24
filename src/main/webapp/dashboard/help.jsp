@@ -31,6 +31,7 @@
 							<option>INTEREST_RATES</option>
 							<option>WHAT_IF_ANALYSIS</option>
 							<option>ANNUITY_QUOTATION</option>
+							<option>POTENTIAL_MEMBER</option>
 							<option>CONTACT_US</option>
 							<option>REGISTRATION</option>
 						</select>

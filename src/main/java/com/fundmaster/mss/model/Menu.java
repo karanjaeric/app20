@@ -17,34 +17,41 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private
-	Long id;
+	private Long id;
+	
 	@Column(name="annuityQuotationActive", nullable=false)
-	private
-	boolean annuityQuotationActive;
+	private boolean annuityQuotationActive;
+	
+	@Column(name="potentialMemberActive", nullable=false)
+	private boolean potentialMemberActive;
+	
 	@Column(name="interestRatesActive", nullable=false)
-	private
-	boolean interestRatesActive;
+	private boolean interestRatesActive;
+	
 	@Column(name="whatIfAnalysisActive", nullable=false)
-	private
-	boolean whatIfAnalysisActive;
+	private boolean whatIfAnalysisActive;
+	
 	@Column(name="contactUsActive", nullable=false)
-	private
-	boolean contactUsActive;
+	private boolean contactUsActive;
+	
 	@Column(name="annuityQuotationName", nullable=false)
-	private
-	String annuityQuotationName;
+	private String annuityQuotationName;
+	
+	@Column(name="potentialMemberName", nullable=false)
+	private String potentialMemberName;
+	
 	@Column(name="interestRatesName", nullable=false)
-	private
-	String interestRatesName;
+	private String interestRatesName;
+	
 	@Column(name="whatIfAnalysisName", nullable=false)
-	private
-	String whatIfAnalysisName;
+	private String whatIfAnalysisName;
+	
 	@Column(name="contactUsName", nullable=false)
-	private
-	String contactUsName;
+	private String contactUsName;
+	
 	public Long getId() {
 		return id;
 	}
@@ -56,6 +63,13 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	}
 	public void setAnnuityQuotationActive(boolean annuityQuotationActive) {
 		this.annuityQuotationActive = annuityQuotationActive;
+	}
+	
+	public boolean isPotentialMemberActive() {
+		return potentialMemberActive;
+	}
+	public void setPotentialMemberActive(boolean potentialMemberActive) {
+		this.potentialMemberActive = potentialMemberActive;
 	}
 	public boolean isInterestRatesActive() {
 		return interestRatesActive;
@@ -81,6 +95,14 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	public void setAnnuityQuotationName(String annuityQuotationName) {
 		this.annuityQuotationName = annuityQuotationName;
 	}
+	
+	public String getPotentialMemberName() {
+		return potentialMemberName;
+	}
+	public void setPotentialMemberName(String potentialMemberName) {
+		this.potentialMemberName = potentialMemberName;
+	}
+	
 	public String getInterestRatesName() {
 		return interestRatesName;
 	}
@@ -102,18 +124,20 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public Menu(Long id, boolean annuityQuotationActive,
+	public Menu(Long id, boolean annuityQuotationActive, boolean potentialMemberActive,
 			boolean interestRatesActive, boolean whatIfAnalysisActive,
-			boolean contactUsActive, String annuityQuotationName,
+			boolean contactUsActive, String annuityQuotationName, String potentialMemberName,
 			String interestRatesName, String whatIfAnalysisName,
 			String contactUsName) {
 		super();
 		this.id = id;
 		this.annuityQuotationActive = annuityQuotationActive;
+		this.potentialMemberActive = potentialMemberActive;
 		this.interestRatesActive = interestRatesActive;
 		this.whatIfAnalysisActive = whatIfAnalysisActive;
 		this.contactUsActive = contactUsActive;
 		this.annuityQuotationName = annuityQuotationName;
+		this.potentialMemberName = potentialMemberName;
 		this.interestRatesName = interestRatesName;
 		this.whatIfAnalysisName = whatIfAnalysisName;
 		this.contactUsName = contactUsName;

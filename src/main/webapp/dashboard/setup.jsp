@@ -19,6 +19,7 @@
 		<table class="table table-responsive table-striped">
 			<tr><th>MENU</th><th>MENU TEXT</th><th>ACTIVE</th></tr>
 			<tr><td>ANNUITY QUOTATION</td><td>${ menu.annuityQuotationName }</td><td>${ menu.annuityQuotationActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
+			<tr><td>POTENTIAL MEMBERS</td><td>${ menu.potentialMemberActive }</td><td>${ menu.potentialMemberActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>INTEREST RATES</td><td>${ menu.interestRatesName }</td><td>${ menu.interestRatesActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>WHAT IF ANALYSIS</td><td>${ menu.whatIfAnalysisName }</td><td>${ menu.whatIfAnalysisActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>CONTACT US</td><td>${ menu.contactUsName }</td><td>${ menu.contactUsActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>

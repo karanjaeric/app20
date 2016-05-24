@@ -3166,6 +3166,203 @@ $(document)
 												});
 
 									});
+					
+					$('#form-new-member')
+					.bootstrapValidator(
+							{
+								message : 'This value is not valid',
+								feedbackIcons : {
+									valid : 'glyphicon glyphicon-ok',
+									invalid : 'glyphicon glyphicon-remove',
+									validating : 'glyphicon glyphicon-refresh'
+								},
+								excluded : ':disabled',
+								fields : {
+									firstName : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your first name is required'
+											},
+											regexp : {
+												regexp : /^[a-z\s]+$/i,
+												message : 'Sorry, your first name can only consist of alphabetical letters & spaces'
+											}
+										}
+									},
+									lastName : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your last name is required'
+											},
+											regexp : {
+												regexp : /^[a-z\s]+$/i,
+												message : 'Sorry, your last name can only consist of alphabetical letters & spaces'
+											}
+										}
+									},
+									dateOfBirth : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your date of birth is required'
+											}
+										}
+									},
+									emailAddress : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your email address is required'
+											},
+											emailAddress : {
+												message : 'Oops! This doesn\'t look like a valid email address'
+											}
+										}
+									},
+									phoneNumber : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your phone number is required'
+											}
+										}
+									},
+									residentialAddress : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your residential address is required'
+											}
+										}
+									},
+									city : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, please tell us your home town'
+											}
+										}
+									},
+									country : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your country is required'
+											}
+										}
+									},
+									IdNumber : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, your ID/Passport number is required'
+											}
+										}
+									},
+									gender : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, please select your gender'
+											}
+										}
+									},
+									maritalStatus : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, please select your marital status'
+											}
+										}
+									},
+									pension_scheme : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, please select your prefered pension scheme'
+											}
+										}
+									}
+								}
+							})
+					.on(
+							'success.form.bv',
+							function(e) {
+								start_wait();
+								// Prevent form submission
+								e.preventDefault();
+								// Get the form instance
+								$
+										.ajax({
+											url : $('#base_url')
+													.val()
+													+ 'potential-member',
+											type : 'post',
+											data : { ACTION: 'ADD_MEMBER',
+												city : $('#city')
+														.val(),
+												country : $(
+														'#country')
+														.val(),
+												dateOfBirth : $(
+														'#dateOfBirth')
+														.val(),
+												emailAddress : $(
+														'#emailAddress')
+														.val(),
+												firstName : $(
+														'#firstName')
+														.val(),
+												lastName : $(
+														'#lastName')
+														.val(),
+												otherName : $(
+														'#otherName')
+														.val(),
+												gender : $(
+														'#gender')
+														.val(),
+												idNumber : $(
+														'#IdNumber')
+														.val(),
+												maritalStatus : $(
+														'#maritalStatus')
+														.val(),
+												memberPassword : $(
+														'#memberPassword')
+														.val(),
+												pension_scheme : $(
+														'#pension_scheme')
+														.val(),
+												phoneNumber : $(
+														'#phoneNumber')
+														.val(),
+												residentialAddress : $(
+														'#residentialAddress')
+														.val(),
+												scheme : $(
+														'#pension_scheme')
+														.val(),
+												type : 'member'
+
+											},
+											dataType : 'json',
+											success : function(json) {
+												stop_wait();
+												if (json.success) {
+													$("form#form-new-member")[0]
+															.reset();
+													setTimeout(
+															function() {
+																window.location.href = $(
+																		'#base_url')
+																		.val();
+															}, 5000);
+												}
+												bootbox
+														.alert('<p class="text-center">'
+																+ json.message
+																+ '</p>');
+
+												load_dashboard(1, 0);
+												$('.modal-backdrop')
+														.remove();
+											}
+										});
+
+							});
+					
+					
 					$('#companyApplicationDate')
 			        .datetimepicker({
 			        	 language:  'en',
