@@ -218,7 +218,7 @@
 										<div class="modal-body">
 											<h2 class="heading">
 													<c:forEach var="pn" items="${profileNames }">
-							            				<c:if test="${ pn.profile == 'SPONSOR'}">
+							            				<c:if test="${ pn.profile == 'TRUSTEE'}">
 							            					${ pn.name }
 							            				</c:if>
 							            			</c:forEach> REGISTRATION</h2>
