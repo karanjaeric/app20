@@ -277,14 +277,16 @@ public class AdminController extends HttpServlet implements Serializable {
 
 						XiMember m = helper.getMemberDetails(u.getProfileID().toString(),null);
 
-
+						session.setAttribute("member_id", m.getId());
 						email_address = m.getEmailAddress();
 						schemeId = res.get("schemeId").toString();
 						proceed = helper.isEmailAddress(email_address);
 					} else {
 						try {
 							JSONObject resp = helper.getProviderDetails(u.getUserProfile(), memberID);
+							
 							if (resp.get("success").equals(true)) {
+							    session.setAttribute("member_id", memberID);
 								try {
 									JSONArray json = (JSONArray) resp.get("rows");
 									JSONObject provider = json.getJSONObject(0);

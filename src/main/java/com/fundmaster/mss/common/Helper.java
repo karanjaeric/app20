@@ -177,12 +177,12 @@ public class Helper {
     private JSONObject URLGet(String link) throws JSONException {
 
         JSONObject json;
-        logger.i("Getting...\n Network link: " + link);
+        //logger.i("Getting...\n Network link: " + link);
         if(isHttps(link))
             json = HttpsGet(link);
         else
             json = HttpGet(link);
-        logger.i("Response: \n" + json);
+        //logger.i("Response: \n" + json);
         return json;
     }
 
@@ -408,12 +408,12 @@ public class Helper {
 
     private JSONObject URLPost(String link, String params, String encoding) throws JSONException {
         JSONObject json;
-        logger.i("Posting...\n Network link: " + link + "\n Params: " + params + "\n Encoding: " + encoding);
+        //logger.i("Posting...\n Network link: " + link + "\n Params: " + params + "\n Encoding: " + encoding);
         if(isHttps(link))
             json = HttpsPost(link, params, encoding);
         else
             json = HttpPost(link, params, encoding);
-        logger.i("Response: \n" + json);
+        //logger.i("Response: \n" + json);
         return json;
     }
 
@@ -1307,7 +1307,7 @@ public class Helper {
     public String getSchemeInterestRates(String schemeID) throws JSONException {
         Setting settings = getSettings();
         JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemeinterestrates/" + schemeID);
-        logger.i("response.get(Helper.SUCCESS) "+response.get(Helper.SUCCESS));
+        //logger.i("response.get(Helper.SUCCESS) "+response.get(Helper.SUCCESS));
         if(response.get(Helper.SUCCESS).equals(true))
         {
 
@@ -2350,7 +2350,12 @@ public class Helper {
         Setting settings = getSettings();
         try
         {
-            JSONObject response = URLPost(settings.getXiPath() + "getmemberaverageinterest/" + memberID, "", "application/x-www-form-urlencoded");
+            JSONObject response = new JSONObject("{\"success\":false, \"msg\":\"Failed!\"}");
+            try{
+                response = URLPost(settings.getXiPath() + "getmemberaverageinterest/" + memberID, "", "application/x-www-form-urlencoded");
+            }catch(Exception x){
+                logger.i("error retrieving average history::" + x);
+            }
             return response.toString();
         }
         catch (Exception ex)

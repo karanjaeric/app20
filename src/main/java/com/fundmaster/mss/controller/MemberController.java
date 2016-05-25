@@ -86,6 +86,7 @@ public class MemberController extends HttpServlet implements Serializable {
 					List<Scheme> schemes = helper.getProfileSchemes(session.getAttribute(Constants.USER).toString(), session.getAttribute(Constants.U_PROFILE).toString());
 					request.setAttribute("schemes", schemes);
 					XiMember m= helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),null);
+					request.setAttribute("member_id", m.getId());
 					if(schemes != null && schemes.size() > 0) {
 						logger.i("Scheme is not null. email: "+session.getAttribute(Constants.USER).toString());
 						if(session.getAttribute(Constants.SCHEME_ID) == null)
