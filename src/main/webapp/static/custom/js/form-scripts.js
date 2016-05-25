@@ -2995,6 +2995,15 @@ $(document)
 													}
 												}
 											},
+											
+											displayable : {
+												validators : {
+													notEmpty : {
+														message : 'Please enter the displayable value'
+													}
+												}
+											},
+											
 											commencementDate : {
 												validators : {
 													notEmpty : {
@@ -3147,6 +3156,7 @@ $(document)
 																'#spouseGender')
 																.val(),
 														spouseReversal: $('#spouseReversal').val(),
+														displayable: $('#displayable').val(),
 														calculationMode: $('#calculationMode').val(),
 														targetPension: $('#targetPension').val(),
 														unRegPurchasePrice: $('#unRegPurchasePrice').val()

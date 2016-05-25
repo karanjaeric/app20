@@ -252,6 +252,13 @@
 														placeholder="0.00" value="0">
 										</div>
 									</div>
+									<div class="col-md-3 hide" id="displayable">
+										<div class="form-group">
+													<label for="displayable" class="control-label">Displayable:</label> <input
+														type="text" name="displayable" class="form-control" id="displayable"
+														placeholder="displayable" value="1">
+										</div>
+									</div>
 						</fieldset>
 					
 						<div align="right">

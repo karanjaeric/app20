@@ -141,10 +141,20 @@ public class AnnuityController extends HttpServlet implements Serializable {
 		String calculationMode = request.getParameter("calculationMode");
 		String targetPension = request.getParameter("targetPension");
 		String spouseReversal = request.getParameter("spouseReversal");
+		
+		
+		Boolean displayable = Boolean.TRUE;
+		
+		
+		//Boolean displayable = Boolean.valueOf(request.getParameter("displayable") != null);
+				
+		System.out.println("Value of displayable is :::::::::::::::::::::::::::>  " + displayable);
+		
 		Gender gender = helper.genderById(Long.valueOf(request.getParameter("gender")));
 		Gender spouseGender = helper.genderById(Long.valueOf(request.getParameter("gender")));
+		
     	try {
-    		String result = helper.getAnnuityQuote(calculationMode, request.getParameter("annuityProduct"), lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, spouseGender.getName(), format.format(spouseDateOfBirth==null?new Date():spouseDateOfBirth));
+    		String result = helper.getAnnuityQuote(calculationMode, request.getParameter("annuityProduct"), lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, displayable, spouseGender.getName(), format.format(spouseDateOfBirth==null?new Date():spouseDateOfBirth));
 			out.write(result);
 		} catch (JSONException e) {
 
