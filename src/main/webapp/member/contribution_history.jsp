@@ -83,6 +83,7 @@
 									        + "&_paramsdateFrom=" + fromDate
 									        +  "&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id=" 
 									        + $('#scheme_id').val() + "&_paramsmember_id=" + $('#member_id').val() + "&_xt=Contribution%20History%20(Detailed)&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+						    console.log(url);
 						
 						    $("#ch-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 						 						 
