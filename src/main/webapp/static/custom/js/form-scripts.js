@@ -80,9 +80,9 @@ $(document)
 																	"ap",
 																	"openingBalances",
 																	"pensionDrawDown",
-																	"registered",
-																	"unRegistered" ];
-															var html = '<tr><th>Acccounting Period</th><th>OPENING BALANCES(%)</th><th>PENSION DRAW DOWN(%)</th><th>REGISTERED</th><th>UNREGISTERED</th></tr>';
+																	"contributions",
+																	"status" ];
+															var html = '<tr><th>Acccounting Period</th><th>OPENING BALANCES(%)</th><th>PENSION DRAW DOWN(%)</th><th>CONTRIBUTIONS</th><th>STATUS</th></tr>';
 															for ( var i = 0; i < json.rows.length; i++) {
 																var row = json.rows[i];
 																html = html
@@ -100,7 +100,7 @@ $(document)
 																}
 																html = html
 																		+ "</tr>";
-																if (i == 4)
+																if (i == 10)
 																	break;
 															}
 

@@ -1361,19 +1361,21 @@ public class Helper {
 
                 if(jsonobj.getString("status").equals("Registered"))
                 {
+                    obj.put("status", "registered");
                     obj.put("registered", jsonobj.get("contributions"));
 
-                    JSONObject jsonobj_ = res.getJSONObject(i/* + 1*/);
+                    JSONObject jsonobj_ = res.getJSONObject(i);
 
-                    obj.put("unRegistered", jsonobj_.get("contributions"));
+                    obj.put("unRegistered", 0);
                 }
                 else
                 {
+                    obj.put("status", "unregistered");
                     obj.put("unRegistered", jsonobj.get("contributions"));
 
-                    JSONObject jsonobj_ = res.getJSONObject(i /*+ 1*/);
+                    JSONObject jsonobj_ = res.getJSONObject(i);
 
-                    obj.put("registered", jsonobj_.get("contributions"));
+                    obj.put("registered", 0);
                 }
 
                 jsonarray.put(obj);
