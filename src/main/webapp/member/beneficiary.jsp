@@ -5,7 +5,8 @@
 <c:forEach var="ben" items="${ beneficiaries }">
 	<c:if test="${ben.id == beneficiary_id }">
 		<input type="hidden" id="beneficiary_id" value="${ ben.id }"/>
-
+		 <input type="hidden" name="ACTION" id="ACTION" value="EDIT_BENEFICIARY" />
+	
 		<div class="form-group">
 			<label for="firstName" class="col-sm-5 control-label">First Name:</label>
 			<div class="col-sm-7">
@@ -94,14 +95,15 @@
 		<div class="form-group">
     		<label for="attachment" class="col-sm-5 control-label">Upload File:</label>
     		<div class="col-sm-7">
-    			<input type="file" id="attachment" name="attachment" class="form-control  input-sm">
-    		</div>
+    			<input type="file" id="attachment" name="attachment" class="filestyle">
+    		</div> 
   		</div>
 	</c:if>
 </c:forEach>
 </c:if>
 <c:if test="${ type == 'ADD' }">
 <input type="hidden" id="beneficiary_id" value="0"/>
+	<input type="hidden" name="ACTION" id="ACTION" value="EDIT_BENEFICIARY" />
 		<div class="form-group">
 			<label for="firstName" class="col-sm-5 control-label">First Name:</label>
 			<div class="col-sm-7">
@@ -187,11 +189,11 @@
 				</select>
 			</div>
 		</div>
-	<!--<div class="form-group">
+	<div class="form-group">
     		<label for="attachment" class="col-sm-5 control-label">Upload File:</label>
     		<div class="col-sm-7">
-    			<input type="file" id="attachment" name="attachment" class="form-control  input-sm">
-    		</div>
-  		</div> -->
+    			<input type="file" id="attachment" name="attachment" class="filestyle">
+    		</div> 
+  		</div>
 </c:if>
 </div>

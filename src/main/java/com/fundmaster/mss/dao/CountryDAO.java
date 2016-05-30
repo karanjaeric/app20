@@ -1,6 +1,9 @@
 package com.fundmaster.mss.dao;
 
 import com.fundmaster.mss.model.Country;
+import com.fundmaster.mss.model.Member;
+
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -13,4 +16,6 @@ public class CountryDAO extends GenericDAOImpl<Country, Long> {
         super(Country.class, entityManager);
         EntityManager em = entityManager;
     }
+    
+    
 }

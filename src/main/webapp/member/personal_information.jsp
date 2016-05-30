@@ -493,87 +493,57 @@
 												message : 'Please select the status'
 											}
 										}
-									}
-									/* file: {
+									},
+									 file: {
 										 validators : {
 					                        extension: 'jpeg,jpg,png,doc,docx,pdf,xls,txt',
 					                        type: 'image/jpeg,image/png,application/msword,application/pdf,application/vnd.ms-excel,',
 					                        maxSize: 2097152,   // 2048 * 1024
 					                        message: 'The selected file is not valid'
 					                    }
-									 }*/
+									 }
 								}
 							})
 
-					.on( 'success.form.bv', function(e) {
-						start_wait();
-							// Prevent form submission
-							e.preventDefault();
+							.on( 'success.form.bv', function(e) {
+								start_wait();
+									// Prevent form submission
+									e.preventDefault();
 
-							// Get the form instance
-								var modal = "modal-edit-beneficiary";
+									// Get the form instance
+										var modal = "modal-edit-beneficiary";
+									
+									//Define formData object
+										var formData = new FormData($(this)[0]);
+										type = $('#type').val();
+										formData.append("type", type);
 
-							//	var formData = new FormData($(this)[0]);
-
-										$.ajax({
-											url : $('#base_url').val() + 'admin',
-											type : 'post',
-											data : {
-												ACTION: 'EDIT_BENEFICIARY',
-												type: $('#type').val(),
-												beneficiary_id: $(
-														'#beneficiary_id').val(),
-												memberID: $(
-														'#member_id').val(),
-												firstname : $(
-														'#firstName')
-														.val(),
-												surname : $(
-														'#ben_surname')
-														.val(),
-												othernames : $(
-														'#othernames')
-														.val(),
-												lumpsum: $('#lumpsum')
-														.val(),
-												gender : $(
-														'#gender')
-														.val(),
-												relationship : $(
-														'#relationship')
-														.val(),
-												relationshipCategory : $(
-														'#relShipCategory')
-														.val(),
-												maritalStatus : $(
-														'#mStatus')
-														.val(),
-												status : $(
-														'#status')
-														.val()
-												/*attachment: $(
-														'#attachment')
-														.val(),*/
-											},
-											dataType : 'json',
-											success : function(json) {
-												stop_wait();
-													if(json.success)
-													{
-														$('form#form-edit-beneficiary')[0].reset();
-														$('#modal-edit-beneficiary').modal('hide');
-													}
-													bootbox
-															.alert('<p class="text-center">'
-																	+ json.message
-																	+ '</p>');
-											}
-										});
-							});
+												$.ajax({
+													url : $('#base_url').val() + 'admin',
+													type : 'post',
+													data: formData,
+													dataType : 'json',
+													success : function(json) {
+														stop_wait();
+															if(json.success)
+															{
+																$('form#form-edit-beneficiary')[0].reset();
+																$('#modal-edit-beneficiary').modal('hide');
+															}
+															bootbox
+																	.alert('<p class="text-center">'
+																			+ json.message
+																			+ '</p>');
+													},
+													cache: false,
+								        	        contentType: false,
+								        	        processData: false
+												});
+									});
 				});
 			</script>
 <div class="modal fade" id="modal-edit-beneficiary" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEditBeneficiary" aria-hidden="true">
-	<form role="form" id="form-edit-beneficiary">
+	<form role="form" id="form-edit-beneficiary" enctype="multipart/form-data">
 		<div class="modal-dialog large-modal">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -583,6 +553,8 @@
 					</h4>
 				</div>
 				<div class="modal-body" id="beneficiary-content">
+				
+				<!-- <input type="hidden" name="ACTION" id="ACTION" value="EDIT_BENEFICIARY" />  -->
 
 				</div>
 

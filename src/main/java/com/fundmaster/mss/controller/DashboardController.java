@@ -132,15 +132,26 @@ public class DashboardController extends HttpServlet implements Serializable {
 				helper.audit(session, "Accessed help content");
 				request.getRequestDispatcher(REPO_FOLDER + "/help.jsp").forward(request, response);
 			}
-			else if(request.getParameter(REPO_FOLDER).toUpperCase().equals("VIEW_MEMBER".toUpperCase()))
+			else if(request.getParameter(REPO_FOLDER).toUpperCase().equals("VIEW_POTENTIAL_MEMBER".toUpperCase()))
 			{
 				String memberID = request.getParameter("id");
 				Member m = helper.getMemberByID(memberID);
 				request.setAttribute("member", m);
 				helper.logActivity("PORTAL MEMBERS", "Viewed member details for potential member", session.getAttribute(Constants.UID).toString(), session.getAttribute(Constants.SCHEME_ID).toString(), session.getAttribute(Constants.U_PROFILE).toString());
 				helper.audit(session, "Viewed member details for a potential member");
-				request.getRequestDispatcher(REPO_FOLDER + "/VIEW_MEMBER.jsp").forward(request, response);
+				request.getRequestDispatcher(REPO_FOLDER + "/VIEW_POTENTIAL_MEMBER.jsp").forward(request, response);
 			}
+			
+			else if(request.getParameter(REPO_FOLDER).toUpperCase().equals("VIEW_PORTAL_MEMBER".toUpperCase()))
+			{
+				String memberID = request.getParameter("id");
+				Member m = helper.getMemberByID(memberID);
+				request.setAttribute("member", m);
+				helper.logActivity("PORTAL MEMBERS", "Viewed member details for potential member", session.getAttribute(Constants.UID).toString(), session.getAttribute(Constants.SCHEME_ID).toString(), session.getAttribute(Constants.U_PROFILE).toString());
+				helper.audit(session, "Viewed member details for a potential member");
+				request.getRequestDispatcher(REPO_FOLDER + "/VIEW_PORTAL_MEMBER.jsp").forward(request, response);
+			}
+			
 			else if(request.getParameter(REPO_FOLDER).equals("VIEW_SPONSOR"))
 			{
 				Sponsor sponsor = helper.getSponsor(request.getParameter("id"));

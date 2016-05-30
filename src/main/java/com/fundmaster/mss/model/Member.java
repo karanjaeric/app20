@@ -46,12 +46,12 @@ public class Member extends GenericModel<Member>  implements Serializable {
 	private
 	String residentialAddress;
 	@Column(name="city", nullable=false)
-	private
-	String city;
-	private Country country;
+	private String city;
+	
+	private String country;
+	
 	@Column (name = "scheme", nullable = false)
-	private
-	String scheme;
+	private String scheme;
 	private boolean posted;
 	private String agentId;
 	public String getAgentId() {
@@ -126,12 +126,18 @@ public class Member extends GenericModel<Member>  implements Serializable {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public Country getCountry() {
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	/*public Country getCountry() {
 		return country;
 	}
 	public void setCountry(Country country) {
 		this.country = country;
-	}
+	}*/
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -145,7 +151,7 @@ public class Member extends GenericModel<Member>  implements Serializable {
 			String othernames, Gender gender, MaritalStatus maritalStatus,
 			Date dateOfBirth, String idNumber, String emailAddress,
 			String phoneNumber, String residentialAddress, String city,
-			Country country, String scheme) {
+			String country, String scheme) {
 		super();
 		this.id = id;
 		this.firstname = firstname;

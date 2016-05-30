@@ -67,7 +67,7 @@ function view_member(id)
 	$.ajax({
         url: $('#base_url').val() + 'dashboard',
         type: 'get',
-        data: {dashboard: 'VIEW_MEMBER', id: id},
+        data: {dashboard: 'VIEW_POTENTIAL_MEMBER', id: id},
         dataType: 'html',
         success: function(html) {
             $('#member-content2').html(html);
@@ -108,7 +108,7 @@ function post_member(id)
 		$.ajax({
 	        url: $('#base_url').val() + 'admin',
 	        type: 'post',
-	        data: {ACTION:'SUBMIT_PORTAL_MEMBER', id: id},
+	        data: {ACTION:'FORWARD_PORTAL_MEMBER', id: id},
 	        dataType: 'json',
 	        success: function(json) {
 				stop_wait();
@@ -164,7 +164,7 @@ $(document).ready(function(){
 			<div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title" id="myModalLabelViewMember">
-					<i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;VIEW MEMBER DETAILS
+					<i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;VIEW POTENTIAL MEMBER DETAILS
 				</h4>
 			</div>
 			<div class="modal-body" id="member-content2">
@@ -461,7 +461,8 @@ $(document).ready(function(){
 									type : 'post',
 									data : { ACTION: 'ADD_MEMBER',
 										city : $('#city').val(),
-										country : $('#country')
+										country : $(
+												'#country')
 												.val(),
 										dateOfBirth : $(
 												'#dateOfBirth')
@@ -505,24 +506,19 @@ $(document).ready(function(){
 									dataType : 'json',
 									success : function(json) {
 										stop_wait();
+										
 										if(json.success)
 										{
-											$("form#form-new-member")[0]
-													.reset();
+											$("form#form-new-member")[0].reset();
 											setTimeout(
 													function() {
-														window.location.href = $(
-																'#base_url')
-																.val();
-													}, 5000);
+														window.location.href = $('#base_url').val();
+													}, 5000)
 										}
-										bootbox
-												.alert('<p class="text-center">'
-														+ json.message
-														+ '</p>');
-
-							            load_dashboard(1, 0);
-							            $('.modal-backdrop').remove();
+										
+										bootbox.alert('<p class="text-center">'+ json.message + '</p>');
+										//load_dashboard("PORTAL_MEMBER");
+										load_dashboard(1, 0);$('.modal-backdrop').remove();
 									}
 								});
 

@@ -3,7 +3,6 @@ package com.fundmaster.mss.beans.ejbImplement;
 import com.fundmaster.mss.beans.ejbInterface.ProfileNameEJB;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.ProfileNameDAO;
-import com.fundmaster.mss.model.ProfileLoginField;
 import com.fundmaster.mss.model.ProfileName;
 
 import javax.ejb.Local;

@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -347,53 +348,111 @@ public class AdminController extends HttpServlet implements Serializable {
 				}
 			}
 		} else if (request.getParameter(REQUEST_ACTION).equals("EDIT_BENEFICIARY")) {
-			JSONObject b = new JSONObject();
-			String beneficiary_id = request.getParameter("beneficiary_id");
-			String memberID = request.getParameter("memberID");
-			String relationshipCategory = request.getParameter("relationshipCategory");
-			String surname = request.getParameter("surname");
-			String lumpsum = request.getParameter("lumpsum");
-			String firstname = request.getParameter("firstname");
-			String gender = request.getParameter("gender");
-			String maritalStatus = request.getParameter("maritalStatus");
-			String status = request.getParameter("status");
-			String othernames = request.getParameter("othernames");
-			String relationship = request.getParameter("relationship");
+			
+			
+			String url = request.getRequestURL().toString();
+			String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
+			boolean attachment = false;
+			String attachment_path = null;
+			String path = getServletContext().getRealPath("/")+ MEDIA_DIR;
+			
 			try {
-				if (request.getParameter("type").equalsIgnoreCase("EDIT")) {
-					b.put("ben.memberId", memberID).put("ben.relationship", relationship)
-							.put("beneficiary.id", beneficiary_id)
-							.put("ben.relShipCategory", relationshipCategory).put("ben.surname", surname)
-							.put("ben.firstname", firstname).put("ben.othernames", othernames).put("ben.dob", "")
-							.put("ben.gender", gender).put("ben.monthlyEntitlement", 0)
-							.put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
-							.put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
-							.put("ben.physicalCondition", "").put("ben.status", status);
-				} else if (request.getParameter("type").equalsIgnoreCase("ADD")){
-					b.put("ben.memberId", memberID).put("beneficiary.id", beneficiary_id)
-							.put("ben.relationship", relationship).put("ben.relShipCategory", relationshipCategory)
-							.put("ben.surname", surname).put("ben.firstname", firstname)
-							.put("ben.othernames", othernames).put("ben.dob", "").put("ben.gender", gender)
-							.put("ben.monthlyEntitlement", 0).put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
-							.put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
-							.put("ben.physicalCondition", "").put("ben.status", status);
-				}
-				try {
-					String res = helper.saveOrUpdateBeneficiary(b.toString());
-					out.write(res);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					out.write(helper
-							.result(false,
-									"Sorry, something didn't work out right. Couldn't save the beneficiary details")
-							.toString());
-				}
-			} catch (JSONException e) {
-				out.write(helper
-						.result(false, "Sorry, something didn't work out right. Couldn't save the beneficiary details")
-						.toString());
+				
+				for (Part part : request.getParts()) {
+					String fileName = extractFileName(part);
 
+					if (!fileName.equals("")) {
+
+						//Get absolute path
+						String fullpath = request.getServletContext().getRealPath("");
+
+						//String savePath = fullpath + File.separator + MEDIA_DIR;
+
+						System.out.println("full path is:" + path);
+
+						File fileSaveDir = new File(path);
+						if (!fileSaveDir.exists()) {
+							fileSaveDir.mkdir();
+						}
+						path = getServletContext().getRealPath("/")+ MEDIA_DIR + File.separator + fileName;
+						//savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
+						part.write(path);
+						System.out.println("Complete file path is: " + path);
+
+						//attachment_url = baseURL + MEDIA_DIR + File.separator + fileName;
+						attachment_path = path;
+						attachment = true;
+					}
+				}
+				
+				JSONObject b = new JSONObject();
+				String beneficiary_id = request.getParameter("beneficiary_id");
+				String memberID = request.getParameter("memberID");
+				String relationshipCategory = request.getParameter("relationshipCategory");
+				String surname = request.getParameter("surname");
+				String lumpsum = request.getParameter("lumpsum");
+				String firstname = request.getParameter("firstname");
+				String gender = request.getParameter("gender");
+				String maritalStatus = request.getParameter("maritalStatus");
+				String status = request.getParameter("status");
+				String othernames = request.getParameter("othernames");
+				String relationship = request.getParameter("relationship");
+				String attachment_url = attachment_path;
+				
+				
+				System.out.println("Attachment URL is ::::::::::::::::::> " + attachment_url);
+				
+				try {
+					if (request.getParameter("type").equalsIgnoreCase("EDIT")) {
+						b.put("ben.memberId", memberID).put("ben.relationship", relationship)
+								.put("beneficiary.id", beneficiary_id)
+								.put("ben.relShipCategory", relationshipCategory).put("ben.surname", surname)
+								.put("ben.firstname", firstname).put("ben.othernames", othernames).put("ben.dob", "")
+								.put("ben.gender", gender).put("ben.monthlyEntitlement", 0)
+								.put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
+								.put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
+								.put("ben.physicalCondition", "").put("ben.status", status);
+								 if(attachment)
+							            b.put("attachment", attachment_url);
+							        else
+							            b.put("attachment", new ArrayList<String>());
+								
+					} else if (request.getParameter("type").equalsIgnoreCase("ADD")){
+						b.put("ben.memberId", memberID).put("beneficiary.id", beneficiary_id)
+								.put("ben.relationship", relationship).put("ben.relShipCategory", relationshipCategory)
+								.put("ben.surname", surname).put("ben.firstname", firstname)
+								.put("ben.othernames", othernames).put("ben.dob", "").put("ben.gender", gender)
+								.put("ben.monthlyEntitlement", 0).put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
+								.put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
+								.put("ben.physicalCondition", "").put("ben.status", status);
+								if(attachment)
+									b.put("attachment", attachment_url);
+								else
+									b.put("attachment", new ArrayList<String>());
+										
+					}
+					try {
+						String res = helper.saveOrUpdateBeneficiary(b.toString());
+						out.write(res);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						out.write(helper
+								.result(false,
+										"Sorry, something didn't work out right. Couldn't save the beneficiary details")
+								.toString());
+					}
+				} catch (JSONException e) {
+					out.write(helper
+							.result(false, "Sorry, something didn't work out right. Couldn't save the beneficiary details")
+							.toString());
+
+				}
+	
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+			
+			
 		} else if (request.getParameter(REQUEST_ACTION).equals("UPDATE_MEMBER")) {
 
 			JSONObject member = new JSONObject();
@@ -572,9 +631,14 @@ public class AdminController extends HttpServlet implements Serializable {
 			JSONObject result = helper.createSponsor(request);
 			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("SUBMIT_PORTAL_MEMBER")) {
+			//String memberID = request.getParameter("id");
+			//Member m = helper.getMemberByID(memberID);
+			JSONObject result = helper.postMemberToXi(request);
+			out.write(result.toString());
+		} else if (request.getParameter(REQUEST_ACTION).equals("FORWARD_PORTAL_MEMBER")) {
 			String memberID = request.getParameter("id");
 			Member m = helper.getMemberByID(memberID);
-			JSONObject result = helper.postMemberToXi(m);
+			JSONObject result = helper.forwardMemberToXi(m);
 			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("SUBMIT_PORTAL_SPONSOR")) {
 			String sponsorID = request.getParameter("id");
@@ -677,10 +741,13 @@ public class AdminController extends HttpServlet implements Serializable {
 			//request.setAttribute(Constants.MEMBER_NAME, request.getParameter("name").toString());
 			List<Country> countries = helper.getCountries();
 			request.setAttribute("countries", countries);
+			
 			List<Gender> genders = helper.getGenders();
 			request.setAttribute("genders", genders);
+			
 			List<MaritalStatus> marital_statuses = helper.getMaritalStatuses();
 			request.setAttribute("maritalStatuses", marital_statuses);
+			
 			Company company = helper.getCompany();
 			request.setAttribute("company", company);
 			Social social = helper.getSocial();

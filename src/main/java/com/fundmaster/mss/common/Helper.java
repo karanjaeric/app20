@@ -29,6 +29,7 @@ import java.util.*;
 @Stateless
 public class Helper {
 
+    private static final String MMM_d_yyyy = "MMM d, yyyy";
     private static final String YYYY_MM_DD = "yyyy-MM-dd";
     private static final int TIMEOUT = 300 * 1000;
     private static final String ROWS = "rows";
@@ -1023,9 +1024,10 @@ public class Helper {
         }
         return result;
     }
-    public JSONObject postMemberToXi(Member m)
+    
+    public JSONObject forwardMemberToXi(Member m)
     {
-        DateFormat format_ = new SimpleDateFormat(Helper.YYYY_MM_DD, Locale.ENGLISH);
+        DateFormat format_ = new SimpleDateFormat(Helper.MMM_d_yyyy, Locale.ENGLISH);
         String title;
         if(m.getGender().getName().equalsIgnoreCase("male"))
             title = "Mr";
@@ -1036,10 +1038,16 @@ public class Helper {
         try {
             member.put("member.surname", m.getLastname());
             member.put("member.firstname", m.getFirstname());
+            member.put("member.othernames", m.getOthernames());
+            member.put("member.address.email", m.getEmailAddress());
+            member.put("member.idNo", m.getIdNumber());
+            member.put("member.address.cellPhone", m.getPhoneNumber());
             member.put("member.dob", format_.format(m.getDateOfBirth()))
                     .put("member.gender", m.getGender().getName().toUpperCase())
                     .put("member.title", title)
-                    .put("member.postalAddress", m.getResidentialAddress())
+                    .put("member.address.residentialAddress", m.getResidentialAddress())
+                    .put("member.address.town", m.getCity())
+                    .put("member.country", m.getCountry())
                     .put("member.maritalStatus", m.getMaritalStatus().getName().toUpperCase())
                     .put("member.mbshipStatus", "INACTIVE")
                     .put("member.schemeId", m.getScheme());
@@ -1056,18 +1064,105 @@ public class Helper {
         }
         return result;
     }
+    
+    public JSONObject postMemberToXi(HttpServletRequest request)
+    {
+    	
+         //HttpSession session = request.getSession(false);
+         Setting settings = getSettings();
+         
+         CountryDAO dao = new CountryDAO(entityManager);
+         Country ctry = dao.findById(Long.valueOf(request.getParameter("country")));
+         
+         System.out.println("Being passed from frontend ======================>  " + request.getParameter("country"));
+         System.out.println("The country is =============================>  " + ctry.getName());
+         
+         String country = ctry.getName();
+         
+         GenderDAO gdao = new GenderDAO(entityManager);
+         Gender gender = gdao.findById(Long.valueOf(request.getParameter("gender")));
+         
+         MaritalStatusDAO msDAO = new MaritalStatusDAO(entityManager);
+         MaritalStatus mStatus = msDAO.findById(Long.valueOf(request.getParameter("maritalStatus")));
+         
+         String date_string = request.getParameter("dateOfBirth");
+         DateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+         Date date = null;
+        // JSONObject result = null;
+         try {
+             date = format.parse(date_string);
+         } catch (ParseException e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+         }
+         
+      
+        String title;
+        if(gender.getName().equalsIgnoreCase("male"))
+        	
+            title = "Mr";
+        else
+            title = "Mrs";
+        
+        DateFormat format_ = new SimpleDateFormat(Helper.MMM_d_yyyy, Locale.ENGLISH);
+        
+        JSONObject member = new JSONObject();
+        JSONObject result = null;
+        
+        try {
+            member.put("member.surname", request.getParameter("lastName"));
+            member.put("member.firstname", request.getParameter("firstName"));
+            member.put("member.othernames", request.getParameter("otherName"));
+            member.put("member.address.email",request.getParameter("emailAddress"));
+            member.put("member.idNo",request.getParameter("idNumber"));
+            member.put("member.address.cellPhone", request.getParameter("phoneNumber"));
+            member.put("member.dob", format_.format(date))
+                    .put("member.gender", gender.getName().toUpperCase())
+                    .put("member.title", title)
+                    .put("member.address.residentialAddress", request.getParameter("residentialAddress"))
+                    .put("member.address.town", request.getParameter("city"))
+                    .put("member.country", country)
+                    .put("member.maritalStatus", mStatus.getName().toUpperCase())
+                    .put("member.mbshipStatus", "INACTIVE")
+                    .put("member.schemeId",request.getParameter("pension_scheme"));
+            
+            System.out.println("Date passed will be : <<<<<<<<<<<<<<<<<<<<<<< "+ format_.format(date)+" >>>>>>>>>>>>>>>>>>>>>>");
+
+            
+            
+            result = saveOrUpdateMember(member.toString());
+            
+            if(result.get(Helper.SUCCESS).toString().equalsIgnoreCase("true"));
+            	
+            	
+            	
+        } catch (JSONException e) {
+        	
+            e.printStackTrace();
+        }
+            
+        return result;
+    }
     public JSONObject createMember(HttpServletRequest request)
     {
         HttpSession session = request.getSession(false);
         Setting settings = getSettings();
+        
         CountryDAO dao = new CountryDAO(entityManager);
-        Country country = dao.findById(Long.valueOf(request.getParameter("country")));
+        Country ctry = dao.findById(Long.valueOf(request.getParameter("country")));
+        
+        System.out.println("Being passed from frontend ======================>  " + request.getParameter("country"));
+        System.out.println("The country is =============================>  " + ctry.getName());
+        
+        String country = ctry.getName();
+        
         GenderDAO gdao = new GenderDAO(entityManager);
         Gender gender = gdao.findById(Long.valueOf(request.getParameter("gender")));
+        
         MaritalStatusDAO msDAO = new MaritalStatusDAO(entityManager);
         MaritalStatus mStatus = msDAO.findById(Long.valueOf(request.getParameter("maritalStatus")));
         String date_string = request.getParameter("dateOfBirth");
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
         Date date = null;
         JSONObject result = null;
         try {
@@ -1089,7 +1184,23 @@ public class Helper {
         m.setCity(request.getParameter("city"));
         m.setCountry(country);
         m.setDateOfBirth(date);
+        
+        System.out.println("The date set is===================================> " + date);
+        
         m.setScheme(request.getParameter("pension_scheme"));
+        
+        try {
+        	
+        	 if(settings.getMemberOnboarding().equals(Helper.BOTH)) {
+             	m.setPosted();
+             	
+             	System.out.println("The field posted <<<<<<<<<<<< "+ m.isPosted() +" >>>>>>>>>>>>>>>>>>>>");
+             }
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+       
 
         try {
             if(session.getAttribute(Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
@@ -1100,7 +1211,8 @@ public class Helper {
         {
             logger.e("Non-logged in user trying to create member");
         }
-        if(settings.getMemberOnboarding().equals(Helper.MSS) || settings.getMemberOnboarding().equals(Helper.BOTH))
+        
+        if(settings.getMemberOnboarding().equals(Helper.MSS) /*|| settings.getMemberOnboarding().equals(Helper.BOTH)*/)
         {
             try {
                 create_member(m);
@@ -1110,10 +1222,28 @@ public class Helper {
                 e.printStackTrace();
             }
         }
-        if(settings.getMemberOnboarding().equals(Helper.XI) || settings.getMemberOnboarding().equals(Helper.BOTH))
+        
+       else if(settings.getMemberOnboarding().equals(Helper.XI))
         {
-            result = postMemberToXi(m);
+    	   
+            result = postMemberToXi(request);
         }
+        
+       else if(settings.getMemberOnboarding().equals(Helper.BOTH))
+        {
+        	
+        	try {
+        		
+                create_member(m);
+                
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        	
+            result = postMemberToXi(request);
+        }
+        
         return result;
     }
     public List<Scheme> getSchemeByPlanType(String planType) throws JSONException{

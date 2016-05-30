@@ -1,6 +1,5 @@
 package com.fundmaster.mss.dao;
 
-import com.fundmaster.mss.model.Media;
 import com.fundmaster.mss.model.Member;
 
 import javax.persistence.EntityManager;
@@ -13,7 +12,7 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
     private EntityManager em;
     public MemberDAO(EntityManager entityManager)
     {
-        super(Media.class, entityManager);
+        super(Member.class, entityManager);
         em = entityManager;
     }
 
