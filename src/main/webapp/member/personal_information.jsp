@@ -517,6 +517,9 @@
 										var formData = new FormData($(this)[0]);
 										type = $('#type').val();
 										formData.append("type", type);
+										
+										memberID = $('#member_id').val();
+										formData.append("memberID", memberID);
 
 												$.ajax({
 													url : $('#base_url').val() + 'admin',
@@ -553,8 +556,6 @@
 					</h4>
 				</div>
 				<div class="modal-body" id="beneficiary-content">
-				
-				<!-- <input type="hidden" name="ACTION" id="ACTION" value="EDIT_BENEFICIARY" />  -->
 
 				</div>
 

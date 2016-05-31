@@ -17,6 +17,7 @@ import javax.servlet.http.*;
 import javax.sql.rowset.serial.SerialException;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -206,6 +207,9 @@ public class AdminController extends HttpServlet implements Serializable {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		PrintWriter out = response.getWriter();
+		String FILE_SEPERATOR = System.getProperty("file.separator");
+		String SCHEME_DOC_ROOT_FOLDER = "XI_Fundmaster_scheme_docs";
+		String scheme_doc_folder = null;
 		String MEDIA_DIR = "media";
 		String BANNER_DIR = "banner";
 		String LOGO_DIR = "logo";
@@ -350,11 +354,11 @@ public class AdminController extends HttpServlet implements Serializable {
 		} else if (request.getParameter(REQUEST_ACTION).equals("EDIT_BENEFICIARY")) {
 			
 			
-			String url = request.getRequestURL().toString();
-			String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
+			//String url = request.getRequestURL().toString();
+			//String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
 			boolean attachment = false;
 			String attachment_path = null;
-			String path = getServletContext().getRealPath("/")+ MEDIA_DIR;
+			String attachment_name = null;
 			
 			try {
 				
@@ -362,32 +366,44 @@ public class AdminController extends HttpServlet implements Serializable {
 					String fileName = extractFileName(part);
 
 					if (!fileName.equals("")) {
-
-						//Get absolute path
-						String fullpath = request.getServletContext().getRealPath("");
-
-						//String savePath = fullpath + File.separator + MEDIA_DIR;
-
-						System.out.println("full path is:" + path);
-
-						File fileSaveDir = new File(path);
-						if (!fileSaveDir.exists()) {
-							fileSaveDir.mkdir();
+						
+						System.out.println("File name is :::::::::" + fileName);
+						
+						File path = new File(getServletContext().getRealPath("/"));
+						
+						if(scheme_doc_folder==null){
+		        			scheme_doc_folder = path.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getPath() + FILE_SEPERATOR +SCHEME_DOC_ROOT_FOLDER ;
+		        			helper.createFolderIfNotExists(scheme_doc_folder);
+		        		}
+						
+						try {
+							
+							String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
+		        			String fullpath = scheme_doc_folder  + FILE_SEPERATOR + fileName;
+		        			
+		        			System.out.println("full path is:" + fullpath);
+		        			
+		        			part.write(fullpath);
+		        			
+		        			System.out.println("Complete file path is: " + fullpath);
+		        			
+		        			attachment_name = fileName;
+		        			attachment_path = fullpath;
+							attachment = true;
+							
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
-						path = getServletContext().getRealPath("/")+ MEDIA_DIR + File.separator + fileName;
-						//savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
-						part.write(path);
-						System.out.println("Complete file path is: " + path);
-
-						//attachment_url = baseURL + MEDIA_DIR + File.separator + fileName;
-						attachment_path = path;
-						attachment = true;
+						
 					}
 				}
-				
+								
 				JSONObject b = new JSONObject();
 				String beneficiary_id = request.getParameter("beneficiary_id");
 				String memberID = request.getParameter("memberID");
+				
+				System.out.println("The member Id passed is <<<<<<<<<<< " +memberID+ " >>>>>>>>>>");
+				
 				String relationshipCategory = request.getParameter("relationshipCategory");
 				String surname = request.getParameter("surname");
 				String lumpsum = request.getParameter("lumpsum");
@@ -399,12 +415,12 @@ public class AdminController extends HttpServlet implements Serializable {
 				String relationship = request.getParameter("relationship");
 				String attachment_url = attachment_path;
 				
-				
 				System.out.println("Attachment URL is ::::::::::::::::::> " + attachment_url);
 				
 				try {
 					if (request.getParameter("type").equalsIgnoreCase("EDIT")) {
 						b.put("ben.memberId", memberID).put("ben.relationship", relationship)
+								.put("ben.attachmentname", attachment_name)
 								.put("beneficiary.id", beneficiary_id)
 								.put("ben.relShipCategory", relationshipCategory).put("ben.surname", surname)
 								.put("ben.firstname", firstname).put("ben.othernames", othernames).put("ben.dob", "")
@@ -413,22 +429,23 @@ public class AdminController extends HttpServlet implements Serializable {
 								.put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
 								.put("ben.physicalCondition", "").put("ben.status", status);
 								 if(attachment)
-							            b.put("attachment", attachment_url);
+							            b.put("ben.attachment", attachment_url);
 							        else
-							            b.put("attachment", new ArrayList<String>());
+							            b.put("ben.attachment", new ArrayList<String>());
 								
 					} else if (request.getParameter("type").equalsIgnoreCase("ADD")){
 						b.put("ben.memberId", memberID).put("beneficiary.id", beneficiary_id)
-								.put("ben.relationship", relationship).put("ben.relShipCategory", relationshipCategory)
+								.put("ben.relationship", relationship) .put("ben.attachmentname", attachment_name)
+								.put("ben.relShipCategory", relationshipCategory)
 								.put("ben.surname", surname).put("ben.firstname", firstname)
 								.put("ben.othernames", othernames).put("ben.dob", "").put("ben.gender", gender)
 								.put("ben.monthlyEntitlement", 0).put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
 								.put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
 								.put("ben.physicalCondition", "").put("ben.status", status);
 								if(attachment)
-									b.put("attachment", attachment_url);
+									b.put("ben.attachment", attachment_url);
 								else
-									b.put("attachment", new ArrayList<String>());
+									b.put("ben.attachment", new ArrayList<String>());
 										
 					}
 					try {
@@ -441,6 +458,8 @@ public class AdminController extends HttpServlet implements Serializable {
 										"Sorry, something didn't work out right. Couldn't save the beneficiary details")
 								.toString());
 					}
+			
+					
 				} catch (JSONException e) {
 					out.write(helper
 							.result(false, "Sorry, something didn't work out right. Couldn't save the beneficiary details")

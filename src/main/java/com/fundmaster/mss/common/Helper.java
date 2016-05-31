@@ -707,6 +707,24 @@ public class Helper {
         return response.toString();
 
     }
+    
+    public boolean createFolderIfNotExists(String folder_name) {
+		File f = new File(folder_name);
+		if(!f.exists()){
+			try{
+				f.mkdirs();
+				return true;
+			}catch(SecurityException se){
+				return false;
+			}catch(Exception se){
+				return false;
+		}
+		}else{
+		return true;
+	}
+}
+    
+    
 
     public JSONObject getProviderDetails(String profile, String identifier) throws JSONException, UnsupportedOperationException {
 
