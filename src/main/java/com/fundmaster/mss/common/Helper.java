@@ -1826,6 +1826,7 @@ public class Helper {
             }
                 else
             {
+
                  response = URLGet(settings.getXiPath() + "getmemberIdfromMail/"+memberID+"/" + schemeId);
 
             }
@@ -1841,7 +1842,19 @@ public class Helper {
             }
             else
             {
-                return null;
+                response = URLGet(settings.getXiPath() + "getmemberdetails/" + memberID);
+                if(response.get(Helper.SUCCESS).equals(true))
+                {
+
+                    JSONArray res = (JSONArray) response.get(Helper.ROWS);
+
+                    JSONObject xi_member = res.getJSONObject(0);
+
+                    return new XiMember(xi_member.getLong("id"), xi_member.getString("mbio_id"), xi_member.getString("memberNo"), xi_member.getString("membershipNo"), xi_member.getString("partyrefno"), xi_member.getString("partnerNumber"), xi_member.getString("policyNo"), xi_member.getString("staffNo"), xi_member.getString("name"), xi_member.getString("idNo"), xi_member.getString("terminateCover"), xi_member.getString("pinNo"), xi_member.getString("postalAddress"), xi_member.getString("cellPhone"), xi_member.getString("email"), xi_member.getString("gender"), xi_member.getString("department"), xi_member.getString("dob"), xi_member.getString("maritalStatus"), xi_member.getString("dateJoinedScheme"), xi_member.getString("schemeId"), xi_member.getString("town"), xi_member.getString("country"), xi_member.getString("currentAnnualPensionableSalary"), xi_member.getString("firstname"), xi_member.getString("surname"), xi_member.getString("othernames"));
+                }
+                else {
+                    return null;
+                }
             }
         } catch (JSONException je) {
 

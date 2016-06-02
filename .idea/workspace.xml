@@ -4,7 +4,8 @@
     <list default="true" id="bb972854-9642-4822-9ef8-855f116f8391" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/custom/js/form-scripts.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/custom/js/form-scripts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
     </list>
     <ignored path="Mss.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,10 +45,8 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/AdminController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="758" column="37" selection-start-line="758" selection-start-column="37" selection-end-line="758" selection-end-column="37" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <caret line="780" column="38" selection-start-line="780" selection-start-column="38" selection-end-line="780" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -56,15 +55,9 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1365" column="0" selection-start-line="1365" selection-start-column="0" selection-end-line="1365" selection-end-column="0" />
+              <caret line="1671" column="41" selection-start-line="1671" selection-start-column="41" selection-end-line="1671" selection-end-column="41" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#1824#1825#0" expanded="false" />
-                <element signature="e#1873#1874#0" expanded="false" />
-                <element signature="e#11762#11763#0" expanded="false" />
-                <element signature="e#11840#11841#0" expanded="false" />
-                <element signature="e#26247#26248#0" expanded="false" />
-                <element signature="e#26274#26275#0" expanded="false" />
+                <marker date="1464852373493" expanded="true" signature="88056:88186" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -74,42 +67,37 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="281" column="88" selection-start-line="281" selection-start-column="88" selection-end-line="281" selection-end-column="88" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="member.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/member.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="66" column="25" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
+              <caret line="114" column="21" selection-start-line="114" selection-start-column="21" selection-end-line="114" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/dashboard.jsp">
+      <file leaf-file-name="SignInController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignInController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="227" column="31" selection-start-line="227" selection-start-column="31" selection-end-line="227" selection-end-column="31" />
-              <folding>
-                <marker date="1464096197399" expanded="true" signature="10441:10455" placeholder="..." />
-                <marker date="1464096197399" expanded="true" signature="10530:10549" placeholder="..." />
-              </folding>
+              <caret line="174" column="51" selection-start-line="174" selection-start-column="51" selection-end-line="174" selection-end-column="51" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="persistence.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
+      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
+              <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="persistence.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.43889844">
+              <caret line="17" column="73" selection-start-line="17" selection-start-column="73" selection-end-line="17" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -125,33 +113,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="form-scripts.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/custom/js/form-scripts.js">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38016528">
-              <caret line="88" column="24" selection-start-line="88" selection-start-column="24" selection-end-line="88" selection-end-column="24" />
-              <folding>
-                <marker date="1464254058021" expanded="true" signature="2907:2970" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="3870:3933" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="4374:4431" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="8979:9033" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="11785:11842" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="14498:14555" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="16963:17016" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="25186:25246" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="33456:33516" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="41754:41814" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="50052:50112" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="58396:58456" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="66692:66752" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="75012:75072" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="83350:83410" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="92116:92176" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="100391:100451" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="108503:108563" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="122660:122716" placeholder="..." />
-                <marker date="1464254058021" expanded="true" signature="127943:128003" placeholder="..." />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="86" column="33" selection-start-line="86" selection-start-column="33" selection-end-line="86" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -211,13 +178,11 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DataController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignInController.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/ebae76ac-7525-4ff7-b3bc-45a7308e9099/console.sql" />
-        <option value="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/2a932058-4dc9-41ab-ac80-48e96438d6f8/console.sql" />
         <option value="$PROJECT_DIR$/src/main/webapp/register.jsp" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/66441ae4-b64d-4ec5-92d6-a21b22f9b115/console.sql" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Constants.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/InterestRateController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/AnnuityController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/InterestRateColumnsDAO.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/what-if-content.jsp" />
@@ -234,11 +199,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/RegisterController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/admin.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/custom/js/scripts.js" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/member.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/dashboard.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/custom/js/form-scripts.js" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
       </list>
     </option>
   </component>
@@ -290,8 +257,8 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -327,7 +294,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
-    <property name="SearchEverywhereHistoryKey" value="helper&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/common/Helper.java&#10;persis&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/resources/META-INF/persistence.xml&#10;RegisterController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/RegisterController.java&#10;DashboardController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/DashboardController.java&#10;PasswordResetController&#9;PSI&#9;JAVA://com.fundmaster.mss.controller.PasswordResetController&#10;admincon&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AdminController.java&#10;dashboardc&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/DashboardController.java&#10;schemed&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.SchemeDAO&#10;memberdao&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.MemberDAO&#10;user&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.UserDAO&#10;calc-log&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/calc-log.jsp&#10;member&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/member.jsp&#10;adminco&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AdminController.java&#10;script&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/static/custom/js/scripts.js&#10;dash&#9;PSI&#9;JAVA://com.fundmaster.mss.controller.DashboardController&#10;scheme &#9;PSI&#9;JAVA://com.fundmaster.mss.model.Scheme&#10;dashboard.jsp&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard.jsp&#10;scheme&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/scheme.jsp&#10;egist&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/register.jsp&#10;AnnuityController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AnnuityController.java&#10;sign&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/SignInController.java&#10;Helper&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/common/Helper.java&#10;pers&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/resources/META-INF/persistence.xml&#10;PermissionDAO.java&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/dao/MemberPermissionDAO.java" />
+    <property name="SearchEverywhereHistoryKey" value="sign&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/SignInController.java&#10;logincon&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/LoginController.java&#10;helper&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/common/Helper.java&#10;persis&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/resources/META-INF/persistence.xml&#10;RegisterController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/RegisterController.java&#10;DashboardController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/DashboardController.java&#10;PasswordResetController&#9;PSI&#9;JAVA://com.fundmaster.mss.controller.PasswordResetController&#10;admincon&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AdminController.java&#10;dashboardc&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/DashboardController.java&#10;schemed&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.SchemeDAO&#10;memberdao&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.MemberDAO&#10;user&#9;PSI&#9;JAVA://com.fundmaster.mss.dao.UserDAO&#10;calc-log&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/calc-log.jsp&#10;member&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/member.jsp&#10;adminco&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AdminController.java&#10;script&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/static/custom/js/scripts.js&#10;dash&#9;PSI&#9;JAVA://com.fundmaster.mss.controller.DashboardController&#10;scheme &#9;PSI&#9;JAVA://com.fundmaster.mss.model.Scheme&#10;dashboard.jsp&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard.jsp&#10;scheme&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/dashboard/scheme.jsp&#10;egist&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/webapp/register.jsp&#10;AnnuityController&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/controller/AnnuityController.java&#10;Helper&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/common/Helper.java&#10;pers&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/resources/META-INF/persistence.xml&#10;PermissionDAO.java&#9;FILE&#9;file:///home/ckibuchi/Documents/mss/src/main/java/com/fundmaster/mss/dao/MemberPermissionDAO.java" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
@@ -900,12 +867,14 @@
       <workItem from="1464091654521" duration="1915000" />
       <workItem from="1464244122873" duration="1533000" />
       <workItem from="1464252122032" duration="2584000" />
-      <workItem from="1464257279903" duration="156000" />
+      <workItem from="1464257279903" duration="642000" />
+      <workItem from="1464702193899" duration="1417000" />
+      <workItem from="1464852120058" duration="2282000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141584000" />
+    <option name="totallyTimeSpent" value="145769000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="741" extended-state="6" />
@@ -1001,13 +970,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/ActivateController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.19575857">
-          <caret line="64" column="28" selection-start-line="64" selection-start-column="28" selection-end-line="64" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/activate.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.07640068">
@@ -1047,20 +1009,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33278957">
           <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02446982">
-          <caret line="192" column="82" selection-start-line="192" selection-start-column="82" selection-end-line="192" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignInController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02446982">
-          <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1246,13 +1194,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1378299">
-          <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/model/XiMember.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.43066883">
@@ -1284,18 +1225,8 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/member.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="25" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
+          <caret line="68" column="25" selection-start-line="68" selection-start-column="25" selection-end-line="68" selection-end-column="25" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="281" column="88" selection-start-line="281" selection-start-column="88" selection-end-line="281" selection-end-column="88" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1303,14 +1234,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33168316">
           <caret line="576" column="40" selection-start-line="576" selection-start-column="40" selection-end-line="576" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1325,16 +1248,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/AdminController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="758" column="37" selection-start-line="758" selection-start-column="37" selection-end-line="758" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/interest-rate-content.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.56110156">
@@ -1342,19 +1255,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/custom/js/form-scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38016528">
+          <caret line="97" column="24" selection-start-line="97" selection-start-column="24" selection-end-line="97" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/dashboard/help.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1365" column="0" selection-start-line="1365" selection-start-column="0" selection-end-line="1365" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1824#1825#0" expanded="false" />
-            <element signature="e#1873#1874#0" expanded="false" />
-            <element signature="e#11762#11763#0" expanded="false" />
-            <element signature="e#11840#11841#0" expanded="false" />
-            <element signature="e#26247#26248#0" expanded="false" />
-            <element signature="e#26274#26275#0" expanded="false" />
-          </folding>
+          <caret line="35" column="36" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1366,39 +1278,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/custom/js/form-scripts.js">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38016528">
-          <caret line="88" column="24" selection-start-line="88" selection-start-column="24" selection-end-line="88" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="86" column="33" selection-start-line="86" selection-start-column="33" selection-end-line="86" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/AdminController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="780" column="38" selection-start-line="780" selection-start-column="38" selection-end-line="780" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1671" column="41" selection-start-line="1671" selection-start-column="41" selection-end-line="1671" selection-end-column="41" />
           <folding>
-            <marker date="1464254058021" expanded="true" signature="2907:2970" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="3870:3933" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="4374:4431" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="8979:9033" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="11785:11842" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="14498:14555" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="16963:17016" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="25186:25246" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="33456:33516" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="41754:41814" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="50052:50112" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="58396:58456" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="66692:66752" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="75012:75072" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="83350:83410" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="92116:92176" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="100391:100451" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="108503:108563" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="122660:122716" placeholder="..." />
-            <marker date="1464254058021" expanded="true" signature="127943:128003" placeholder="..." />
+            <marker date="1464852373493" expanded="true" signature="88056:88186" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/dashboard/help.jsp">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="36" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="36" />
+          <caret line="194" column="92" selection-start-line="194" selection-start-column="92" selection-end-line="194" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignInController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="174" column="51" selection-start-line="174" selection-start-column="51" selection-end-line="174" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="114" column="21" selection-start-line="114" selection-start-column="21" selection-end-line="114" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43889844">
+          <caret line="17" column="73" selection-start-line="17" selection-start-column="73" selection-end-line="17" selection-end-column="73" />
           <folding />
         </state>
       </provider>

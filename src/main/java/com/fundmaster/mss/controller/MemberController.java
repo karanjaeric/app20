@@ -87,6 +87,7 @@ public class MemberController extends HttpServlet implements Serializable {
 					request.setAttribute("schemes", schemes);
 					XiMember m= helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),null);
 					request.setAttribute("member_id", m.getId());
+					session.setAttribute(Constants.PROFILE_ID,m.getId());
 					if(schemes != null && schemes.size() > 0) {
 						logger.i("Scheme is not null. email: "+session.getAttribute(Constants.USER).toString());
 						if(session.getAttribute(Constants.SCHEME_ID) == null)
@@ -101,6 +102,10 @@ public class MemberController extends HttpServlet implements Serializable {
 					}
 					request.setAttribute("member", m);
 					try{
+						if(m==null)
+						{
+							m= helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),null);
+						}
 						session.setAttribute(Constants.PROFILE_ID,m.getId());
 
 					}
