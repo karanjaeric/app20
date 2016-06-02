@@ -610,6 +610,10 @@ public class DashboardController extends HttpServlet implements Serializable {
 					agentId = session.getAttribute(Constants.PROFILE_ID).toString();
 				List<Sponsor> sponsors = helper.getPortalSponsors(agentId, search, start, PER_PAGE);
 				request.setAttribute("sponsors", sponsors);
+				
+				List<Sector> sectors = helper.getSectors();
+				request.setAttribute("sectors", sectors);
+				
 				List<Country> countries = helper.getCountries();
 				request.setAttribute("countries",  countries);
 				request.setAttribute("pages", pages);

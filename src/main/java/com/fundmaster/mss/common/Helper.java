@@ -1018,6 +1018,9 @@ public class Helper {
         DateFormat format_ = new SimpleDateFormat(Helper.YYYY_MM_DD, Locale.ENGLISH);
         JSONObject jsponsor = new JSONObject();
         JSONObject result = null;
+        
+       // DateFormat frmt = new SimpleDateFormat(Helper.MMM_d_yyyy, Locale.ENGLISH);
+        
         try {
             jsponsor.put("sponsor.name", sponsor.getCompanyName())
                     .put("sponsor.applicationDate", format_.format(sponsor.getApplicationDate()))
@@ -1028,6 +1031,7 @@ public class Helper {
                     .put("sponsor.address.country", sponsor.getCountry().getName())
                     .put("sponsor.sector", sponsor.getSector().getName())
                     .put("sponsor.employerpin", sponsor.getEmployerRefNo())
+                    .put("sponsor.pin", sponsor.getPinNumber())
                     .put("sponsor.status",  "POTENTIAL_SPONSOR");
             result = saveOrUpdateSponsor(jsponsor.toString());
             if(result.get(Helper.SUCCESS).equals(true))
