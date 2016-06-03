@@ -660,9 +660,14 @@ public class AdminController extends HttpServlet implements Serializable {
 			JSONObject result = helper.forwardMemberToXi(m);
 			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("SUBMIT_PORTAL_SPONSOR")) {
+			//String sponsorID = request.getParameter("id");
+			//Sponsor s = helper.getSponsor(sponsorID);
+			JSONObject result = helper.postSponsorToXi(request);
+			out.write(result.toString());
+		} else if (request.getParameter(REQUEST_ACTION).equals("FORWARD_PORTAL_SPONSOR")) {
 			String sponsorID = request.getParameter("id");
-			Sponsor s = helper.getSponsor(sponsorID);
-			JSONObject result = helper.postSponsorToXi(s);
+			Sponsor sp = helper.getSponsor(sponsorID);
+			JSONObject result = helper.forwardSponsorToXi(sp);
 			out.write(result.toString());
 		} else if (request.getParameter(REQUEST_ACTION).equals("DELETE_PORTAL_MEMBER")) {
 			Member m = memberEJB.findById(helper.toLong(request.getParameter("id")));
@@ -1053,17 +1058,21 @@ public class AdminController extends HttpServlet implements Serializable {
 			/* Menu Update Request */
 			boolean annuityQuotationActive = request.getParameter("annuityQuotationActive").equalsIgnoreCase("true");
 			boolean potentialMemberActive = request.getParameter("potentialMemberActive").equalsIgnoreCase("true");
+			boolean potentialSponsorActive = request.getParameter("potentialSponsorActive").equalsIgnoreCase("true");
 			boolean interestRatesActive = request.getParameter("interestRatesActive").equalsIgnoreCase("true");
 			boolean whatIfAnalysisActive = request.getParameter("whatIfAnalysisActive").equalsIgnoreCase("true");
 			boolean contactUsActive = request.getParameter("contactUsActive").equalsIgnoreCase("true");
+			
 			Menu menu = menuEJB.find();
 			menu.setAnnuityQuotationActive(annuityQuotationActive);
 			menu.setPotentialMemberActive(potentialMemberActive);
+			menu.setPotentialSponsorActive(potentialSponsorActive);
 			menu.setInterestRatesActive(interestRatesActive);
 			menu.setWhatIfAnalysisActive(whatIfAnalysisActive);
 			menu.setContactUsActive(contactUsActive);
 			menu.setAnnuityQuotationName(request.getParameter("annuityQuotationName"));
 			menu.setPotentialMemberName(request.getParameter("potentialMemberName"));
+			menu.setPotentialSponsorName(request.getParameter("potentialSponsorName"));
 			menu.setInterestRatesName(request.getParameter("interestRatesName"));
 			menu.setWhatIfAnalysisName(request.getParameter("whatIfAnalysisName"));
 			menu.setContactUsName(request.getParameter("contactUsName"));

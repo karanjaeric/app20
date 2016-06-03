@@ -28,6 +28,9 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	@Column(name="potentialMemberActive", nullable=false)
 	private boolean potentialMemberActive;
 	
+	@Column(name="potentialSponsorActive", nullable=false)
+	private boolean potentialSponsorActive;
+	
 	@Column(name="interestRatesActive", nullable=false)
 	private boolean interestRatesActive;
 	
@@ -42,6 +45,9 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	
 	@Column(name="potentialMemberName", nullable=false)
 	private String potentialMemberName;
+	
+	@Column(name="potentialSponsorName", nullable=false)
+	private String potentialSponsorName;
 	
 	@Column(name="interestRatesName", nullable=false)
 	private String interestRatesName;
@@ -70,6 +76,12 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	}
 	public void setPotentialMemberActive(boolean potentialMemberActive) {
 		this.potentialMemberActive = potentialMemberActive;
+	}
+	public boolean isPotentialSponsorActive() {
+		return potentialSponsorActive;
+	}
+	public void setPotentialSponsorActive(boolean potentialSponsorActive) {
+		this.potentialSponsorActive = potentialSponsorActive;
 	}
 	public boolean isInterestRatesActive() {
 		return interestRatesActive;
@@ -103,6 +115,12 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 		this.potentialMemberName = potentialMemberName;
 	}
 	
+	public String getPotentialSponsorName() {
+		return potentialSponsorName;
+	}
+	public void setPotentialSponsorName(String potentialSponsorName) {
+		this.potentialSponsorName = potentialSponsorName;
+	}
 	public String getInterestRatesName() {
 		return interestRatesName;
 	}
@@ -125,19 +143,21 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 		return serialVersionUID;
 	}
 	public Menu(Long id, boolean annuityQuotationActive, boolean potentialMemberActive,
-			boolean interestRatesActive, boolean whatIfAnalysisActive,
+			boolean potentialSponsorActive, boolean interestRatesActive, boolean whatIfAnalysisActive,
 			boolean contactUsActive, String annuityQuotationName, String potentialMemberName,
-			String interestRatesName, String whatIfAnalysisName,
+			String potentialSponsorName, String interestRatesName, String whatIfAnalysisName,
 			String contactUsName) {
 		super();
 		this.id = id;
 		this.annuityQuotationActive = annuityQuotationActive;
 		this.potentialMemberActive = potentialMemberActive;
+		this.potentialSponsorActive = potentialSponsorActive;
 		this.interestRatesActive = interestRatesActive;
 		this.whatIfAnalysisActive = whatIfAnalysisActive;
 		this.contactUsActive = contactUsActive;
 		this.annuityQuotationName = annuityQuotationName;
 		this.potentialMemberName = potentialMemberName;
+		this.potentialSponsorName = potentialSponsorName;
 		this.interestRatesName = interestRatesName;
 		this.whatIfAnalysisName = whatIfAnalysisName;
 		this.contactUsName = contactUsName;

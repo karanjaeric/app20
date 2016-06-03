@@ -90,7 +90,7 @@ function post_sponsor(id)
 		$.ajax({
 	        url: $('#base_url').val() + 'admin',
 	        type: 'post',
-	        data: {ACTION:'SUBMIT_PORTAL_SPONSOR', id: id},
+	        data: {ACTION:'FORWARD_PORTAL_SPONSOR', id: id},
 	        dataType: 'json',
 	        success: function(json) {
 				stop_wait();

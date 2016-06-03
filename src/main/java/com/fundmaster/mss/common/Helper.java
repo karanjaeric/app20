@@ -978,6 +978,7 @@ public class Helper {
         sponsor.setPhoneNumber(request.getParameter("phone"));
         sponsor.setPinNumber(request.getParameter("pinNo"));
         sponsor.setScheme(request.getParameter("scheme"));
+        
         try {
             if(session.getAttribute(Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
             {
@@ -987,13 +988,29 @@ public class Helper {
         {
             logger.e("Non-logged in user trying to create sponsor");
         }
+        
         SectorDAO dao = new SectorDAO(entityManager);
         Sector sector = dao.findById(Long.valueOf(request.getParameter("sector")));
         sponsor.setSector(sector);
+        
         JSONObject result = null;
-        if(settings.getSponsorOnboading().equals(Helper.MSS) || settings.getSponsorOnboading().equals(Helper.BOTH))
+        
+        try {
+        	
+       	 if(settings.getSponsorOnboading().equals(Helper.BOTH)) {
+       		sponsor.setPosted();
+            	
+            	System.out.println("The field posted <<<<<<<<<<<< "+ sponsor.isPosted() +" >>>>>>>>>>>>>>>>>>>>");
+            }
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        if(settings.getSponsorOnboading().equals(Helper.MSS) /*|| settings.getSponsorOnboading().equals(Helper.BOTH)*/)
         {
             SponsorDAO sdao = new SponsorDAO(entityManager);
+            
             try {
                 sdao.merge(sponsor);
                 result = result(true, "Sponsor details have been successfully saved.");
@@ -1002,10 +1019,29 @@ public class Helper {
                 result = result(false, "Sponsor details could not be saved. We apologise for the inconvenience.");
             }
         }
-        if(settings.getSponsorOnboading().equals(Helper.XI) || settings.getSponsorOnboading().equals(Helper.BOTH))
+        
+        else if(settings.getSponsorOnboading().equals(Helper.XI) /*|| settings.getSponsorOnboading().equals(Helper.BOTH)*/)
         {
-            result = postSponsorToXi(sponsor);
+            result = postSponsorToXi(request);
         }
+        
+        else if(settings.getSponsorOnboading().equals(Helper.BOTH))
+        {
+        	SponsorDAO sdao = new SponsorDAO(entityManager);
+        	
+        	try {
+        		
+        		 sdao.merge(sponsor);
+        		 result = result(true, "Sponsor details have been successfully saved.");
+                
+            } catch (Exception e)
+            {
+            	result = result(false, "Sponsor details could not be saved. We apologise for the inconvenience.");
+            }
+        	
+            result = postSponsorToXi(request);
+        }
+        
         return result;
     }
     public Member getMemberByID(String memberID)
@@ -1013,38 +1049,143 @@ public class Helper {
        MemberDAO dao = new MemberDAO(entityManager);
         return dao.findById(Long.valueOf(memberID));
     }
-    public JSONObject postSponsorToXi(Sponsor sponsor)
+    
+    
+    public JSONObject postSponsorToXi(HttpServletRequest request)
     {
+    	
+    	HttpSession session = request.getSession(false);
+        Setting settings = getSettings();
+        
+        
+              
+        CountryDAO dao = new CountryDAO(entityManager);
+        Country ctry = dao.findById(Long.valueOf(request.getParameter("country")));
+        System.out.println("Being passed from frontend ======================>  " + request.getParameter("country"));
+        System.out.println("The country is =============================>  " + ctry.getName());
+        String country = ctry.getName();
+        
+        SectorDAO sec = new SectorDAO(entityManager);
+        Sector sectr = sec.findById(Long.valueOf(request.getParameter("sector")));
+        String sector = sectr.getName();
+        
+        
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        String date_string = request.getParameter("applicationDate");
+        Date date = null;
+        try {
+            date = format.parse(date_string);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
         DateFormat format_ = new SimpleDateFormat(Helper.YYYY_MM_DD, Locale.ENGLISH);
+        
         JSONObject jsponsor = new JSONObject();
         JSONObject result = null;
         
-       // DateFormat frmt = new SimpleDateFormat(Helper.MMM_d_yyyy, Locale.ENGLISH);
-        
+ 
         try {
-            jsponsor.put("sponsor.name", sponsor.getCompanyName())
-                    .put("sponsor.applicationDate", format_.format(sponsor.getApplicationDate()))
-                    .put("sponsor.address.residentialAddress", sponsor.getCompanyAddress())
-                    .put("sponsor.address.fixedPhone", sponsor.getPhoneNumber())
-                    .put("sponsor.address.email", sponsor.getEmailAddress())
-                    .put("sponsor.address.town", sponsor.getCity())
-                    .put("sponsor.address.country", sponsor.getCountry().getName())
-                    .put("sponsor.sector", sponsor.getSector().getName())
-                    .put("sponsor.employerpin", sponsor.getEmployerRefNo())
-                    .put("sponsor.pin", sponsor.getPinNumber())
-                    .put("sponsor.status",  "POTENTIAL_SPONSOR");
-            result = saveOrUpdateSponsor(jsponsor.toString());
-            if(result.get(Helper.SUCCESS).equals(true))
+        	
+        	jsponsor.put("sponsor.name", request.getParameter("name"))
+        			.put("sponsor.applicationDate", format_.format(date) )
+        			.put("sponsor.address.residentialAddress", request.getParameter("address"))
+        			.put("sponsor.address.fixedPhone", request.getParameter("phone"))
+        			.put("sponsor.address.email", request.getParameter("email"))
+        			.put("sponsor.address.town", request.getParameter("city"))
+        			.put("sponsor.address.country", country)
+        			.put("sponsor.sector", sector)
+        			.put("sponsor.employerpin", request.getParameter("employerNo"))
+        			.put("sponsor.pin", request.getParameter("pinNo"))
+        			.put("sponsor.status", "POTENTIAL_SPONSOR");
+        	
+        	result = saveOrUpdateSponsor(jsponsor.toString());
+        	
+        	if(result.get(Helper.SUCCESS).equals(true));
+        	
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        return result;
+    }
+    
+    
+    public JSONObject forwardSponsorToXi(Sponsor sp)
+    {
+    	
+    	
+    	 DateFormat format_ = new SimpleDateFormat(Helper.YYYY_MM_DD, Locale.ENGLISH);
+         JSONObject jsponsor = new JSONObject();
+         JSONObject result = null;
+         
+        // DateFormat frmt = new SimpleDateFormat(Helper.MMM_d_yyyy, Locale.ENGLISH);
+         
+         try {
+             jsponsor.put("sponsor.name", sp.getCompanyName())
+                     .put("sponsor.applicationDate", format_.format(sp.getApplicationDate()))
+                     .put("sponsor.address.residentialAddress", sp.getCompanyAddress())
+                     .put("sponsor.address.fixedPhone", sp.getPhoneNumber())
+                     .put("sponsor.address.email", sp.getEmailAddress())
+                     .put("sponsor.address.town", sp.getCity())
+                     .put("sponsor.address.country", sp.getCountry().getName())
+                     .put("sponsor.sector", sp.getSector().getName())
+                     .put("sponsor.employerpin", sp.getEmployerRefNo())
+                     .put("sponsor.pin", sp.getPinNumber())
+                     .put("sponsor.status",  "POTENTIAL_SPONSOR");
+             result = saveOrUpdateSponsor(jsponsor.toString());
+             if(result.get(Helper.SUCCESS).equals(true))
+             {
+                 SponsorDAO dao = new SponsorDAO(entityManager);
+                 sp.setPosted();
+                 dao.merge(sp);
+             }
+         } catch (JSONException e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+         }
+         return result;
+
+    	  
+       /* DateFormat format_ = new SimpleDateFormat(Helper.MMM_d_yyyy, Locale.ENGLISH);
+        
+        String title;
+        if(m.getGender().getName().equalsIgnoreCase("male"))
+            title = "Mr";
+        else
+            title = "Mrs";
+        JSONObject member = new JSONObject();
+        JSONObject result = null;
+        try {
+            member.put("member.surname", m.getLastname());
+            member.put("member.firstname", m.getFirstname());
+            member.put("member.othernames", m.getOthernames());
+            member.put("member.address.email", m.getEmailAddress());
+            member.put("member.idNo", m.getIdNumber());
+            member.put("member.address.cellPhone", m.getPhoneNumber());
+            member.put("member.dob", format_.format(m.getDateOfBirth()))
+                    .put("member.gender", m.getGender().getName().toUpperCase())
+                    .put("member.title", title)
+                    .put("member.address.residentialAddress", m.getResidentialAddress())
+                    .put("member.address.town", m.getCity())
+                    .put("member.country", m.getCountry())
+                    .put("member.maritalStatus", m.getMaritalStatus().getName().toUpperCase())
+                    .put("member.mbshipStatus", "INACTIVE")
+                    .put("member.schemeId", m.getScheme());
+            result = saveOrUpdateMember(member.toString());
+            if(result.get(Helper.SUCCESS).toString().equalsIgnoreCase("true"))
             {
-                SponsorDAO dao = new SponsorDAO(entityManager);
-                sponsor.setPosted();
-                dao.merge(sponsor);
+                m.setPosted();
+                MemberDAO mDAO = new MemberDAO(entityManager);
+                mDAO.merge(m);
             }
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-        return result;
+        }*/
+    	
     }
     
     public JSONObject forwardMemberToXi(Member m)
@@ -1091,7 +1232,7 @@ public class Helper {
     {
     	
          //HttpSession session = request.getSession(false);
-         Setting settings = getSettings();
+        // Setting settings = getSettings();
          
          CountryDAO dao = new CountryDAO(entityManager);
          Country ctry = dao.findById(Long.valueOf(request.getParameter("country")));
@@ -1114,7 +1255,6 @@ public class Helper {
          try {
              date = format.parse(date_string);
          } catch (ParseException e) {
-             // TODO Auto-generated catch block
              e.printStackTrace();
          }
          
@@ -1234,7 +1374,7 @@ public class Helper {
             logger.e("Non-logged in user trying to create member");
         }
         
-        if(settings.getMemberOnboarding().equals(Helper.MSS) /*|| settings.getMemberOnboarding().equals(Helper.BOTH)*/)
+        if(settings.getMemberOnboarding().equals(Helper.MSS))
         {
             try {
                 create_member(m);

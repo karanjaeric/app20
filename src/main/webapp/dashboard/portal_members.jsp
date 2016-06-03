@@ -517,8 +517,8 @@ $(document).ready(function(){
 										}
 										
 										bootbox.alert('<p class="text-center">'+ json.message + '</p>');
-										//load_dashboard("PORTAL_MEMBER");
-										load_dashboard(1, 0);$('.modal-backdrop').remove();
+									  //load_dashboard("PORTAL_MEMBER");
+									  //load_dashboard(1, 0);$('.modal-backdrop').remove();
 									}
 								});
 

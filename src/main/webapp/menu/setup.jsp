@@ -400,6 +400,18 @@
 							
 							<tr>
 							<td>
+							 <label class="control-label">POTENTIAL SPONSOR</label>
+							</td>
+							<td>
+							 <input type="text" name="potentialSponsorName" id="potentialSponsorName" value="${ menu.potentialSponsorName }"/>
+							</td>
+							<td>
+							 <input type="checkbox" name="potentialSponsorActive" id="potentialSponsorActive" ${menu.potentialSponsorActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+							</tr>
+							
+							<tr>
+							<td>
 							 <label class="control-label">INTEREST RATES</label>
 							</td>
 							<td>
@@ -741,6 +753,14 @@
 		                }
 		            },
 		            
+		            potentialSponsorName: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'A title for the Potential Sponsor menu is required'
+		                    }
+		                }
+		            },
+		            
 		            interestRatesName: {
 		                validators: {
 		                    notEmpty: {
@@ -777,7 +797,17 @@
         		$.ajax({
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
-        	        data: {menu_id: $('#menu_id').val(), annuityQuotationName: $('#annuityQuotationName').val(), potentialMemberName: $('#potentialMemberName').val(), interestRatesName: $('#interestRatesName').val(), whatIfAnalysisName: $('#whatIfAnalysisName').val(), contactUsName: $('#contactUsName').val(), annuityQuotationActive: $('#annuityQuotationActive').prop('checked'), potentialMemberActive: $('#potentialMemberActive').prop('checked'), interestRatesActive: $('#interestRatesActive').prop('checked'), whatIfAnalysisActive: $('#whatIfAnalysisActive').prop('checked'), contactUsActive: $('#contactUsActive').prop('checked'), ACTION: 'MENU'},
+        	        data: {menu_id: $('#menu_id').val(), annuityQuotationName: $('#annuityQuotationName').val(), 
+        	        	potentialMemberName: $('#potentialMemberName').val(), 
+        	        	potentialSponsorName: $('#potentialSponsorName').val(), 
+        	        	interestRatesName: $('#interestRatesName').val(), 
+        	        	whatIfAnalysisName: $('#whatIfAnalysisName').val(), 
+        	        	contactUsName: $('#contactUsName').val(), 
+        	        	annuityQuotationActive: $('#annuityQuotationActive').prop('checked'), 
+        	        	potentialMemberActive: $('#potentialMemberActive').prop('checked'), 
+        	        	potentialSponsorActive: $('#potentialSponsorActive').prop('checked'),
+        	        	interestRatesActive: $('#interestRatesActive').prop('checked'), 
+        	        	whatIfAnalysisActive: $('#whatIfAnalysisActive').prop('checked'), contactUsActive: $('#contactUsActive').prop('checked'), ACTION: 'MENU'},
         	        dataType: 'json',
         	        success: function(json) {
         	            $('#' + btn).val('Done');

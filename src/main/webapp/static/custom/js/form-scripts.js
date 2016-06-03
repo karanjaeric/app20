@@ -3372,6 +3372,156 @@ $(document)
 
 							});
 					
+					$('#form-new-sponsor')
+					.bootstrapValidator(
+							{
+								message : 'This value is not valid',
+								feedbackIcons : {
+									valid : 'glyphicon glyphicon-ok',
+									invalid : 'glyphicon glyphicon-remove',
+									validating : 'glyphicon glyphicon-refresh'
+								},
+						        excluded: ':disabled',
+								fields : {
+									companyName : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, company name is required'
+											},
+											regexp : {
+												regexp : /^[a-z\s]+$/i,
+												message : 'Sorry, company name can only consist of alphabetical letters & spaces'
+											}
+										}
+									},
+									companyApplicationDate : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, the application date is required'
+											}
+										}
+									},
+									companyEmail : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, company email address is required'
+											},
+											emailAddress : {
+												message : 'Oops! This doesn\'t look like a valid email address'
+											}
+										}
+									},
+									companyPhone : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, the phone number is required'
+											}
+										}
+									},
+									companyAddress : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, the company address is required'
+											}
+										}
+									},
+									companyCity : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, the company town or city is required'
+											}
+										}
+									},
+									companyCountry : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, the company country is required'
+											}
+										}
+									},
+									pinNumber : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, the company PIN number is required'
+											}
+										}
+									},
+									sector : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, please select the company sector'
+											}
+										}
+									},
+									employerNumber : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, the company\'s employer number is required'
+											}
+										}
+									},
+									pension_scheme : {
+										validators : {
+											notEmpty : {
+												message : 'Sorry, please select your prefered pension scheme'
+											}
+										}
+									}
+								}
+							})
+					.on(
+							'success.form.bv',
+							function(e) {
+								start_wait();
+								// Prevent form submission
+								e.preventDefault();
+								// Get the form instance
+								$
+										.ajax({
+											url : $('#base_url').val()
+													+ 'potential-sponsor',
+											type : 'post',
+											data : {
+												ACTION: 'ADD_SPONSOR',
+												name: $('#companyName').val(),
+												applicationDate: $('#companyApplicationDate').val(),
+												pinNo: $('#pinNumber').val(),
+												employerNo: $('#employerNumber').val(),
+												sector: $('#sector').val(),
+												email: $('#companyEmail').val(),
+												phone: $('#companyPhone').val(),
+												address: $('#companyAddress').val(),
+												city: $('#companyCity').val(),
+												country: $('#companyCountry').val(),
+												scheme: $('#pension_scheme').val(),
+												type : 'sponsor'
+											}
+												
+												,
+											dataType : 'json',
+											success : function(json) {
+												stop_wait();
+												if(json.success)
+												{
+													$("form#form-sponsor")[0]
+															.reset();
+													setTimeout(
+															function() {
+																window.location.href = $(
+																		'#base_url')
+																		.val();
+															}, 5000);
+												}
+												bootbox
+														.alert('<p class="text-center">'
+																+ json.message
+																+ '</p>');
+												
+											}
+										});
+
+							});
+					
 					
 					$('#companyApplicationDate')
 			        .datetimepicker({
