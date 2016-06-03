@@ -48,10 +48,18 @@
 		<div class="form-group">
 			<label for="maritalStatus" class="control-label">Marital Status:</label>
 		
-				<select name="maritalStatus" id="maritalStatus" onchange="hide_or_show();" class="form-control">
+				<!-- <select name="maritalStatus" id="maritalStatus" onchange="hide_or_show();" class="form-control">
 					<option value="">Select marital status...</option>
 					<option ${ maritalStatus == 'SINGLE' ? 'selected="selected"' : '' }>Single</option>
 					<option ${ maritalStatus == 'MARRIED' ? 'selected="selected"' : '' }>Married</option>
+				</select> -->
+				
+				<select id="maritalStatus" class="form-control" onchange="hide_or_show();" name="maritalStatus" data-bv-field="maritalStatus">
+					<option value="">Select marital status...</option>
+					<option value="1"> Single </option>
+					<option value="2"> Married </option>
+					<!-- <option value="3"> Divorced </option> -->
+					<!-- <option value="4"> Widowed </option> -->
 				</select>
 			
 		</div>			
