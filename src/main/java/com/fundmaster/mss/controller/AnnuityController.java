@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -122,8 +123,17 @@ public class AnnuityController extends HttpServlet implements Serializable {
         else if(names.length ==  0)
         {
             firstName = "";
+            
+           System.out.println("************* First name is: " + firstName+ " ***********************");
+            
             lastName = "";
+            
+            System.out.println("************* Last name is: " + lastName+ " ***********************");
+            
             otherNames = "";
+            
+            System.out.println("************* Other name is: " + otherNames+ " ***********************");
+            
         }
 
 		DateFormat format = new SimpleDateFormat(DD_MM_YYYY, Locale.ENGLISH);
@@ -133,15 +143,48 @@ public class AnnuityController extends HttpServlet implements Serializable {
 		Date spouseDateOfBirth;
 
     	purchaseDate = helper.dateFromString(request.getParameter("purchaseDate"), DD_MM_YYYY);
+    	
+    	System.out.println("************* Purchase date is: " + purchaseDate+ " ***********************");
+    	
     	pensionStartDate = helper.dateFromString(request.getParameter("commencementDate"), DD_MM_YYYY);
+    	
+    	System.out.println("************* Pension start date is: " + pensionStartDate+ " ***********************");
+    	
+    	format = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
 
     	dateOfBirth = helper.dateFromString(request.getParameter("dateOfBirth"), DD_MM_YYYY);
-		spouseDateOfBirth = helper.dateFromString(request.getParameter("spouseDateOfBirth"), DD_MM_YYYY);
-		format = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
+    	
+    	System.out.println("************* Date of birth is: " + dateOfBirth+ " ***********************");
+    	
+    	spouseDateOfBirth = helper.dateFromString(request.getParameter("spouseDateOfBirth"), DD_MM_YYYY);
+    	
+    	System.out.println("************* Spouse Date of birth is: " + spouseDateOfBirth+ " ***********************");
+		
+    	
+    	try {
+    		
+    		if(spouseDateOfBirth == null) {
+        		
+        		spouseDateOfBirth = new Date();
+        	}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	
+    	
 		String calculationMode = request.getParameter("calculationMode");
+		
+		System.out.println("************* Calculation Mode is : " + calculationMode + " ***********************");
+		
 		String targetPension = request.getParameter("targetPension");
+		
+		System.out.println("************* Target Pension is : " + targetPension + " ***********************");
+		
 		String spouseReversal = request.getParameter("spouseReversal");
 		
+		System.out.println("************* Spouse reversal is : " + spouseReversal + " ***********************");
 		
 		Boolean displayable = Boolean.TRUE;
 		
@@ -151,10 +194,18 @@ public class AnnuityController extends HttpServlet implements Serializable {
 		System.out.println("Value of displayable is :::::::::::::::::::::::::::>  " + displayable);
 		
 		Gender gender = helper.genderById(Long.valueOf(request.getParameter("gender")));
-		Gender spouseGender = helper.genderById(Long.valueOf(request.getParameter("gender")));
+		
+		System.out.println("************* Gender is : " + gender.getName() + " ***********************");
+		
+		Gender spouseGender = helper.genderById(Long.valueOf(request.getParameter("spouseGender")));
+		
+		System.out.println("************* Spouse Gender is : " + spouseGender.getName() + " ***********************");
+		
+		String productID = request.getParameter("annuityProduct");
+		System.out.println("************* Product Id is : " + productID + " ***********************");
 		
     	try {
-    		String result = helper.getAnnuityQuote(calculationMode, request.getParameter("annuityProduct"), lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, displayable, spouseGender.getName(), format.format(spouseDateOfBirth==null?new Date():spouseDateOfBirth));
+    		String result = helper.getAnnuityQuote(calculationMode, request.getParameter("annuityProduct"), lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, displayable, spouseGender.getName(), format.format(spouseDateOfBirth));
 			out.write(result);
 		} catch (JSONException e) {
 
