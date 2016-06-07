@@ -168,13 +168,30 @@ body {
 					<div class="row">
 						<div class="col-md-9">
 							<ul class="nav navbar-nav">
+							
 								<li><a href="<%=request.getContextPath()%>">Home</a></li>
+								
 								<c:if test="${menu.annuityQuotationActive == 'TRUE'}">
 								<li><a
 									href="<%=request.getContextPath()%>/annuity-quotation">${ menu.annuityQuotationName }</a></li>
 								</c:if>
 								
-								<c:if test="${menu.potentialMemberActive == 'TRUE'}">
+								<c:if test="${menu.whatIfAnalysisActive == 'TRUE'}">
+								<li><a
+									href="<%=request.getContextPath()%>/what-if-analysis">${ menu.whatIfAnalysisName }</a></li>
+								</c:if>
+									
+								<c:if test="${menu.potentialMemberActive == 'TRUE' || menu.potentialSponsorActive == 'TRUE' || menu.interestRatesActive == 'TRUE'}">
+								
+								<li class="dropdown">
+          						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Other Options <b class="caret"></b></a>
+            					<ul class="dropdown-menu">
+            					
+            					<c:if test="${menu.interestRatesActive == 'TRUE'}">
+								<li><a href="<%=request.getContextPath()%>/interest-rates">${ menu.interestRatesName }</a></li>
+								</c:if>
+								
+            					<c:if test="${menu.potentialMemberActive == 'TRUE'}">
 								<li><a
 									href="<%=request.getContextPath()%>/potential-member">${ menu.potentialMemberName }</a></li>
 								</c:if>
@@ -183,14 +200,12 @@ body {
 								<li><a
 									href="<%=request.getContextPath()%>/potential-sponsor">${ menu.potentialSponsorName }</a></li>
 								</c:if>
+
+            					</ul>
+        						</li>
 								
-								<c:if test="${menu.interestRatesActive == 'TRUE'}">
-								<li><a href="<%=request.getContextPath()%>/interest-rates">${ menu.interestRatesName }</a></li>
 								</c:if>
-								<c:if test="${menu.whatIfAnalysisActive == 'TRUE'}">
-								<li><a
-									href="<%=request.getContextPath()%>/what-if-analysis">${ menu.whatIfAnalysisName }</a></li>
-								</c:if>
+        								
 								<c:if test="${menu.contactUsActive == 'TRUE'}">
 								<li><a
 									href="<%=request.getContextPath()%>/contact-us">${ menu.contactUsName }</a></li>
