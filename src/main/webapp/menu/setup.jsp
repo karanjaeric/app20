@@ -230,9 +230,9 @@
 						<div class="form-group">
 							 <label class="control-label" for="sponsorOnboarding">Sponsor Onboarding Process:</label>
 							 <select name="sponsorOnboarding" id="sponsorOnboarding" class="form-control">
-							 			<option value="FUNDMASTER" ${ settings.memberOnboarding == 'FUNDMASTER' ? 'selected="selected"' : '' }>DETAILS DIRECTLY POSTED TO FUNDMASTER</option>
-							 			<option value="PORTAL" ${ settings.memberOnboarding == 'PORTAL' ? 'selected="selected"' : '' }>DETAILS POSTED TO PORTAL FIRST (FOR APPROVAL)</option>
-							 			<option value="BOTH" ${ settings.memberOnboarding == 'BOTH' ? 'selected="selected"' : '' }>DETAILS POSTED TO BOTH PORTAL AND FUNDMASTER</option>
+							 			<option value="FUNDMASTER" ${ settings.sponsorOnboarding == 'FUNDMASTER' ? 'selected="selected"' : '' }>DETAILS DIRECTLY POSTED TO FUNDMASTER</option>
+							 			<option value="PORTAL" ${ settings.sponsorOnboarding == 'PORTAL' ? 'selected="selected"' : '' }>DETAILS POSTED TO PORTAL FIRST (FOR APPROVAL)</option>
+							 			<option value="BOTH" ${ settings.sponsorOnboarding == 'BOTH' ? 'selected="selected"' : '' }>DETAILS POSTED TO BOTH PORTAL AND FUNDMASTER</option>
 							 </select>
 						</div>
 						<div class="form-group hide">

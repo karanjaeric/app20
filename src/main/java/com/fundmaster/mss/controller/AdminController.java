@@ -1045,7 +1045,7 @@ public class AdminController extends HttpServlet implements Serializable {
 				settings.setXiReportPassword(request.getParameter("xiReportPassword"));
 			}
 			settings.setMemberOnboarding(request.getParameter("memberOnboarding"));
-			settings.setSponsorOnboading(request.getParameter("sponsorOnboarding"));
+			settings.setSponsorOnboarding(request.getParameter("sponsorOnboarding"));
 			settings.setEncrypt(request.getParameter("encrypt").equalsIgnoreCase("true"));
 
 			if (settingEJB.edit(settings) != null) {

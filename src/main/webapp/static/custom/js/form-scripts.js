@@ -3291,6 +3291,9 @@ $(document)
 								start_wait();
 								// Prevent form submission
 								e.preventDefault();
+								
+								 var form = "form-new-member";
+								
 								// Get the form instance
 								$
 										.ajax({
@@ -3350,8 +3353,7 @@ $(document)
 											success : function(json) {
 												stop_wait();
 												if (json.success) {
-													$("form#form-new-member")[0]
-															.reset();
+													$('#' + form)[0].reset();
 													setTimeout(
 															function() {
 																window.location.href = $(
@@ -3475,6 +3477,9 @@ $(document)
 								start_wait();
 								// Prevent form submission
 								e.preventDefault();
+								
+								var form = "form-new-sponsor";
+								
 								// Get the form instance
 								$
 										.ajax({
@@ -3499,7 +3504,7 @@ $(document)
 												
 												,
 											dataType : 'json',
-											success : function(json) {
+											/*success : function(json) {
 												stop_wait();
 												if(json.success)
 												{
@@ -3517,7 +3522,28 @@ $(document)
 																+ json.message
 																+ '</p>');
 												
-											}
+											}*/
+												
+												success : function(json) {
+													stop_wait();
+													if (json.success) {
+														$('#' + form)[0].reset();
+														setTimeout(
+																function() {
+																	window.location.href = $(
+																			'#base_url')
+																			.val();
+																}, 5000);
+													}
+													bootbox
+															.alert('<p class="text-center">'
+																	+ json.message
+																	+ '</p>');
+
+													load_dashboard(1, 0);
+													$('.modal-backdrop')
+															.remove();
+												}
 										});
 
 							});

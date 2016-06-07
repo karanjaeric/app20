@@ -224,10 +224,9 @@ $(document).ready(function(){
 																	placeholder="Other Names">
 															</div>
 															<div class="form-group">
-																<label for="dateOfBirth" class="control-label">Date Of
-																	Birth:</label> <input type="text" readonly="readonly" name="dateOfBirth"
-																	class="form-control datepicker" id="dateOfBirth"
-																	placeholder="Date Of Birth">
+																<label for="dateOfBirth" class="control-label">Date Of Birth:</label>
+																 <input type="text" readonly="readonly" name="dateOfBirth" class="form-control datepicker " 
+																 id="dateOfBirth" placeholder="Date Of Birth">
 															</div>
 															<div class="form-group">
 																<label for="gender" class="control-label">Gender:</label> <select
@@ -331,10 +330,20 @@ $(document).ready(function(){
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
+	
 	$('#dateOfBirth')
-	.datetimepicker({
-	    format: 'dd-mm-yyyy'
-	})
+    .datetimepicker({
+    	 language:  'en',
+         weekStart: 1,
+         todayBtn:  1,
+         autoclose: 1,
+         todayHighlight: 1,
+         startView: 2,
+         minView: 2,
+         forceParse: 0,
+         format: 'dd-mm-yyyy'
+    })
+	
 	.on('changeDate', function(e) {
 	    // Revalidate the date field
 	    $('#form-new-member').bootstrapValidator('revalidateField', 'dateOfBirth');
@@ -376,7 +385,7 @@ $(document).ready(function(){
 								validators : {
 									notEmpty : {
 										message : 'Sorry, your date of birth is required'
-									}
+									},
 								}
 							},
 							emailAddress : {
@@ -453,6 +462,10 @@ $(document).ready(function(){
 						start_wait();
 						// Prevent form submission
 						e.preventDefault();
+						
+						 var form = "form-new-member";
+			             var modal = "modal-new-member";
+						
 						// Get the form instance
 						$
 								.ajax({
@@ -504,7 +517,7 @@ $(document).ready(function(){
 										
 									},
 									dataType : 'json',
-									success : function(json) {
+									/*success : function(json) {
 										stop_wait();
 										
 										if(json.success)
@@ -519,7 +532,18 @@ $(document).ready(function(){
 										bootbox.alert('<p class="text-center">'+ json.message + '</p>');
 									  //load_dashboard("PORTAL_MEMBER");
 									  //load_dashboard(1, 0);$('.modal-backdrop').remove();
-									}
+									}*/
+									
+									success: function(json) {
+				        	            stop_wait();
+				        	            if(json.success)
+				        	            {
+				        	                $('#' + form)[0].reset();
+				        	                $('#' + modal).modal('hide');
+				        	            }
+				        	            bootbox.alert(json.message);
+				        	        }
+									
 								});
 
 					});

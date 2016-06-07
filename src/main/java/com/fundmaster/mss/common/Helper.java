@@ -997,7 +997,7 @@ public class Helper {
         
         try {
         	
-       	 if(settings.getSponsorOnboading().equals(Helper.BOTH)) {
+       	 if(settings.getSponsorOnboarding().equals(Helper.BOTH)) {
        		sponsor.setPosted();
             	
             	System.out.println("The field posted <<<<<<<<<<<< "+ sponsor.isPosted() +" >>>>>>>>>>>>>>>>>>>>");
@@ -1007,7 +1007,7 @@ public class Helper {
 			e.printStackTrace();
 		}
         
-        if(settings.getSponsorOnboading().equals(Helper.MSS) /*|| settings.getSponsorOnboading().equals(Helper.BOTH)*/)
+        if(settings.getSponsorOnboarding().equals(Helper.MSS) /*|| settings.getSponsorOnboarding().equals(Helper.BOTH)*/)
         {
             SponsorDAO sdao = new SponsorDAO(entityManager);
             
@@ -1020,12 +1020,12 @@ public class Helper {
             }
         }
         
-        else if(settings.getSponsorOnboading().equals(Helper.XI) /*|| settings.getSponsorOnboading().equals(Helper.BOTH)*/)
+        else if(settings.getSponsorOnboarding().equals(Helper.XI) /*|| settings.getSponsorOnboarding().equals(Helper.BOTH)*/)
         {
             result = postSponsorToXi(request);
         }
         
-        else if(settings.getSponsorOnboading().equals(Helper.BOTH))
+        else if(settings.getSponsorOnboarding().equals(Helper.BOTH))
         {
         	SponsorDAO sdao = new SponsorDAO(entityManager);
         	

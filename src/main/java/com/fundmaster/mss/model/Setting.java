@@ -96,11 +96,12 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 	@Column (name = "xiReportPath", nullable = false)
 	private
 	String xiReportPath;
-	public String getSponsorOnboading() {
-		return sponsorOnboading;
+	
+	public String getSponsorOnboarding() {
+		return sponsorOnboarding;
 	}
-	public void setSponsorOnboading(String sponsorOnboading) {
-		this.sponsorOnboading = sponsorOnboading;
+	public void setSponsorOnboarding(String sponsorOnboarding) {
+		this.sponsorOnboarding = sponsorOnboarding;
 	}
 	public String getMemberOnboarding() {
 		return memberOnboarding;
@@ -111,7 +112,7 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 	private String xiReportUsername;
 	private String xiReportPassword;
 	private String logoFile;
-	private String sponsorOnboading;
+	private String sponsorOnboarding;
 	private String memberOnboarding;
 	private String portalBaseURL;
 	public String getPortalBaseURL() {

@@ -293,7 +293,15 @@ $(document).ready(function(){
 <script type="text/javascript">
 $('#companyApplicationDate')
 .datetimepicker({
-    format: 'dd-mm-yyyy'
+	 language:  'en',
+     weekStart: 1,
+     todayBtn:  1,
+     autoclose: 1,
+     todayHighlight: 1,
+     startView: 2,
+     minView: 2,
+     forceParse: 0,
+     format: 'dd-mm-yyyy'
 })
 .on('changeDate', function(e) {
     // Revalidate the date field
@@ -402,6 +410,11 @@ $('#form-new-sponsor')
 					start_wait();
 					// Prevent form submission
 					e.preventDefault();
+					
+					//var btn = "btn-media";
+	                var form = "form-new-sponsor";
+	                var modal = "modal-new-sponsor";
+					
 					// Get the form instance
 					$
 							.ajax({
@@ -426,25 +439,16 @@ $('#form-new-sponsor')
 									
 									,
 								dataType : 'json',
-								success : function(json) {
-									stop_wait();
-									if(json.success)
-									{
-										$("form#form-sponsor")[0]
-												.reset();
-										setTimeout(
-												function() {
-													window.location.href = $(
-															'#base_url')
-															.val();
-												}, 5000);
-									}
-									bootbox
-											.alert('<p class="text-center">'
-													+ json.message
-													+ '</p>');
-									
-								}
+								
+									success: function(json) {
+				        	            stop_wait();
+				        	            if(json.success)
+				        	            {
+				        	                $('#' + form)[0].reset();
+				        	                $('#' + modal).modal('hide');
+				        	            }
+				        	            bootbox.alert(json.message);
+				        	        }
 							});
 
 				});
