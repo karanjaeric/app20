@@ -72,7 +72,7 @@
 		            	}
 		            	else
 		            	{
-		            	    url = $('#reportPath').val() + 'members/combinedToDate.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FcombinedToDate.xdo&_xmode=3&_paramsBASE=' + $('#xiRootPath').val() + 'Xi&_paramsmember_id=' + $('#member_id').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsadmin=1&_paramsap_id=' + json.accountingPeriodId + '&_paramsadmin=1&id=' + $('#username').val() + '&passwd=' + $('#password').val() + '';
+		            	    url = $('#reportPath').val() + 'members/Provisional combined To Date.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FProvisional%20combined%20To%20Date.xdo&_xmode=3&_paramsBASE=' + $('#xiRootPath').val() + 'Xi&_paramsmember_id=' + $('#member_id').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsadmin=1&_paramsap_id=' + json.accountingPeriodId + '&_paramsadmin=1&id=' + $('#username').val() + '&passwd=' + $('#password').val() + '';
 		            		 
 		            	}
 		   			 $("#sa-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
