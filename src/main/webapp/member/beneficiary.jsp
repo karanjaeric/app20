@@ -101,7 +101,7 @@
 	</c:if>
 </c:forEach>
 </c:if>
-<c:if test="${ type == 'ADD' }">
+<c:if test="${ type == 'ADD' }"> 
 <input type="hidden" id="beneficiary_id" value="0"/>
 	<input type="hidden" name="ACTION" id="ACTION" value="EDIT_BENEFICIARY" />
 		<div class="form-group">

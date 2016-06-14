@@ -5,11 +5,16 @@ import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.LOGGER;
 import com.fundmaster.mss.model.*;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -83,6 +88,9 @@ public class AdminController extends HttpServlet implements Serializable {
 	MenuEJB menuEJB;
 	@EJB
 	SocialEJB socialEJB;
+	
+	@PersistenceContext
+	private EntityManager em;
 
 	public AdminController() {
 		// TODO Auto-generated constructor stub
@@ -408,6 +416,9 @@ public class AdminController extends HttpServlet implements Serializable {
 				String surname = request.getParameter("surname");
 				String lumpsum = request.getParameter("lumpsum");
 				String firstname = request.getParameter("firstname");
+				
+				System.out.println("First name to be passed: " + firstname);
+				
 				String gender = request.getParameter("gender");
 				String maritalStatus = request.getParameter("maritalStatus");
 				String status = request.getParameter("status");
@@ -524,6 +535,7 @@ public class AdminController extends HttpServlet implements Serializable {
 		}
 
 		else if (request.getParameter(REQUEST_ACTION).equals("GET_BENEFICIARY")) {
+			
 			if (request.getParameter("type").equals("EDIT")) {
 				List<Beneficiary> beneficiaries = helper.getBeneficiaries(request.getParameter("memberID"));
 				request.setAttribute("beneficiaries", beneficiaries);
@@ -785,8 +797,9 @@ public class AdminController extends HttpServlet implements Serializable {
 				// TODO Auto-generated catch block
 				logger.e("JSONException was detected: " + e.getMessage());
 			}
-			List<Beneficiary> beneficiaries = helper.getBeneficiaries(request.getParameter("memberID"));
+			List<Beneficiary> beneficiaries = helper.getBeneficiaries(request.getParameter("memberID"));			
 			request.setAttribute("beneficiaries", beneficiaries);
+			
 			request.setAttribute("schemes", schemes);
 			MemberPermission memberPermission = helper.getMemberPermissions();
 			request.setAttribute("memberPermission", memberPermission);
@@ -1179,6 +1192,8 @@ public class AdminController extends HttpServlet implements Serializable {
 					out.write(helper.result(true, "Contact category could not be saved").toString());
 			}
 		} else if (request.getParameter(REQUEST_ACTION).equals("LOGO")) {
+			
+			
 			for (Part part : request.getParts()) {
 				String fileName = extractFileName(part);
 				if (!fileName.equals("")) {
@@ -1206,6 +1221,7 @@ public class AdminController extends HttpServlet implements Serializable {
 					//Save banner to database as blob
 
 					File file = new File(savePath);
+					
 					byte[] bFile = new byte[(int) file.length()];
 
 					try {
@@ -1226,11 +1242,17 @@ public class AdminController extends HttpServlet implements Serializable {
 						
 						fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
 						
+						//Logo logo = new Logo();
+						
+						
 						Logo logo = new Logo();
+						
 						logo.setPath(savePath);
 						logo.setImage(fileBlob);
 						logo.setName(fileName);
 						
+						
+
 						if (logoEJB.add(logo) != null) {
 							helper.audit(session, "Uploaded a logo for the portal");
 							out.write(helper.result(true, "Logo was successfully uploaded").toString());

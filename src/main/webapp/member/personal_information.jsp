@@ -515,12 +515,22 @@
 									
 									//Define formData object
 										var formData = new FormData($(this)[0]);
+									
 										type = $('#type').val();
 										formData.append("type", type);
 										
 										memberID = $('#member_id').val();
 										formData.append("memberID", memberID);
-
+										
+										beneficiary_id = $('#beneficiary_id').val();
+										formData.append("beneficiary_id", beneficiary_id);
+										
+										firstname = $('#firstName').val();
+										formData.append("firstname", firstname);
+										
+										//firstname = $('#firstname').val();
+										//formData.append("firstname", firstname);
+											
 												$.ajax({
 													url : $('#base_url').val() + 'admin',
 													type : 'post',

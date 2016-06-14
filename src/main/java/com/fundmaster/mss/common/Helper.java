@@ -570,7 +570,7 @@ public class Helper {
         formatter.close();
         return result;
     }
-
+    
     private void create_member(Member m)
     {
         MemberDAO dao = new MemberDAO(entityManager);
@@ -1964,6 +1964,7 @@ public class Helper {
         Setting settings = getSettings();
         try {
             JSONObject response=null;
+            
             if(schemeId==null)
             {
                 response = URLGet(settings.getXiPath() + "getmemberdetails/" + memberID);
@@ -2028,24 +2029,36 @@ public class Helper {
 		 return permissions;
     }
     public List<Beneficiary> getBeneficiaries(String memberID)
+    
     {
+    	
+    	logger.i("Member Id for bene " + memberID);
+    	
         Setting settings = getSettings();
+        
         try {
             JSONObject response = URLPost(settings.getXiPath() + "getmemberbeneficiaries/" + memberID,"", "application/x-www-form-urlencoded");
+            
+            
             if(response.get(Helper.SUCCESS).equals(true))
             {
                 JSONArray res = (JSONArray) response.get(Helper.ROWS);
+                
 
                 List<Beneficiary> beneficiaries = new ArrayList<>();
 
-               for(int i = 0; i < res.length(); i ++)
+               
+                
+                for(int i = 0; i < res.length(); i ++)
 
                 {
 
                     JSONObject obj = res.getJSONObject(i);
+                    
                     Beneficiary ben = new Beneficiary(obj.getLong("id"), obj.getLong("memberNo"), obj.getString("relationship"), obj.getString("category"), obj.getString("surname"), obj.getString("firstname"), obj.getString("othernames"),obj.getString("name"), obj.getString("dob"), obj.getString("gender"), obj.get("monthlyEntitlement").toString(), obj.get("lumpsumEntitlement").toString(), obj.getString("idNo"), obj.getString("address"), obj.getString("mstatus"), obj.getString("physicalCondition"), obj.getString("dateOfAppointment"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"), obj.getString("trustFund"));
+                                        
                     beneficiaries.add(ben);
-                  
+                
                 }
                 
                 return beneficiaries;
@@ -2058,6 +2071,7 @@ public class Helper {
         }
         catch (Exception ex)
         {
+        	ex.printStackTrace();
             return null;
         }
     }
