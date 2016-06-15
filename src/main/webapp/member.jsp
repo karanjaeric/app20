@@ -9,6 +9,7 @@
 <input type="hidden" id="uppercase" value="${ policy.uppercase }" />
 <input type="hidden" id="numbers" value="${ policy.numbers }" />
 <input type="hidden" id="member_id" value="${ member_id }" />
+
 <div class="container-fluid navigation-bar">
 	<div class="container-fluid">
 		<div class="col-md-2">
@@ -67,7 +68,6 @@
 						</c:choose>
 					</c:forEach>
 				</select>
-			</div>
 			</div>
 			<p>&nbsp;</p>
 			<div class="sidebar-right section text-center">
