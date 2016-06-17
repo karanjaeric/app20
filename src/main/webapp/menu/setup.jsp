@@ -374,12 +374,15 @@
 						<input type="hidden" name="menu_id" value="${ menu.id }" id="menu_id"/>
 						<table class="table">
 							<tr><th>MENU ITEM</th><th>MENU TEXT</th><th>VISIBLE</th></tr>
+							
 							<tr>
 							<td>
-							 <label class="control-label">ANNUITY QUOTATION</label>
+							<label class="control-label">ANNUITY QUOTATION</label>
 							</td>
 							<td>
-							 <input type="text" name="annuityQuotationName" id="annuityQuotationName" value="${ menu.annuityQuotationName }"/>
+							<div class="form-group">
+							<input type="text" class="form-control" name="annuityQuotationName" id="annuityQuotationName" placeholder="ANNUITY QUOTATION" value="${ menu.annuityQuotationName }"/>
+							</div>	
 							</td>
 							<td>
 							 <input type="checkbox" name="annuityQuotationActive" id="annuityQuotationActive" ${menu.annuityQuotationActive == 'TRUE' ? 'checked' : ''}/>
@@ -391,7 +394,9 @@
 							 <label class="control-label">POTENTIAL MEMBERS</label>
 							</td>
 							<td>
-							 <input type="text" name="potentialMemberName" id="potentialMemberName" value="${ menu.potentialMemberName }"/>
+							<div class="form-group">
+							<input type="text" class="form-control" name="potentialMemberName" id="potentialMemberName" placeholder="POTENTIAL MEMBER" value="${ menu.potentialMemberName }"/>
+							</div>
 							</td>
 							<td>
 							 <input type="checkbox" name="potentialMemberActive" id="potentialMemberActive" ${menu.potentialMemberActive == 'TRUE' ? 'checked' : ''}/>
@@ -403,7 +408,9 @@
 							 <label class="control-label">POTENTIAL SPONSOR</label>
 							</td>
 							<td>
-							 <input type="text" name="potentialSponsorName" id="potentialSponsorName" value="${ menu.potentialSponsorName }"/>
+							<div class="form-group">
+							<input type="text" class="form-control" name="potentialSponsorName" id="potentialSponsorName" placeholder="POTENTIAL SPONSOR" value="${ menu.potentialSponsorName }"/>
+							</div>
 							</td>
 							<td>
 							 <input type="checkbox" name="potentialSponsorActive" id="potentialSponsorActive" ${menu.potentialSponsorActive == 'TRUE' ? 'checked' : ''}/>
@@ -415,29 +422,37 @@
 							 <label class="control-label">INTEREST RATES</label>
 							</td>
 							<td>
-							 <input type="text" name="interestRatesName" id="interestRatesName"  value="${ menu.interestRatesName }"/>
+							<div class="form-group">
+							<input type="text" class="form-control" name="interestRatesName" id="interestRatesName" placeholder="INTEREST RATES" value="${ menu.interestRatesName }"/>
+							</div>
 							</td>
 							<td>
 							 <input type="checkbox" name="interestRatesActive" id="interestRatesActive"  ${menu.interestRatesActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
+							
 							<tr>
 							<td>
 							 <label class="control-label">WHAT IF ANALYSIS</label>
 							</td>
 							<td>
-							 <input type="text" name="whatIfAnalysisName" id="whatIfAnalysisName"  value="${ menu.whatIfAnalysisName }"/>
+							<div class="form-group">
+							<input type="text" class="form-control" name="whatIfAnalysisName" id="whatIfAnalysisName" placeholder="WHAT IF ANALYSIS" value="${ menu.whatIfAnalysisName }"/>
+							</div>
 							</td>
 							<td>
 							 <input type="checkbox" name="whatIfAnalysisActive" id="whatIfAnalysisActive"  ${menu.whatIfAnalysisActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
+							
 							<tr>
 							<td>
 							 <label class="control-label">CONTACT US</label>
 							</td>
 							<td>
-							 <input type="text" name="contactUsName" id="contactUsName"  value="${ menu.contactUsName }" />
+							<div class="form-group">
+							<input type="text" class="form-control" name="contactUsName" id="contactUsName" placeholder="CONTACT US" value="${ menu.contactUsName }" />
+							</div>
 							</td>
 							<td>
 							 <input type="checkbox" name="contactUsActive" id="contactUsActive" ${menu.contactUsActive == 'TRUE' ? 'checked' : ''}/>
@@ -768,7 +783,7 @@
 		                    }
 		                }
 		            },
-		            whatIfAnalaysisName: {
+		            whatIfAnalysisName: {
 		                validators: {
 		                    notEmpty: {
 		                        message: 'A title for the What If Analysis menu is required'

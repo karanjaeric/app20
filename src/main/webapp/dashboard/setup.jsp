@@ -19,8 +19,8 @@
 		<table class="table table-responsive table-striped">
 			<tr><th>MENU</th><th>MENU TEXT</th><th>ACTIVE</th></tr>
 			<tr><td>ANNUITY QUOTATION</td><td>${ menu.annuityQuotationName }</td><td>${ menu.annuityQuotationActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
-			<tr><td>POTENTIAL MEMBER</td><td>${ menu.potentialMemberActive }</td><td>${ menu.potentialMemberActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
-			<tr><td>POTENTIAL SPONSOR</td><td>${ menu.potentialSponsorActive }</td><td>${ menu.potentialSponsorActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
+			<tr><td>POTENTIAL MEMBER</td><td>${ menu.potentialMemberName }</td><td>${ menu.potentialMemberActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
+			<tr><td>POTENTIAL SPONSOR</td><td>${ menu.potentialSponsorName }</td><td>${ menu.potentialSponsorActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>INTEREST RATES</td><td>${ menu.interestRatesName }</td><td>${ menu.interestRatesActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>WHAT IF ANALYSIS</td><td>${ menu.whatIfAnalysisName }</td><td>${ menu.whatIfAnalysisActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>CONTACT US</td><td>${ menu.contactUsName }</td><td>${ menu.contactUsActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
