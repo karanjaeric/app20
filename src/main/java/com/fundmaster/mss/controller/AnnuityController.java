@@ -105,7 +105,8 @@ public class AnnuityController extends HttpServlet implements Serializable {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
     	PrintWriter out = response.getWriter();
-    	String[] names = request.getParameter("fullName").split(" ");
+    	
+      /*String[] names = request.getParameter("fullName").split(" ");
     	String firstName, lastName, otherNames;
         firstName = lastName = otherNames = null;
 		if(names.length > 0)
@@ -134,7 +135,8 @@ public class AnnuityController extends HttpServlet implements Serializable {
             
             System.out.println("************* Other name is: " + otherNames+ " ***********************");
             
-        }
+        }*/
+    	
 
 		DateFormat format = new SimpleDateFormat(DD_MM_YYYY, Locale.ENGLISH);
 		Date purchaseDate;
@@ -173,6 +175,24 @@ public class AnnuityController extends HttpServlet implements Serializable {
 		}
     	
     	
+    	//String firstName, lastName, otherNames;
+    	
+    	String firstName = request.getParameter("firstName");
+    	String lastName = request.getParameter("lastName");
+    	String otherNames = request.getParameter("otherNames");
+    	
+    	try {
+    		
+    		if(otherNames == null) {
+    			
+    			otherNames = "";
+    		}
+    		
+    		System.out.println("************* Other name is: " + otherNames+ " ***********************");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
     	
 		String calculationMode = request.getParameter("calculationMode");
 		

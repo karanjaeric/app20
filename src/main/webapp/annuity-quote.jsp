@@ -13,11 +13,31 @@
 							<legend>
 								<i class="fa fa-user"></i> &nbsp;Personal Information
 							</legend>
-							<div class="form-group">
+							
+							<!-- <div class="form-group">
 								<label for="fullName" class="control-label">Name:</label> <input
 									type="text" name="fullName" class="form-control" id="fullName"
 									placeholder="Full Name">
+							</div>  -->
+							
+							<div class="form-group">
+								<label for="firstName" class="control-label">First Name:</label> <input
+									type="text" name="firstName" class="form-control" id="firstName"
+									placeholder="First Name">
 							</div>
+							
+							<div class="form-group">
+								<label for="lastName" class="control-label">Last Name:</label> <input
+									type="text" name="lastName" class="form-control" id="lastName"
+									placeholder="Last Name">
+							</div>
+							
+							<div class="form-group">
+								<label for="otherNames" class="control-label">Other Names:</label> <input
+									type="text" name="otherNames" class="form-control" id="otherNames"
+									placeholder="Other Names">
+							</div>
+							
 							<div class="form-group">
 								<label for="dateOfBirth" class="control-label">Date Of
 									Birth:</label> <input type="text" onblur="set_spouse_date_of_birth();" readonly="readonly" name="dateOfBirth"

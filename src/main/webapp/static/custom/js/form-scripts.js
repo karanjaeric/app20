@@ -2883,7 +2883,8 @@ $(document)
 										},
 								        excluded: ':disabled',
 										fields : {
-											fullName : {
+											
+											/*fullName : {
 												validators : {
 													notEmpty : {
 														message : 'Sorry, your name is required'
@@ -2893,7 +2894,24 @@ $(document)
 														message : 'Sorry, your name can only consist of alphabetical letters & spaces'
 													}
 												}
+											},*/
+											
+											firstName : {
+												validators : {
+													notEmpty : {
+														message : 'Sorry, your first name is required'
+													}
+												}
 											},
+											
+											lastName : {
+												validators : {
+													notEmpty : {
+														message : 'Sorry, your last name is required'
+													}
+												}
+											},
+											
 											dateOfBirth : {
 												validators : {
 													notEmpty : {
@@ -2901,6 +2919,7 @@ $(document)
 													}
 												}
 											},
+											
 											emailAddress : {
 												validators : {
 													notEmpty : {
@@ -3120,9 +3139,23 @@ $(document)
 														emailAddress : $(
 																'#emailAddress')
 																.val(),
-														fullName : $(
+																
+														/*fullName : $(
 																'#fullName')
+																.val(),*/
+																
+														firstName : $(
+																'#firstName')
 																.val(),
+																
+														lastName : $(
+																'#lastName')
+																.val(),
+																
+														otherNames : $(
+																'#otherNames')
+																.val(),
+																
 														gender : $('#gender')
 																.val(),
 														guaranteePeriod : $(
