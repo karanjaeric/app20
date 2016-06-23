@@ -2639,12 +2639,12 @@ public class Helper {
             return null;
         }
     }
-    public String getFundValueAsAt(String date,String accountinPeriodId, String schemeID,String profileID)
+    public String getFundValueAsAt(String date,String periodType, String schemeID,String profileID)
     {
         Setting settings = getSettings();
         try
         {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getfundvalueasat/"+date+"/" + accountinPeriodId + "/" + schemeID+"/"+profileID);
+            JSONObject response = URLGet(settings.getXiPath() + "scheme/getfundvalueasat/"+date+"/" + periodType + "/" + schemeID+"/"+profileID);
             return response.toString();
         }
         catch (Exception ex)

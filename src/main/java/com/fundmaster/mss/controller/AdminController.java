@@ -956,18 +956,42 @@ public class AdminController extends HttpServlet implements Serializable {
 
 			DateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 			Date date = new Date();
-			String result = helper.getAccountingPeriod(format.format(date),
-					session.getAttribute(Constants.SCHEME_ID).toString());
+			
+			//logger.i("Date is: " + format.format(date));
+			//logger.i("Scheme id: " + session.getAttribute(Constants.SCHEME_ID).toString());
+			
+			String result = helper.getAccountingPeriod(format.format(date), session.getAttribute(Constants.SCHEME_ID).toString());
+			
+			//logger.i("Result is: " + result);
+			
 			out.write(result);
 		} else if (request.getParameter(REQUEST_ACTION).equals("FV")) {
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 			Date date = new Date();
+			
+			/*String sendDate = format.format(date);
+			String schemeId = session.getAttribute(Constants.SCHEME_ID).toString();
+			
+			logger.i("Date is: " + sendDate);
+			logger.i("Scheme id: " + schemeId);
+			
+			String accountingPeriod = helper.getAccountingPeriod(sendDate, schemeId);
+			
+			logger.i("Accounting Period from Xi: " + accountingPeriod);*/
+			
+			
 			// String result =
 			// helper.getFundValue(request.getParameter("accountingPeriodId"),
 			// session.getAttribute(Constants.SCHEME_ID).toString(),session.getAttribute(Constants.PROFILE_ID).toString());
 			String result = helper.getFundValueAsAt(format.format(date), request.getParameter("accountingPeriodId"),
 					session.getAttribute(Constants.SCHEME_ID).toString(),
 					session.getAttribute(Constants.PROFILE_ID).toString());
+			
+			//logger.i("Accounting periodId: " + request.getParameter("accountingPeriodId"));
+			//logger.i("Scheme id: " + session.getAttribute(Constants.SCHEME_ID).toString());
+			//logger.i("Profile id: " + session.getAttribute(Constants.PROFILE_ID).toString());
+			
+			
 			out.write(result);
 		} else if (request.getParameter(REQUEST_ACTION).equals("HELP")) {
 			Help h = helpEJB.findById(helper.toLong(request.getParameter("ID")));
