@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 @WebServlet(name = "AnnuityController", urlPatterns = {"/annuity-quotation"})
 public class AnnuityController extends HttpServlet implements Serializable {
 	@EJB
@@ -88,8 +89,10 @@ public class AnnuityController extends HttpServlet implements Serializable {
 		List<AnnuityProduct> annuityProducts = null;
 		try {
 			annuityProducts = helper.getAnnuityProducts();
+			
+			System.out.println("The Annuity Products passed: " + annuityProducts);
+			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		request.setAttribute("annuityProducts", annuityProducts);
@@ -225,7 +228,7 @@ public class AnnuityController extends HttpServlet implements Serializable {
 		System.out.println("************* Product Id is : " + productID + " ***********************");
 		
     	try {
-    		String result = helper.getAnnuityQuote(calculationMode, request.getParameter("annuityProduct"), lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, displayable, spouseGender.getName(), format.format(spouseDateOfBirth));
+    		String result = helper.getAnnuityQuote(calculationMode, productID, lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, displayable, spouseGender.getName(), format.format(spouseDateOfBirth));
 			out.write(result);
 		} catch (JSONException e) {
 
