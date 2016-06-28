@@ -2808,6 +2808,7 @@ public class Helper {
             List<Scheme> schemes = new ArrayList<>();
 
             String ordinal = getLoginField(profile);
+                        
             JSONObject response = URLPost(settings.getXiPath() + "getmemberschemes/" + ordinal + "/" + user + "/" + profile, "", "application/x-www-form-urlencoded");
 
             if(response.get(Helper.SUCCESS).equals(true))

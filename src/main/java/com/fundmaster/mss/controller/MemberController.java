@@ -83,8 +83,12 @@ public class MemberController extends HttpServlet implements Serializable {
 					request.setAttribute("company", company);
 					request.setAttribute("username", session.getAttribute(Constants.USER).toString());
 					request.setAttribute("path", "member");
-					List<Scheme> schemes = helper.getProfileSchemes(session.getAttribute(Constants.USER).toString(), session.getAttribute(Constants.U_PROFILE).toString());
+					
+					String user = session.getAttribute(Constants.USER).toString().trim();
+					
+					List<Scheme> schemes = helper.getProfileSchemes(user, session.getAttribute(Constants.U_PROFILE).toString());
 					request.setAttribute("schemes", schemes);
+					
 					XiMember m= helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),null);
 					request.setAttribute("member_id", m.getId());
 					session.setAttribute(Constants.PROFILE_ID,m.getId());
