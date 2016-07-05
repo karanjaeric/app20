@@ -481,7 +481,7 @@
 					</div>
 					<div class="modal-body">
 						<input type="hidden" name="ACTION" id="ACTION" value="LOGO" />
-						<img src="static/images/${ settings.logoFile }" alt="logo" height="120" />
+						<!--<img src="static/images/${ settings.logoFile }" alt="logo" height="120" />  -->
 						<div class="form-group">
 							 <input type="file" class="filestyle" data-buttonName="btn-primary" id="logo_file" name="logo_file" data-buttonBefore="true" />
 						</div>
