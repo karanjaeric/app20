@@ -1265,16 +1265,24 @@ public class AdminController extends HttpServlet implements Serializable {
 					try {
 						
 						fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
+												
+						try {
+							
+							List<Logo> logoz = logoEJB.findAll();
+														
+							for(Logo logo:logoz)
+							{
+								logoEJB.delete(logo);
+							}
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 						
-						//Logo logo = new Logo();
-						
-						
-						Logo logo = new Logo();
-						
+						Logo logo = new Logo();						
 						logo.setPath(savePath);
 						logo.setImage(fileBlob);
 						logo.setName(fileName);
-						
 						
 
 						if (logoEJB.add(logo) != null) {

@@ -24,6 +24,12 @@ public class LogoBean implements LogoEJB {
 	    	LogoDAO dao = new LogoDAO(entityManager);
 	        return dao.update(logo);
 	    }
+	    
+	    @Override
+	    public List<Logo> findAll() {
+	    	LogoDAO dao = new LogoDAO(entityManager);
+	    	return dao.findAll();
+	    }
 
 	    @Override
 	    public Logo findById(long id) {

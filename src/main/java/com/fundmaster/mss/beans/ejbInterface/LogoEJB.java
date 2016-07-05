@@ -13,4 +13,5 @@ public interface LogoEJB {
 	boolean delete(Logo logo);
 	List<Logo> find();
 	Logo findById(long id);
+	List<Logo> findAll();
 }
