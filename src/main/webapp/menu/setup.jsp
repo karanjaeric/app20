@@ -469,7 +469,7 @@
 			</div>
 		</form>
 	</div>
-<!-- LOGO -->
+		<!-- LOGO -->
 <div class="modal fade" id="modal-logo" tabindex="-1" role="dialog" aria-labelledby="myModalLabelLogo" aria-hidden="true">
 		<form role="form" id="form-logo">
 			<div class="modal-dialog">
@@ -480,9 +480,17 @@
 						</h4>
 					</div>
 					<div class="modal-body">
+					<table class="table table-responsive">
+					<tr><th>LOGO</th><th>ACTION</th></tr>
+					
+					<c:forEach var="logo" items="${logos}">
+					<tr><td><img src="${pageContext.request.contextPath}/logos/${ logo.id }" alt="logo" width="100" /></td><td><a class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="remove_logo('${logo.id}');"><i class="glyphicon glyphicon-trash"></i>&nbsp;REMOVE</a></td></tr>
+					</c:forEach>
+					
+					</table>
 						<input type="hidden" name="ACTION" id="ACTION" value="LOGO" />
-						<!--<img src="static/images/${ settings.logoFile }" alt="logo" height="120" />  -->
 						<div class="form-group">
+							 <label class="control-label">Select image (100 X 50 preferably)</label>
 							 <input type="file" class="filestyle" data-buttonName="btn-primary" id="logo_file" name="logo_file" data-buttonBefore="true" />
 						</div>
 					</div>
@@ -495,6 +503,7 @@
 			</div>
 		</form>
 	</div>
+	
 <!-- SOCIAL MEDIA -->
 	<div class="modal fade" id="modal-social" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSocial" aria-hidden="true">
 		<form role="form" id="form-social">
@@ -631,6 +640,27 @@
 				}
 			});
 		}
+		
+		function remove_logo(id)
+		{
+			bootbox.confirm("<p class=\"text-center\">You are about to remove a logo. Are you sure?</p>", function (result) {
+				if(result)
+				{
+					 start_wait();
+						$.ajax({
+				            url: $('#base_url').val() + 'admin',
+				            type: 'post',
+				            data: {ACTION: 'REMOVE_LOGO', id: id},
+				            dataType: 'json',
+				            success: function(json) {
+				                stop_wait();
+				                bootbox.alert(json.message);
+				            }
+				        });
+				}
+			});
+		}
+		
 		$(document).ready(function(){
 			
 		    $('#interest-settings-li').click(function(){

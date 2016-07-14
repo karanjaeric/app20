@@ -96,9 +96,6 @@ public class DefaultController extends HttpServlet implements Serializable {
 		Theme theme = themeEJB.find();
 		request.setAttribute("theme", theme);
 		
-		/*List<Logo> logos = logoEJB.find();
-		request.setAttribute("logos", logos);*/
-		
 		List<Logo> logos = logoEJB.find();
 		request.setAttribute("logos", logos);
 		

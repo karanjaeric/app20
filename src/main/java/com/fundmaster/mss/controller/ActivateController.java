@@ -101,6 +101,8 @@ public class ActivateController extends HttpServlet implements Serializable {
 		request.setAttribute("menu", menu);
 		List<Banner> banners = bannerEJB.find();
 		request.setAttribute("banners", banners);
+		List<Logo> logos = logoEJB.find();
+		request.setAttribute("logos", logos);
 		/*List<Logo> logos = logoEJB.find();
 		request.setAttribute("logos", logos);*/
 		Theme theme = themeEJB.find();

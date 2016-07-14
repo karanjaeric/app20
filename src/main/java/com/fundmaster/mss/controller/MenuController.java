@@ -50,6 +50,8 @@ public class MenuController extends HttpServlet implements Serializable {
     @EJB
     BannerEJB bannerEJB;
     @EJB
+    LogoEJB logoEJB;
+    @EJB
     PermissionEJB permissionEJB;
     @EJB
     PasswordPolicyEJB passwordPolicyEJB;
@@ -72,6 +74,8 @@ public class MenuController extends HttpServlet implements Serializable {
 			request.setAttribute("theme", theme);
 			List<Banner> banners = bannerEJB.find();
 			request.setAttribute("banners", banners);
+			List<Logo> logos = logoEJB.find();
+			request.setAttribute("logos", logos);
 			List<Ordinal> ordinals = helper.getOrdinals();
 			request.setAttribute("ordinals", ordinals);
 			InterestRateColumns irc = helper.getInterestRateColumns();
