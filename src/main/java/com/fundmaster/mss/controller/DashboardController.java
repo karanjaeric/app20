@@ -62,6 +62,8 @@ public class DashboardController extends HttpServlet implements Serializable {
 			{
 				Company company = helper.getCompany();
 				request.setAttribute("company", company);
+				InterestRateColumns interest = helper.getInterestRateColumns();
+				request.setAttribute("interest", interest);
 				Menu menu = helper.getMenu();
 				request.setAttribute("menu", menu);
 				helper.logActivity("SETUP", "Accessed setup menu and details", session.getAttribute(Constants.UID).toString(), session.getAttribute(Constants.SCHEME_ID).toString(), session.getAttribute(Constants.U_PROFILE).toString());

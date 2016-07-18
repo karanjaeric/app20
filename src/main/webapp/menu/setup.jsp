@@ -136,6 +136,7 @@
 							 	<option>PT Sans</option>
 							 	<option>Ubuntu</option>
 							 	<option>Lato</option>
+							 	<option>Franklin Gothic</option>
 							 </select>
 							</div>
 						</fieldset>

@@ -82,7 +82,7 @@ $(document)
 																	"pensionDrawDown",
 																	"contributions",
 																	"status" ];
-															var html = '<tr><th>Acccounting Period</th><th>OPENING BALANCES(%)</th><th>PENSION DRAW DOWN(%)</th><th>CONTRIBUTIONS</th><th>STATUS</th></tr>';
+															var html = '';
 															for ( var i = 0; i < json.rows.length; i++) {
 																var row = json.rows[i];
 																html = html

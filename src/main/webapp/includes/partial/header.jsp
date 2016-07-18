@@ -119,7 +119,7 @@ body {
 					</button>
 					<p class="logo">
 					<!--<c:forEach var="logo" items="${logos}">-->
-					<img src="${pageContext.request.contextPath}/logos/${ logo.id }" alt="logo" width="100" />
+					<img src="${pageContext.request.contextPath}/logos/${ logo.id }" alt="logo" width="180" />
 					<!--</c:forEach>-->
 					</p>
 				</div>

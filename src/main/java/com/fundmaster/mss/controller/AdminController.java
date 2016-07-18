@@ -1011,7 +1011,6 @@ public class AdminController extends HttpServlet implements Serializable {
 		} else if (request.getParameter(REQUEST_ACTION).equals("REMOVE_LOGO")) {
 			
 			Logo lg = logoEJB.findById(helper.toLong(request.getParameter("id")));
-			//Banner b = bannerEJB.findById(helper.toLong(request.getParameter("id")));
 
 			if (logoEJB.delete(lg)) 
 				out.write(helper.result(true, "Logo successfully deleted").toString());

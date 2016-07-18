@@ -43,6 +43,8 @@ public class InterestRateController extends HttpServlet implements Serializable 
 	@EJB
 	MenuEJB menuEJB;
 	@EJB
+	InterestRateColumnEJB interestEJB;
+	@EJB
 	ThemeEJB themeEJB;
 	@EJB
 	HelpEJB helpEJB;
@@ -78,6 +80,8 @@ public class InterestRateController extends HttpServlet implements Serializable 
 		request.setAttribute("schemes", schemes);
 		Menu menu = menuEJB.find();
 		request.setAttribute("menu", menu);
+		InterestRateColumns interest = interestEJB.find();
+		request.setAttribute("interest", interest);
 		Theme theme = themeEJB.find();
 		request.setAttribute("theme", theme);
 		request.setAttribute("noMenu", false);

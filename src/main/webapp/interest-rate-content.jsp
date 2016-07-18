@@ -23,8 +23,11 @@
 				</form>
 			<fieldset class="pad-top">
 				<legend id="result-title">Interest Rates History</legend>
-					<table class="table table-responsive table-striped" id="interest-result">
-												
+					<!-- <table class="table table-responsive table-striped" id="interest-result"> -->
+					<table class="table table-responsive table-striped">
+					<tr><th>${ interest.accountingPeriodText }</th><th>${ interest.openingBalancesText }</th>
+					<th>${ interest.pensionDrawDownText }</th><th>${ interest.contributionsText }</th><th>STATUS</th></tr>
+					<tbody id="interest-result"></tbody>						
 					</table>
 			</fieldset>
 			<table id="datatable" class="hide">
