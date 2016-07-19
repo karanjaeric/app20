@@ -167,7 +167,7 @@ public class Helper {
 
     public void audit(HttpSession session, String description)
     {
-        logAuditTrail(session.getAttribute(Constants.USER).toString(), session.getAttribute(Constants.U_PROFILE).toString(), description);
+        logAuditTrail(session.getAttribute(Constants.USER).toString(), new Date(), session.getAttribute(Constants.U_PROFILE).toString(), description);
     }
     private boolean isHttps(String link)
     {
@@ -320,13 +320,14 @@ public class Helper {
         UserDAO dao = new UserDAO(entityManager);
         return dao.findByStatus();
     }
-    private void logAuditTrail(String username, String profile, String description)
+    private void logAuditTrail(String username, Date date, String profile, String description)
     {
         AuditTrailDAO dao = new AuditTrailDAO(entityManager);
         AuditTrail at = new AuditTrail();
         at.setDescription(description);
         at.setProfile(profile);
         at.setUsername(username);
+        at.setDatetime(date);
         dao.merge(at);
     }
 
@@ -2970,6 +2971,7 @@ public class Helper {
     public void logActivity(String access_menu, String description, String userID, String scheme, String userProfile)
     {
         activityLogEJB.add(new ActivityLog(description, new Date(), Long.valueOf(userID).longValue(), scheme, access_menu, userProfile));
+
     }
 
 }
