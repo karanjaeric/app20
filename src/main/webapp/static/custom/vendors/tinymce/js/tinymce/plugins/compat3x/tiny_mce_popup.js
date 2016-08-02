@@ -50,7 +50,7 @@ tinyMCEPopup = {
 			settings.popup_css += ',' + t.documentBaseURI.toAbsolute(settings.popup_css_add);
 		}
 
-		// Setup local DOM
+		// Setup ejb DOM
 		t.dom = t.editor.windowManager.createInstance('tinymce.dom.DOMUtils', document, {ownEvents: true, proxy: tinyMCEPopup._eventProxy});
 		t.dom.bind(window, 'ready', t._onDOMLoaded, t);
 

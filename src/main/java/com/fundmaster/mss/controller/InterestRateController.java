@@ -1,9 +1,9 @@
 package com.fundmaster.mss.controller;
 
-import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
 import org.json.JSONException;
 
@@ -58,7 +58,7 @@ public class InterestRateController extends HttpServlet implements Serializable 
 	BannerEJB bannerEJB;
 	@EJB
 	PermissionEJB permissionEJB;
-	LOGGER logger = new LOGGER(this.getClass());
+	JLogger JLogger = new JLogger(this.getClass());
 	public InterestRateController() {
 		// TODO Auto-generated constructor stub
 	}
@@ -75,7 +75,7 @@ public class InterestRateController extends HttpServlet implements Serializable 
 			schemes = helper.getSchemes(0, 10000);
 		} catch (JSONException je) {
 			// TODO Auto-generated catch block
-			logger.i("JSON Exception was detected: " + je.getMessage());
+			JLogger.i("JSON Exception was detected: " + je.getMessage());
 		}
 		request.setAttribute("schemes", schemes);
 		Menu menu = menuEJB.find();

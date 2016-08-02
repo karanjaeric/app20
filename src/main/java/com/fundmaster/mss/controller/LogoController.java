@@ -16,14 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.Logo;
 
 @WebServlet(name = "LogoController", urlPatterns = { "/logos/*" })
 @MultipartConfig
 public class LogoController extends HttpServlet implements Serializable {
 
-	LOGGER logger = new LOGGER(this.getClass());
+	JLogger JLogger = new JLogger(this.getClass());
 	
 	@EJB
 	Helper helper;

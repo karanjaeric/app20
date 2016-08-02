@@ -5,18 +5,12 @@
 
 package com.fundmaster.mss.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-
-import com.fundmaster.mss.common.LOGGER;
-import com.fundmaster.mss.model.Logo;
+import com.fundmaster.mss.common.JLogger;
 
 /**
  * Created by bryanitur on 9/16/15.
@@ -24,11 +18,11 @@ import com.fundmaster.mss.model.Logo;
 public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
     protected Class<T> entityClass;
     private EntityManager em;
-    private LOGGER logger;
+    private JLogger JLogger;
 
     public GenericDAOImpl(Class entityClass, EntityManager entityManager) {
         this.entityClass = entityClass;
-        logger = new LOGGER(entityClass);
+        JLogger = new JLogger(entityClass);
         this.em = entityManager;
     }
 
@@ -36,7 +30,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
         try {
             return em.find(entityClass, id);
         } catch(PersistenceException pe) {
-            logger.e("We found a persistence exception executing findById " + pe.getMessage());
+            JLogger.e("We found a persistence exception executing findById " + pe.getMessage());
             return null;
         }
     }
@@ -46,7 +40,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
             em.persist(entity);
             return entity;
         } catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing persist" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing persist" + pe.getMessage());
             return null;
         }
     }
@@ -56,7 +50,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
     		em.merge(entity);
     		return entity;
     	} catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing persist" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing persist" + pe.getMessage());
             return null;
         }
     }
@@ -66,7 +60,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
             em.merge(entity);
             return entity;
         } catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing merge" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing merge" + pe.getMessage());
             return null;
         }
     }
@@ -81,7 +75,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
           //em.remove(entity);
             return true;
         } catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing remove" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing remove" + pe.getMessage());
             return false;
         }
     }
@@ -92,42 +86,42 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
             List<T> results = em.createQuery(query).getResultList();
             return results;
         } catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing findPaged" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing findPaged" + pe.getMessage());
             return null;
         }
     }
 
     public List<T> findPaged(int start, int limit) {
 
-        logger.i("Start: " + start + ", Limit: " + limit);
+        JLogger.i("Start: " + start + ", Limit: " + limit);
         try {
             String query = "SELECT e FROM " + entityClass.getSimpleName() + " e";
             List<T> results = em.createQuery(query).setFirstResult(start).setMaxResults(limit).getResultList();
             return results;
         } catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing findPaged" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing findPaged" + pe.getMessage());
             return null;
         }
     }
 
     public List<T> customQuery(String s, String value) {
-        logger.i(s + " : " + value);
+        JLogger.i(s + " : " + value);
         try {
             List<T> results = em.createQuery(s).setParameter("value", value).getResultList();
             return results;
         } catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing customQuery:" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing customQuery:" + pe.getMessage());
             return null;
         }
     }
 
     public List<T> customPagedQuery(String s, String value, int start, int limit) {
-        logger.i(s + " : " + value);
+        JLogger.i(s + " : " + value);
         try {
             List<T> results = em.createQuery(s).setParameter("value", value).setFirstResult(start).setMaxResults(limit).getResultList();
             return results;
         } catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing customQuery:" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing customQuery:" + pe.getMessage());
             return null;
         }
     }
@@ -137,7 +131,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
             List<T> results = em.createQuery(query).getResultList();
             return results;
         } catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing query:" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing query:" + pe.getMessage());
             return null;
         }
     }
@@ -147,7 +141,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
             List<T> results = em.createQuery(s).setParameter("object", o).getResultList();
             return results;
         } catch (PersistenceException pe) {
-            logger.e("We found a persistence exception executing findByObject:" + pe.getMessage());
+            JLogger.e("We found a persistence exception executing findByObject:" + pe.getMessage());
             return null;
         }
     }

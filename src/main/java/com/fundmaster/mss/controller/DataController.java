@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.common.JLogger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,7 +59,7 @@ public class DataController extends HttpServlet implements Serializable {
 	BannerEJB bannerEJB;
 	@EJB
 	PermissionEJB permissionEJB;
-	LOGGER logger = new LOGGER(this.getClass());
+	JLogger JLogger = new JLogger(this.getClass());
 	public DataController() {
 		// TODO Auto-generated constructor stub
 	}
@@ -76,7 +76,7 @@ public class DataController extends HttpServlet implements Serializable {
 							.put("description", h.getDescription());
 				} catch (JSONException je) {
 					// TODO Auto-generated catch block
-					logger.i("JSON Exception was detected: " + je.getMessage());
+					JLogger.i("JSON Exception was detected: " + je.getMessage());
 				}
         		out.write(obj.toString());
         	}
@@ -92,7 +92,7 @@ public class DataController extends HttpServlet implements Serializable {
 							.put("publish", h.isPublish());
 				} catch (JSONException je) {
 					// TODO Auto-generated catch block
-					logger.i("JSON Exception was detected: " + je.getMessage());
+					JLogger.i("JSON Exception was detected: " + je.getMessage());
 				}
         		out.write(obj.toString());
         	}

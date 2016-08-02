@@ -189,7 +189,7 @@
 						var callbackContext = origSettings && origSettings.context || s;
 						
 						function success() {
-							// If a local callback was specified, fire it and pass it the data
+							// If a ejb callback was specified, fire it and pass it the data
 							if ( s.success ) {
 								s.success.call( callbackContext, ( m.response ? m.response.toString() : m.responseText || ''), status, {} );
 							}

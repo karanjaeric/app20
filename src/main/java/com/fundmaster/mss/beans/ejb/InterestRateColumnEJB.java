@@ -1,0 +1,16 @@
+package com.fundmaster.mss.beans.ejb;
+
+import com.fundmaster.mss.model.InterestRateColumns;
+
+import javax.ejb.Local;
+
+/**
+ * Created by bryanitur on 1/30/2016.
+ */
+@Local
+public interface InterestRateColumnEJB {
+
+    InterestRateColumns edit(InterestRateColumns interestRateColumns);
+    InterestRateColumns find();
+
+}

@@ -1,9 +1,9 @@
 package com.fundmaster.mss.controller;
 
-import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +59,7 @@ public class MemberController extends HttpServlet implements Serializable {
 	ProfileLoginFieldEJB profileLoginFieldEJB;
 	@EJB
 	BannerEJB bannerEJB;
-	LOGGER logger = new LOGGER(this.getClass());
+	JLogger JLogger = new JLogger(this.getClass());
 	public MemberController() {
 		// TODO Auto-generated constructor stub
 	}
@@ -93,7 +93,7 @@ public class MemberController extends HttpServlet implements Serializable {
 					request.setAttribute("member_id", m.getId());
 					session.setAttribute(Constants.PROFILE_ID,m.getId());
 					if(schemes != null && schemes.size() > 0) {
-						logger.i("Scheme is not null. email: "+session.getAttribute(Constants.USER).toString());
+						JLogger.i("Scheme is not null. email: "+session.getAttribute(Constants.USER).toString());
 						if(session.getAttribute(Constants.SCHEME_ID) == null)
 						{
 							m= helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),schemes.get(0).getId().toString());
@@ -132,7 +132,7 @@ public class MemberController extends HttpServlet implements Serializable {
 							}
 						} catch(NullPointerException npe)
 						{
-                            logger.e("NullPointerException was detected: " + npe.getMessage());
+                            JLogger.e("NullPointerException was detected: " + npe.getMessage());
                             session.setAttribute(Constants.SCHEME_ID, String.valueOf(schemes.get(0).getId()));
 						}
 					}
@@ -158,7 +158,7 @@ public class MemberController extends HttpServlet implements Serializable {
 									}
 								} catch(NullPointerException npe)
 								{
-									logger.e("NullPointerException was detected: " + npe.getMessage());
+									JLogger.e("NullPointerException was detected: " + npe.getMessage());
 									session.setAttribute(Constants.SCHEME_ID, String.valueOf(scheme.getId()));
 								}
 							}
@@ -181,7 +181,7 @@ public class MemberController extends HttpServlet implements Serializable {
 		}
 		catch (JSONException | NullPointerException npe)
 		{
-			logger.e("NullPointerException or JSONException was detected: " + npe.getMessage());
+			JLogger.e("NullPointerException or JSONException was detected: " + npe.getMessage());
 			response.sendRedirect(getServletContext().getContextPath() + "/sign-in");			
 		} 
 	}
@@ -240,7 +240,7 @@ public class MemberController extends HttpServlet implements Serializable {
 				catch(Exception e){e.printStackTrace();}
 			} catch (JSONException je) {
 				// TODO Auto-generated catch block
-				logger.e("JSONException was detected: " + je.getMessage());
+				JLogger.e("JSONException was detected: " + je.getMessage());
 			}
 			try {
 				Company company = helper.getCompany();
@@ -287,7 +287,7 @@ public class MemberController extends HttpServlet implements Serializable {
 		else if (request.getParameter("ACTION").equals("CHANGE_SCHEME")) {
 			helper.audit(session, "Switched between schemes from scheme #" + session.getAttribute(Constants.SCHEME_ID)
 					+ " to scheme #" + request.getParameter("schemeID"));
-			logger.i("Switched between schemes from scheme #" + session.getAttribute(Constants.SCHEME_ID)
+			JLogger.i("Switched between schemes from scheme #" + session.getAttribute(Constants.SCHEME_ID)
 					+ " to scheme #" + request.getParameter("schemeID"));
 			session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
 			out.write(helper.result(true, "Scheme changed successfully").toString());
@@ -303,7 +303,7 @@ public class MemberController extends HttpServlet implements Serializable {
 				date = format_from.parse(date_string);
 			} catch (ParseException pe) {
 				// TODO Auto-generated catch block
-				logger.e("ParseException was detected: " + pe.getMessage());
+				JLogger.e("ParseException was detected: " + pe.getMessage());
 			}
 			String result = helper.getAccountingPeriod(format.format(date), session.getAttribute(Constants.SCHEME_ID).toString());
 			out.write(result);
@@ -316,7 +316,7 @@ public class MemberController extends HttpServlet implements Serializable {
 				out.write(result);
 			} catch (JSONException je) {
 				// TODO Auto-generated catch block
-				logger.e("JSONException was detected: " + je.getMessage());
+				JLogger.e("JSONException was detected: " + je.getMessage());
 			}
 
 		}

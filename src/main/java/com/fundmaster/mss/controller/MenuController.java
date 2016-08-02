@@ -1,6 +1,6 @@
 package com.fundmaster.mss.controller;
 
-import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.*;
 

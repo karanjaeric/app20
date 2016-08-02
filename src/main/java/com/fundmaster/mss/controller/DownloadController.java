@@ -17,14 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.Media;
 
 @WebServlet(name = "DownloadController", urlPatterns = { "/downloads/*" })
 @MultipartConfig
 public class DownloadController extends HttpServlet implements Serializable {
 	
-	LOGGER logger = new LOGGER(this.getClass());
+	JLogger JLogger = new JLogger(this.getClass());
 	@EJB
 	Helper helper;
 	

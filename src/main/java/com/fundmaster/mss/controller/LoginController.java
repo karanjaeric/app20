@@ -1,9 +1,9 @@
 package com.fundmaster.mss.controller;
 
-import com.fundmaster.mss.beans.ejbInterface.*;
+import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.LOGGER;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,7 +60,7 @@ public class LoginController extends HttpServlet implements Serializable {
 	@EJB
 	PermissionEJB permissionEJB;
 	
-	LOGGER logger = new LOGGER(this.getClass());
+	JLogger JLogger = new JLogger(this.getClass());
 	
 	public LoginController() {
 		super();
@@ -130,7 +130,7 @@ public class LoginController extends HttpServlet implements Serializable {
 					 res = helper.memberExists(u.getUserProfile(), u.getUsername());
 				} catch (JSONException je) {
 					// TODO Auto-generated catch block
-					logger.i("JSON Exception was detected: " + je.getMessage());
+					jLogger.i("JSON Exception was detected: " + je.getMessage());
 				}
 				
 				try {

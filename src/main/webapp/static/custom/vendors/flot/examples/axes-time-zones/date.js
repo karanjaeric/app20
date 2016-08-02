@@ -199,7 +199,7 @@
     //Tricky part:
     // For the cases where there are 1/2 arguments: `timezoneJS.Date(millis, [tz])` and `timezoneJS.Date(Date, [tz])`. The
     // Date `dt` created should be in UTC. Thus the way I detect such cases is to determine if `arr` is not populated & `tz`
-    // is specified. Because if `tz` is not specified, `dt` can be in local time.
+    // is specified. Because if `tz` is not specified, `dt` can be in ejb time.
     if (arr.length) {
        this.setFromDateObjProxy(dt);
     } else {
@@ -242,7 +242,7 @@
           ? { tzOffset: 0, tzAbbr: 'UTC' }
           : timezoneJS.timezone.getTzInfo(this._timeProxy, this.timezone);
       }
-      // If no timezone was specified, use the local browser offset
+      // If no timezone was specified, use the ejb browser offset
       else {
         res = { tzOffset: this.getLocalOffset(), tzAbbr: null };
       }
@@ -515,7 +515,7 @@
     }
 
     //if isUTC is true, date is given in UTC, otherwise it's given
-    // in local time (ie. date.getUTC*() returns local time components)
+    // in ejb time (ie. date.getUTC*() returns ejb time components)
     function getRule(dt, zone, isUTC) {
       var date = typeof dt === 'number' ? new Date(dt) : dt;
       var ruleset = zone[1];
@@ -614,7 +614,7 @@
 
 
         //If previous rule is given, correct for the fact that the starting time of the current
-        // rule may be specified in local time.
+        // rule may be specified in ejb time.
         if (prevRule) {
           effectiveDate = convertDateToUTC(effectiveDate, hms[4], prevRule);
         }

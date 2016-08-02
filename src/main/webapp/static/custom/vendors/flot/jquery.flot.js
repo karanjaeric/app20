@@ -445,7 +445,7 @@ Licensed under the MIT license.
                     show: null, // null = auto-detect, true = always, false = never
                     position: "bottom", // or "top"
                     mode: null, // null or "time"
-                    timezone: null, // "browser" for local to the client or timezone for timezone-js
+                    timezone: null, // "browser" for ejb to the client or timezone for timezone-js
                     font: null, // null (derived from CSS in placeholder) or object like { size: 11, style: "italic", weight: "bold", family: "sans-serif", variant: "small-caps" }
                     color: null, // base color, labels, ticks
                     tickColor: null, // possibly different color of ticks, e.g. "rgba(0,0,0,0.15)"

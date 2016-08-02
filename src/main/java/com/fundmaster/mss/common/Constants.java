@@ -7,8 +7,8 @@ public class Constants implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	public static final String PERSISTENCE_UNIT = "Mss";
+	public static final long serialVersionUID = 1L;
+	public static final String MYSQL_PERSISTENCE_UNIT = "MYSQL.MSS";
 	public static final String ML = "MEMBER_LOGIN";
 	public static final String AL = "ADMIN_LOGIN";
 	public static final String USER = "USERNAME";
@@ -36,7 +36,24 @@ public class Constants implements Serializable {
 	public static final String MANAGER = "MANAGER";
 	public static final String AGENT_PROFILE = "AGENT";
 	public static final String SPONSOR = "SPONSOR";
+	public static final String APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
+	public static final String APPLICATION_JSON = "application/json";
+	public static final String NUMBER_ZER0 = "0.00";
+	public static final String EMAIL = "EMAIL";
+	public static final String ALL = "ALL";
 	public static int RECORD_COUNT = 0;
 	public static String BASE_URL;
 
+
+	public static final String MMM_d_yyyy = "MMM d, yyyy";
+	public static final String YYYY_MM_DD = "yyyy-MM-dd";
+	public static final int TIMEOUT = 300 * 1000;
+	public static final String ROWS = "rows";
+	public static final String BOTH = "BOTH";
+	public static final String MSS = "PORTAL";
+	public static final String XI = "FUNDMASTER";
+	public static final String CONTENT_TYPE = "Content-Type";
+	public static final String HTTP_POST = "POST";
+	public static final String HTTP_GET = "GET";
+	public static final String HTTPS = "https";
 }

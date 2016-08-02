@@ -15,18 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.fundmaster.mss.beans.ejbInterface.CompanyEJB;
-import com.fundmaster.mss.beans.ejbInterface.CountryEJB;
-import com.fundmaster.mss.beans.ejbInterface.GenderEJB;
-import com.fundmaster.mss.beans.ejbInterface.HelpEJB;
-import com.fundmaster.mss.beans.ejbInterface.MaritalStatusEJB;
-import com.fundmaster.mss.beans.ejbInterface.MenuEJB;
-import com.fundmaster.mss.beans.ejbInterface.PageContentEJB;
-import com.fundmaster.mss.beans.ejbInterface.SchemeManagerEJB;
-import com.fundmaster.mss.beans.ejbInterface.SectorEJB;
-import com.fundmaster.mss.beans.ejbInterface.SettingEJB;
-import com.fundmaster.mss.beans.ejbInterface.SocialEJB;
-import com.fundmaster.mss.beans.ejbInterface.ThemeEJB;
+import com.fundmaster.mss.beans.ejb.CompanyEJB;
+import com.fundmaster.mss.beans.ejb.CountryEJB;
+import com.fundmaster.mss.beans.ejb.GenderEJB;
+import com.fundmaster.mss.beans.ejb.HelpEJB;
+import com.fundmaster.mss.beans.ejb.MaritalStatusEJB;
+import com.fundmaster.mss.beans.ejb.MenuEJB;
+import com.fundmaster.mss.beans.ejb.PageContentEJB;
+import com.fundmaster.mss.beans.ejb.SchemeManagerEJB;
+import com.fundmaster.mss.beans.ejb.SectorEJB;
+import com.fundmaster.mss.beans.ejb.SettingEJB;
+import com.fundmaster.mss.beans.ejb.SocialEJB;
+import com.fundmaster.mss.beans.ejb.ThemeEJB;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.Company;
@@ -40,7 +40,6 @@ import com.fundmaster.mss.model.Scheme;
 import com.fundmaster.mss.model.Sector;
 import com.fundmaster.mss.model.Setting;
 import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Sponsor;
 import com.fundmaster.mss.model.Theme;
 
 @WebServlet(name = "PotentialSponsorController", urlPatterns = {"/potential-sponsor"})

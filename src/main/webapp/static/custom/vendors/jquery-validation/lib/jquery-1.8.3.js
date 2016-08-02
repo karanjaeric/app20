@@ -38,7 +38,7 @@ var
 	core_hasOwn = Object.prototype.hasOwnProperty,
 	core_trim = String.prototype.trim,
 
-	// Define a local copy of jQuery
+	// Define a ejb copy of jQuery
 	jQuery = function( selector, context ) {
 		// The jQuery object is actually just the init constructor 'enhanced'
 		return new jQuery.fn.init( selector, context, rootjQuery );
@@ -7283,7 +7283,7 @@ var
 
 	rhash = /#.*$/,
 	rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg, // IE leaves an \r character at EOL
-	// #7653, #8125, #8152: local protocol detection
+	// #7653, #8125, #8152: ejb protocol detection
 	rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|res|widget):$/,
 	rnoContent = /^(?:GET|HEAD)$/,
 	rprotocol = /^\/\//,
@@ -8357,7 +8357,7 @@ function createActiveXHR() {
 // (This is still attached to ajaxSettings for backward compatibility)
 jQuery.ajaxSettings.xhr = window.ActiveXObject ?
 	/* Microsoft failed to properly
-	 * implement the XMLHttpRequest in IE7 (can't request local files),
+	 * implement the XMLHttpRequest in IE7 (can't request ejb files),
 	 * so we use the ActiveXObject when it is available
 	 * Additionally XMLHttpRequest can be disabled in IE7/IE8 so
 	 * we need a fallback.
@@ -8496,7 +8496,7 @@ if ( jQuery.support.ajax ) {
 
 									// Filter status for non standard behaviors
 
-									// If the request is local and we have data: assume a success
+									// If the request is ejb and we have data: assume a success
 									// (success with no data won't get notified, that's the best we
 									// can do given current implementations)
 									if ( !status && s.isLocal && !s.crossDomain ) {

@@ -1,6 +1,6 @@
 package com.fundmaster.mss.common;
 
-import com.fundmaster.mss.beans.ejbInterface.ActivityLogEJB;
+import com.fundmaster.mss.beans.ejb.ActivityLogEJB;
 import com.fundmaster.mss.dao.*;
 import com.fundmaster.mss.model.*;
 import org.json.JSONArray;
@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.net.ssl.HttpsURLConnection;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -26,7 +27,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-@Stateless
 public class Helper {
 
     private static final String MMM_d_yyyy = "MMM d, yyyy";
@@ -47,7 +47,7 @@ public class Helper {
     /**
      *
      */
-    private final LOGGER logger = new LOGGER(this.getClass());
+    private final JLogger jLogger = new JLogger(this.getClass());
     public static final long serialVersionUID = 1L;
 
     public long toLong(Object o)
@@ -56,7 +56,7 @@ public class Helper {
     }
 
 
-    @PersistenceContext(unitName = Constants.PERSISTENCE_UNIT)
+    @PersistenceContext(unitName = Constants.MYSQL_PERSISTENCE_UNIT)
     private EntityManager entityManager;
     public Date dateFromString(String date, String ft)
     {
@@ -173,147 +173,108 @@ public class Helper {
     {
         return link.trim().substring(0, Math.min(link.length(), 5)).equalsIgnoreCase(Helper.HTTPS);
     }
-	/* GET Request to URL */
 
     private JSONObject URLGet(String link) throws JSONException {
-
-        JSONObject json;
-        //logger.i("Getting...\n Network link: " + link);
-        if(isHttps(link))
-            json = HttpsGet(link);
-        else
-            json = HttpGet(link);
-        //logger.i("Response: \n" + json);
-        return json;
+        return isHttps(link) ? HttpsGet(link) : HttpGet(link);
     }
-
+    private HttpsURLConnection setHttpsHeaders(Setting settings, HttpsURLConnection httpsConn)
+    {
+        try {
+            httpsConn.setRequestMethod(Helper.HTTP_GET);
+            httpsConn.setReadTimeout(Helper.TIMEOUT);
+            httpsConn.setRequestProperty(Helper.USERNAME, settings.getUsername());
+            httpsConn.setRequestProperty(Helper.PASSWORD, settings.getPassword());
+            return httpsConn;
+        } catch (ProtocolException pe) {
+            jLogger.e("We have an error setting up headers for the connection");
+            return null;
+        }
+    }
+    private HttpURLConnection setHttpHeaders(Setting settings, HttpURLConnection httpConn)
+    {
+        try {
+            httpConn.setRequestMethod(Helper.HTTP_GET);
+            httpConn.setReadTimeout(Helper.TIMEOUT);
+            httpConn.setRequestProperty(Helper.USERNAME, settings.getUsername());
+            httpConn.setRequestProperty(Helper.PASSWORD, settings.getPassword());
+            return httpConn;
+        } catch (ProtocolException pe) {
+            jLogger.e("We have an error setting up headers for the connection");
+            return null;
+        }
+    }
     private JSONObject HttpsGet(String link) throws JSONException
     {
         Setting settings = getSettings();
         StringBuilder sb = new StringBuilder();
         HttpsURLConnection httpConn;
         InputStreamReader in = null;
-        JSONObject json;
+        URL url;
         try {
-            URL url = new URL(link);
+            url = new URL(link);
+        } catch (MalformedURLException ue) {
+            jLogger.e("We have a malformed url exception " + ue.getMessage());
+            return null;
+        }
+        try {
             httpConn = (HttpsURLConnection) url.openConnection();
             if (httpConn != null)
             {
-                httpConn.setRequestMethod(Helper.HTTP_GET);
-                httpConn.setReadTimeout(Helper.TIMEOUT);
-                httpConn.setRequestProperty(Helper.USERNAME, settings.getUsername());
-                httpConn.setRequestProperty(Helper.PASSWORD, settings.getPassword());
-            }
-            if (httpConn != null && httpConn.getInputStream() != null) {
-                try {
+                httpConn = this.setHttpsHeaders(settings, httpConn);
+                if (httpConn != null && httpConn.getInputStream() != null) {
                     in = new InputStreamReader(httpConn.getInputStream(),
                             Charset.defaultCharset());
-                    BufferedReader bufferedReader = new BufferedReader(in);
-                    int cp;
-                    while ((cp = bufferedReader.read()) != -1) {
-                        sb.append((char) cp);
-                    }
-                    bufferedReader.close();
-                } catch (Exception ex)
-                {
-                    json = new JSONObject();
-                    json.put(Helper.SUCCESS, false);
-                    json.put(Helper.MESSAGE, "An error was encountered fetching the data from the url. " + ex.getMessage());
-                    return json;
+                    sb = this.readInputStream(in);
                 }
+                if(in != null)
+                    in.close();
+                return sb != null ? new JSONObject(sb.toString()) : null;
             }
-            in.close();
-        } catch (Exception e) {
-            json = new JSONObject();
-            json.put(Helper.SUCCESS, false);
-            json.put(Helper.MESSAGE, "An error was encountered fetching the data from the url2. " + e.getMessage());
-            return json;
+            else
+            {
+                jLogger.e("The connection link was empty (null) ");
+                return null;
+            }
+        } catch (IOException ioe) {
+            jLogger.e("We have an IOException " + ioe.getMessage());
+            return null;
         }
-        String return_sting = sb.toString().trim().replace("\\", "");
-
-        try {
-            json = new JSONObject(return_sting);
-        } catch (JSONException e) {
-            json = new JSONObject();
-            try {
-                json.put(Helper.SUCCESS, false);
-            } catch (JSONException e2) {
-                // TODO Auto-generated catch block
-                e2.printStackTrace();
-            }
-            try {
-                json.put(Helper.MESSAGE, return_sting);
-            } catch (JSONException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-            return json;
-        }
-        return json;
     }
     private JSONObject HttpGet(String link) throws JSONException
     {
         Setting settings = getSettings();
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb;
         HttpURLConnection httpConn;
         InputStreamReader in = null;
-        JSONObject json;
+        URL url;
         try {
-            URL url = new URL(link);
+            url = new URL(link);
+        } catch (MalformedURLException ue) {
+            jLogger.e("We have a malformed url exception " + ue.getMessage());
+            return null;
+        }
+        try {
             httpConn = (HttpURLConnection) url.openConnection();
             if (httpConn != null)
             {
-                httpConn.setRequestMethod(Helper.HTTP_GET);
-                httpConn.setReadTimeout(Helper.TIMEOUT);
-                httpConn.setRequestProperty(Helper.USERNAME, settings.getUsername());
-                httpConn.setRequestProperty(Helper.PASSWORD, settings.getPassword());
+                httpConn = this.setHttpHeaders(settings, httpConn);
             }
             if (httpConn != null && httpConn.getInputStream() != null) {
-                try {
-                    in = new InputStreamReader(httpConn.getInputStream(),
-                            Charset.defaultCharset());
-                    BufferedReader bufferedReader = new BufferedReader(in);
-                    int cp;
-                    while ((cp = bufferedReader.read()) != -1) {
-                        sb.append((char) cp);
-                    }
-                    bufferedReader.close();
-                } catch (Exception ex)
-                {
-                    json = new JSONObject();
-                    json.put(Helper.SUCCESS, false);
-                    json.put(Helper.MESSAGE, "An error was encountered fetching the data from the url. " + ex.getMessage());
-                    return json;
-                }
+                in = new InputStreamReader(httpConn.getInputStream(),
+                        Charset.defaultCharset());
+                sb = this.readInputStream(in);
+                in.close();
+                return sb != null ? new JSONObject(sb) : null;
             }
-            in.close();
-        } catch (Exception e) {
-            json = new JSONObject();
-            json.put(Helper.SUCCESS, false);
-            json.put(Helper.MESSAGE, "An error was encountered fetching the data from the url2. " + e.getMessage());
-            return json;
+            else
+            {
+                jLogger.e("The connection link was empty (null) ");
+                return null;
+            }
+        } catch (IOException ioe) {
+            jLogger.e("We have an IO Exception " + ioe.getMessage());
+            return this.technicalError(ioe.getMessage());
         }
-        String return_sting = sb.toString().trim().replace("\\", "");
-
-        try {
-            json = new JSONObject(return_sting);
-        } catch (JSONException e) {
-            json = new JSONObject();
-            try {
-                json.put(Helper.SUCCESS, false);
-            } catch (JSONException e2) {
-                // TODO Auto-generated catch block
-                e2.printStackTrace();
-            }
-            try {
-                json.put(Helper.MESSAGE, return_sting);
-            } catch (JSONException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-            return json;
-        }
-        return json;
     }
     public List<User> findByStatus()
     {
@@ -406,17 +367,9 @@ public class Helper {
         AuditTrailDAO dao = new AuditTrailDAO(entityManager);
         return dao.countAll(search);
     }
-	/* POST Request to URL */
 
     private JSONObject URLPost(String link, String params, String encoding) throws JSONException {
-        JSONObject json;
-        //logger.i("Posting...\n Network link: " + link + "\n Params: " + params + "\n Encoding: " + encoding);
-        if(isHttps(link))
-            json = HttpsPost(link, params, encoding);
-        else
-            json = HttpPost(link, params, encoding);
-        //logger.i("Response: \n" + json);
-        return json;
+        return isHttps(link) ? HttpsPost(link, params, encoding) : HttpPost(link, params, encoding);
     }
 
     private JSONObject HttpsPost(String link, String params, String encoding) throws JSONException
@@ -441,44 +394,43 @@ public class Helper {
                 os.write(params.getBytes());
                 os.flush();
                 os.close();
-            }
-            try
-            {
-                if (urlConn != null && urlConn.getInputStream() != null) {
-                    try {
-                        in = new InputStreamReader(urlConn.getInputStream(),
-                                Charset.defaultCharset());
-                        BufferedReader bufferedReader = new BufferedReader(in);
-                        int cp;
-                        while ((cp = bufferedReader.read()) != -1) {
-                            sb.append((char) cp);
-                        }
-                        bufferedReader.close();
-                    } catch (Exception ex)
-                    {
-                        ex.printStackTrace();
-                        json = new JSONObject();
-                        json.put(Helper.SUCCESS, false);
-                        json.put(Helper.MESSAGE, "An error was encountered fetching the data from the url. " + ex.getMessage());
-                        return json;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.printStackTrace();
-            }
-            in.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            json = new JSONObject();
-            json.put(Helper.SUCCESS, false);
-            json.put(Helper.MESSAGE, "An error was encountered fetching the data from the url. " + e.getMessage());
-            return json;
-        }
+                in = new InputStreamReader(urlConn.getInputStream(),
+                        Charset.defaultCharset());
+                sb = this.readInputStream(in);
 
-        json = new JSONObject(sb.toString().trim());
-        return json;
+                json = sb != null ? new JSONObject(sb.toString().trim()) : null;
+                in.close();
+                return json;
+            }
+
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+            return this.technicalError(ioe.getMessage());
+        }
+    }
+    private StringBuilder readInputStream(InputStreamReader in)
+    {
+        try {
+            StringBuilder sb = new StringBuilder();
+            BufferedReader bufferedReader = new BufferedReader(in);
+            int cp;
+            while ((cp = bufferedReader.read()) != -1) {
+                sb.append((char) cp);
+            }
+            bufferedReader.close();
+            return sb;
+        } catch (IOException ioe)
+        {
+            return null;
+        }
+    }
+    private JSONObject technicalError(String message)
+    {
+        try {
+            return new JSONObject().put(Helper.SUCCESS, false).put(Helper.MESSAGE, Message.AN_ERROR_WAS_ENCOUNTERED_FETCHING_THE_DATA_FROM_THE_URL + message);
+        } catch (JSONException je) {
+            return null;
+        }
     }
 
     private JSONObject HttpPost(String link, String params, String encoding) throws JSONException
@@ -630,10 +582,10 @@ public class Helper {
     public JSONObject memberExists(String profile, String idNumber) throws JSONException, IOException {
 
         Setting settings = getSettings();
-
         String ordinal = getLoginField(profile);
+        JSONObject response;
 
-        JSONObject response = URLPost(settings.getXiPath() + "checkMemberExists/" + ordinal  + "/" + idNumber + "/" + profile, "", "application/x-www-form-urlencoded");
+        response = URLPost(settings.getXiPath() + APICall.CHECK_MEMBER_EXISTS + ordinal  + "/" + idNumber + "/" + profile, "", "application/x-www-form-urlencoded");
 
         try {
             if(response.get(Helper.SUCCESS).equals(true))
@@ -661,7 +613,7 @@ public class Helper {
 
         Setting settings = getSettings();
 
-        JSONObject response = URLPost(settings.getXiPath() + "upload/" + memberId  + "/" + docName + "/" + docNotes + "/" + docNum + "/" + docTypeId, "", "application/x-www-form-urlencoded");
+        JSONObject response = URLPost(settings.getXiPath() + APICall.UPLOAD + memberId  + "/" + docName + "/" + docNotes + "/" + docNum + "/" + docTypeId, "", "application/x-www-form-urlencoded");
 
         try {
             if(response.get(Helper.SUCCESS).equals(true))
@@ -685,7 +637,7 @@ public class Helper {
 
         String ordinal = getLoginField(profile);
 
-        JSONObject response = URLGet(settings.getXiPath() + "checkMemberExistsInScheme/" + ordinal + "/" + idNumber + "/" + profile + "/" + schemeID);
+        JSONObject response = URLGet(settings.getXiPath() + APICall.CHECK_MEMBER_EXISTS_IN_SCHEME + ordinal + "/" + idNumber + "/" + profile + "/" + schemeID);
 
         if(response.get(Helper.SUCCESS).equals(true))
         {
@@ -703,7 +655,7 @@ public class Helper {
 
         Setting settings = getSettings();
 
-        JSONObject response = URLPost(settings.getXiPath() + "saveorupdatebeneficiarydetails", params, "application/json");
+        JSONObject response = URLPost(settings.getXiPath() + APICall.SAVE_OR_UPDATE_BENEFICIARY_DETAILS, params, "application/json");
 
         return response.toString();
 
@@ -730,12 +682,8 @@ public class Helper {
     public JSONObject getProviderDetails(String profile, String identifier) throws JSONException, UnsupportedOperationException {
 
         Setting settings = getSettings();
-
-      //  return URLGet(settings.getXiPath() + "DAOprovider/get/" + profile + "/" + identifier);
-        String ordinal =getLoginField(profile);// "MEMBER_ID";//
-
-         JSONObject response = URLPost(settings.getXiPath() + "checkMemberExists/" + ordinal  + "/" + identifier + "/" + profile, "", "application/x-www-form-urlencoded");
-
+        String ordinal =getLoginField(profile);
+        JSONObject response = URLPost(settings.getXiPath() + APICall.CHECK_MEMBER_EXISTS + ordinal  + "/" + identifier + "/" + profile, "", "application/x-www-form-urlencoded");
         try {
             if(response.get(Helper.SUCCESS).equals(true))
             {
@@ -762,7 +710,7 @@ public class Helper {
 
         Setting settings = getSettings();
 
-        return URLPost(settings.getXiPath() + "sponsor/saveorupdatepotentialsponsor", params, "application/json");
+        return URLPost(settings.getXiPath() + APICall.SPONSOR_SAVE_OR_UPDATE_POTENTIAL_SPONSOR, params, "application/json");
 
     }
 
@@ -771,7 +719,7 @@ public class Helper {
 
         Setting settings = getSettings();
 
-        return URLPost(settings.getXiPath() + "saveorupdatemember", params, "application/json");
+        return URLPost(settings.getXiPath() + APICall.SAVE_OR_UPDATE_MEMBER, params, "application/json");
 
     }
 
@@ -987,7 +935,7 @@ public class Helper {
             }
         } catch (NullPointerException e)
         {
-            logger.e("Non-logged in user trying to create sponsor");
+            jLogger.e("Non-logged in user trying to create sponsor");
         }
         
         SectorDAO dao = new SectorDAO(entityManager);
@@ -1372,7 +1320,7 @@ public class Helper {
             }
         } catch (NullPointerException e)
         {
-            logger.e("Non-logged in user trying to create member");
+            jLogger.e("Non-logged in user trying to create member");
         }
         
         if(settings.getMemberOnboarding().equals(Helper.MSS))
@@ -1414,7 +1362,7 @@ public class Helper {
         {
             Setting settings = getSettings();
             List<Scheme> schemes = new ArrayList<>();
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebyplantype/" + planType);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_BY_PLAN_TYPE + planType);
             if(response.get(Helper.SUCCESS).equals(true))
             {
 
@@ -1424,7 +1372,7 @@ public class Helper {
 
                     JSONObject jsonobj = res.getJSONObject(i);
 
-                    Scheme scheme = new Scheme(Long.valueOf(jsonobj.getString("id")).longValue(), jsonobj.getString("schemePin"), jsonobj.getString("schemeName"), jsonobj.getString("schemeType"), jsonobj.getString("schemePin"), jsonobj.getString("planType"), jsonobj.getString("sector"));
+                    Scheme scheme = new Scheme(this.toLong(jsonobj.getString("id")), jsonobj.getString("schemePin"), jsonobj.getString("schemeName"), jsonobj.getString("schemeType"), jsonobj.getString("schemePin"), jsonobj.getString("planType"), jsonobj.getString("sector"));
 
                     schemes.add(scheme);
 
@@ -1451,7 +1399,7 @@ public class Helper {
         try {
             Setting settings = getSettings();
             List<AnnuityProduct> annuityProducts = new ArrayList<>();
-            JSONObject response = URLGet(settings.getXiPath() + "annuity_quote/getannuityproducts");
+            JSONObject response = URLGet(settings.getXiPath() + APICall.ANNUITY_QUOTE_GET_ANNUITY_PRODUCTS);
             if(response.get(Helper.SUCCESS).equals(true))
             {
 
@@ -1461,7 +1409,7 @@ public class Helper {
 
                     JSONObject jsonobj = res.getJSONObject(i);
 
-                    AnnuityProduct annuityProduct = new AnnuityProduct(Long.valueOf(jsonobj.getString("id")).longValue(), jsonobj.getString("product_name"), jsonobj.getString("product_date"));
+                    AnnuityProduct annuityProduct = new AnnuityProduct(this.toLong(jsonobj.getString("id")), jsonobj.getString("product_name"), jsonobj.getString("product_date"));
 
                     annuityProducts.add(annuityProduct);
 
@@ -1488,7 +1436,7 @@ public class Helper {
         {
             Setting settings = getSettings();
             List<Scheme> schemes = new ArrayList<>();
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebyschememode/" + schemeMode);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_BY_SCHEME_MODE + schemeMode);
             if(response.get(Helper.SUCCESS).equals(true))
             {
 
@@ -1498,7 +1446,7 @@ public class Helper {
 
                     JSONObject jsonobj = res.getJSONObject(i);
 
-                    Scheme scheme = new Scheme(Long.valueOf(jsonobj.getString("id")).longValue(), jsonobj.getString("schemePin"), jsonobj.getString("schemeName"), jsonobj.getString("schemeType"), jsonobj.getString("schemePin"), jsonobj.getString("planType"), jsonobj.getString("sector"));
+                    Scheme scheme = new Scheme(this.toLong(jsonobj.getString("id")), jsonobj.getString("schemePin"), jsonobj.getString("schemeName"), jsonobj.getString("schemeType"), jsonobj.getString("schemePin"), jsonobj.getString("planType"), jsonobj.getString("sector"));
 
                     schemes.add(scheme);
 
@@ -1523,7 +1471,7 @@ public class Helper {
         {
             Setting settings = getSettings();
             List<Scheme> schemes = new ArrayList<>();
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebyschememodeandplantype/" + schemeMode + "/" + planType);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_BY_SCHEME_MODE_AND_PLAN_TYPE + schemeMode + "/" + planType);
             if(response.get(Helper.SUCCESS).equals(true))
             {
 
@@ -1533,7 +1481,7 @@ public class Helper {
 
                     JSONObject jsonobj = res.getJSONObject(i);
 
-                    Scheme scheme = new Scheme(Long.valueOf(jsonobj.getString("id")).longValue(), jsonobj.getString("schemePin"), jsonobj.getString("schemeName"), jsonobj.getString("schemeType"), jsonobj.getString("schemePin"), jsonobj.getString("planType"), jsonobj.getString("sector"));
+                    Scheme scheme = new Scheme(this.toLong(jsonobj.getString("id")), jsonobj.getString("schemePin"), jsonobj.getString("schemeName"), jsonobj.getString("schemeType"), jsonobj.getString("schemePin"), jsonobj.getString("planType"), jsonobj.getString("sector"));
 
                     schemes.add(scheme);
 
@@ -1564,7 +1512,6 @@ public class Helper {
     }
     public String queryWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate, String inflationRate,String email,String phone,String yourAge) throws JSONException {
         Setting settings = getSettings();
-        //JSONObject response = URLPost(settings.getXiPath() + "whatifanalysis.json", "");
         try
         {
             BenefitCalculationsDao dao = new BenefitCalculationsDao(entityManager);
@@ -1584,7 +1531,7 @@ public class Helper {
         }
         catch(Exception e)
         {e.printStackTrace();}
-        JSONObject response = URLPost(settings.getXiPath() + "whatifanalysis/" + yearsToProject + "/" + contributions + "/" + rateOfReturn + "/" + salaryEscalationRate + "/" + inflationRate, "", "application/x-www-form-urlencoded");
+        JSONObject response = URLPost(settings.getXiPath() + APICall.WHAT_IF_ANALYSIS + yearsToProject + "/" + contributions + "/" + rateOfReturn + "/" + salaryEscalationRate + "/" + inflationRate, "", "application/x-www-form-urlencoded");
         if(response.get(Helper.SUCCESS).equals(true))
         {
 
@@ -1599,8 +1546,7 @@ public class Helper {
 
     public String getSchemeInterestRates(String schemeID) throws JSONException {
         Setting settings = getSettings();
-        JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemeinterestrates/" + schemeID);
-        //logger.i("response.get(Helper.SUCCESS) "+response.get(Helper.SUCCESS));
+        JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_INTEREST_RATES + schemeID);
         if(response.get(Helper.SUCCESS).equals(true))
         {
 
@@ -1685,7 +1631,7 @@ public class Helper {
     public String getMemberBalances(String memberID) throws JSONException{
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "getmemberbalances/" + memberID);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.GET_MEMBER_BALANCES + memberID);
             if(response.get(Helper.SUCCESS).equals(true))
             {
 
@@ -1722,7 +1668,7 @@ public class Helper {
         }
     }
 
-    private String format_no(double amount)
+    public String format_no(double amount)
     {
         if(amount > 0)
         {
@@ -1736,7 +1682,7 @@ public class Helper {
 
     public List<BenefitPayment> getBenefitPayments(String schemeID, int start, int count) throws JSONException {
         Setting settings = getSettings();
-        JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebenefitpayments/" + schemeID + "/?start=" + start + "&size=" + count);
+        JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_BENEFIT_PAYMENTS + schemeID + "/?start=" + start + "&size=" + count);
         if(response.get(Helper.SUCCESS).equals(true))
         {
 
@@ -1819,7 +1765,7 @@ public class Helper {
     }
 
 
-    private String humanReadableDate(String date_string)
+    public String humanReadableDate(String date_string)
 
     {
         Date compdate = null;
@@ -1849,7 +1795,7 @@ public class Helper {
 
         Constants.RECORD_COUNT = 0;
 
-        JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemereceipts/" + schemeID);
+        JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_RECEIPTS + schemeID);
         try {
             if(response.get(Helper.SUCCESS).equals(true))
             {
@@ -1901,7 +1847,7 @@ public class Helper {
     public String listMembers(String schemeID, String profileID) throws JSONException
     {
         Setting settings = getSettings();
-        JSONObject response = URLGet(settings.getXiPath() + "member/statistics/statusdistribution/" + schemeID+"/"+profileID);
+        JSONObject response = URLGet(settings.getXiPath() + APICall.MEMBER_STATISTICS_STATUS_DISTRIBUTION + schemeID+"/"+profileID);
         try {
             if(response.get(Helper.SUCCESS).equals(true))
             {
@@ -1920,7 +1866,7 @@ public class Helper {
         Constants.RECORD_COUNT = 0;
 
         Setting settings = getSettings();
-        JSONObject response = URLPost(settings.getXiPath() + "getmemberlisting/" + profileID + "/" + profile + "/" + schemeID + "/?start=" + start + "&size=" + size, "", "application/x-www-form-urlencoded");
+        JSONObject response = URLPost(settings.getXiPath() + APICall.GET_MEMBER_LISTING + profileID + "/" + profile + "/" + schemeID + "/?start=" + start + "&size=" + size, "", "application/x-www-form-urlencoded");
         try {
             if(response.get(Helper.SUCCESS).equals(true))
             {
@@ -1968,12 +1914,12 @@ public class Helper {
             
             if(schemeId==null)
             {
-                response = URLGet(settings.getXiPath() + "getmemberdetails/" + memberID);
+                response = URLGet(settings.getXiPath() + APICall.GET_MEMBER_DETAILS + memberID);
             }
                 else
             {
 
-                 response = URLGet(settings.getXiPath() + "getmemberIdfromMail/"+memberID+"/" + schemeId);
+                 response = URLGet(settings.getXiPath() + APICall.GET_MEMBER_ID_FROM_MAIL +memberID+"/" + schemeId);
 
             }
 
@@ -1988,7 +1934,7 @@ public class Helper {
             }
             else
             {
-                response = URLGet(settings.getXiPath() + "getmemberdetails/" + memberID);
+                response = URLGet(settings.getXiPath() + APICall.GET_MEMBER_DETAILS + memberID);
                 if(response.get(Helper.SUCCESS).equals(true))
                 {
 
@@ -2033,12 +1979,12 @@ public class Helper {
     
     {
     	
-    	logger.i("Member Id for bene " + memberID);
+    	jLogger.i("Member Id for bene " + memberID);
     	
         Setting settings = getSettings();
         
         try {
-            JSONObject response = URLPost(settings.getXiPath() + "getmemberbeneficiaries/" + memberID,"", "application/x-www-form-urlencoded");
+            JSONObject response = URLPost(settings.getXiPath() + APICall.GET_MEMBER_BENEFICIARIES + memberID,"", "application/x-www-form-urlencoded");
             
             
             if(response.get(Helper.SUCCESS).equals(true))
@@ -2077,13 +2023,11 @@ public class Helper {
         }
     }
 
-
     public JSONObject searchProfilesJSON(String search, String identifier, String profile, String schemeID)
     {
         Setting settings = getSettings();
         try {
-
-            return URLPost(settings.getXiPath() + "searchForMemberDetails/" + identifier + "/" + search + "/" + profile + "/" + schemeID + "/0/20", "", "application/x-www-form-urlencoded");
+            return URLPost(settings.getXiPath() + APICall.SEARCH_FOR_MEMBER_DETAILS + identifier + "/" + search + "/" + profile + "/" + schemeID + "/0/20", "", "application/x-www-form-urlencoded");
         }
         catch (Exception ex)
         {
@@ -2095,7 +2039,7 @@ public class Helper {
     {
         Setting settings = getSettings();
         try {
-            JSONObject response = URLPost(settings.getXiPath() + "searchForMemberDetails/" + identifier + "/" + search + "/" + profile + "/" + schemeID + "/" + start + "/" + count, "", "application/x-www-form-urlencoded");
+            JSONObject response = URLPost(settings.getXiPath() + APICall.SEARCH_FOR_MEMBER_DETAILS + identifier + "/" + search + "/" + profile + "/" + schemeID + "/" + start + "/" + count, "", "application/x-www-form-urlencoded");
             try {
                 if(response.get(Helper.SUCCESS).equals(true))
                 {
@@ -2138,7 +2082,7 @@ public class Helper {
     {
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getreasonsforexit/" + "ALL");
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_REASONS_FOR_EXIT + "ALL");
 
             return response.toString();
         }
@@ -2153,7 +2097,7 @@ public class Helper {
     {
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebenefitswithinyear/" + schemeID);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR + schemeID);
 
             return response.toString();
         }
@@ -2170,7 +2114,7 @@ public class Helper {
     {
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "commissions/get/" + agentID);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.COMMISSIONS_GET + agentID);
 
             return response.toString();
         }
@@ -2199,7 +2143,7 @@ public class Helper {
             params.put("attachments", new ArrayList<String>());
         try {
 
-            return URLPost(settings.getXiPath() + "notification/push", params.toString(), "application/json");
+            return URLPost(settings.getXiPath() + APICall.NOTIFICATION_PUSH, params.toString(), "application/json");
         }
         catch (Exception ex)
         {
@@ -2212,7 +2156,7 @@ public class Helper {
     {
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebyname/" + search);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_BY_NAME + search);
 
             return response.toString();
         }
@@ -2226,7 +2170,7 @@ public class Helper {
     public List<XiMember> due4Retirement(String schemeID) throws JSONException
     {
         Setting settings = getSettings();
-        JSONObject response = URLGet(settings.getXiPath() + "getmembersdueforretirement/" + schemeID + "/0/100000");
+        JSONObject response = URLGet(settings.getXiPath() + APICall.GET_MEMBERS_DUE_FOR_RETIREMENT + schemeID + "/0/100000");
         try {
             if(response.get(Helper.SUCCESS).equals(true))
             {
@@ -2267,7 +2211,7 @@ public class Helper {
 
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebenefitpaymentsbetweendates/" + schemeID + "/" + from + "/" + to);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GETS_CHEME_BENEFIT_PAYMENTS_BETWEEN_DATES + schemeID + "/" + from + "/" + to);
 
             if(response.get(Helper.SUCCESS).equals(true))
             {
@@ -2362,7 +2306,7 @@ public class Helper {
     {
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemereceiptsbetweendates/" + schemeID + "/" + from + "/" + to);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_RECEIPTS_BETWEEN_DATES + schemeID + "/" + from + "/" + to);
 
             if(response.get(Helper.SUCCESS).equals(true))
             {
@@ -2410,7 +2354,7 @@ public class Helper {
     {
         Setting settings = getSettings();
         try {
-            JSONObject response = URLPost(settings.getXiPath() + "newMemberListingWithinYear/" + schemeID+"/"+profileID, "", "application/x-www-form-urlencoded");
+            JSONObject response = URLPost(settings.getXiPath() + APICall.NEW_MEMBER_LISTING_WITHIN_YEAR + schemeID+"/"+profileID, "", "application/x-www-form-urlencoded");
 
             return response.toString();
         }
@@ -2426,7 +2370,7 @@ public class Helper {
         Setting settings = getSettings();
         try {
             //JSONObject response = URLGet(settings.getXiPath() + "getmemberbeneficiaries.json");
-            JSONObject response = URLPost(settings.getXiPath() + "getmemberbeneficiaries/" + memberID,"", "application/x-www-form-urlencoded");
+            JSONObject response = URLPost(settings.getXiPath() + APICall.GET_MEMBER_BENEFICIARIES + memberID,"", "application/x-www-form-urlencoded");
             if(response.get(Helper.SUCCESS).equals(true))
             {
 
@@ -2475,7 +2419,7 @@ public class Helper {
     public String getSchemeContributions(String schemeID ,String profileID) throws JSONException{
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/gettotalschemecontributions/" + schemeID+"/"+profileID);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GETTOTALSCHEMECONTRIBUTIONS + schemeID+"/"+profileID);
             return response.toString();
         } catch (JSONException je) {
 
@@ -2486,7 +2430,7 @@ public class Helper {
     public String getMemberContributions(String memberID) throws JSONException{
         Setting settings = getSettings();
         try {
-            JSONObject response = URLGet(settings.getXiPath() + "getmembercontributions/" + memberID);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.GETMEMBERCONTRIBUTIONS + memberID);
             if(response.get(Helper.SUCCESS).equals(true))
             {
 
@@ -2571,7 +2515,7 @@ public class Helper {
         try {
             Setting settings = getSettings();
             List<UserProfile> uprofiles = new ArrayList<>();
-            JSONObject response = URLGet(settings.getXiPath() + "profile/getprofiles");
+            JSONObject response = URLGet(settings.getXiPath() + APICall.PROFILE_GET_PROFILES);
             if(response.get(Helper.SUCCESS).equals(true))
             {
 
@@ -2604,8 +2548,7 @@ public class Helper {
         Setting settings = getSettings();
         try
         {
-            //JSONObject response = URLPost(settings.getXiPath() + "getmembercummulativeinterest.json", "");
-            JSONObject response = URLPost(settings.getXiPath() + "getmembercummulativeinterest/" + memberID, "", "application/x-www-form-urlencoded");
+            JSONObject response = URLPost(settings.getXiPath() + APICall.GET_MEMBER_CUMMULATIVE_INTEREST + memberID, "", "application/x-www-form-urlencoded");
             return response.toString();
         }
         catch (Exception ex)
@@ -2618,8 +2561,7 @@ public class Helper {
         Setting settings = getSettings();
         try
         {
-            //JSONObject response = URLPost(settings.getXiPath() + "getaccountingperiodfromdateforscheme.json", "");
-            JSONObject response = URLPost(settings.getXiPath() + "getaccountingperiodfromdateforscheme/" + date + "/" + schemeID, "", "application/x-www-form-urlencoded");
+            JSONObject response = URLPost(settings.getXiPath() + APICall.GET_ACCOUNTING_PERIOD_FROM_DATE_FOR_SCHEME + date + "/" + schemeID, "", "application/x-www-form-urlencoded");
             return response.toString();
         }
         catch (Exception ex)
@@ -2632,7 +2574,7 @@ public class Helper {
         Setting settings = getSettings();
         try
         {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getfundvalue/" + accountinPeriodId + "/" + schemeID+"/"+profileID);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_FUND_VALUE + accountinPeriodId + "/" + schemeID+"/"+profileID);
             return response.toString();
         }
         catch (Exception ex)
@@ -2645,7 +2587,7 @@ public class Helper {
         Setting settings = getSettings();
         try
         {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getfundvalueasat/"+date+"/" + periodType + "/" + schemeID+"/"+profileID);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_FUND_VALUE_AS_AT +date+"/" + periodType + "/" + schemeID+"/"+profileID);
             return response.toString();
         }
         catch (Exception ex)
@@ -2659,13 +2601,17 @@ public class Helper {
         Setting settings = getSettings();
         try
         {
-            JSONObject response = URLGet(settings.getXiPath() + "scheme/getschemebasecurrency/" + schemeID);
+            JSONObject response = URLGet(settings.getXiPath() + APICall.SCHEME_GET_SCHEME_BASE_CURRENCY + schemeID);
             return response.toString();
         }
         catch (Exception ex)
         {
             return null;
         }
+    }
+    public BigDecimal toBigDecimal(double value)
+    {
+        return BigDecimal.valueOf(value);
     }
     public String getMemberAverageInterest(String memberID)
     {
@@ -2674,9 +2620,9 @@ public class Helper {
         {
             JSONObject response = new JSONObject("{\"success\":false, \"msg\":\"Failed!\"}");
             try{
-                response = URLPost(settings.getXiPath() + "getmemberaverageinterest/" + memberID, "", "application/x-www-form-urlencoded");
+                response = URLPost(settings.getXiPath() + APICall.GET_MEMBER_AVERAGE_INTEREST + memberID, "", "application/x-www-form-urlencoded");
             }catch(Exception x){
-                logger.i("error retrieving average history::" + x);
+                jLogger.i("error retrieving average history::" + x);
             }
             return response.toString();
         }
@@ -2747,7 +2693,7 @@ public class Helper {
 
                     JSONObject jsonobj = res.getJSONObject(i);
 
-                    Scheme scheme = new Scheme(Long.valueOf(jsonobj.getString("id")).longValue(), jsonobj.getString("schemePin"), jsonobj.getString("schemeName"), jsonobj.getString("schemeType"), jsonobj.getString("schemePin"), jsonobj.getString("planType"), jsonobj.getString("sector"));
+                    Scheme scheme = new Scheme(this.toLong(jsonobj.getString("id")), jsonobj.getString("schemePin"), jsonobj.getString("schemeName"), jsonobj.getString("schemeType"), jsonobj.getString("schemePin"), jsonobj.getString("planType"), jsonobj.getString("sector"));
 
                     schemes.add(scheme);
 
@@ -2810,9 +2756,19 @@ public class Helper {
 
             String ordinal = getLoginField(profile);
                         
-            JSONObject response = URLPost(settings.getXiPath() + "getmemberschemes/" + ordinal + "/" + user + "/" + profile, "", "application/x-www-form-urlencoded");
+            JSONObject response = URLPost(settings.getXiPath() + APICall.GET_MEMBER_SCHEMES + ordinal + "/" + user + "/" + profile, "", "application/x-www-form-urlencoded");
 
-            if(response.get(Helper.SUCCESS).equals(true))
+            if(response.get(Helper.SUCCEJSONArray res = (JSONArray) response.get(Helper.ROWS);
+
+                for(int i = 0; i < res.length(); i++){
+
+                    JSONObject jsonobj = res.getJSONObject(i);
+
+                    Scheme scheme = new Scheme(this.toLong(jsonobj.get("id").toString()), "1", jsonobj.getString("name"), "1", "1", jsonobj.getString("planType"), "1");
+
+                    schemes.add(scheme);
+
+                }SS).equals(true))
             {
 
                 JSONArray res = (JSONArray) response.get(Helper.ROWS);
@@ -2821,7 +2777,7 @@ public class Helper {
 
                     JSONObject jsonobj = res.getJSONObject(i);
 
-                    Scheme scheme = new Scheme(Long.valueOf(jsonobj.get("id").toString()).longValue(), "1", jsonobj.getString("name"), "1", "1", jsonobj.getString("planType"), "1");
+                    Scheme scheme = new Scheme(this.toLong(jsonobj.get("id").toString()), "1", jsonobj.getString("name"), "1", "1", jsonobj.getString("planType"), "1");
 
                     schemes.add(scheme);
 
@@ -2886,7 +2842,7 @@ public class Helper {
     {
 
         SettingDAO dao = new SettingDAO(entityManager);
-        Setting settings = dao.findById(Long.valueOf("1"));
+        Setting settings = dao.find();
         if(settings.isEncrypt())
         {
 
@@ -2970,7 +2926,7 @@ public class Helper {
     ActivityLogEJB activityLogEJB;
     public void logActivity(String access_menu, String description, String userID, String scheme, String userProfile)
     {
-        activityLogEJB.add(new ActivityLog(description, new Date(), Long.valueOf(userID).longValue(), scheme, access_menu, userProfile));
+        activityLogEJB.add(new ActivityLog(description, new Date(), this.toLong(userID), scheme, access_menu, userProfile));
 
     }
 
