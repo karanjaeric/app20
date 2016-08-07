@@ -46,7 +46,7 @@ public class SchemeManagerBean implements SchemeManagerEJB {
     @Override
     public void add(SchemeMemberManager schemeMemberManager) {
         SchemeMemberManagerDAO dao = new SchemeMemberManagerDAO(entityManager);
-        return dao.save(schemeMemberManager);
+        dao.save(schemeMemberManager);
     }
 
     @Override

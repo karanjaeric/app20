@@ -73,6 +73,7 @@ $(document)
 													},
 													dataType : 'json',
 													success : function(json) {
+														json = $.parseJSON(json.data);
 														stop_wait();
 														var message = 'Oops! We are sorry, but something unexpected just happend and we were unable to process your request. Please try again';
 														if (json.success == true) {
@@ -276,6 +277,7 @@ $(document)
 											dataType : 'json',
 											success : function(json) {
 												stop_wait();
+                                                json = $.parseJSON(json.data);
 												if (json.success) {
 													$('.results').removeClass('hide');
 													$('#projectedROR').html(format_no(json.projectedROR));
@@ -2977,13 +2979,6 @@ $(document)
 												validators : {
 													notEmpty : {
 														message : 'Sorry, please enter the purchase date'
-													}
-												}
-											},
-											purchasePrice : {
-												validators : {
-													notEmpty : {
-														message : 'The registered purchase price is required'
 													}
 												}
 											},

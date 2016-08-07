@@ -46,6 +46,6 @@ public class AuditTrailBean implements AuditTrailEJB{
     @Override
     public void add(AuditTrail auditTrail) {
         AuditTrailDAO dao = new AuditTrailDAO(entityManager);
-        return dao.save(auditTrail);
+        dao.save(auditTrail);
     }
 }

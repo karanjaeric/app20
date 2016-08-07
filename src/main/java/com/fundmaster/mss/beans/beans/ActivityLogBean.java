@@ -24,7 +24,7 @@ public class ActivityLogBean implements ActivityLogEJB {
     @Override
     public void add(ActivityLog activityLog) {
         ActivityLogDAO dao = new ActivityLogDAO(entityManager);
-        return dao.save(activityLog);
+        dao.save(activityLog);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class BenefitsCalculationBean implements BenefitsCalculationEJB {
     @Override
     public void add(BenefitCalculation benefitCalculation) {
         BenefitCalculationsDao dao = new BenefitCalculationsDao(entityManager);
-        return dao.save(benefitCalculation);
+        dao.save(benefitCalculation);
     }
     @Override
     public List<BenefitCalculation> findAll(int start, int end) {
