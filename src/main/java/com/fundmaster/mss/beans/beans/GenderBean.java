@@ -45,4 +45,9 @@ public class GenderBean implements GenderEJB {
         GenderDAO dao = new GenderDAO(entityManager);
         return dao.remove(gender);
     }
+    @Override
+    public Gender findById(long id) {
+        GenderDAO dao = new GenderDAO(entityManager);
+        return dao.findById(id);
+    }
 }

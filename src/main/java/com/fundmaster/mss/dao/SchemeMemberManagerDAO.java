@@ -9,7 +9,7 @@ import java.util.List;
  * Created by bryanitur on 1/29/2016.
  */
 public class SchemeMemberManagerDAO extends GenericDAOImpl<SchemeMemberManager, Long> {
-    private EntityManager em;
+    private final EntityManager em;
     public SchemeMemberManagerDAO(EntityManager entityManager)
     {
         super(SchemeMemberManager.class, entityManager);

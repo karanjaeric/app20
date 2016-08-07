@@ -22,10 +22,16 @@ public class BenefitCalculation extends GenericModel<BenefitCalculation> impleme
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private
     Long id;
-    String email;
-    Date requestdate;
-    String phone;
-    BigDecimal openingbal,mothnlycontrib,returnrate,salarygrowth,inflationrate,age,projectedage;
+    private String email;
+    private Date requestdate;
+    private String phone;
+    private BigDecimal openingbal;
+    private BigDecimal mothnlycontrib;
+    private BigDecimal returnrate;
+    private BigDecimal salarygrowth;
+    private BigDecimal inflationrate;
+    private BigDecimal age;
+    private BigDecimal projectedage;
 
     public BigDecimal getAge() {
         return age;

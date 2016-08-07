@@ -10,7 +10,6 @@ public class LogoDAO extends GenericDAOImpl<Logo, Long> {
 	
     {
         super(Logo.class, entityManager);
-        EntityManager em = entityManager;
     }
 
 }

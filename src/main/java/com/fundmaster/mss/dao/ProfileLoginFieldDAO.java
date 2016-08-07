@@ -9,7 +9,7 @@ import java.util.List;
  * Created by bryanitur on 1/29/2016.
  */
 public class ProfileLoginFieldDAO extends GenericDAOImpl<ProfileLoginField, Long> {
-    private EntityManager em;
+    private final EntityManager em;
     public ProfileLoginFieldDAO(EntityManager entityManager)
     {
         super(ProfileLoginField.class, entityManager);
@@ -21,7 +21,7 @@ public class ProfileLoginFieldDAO extends GenericDAOImpl<ProfileLoginField, Long
         @SuppressWarnings("unchecked")
         List<ProfileLoginField> logs = em.createQuery("SELECT p FROM ProfileLoginField p WHERE p.profile=:profile").setParameter("profile", profile).setMaxResults(5).getResultList();
 
-        return logs.get(0);
+        return logs.size() > 0 ? logs.get(0) : null;
     }
 
 }

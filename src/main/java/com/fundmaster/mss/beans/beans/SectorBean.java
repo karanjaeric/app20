@@ -44,4 +44,9 @@ public class SectorBean implements SectorEJB {
         SectorDAO dao = new SectorDAO(entityManager);
         return dao.remove(sector);
     }
+    @Override
+    public Sector findById(long id) {
+        SectorDAO dao = new SectorDAO(entityManager);
+        return dao.findById(id);
+    }
 }

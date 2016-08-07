@@ -14,6 +14,7 @@ public interface SectorEJB {
     Sector add(Sector sector);
     Sector edit(Sector sector);
     List<Sector> find();
+    Sector findById(long id);
     boolean delete(Sector sector);
 
 }

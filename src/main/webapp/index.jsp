@@ -1,22 +1,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="includes/partial/header.jsp" />
-<div class="banner-image container">
+<div class="imageBanner-image container">
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
   <c:set var="count" value="0" scope="page" />
-  <c:forEach var="banner" items="${banners}">
+  <c:forEach var="imageBanner" items="${imageBanners}">
   
   <c:if test="${ count == 0 }">
     <div class="item active">
-     <img src= "${pageContext.request.contextPath}/banners/${ banner.id }"style="float:center;">
+     <img src= "${pageContext.request.contextPath}/imageBanners/${ imageBanner.id }"style="float:center;">
       <c:set var="count" value="${count + 1}" scope="page"/>
     </div>
      </c:if>
   <c:if test="${ count > 0 }">  
    <div class="item">
-      <img src="${pageContext.request.contextPath}/banners/${ banner.id }" style="float:center;">
+      <img src="${pageContext.request.contextPath}/imageBanners/${ imageBanner.id }" style="float:center;">
       <c:set var="count" value="${count + 1}" scope="page"/>
     </div>
   </c:if>

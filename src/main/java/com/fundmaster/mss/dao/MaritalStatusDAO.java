@@ -11,6 +11,5 @@ public class MaritalStatusDAO extends GenericDAOImpl<MaritalStatus, Long> {
     public MaritalStatusDAO(EntityManager entityManager)
     {
         super(MaritalStatus.class, entityManager);
-        EntityManager em = entityManager;
     }
 }

@@ -29,7 +29,7 @@
 				class="fa fa-chevron-right"></i> THEME SETTINGS</a></li>
 		</c:if>
 		<c:if test="${ permissions.setup_banner }">
-		<li id="banner-li"><a href="javascript:void(0);"><i
+		<li id="imageBanner-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-cog"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> HOMEPAGE BANNER(S)</a></li>
 		</c:if>
@@ -51,8 +51,8 @@
 	</ul>
 	
 <!-- BANNERS -->
-<div class="modal fade" id="modal-banner" tabindex="-1" role="dialog" aria-labelledby="myModalLabelBanner" aria-hidden="true">
-		<form role="form" id="form-banner">
+<div class="modal fade" id="modal-imageBanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabelBanner" aria-hidden="true">
+		<form role="form" id="form-imageBanner">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -63,8 +63,8 @@
 					<div class="modal-body">
 						<table class="table table-responsive">
 						<tr><th>IMAGE</th><th>ACTION</th></tr>
-						<c:forEach var="banner" items="${banners}">
-						<tr><td><img src="${pageContext.request.contextPath}/banners/${ banner.id }" width="100" /></td><td><a class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="remove_banner('${ banner.id}');"><i class="glyphicon glyphicon-trash"></i>&nbsp;REMOVE</a></td></tr>
+						<c:forEach var="imageBanner" items="${imageBanners}">
+						<tr><td><img src="${pageContext.request.contextPath}/imageBanners/${ imageBanner.id }" width="100" /></td><td><a class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="remove_banner('${ imageBanner.id}');"><i class="glyphicon glyphicon-trash"></i>&nbsp;REMOVE</a></td></tr>
 						</c:forEach>
 						</table>
 						<input type="hidden" name="ACTION" id="ACTION" value="BANNER" />
@@ -76,7 +76,7 @@
 					<div class="modal-footer">
 						<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
 						<input class="btn btn-primary" type="submit"
-							value="Upload Banner" id="btn-banner">
+							value="Upload Banner" id="btn-imageBanner">
 					</div>
 				</div>
 			</div>
@@ -624,7 +624,7 @@
 
 		function remove_banner(id)
 		{
-			bootbox.confirm("<p class=\"text-center\">You are about to remove a home page banner. Are you sure?</p>", function (result) {
+			bootbox.confirm("<p class=\"text-center\">You are about to remove a home page imageBanner. Are you sure?</p>", function (result) {
 				if(result)
 				{
 					 start_wait();
@@ -706,8 +706,8 @@
 		        load_dashboard('CONTACT_REASONS');
 		    });
 
-		    $('#banner-li').click(function(){
-		        $('#modal-banner').modal('show');
+		    $('#imageBanner-li').click(function(){
+		        $('#modal-imageBanner').modal('show');
 		    });
 		    
 		    $('#other-settings-li').click(function(){
@@ -1229,7 +1229,7 @@
 
 			});
 
-		    $('#form-banner').bootstrapValidator({
+		    $('#form-imageBanner').bootstrapValidator({
 		        message: 'This value is not valid',
 		        feedbackIcons: {
 		            valid: 'glyphicon glyphicon-ok',
@@ -1251,9 +1251,9 @@
                 
                 // Prevent form submission
                 e.preventDefault();
-                var btn = "btn-banner";
-                var form = "form-banner";
-                var modal = "modal-banner";
+                var btn = "btn-imageBanner";
+                var form = "form-imageBanner";
+                var modal = "modal-imageBanner";
                 var btn_text = $('#' + btn).val();
 
                 $('#' + btn).val('Please wait...');
@@ -1275,10 +1275,10 @@
         	
         	            }
         	            
-        	            html = 'Company banner successfully uploaded';
+        	            html = 'Company imageBanner successfully uploaded';
         	            bootbox.alert(html);
         	            /*else
-        	                html = 'Company banner was not uploaded';
+        	                html = 'Company imageBanner was not uploaded';
         	            bootbox.alert(html);
         	            $('#' + btn).val(btn_text);*/
         	        },

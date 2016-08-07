@@ -12,7 +12,6 @@ public class MenuDAO extends GenericDAOImpl<Menu, Long> {
     public MenuDAO(EntityManager entityManager)
     {
         super(Menu.class, entityManager);
-        EntityManager em = entityManager;
     }
 
     public Menu find()

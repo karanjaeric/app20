@@ -11,6 +11,5 @@ public class ProfileNameDAO extends GenericDAOImpl<ProfileName, Long> {
     public ProfileNameDAO(EntityManager entityManager)
     {
         super(ProfileName.class, entityManager);
-        EntityManager em = entityManager;
     }
 }

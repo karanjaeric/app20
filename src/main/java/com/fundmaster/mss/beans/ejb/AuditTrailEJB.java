@@ -15,5 +15,6 @@ public interface AuditTrailEJB {
     List<AuditTrail> frequenters(String from, String to);
     List<AuditTrail> findAll(String search, int offset, int limit);
     int countAll(String search);
+    void add(AuditTrail auditTrail);
 
 }

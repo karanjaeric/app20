@@ -136,7 +136,7 @@
 	</div>
 
 	<!--  End Change Password -->
-	<nav id="main-nav" class="navbar navbar-default navbar-fixed-top" role="banner">
+	<nav id="main-nav" class="navbar navbar-default navbar-fixed-top" role="imageBanner">
 		<div class="container-fluid section">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"

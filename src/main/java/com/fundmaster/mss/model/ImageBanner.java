@@ -12,7 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 @Entity
 @Table (name = "tbl_banners")
-public class Banner extends GenericModel<Banner> implements Serializable {
+public class ImageBanner extends GenericModel<ImageBanner> implements Serializable {
 
 	/**
 	 * 
@@ -33,7 +33,7 @@ public class Banner extends GenericModel<Banner> implements Serializable {
 	
 	private String path;
 	
-	public Banner() {
+	public ImageBanner() {
 		// TODO Auto-generated constructor stub
 	}
 	public Long getId() {

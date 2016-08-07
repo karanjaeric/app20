@@ -12,7 +12,7 @@ import java.util.List;
 @Local
 public interface ActivityLogEJB {
 
-    ActivityLog add(ActivityLog activityLog);
+    void add(ActivityLog activityLog);
     List<PieObject> findByFrontPageAccess();
     List<ActivityLog> findAllByUserID(String user_id);
     List<PieObject> findAccessByProfile();

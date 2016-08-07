@@ -38,7 +38,11 @@ public class SponsorBean implements SponsorEJB {
         SponsorDAO dao = new SponsorDAO(entityManager);
         return dao.findById(id);
     }
-
+    @Override
+    public int countAll(String search) {
+        SponsorDAO dao = new SponsorDAO(entityManager);
+        return dao.countAll(search);
+    }
     @Override
     public List<Sponsor> findAll(String agentId, String search, int offset, int limit) {
         SponsorDAO dao = new SponsorDAO(entityManager);

@@ -1,9 +1,9 @@
 package com.fundmaster.mss.beans.beans;
 
-import com.fundmaster.mss.beans.ejb.BannerEJB;
+import com.fundmaster.mss.beans.ejb.ImageBannerEJB;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.BannerDAO;
-import com.fundmaster.mss.model.Banner;
+import com.fundmaster.mss.model.ImageBanner;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -16,32 +16,32 @@ import java.util.List;
  */
 @Local
 @Stateless
-public class BannerBean implements BannerEJB {
+public class ImageBannerBean implements ImageBannerEJB {
 
 
     @PersistenceContext(unitName = Constants.MYSQL_PERSISTENCE_UNIT)
     private EntityManager entityManager;
 
     @Override
-    public Banner add(Banner banner) {
+    public ImageBanner add(ImageBanner imageBanner) {
         BannerDAO dao = new BannerDAO(entityManager);
-        return dao.save(banner);
+        return dao.save(imageBanner);
     }
 
     @Override
-    public Banner findById(long id) {
+    public ImageBanner findById(long id) {
         BannerDAO dao = new BannerDAO(entityManager);
         return dao.findById(id);
     }
 
     @Override
-    public boolean delete(Banner banner) {
+    public boolean delete(ImageBanner imageBanner) {
         BannerDAO dao = new BannerDAO(entityManager);
-        return dao.remove(banner);
+        return dao.remove(imageBanner);
     }
 
     @Override
-    public List<Banner> find() {
+    public List<ImageBanner> find() {
         BannerDAO dao = new BannerDAO(entityManager);
         return dao.findAll();
     }

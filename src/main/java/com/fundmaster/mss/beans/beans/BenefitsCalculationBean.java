@@ -9,7 +9,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+import java.util.List;
 /**
  * Created by bryanitur on 8/2/16.
  */
@@ -20,8 +20,13 @@ public class BenefitsCalculationBean implements BenefitsCalculationEJB {
     private EntityManager entityManager;
 
     @Override
-    public BenefitCalculation add(BenefitCalculation benefitCalculation) {
+    public void add(BenefitCalculation benefitCalculation) {
         BenefitCalculationsDao dao = new BenefitCalculationsDao(entityManager);
         return dao.save(benefitCalculation);
+    }
+    @Override
+    public List<BenefitCalculation> findAll(int start, int end) {
+        BenefitCalculationsDao dao = new BenefitCalculationsDao(entityManager);
+        return dao.findPaged(start, end);
     }
 }

@@ -29,7 +29,7 @@ public class HelpBean implements HelpEJB {
     }
 
     @Override
-    public Help edit(Help help) {
+    public void edit(Help help) {
         HelpDAO dao = new HelpDAO(entityManager);
         return dao.merge(help);
     }

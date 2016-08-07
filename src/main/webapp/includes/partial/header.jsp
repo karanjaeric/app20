@@ -109,7 +109,7 @@ body {
 <input type="hidden" name="message" id="message" value="${ message }" />
 								<c:if test="${noMenu == 'FALSE'}">
 		<nav id="main-nav" class="navbar navbar-default navbar-fixed-top"
-			role="banner">
+			role="imageBanner">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"data-target=".navbar-collapse">

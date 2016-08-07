@@ -7,7 +7,6 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,14 +20,14 @@ import com.fundmaster.mss.model.Help;
 import com.fundmaster.mss.model.PageContent;
 
 @WebServlet(name = "DataController", urlPatterns = {"/data"})
-public class DataController extends HttpServlet implements Serializable {
+public class DataController extends BaseServlet implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@EJB
-	Helper helper;
+
+	Helper helper = new Helper();
 	@EJB
 	ProfileNameEJB profileNameEJB;
 	@EJB
@@ -56,19 +55,19 @@ public class DataController extends HttpServlet implements Serializable {
 	@EJB
 	ProfileLoginFieldEJB profileLoginFieldEJB;
 	@EJB
-	BannerEJB bannerEJB;
+	ImageBannerEJB imageBannerEJB;
 	@EJB
 	PermissionEJB permissionEJB;
-	JLogger JLogger = new JLogger(this.getClass());
+	private final JLogger JLogger = new JLogger(this.getClass());
 	public DataController() {
 		// TODO Auto-generated constructor stub
 	}
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
         	PrintWriter out = response.getWriter();
-        	if(request.getParameter("DATA").equals("HELP"))
+        	if(this.get(request, "DATA").equals("HELP"))
         	{
-        		Help h = helpEJB.findById(helper.toLong(request.getParameter("ID")));
+        		Help h = helpEJB.findById(helper.toLong(this.get(request, "ID")));
         		JSONObject obj = new JSONObject();
         		try {
 					obj.put("id", h.getId())
@@ -80,9 +79,9 @@ public class DataController extends HttpServlet implements Serializable {
 				}
         		out.write(obj.toString());
         	}
-        	if(request.getParameter("DATA").equals("PAGE_CONTENT"))
+        	if(this.get(request, "DATA").equals("PAGE_CONTENT"))
         	{
-        		PageContent h = pageContentEJB.findById(helper.toLong(request.getParameter("ID")));
+        		PageContent h = pageContentEJB.findById(helper.toLong(this.get(request, "ID")));
         		JSONObject obj = new JSONObject();
         		try {
 					obj.put("id", h.getId())

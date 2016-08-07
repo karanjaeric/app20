@@ -5,12 +5,7 @@ import com.fundmaster.mss.common.Constants;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_members")
@@ -28,7 +23,9 @@ public class Member extends GenericModel<Member>  implements Serializable {
 	String firstname;
 	private String lastname;
 	private String othernames;
+	@ManyToOne
 	private Gender gender;
+	@ManyToOne
 	private MaritalStatus maritalStatus;
 	@Column (name = "dateOfBirth", nullable = false)
 	private

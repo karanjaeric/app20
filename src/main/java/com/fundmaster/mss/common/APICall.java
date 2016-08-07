@@ -45,4 +45,6 @@ public class APICall {
     public static final String SCHEME_GET_SCHEME_BY_SCHEME_MODE = "scheme/getschemebyschememode/";
     public static final String ANNUITY_QUOTE_GET_ANNUITY_PRODUCTS = "annuity_quote/getannuityproducts";
     public static final String SCHEME_GET_SCHEME_BY_PLAN_TYPE = "scheme/getschemebyplantype/";
+    public static final String ANNUITY_QUOTE_GETQUOTE = "annuity_quote/getquote";
+    public static final String SCHEME_GETSCHEMES = "scheme/getschemes";
 }

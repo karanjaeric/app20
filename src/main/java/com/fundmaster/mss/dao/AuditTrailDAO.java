@@ -9,7 +9,7 @@ import java.util.List;
  * Created by bryanitur on 1/29/2016.
  */
 public class AuditTrailDAO extends GenericDAOImpl<AuditTrail, Long>{
-    private EntityManager em;
+    private final EntityManager em;
     public AuditTrailDAO(EntityManager entityManager)
     {
         super(AuditTrail.class, entityManager);

@@ -12,7 +12,7 @@ import java.util.List;
  * Created by bryanitur on 1/29/2016.
  */
 public class ActivityLogDAO extends GenericDAOImpl<ActivityLog, Long> {
-    private EntityManager em;
+    private final EntityManager em;
     public ActivityLogDAO(EntityManager entityManager)
     {
         super(ActivityLog.class, entityManager);
@@ -23,7 +23,7 @@ public class ActivityLogDAO extends GenericDAOImpl<ActivityLog, Long> {
         // TODO Auto-generated method stub
 
         @SuppressWarnings("unchecked")
-        List<ActivityLog> logs = em.createQuery("SELECT a FROM ActivityLog a WHERE user_id=:user_id order by a.id desc").setParameter("user_id", user_id).setMaxResults(10).getResultList();
+        List<ActivityLog> logs = em.createQuery("SELECT a FROM ActivityLog a WHERE a.userID=:user_id order by a.id desc").setParameter("user_id", user_id).setMaxResults(10).getResultList();
 
         return logs;
     }

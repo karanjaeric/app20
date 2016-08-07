@@ -12,7 +12,6 @@ public class InterestRateColumnsDAO extends GenericDAOImpl<InterestRateColumns, 
     public InterestRateColumnsDAO(EntityManager entityManager)
     {
         super(InterestRateColumns.class, entityManager);
-        EntityManager em = entityManager;
     }
 
     public InterestRateColumns find()

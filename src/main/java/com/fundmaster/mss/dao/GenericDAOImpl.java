@@ -16,11 +16,11 @@ import com.fundmaster.mss.common.JLogger;
  * Created by bryanitur on 9/16/15.
  */
 public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
-    protected Class<T> entityClass;
-    private EntityManager em;
-    private JLogger JLogger;
+    private final Class<T> entityClass;
+    private final EntityManager em;
+    private final JLogger JLogger;
 
-    public GenericDAOImpl(Class entityClass, EntityManager entityManager) {
+    GenericDAOImpl(Class entityClass, EntityManager entityManager) {
         this.entityClass = entityClass;
         JLogger = new JLogger(entityClass);
         this.em = entityManager;
@@ -83,8 +83,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
     public List<T> findAll() {
         try {
             String query = "SELECT e FROM " + entityClass.getSimpleName() + " e";
-            List<T> results = em.createQuery(query).getResultList();
-            return results;
+            return (List<T>) em.createQuery(query).getResultList();
         } catch (PersistenceException pe) {
             JLogger.e("We found a persistence exception executing findPaged" + pe.getMessage());
             return null;
@@ -96,8 +95,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
         JLogger.i("Start: " + start + ", Limit: " + limit);
         try {
             String query = "SELECT e FROM " + entityClass.getSimpleName() + " e";
-            List<T> results = em.createQuery(query).setFirstResult(start).setMaxResults(limit).getResultList();
-            return results;
+            return (List<T>) em.createQuery(query).setFirstResult(start).setMaxResults(limit).getResultList();
         } catch (PersistenceException pe) {
             JLogger.e("We found a persistence exception executing findPaged" + pe.getMessage());
             return null;
@@ -107,8 +105,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
     public List<T> customQuery(String s, String value) {
         JLogger.i(s + " : " + value);
         try {
-            List<T> results = em.createQuery(s).setParameter("value", value).getResultList();
-            return results;
+            return (List<T>) em.createQuery(s).setParameter("value", value).getResultList();
         } catch (PersistenceException pe) {
             JLogger.e("We found a persistence exception executing customQuery:" + pe.getMessage());
             return null;
@@ -118,8 +115,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
     public List<T> customPagedQuery(String s, String value, int start, int limit) {
         JLogger.i(s + " : " + value);
         try {
-            List<T> results = em.createQuery(s).setParameter("value", value).setFirstResult(start).setMaxResults(limit).getResultList();
-            return results;
+            return (List<T>) em.createQuery(s).setParameter("value", value).setFirstResult(start).setMaxResults(limit).getResultList();
         } catch (PersistenceException pe) {
             JLogger.e("We found a persistence exception executing customQuery:" + pe.getMessage());
             return null;
@@ -128,8 +124,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
 
     public List<T> query(String query) {
         try {
-            List<T> results = em.createQuery(query).getResultList();
-            return results;
+            return (List<T>) em.createQuery(query).getResultList();
         } catch (PersistenceException pe) {
             JLogger.e("We found a persistence exception executing query:" + pe.getMessage());
             return null;
@@ -138,8 +133,7 @@ public class GenericDAOImpl<T, PK> implements GenericDAO<T> {
 
     public List<T> findByObject(String s, Object o) {
         try {
-            List<T> results = em.createQuery(s).setParameter("object", o).getResultList();
-            return results;
+            return (List<T>) em.createQuery(s).setParameter("object", o).getResultList();
         } catch (PersistenceException pe) {
             JLogger.e("We found a persistence exception executing findByObject:" + pe.getMessage());
             return null;

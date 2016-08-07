@@ -14,5 +14,5 @@ public interface MaritalStatusEJB {
     MaritalStatus add(MaritalStatus maritalStatus);
     MaritalStatus edit(MaritalStatus maritalStatus);
     List<MaritalStatus> find();
-
+    MaritalStatus findById(long id);
 }

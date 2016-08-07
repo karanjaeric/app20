@@ -1,19 +1,16 @@
 package com.fundmaster.mss.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.fundmaster.mss.api.ApiEJB;
 
 import com.fundmaster.mss.beans.ejb.CompanyEJB;
 import com.fundmaster.mss.beans.ejb.CountryEJB;
@@ -43,12 +40,12 @@ import com.fundmaster.mss.model.Social;
 import com.fundmaster.mss.model.Theme;
 
 @WebServlet(name = "PotentialSponsorController", urlPatterns = {"/potential-sponsor"})
-public class PotentialSponserController extends HttpServlet implements Serializable {
+public class PotentialSponserController extends BaseServlet implements Serializable {
 	
 private static final String REQUEST_ACTION = "ACTION";
-	
-	@EJB
-	Helper helper;
+
+
+	Helper helper = new Helper();
 	
 	@EJB
 	CompanyEJB companyEJB;
@@ -88,10 +85,8 @@ private static final String REQUEST_ACTION = "ACTION";
 	
 	private static final long serialVersionUID = 1L;
 	
-	public PotentialSponserController() {
-		super();
-		
-	}
+	@EJB
+	ApiEJB apiEJB;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -115,44 +110,29 @@ private static final String REQUEST_ACTION = "ACTION";
 		List<MaritalStatus> marital_statuses = maritalStatusEJB.find();
 		request.setAttribute("maritalStatuses",  marital_statuses);
 		
-		List<Sector> sectors = helper.getSectors();
+		List<Sector> sectors = sectorEJB.find();
 		request.setAttribute("sectors", sectors);
 		
-		List<Country> countries = helper.getCountries();
+		List<Country> countries = countryEJB.find();
 		request.setAttribute("countries",  countries);
 		
-		List<Scheme> sponsorSchemes = null;
-		try {
-			sponsorSchemes = helper.getSchemeBySchemeModeAndPlanType("UMBRELLA", "INDIVIDUAL_PENSION_FUND");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		List<Scheme> sponsorSchemes = apiEJB.getSchemeBySchemeModeAndPlanType("UMBRELLA", "INDIVIDUAL_PENSION_FUND");
+
 		request.setAttribute("sponsorSchemes", sponsorSchemes);
 		
 		PageContent content = pageContentEJB.findPageContent(Constants.PAGE_POTENTIAL_SPONSOR);
 		request.setAttribute("content", content);
-		helper.logActivity(Constants.PAGE_POTENTIAL_SPONSOR, "accesed Potential Sponsor page", "0", null, null);
+		logActivity(Constants.PAGE_POTENTIAL_SPONSOR, "accesed Potential Sponsor page", "0", null, null);
 		request.getRequestDispatcher("potential-sponsor.jsp").forward(request, response);
 				
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		PrintWriter out = response.getWriter();
-		
-		try {
 			
-			if (request.getParameter(REQUEST_ACTION).equals("ADD_SPONSOR")) {
-				JSONObject result = helper.createSponsor(request);
-				out.write(result.toString());
+			if (this.get(request, REQUEST_ACTION).equals("ADD_SPONSOR")) {
+				this.addSponsor(response, request);
 			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 	}
 	

@@ -1,24 +1,19 @@
 package com.fundmaster.mss.controller;
-
+import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.sql.rowset.serial.SerialException;
-
 import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -30,1572 +25,1466 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-
-@WebServlet(name = "Admin", urlPatterns = { "/admin" })
+@WebServlet(name = "Admin", urlPatterns = {"/admin"})
 @MultipartConfig
-public class Admin extends HttpServlet implements Serializable {
-	private static final String REQUEST_ACTION = "ACTION";
-	private static final String LOGO_DIR = "static" + File.separator + "images";
-	JLogger jLogger = new JLogger(this.getClass());
-	@EJB
-	Helper helper;
-	@EJB
-	MediaEJB mediaEJB;
-	@EJB
-	CompanyEJB companyEJB;
-	@EJB
-	SettingEJB settingEJB;
-	@EJB
-	CountryEJB countryEJB;
-	@EJB
-	ProfileNameEJB profileNameEJB;
-	@EJB
-	ProfileLoginFieldEJB profileLoginFieldEJB;
-	@EJB
-	UserEJB userEJB;
-	@EJB
-	MemberPermissionEJB memberPermissionEJB;
-	@EJB
-	PermissionEJB permissionEJB;
-	@EJB
-	PasswordPolicyEJB passwordPolicyEJB;
-	@EJB
-	MemberEJB memberEJB;
-	@EJB
-	SponsorEJB sponsorEJB;
-	@EJB
-	SchemeManagerEJB schemeManagerEJB;
-	@EJB
-	UsedPasswordEJB usedPasswordEJB;
-	@EJB
-	HelpEJB helpEJB;
-	@EJB
-	PageContentEJB pageContentEJB;
-	@EJB
-	ContactCategoryEJB contactCategoryEJB;
-	@EJB
-	BannerEJB bannerEJB;
-	@EJB
-	LogoEJB logoEJB;
-	@EJB
-	ThemeEJB themeEJB;
-	@EJB
-	InterestRateColumnEJB interestRateColumnEJB;
-	@EJB
-	MenuEJB menuEJB;
-	@EJB
-	SocialEJB socialEJB;
-	
-	@PersistenceContext
-	private EntityManager em;
+public class Admin extends BaseServlet implements Serializable {
+    private static final String REQUEST_ACTION = "ACTION";
+    private static final String ADMIN_SWITCH_SCHEME = "SWITCH_SCHEME";
+    private static final String ADMIN_COMPANY = "COMPANY";
+    private static final String ADMIN_SCHEME_CONTRIBUTIONS = "SC";
+    private static final String ADMIN_PROFILE_NAMES = "PROFILE_NAMES";
+    private static final String ADMIN_PWD_RESET = "ADMIN_PWD_RESET";
+    private static final String EDIT_BENEFICIARY = "EDIT_BENEFICIARY";
+    private static final String UPDATE_MEMBER = "UPDATE_MEMBER";
+    private static final String GET_BENEFICIARY = "GET_BENEFICIARY";
+    private static final String GET_PERMISSION = "GET_PERMISSION";
+    private static final String SAVE_PERMISSION = "SAVE_PERMISSION";
+    private static final String SET_PASSWORD_POLICY = "SET_PASSWORD_POLICY";
+    private static final String PROFILE_LOGIN_FIELD = "PROFILE_LOGIN_FIELD";
+    private static final String FRONTPAGE_ACCESS = "FRONTPAGE_ACCESS";
+    private static final String DELETE_PORTAL_SPONSOR = "DELETE_PORTAL_SPONSOR";
+    private static final String ADD_MEMBER = "ADD_MEMBER";
+    private static final String ADD_SPONSOR = "ADD_SPONSOR";
+    private static final String SUBMIT_PORTAL_MEMBER = "SUBMIT_PORTAL_MEMBER";
+    private static final String FORWARD_PORTAL_MEMBER = "FORWARD_PORTAL_MEMBER";
+    private static final String SUBMIT_PORTAL_SPONSOR = "SUBMIT_PORTAL_SPONSOR";
+    private static final String FORWARD_PORTAL_SPONSOR = "FORWARD_PORTAL_SPONSOR";
+    private static final String DELETE_PORTAL_MEMBER = "DELETE_PORTAL_MEMBER";
+    private static final String SEARCH_MEMBER = "SEARCH_MEMBER";
+    private static final String PROFILE_ACCESS = "PROFILE_ACCESS";
+    private static final String MOST_BY_MANAGER = "MOST_BY_MANAGER";
+    private static final String MOST_BY_MEMBER = "MOST_BY_MEMBER";
+    private static final String USER_TOGGLE = "USER_TOGGLE";
+    private static final String NEW = "NEW";
+    private static final String AGENT_COMMISSION = "AGENT_COMMISSION";
+    private static final String EXITS = "EXITS";
+    private static final String SEARCH_SCHEMES = "SEARCH_SCHEMES";
+    private static final String CHANGE_SCHEME = "CHANGE_SCHEME";
+    private static final String GET_MEMBER = "GET_MEMBER";
+    private static final String DELINK_SCHEME_MANAGER = "DELINK_SCHEME_MANAGER";
+    private static final String ADD_SCHEME_MANAGER = "ADD_SCHEME_MANAGER";
+    private static final String VIEW_MEMBER = "VIEW_MEMBER";
+    private static final String CURR = "CURR";
+    private static final String ML = "ML";
+    private static final String PRE_CHANGE_PASSWORD = "PRE_CHANGE_PASSWORD";
+    private static final String CHANGE_PASSWORD = "CHANGE_PASSWORD";
+    private static final String AP = "AP";
+    private static final String FV = "FV";
+    private static final String HELP = "HELP";
+    private static final String REMOVE_BANNER = "REMOVE_BANNER";
+    private static final String REMOVE_LOGO = "REMOVE_LOGO";
+    private static final String PAGE_CONTENT = "PAGE_CONTENT";
+    private static final String THEME = "THEME";
+    private static final String INTEREST_RATE_COLUMNS = "INTEREST_RATE_COLUMNS";
+    private static final String SETTINGS = "SETTINGS";
+    private static final String MENU = "MENU";
+    private static final String LOGOUT = "LOGOUT";
+    private static final String SOCIAL = "SOCIAL";
+    private static final String REMOVE_CONTACT_REASON = "REMOVE_CONTACT_REASON";
+    private static final String REMOVE_MEDIA = "REMOVE_MEDIA";
+    private static final String MEMBER_PERMISSION = "MEMBER_PERMISSION";
+    private static final String PLF = "PLF";
+    private static final String ADD_CONTACT_REASON = "ADD_CONTACT_REASON";
+    private static final String LOGO = "LOGO";
+    private static final String BANNER = "BANNER";
+    private static final String MEDIA = "MEDIA";
+    private static final String EMAIL = "EMAIL";
+    private final JLogger jLogger = new JLogger(this.getClass());
+    @EJB
+    MediaEJB mediaEJB;
+    @EJB
+    CompanyEJB companyEJB;
+    @EJB
+    SettingEJB settingEJB;
+    @EJB
+    CountryEJB countryEJB;
+    @EJB
+    ProfileNameEJB profileNameEJB;
+    @EJB
+    ProfileLoginFieldEJB profileLoginFieldEJB;
+    @EJB
+    UserEJB userEJB;
+    @EJB
+    MemberPermissionEJB memberPermissionEJB;
+    @EJB
+    PermissionEJB permissionEJB;
+    @EJB
+    PasswordPolicyEJB passwordPolicyEJB;
+    @EJB
+    MemberEJB memberEJB;
+    @EJB
+    SponsorEJB sponsorEJB;
+    @EJB
+    SchemeManagerEJB schemeManagerEJB;
+    @EJB
+    UsedPasswordEJB usedPasswordEJB;
+    @EJB
+    HelpEJB helpEJB;
+    @EJB
+    PageContentEJB pageContentEJB;
+    @EJB
+    ContactCategoryEJB contactCategoryEJB;
+    @EJB
+    ImageBannerEJB imageBannerEJB;
+    @EJB
+    LogoEJB logoEJB;
+    @EJB
+    ThemeEJB themeEJB;
+    @EJB
+    InterestRateColumnEJB interestRateColumnEJB;
+    @EJB
+    MenuEJB menuEJB;
+    @EJB
+    SocialEJB socialEJB;
+    @EJB
+    ApiEJB apiEJB;
+    @EJB
+    SectorEJB sectorEJB;
+    Helper helper = new Helper();
+    private static final long serialVersionUID = 1L;
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        /* Check if user is already authenticated */
+        HttpSession session = request.getSession(false);
+        try {
+            if (session != null) {
+                if (!(session.getAttribute(Constants.LOGIN).equals(true) && (helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)) || helper.isManager(request)))) {
+                    response.sendRedirect(getServletContext().getContextPath() + "/login");
+                } else {
+                    Company company = companyEJB.find();
+                    List<ActivityLog> activityLogs = activityLogEJB.findAllByUserID(this.getSessKey(request, Constants.UID));
+                    request.setAttribute("activityLogs", activityLogs);
+                    request.setAttribute("company", company);
+                    List<Scheme> schemes;
+                    if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.ADMIN_PROFILE))
+                        schemes = apiEJB.getSchemes(0, 10000);
+                    else
+                        schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER),
+                                this.getSessKey(request, Constants.U_PROFILE));
+                    request.setAttribute("schemes", schemes);
+                    PasswordPolicy policy = passwordPolicyEJB.find();
+                    request.setAttribute("policy", policy);
+                    request.setAttribute("username", this.getSessKey(request, Constants.USER));
+                    if (schemes != null && schemes.size() == 1) {
+                        try {
+                            if (this.getSessKey(request, Constants.SCHEME_ID) == null) {
+                                session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
+                                session.setAttribute(Constants.SCHEME_ID, schemes.get(0).getId().toString());
+                                session.setAttribute(Constants.SCHEME_NAME, schemes.get(0).getName());
+                                request.setAttribute("scheme_id", schemes.get(0).getId().toString());
+                            } else {
+                                for (Scheme scheme : schemes) {
+                                    if (this.getSessKey(request, Constants.SCHEME_ID)
+                                            .equals(String.valueOf(scheme.getId()))) {
+                                        session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
+                                        break;
+                                    }
+                                }
+                                request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            session.setAttribute(Constants.SCHEME_ID, String.valueOf(schemes.get(0).getId()));
+                            session.setAttribute(Constants.SCHEME_NAME, schemes.get(0).getName());
+                        }
+                    } else if (this.getSessKey(request, Constants.SCHEME_ID) != null) {
+                        if (schemes != null)
+                            for (Scheme scheme : schemes) {
+                                if (scheme.getId() == helper.toLong(this.getSessKey(request, Constants.SCHEME_ID))) {
+                                    try {
+                                        if (this.getSessKey(request, Constants.SCHEME_ID) == null) {
+                                            session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
+                                            session.setAttribute(Constants.SCHEME_ID, scheme.getId().toString());
+                                            session.setAttribute(Constants.SCHEME_NAME, scheme.getName());
+                                            request.setAttribute("scheme_id", scheme.getId().toString());
+                                        } else {
+                                            for (Scheme scheme1 : schemes) {
+                                                if (this.getSessKey(request, Constants.SCHEME_ID)
+                                                        .equals(String.valueOf(scheme1.getId()))) {
+                                                    session.setAttribute(Constants.SCHEME_TYPE, scheme1.getPlanType());
+                                                    break;
+                                                }
+                                            }
+                                            request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+                                        }
+                                    } catch (NullPointerException npe) {
+                                        npe.printStackTrace();
+                                        session.setAttribute(Constants.SCHEME_ID, String.valueOf(scheme.getId()));
+                                        session.setAttribute(Constants.SCHEME_NAME, scheme.getName());
+                                    }
+                                    break;
+                                }
+                            }
+                    }
+                    request.setAttribute("path", "admin");
+                    request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
+                    Permission permissions = getPermissions(request);
+                    request.setAttribute("permissions", permissions);
+                    List<ContactCategory> contactReasons = contactCategoryEJB.find();
+                    request.setAttribute("contactReasons", contactReasons);
+                    request.setAttribute("isManager", helper.isManager(request));
+                    if ((schemes != null ? schemes.size() : 0) > 1 && this.getSessKey(request, Constants.SCHEME_ID) == null)
+                        request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
+                    else {
+                        List<XiMember> due4retirement = apiEJB.due4Retirement(this.getSessKey(request, Constants.SCHEME_ID));
+                        request.setAttribute("retirement", due4retirement);
+                        request.getRequestDispatcher("admin.jsp").forward(request, response);
+                    }
+                }
+            } else {
+                jLogger.e("We have a problem, the session was null");
+                response.sendRedirect(getServletContext().getContextPath() + "/login");
+            }
+        } catch (NullPointerException jnpe) {
+            jnpe.printStackTrace();
+            jLogger.e("We have a problem " + jnpe.getMessage());
+            response.sendRedirect(getServletContext().getContextPath() + "/login");
+        }
+    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        PrintWriter out = response.getWriter();
+        String FILE_SEPERATOR = System.getProperty("file.separator");
+        String SCHEME_DOC_ROOT_FOLDER = "XI_Fundmaster_scheme_docs";
+        String scheme_doc_folder = null;
+        String MEDIA_DIR = "media";
+        String BANNER_DIR = "banner";
+        String LOGO_DIR = "logo";
+        String action = this.get(request, REQUEST_ACTION);
+        switch (action) {
+            case ADMIN_SWITCH_SCHEME:
+                switchScheme(request, response, session);
+                break;
+            case ADMIN_COMPANY:
+                updateCompany(request, response, session);
+                break;
+            case ADMIN_SCHEME_CONTRIBUTIONS:
+                getSchemeContributions(request, response);
+                break;
+            case ADMIN_PROFILE_NAMES:
+                updateProfileNames(request, response, session);
+                break;
+            case ADMIN_PWD_RESET:
+                adminPasswordReset(request, response, session);
+                break;
+            case EDIT_BENEFICIARY:
+                editBeneficiary(request, response, out, FILE_SEPERATOR, SCHEME_DOC_ROOT_FOLDER, scheme_doc_folder);
+                break;
+            case UPDATE_MEMBER:
+                updateMember(request, response);
+                break;
+            case GET_BENEFICIARY:
+                showMemberBeneficiary(request, response);
+                break;
+            case GET_PERMISSION:
+                showPermissions(request, response);
+                break;
+            case SAVE_PERMISSION:
+                savePermissions(request, response, session);
+                break;
+            case SET_PASSWORD_POLICY:
+                editPasswordPolicy(request, response);
+                break;
+            case PROFILE_LOGIN_FIELD:
+                editProfileLoginFields(request, response, session);
+                break;
+            case FRONTPAGE_ACCESS:
+                getFrontPageAccessByPage(response);
+                break;
+            case DELETE_PORTAL_SPONSOR:
+                deletePortalSponsor(request, response);
+                break;
+            case ADD_MEMBER:
+                this.createMember(request, response);
+                break;
+            case ADD_SPONSOR:
+                addSponsor(response, request);
+                break;
+            case SUBMIT_PORTAL_MEMBER:
+                submitPortalMemberToXi(response, request);
+                break;
+            case FORWARD_PORTAL_MEMBER:
+                forwardMemberToXi(request, response);
+                break;
+            case SUBMIT_PORTAL_SPONSOR:
+                submitSponsorToXi(response, request);
+                break;
+            case FORWARD_PORTAL_SPONSOR:
+                forwardSponsorToXi(request, response);
+                break;
+            case DELETE_PORTAL_MEMBER:
+                deletePortalMember(request, response);
+                break;
+            case SEARCH_MEMBER:
+                searchMember(request, response, session);
+                break;
+            case PROFILE_ACCESS:
+                getProfileAccess(response);
+                break;
+            case MOST_BY_MANAGER:
+                getMostAccessedByManagers(response);
+                break;
+            case MOST_BY_MEMBER:
+                mostAccessedByMembers(response);
+                break;
+            case USER_TOGGLE:
+                toggleUserStatus(request, response, session);
+                break;
+            case NEW:
+                getNewMembersInYear(request, response);
+                break;
+            case AGENT_COMMISSION:
+                getAgentCommission(request, response);
+                break;
+            case EXITS:
+                getExitsInYear(request, response);
+                break;
+            case SEARCH_SCHEMES:
+                searchSchemes(request, response, session);
+                break;
+            case CHANGE_SCHEME:
+                changeScheme(request, response, session);
+                break;
+            case GET_MEMBER:
+                showMemberPersonalInformation(request, response, session);
+                break;
+            case DELINK_SCHEME_MANAGER:
+                removeSchemeManager(request, response, session);
+                break;
+            case ADD_SCHEME_MANAGER:
+                addSchemeManager(request, response, session);
+                break;
+            case VIEW_MEMBER:
+                showMemberInformationView(request, response, session);
+                break;
+            case CURR:
+                getSchemeCurrency(request, response);
+                break;
+            case ML:
+                listMembers(request, response, session);
+                break;
+            case PRE_CHANGE_PASSWORD:
+                preChangeUserPassword(request, response);
+                break;
+            case CHANGE_PASSWORD:
+                changePassword(request, response, session);
+                break;
+            case AP:
+                getAccountingPeriod(request, response);
+                break;
+            case FV:
+                getFundValueAsAt(request, response);
+                break;
+            case HELP:
+                updateHelpContent(request, response, session);
+                break;
+            case REMOVE_BANNER:
+                deleteImageBanner(request, response);
+                break;
+            case REMOVE_LOGO:
+                deleteLogo(request, response);
+                break;
+            case PAGE_CONTENT:
+                editPageContent(request, response, session);
+                break;
+            case THEME:
+                editTheme(request, response, session);
+                break;
+            case INTEREST_RATE_COLUMNS:
+                editInterestRateColumns(request, response, session);
+                break;
+            case SETTINGS:
+                editPortalSettings(request, response, session);
+                break;
+            case MENU:
+                editMenuSettings(request, response, session);
+                break;
+            case LOGOUT:
+                logout(request, response, session);
+                break;
+            case SOCIAL:
+                editSocialMediaSettings(request, response, session);
+                break;
+            case REMOVE_CONTACT_REASON:
+                deleteContactReason(request, response, session);
+                break;
+            case REMOVE_MEDIA:
+                deleteMediaFile(request, response, session);
+                break;
+            case MEMBER_PERMISSION:
+                editMemberPermissions(request, response, session);
+                break;
+            case PLF:
+                updateProfileLoginFields(request, response, session);
+                break;
+            case ADD_CONTACT_REASON:
+                addContactReason(request, response, session);
+                break;
+            case LOGO:
+                addLogo(request, response, session, LOGO_DIR);
+                break;
+            case BANNER:
+                addBanner(request, response, session, BANNER_DIR);
+                break;
+            case MEDIA:
+                addMediaFile(request, response, session, MEDIA_DIR);
+                break;
+            case EMAIL:
+                sendEmail(request, response, MEDIA_DIR);
+                break;
+        }
+    }
+    private void mostAccessedByMembers(HttpServletResponse response) {
+        this.respond(response, true, "", new JSONObject(activityLogEJB.mostAccessedByMembers()));
+    }
+    private void updateProfileLoginFields(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        List<ProfileLoginField> pfs = profileLoginFieldEJB.find();
+        boolean status = true;
+        for (ProfileLoginField plf : pfs) {
+            plf.setOrdinal(this.get(request, String.valueOf(plf.getId())));
+            status = status && profileLoginFieldEJB.edit(plf) != null;
+        }
+        if (status) {
+            audit(session, "Updated the profile unique login fields for the various user profiles");
+            this.respond(response, true, "Profile login ordinals successfully saved", null);
+        } else
+            this.respond(response, true, "Profile login ordinals could not be saved", null);
+    }
+    private void sendEmail(HttpServletRequest request, HttpServletResponse response, String MEDIA_DIR) throws IOException, ServletException {
+        String url = request.getRequestURL().toString();
+        String baseURL = url.substring(0, url.length() - request.getRequestURI().length())
+                + request.getContextPath() + "/";
+        boolean attachment = false;
+        String attachment_url = null;
+        String path = getServletContext().getRealPath("/") + MEDIA_DIR;
+        for (Part part : request.getParts()) {
+            String fileName = extractFileName(part);
+            if (!fileName.equals("")) {
+                //Get absolute path
+                String fullpath = request.getServletContext().getRealPath("");
+                //String savePath = fullpath + File.separator + MEDIA_DIR;
+                jLogger.i("full path is:" + path);
+                File fileSaveDir = new File(path);
+                if (!fileSaveDir.exists()) {
+                    fileSaveDir.mkdir();
+                }
+                path = getServletContext().getRealPath("/") + MEDIA_DIR + File.separator + fileName;
+                //savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
+                part.write(path);
+                jLogger.i("Complete file path is: " + path);
+                //attachment_url = baseURL + MEDIA_DIR + File.separator + fileName;
+                attachment_url = path;
+                attachment = true;
+            }
+        }
+        String subject = this.get(request, "subject") + " [" + this.get(request, "category") + "]";
+        String message = this.get(request, "message");
+        Company company = companyEJB.find();
+        String senderId = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("SENDER ID ========================> " + senderId);
+        XiMember mbr = apiEJB.getMemberDetails(senderId, null);
+        String senderName = mbr.getName();
+        jLogger.i("SENDER NAME ======================> " + senderName);
+        boolean status = apiEJB.sendEmail(company.getEmail(), this.getSessKey(request, Constants.USER), senderName, subject, message,
+                this.getSessKey(request, Constants.SCHEME_ID), attachment, attachment_url);
+        if (status) {
+            this.respond(response, true, "The email was successfully sent", null);
+        } else {
+            this.respond(response, true, "We are sorry, but we were unable to send the email address", null);
+        }
+    }
+    private void addMediaFile(HttpServletRequest request, HttpServletResponse response, HttpSession session, String MEDIA_DIR) throws IOException, ServletException {
+        for (Part part : request.getParts()) {
+            String fileName = extractFileName(part);
+            if (!fileName.equals("")) {
+                // Get absolute path (fullpath)
+                String fullpath = request.getServletContext().getRealPath("");
+                String savePath = fullpath + File.separator + MEDIA_DIR;
+                //jLogger.i("full path is:" + savePath);
+                File fileSaveDir = new File(savePath);
+                if (!fileSaveDir.exists()) {
+                    fileSaveDir.mkdir();
+                }
+                savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
+                part.write(savePath);
+                jLogger.i("Complete file path is: " + savePath);
+                File file = new File(savePath);
+                byte[] bFile = new byte[(int) file.length()];
+                Blob fileBlob;
+                try {
+                    fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
+                    Date date = new Date();
+                    Media media = new Media(fileName, this.getSessKey(request, Constants.SCHEME_ID), this.get(request, "description"), this.get(request, "access"), date);
+                    media.setFile(fileBlob);
+                    media.setPath(savePath);
+                    boolean administrator = this.get(request, Constants.ADMIN_PROFILE) != null && this.get(request, Constants.ADMIN_PROFILE).equals("on");
+                    boolean member = this.get(request, Constants.MEMBER_PROFILE) != null && this.get(request, Constants.MEMBER_PROFILE).equals("on");
+                    boolean agent = this.get(request, Constants.AGENT_PROFILE) != null && this.get(request, Constants.AGENT_PROFILE).equals("on");
+                    boolean sponsor = this.get(request, Constants.SPONSOR) != null && this.get(request, Constants.SPONSOR).equals("on");
+                    boolean trustee = this.get(request, Constants.TRUSTEE) != null && this.get(request, Constants.TRUSTEE).equals("on");
+                    boolean custodian = this.get(request, Constants.CUSTODIAN) != null && this.get(request, "CUSTODIAN").equals("on");
+                    boolean crm = this.get(request, Constants.CUSTOMER_RELATIONSHIP_MANAGER) != null && this.get(request, Constants.CUSTOMER_RELATIONSHIP_MANAGER).equals("on");
+                    boolean cre = this.get(request, Constants.CUSTOMER_RELATIONSHIP_EXECUTIVE) != null && this.get(request, Constants.CUSTOMER_RELATIONSHIP_EXECUTIVE).equals("on");
+                    boolean fm = this.get(request, Constants.FUND_MANAGER) != null && this.get(request, Constants.FUND_MANAGER).equals("on");
+                    boolean pensioner = this.get(request, Constants.PENSIONER) != null && this.get(request, Constants.PENSIONER).equals("on");
+                    media.setAdministrator(administrator);
+                    media.setAgent(agent);
+                    media.setCre(cre);
+                    media.setCrm(crm);
+                    media.setFundManager(fm);
+                    media.setCustodian(custodian);
+                    media.setPensioner(pensioner);
+                    media.setSponsor(sponsor);
+                    media.setMember(member);
+                    media.setTrustee(trustee);
+                    try {
+                        media.setMemberId(Long.valueOf(this.get(request, "member_id")));
+                    } catch (NullPointerException | NumberFormatException npe) {
+                        media.setMemberId(Long.valueOf("0"));
+                    }
+                    if (mediaEJB.add(media) != null) {
+                        audit(session, "Uploaded a media file");
+                        this.respond(response, true, "Media file successfully uploaded", null);
+                    } else
+                        this.respond(response, true, "Media file was not uploaded", null);
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    private void addBanner(HttpServletRequest request, HttpServletResponse response, HttpSession session, String BANNER_DIR) throws IOException, ServletException {
+        for (Part part : request.getParts()) {
+            String fileName = extractFileName(part);
+            if (!fileName.equals("")) {
+                //Save banner to directory
+                String fullpath = request.getServletContext().getRealPath("");
+                String savePath = fullpath + File.separator + BANNER_DIR;
+                jLogger.i("full path is:" + savePath);
+                File fileSaveDir = new File(savePath);
+                if (!fileSaveDir.exists()) {
+                    fileSaveDir.mkdir();
+                }
+                savePath = fullpath + File.separator + BANNER_DIR + File.separator + fileName;
+                part.write(savePath);
+                jLogger.i("Where the banner is saved ================>  " + savePath);
+                //Save banner to database as blob
+                File file = new File(savePath);
+                byte[] bFile = new byte[(int) file.length()];
+/*
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(file);
 
-	public Admin() {
-		// TODO Auto-generated constructor stub
-	}
+                    // Convert file into array of bytes
+                    fileInputStream.read(bFile);
+                    fileInputStream.close();
 
-	private static final long serialVersionUID = 1L;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                */
+                //convert to blob
+                Blob fileBlob;
+                try {
+                    fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
+                    ImageBanner imageBanner = new ImageBanner();
+                    imageBanner.setPath(savePath);
+                    imageBanner.setName(fileName);
+                    imageBanner.setImage(fileBlob);
+                    if (imageBannerEJB.add(imageBanner) != null) {
+                        audit(session, "Uploaded a imageBanner for the portal");
+                        this.respond(response, true, "ImageBanner image was successfully uploaded", null);
+                    } else
+                        this.respond(response, false, "ImageBanner image could not be uploaded", null);
+                } catch (SQLException sqe) {
+                    this.respond(response, false, "ImageBanner image could not be uploaded", null);
+                }
+            }
+        }
+    }
+    private void addLogo(HttpServletRequest request, HttpServletResponse response, HttpSession session, String LOGO_DIR) throws IOException, ServletException {
+        for (Part part : request.getParts()) {
+            String fileName = extractFileName(part);
+            if (!fileName.equals("")) {
+                //Save banner to directory
+                String fullpath = request.getServletContext().getRealPath("");
+                String savePath = fullpath + File.separator + LOGO_DIR;
+                jLogger.i("full path is:" + savePath);
+                jLogger.i("Filename is:" + fileName);
+                File fileSaveDir = new File(savePath);
+                if (!fileSaveDir.exists()) {
+                    fileSaveDir.mkdir();
+                }
+                savePath = fullpath + File.separator + LOGO_DIR + File.separator + fileName;
+                part.write(savePath);
+                jLogger.i("Where the banner is saved ================>  " + savePath);
+                //Save banner to database as blob
+                File file = new File(savePath);
+                byte[] bFile = new byte[(int) file.length()];
+/*
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(file);
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		/* Check if user is already authenticated */
-		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession(false);
+                    // Convert file into array of bytes
+                    fileInputStream.read(bFile);
+                    fileInputStream.close();
 
-		try {
-			if (session != null) {
-				if (!(session.getAttribute(Constants.LOGIN).equals(true) && (helper.isManagerial(session.getAttribute(Constants.U_PROFILE).toString()) || helper.isManager(request))))
-				{
-					response.sendRedirect(getServletContext().getContextPath() + "/login");
-
-				} else {
-					Company company = helper.getCompany();
-					List<ActivityLog> activityLogs = helper
-							.getActivityLogs(session.getAttribute(Constants.UID).toString());
-					request.setAttribute("activityLogs", activityLogs);
-					request.setAttribute("company", company);
-					List<Scheme> schemes;
-					if (session.getAttribute(Constants.U_PROFILE).equals(Constants.ADMIN_PROFILE))
-						try {
-							schemes = helper.getSchemes(0, 10000);
-						} catch (JSONException je) {
-							schemes = null;
-						}
-					else
-						schemes = helper.getProfileSchemes(session.getAttribute(Constants.USER).toString(),
-								session.getAttribute(Constants.U_PROFILE).toString());
-					request.setAttribute("schemes", schemes);
-					PasswordPolicy policy = helper.getPasswordPolicy();
-					request.setAttribute("policy", policy);
-					request.setAttribute("username", session.getAttribute(Constants.USER).toString());
-					if (schemes != null && schemes.size() == 1) {
-						try {
-							if (session.getAttribute(Constants.SCHEME_ID) == null) {
-								session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
-								session.setAttribute(Constants.SCHEME_ID, schemes.get(0).getId().toString());
-								session.setAttribute(Constants.SCHEME_NAME, schemes.get(0).getName());
-								request.setAttribute("scheme_id", schemes.get(0).getId().toString());
-							} else {
-								for (Scheme scheme : schemes) {
-									if (session.getAttribute(Constants.SCHEME_ID)
-											.equals(String.valueOf(scheme.getId()))) {
-										session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
-										break;
-									}
-								}
-								request.setAttribute("scheme_id", session.getAttribute(Constants.SCHEME_ID));
-							}
-						} catch (Exception ex) {
-							ex.printStackTrace(out);
-							session.setAttribute(Constants.SCHEME_ID, String.valueOf(schemes.get(0).getId()));
-							session.setAttribute(Constants.SCHEME_NAME, schemes.get(0).getName());
-						}
-					} else if (session.getAttribute(Constants.SCHEME_ID) != null) {
-						for (Scheme scheme : schemes != null ? schemes : null) {
-
-							if (scheme.getId()
-									.equals(Long.valueOf(session.getAttribute(Constants.SCHEME_ID).toString()))) {
-
-								try {
-
-									if (session.getAttribute(Constants.SCHEME_ID) == null) {
-										session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
-										session.setAttribute(Constants.SCHEME_ID, scheme.getId().toString());
-										session.setAttribute(Constants.SCHEME_NAME, scheme.getName());
-										request.setAttribute("scheme_id", scheme.getId().toString());
-									} else {
-										for (Scheme scheme1 : schemes) {
-											if (session.getAttribute(Constants.SCHEME_ID)
-													.equals(String.valueOf(scheme1.getId()))) {
-												session.setAttribute(Constants.SCHEME_TYPE, scheme1.getPlanType());
-												break;
-											}
-										}
-										request.setAttribute("scheme_id", session.getAttribute(Constants.SCHEME_ID));
-									}
-								} catch (Exception ex) {
-									ex.printStackTrace(out);
-									session.setAttribute(Constants.SCHEME_ID, String.valueOf(scheme.getId()));
-									session.setAttribute(Constants.SCHEME_NAME, scheme.getName());
-								}
-								break;
-							}
-						}
-					}
-					request.setAttribute("path", "admin");
-					request.setAttribute("profile", session.getAttribute(Constants.U_PROFILE));
-					Permission permissions = helper.getPermissions(request);
-					request.setAttribute("permissions", permissions);
-					List<ContactCategory> contactReasons = helper.getContactReasons();
-					request.setAttribute("contactReasons", contactReasons);
-					request.setAttribute("isManager", helper.isManager(request));
-					if ((schemes != null ? schemes.size() : 0) > 1 && session.getAttribute(Constants.SCHEME_ID) == null)
-						request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
-					else {
-						try {
-							List<XiMember> due4retirement = helper
-									.due4Retirement(session.getAttribute(Constants.SCHEME_ID).toString());
-							request.setAttribute("retirement", due4retirement);
-						} catch (JSONException je) {
-							jLogger.e("Json Exception detected: " + je.getMessage());
-						}
-						request.getRequestDispatcher("admin.jsp").forward(request, response);
-					}
-				}
-			} else
-				response.sendRedirect(getServletContext().getContextPath() + "/login");
-		} catch (NullPointerException jnpe) {
-			response.sendRedirect(getServletContext().getContextPath() + "/login");
-		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		PrintWriter out = response.getWriter();
-		String FILE_SEPERATOR = System.getProperty("file.separator");
-		String SCHEME_DOC_ROOT_FOLDER = "XI_Fundmaster_scheme_docs";
-		String scheme_doc_folder = null;
-		String MEDIA_DIR = "media";
-		String BANNER_DIR = "banner";
-		String LOGO_DIR = "logo";
-		
-		if (request.getParameter(REQUEST_ACTION).equals("SWITCH_SCHEME")) {
-			session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
-			out.write(helper.result(true, "success").toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("COMPANY")) {
-
-			/* Company Details Update Request */
-			Country country = countryEJB.findById(helper.toLong(request.getParameter("country")));
-			Company company = new Company(Long.valueOf(request.getParameter("company_id")).longValue(),
-					request.getParameter("companyName"), request.getParameter("streetAddress"),
-					request.getParameter("telephone"), request.getParameter("fax"),
-					request.getParameter("emailAddress"), request.getParameter("email"), request.getParameter("city"),
-					country, request.getParameter("geolocation"));
-
-			if (companyEJB.edit(company) != null) {
-				helper.audit(session, "Updated company details");
-				out.write(helper.result(true, "success").toString());
-			} else
-				out.write(helper.result(false, "failed").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("SC")) {
-			try {
-				String result = helper.getSchemeContributions(session.getAttribute(Constants.SCHEME_ID).toString(),
-						session.getAttribute(Constants.PROFILE_ID).toString());
-				out.write(result);
-
-			} catch (JSONException e) {
-
-				out.write(helper.result(false,
-						"Sorry, an error was encountered loading the scheme contribution history, please try again"
-								+ e.getMessage())
-						.toString());
-
-			}
-		}
-
-		else if (request.getParameter(REQUEST_ACTION).equals("PROFILE_NAMES")) {
-			List<ProfileName> pNames = profileNameEJB.find();
-			boolean status = true;
-			for (ProfileName pName : pNames) {
-				pName.setName(request.getParameter(pName.getProfile()));
-				status = status && profileNameEJB.edit(pName) != null;
-			}
-			if (status) {
-				helper.audit(session, "Updated profile name settings");
-				out.write(helper.result(true, "Profile name settings successfully saved").toString());
-			} else
-				out.write(helper.result(true, "Profile name settings could not be saved").toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("ADMIN_PWD_RESET")) {
-			String userID = request.getParameter("userID");
-			User u = userEJB.findById(helper.toLong(userID));
-			if (u != null) {
-				String password = helper.shorterUUID(UUID.randomUUID().toString(), 0);
-				u.setPassword(helper.hash(password));
-				String email_address = null;
-				String schemeId = null;
-				boolean proceed = false;
-				JSONObject res;
-				String memberID;
-
-				try {
-					res = helper.memberExists(u.getUserProfile(), u.getUsername());
-					memberID = res.get("memberId").toString();
-
-					System.out.println("memberID " + memberID + " u.getProfileID() " + u.getProfileID());
-					if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
-
-						XiMember m = helper.getMemberDetails(u.getProfileID().toString(),null);
-
-						session.setAttribute("member_id", m.getId());
-						email_address = m.getEmailAddress();
-						schemeId = res.get("schemeId").toString();
-						proceed = helper.isEmailAddress(email_address);
-					} else {
-						try {
-							JSONObject resp = helper.getProviderDetails(u.getUserProfile(), memberID);
-							
-							if (resp.get("success").equals(true)) {
-							    session.setAttribute("member_id", memberID);
-								try {
-									JSONArray json = (JSONArray) resp.get("rows");
-									JSONObject provider = json.getJSONObject(0);
-									email_address = provider.getString("email");
-									schemeId = provider.get("schemeId").toString();
-									proceed = helper.isEmailAddress(email_address);
-								} catch (JSONException e) {
-									try {
-										JSONArray json = (JSONArray) resp.get("rows");
-										JSONObject provider = json.getJSONObject(0);
-										email_address = provider.getString("user.email");
-										schemeId = provider.get("user.schemeId").toString();
-										proceed = helper.isEmailAddress(email_address);
-									} catch (JSONException ex) {
-										proceed = false;
-									}
-								}
-							}
-						} catch (Exception e) {
-							proceed = false;
-
-						}
-					}
-					if (proceed) {
-						Setting settings = helper.getSettings();
-						Company company = helper.getCompany();
-						helper.sendNotification(email_address,company.getEmail(), null,"MSS Portal Password Reset",
-								"Dear " + u.getUserProfile() + ",<br />"
-										+ "Your password has been reset on the FundMaster Xi Member Self Service Portal. Your new password is "
-										+ password + ".<br />Please click this <a href='" + settings.getPortalBaseURL()
-										+ "sign-in'>link</a> to gain access to the Self Service Portal",
-								schemeId, false, null);
-
-						if (userEJB.edit(u) != null)
-							out.write(helper
-									.result(true,
-											"<strong>Password Reset Successful</strong><br /> Success! The user's password has been reset. An email has been sent to the user with the new password.")
-									.toString());
-						else
-							out.write(helper
-									.result(false,
-											"We could not complete the requested action as we were unable to obtain the user's email address")
-									.toString());
-
-					} else {
-						out.write(helper
-								.result(false,
-										"We could not complete the requested action as we were unable to obtain the user's email address")
-								.toString());
-
-					}
-				} catch (JSONException je) {
-					out.write(helper
-							.result(false,
-									"We could not complete the requested action as we were unable to obtain the user's email address")
-							.toString());
-
-				}
-			}
-		} else if (request.getParameter(REQUEST_ACTION).equals("EDIT_BENEFICIARY")) {
-			
-			
-			//String url = request.getRequestURL().toString();
-			//String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
-			boolean attachment = false;
-			String attachment_path = null;
-			String attachment_name = null;
-			
-			try {
-				
-				for (Part part : request.getParts()) {
-					String fileName = extractFileName(part);
-
-					if (!fileName.equals("")) {
-						
-						System.out.println("File name is :::::::::" + fileName);
-						
-						File path = new File(getServletContext().getRealPath("/"));
-						
-						if(scheme_doc_folder==null){
-		        			scheme_doc_folder = path.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getPath() + FILE_SEPERATOR +SCHEME_DOC_ROOT_FOLDER ;
-		        			helper.createFolderIfNotExists(scheme_doc_folder);
-		        		}
-						
-						try {
-							
-							String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
-		        			String fullpath = scheme_doc_folder  + FILE_SEPERATOR + fileName;
-		        			
-		        			System.out.println("full path is:" + fullpath);
-		        			
-		        			part.write(fullpath);
-		        			
-		        			System.out.println("Complete file path is: " + fullpath);
-		        			
-		        			attachment_name = fileName;
-		        			attachment_path = fullpath;
-							attachment = true;
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						
-					}
-				}
-								
-				JSONObject b = new JSONObject();
-				String beneficiary_id = request.getParameter("beneficiary_id");
-				String memberID = request.getParameter("memberID");
-				
-				System.out.println("The member Id passed is <<<<<<<<<<< " +memberID+ " >>>>>>>>>>");
-				
-				String relationshipCategory = request.getParameter("relationshipCategory");
-				String surname = request.getParameter("surname");
-				String lumpsum = request.getParameter("lumpsum");
-				String firstname = request.getParameter("firstname");
-				
-				System.out.println("First name to be passed: " + firstname);
-				
-				String gender = request.getParameter("gender");
-				String maritalStatus = request.getParameter("maritalStatus");
-				String status = request.getParameter("status");
-				String othernames = request.getParameter("othernames");
-				String relationship = request.getParameter("relationship");
-				String attachment_url = attachment_path;
-				
-				System.out.println("Attachment URL is ::::::::::::::::::> " + attachment_url);
-				
-				try {
-					if (request.getParameter("type").equalsIgnoreCase("EDIT")) {
-						b.put("ben.memberId", memberID).put("ben.relationship", relationship)
-								.put("ben.attachmentname", attachment_name)
-								.put("beneficiary.id", beneficiary_id)
-								.put("ben.relShipCategory", relationshipCategory).put("ben.surname", surname)
-								.put("ben.firstname", firstname).put("ben.othernames", othernames).put("ben.dob", "")
-								.put("ben.gender", gender).put("ben.monthlyEntitlement", 0)
-								.put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
-								.put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
-								.put("ben.physicalCondition", "").put("ben.status", status);
-								 if(attachment)
-							            b.put("ben.attachment", attachment_url);
-							        else
-							            b.put("ben.attachment", new ArrayList<String>());
-								
-					} else if (request.getParameter("type").equalsIgnoreCase("ADD")){
-						b.put("ben.memberId", memberID).put("beneficiary.id", beneficiary_id)
-								.put("ben.relationship", relationship) .put("ben.attachmentname", attachment_name)
-								.put("ben.relShipCategory", relationshipCategory)
-								.put("ben.surname", surname).put("ben.firstname", firstname)
-								.put("ben.othernames", othernames).put("ben.dob", "").put("ben.gender", gender)
-								.put("ben.monthlyEntitlement", 0).put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
-								.put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
-								.put("ben.physicalCondition", "").put("ben.status", status);
-								if(attachment)
-									b.put("ben.attachment", attachment_url);
-								else
-									b.put("ben.attachment", new ArrayList<String>());
-										
-					}
-					try {
-						String res = helper.saveOrUpdateBeneficiary(b.toString());
-						out.write(res);
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						out.write(helper
-								.result(false,
-										"Sorry, something didn't work out right. Couldn't save the beneficiary details")
-								.toString());
-					}
-			
-					
-				} catch (JSONException e) {
-					out.write(helper
-							.result(false, "Sorry, something didn't work out right. Couldn't save the beneficiary details")
-							.toString());
-
-				}
-	
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			
-		} else if (request.getParameter(REQUEST_ACTION).equals("UPDATE_MEMBER")) {
-
-			JSONObject member = new JSONObject();
-			String firstname = request.getParameter("firstname");
-			String surname = request.getParameter("surname");
-			String othernames = request.getParameter("othernames");
-			String postalAddress = request.getParameter("postalAddress");
-			String maritalStatus = request.getParameter("maritalStatus");
-			String phoneNumber = request.getParameter("phoneNumber");
-			String emailAddress = request.getParameter("emailAddress");
-			String memberID = request.getParameter("memberID");
-			String salary = request.getParameter("currentAnnualPensionableSalary");
-			String city = request.getParameter("city");
-			DateFormat df = new SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH);
-			Date dob = null;
-			try {
-				dob = df.parse(request.getParameter("dateOfBirth"));
-			} catch (ParseException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-			String status = "ACTIVE";
-			String gender = request.getParameter("gender").toUpperCase();
-			DateFormat format_ = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-			try {
-				member.put("member.surname", surname).put("member.firstname", firstname)
-
-						.put("member.othernames", othernames).put("member.person.biodata.town", city)
-						.put("member.dob", format_.format(dob)).put("member.id", memberID).put("member.gender", gender)
-						.put("member.mbshipStatus", status).put("member.address.email", emailAddress)
-						.put("member.person.biodata.cellPhone", phoneNumber)
-						.put("member.currentAnnualPensionableSalary", salary)
-						.put("member.person.biodata.postalAddress", postalAddress)
-						.put("member.maritalStatus", maritalStatus);
-				try {
-					JSONObject res = helper.saveOrUpdateMember(member.toString());
-					out.write(res.toString());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					out.write(helper
-							.result(false, "Sorry, something didn't work out right. Couldn't save the member details")
-							.toString());
-				}
-			} catch (JSONException e) {
-				out.write(
-						helper.result(false, "Sorry, something didn't work out right. Couldn't save the member details")
-								.toString());
-
-			}
-		}
-
-		else if (request.getParameter(REQUEST_ACTION).equals("GET_BENEFICIARY")) {
-			
-			if (request.getParameter("type").equals("EDIT")) {
-				List<Beneficiary> beneficiaries = helper.getBeneficiaries(request.getParameter("memberID"));
-				request.setAttribute("beneficiaries", beneficiaries);
-			}
-			request.setAttribute("beneficiary_id", request.getParameter("beneficiaryID"));
-			request.setAttribute("type", request.getParameter("type"));
-			request.getRequestDispatcher("member/beneficiary.jsp").forward(request, response);
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("GET_PERMISSION")) {
-			Permission perm = helper.getPermissions(request.getParameter("profile"));
-			request.setAttribute("permissions", perm);
-			request.getRequestDispatcher("dashboard/permissions.jsp").forward(request, response);
-		} else if (request.getParameter(REQUEST_ACTION).equals("SAVE_PERMISSION")) {
-			helper.audit(session, "Updated permissions and privileges for " + request.getParameter("profile"));
-			Permission perm = permissionEJB.findByProfile(request.getParameter("profile"));
-			perm.setSetup(request.getParameter("setup").equalsIgnoreCase("true"));
-			perm.setContent(request.getParameter("content").equalsIgnoreCase("true"));
-			perm.setSchemes(request.getParameter("schemes").equalsIgnoreCase("true"));
-			perm.setReceipts(request.getParameter("receipts").equalsIgnoreCase("true"));
-			perm.setPayments(request.getParameter("payments").equalsIgnoreCase("true"));
-			perm.setOperations(request.getParameter("member_operations").equalsIgnoreCase("true"));
-			perm.setMembers(request.getParameter("members").equalsIgnoreCase("true"));
-			perm.setMedia(request.getParameter("media").equalsIgnoreCase("true"));
-			perm.setUac(request.getParameter("uac").equalsIgnoreCase("true"));
-			perm.setAnalytics(request.getParameter("analytics").equalsIgnoreCase("true"));
-			perm.setContent_help(request.getParameter("content_help").equalsIgnoreCase("true"));
-			perm.setContent_page(request.getParameter("content_page").equalsIgnoreCase("true"));
-			perm.setMedia_remove(request.getParameter("media_remove").equalsIgnoreCase("true"));
-			perm.setMedia_upload(request.getParameter("media_upload").equalsIgnoreCase("true"));
-			perm.setMember_edit(request.getParameter("member_edit").equalsIgnoreCase("true"));
-			perm.setMember_view(request.getParameter("member_view").equalsIgnoreCase("true"));
-			perm.setMember_edit_permissions(request.getParameter("member_edit_permissions").equalsIgnoreCase("true"));
-			perm.setProfile_login_username(request.getParameter("profile_login_username").equalsIgnoreCase("true"));
-			perm.setProfile_privileges(request.getParameter("profile_privileges").equalsIgnoreCase("true"));
-			perm.setProfile_names(request.getParameter("profile_names").equalsIgnoreCase("true"));
-			perm.setSetup_banner(request.getParameter("setup_banner").equalsIgnoreCase("true"));
-			perm.setSetup_company(request.getParameter("setup_company").equalsIgnoreCase("true"));
-			perm.setSetup_contact_reason(request.getParameter("setup_contact_reason").equalsIgnoreCase("true"));
-			perm.setSetup_interest_rate(request.getParameter("setup_interest_rate").equalsIgnoreCase("true"));
-			perm.setSetup_logo(request.getParameter("setup_logo").equalsIgnoreCase("true"));
-			perm.setSetup_menu(request.getParameter("setup_menu").equalsIgnoreCase("true"));
-			perm.setSetup_other(request.getParameter("setup_other").equalsIgnoreCase("true"));
-			perm.setSetup_social(request.getParameter("setup_social").equalsIgnoreCase("true"));
-			perm.setSetup_theme(request.getParameter("setup_theme").equalsIgnoreCase("true"));
-			perm.setOperation_balance_history(
-					request.getParameter("operation_balance_history").equalsIgnoreCase("true"));
-			perm.setOperation_benefit_projection(
-					request.getParameter("operation_benefit_projection").equalsIgnoreCase("true"));
-			perm.setOperation_contribution_history(
-					request.getParameter("operation_contribution_history").equalsIgnoreCase("true"));
-			perm.setOperation_personal_info(request.getParameter("operation_personal_info").equalsIgnoreCase("true"));
-			perm.setOperation_statement_of_account(
-					request.getParameter("operation_statement_of_account").equalsIgnoreCase("true"));
-			perm.setUsers(request.getParameter("users").equalsIgnoreCase("true"));
-			perm.setUser_enable_disable(request.getParameter("user_enable_disable").equalsIgnoreCase("true"));
-			perm.setAudit_trail(request.getParameter("audit_trail").equalsIgnoreCase("true"));
-			perm.setPortal_member_add(request.getParameter("portal_member_add").equalsIgnoreCase("true"));
-			perm.setPortal_member_delete(request.getParameter("portal_member_delete").equalsIgnoreCase("true"));
-			perm.setPortal_member_process(request.getParameter("portal_member_process").equalsIgnoreCase("true"));
-			perm.setPortal_member_view(request.getParameter("portal_member_view").equalsIgnoreCase("true"));
-			perm.setPortal_members(request.getParameter("portal_members").equalsIgnoreCase("true"));
-			perm.setPortal_sponsor_add(request.getParameter("portal_sponsor_add").equalsIgnoreCase("true"));
-			perm.setPortal_sponsor_delete(request.getParameter("portal_sponsor_delete").equalsIgnoreCase("true"));
-			perm.setPortal_sponsor_process(request.getParameter("portal_sponsor_process").equalsIgnoreCase("true"));
-			perm.setPortal_sponsor_view(request.getParameter("portal_sponsor_view").equalsIgnoreCase("true"));
-			perm.setPortal_sponsors(request.getParameter("portal_sponsors").equalsIgnoreCase("true"));
-			perm.setPassword_policy(request.getParameter("password_policy").equalsIgnoreCase("true"));
-
-			if (permissionEJB.edit(perm) != null)
-				out.write(helper.result(true, "Permissions successfully saved").toString());
-			else
-				out.write(helper.result(false, "Permissions could not be saved").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("SET_PASSWORD_POLICY")) {
-			PasswordPolicy p = passwordPolicyEJB.find();
-			p.setExpiry_days(Integer.parseInt(request.getParameter("expiry_days")));
-			p.setLength(Integer.parseInt(request.getParameter("length")));
-			p.setLock_after_count_of(Integer.parseInt(request.getParameter("lock_after_count_of")));
-			p.setLowercase(request.getParameter("lowercase").equalsIgnoreCase("true"));
-			p.setNumbers(request.getParameter("numbers").equalsIgnoreCase("true"));
-			p.setPassword_reuse(request.getParameter("password_reuse").equalsIgnoreCase("true"));
-			p.setUppercase(request.getParameter("uppercase").equalsIgnoreCase("true"));
-
-			if (passwordPolicyEJB.edit(p) != null)
-				out.write(helper.result(true, "Password policy successfully saved").toString());
-			else
-				out.write(helper.result(false, "Password policy could not be saved").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("PROFILE_LOGIN_FIELD")) {
-			String[] profiles = helper.listProfiles();
-			boolean status = true;
-			for (String profile : profiles) {
-				ProfileLoginField plf = profileLoginFieldEJB.findByProfile(profile);
-				plf.setOrdinal(request.getParameter(plf.getProfile()));
-				plf.setPublished(request.getParameter(plf.getProfile() + "_PUBLISHED").equalsIgnoreCase("true"));
-				status = status && profileLoginFieldEJB.edit(plf) != null;
-			}
-			if (status) {
-				helper.audit(session, "Updated profile login settings");
-				out.write(helper.result(true, "Profile login settings successfully saved").toString());
-			} else
-				out.write(helper.result(false, "Profile login settings could not be saved").toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("FRONTPAGE_ACCESS")) {
-			try {
-				String result = helper.frontPageAccessByPage();
-				out.write(result);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-
-			}
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("DELETE_PORTAL_SPONSOR")) {
-			Sponsor s = sponsorEJB.findById(helper.toLong(request.getParameter("id")));
-
-			if (sponsorEJB.delete(s))
-				out.write(helper.result(true, "Potential sponsor record successfully deleted").toString());
-			else
-				out.write(helper.result(false, "Potential sponsor record could not be deleted").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("ADD_MEMBER")) {
-			JSONObject result = helper.createMember(request);
-			out.write(result.toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("ADD_SPONSOR")) {
-			JSONObject result = helper.createSponsor(request);
-			out.write(result.toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("SUBMIT_PORTAL_MEMBER")) {
-			//String memberID = request.getParameter("id");
-			//Member m = helper.getMemberByID(memberID);
-			JSONObject result = helper.postMemberToXi(request);
-			out.write(result.toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("FORWARD_PORTAL_MEMBER")) {
-			String memberID = request.getParameter("id");
-			Member m = helper.getMemberByID(memberID);
-			JSONObject result = helper.forwardMemberToXi(m);
-			out.write(result.toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("SUBMIT_PORTAL_SPONSOR")) {
-			//String sponsorID = request.getParameter("id");
-			//Sponsor s = helper.getSponsor(sponsorID);
-			JSONObject result = helper.postSponsorToXi(request);
-			out.write(result.toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("FORWARD_PORTAL_SPONSOR")) {
-			String sponsorID = request.getParameter("id");
-			Sponsor sp = helper.getSponsor(sponsorID);
-			JSONObject result = helper.forwardSponsorToXi(sp);
-			out.write(result.toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("DELETE_PORTAL_MEMBER")) {
-			Member m = memberEJB.findById(helper.toLong(request.getParameter("id")));
-
-			if (memberEJB.delete(m))
-				out.write(helper.result(true, "Potential member record successfully deleted").toString());
-			else
-				out.write(helper.result(false, "Potential member record could not be deleted").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("SEARCH_MEMBER")) {
-			JSONObject result = helper.searchProfilesJSON(request.getParameter("search"),
-					request.getParameter("identifier"), request.getParameter("profile"),
-					session.getAttribute(Constants.SCHEME_ID).toString());
-			jLogger.i(result.toString());
-			try{
-			    JSONArray array = result.getJSONArray("rows");
-			    JSONObject unitObj =  array.getJSONObject(0);
-			    session.setAttribute("unitization", unitObj.get("unitization"));
-			    jLogger.i("found unitization:::" + unitObj.get("unitization"));
-			    request.setAttribute("unitization", unitObj.get("unitization"));
-			}catch(Exception x){
-			    jLogger.i("error extracting unitization:::" + x.toString());
-			}
-			helper.audit(session, "Searched members with search parameter " + request.getParameter("search"));
-			out.write(result.toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("PROFILE_ACCESS")) {
-			try {
-				String result = helper.profileAccess();
-				out.write(result);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-
-			}
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("MOST_BY_MANAGER")) {
-			try {
-				String result = helper.mostAccesssedByManagers();
-				out.write(result);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace(out);
-			}
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("MOST_BY_MEMBER")) {
-			try {
-				String result = helper.mostAccessedByMembers();
-				out.write(result);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace(out);
-			}
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("USER_TOGGLE")) {
-			User u = userEJB.findById(helper.toLong(request.getParameter("userID")));
-
-			u.setStatus(!u.isStatus());
-			u = userEJB.edit(u);
-			if (u != null) {
-				helper.audit(session, "Updated user status for " + u.getUserProfile() + " " + u.getUsername());
-
-				out.write(helper.result(true, "The user status was successfully changed").toString());
-			} else
-
-				out.write(helper.result(false, "We are sorry, the user status could not be changed").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("NEW")) {
-			String res = helper.getNewMembersInYear(session.getAttribute(Constants.SCHEME_ID).toString(),
-					session.getAttribute(Constants.PROFILE_ID).toString());
-			out.write(res);
-		} else if (request.getParameter(REQUEST_ACTION).equals("AGENT_COMMISSION")) {
-			String res = helper.getAgentCommission(session.getAttribute(Constants.PROFILE_ID).toString());
-			out.write(res);
-		} else if (request.getParameter(REQUEST_ACTION).equals("EXITS")) {
-			String res = helper.getExitsInYear(session.getAttribute(Constants.SCHEME_ID).toString());
-			out.write(res);
-		} else if (request.getParameter(REQUEST_ACTION).equals("SEARCH_SCHEMES")) {
-			String res = helper.searchSchemes(request.getParameter("search"));
-			helper.audit(session, "Searched schemes with parameter " + request.getParameter("search"));
-			out.write(res);
-		} else if (request.getParameter(REQUEST_ACTION).equals("CHANGE_SCHEME")) {
-			helper.audit(session, "Switched between schemes from scheme #" + session.getAttribute(Constants.SCHEME_ID)
-					+ " to scheme #" + request.getParameter("schemeID"));
-			session.setAttribute(Constants.SCHEME_ID, request.getParameter("schemeID"));
-			out.write(helper.result(true, "Scheme changed successfully").toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("GET_MEMBER")) {
-			XiMember xm = null;
-			try {
-				jLogger.i("MemberId "+request.getParameter("memberID"));
-				xm = helper.getMemberDetails(request.getParameter("memberID"),null);
-			} catch (JSONException  e) {
-				// TODO Auto-generated catch block
-				jLogger.e("JSONException was detected: " + e.getMessage());
-			}
-			
-			//request.setAttribute(Constants.MEMBER_NAME, request.getParameter("name").toString());
-			List<Country> countries = helper.getCountries();
-			request.setAttribute("countries", countries);
-			
-			List<Gender> genders = helper.getGenders();
-			request.setAttribute("genders", genders);
-			
-			List<MaritalStatus> marital_statuses = helper.getMaritalStatuses();
-			request.setAttribute("maritalStatuses", marital_statuses);
-			
-			Company company = helper.getCompany();
-			request.setAttribute("company", company);
-			Social social = helper.getSocial();
-			request.setAttribute("social", social);
-			List<Sector> sectors = helper.getSectors();
-			request.setAttribute("sectors", sectors);
-			List<Scheme> schemes = null;
-			try {
-				schemes = helper.getSchemes(0, 10000);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				jLogger.e("JSONException was detected: " + e.getMessage());
-			}
-			List<Beneficiary> beneficiaries = helper.getBeneficiaries(request.getParameter("memberID"));			
-			request.setAttribute("beneficiaries", beneficiaries);
-			
-			request.setAttribute("schemes", schemes);
-			MemberPermission memberPermission = helper.getMemberPermissions();
-			request.setAttribute("memberPermission", memberPermission);
-			request.setAttribute("member", xm);
-			helper.audit(session, "Accessed editable view for member " + xm.getName());
-			request.getRequestDispatcher("member/personal_information.jsp").forward(request, response);
-		} else if (request.getParameter(REQUEST_ACTION).equals("DELINK_SCHEME_MANAGER")) {
-
-			SchemeMemberManager smm = schemeManagerEJB.findById(helper.toLong(request.getParameter("id")));
-
-			if (schemeManagerEJB.delete(smm)) {
-				helper.audit(session, "De-linked scheme manager #" + smm.getName());
-				out.write(helper.result(true, "Scheme member successfully delinked from scheme managers").toString());
-			} else {
-				out.write(helper.result(false, "Scheme member could not be delinked from scheme managers").toString());
-			}
-		} else if (request.getParameter(REQUEST_ACTION).equals("ADD_SCHEME_MANAGER")) {
-			String profile = request.getParameter("profile");
-			String email = request.getParameter("email");
-			String ordinal = helper.getLoginField(profile);
-			String ordinal_key = helper.getOrdinalKey(ordinal);
-			JSONObject res = helper.searchProfilesJSON(email, "EMAIL", profile,
-					session.getAttribute(Constants.SCHEME_ID).toString());
-			String username;
-			try {
-				JSONArray json_arr = (JSONArray) res.get("rows");
-
-				JSONObject obj = json_arr.getJSONObject(0);
-
-				username = obj.getString(ordinal_key);
-
-				User u = helper.findByUsernameAndProfile(username, profile);
-				SchemeMemberManager smm = new SchemeMemberManager(Long.valueOf("0").longValue(), u.getId().longValue(),
-						profile, session.getAttribute(Constants.SCHEME_ID).toString(), obj.get("name").toString(),
-						session.getAttribute(Constants.SCHEME_NAME).toString());
-				schemeManagerEJB.add(smm);
-				helper.audit(session, "Added a new scheme manager " + smm.getName());
-				out.write(helper.result(true, "Scheme member successfully added as scheme manager").toString());
-			} catch (JSONException je) {
-				out.write(helper.result(false, "Scheme member could not be added as a scheme manager").toString());
-			}
-		} else if (request.getParameter(REQUEST_ACTION).equals("VIEW_MEMBER")) {
-			XiMember xm = null;
-			try {
-				xm = helper.getMemberDetails(request.getParameter("memberID"),null);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-
-			}
-			List<Beneficiary> beneficiaries = helper.getBeneficiaries(request.getParameter("memberID"));
-			request.setAttribute("beneficiaries", beneficiaries);
-			MemberPermission memberPermission = helper.getMemberPermissions();
-			request.setAttribute("memberPermission", memberPermission);
-			request.setAttribute("member", xm);
-			helper.audit(session, "Viewed member details for member #" + xm.getName());
-			request.getRequestDispatcher("member/personal_information_view.jsp").forward(request, response);
-		} else if (request.getParameter(REQUEST_ACTION).equals("CURR")) {
-			String result = helper.getSchemeCurrency(session.getAttribute(Constants.SCHEME_ID).toString());
-			out.write(result);
-		} else if (request.getParameter(REQUEST_ACTION).equals("ML")) {
-			String result = null;
-			try {
-				result = helper.listMembers(session.getAttribute(Constants.SCHEME_ID).toString(),
-						session.getAttribute(Constants.PROFILE_ID).toString());
-				helper.audit(session, "Accessed scheme member listing");
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			out.write(result);
-		} else if (request.getParameter(REQUEST_ACTION).equals("PRE_CHANGE_PASSWORD")) {
-			User u = userEJB.find(session.getAttribute(Constants.USER).toString(),
-					session.getAttribute(Constants.U_PROFILE).toString());
-			String securityCode = helper.shorterUUID(UUID.randomUUID().toString(), 1);
-			/*
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+*/
+                try {
+//convert to blob
+                    Blob fileBlob;
+                    fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
+                    try {
+                        List<Logo> logoz = logoEJB.findAll();
+                        for (Logo logo : logoz) {
+                            logoEJB.delete(logo);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Logo logo = new Logo();
+                    logo.setPath(savePath);
+                    logo.setImage(fileBlob);
+                    logo.setName(fileName);
+                    if (logoEJB.add(logo) != null) {
+                        audit(session, "Uploaded a logo for the portal");
+                        this.respond(response, true, "Logo was successfully uploaded", null);
+                    } else
+                        this.respond(response, false, "Logo could not be uploaded", null);
+                } catch (SQLException sqe) {
+                    this.respond(response, false, "Logo could not be uploaded", null);
+                }
+            }
+        }
+    }
+    private void addContactReason(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        if (this.get(request, "type").equalsIgnoreCase("ADD")) {
+            ContactCategory cc = new ContactCategory();
+            cc.setName(this.get(request, "name"));
+            if (contactCategoryEJB.add(cc) != null) {
+                audit(session, "Added a new contact category " + this.get(request, "name"));
+                this.respond(response, true, "Contact category successfully saved", null);
+            } else
+                this.respond(response, true, "Contact category could not be saved", null);
+        } else {
+            ContactCategory cc = contactCategoryEJB.findById(helper.toLong(this.get(request, "id")));
+            cc.setName(this.get(request, "name"));
+            if (contactCategoryEJB.edit(cc) != null) {
+                audit(session, "Updated a contact category " + this.get(request, "name"));
+                this.respond(response, true, "Contact category successfully saved", null);
+            } else
+                this.respond(response, true, "Contact category could not be saved", null);
+        }
+    }
+    private void editMemberPermissions(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        MemberPermission mp = new MemberPermission(
+                helper.toLong(this.get(request, "member_permission_id")),
+                this.get(request, "memberNo").equalsIgnoreCase("true"),
+                this.get(request, "partyRefNo").equalsIgnoreCase("true"),
+                this.get(request, "partnerNo").equalsIgnoreCase("true"),
+                this.get(request, "policyNo").equalsIgnoreCase("true"),
+                this.get(request, "staffNo").equalsIgnoreCase("true"),
+                this.get(request, "name").equalsIgnoreCase("true"),
+                this.get(request, "idNumber").equalsIgnoreCase("true"),
+                this.get(request, "pinNo").equalsIgnoreCase("true"),
+                this.get(request, "postalAddress").equalsIgnoreCase("true"),
+                this.get(request, "phoneNumber").equalsIgnoreCase("true"),
+                this.get(request, "emailAddress").equalsIgnoreCase("true"),
+                this.get(request, "gender").equalsIgnoreCase("true"),
+                this.get(request, "dateOfBirth").equalsIgnoreCase("true"),
+                this.get(request, "maritalStatus").equalsIgnoreCase("true"),
+                this.get(request, "country").equalsIgnoreCase("true"),
+                this.get(request, "town").equalsIgnoreCase("true"),
+                this.get(request, "annualPensionableSalary").equalsIgnoreCase("true"));
+        if (memberPermissionEJB.edit(mp) != null) {
+            audit(session, "Updated member edit permissions");
+            this.respond(response, true, "Member edit permissions successfully saved", null);
+        } else
+            this.respond(response, false, "Member edit permissions could not be saved", null);
+    }
+    private void deleteMediaFile(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        Media m = mediaEJB.findById(helper.toLong(this.get(request, "id")));
+        if (mediaEJB.delete(m)) {
+            audit(session, "Deleted a media/file: " + m.getName());
+            this.respond(response, true, "Media/File was successfully deleted", null);
+        } else
+            this.respond(response, true, "Media/File could not be deleted", null);
+    }
+    private void deleteContactReason(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        ContactCategory cc = contactCategoryEJB.findById(helper.toLong(this.get(request, "id")));
+        if (contactCategoryEJB.delete(cc)) {
+            audit(session, "Deleted a contact category: " + cc.getName());
+            this.respond(response, true, "Contact category was successfully deleted", null);
+        } else
+            this.respond(response, false, "Contact category could not be deleted", null);
+    }
+    private void editSocialMediaSettings(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    /* Social Media Links Update Request */
+        Social social = socialEJB.find();
+        social.setTwitter(this.get(request, "twitter"));
+        social.setFacebook(this.get(request, "facebook"));
+        social.setLinkedin(this.get(request, "linkedin"));
+        social.setGoogle(this.get(request, "google"));
+        social.setYoutube(this.get(request, "youtube"));
+        social.setPinterest(this.get(request, "pinterest"));
+        if (socialEJB.edit(social) != null) {
+            audit(session, "Updated portal social network settings");
+            this.respond(response, true, "Social network details successfully saved", null);
+        } else
+            this.respond(response, false, "Social network details could not be saved", null);
+    }
+    private void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    /* Logout Request */
+        logActivity("", "logged out", this.getSessKey(request, Constants.UID), null,
+                this.getSessKey(request, Constants.U_PROFILE));
+        audit(session, "Logged out of the portal");
+        session.invalidate();
+        this.respond(response, true, "You have been successfully logged out", null);
+    }
+    private void editMenuSettings(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    /* Menu Update Request */
+        boolean annuityQuotationActive = this.get(request, "annuityQuotationActive").equalsIgnoreCase("true");
+        boolean potentialMemberActive = this.get(request, "potentialMemberActive").equalsIgnoreCase("true");
+        boolean potentialSponsorActive = this.get(request, "potentialSponsorActive").equalsIgnoreCase("true");
+        boolean interestRatesActive = this.get(request, "interestRatesActive").equalsIgnoreCase("true");
+        boolean whatIfAnalysisActive = this.get(request, "whatIfAnalysisActive").equalsIgnoreCase("true");
+        boolean contactUsActive = this.get(request, "contactUsActive").equalsIgnoreCase("true");
+        Menu menu = menuEJB.find();
+        menu.setAnnuityQuotationActive(annuityQuotationActive);
+        menu.setPotentialMemberActive(potentialMemberActive);
+        menu.setPotentialSponsorActive(potentialSponsorActive);
+        menu.setInterestRatesActive(interestRatesActive);
+        menu.setWhatIfAnalysisActive(whatIfAnalysisActive);
+        menu.setContactUsActive(contactUsActive);
+        menu.setAnnuityQuotationName(this.get(request, "annuityQuotationName"));
+        menu.setPotentialMemberName(this.get(request, "potentialMemberName"));
+        menu.setPotentialSponsorName(this.get(request, "potentialSponsorName"));
+        menu.setInterestRatesName(this.get(request, "interestRatesName"));
+        menu.setWhatIfAnalysisName(this.get(request, "whatIfAnalysisName"));
+        menu.setContactUsName(this.get(request, "contactUsName"));
+        if (menuEJB.edit(menu) != null) {
+            audit(session, "Updated portal menu configuration settings");
+            this.respond(response, true, "Portal menu configurations successfully saved", null);
+        } else
+            this.respond(response, true, "Portal menu configurations could not be saved", null);
+    }
+    private void editPortalSettings(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        Setting settings = settingEJB.find();
+        if (this.get(request, "encrypt").equalsIgnoreCase("true")) {
+            settings.setXiPath(helper.encrypt(this.get(request, "fundmasterXi")));
+            settings.setUsername(helper.encrypt(this.get(request, "username")));
+            settings.setPassword(helper.encrypt(this.get(request, "password")));
+            settings.setPortalBaseURL(helper.encrypt(this.get(request, "portalBaseURL")));
+            settings.setXiReportPath(helper.encrypt(this.get(request, "xiReportPath")));
+            settings.setXiReportUsername(helper.encrypt(this.get(request, "xiReportUsername")));
+            settings.setXiReportPassword(helper.encrypt(this.get(request, "xiReportPassword")));
+        } else {
+            settings.setXiPath(this.get(request, "fundmasterXi"));
+            settings.setUsername(this.get(request, "username"));
+            settings.setPassword(this.get(request, "password"));
+            settings.setPortalBaseURL(this.get(request, "portalBaseURL"));
+            settings.setXiReportPath(this.get(request, "xiReportPath"));
+            settings.setXiReportUsername(this.get(request, "xiReportUsername"));
+            settings.setXiReportPassword(this.get(request, "xiReportPassword"));
+        }
+        settings.setMemberOnboarding(this.get(request, "memberOnboarding"));
+        settings.setSponsorOnboarding(this.get(request, "sponsorOnboarding"));
+        settings.setEncrypt(this.get(request, "encrypt").equalsIgnoreCase("true"));
+        if (settingEJB.edit(settings) != null) {
+            audit(session, "Updated other portal settings and configurations");
+            this.respond(response, true, "Portal Settings & Configurations successfully saved", null);
+        } else
+            this.respond(response, true, "Portal Settings & Configurations could not be saved", null);
+    }
+    private void editInterestRateColumns(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        boolean accountingPeriod = this.get(request, "accountingPeriod").equalsIgnoreCase("true");
+        boolean contributions = this.get(request, "contributions").equalsIgnoreCase("true");
+        boolean dateDeclared = this.get(request, "dateDeclared").equalsIgnoreCase("true");
+        boolean openingBalances = this.get(request, "openingBalances").equalsIgnoreCase("true");
+        boolean pensionDrawDown = this.get(request, "pensionDrawDown").equalsIgnoreCase("true");
+        boolean year = this.get(request, "year").equalsIgnoreCase("true");
+        InterestRateColumns irc = interestRateColumnEJB.find();
+        irc.setDateDeclared(dateDeclared);
+        irc.setYear(year);
+        irc.setContributions(contributions);
+        irc.setOpeningBalances(openingBalances);
+        irc.setPensionDrawDown(pensionDrawDown);
+        irc.setAccountingPeriod(accountingPeriod);
+        irc.setDateDeclaredText(this.get(request, "dateDeclaredText"));
+        irc.setYearText(this.get(request, "yearText"));
+        irc.setContributionsText(this.get(request, "contributionsText"));
+        irc.setOpeningBalancesText(this.get(request, "openingBalancesText"));
+        irc.setPensionDrawDownText(this.get(request, "pensionDrawDownText"));
+        irc.setAccountingPeriodText(this.get(request, "accountingPeriodText"));
+        if (interestRateColumnEJB.edit(irc) != null) {
+            audit(session, "Updated interest rate column settings");
+            this.respond(response, true, "Interest rate settings successfully saved", null);
+        } else
+            this.respond(response, false, "Interest rate settings could not be saved", null);
+    }
+    private void editTheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        Theme theme = themeEJB.findById(helper.toLong(this.get(request, "theme_id")));
+        theme.setMajor(this.get(request, "major"));
+        theme.setMinor(this.get(request, "minor"));
+        theme.setFont(this.get(request, "font"));
+        theme.setOther(this.get(request, "other"));
+        theme.setHeader(this.get(request, "header"));
+        theme.setContent(this.get(request, "content"));
+        theme.setFooter(this.get(request, "footer"));
+        if (themeEJB.edit(theme) != null) {
+            audit(session, "Updated portal theme settings");
+            this.respond(response, true, "Theme settings saved", null);
+        } else
+            this.respond(response, false, "Theme settings not saved", null);
+    }
+    private void editPageContent(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        PageContent pc = pageContentEJB.findById(helper.toLong(this.get(request, "ID")));
+        pc.setPage(this.get(request, "page"));
+        pc.setText(this.get(request, "description"));
+        pc.setPosition(this.get(request, "position"));
+        pc.setPublish(this.get(request, "publish").equalsIgnoreCase("true"));
+        if (pageContentEJB.edit(pc) != null) {
+            audit(session, "Updated portal page content for page " + this.get(request, "page"));
+            this.respond(response, true, "Content was successfully updated", null);
+        } else
+            this.respond(response, true, "Content could not be updated", null);
+    }
+    private void deleteLogo(HttpServletRequest request, HttpServletResponse response) {
+        Logo lg = logoEJB.findById(helper.toLong(this.get(request, "id")));
+        if (logoEJB.delete(lg))
+            this.respond(response, true, "Logo successfully deleted", null);
+        else
+            this.respond(response, false, "Logo could not be deleted", null);
+    }
+    private void deleteImageBanner(HttpServletRequest request, HttpServletResponse response) {
+        ImageBanner b = imageBannerEJB.findById(helper.toLong(this.get(request, "id")));
+        if (imageBannerEJB.delete(b))
+            this.respond(response, true, "ImageBanner image successfully deleted", null);
+        else
+            this.respond(response, false, "ImageBanner image could not be deleted", null);
+    }
+    private void updateHelpContent(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        Help h = helpEJB.findById(helper.toLong(this.get(request, "ID")));
+        h.setPage(this.get(request, "page"));
+        h.setDescription(this.get(request, "description"));
+        helpEJB.edit(h);
+        audit(session, "Updated portal help content for page " + this.get(request, "page"));
+        this.respond(response, true, "content edited", null);
+    }
+    private void getFundValueAsAt(HttpServletRequest request, HttpServletResponse response) {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = new Date();
+        this.respond(response, true, "", apiEJB.getFundValueAsAt(format.format(date), this.get(request, "accountingPeriodId"),
+                this.getSessKey(request, Constants.SCHEME_ID),
+                this.getSessKey(request, Constants.PROFILE_ID)));
+    }
+    private void getAccountingPeriod(HttpServletRequest request, HttpServletResponse response) {
+        DateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        Date date = new Date();
+        this.respond(response, true, "", apiEJB.getAccountingPeriod(format.format(date), this.getSessKey(request, Constants.SCHEME_ID)));
+    }
+    private void changePassword(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        PasswordPolicy policy = passwordPolicyEJB.find();
+        String securityCode = this.get(request, "securityCode");
+        String username = this.getSessKey(request, Constants.USER);
+        String password = this.get(request, "currentPassword");
+        String new_password = this.get(request, "newPassword");
+        User u = userEJB.findUser(username, password);
+        if (u != null) {
+            if (u.getSecurityCode().equalsIgnoreCase(securityCode)) {
+                if (!(usedPasswordEJB.isUsed(new_password) && policy.isPassword_reuse())) {
+                    u.setPassword(helper.hash(new_password));
+                    Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
+                    u.setPassword_expiry(password_expiry);
+                    userEJB.edit(u);
+                    audit(session, "Changed password");
+                    this.respond(response, true, "Your password was changed successfully", null);
+                } else {
+                    this.respond(response, false, "", null);
+                }
+            } else {
+                this.respond(response, false, "Sorry, your security code is invalid. Please enter a valid security code.", null);
+            }
+        } else {
+            this.respond(response, false, "The current password you entered is wrong. Please try again.", null);
+        }
+    }
+    private void preChangeUserPassword(HttpServletRequest request, HttpServletResponse response) {
+        User u = userEJB.find(this.getSessKey(request, Constants.USER),
+                this.getSessKey(request, Constants.U_PROFILE));
+        String securityCode = helper.shorterUUID(UUID.randomUUID().toString(), 1);
+            /*
 			 * Shorter code is more user friendly... the UUID was way too long
 			 * :)
 			 */
-			u.setSecurityCode(securityCode);
-			userEJB.edit(u);
-			XiMember m = null;
-			try {
-				m = helper.getMemberDetails(session.getAttribute(Constants.PROFILE_ID).toString(),null);
-			} catch (JSONException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-			try {
-				Company company = helper.getCompany();
-				JSONObject resp = helper.sendNotification(m.getEmailAddress(),company.getEmail(), null, "Change Password Request",
-						"Dear " + u.getUsername() + ", " + "You recently requested to change your password. "
-								+ "Here is your security code:" + "" + securityCode
-								+ "\nYou will require it to be able to change your password",
-						session.getAttribute(Constants.SCHEME_ID).toString(), false, "");
-				if (resp.get("success").equals(true)) {
-					out.write(
-							helper.result(true, "The change password instructions have been sent to your email address")
-									.toString());
+        u.setSecurityCode(securityCode);
+        userEJB.edit(u);
+        XiMember m = apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID), null);
+        try {
+            Company company = companyEJB.find();
+            boolean status = apiEJB.sendEmail(m.getEmailAddress(), company.getEmail(), null, "Change Password Request",
+                    "Dear " + u.getUsername() + ", " + "You recently requested to change your password. "
+                            + "Here is your security code:" + "" + securityCode
+                            + "\nYou will require it to be able to change your password",
+                    this.getSessKey(request, Constants.SCHEME_ID), false, "");
+            if (status) {
+                this.respond(response, true, "The change password instructions have been sent to your email address", null);
+            } else {
+                this.respond(response, false, "We are sorry, we were unable to send you the change password instructions", null);
+            }
+        } catch (NullPointerException e1) {
+            this.respond(response, false,
+                    "We are sorry, we encountered a problem obtaining your email address. Please try again", null);
+        }
+    }
+    private void listMembers(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        audit(session, "Accessed scheme member listing");
+        this.respond(response, true, "", apiEJB.listMembers(this.getSessKey(request, Constants.SCHEME_ID),
+                this.getSessKey(request, Constants.PROFILE_ID)));
+    }
+    private void getSchemeCurrency(HttpServletRequest request, HttpServletResponse response) {
+        this.respond(response, true, "", apiEJB.getSchemeCurrency(this.getSessKey(request, Constants.SCHEME_ID)));
+    }
+    private void showMemberInformationView(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        XiMember xm = apiEJB.getMemberDetails(this.get(request, "memberID"), null);
+        List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(this.get(request, "memberID"));
+        request.setAttribute("beneficiaries", beneficiaries);
+        MemberPermission memberPermission = memberPermissionEJB.find();
+        request.setAttribute("memberPermission", memberPermission);
+        request.setAttribute("member", xm);
+        audit(session, "Viewed member details for member #" + xm.getName());
+        request.getRequestDispatcher("member/personal_information_view.jsp").forward(request, response);
+    }
+    private void addSchemeManager(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String profile = this.get(request, "profile");
+        String email = this.get(request, "email");
+        String ordinal = profileLoginFieldEJB.findByProfile(profile);
+        String ordinal_key = helper.getOrdinalKey(ordinal);
+        JSONObject res = apiEJB.searchProfilesJSON(email, "EMAIL", profile,
+                this.getSessKey(request, Constants.SCHEME_ID), 0, 20);
+        String username;
+        try {
+            JSONArray json_arr = (JSONArray) res.get("rows");
+            JSONObject obj = json_arr.getJSONObject(0);
+            username = obj.getString(ordinal_key);
+            User u = userEJB.findUserByUsernameAndProfile(username, profile);
+            SchemeMemberManager smm = new SchemeMemberManager();
+            smm.setUser_id(u.getId());
+            smm.setName(obj.getString("name"));
+            smm.setScheme(this.getSessKey(request, Constants.SCHEME_NAME));
+            smm.setSchemeID(this.getSessKey(request, Constants.SCHEME_ID));
+            smm.setProfile(profile);
+            schemeManagerEJB.add(smm);
+            audit(session, "Added a new scheme manager " + smm.getName());
+            this.respond(response, true, "Scheme member successfully added as scheme manager", null);
+        } catch (JSONException je) {
+            this.respond(response, false, "Scheme member could not be added as a scheme manager", null);
+        }
+    }
+    private void removeSchemeManager(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        SchemeMemberManager smm = schemeManagerEJB.findById(helper.toLong(this.get(request, "id")));
+        if (schemeManagerEJB.delete(smm)) {
+            audit(session, "De-linked scheme manager #" + smm.getName());
+            this.respond(response, true, "Scheme member successfully delinked from scheme managers", null);
+        } else {
+            this.respond(response, false, "Scheme member could not be delinked from scheme managers", null);
+        }
+    }
+    @EJB
+    GenderEJB genderEJB;
+    private void showMemberPersonalInformation(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        XiMember xm;
+        xm = apiEJB.getMemberDetails(this.get(request, "memberID"), null);
+        List<Country> countries = countryEJB.find();
+        request.setAttribute("countries", countries);
+        List<Gender> genders = genderEJB.find();
+        request.setAttribute("genders", genders);
+        List<MaritalStatus> marital_statuses = maritalStatusEJB.find();
+        request.setAttribute("maritalStatuses", marital_statuses);
+        Company company = companyEJB.find();
+        request.setAttribute("company", company);
+        Social social = socialEJB.find();
+        request.setAttribute("social", social);
+        List<Sector> sectors = sectorEJB.find();
+        request.setAttribute("sectors", sectors);
+        List<Scheme> schemes;
+        schemes = apiEJB.getSchemes(0, 10000);
+        List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(this.get(request, "memberID"));
+        request.setAttribute("beneficiaries", beneficiaries);
+        request.setAttribute("schemes", schemes);
+        MemberPermission memberPermission = memberPermissionEJB.find();
+        request.setAttribute("memberPermission", memberPermission);
+        request.setAttribute("member", xm);
+        audit(session, "Accessed editable view for member " + xm.getName());
+        request.getRequestDispatcher("member/personal_information.jsp").forward(request, response);
+    }
+    private void changeScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        audit(session, "Switched between schemes from scheme #" + this.getSessKey(request, Constants.SCHEME_ID)
+                + " to scheme #" + this.get(request, "schemeID"));
+        session.setAttribute(Constants.SCHEME_ID, this.get(request, "schemeID"));
+        this.respond(response, true, "Scheme changed successfully", null);
+    }
+    private void searchSchemes(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        audit(session, "Searched schemes with parameter " + this.get(request, "search"));
+        this.respond(response, true, "", apiEJB.searchSchemes(this.get(request, "search")));
+    }
+    private void getExitsInYear(HttpServletRequest request, HttpServletResponse response) {
+        this.respond(response, true, "", apiEJB.getExitsInYear(this.getSessKey(request, Constants.SCHEME_ID)));
+    }
+    private void getAgentCommission(HttpServletRequest request, HttpServletResponse response) {
+        this.respond(response, true, "", apiEJB.getAgentCommission(this.getSessKey(request, Constants.PROFILE_ID)));
+    }
+    private void getNewMembersInYear(HttpServletRequest request, HttpServletResponse response) {
+        this.respond(response, true, "", apiEJB.getNewMembersInYear(this.getSessKey(request, Constants.SCHEME_ID),
+                this.getSessKey(request, Constants.PROFILE_ID)));
+    }
+    private void toggleUserStatus(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        User u = userEJB.findById(helper.toLong(this.get(request, "userID")));
+        u.setStatus(!u.isStatus());
+        u = userEJB.edit(u);
+        if (u != null) {
+            audit(session, "Updated user status for " + u.getUserProfile() + " " + u.getUsername());
+            this.respond(response, true, "The user status was successfully changed", null);
+        } else
+            this.respond(response, false, "We are sorry, the user status could not be changed", null);
+    }
+    private void getMostAccessedByManagers(HttpServletResponse response) {
+        this.respond(response, true, "", new JSONObject(activityLogEJB.mostAccessedByManagers()));
+    }
+    @EJB
+    ActivityLogEJB activityLogEJB;
+    private void getProfileAccess(HttpServletResponse response) {
+        this.respond(response, true, "", new JSONObject(activityLogEJB.findAccessByProfile()));
+    }
+    private void searchMember(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        JSONObject result = apiEJB.searchProfilesJSON(this.get(request, "search"),
+                this.get(request, "identifier"), this.get(request, "profile"),
+                this.getSessKey(request, Constants.SCHEME_ID), 0, 20);
+        jLogger.i(result.toString());
+        try {
+            JSONArray array = result.getJSONArray("rows");
+            JSONObject unitObj = array.getJSONObject(0);
+            session.setAttribute("unitization", unitObj.get("unitization"));
+            jLogger.i("found unitization:::" + unitObj.get("unitization"));
+            request.setAttribute("unitization", unitObj.get("unitization"));
+            audit(session, "Searched members with search parameter " + this.get(request, "search"));
+            this.respond(response, true, "Success", result);
+        } catch (JSONException je) {
+            this.respond(response, false, "", null);
+        }
+    }
+    private void deletePortalMember(HttpServletRequest request, HttpServletResponse response) {
+        Member m = memberEJB.findById(helper.toLong(this.get(request, "id")));
+        if (memberEJB.delete(m))
+            this.respond(response, true, "Potential member record successfully deleted", null);
+        else
+            this.respond(response, false, "Potential member record could not be deleted", null);
+    }
+    private void forwardSponsorToXi(HttpServletRequest request, HttpServletResponse response) {
+        String sponsorID = this.get(request, "id");
+        Sponsor sp = sponsorEJB.findById(helper.toLong(sponsorID));
+        DateFormat format_ = new SimpleDateFormat(Constants.YYYY_MM_DD, Locale.ENGLISH);
+        JSONObject jsponsor = new JSONObject();
+        try {
+            jsponsor.put("sponsor.name", sp.getCompanyName())
+                    .put("sponsor.applicationDate", format_.format(sp.getApplicationDate()))
+                    .put("sponsor.address.residentialAddress", sp.getCompanyAddress())
+                    .put("sponsor.address.fixedPhone", sp.getPhoneNumber())
+                    .put("sponsor.address.email", sp.getEmailAddress())
+                    .put("sponsor.address.town", sp.getCity())
+                    .put("sponsor.address.country", sp.getCountry().getName())
+                    .put("sponsor.sector", sp.getSector().getName())
+                    .put("sponsor.employerpin", sp.getEmployerRefNo())
+                    .put("sponsor.pin", sp.getPinNumber())
+                    .put("sponsor.status", "POTENTIAL_SPONSOR");
+            boolean status = apiEJB.saveOrUpdateSponsor(sp.toString());
+            this.respond(response, status, status ? "Sponsor details were successfully saved" : "Sponsor details could not be saved", null);
+        } catch (JSONException je) {
+            jLogger.e("We encountered a JSON Exception " + je.getMessage());
+        }
+    }
+    private void submitSponsorToXi(HttpServletResponse response, HttpServletRequest request) {
+        JSONObject jsponsor = xtractSponsorFromRequest(request);
+        boolean status = apiEJB.saveOrUpdateSponsor(jsponsor.toString());
+        this.respond(response, status, status ? "Sponsor details were successfully saved" : "Sponsor details could not be saved", null);
+    }
 
-				} else {
-					out.write(helper
-							.result(false, "We are sorry, we were unable to send you the change password instructions")
-							.toString());
+    private void forwardMemberToXi(HttpServletRequest request, HttpServletResponse response) {
+        String memberID = this.get(request, "id");
+        Member m = memberEJB.findById(helper.toLong(memberID));
+        DateFormat format_ = new SimpleDateFormat(Constants.MMM_d_yyyy, Locale.ENGLISH);
+        String title;
+        if(m.getGender().getName().equalsIgnoreCase("male"))
+            title = "Mr";
+        else
+            title = "Mrs";
+        JSONObject member = new JSONObject();
+        boolean status = false;
+        try {
+            member.put("member.surname", m.getLastname());
+            member.put("member.firstname", m.getFirstname());
+            member.put("member.othernames", m.getOthernames());
+            member.put("member.address.email", m.getEmailAddress());
+            member.put("member.idNo", m.getIdNumber());
+            member.put("member.address.cellPhone", m.getPhoneNumber());
+            member.put("member.dob", format_.format(m.getDateOfBirth()))
+                    .put("member.gender", m.getGender().getName().toUpperCase())
+                    .put("member.title", title)
+                    .put("member.address.residentialAddress", m.getResidentialAddress())
+                    .put("member.address.town", m.getCity())
+                    .put("member.country", m.getCountry())
+                    .put("member.maritalStatus", m.getMaritalStatus().getName().toUpperCase())
+                    .put("member.mbshipStatus", "INACTIVE")
+                    .put("member.schemeId", m.getScheme());
+            status = apiEJB.saveOrUpdateMember(member.toString());
+        } catch (JSONException je) {
+            jLogger.e("WE have a JSOn Exception " + je.getMessage());
+        }
+        this.respond(response, status, status ? "Member details were successfully saved" : "Member details could not be saved", null);
+    }
+    private void submitPortalMemberToXi(HttpServletResponse response, HttpServletRequest request) {
+        boolean status = apiEJB.saveOrUpdateMember(xtractMemberFromRequest(request).toString());
+        this.respond(response, status, status ? "Member details were successfully saved" : "Could not save the member details", null);
+    }
+    private void deletePortalSponsor(HttpServletRequest request, HttpServletResponse response) {
+        Sponsor s = sponsorEJB.findById(helper.toLong(this.get(request, "id")));
+        if (sponsorEJB.delete(s))
+            this.respond(response, true, "Potential sponsor record successfully deleted", null);
+        else
+            this.respond(response, false, "Potential sponsor record could not be deleted", null);
+    }
+    private void getFrontPageAccessByPage(HttpServletResponse response) {
+        this.respond(response, true, "", new JSONObject(activityLogEJB.findByFrontPageAccess()));
+    }
+    private void editProfileLoginFields(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String[] profiles = helper.listProfiles();
+        boolean status = true;
+        for (String profile : profiles) {
+            ProfileLoginField plf = profileLoginFieldEJB.find(profile);
+            plf.setOrdinal(this.get(request, plf.getProfile()));
+            plf.setPublished(this.get(request, plf.getProfile() + "_PUBLISHED").equalsIgnoreCase("true"));
+            status = status && profileLoginFieldEJB.edit(plf) != null;
+        }
+        if (status) {
+            audit(session, "Updated profile login settings");
+            this.respond(response, true, "Profile login settings successfully saved", null);
+        } else
+            this.respond(response, false, "Profile login settings could not be saved", null);
+    }
+    private void editPasswordPolicy(HttpServletRequest request, HttpServletResponse response) {
+        PasswordPolicy p = passwordPolicyEJB.find();
+        p.setExpiry_days(Integer.parseInt(this.get(request, "expiry_days")));
+        p.setLength(Integer.parseInt(this.get(request, "length")));
+        p.setLock_after_count_of(Integer.parseInt(this.get(request, "lock_after_count_of")));
+        p.setLowercase(this.get(request, "lowercase").equalsIgnoreCase("true"));
+        p.setNumbers(this.get(request, "numbers").equalsIgnoreCase("true"));
+        p.setPassword_reuse(this.get(request, "password_reuse").equalsIgnoreCase("true"));
+        p.setUppercase(this.get(request, "uppercase").equalsIgnoreCase("true"));
+        if (passwordPolicyEJB.edit(p) != null)
+            this.respond(response, true, "Password policy successfully saved", null);
+        else
+            this.respond(response, false, "Password policy could not be saved", null);
+    }
+    private void savePermissions(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        audit(session, "Updated permissions and privileges for " + this.get(request, "profile"));
+        Permission perm = permissionEJB.findByProfile(this.get(request, "profile"));
+        perm.setSetup(this.get(request, "setup").equalsIgnoreCase("true"));
+        perm.setContent(this.get(request, "content").equalsIgnoreCase("true"));
+        perm.setSchemes(this.get(request, "schemes").equalsIgnoreCase("true"));
+        perm.setReceipts(this.get(request, "receipts").equalsIgnoreCase("true"));
+        perm.setPayments(this.get(request, "payments").equalsIgnoreCase("true"));
+        perm.setOperations(this.get(request, "member_operations").equalsIgnoreCase("true"));
+        perm.setMembers(this.get(request, "members").equalsIgnoreCase("true"));
+        perm.setMedia(this.get(request, "media").equalsIgnoreCase("true"));
+        perm.setUac(this.get(request, "uac").equalsIgnoreCase("true"));
+        perm.setAnalytics(this.get(request, "analytics").equalsIgnoreCase("true"));
+        perm.setContent_help(this.get(request, "content_help").equalsIgnoreCase("true"));
+        perm.setContent_page(this.get(request, "content_page").equalsIgnoreCase("true"));
+        perm.setMedia_remove(this.get(request, "media_remove").equalsIgnoreCase("true"));
+        perm.setMedia_upload(this.get(request, "media_upload").equalsIgnoreCase("true"));
+        perm.setMember_edit(this.get(request, "member_edit").equalsIgnoreCase("true"));
+        perm.setMember_view(this.get(request, "member_view").equalsIgnoreCase("true"));
+        perm.setMember_edit_permissions(this.get(request, "member_edit_permissions").equalsIgnoreCase("true"));
+        perm.setProfile_login_username(this.get(request, "profile_login_username").equalsIgnoreCase("true"));
+        perm.setProfile_privileges(this.get(request, "profile_privileges").equalsIgnoreCase("true"));
+        perm.setProfile_names(this.get(request, "profile_names").equalsIgnoreCase("true"));
+        perm.setSetup_banner(this.get(request, "setup_banner").equalsIgnoreCase("true"));
+        perm.setSetup_company(this.get(request, "setup_company").equalsIgnoreCase("true"));
+        perm.setSetup_contact_reason(this.get(request, "setup_contact_reason").equalsIgnoreCase("true"));
+        perm.setSetup_interest_rate(this.get(request, "setup_interest_rate").equalsIgnoreCase("true"));
+        perm.setSetup_logo(this.get(request, "setup_logo").equalsIgnoreCase("true"));
+        perm.setSetup_menu(this.get(request, "setup_menu").equalsIgnoreCase("true"));
+        perm.setSetup_other(this.get(request, "setup_other").equalsIgnoreCase("true"));
+        perm.setSetup_social(this.get(request, "setup_social").equalsIgnoreCase("true"));
+        perm.setSetup_theme(this.get(request, "setup_theme").equalsIgnoreCase("true"));
+        perm.setOperation_balance_history(
+                this.get(request, "operation_balance_history").equalsIgnoreCase("true"));
+        perm.setOperation_benefit_projection(
+                this.get(request, "operation_benefit_projection").equalsIgnoreCase("true"));
+        perm.setOperation_contribution_history(
+                this.get(request, "operation_contribution_history").equalsIgnoreCase("true"));
+        perm.setOperation_personal_info(this.get(request, "operation_personal_info").equalsIgnoreCase("true"));
+        perm.setOperation_statement_of_account(
+                this.get(request, "operation_statement_of_account").equalsIgnoreCase("true"));
+        perm.setUsers(this.get(request, "users").equalsIgnoreCase("true"));
+        perm.setUser_enable_disable(this.get(request, "user_enable_disable").equalsIgnoreCase("true"));
+        perm.setAudit_trail(this.get(request, "audit_trail").equalsIgnoreCase("true"));
+        perm.setPortal_member_add(this.get(request, "portal_member_add").equalsIgnoreCase("true"));
+        perm.setPortal_member_delete(this.get(request, "portal_member_delete").equalsIgnoreCase("true"));
+        perm.setPortal_member_process(this.get(request, "portal_member_process").equalsIgnoreCase("true"));
+        perm.setPortal_member_view(this.get(request, "portal_member_view").equalsIgnoreCase("true"));
+        perm.setPortal_members(this.get(request, "portal_members").equalsIgnoreCase("true"));
+        perm.setPortal_sponsor_add(this.get(request, "portal_sponsor_add").equalsIgnoreCase("true"));
+        perm.setPortal_sponsor_delete(this.get(request, "portal_sponsor_delete").equalsIgnoreCase("true"));
+        perm.setPortal_sponsor_process(this.get(request, "portal_sponsor_process").equalsIgnoreCase("true"));
+        perm.setPortal_sponsor_view(this.get(request, "portal_sponsor_view").equalsIgnoreCase("true"));
+        perm.setPortal_sponsors(this.get(request, "portal_sponsors").equalsIgnoreCase("true"));
+        perm.setPassword_policy(this.get(request, "password_policy").equalsIgnoreCase("true"));
+        if (permissionEJB.edit(perm) != null)
+            this.respond(response, true, "Permissions successfully saved", null);
+        else
+            this.respond(response, false, "Permissions could not be saved", null);
+    }
+    private void showPermissions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Permission perm = permissionEJB.findByProfile(this.get(request, "profile"));
+        request.setAttribute("permissions", perm);
+        request.getRequestDispatcher("dashboard/permissions.jsp").forward(request, response);
+    }
+    private void showMemberBeneficiary(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (this.get(request, "type").equals("EDIT")) {
+            List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(this.get(request, "memberID"));
+            request.setAttribute("beneficiaries", beneficiaries);
+        }
+        request.setAttribute("beneficiary_id", this.get(request, "beneficiaryID"));
+        request.setAttribute("type", this.get(request, "type"));
+        request.getRequestDispatcher("member/beneficiary.jsp").forward(request, response);
+    }
+    private void updateMember(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject member = new JSONObject();
+        String firstname = this.get(request, "firstname");
+        String surname = this.get(request, "surname");
+        String othernames = this.get(request, "othernames");
+        String postalAddress = this.get(request, "postalAddress");
+        String maritalStatus = this.get(request, "maritalStatus");
+        String phoneNumber = this.get(request, "phoneNumber");
+        String emailAddress = this.get(request, "emailAddress");
+        String memberID = this.get(request, "memberID");
+        String salary = this.get(request, "currentAnnualPensionableSalary");
+        String city = this.get(request, "city");
+        DateFormat df = new SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH);
+        Date dob = null;
+        try {
+            dob = df.parse(this.get(request, "dateOfBirth"));
+        } catch (ParseException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        }
+        String status = "ACTIVE";
+        String gender = this.get(request, "gender").toUpperCase();
+        DateFormat format_ = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        try {
+            member.put("member.surname", surname).put("member.firstname", firstname)
+                    .put("member.othernames", othernames).put("member.person.biodata.town", city)
+                    .put("member.dob", format_.format(dob)).put("member.id", memberID).put("member.gender", gender)
+                    .put("member.mbshipStatus", status).put("member.address.email", emailAddress)
+                    .put("member.person.biodata.cellPhone", phoneNumber)
+                    .put("member.currentAnnualPensionableSalary", salary)
+                    .put("member.person.biodata.postalAddress", postalAddress)
+                    .put("member.maritalStatus", maritalStatus);
+            boolean status_ = apiEJB.saveOrUpdateMember(member.toString());
+            this.respond(response, status_, status_ ? "Member details were successfully saved" : "Member details could not be saved", null);
+        } catch (JSONException e) {
+            this.respond(response, false, "Sorry, something didn't work out right. Couldn't save the member details", null);
+        }
+    }
+    private void editBeneficiary(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String FILE_SEPERATOR, String SCHEME_DOC_ROOT_FOLDER, String scheme_doc_folder) {
+        boolean attachment = false;
+        String attachment_path = null;
+        String attachment_name = null;
+        try {
+            for (Part part : request.getParts()) {
+                String fileName = extractFileName(part);
+                if (!fileName.equals("")) {
+                    jLogger.i("File name is :::::::::" + fileName);
+                    File path = new File(getServletContext().getRealPath("/"));
+                    if (scheme_doc_folder == null) {
+                        scheme_doc_folder = path.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getPath() + FILE_SEPERATOR + SCHEME_DOC_ROOT_FOLDER;
+                        helper.createFolderIfNotExists(scheme_doc_folder);
+                    }
+                    try {
+                        String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
+                        String fullpath = scheme_doc_folder + FILE_SEPERATOR + fileName;
+                        jLogger.i("full path is:" + fullpath);
+                        part.write(fullpath);
+                        jLogger.i("Complete file path is: " + fullpath);
+                        attachment_name = fileName;
+                        attachment_path = fullpath;
+                        attachment = true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            JSONObject b = new JSONObject();
+            String beneficiary_id = this.get(request, "beneficiary_id");
+            String memberID = this.get(request, "memberID");
+            jLogger.i("The member Id passed is <<<<<<<<<<< " + memberID + " >>>>>>>>>>");
+            String relationshipCategory = this.get(request, "relationshipCategory");
+            String surname = this.get(request, "surname");
+            String lumpsum = this.get(request, "lumpsum");
+            String firstname = this.get(request, "firstname");
+            jLogger.i("First name to be passed: " + firstname);
+            String gender = this.get(request, "gender");
+            String maritalStatus = this.get(request, "maritalStatus");
+            String status = this.get(request, "status");
+            String othernames = this.get(request, "othernames");
+            String relationship = this.get(request, "relationship");
+            String attachment_url = attachment_path;
+            jLogger.i("Attachment URL is ::::::::::::::::::> " + attachment_url);
+            try {
+                if (this.get(request, "type").equalsIgnoreCase("EDIT")) {
+                    b.put("ben.memberId", memberID).put("ben.relationship", relationship)
+                            .put("ben.attachmentname", attachment_name)
+                            .put("beneficiary.id", beneficiary_id)
+                            .put("ben.relShipCategory", relationshipCategory).put("ben.surname", surname)
+                            .put("ben.firstname", firstname).put("ben.othernames", othernames).put("ben.dob", "")
+                            .put("ben.gender", gender).put("ben.monthlyEntitlement", 0)
+                            .put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
+                            .put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
+                            .put("ben.physicalCondition", "").put("ben.status", status);
+                    if (attachment)
+                        b.put("ben.attachment", attachment_url);
+                    else
+                        b.put("ben.attachment", new ArrayList<String>());
+                } else if (this.get(request, "type").equalsIgnoreCase("ADD")) {
+                    b.put("ben.memberId", memberID).put("beneficiary.id", beneficiary_id)
+                            .put("ben.relationship", relationship).put("ben.attachmentname", attachment_name)
+                            .put("ben.relShipCategory", relationshipCategory)
+                            .put("ben.surname", surname).put("ben.firstname", firstname)
+                            .put("ben.othernames", othernames).put("ben.dob", "").put("ben.gender", gender)
+                            .put("ben.monthlyEntitlement", 0).put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
+                            .put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
+                            .put("ben.physicalCondition", "").put("ben.status", status);
+                    if (attachment)
+                        b.put("ben.attachment", attachment_url);
+                    else
+                        b.put("ben.attachment", new ArrayList<String>());
+                }
+                boolean done = apiEJB.saveOrUpdateBeneficiary(b.toString());
+                this.respond(response, done, done ? "Beneficiary information was successfully updated" : "Beneficiary information could not be updated", null);
 
-				}
-			} catch (JSONException | NullPointerException e1) {
-
-				out.write(helper
-						.result(false,
-								"We are sorry, we encountered a problem obtaining your email address. Please try again")
-						.toString());
-
-			}
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("CHANGE_PASSWORD")) {
-			PasswordPolicy policy = helper.getPasswordPolicy();
-			String securityCode = request.getParameter("securityCode");
-			String username = session.getAttribute(Constants.USER).toString();
-			String password = request.getParameter("currentPassword");
-			String new_password = request.getParameter("newPassword");
-			User u = helper.login(username, password);
-			if (u != null) {
-				if (u.getSecurityCode().equalsIgnoreCase(securityCode)) {
-					if (!(usedPasswordEJB.isUsed(new_password) && policy.isPassword_reuse())) {
-						try {
-							u.setPassword(helper.hash(new_password));
-							Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
-							u.setPassword_expiry(password_expiry);
-							userEJB.edit(u);
-							helper.audit(session, "Changed password");
-							out.write(helper.result(true, "Your password was changed successfully").toString());
-						} catch (Exception e) {
-							out.write(helper.result(false, "Sorry, your password could not be changed").toString());
-
-						}
-					} else {
-						out.write(helper
-								.result(false,
-										"Sorry, the new password entered has already been used once. You cannot re-use the password.")
-								.toString());
-
-					}
-				} else {
-					out.write(helper
-							.result(false, "Sorry, your security code is invalid. Please enter a valid security code.")
-							.toString());
-				}
-			} else {
-				out.write(helper.result(false, "The current password you entered is wrong. Please try again.")
-						.toString());
-			}
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("AP")) {
-
-			DateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-			Date date = new Date();
-			
-			//jLogger.i("Date is: " + format.format(date));
-			//jLogger.i("Scheme id: " + session.getAttribute(Constants.SCHEME_ID).toString());
-			
-			String result = helper.getAccountingPeriod(format.format(date), session.getAttribute(Constants.SCHEME_ID).toString());
-			
-			//jLogger.i("Result is: " + result);
-			
-			out.write(result);
-		} else if (request.getParameter(REQUEST_ACTION).equals("FV")) {
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-			Date date = new Date();
-			
-			/*String sendDate = format.format(date);
-			String schemeId = session.getAttribute(Constants.SCHEME_ID).toString();
-			
-			jLogger.i("Date is: " + sendDate);
-			jLogger.i("Scheme id: " + schemeId);
-			
-			String accountingPeriod = helper.getAccountingPeriod(sendDate, schemeId);
-			
-			jLogger.i("Accounting Period from Xi: " + accountingPeriod);*/
-			
-			
-			// String result =
-			// helper.getFundValue(request.getParameter("accountingPeriodId"),
-			// session.getAttribute(Constants.SCHEME_ID).toString(),session.getAttribute(Constants.PROFILE_ID).toString());
-			String result = helper.getFundValueAsAt(format.format(date), request.getParameter("accountingPeriodId"),
-					session.getAttribute(Constants.SCHEME_ID).toString(),
-					session.getAttribute(Constants.PROFILE_ID).toString());
-			
-			//jLogger.i("Accounting periodId: " + request.getParameter("accountingPeriodId"));
-			//jLogger.i("Scheme id: " + session.getAttribute(Constants.SCHEME_ID).toString());
-			//jLogger.i("Profile id: " + session.getAttribute(Constants.PROFILE_ID).toString());
-			
-			
-			out.write(result);
-		} else if (request.getParameter(REQUEST_ACTION).equals("HELP")) {
-			Help h = helpEJB.findById(helper.toLong(request.getParameter("ID")));
-			h.setPage(request.getParameter("page"));
-			h.setDescription(request.getParameter("description"));
-			helpEJB.edit(h);
-			helper.audit(session, "Updated portal help content for page " + request.getParameter("page"));
-			out.write(helper.result(true, "content edited").toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("REMOVE_BANNER")) {
-			Banner b = bannerEJB.findById(helper.toLong(request.getParameter("id")));
-
-			if (bannerEJB.delete(b))
-				out.write(helper.result(true, "Banner image successfully deleted").toString());
-			else
-				out.write(helper.result(false, "Banner image could not be deleted").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("REMOVE_LOGO")) {
-			
-			Logo lg = logoEJB.findById(helper.toLong(request.getParameter("id")));
-
-			if (logoEJB.delete(lg)) 
-				out.write(helper.result(true, "Logo successfully deleted").toString());
-			else
-				out.write(helper.result(false, "Logo could not be deleted").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("PAGE_CONTENT")) {
-
-			PageContent pc = pageContentEJB.findById(helper.toLong(request.getParameter("ID")));
-			pc.setPage(request.getParameter("page"));
-			pc.setText(request.getParameter("description"));
-			pc.setPosition(request.getParameter("position"));
-			pc.setPublish(request.getParameter("publish").equalsIgnoreCase("true"));
-			if (pageContentEJB.edit(pc) != null) {
-				helper.audit(session, "Updated portal page content for page " + request.getParameter("page"));
-				out.write(helper.result(true, "Content was successfully updated").toString());
-			} else
-				out.write(helper.result(true, "Content could not be updated").toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("THEME")) {
-
-			Theme theme = themeEJB.findById(helper.toLong(request.getParameter("theme_id")));
-			theme.setMajor(request.getParameter("major"));
-			theme.setMinor(request.getParameter("minor"));
-			theme.setFont(request.getParameter("font"));
-			theme.setOther(request.getParameter("other"));
-			theme.setHeader(request.getParameter("header"));
-			theme.setContent(request.getParameter("content"));
-			theme.setFooter(request.getParameter("footer"));
-			if (themeEJB.edit(theme) != null) {
-				helper.audit(session, "Updated portal theme settings");
-				out.write(helper.result(true, "Theme settings saved").toString());
-			} else
-				out.write(helper.result(false, "Theme settings not saved").toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("INTEREST_RATE_COLUMNS")) {
-			boolean accountingPeriod = request.getParameter("accountingPeriod").equalsIgnoreCase("true");
-			boolean contributions = request.getParameter("contributions").equalsIgnoreCase("true");
-			boolean dateDeclared = request.getParameter("dateDeclared").equalsIgnoreCase("true");
-			boolean openingBalances = request.getParameter("openingBalances").equalsIgnoreCase("true");
-			boolean pensionDrawDown = request.getParameter("pensionDrawDown").equalsIgnoreCase("true");
-			boolean year = request.getParameter("year").equalsIgnoreCase("true");
-			InterestRateColumns irc = interestRateColumnEJB.find();
-			irc.setDateDeclared(dateDeclared);
-			irc.setYear(year);
-			irc.setContributions(contributions);
-			irc.setOpeningBalances(openingBalances);
-			irc.setPensionDrawDown(pensionDrawDown);
-			irc.setAccountingPeriod(accountingPeriod);
-			irc.setDateDeclaredText(request.getParameter("dateDeclaredText"));
-			irc.setYearText(request.getParameter("yearText"));
-			irc.setContributionsText(request.getParameter("contributionsText"));
-			irc.setOpeningBalancesText(request.getParameter("openingBalancesText"));
-			irc.setPensionDrawDownText(request.getParameter("pensionDrawDownText"));
-			irc.setAccountingPeriodText(request.getParameter("accountingPeriodText"));
-
-			if (interestRateColumnEJB.edit(irc) != null) {
-				helper.audit(session, "Updated interest rate column settings");
-				out.write(helper.result(true, "Interest rate settings successfully saved").toString());
-			} else
-				out.write(helper.result(false, "Interest rate settings could not be saved").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("SETTINGS")) {
-			Setting settings = settingEJB.find();
-			if (request.getParameter("encrypt").equalsIgnoreCase("true")) {
-				settings.setXiPath(helper.encrypt(request.getParameter("fundmasterXi")));
-				settings.setUsername(helper.encrypt(request.getParameter("username")));
-				settings.setPassword(helper.encrypt(request.getParameter("password")));
-				settings.setPortalBaseURL(helper.encrypt(request.getParameter("portalBaseURL")));
-				settings.setXiReportPath(helper.encrypt(request.getParameter("xiReportPath")));
-				settings.setXiReportUsername(helper.encrypt(request.getParameter("xiReportUsername")));
-				settings.setXiReportPassword(helper.encrypt(request.getParameter("xiReportPassword")));
-			} else {
-				settings.setXiPath(request.getParameter("fundmasterXi"));
-				settings.setUsername(request.getParameter("username"));
-				settings.setPassword(request.getParameter("password"));
-				settings.setPortalBaseURL(request.getParameter("portalBaseURL"));
-				settings.setXiReportPath(request.getParameter("xiReportPath"));
-				settings.setXiReportUsername(request.getParameter("xiReportUsername"));
-				settings.setXiReportPassword(request.getParameter("xiReportPassword"));
-			}
-			settings.setMemberOnboarding(request.getParameter("memberOnboarding"));
-			settings.setSponsorOnboarding(request.getParameter("sponsorOnboarding"));
-			settings.setEncrypt(request.getParameter("encrypt").equalsIgnoreCase("true"));
-
-			if (settingEJB.edit(settings) != null) {
-				helper.audit(session, "Updated other portal settings and configurations");
-				out.write(helper.result(true, "Portal Settings & Configurations successfully saved").toString());
-			} else
-				out.write(helper.result(true, "Portal Settings & Configurations could not be saved").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("MENU")) {
-			/* Menu Update Request */
-			boolean annuityQuotationActive = request.getParameter("annuityQuotationActive").equalsIgnoreCase("true");
-			boolean potentialMemberActive = request.getParameter("potentialMemberActive").equalsIgnoreCase("true");
-			boolean potentialSponsorActive = request.getParameter("potentialSponsorActive").equalsIgnoreCase("true");
-			boolean interestRatesActive = request.getParameter("interestRatesActive").equalsIgnoreCase("true");
-			boolean whatIfAnalysisActive = request.getParameter("whatIfAnalysisActive").equalsIgnoreCase("true");
-			boolean contactUsActive = request.getParameter("contactUsActive").equalsIgnoreCase("true");
-			
-			Menu menu = menuEJB.find();
-			menu.setAnnuityQuotationActive(annuityQuotationActive);
-			menu.setPotentialMemberActive(potentialMemberActive);
-			menu.setPotentialSponsorActive(potentialSponsorActive);
-			menu.setInterestRatesActive(interestRatesActive);
-			menu.setWhatIfAnalysisActive(whatIfAnalysisActive);
-			menu.setContactUsActive(contactUsActive);
-			menu.setAnnuityQuotationName(request.getParameter("annuityQuotationName"));
-			menu.setPotentialMemberName(request.getParameter("potentialMemberName"));
-			menu.setPotentialSponsorName(request.getParameter("potentialSponsorName"));
-			menu.setInterestRatesName(request.getParameter("interestRatesName"));
-			menu.setWhatIfAnalysisName(request.getParameter("whatIfAnalysisName"));
-			menu.setContactUsName(request.getParameter("contactUsName"));
-			if (menuEJB.edit(menu) != null) {
-				helper.audit(session, "Updated portal menu configuration settings");
-				out.write(helper.result(true, "Portal menu configurations successfully saved").toString());
-			} else
-				out.write(helper.result(true, "Portal menu configurations could not be saved").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("LOGOUT")) {
-			/* Logout Request */
-			helper.logActivity("", "logged out", session.getAttribute(Constants.UID).toString(), null,
-					session.getAttribute(Constants.U_PROFILE).toString());
-			helper.audit(session, "Logged out of the portal");
-			session.invalidate();
-			out.write(helper.result(true, "You have been successfully logged out").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("SOCIAL")) {
-			/* Social Media Links Update Request */
-			Social social = socialEJB.find();
-			social.setTwitter(request.getParameter("twitter"));
-			social.setFacebook(request.getParameter("facebook"));
-			social.setLinkedin(request.getParameter("linkedin"));
-			social.setGoogle(request.getParameter("google"));
-			social.setYoutube(request.getParameter("youtube"));
-			social.setPinterest(request.getParameter("pinterest"));
-			if (socialEJB.edit(social) != null) {
-				helper.audit(session, "Updated portal social network settings");
-				out.write(helper.result(true, "Social network details successfully saved").toString());
-			} else
-				out.write(helper.result(false, "Social network details could not be saved").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("REMOVE_CONTACT_REASON")) {
-			ContactCategory cc = contactCategoryEJB.findById(helper.toLong(request.getParameter("id")));
-			if (contactCategoryEJB.delete(cc)) {
-				helper.audit(session, "Deleted a contact category: " + cc.getName());
-
-				out.write(helper.result(true, "Contact category was successfully deleted").toString());
-			} else
-				out.write(helper.result(false, "Contact category could not be deleted").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("REMOVE_MEDIA")) {
-			Media m = helper.getMediaById(helper.toLong(request.getParameter("id")));
-			if (mediaEJB.delete(m)) {
-				helper.audit(session, "Deleted a media/file: " + m.getName());
-				out.write(helper.result(true, "Media/File was successfully deleted").toString());
-			} else
-				out.write(helper.result(true, "Media/File could not be deleted").toString());
-
-		} else if (request.getParameter(REQUEST_ACTION).equals("MEMBER_PERMISSION")) {
-			MemberPermission mp = new MemberPermission(
-					Long.valueOf(request.getParameter("member_permission_id")).longValue(),
-					request.getParameter("memberNo").equalsIgnoreCase("true"),
-					request.getParameter("partyRefNo").equalsIgnoreCase("true"),
-					request.getParameter("partnerNo").equalsIgnoreCase("true"),
-					request.getParameter("policyNo").equalsIgnoreCase("true"),
-					request.getParameter("staffNo").equalsIgnoreCase("true"),
-					request.getParameter("name").equalsIgnoreCase("true"),
-					request.getParameter("idNumber").equalsIgnoreCase("true"),
-					request.getParameter("pinNo").equalsIgnoreCase("true"),
-					request.getParameter("postalAddress").equalsIgnoreCase("true"),
-					request.getParameter("phoneNumber").equalsIgnoreCase("true"),
-					request.getParameter("emailAddress").equalsIgnoreCase("true"),
-					request.getParameter("gender").equalsIgnoreCase("true"),
-					request.getParameter("dateOfBirth").equalsIgnoreCase("true"),
-					request.getParameter("maritalStatus").equalsIgnoreCase("true"),
-					request.getParameter("country").equalsIgnoreCase("true"),
-					request.getParameter("town").equalsIgnoreCase("true"),
-					request.getParameter("annualPensionableSalary").equalsIgnoreCase("true"));
-
-			if (memberPermissionEJB.edit(mp) != null) {
-				helper.audit(session, "Updated member edit permissions");
-				out.write(helper.result(true, "Member edit permissions successfully saved").toString());
-			} else
-				out.write(helper.result(false, "Member edit permissions could not be saved").toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("PLF")) {
-			List<ProfileLoginField> pfs = helper.getProfileLoginFields();
-			boolean status = true;
-			for (ProfileLoginField plf : pfs) {
-				plf.setOrdinal(request.getParameter(String.valueOf(plf.getId())));
-				status = status && profileLoginFieldEJB.edit(plf) != null;
-			}
-			if (status) {
-				helper.audit(session, "Updated the profile unique login fields for the various user profiles");
-				out.write(helper.result(true, "Profile login ordinals successfully saved").toString());
-			} else
-				out.write(helper.result(true, "Profile login ordinals could not be saved").toString());
-		} else if (request.getParameter(REQUEST_ACTION).equals("ADD_CONTACT_REASON")) {
-			if (request.getParameter("type").equalsIgnoreCase("ADD")) {
-				ContactCategory cc = new ContactCategory();
-				cc.setName(request.getParameter("name"));
-				if (contactCategoryEJB.add(cc) != null) {
-					helper.audit(session, "Added a new contact category " + request.getParameter("name"));
-					out.write(helper.result(true, "Contact category successfully saved").toString());
-				} else
-					out.write(helper.result(true, "Contact category could not be saved").toString());
-			} else {
-				ContactCategory cc = helper.findConcactCategoryById(helper.toLong(request.getParameter("id")));
-				cc.setName(request.getParameter("name"));
-				if (contactCategoryEJB.edit(cc) != null) {
-					helper.audit(session, "Updated a contact category " + request.getParameter("name"));
-					out.write(helper.result(true, "Contact category successfully saved").toString());
-				} else
-					out.write(helper.result(true, "Contact category could not be saved").toString());
-			}
-		} else if (request.getParameter(REQUEST_ACTION).equals("LOGO")) {
-			
-			
-			for (Part part : request.getParts()) {
-				String fileName = extractFileName(part);
-				if (!fileName.equals("")) {
-					
-					//Save banner to directory
-					String fullpath = request.getServletContext().getRealPath("");
-					
-					String savePath = fullpath + File.separator + LOGO_DIR;
-					
-					System.out.println("full path is:" + savePath);
-					
-					System.out.println("Filename is:" + fileName);
-					
-					
-					
-					File fileSaveDir = new File(savePath);
-					if (!fileSaveDir.exists()) {
-						fileSaveDir.mkdir();
-					}
-					
-					savePath = fullpath + File.separator + LOGO_DIR + File.separator + fileName;
-					part.write(savePath);
-					System.out.println("Where the banner is saved ================>  " + savePath);
-					
-					//Save banner to database as blob
-
-					File file = new File(savePath);
-					
-					byte[] bFile = new byte[(int) file.length()];
-
-					try {
-						FileInputStream fileInputStream = new FileInputStream(file);
-
-						// Convert file into array of bytes
-						fileInputStream.read(bFile);
-						fileInputStream.close();
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					
-					//convert to blob
-					Blob fileBlob;
-					
-					try {
-						
-						fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
-												
-						try {
-							
-							List<Logo> logoz = logoEJB.findAll();
-														
-							for(Logo logo:logoz)
-							{
-								logoEJB.delete(logo);
-							}
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						
-						Logo logo = new Logo();						
-						logo.setPath(savePath);
-						logo.setImage(fileBlob);
-						logo.setName(fileName);
-						
-
-						if (logoEJB.add(logo) != null) {
-							helper.audit(session, "Uploaded a logo for the portal");
-							out.write(helper.result(true, "Logo was successfully uploaded").toString());
-						} else
-							out.write(helper.result(true, "Logo could not be uploaded").toString());
-					
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		} else if (request.getParameter(REQUEST_ACTION).equals("BANNER")) {
-			for (Part part : request.getParts()) {
-				String fileName = extractFileName(part);
-				if (!fileName.equals("")) {
-					
-					//Save banner to directory
-					String fullpath = request.getServletContext().getRealPath("");
-					
-					String savePath = fullpath + File.separator + BANNER_DIR;
-					
-					System.out.println("full path is:" + savePath);
-					
-					
-					File fileSaveDir = new File(savePath);
-					if (!fileSaveDir.exists()) {
-						fileSaveDir.mkdir();
-					}
-					
-					savePath = fullpath + File.separator + BANNER_DIR + File.separator + fileName;
-					part.write(savePath);
-					System.out.println("Where the banner is saved ================>  " + savePath);
-					
-					//Save banner to database as blob
-
-					File file = new File(savePath);
-					byte[] bFile = new byte[(int) file.length()];
-
-					try {
-						FileInputStream fileInputStream = new FileInputStream(file);
-
-						// Convert file into array of bytes
-						fileInputStream.read(bFile);
-						fileInputStream.close();
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					
-					//convert to blob
-					Blob fileBlob;
-					
-					try {
-						
-						fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
-						Banner banner = new Banner();
-						banner.setPath(savePath);		
-						banner.setName(fileName);						
-						banner.setImage(fileBlob);
-						
-						if (bannerEJB.add(banner) != null) {
-							helper.audit(session, "Uploaded a banner for the portal");
-							out.write(helper.result(true, "Banner image was successfully uploaded").toString());
-						} else
-							out.write(helper.result(true, "Banner image could not be uploaded").toString());
-
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-
-				}
-			}
-		} else if (request.getParameter(REQUEST_ACTION).equals("MEDIA")) {
-
-			for (Part part : request.getParts()) {
-				String fileName = extractFileName(part);
-				if (!fileName.equals("")) {
-					// Get absolute path (fullpath)
-					String fullpath = request.getServletContext().getRealPath("");
-
-					String savePath = fullpath + File.separator + MEDIA_DIR;
-					//System.out.println("full path is:" + savePath);
-
-					File fileSaveDir = new File(savePath);
-					if (!fileSaveDir.exists()) {
-						fileSaveDir.mkdir();
-					}
-
-					savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
-					part.write(savePath);
-					System.out.println("Complete file path is: " + savePath);
-
-					// Save image into database
-
-					File file = new File(savePath);
-					byte[] bFile = new byte[(int) file.length()];
-
-					try {
-						FileInputStream fileInputStream = new FileInputStream(file);
-
-						// Convert file into array of bytes
-						fileInputStream.read(bFile);
-						fileInputStream.close();
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-
-					//convert to blob
-					Blob fileBlob;
-
-					try {
-						fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
-
-						Date date = new Date();
-						Media media = new Media(fileName, session.getAttribute(Constants.SCHEME_ID).toString(),request.getParameter("description"), request.getParameter("access"), date);
-						media.setFile(fileBlob);
-						media.setPath(savePath);		
-
-						boolean administrator;
-						try {
-							administrator = request.getParameter(Constants.ADMIN_PROFILE).equals("on");
-						} catch (NullPointerException npe) {
-							administrator = false;
-						}
-						boolean member;
-						try {
-							member = request.getParameter(Constants.MEMBER_PROFILE).equals("on");
-						} catch (NullPointerException npe) {
-							member = false;
-						}
-						boolean agent;
-						try {
-							agent = request.getParameter(Constants.AGENT_PROFILE).equals("on");
-						} catch (NullPointerException npe) {
-							agent = false;
-						}
-						boolean sponsor;
-						try {
-							sponsor = request.getParameter("SPONSOR").equals("on");
-						} catch (NullPointerException npe) {
-							sponsor = false;
-						}
-						boolean trustee;
-						try {
-							trustee = request.getParameter("TRUSTEE").equals("on");
-						} catch (NullPointerException npe) {
-							trustee = false;
-						}
-						boolean custodian;
-						try {
-							custodian = request.getParameter("CUSTODIAN").equals("on");
-						} catch (NullPointerException npe) {
-							custodian = false;
-						}
-						boolean crm;
-						try {
-							crm = request.getParameter("CUSTOMER_RELATIONSHIP_MANAGER").equals("on");
-						} catch (NullPointerException npe) {
-							crm = false;
-						}
-						boolean cre;
-						try {
-							cre = request.getParameter("CUSTOMER_RELATIONSHIP_EXECUTIVE").equals("on");
-						} catch (NullPointerException npe) {
-							cre = false;
-						}
-						boolean fm;
-						try {
-							fm = request.getParameter("FUND_MANAGER").equals("on");
-						} catch (NullPointerException npe) {
-							fm = false;
-						}
-						boolean pensioner;
-						try {
-							pensioner = request.getParameter("PENSIONER").equals("on");
-						} catch (NullPointerException npe) {
-							pensioner = false;
-						}
-						media.setAdministrator(administrator);
-						media.setAgent(agent);
-						media.setCre(cre);
-						media.setCrm(crm);
-						media.setFundManager(fm);
-						media.setCustodian(custodian);
-						media.setPensioner(pensioner);
-						media.setSponsor(sponsor);
-						media.setMember(member);
-						media.setTrustee(trustee);
-						try {
-							media.setMemberId(Long.valueOf(request.getParameter("member_id")));
-						} catch (NullPointerException | NumberFormatException npe) {
-							media.setMemberId(Long.valueOf("0"));
-						}
-						if (mediaEJB.add(media) != null) {
-							helper.audit(session, "Uploaded a media file");
-							out.write(helper.result(true, "Media file successfully uploaded").toString());
-						} else
-							out.write(helper.result(true, "Media file was not uploaded").toString());
-					} catch (SerialException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		} else if (request.getParameter(REQUEST_ACTION).equals("EMAIL")) {
-			String url = request.getRequestURL().toString();
-			String baseURL = url.substring(0, url.length() - request.getRequestURI().length())
-					+ request.getContextPath() + "/";
-
-			boolean attachment = false;
-			String attachment_url = null;
-			String path = getServletContext().getRealPath("/")+ MEDIA_DIR;
-
-			try {
-				for (Part part : request.getParts()) {
-					String fileName = extractFileName(part);
-
-					if (!fileName.equals("")) {
-
-						//Get absolute path
-						String fullpath = request.getServletContext().getRealPath("");
-
-						//String savePath = fullpath + File.separator + MEDIA_DIR;
-						
-						System.out.println("full path is:" + path);
-
-						File fileSaveDir = new File(path);
-						if (!fileSaveDir.exists()) {
-							fileSaveDir.mkdir();
-						}
-						path = getServletContext().getRealPath("/")+ MEDIA_DIR + File.separator + fileName;
-						//savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
-						part.write(path);
-						System.out.println("Complete file path is: " + path);
-
-						//attachment_url = baseURL + MEDIA_DIR + File.separator + fileName;
-						attachment_url = path;
-						attachment = true;
-					}
-				}
-				String subject = request.getParameter("subject") + " [" + request.getParameter("category") + "]";
-				String message = request.getParameter("message");
-				Company company = helper.getCompany();
-				
-	           //String senderName = session.getAttribute(Constants.MEMBER_NAME).toString();
-	           
-				
-				//String memberID = request.getParameter("memberID");
-				//User u = userEJB.findById(helper.toLong(userID));
-				//Member m = memberEJB.findById(helper.toLong(memberID));
-					
-				//User us = helper.findByUsernameAndProfile(request.getParameter("email"), Constants.MEMBER_PROFILE);
-			    //XiMember m = helper.getMemberDetails(u.getProfileID().toString());
-			    //String senderName =m.getName();
-				//XiMember m = helper.getMemberDetails(u.getProfileID().toString());
-				
-				
-				//XiMember senderName = helper.getMemberDetails(m.getName().toString());
-				
-				//String senderId = session.getAttribute(Constants.UID).toString();
-				//System.out.println("SENDER ID ========================> " +senderId);
-				
-				String senderId = session.getAttribute(Constants.PROFILE_ID).toString();
-				System.out.println("SENDER ID ========================> " +senderId);
-				
-			//	Member m = memberEJB.findById(helper.toLong(senderId));
-				XiMember mbr = helper.getMemberDetails(senderId.toString(), null);
-				String senderName = mbr.getName();
-				System.out.println("SENDER NAME ======================> " + senderName);
-	
-				
-				
-				JSONObject resp = helper.sendNotification(company.getEmail(),session.getAttribute(Constants.USER).toString(), senderName, subject, message,
-						session.getAttribute(Constants.SCHEME_ID).toString(), attachment, attachment_url);
-				if (resp.get("success").equals(true)) {
-					out.write(helper.result(true, "The email was successfully sent").toString());
-
-				} else {
-					out.write(helper.result(true, "We are sorry, but we were unable to send the email address")
-							.toString());
-
-				}
-			} catch (JSONException je) {
-				out.write(helper.result(false, "Email could not be sent").toString());
-			}
-		}
-	}
-
-	/**
-	 * Extracts file name from HTTP header content-disposition
-	 */
-	private String extractFileName(Part part) {
-		String contentDisp = part.getHeader("content-disposition");
-		String[] items = contentDisp.split(";");
-		for (String s : items) {
-			if (s.trim().startsWith("filename")) {
-				return s.substring(s.indexOf("=") + 2, s.length() - 1);
-			}
-		}
-		return "";
-	}
+            } catch (JSONException e) {
+                this.respond(response, false, "Sorry, something didn't work out right. Couldn't save the beneficiary details", null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void adminPasswordReset(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String userID = this.get(request, "userID");
+        User u = userEJB.findById(helper.toLong(userID));
+        if (u != null) {
+            String password = helper.shorterUUID(UUID.randomUUID().toString(), 0);
+            u.setPassword(helper.hash(password));
+            String email_address = null;
+            String schemeId = null;
+            boolean proceed = false;
+            JSONObject res;
+            String memberID;
+            XiMember member = apiEJB.memberExists(u.getUserProfile(), u.getUsername());
+            if (member != null) {
+                jLogger.i("memberID " + member.getId() + " u.getProfileID() " + u.getProfileID());
+                if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+                    member = apiEJB.getMemberDetails(helper.toString(member.getId()), null);
+                    session.setAttribute("member_id", member.getId());
+                    email_address = member.getEmailAddress();
+                    schemeId = member.getSchemeId();
+                    proceed = helper.isEmailAddress(email_address);
+                } else {
+                    member = apiEJB.getMemberDetails(u.getUserProfile(), helper.toString(member.getId()));
+                    if (member != null) {
+                        session.setAttribute("member_id", member.getId());
+                        email_address = member.getEmailAddress();
+                        schemeId = member.getSchemeId();
+                        proceed = helper.isEmailAddress(email_address);
+                    } else
+                        proceed = false;
+                }
+                if (proceed) {
+                    Setting settings = settingEJB.find();
+                    Company company = companyEJB.find();
+                    apiEJB.sendEmail(email_address, company.getEmail(), null, "MSS Portal Password Reset",
+                            "Dear " + u.getUserProfile() + ",<br />"
+                                    + "Your password has been reset on the FundMaster Xi Member Self Service Portal. Your new password is "
+                                    + password + ".<br />Please click this <a href='" + settings.getPortalBaseURL()
+                                    + "sign-in'>link</a> to gain access to the Self Service Portal",
+                            schemeId, false, null);
+                    if (userEJB.edit(u) != null)
+                        this.respond(response, true,
+                                "<strong>Password Reset Successful</strong><br /> Success! The user's password has been reset. An email has been sent to the user with the new password.", null);
+                    else
+                        this.respond(response, false,
+                                "We could not complete the requested action as we were unable to obtain the user's email address", null);
+                } else {
+                    this.respond(response, false,
+                            "We could not complete the requested action as we were unable to obtain the user's email address", null);
+                }
+            } else
+                this.respond(response, false,
+                        "We could not complete the requested action as we were unable to obtain the user's email address", null);
+        }
+    }
+    private void updateProfileNames(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        List<ProfileName> pNames = profileNameEJB.find();
+        boolean status = true;
+        for (ProfileName pName : pNames) {
+            pName.setName(this.get(request, pName.getProfile()));
+            status = status && profileNameEJB.edit(pName) != null;
+        }
+        if (status) {
+            audit(session, "Updated profile name settings");
+            this.respond(response, true, "Profile name settings successfully saved", null);
+        } else
+            this.respond(response, false, "Profile name settings could not be saved", null);
+    }
+    private void getSchemeContributions(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject result = apiEJB.getSchemeContributions(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));
+        this.respond(response, true, "success", result);
+    }
+    private void updateCompany(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    /* Company Details Update Request */
+        Country country = countryEJB.findById(helper.toLong(this.get(request, "country")));
+        Company company = new Company(helper.toLong(this.get(request, "company_id")),
+                this.get(request, "companyName"), this.get(request, "streetAddress"),
+                this.get(request, "telephone"), this.get(request, "fax"),
+                this.get(request, "emailAddress"), this.get(request, "email"), this.get(request, "city"),
+                country, this.get(request, "geolocation"));
+        if (companyEJB.edit(company) != null) {
+            audit(session, "Updated company details");
+            this.respond(response, true, "success", null);
+        } else
+            this.respond(response, false, "failed", null);
+    }
+    private void switchScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        session.setAttribute(Constants.SCHEME_ID, this.get(request, "schemeID"));
+        this.respond(response, true, "success", null);
+    }
+    /**
+     * Extracts file name from HTTP header content-disposition
+     */
+    String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
+    }
 }

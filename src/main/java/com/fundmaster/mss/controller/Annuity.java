@@ -1,19 +1,18 @@
 package com.fundmaster.mss.controller;
 
+import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
-import org.json.JSONException;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,9 +21,9 @@ import java.util.List;
 import java.util.Locale;
 
 @WebServlet(name = "Annuity", urlPatterns = {"/annuity-quotation"})
-public class Annuity extends HttpServlet implements Serializable {
-	@EJB
-	Helper helper;
+public class Annuity extends BaseServlet implements Serializable {
+
+	Helper helper = new Helper();
 	private static final String YYYY_MM_DD = "yyyy-MM-dd";
 	private static final String DD_MM_YYYY = "dd-MM-yyyy";
 	/**
@@ -57,16 +56,13 @@ public class Annuity extends HttpServlet implements Serializable {
 	@EJB
 	ProfileLoginFieldEJB profileLoginFieldEJB;
 	@EJB
-	BannerEJB bannerEJB;
+	ImageBannerEJB imageBannerEJB;
 	@EJB
 	PermissionEJB permissionEJB;
 	private static final long serialVersionUID = 1L;
-
-	public Annuity() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
+	@EJB
+	ApiEJB apiEJB;
+	private final JLogger jLogger = new JLogger(this.getClass());
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
 		Company company = companyEJB.find();
@@ -85,155 +81,93 @@ public class Annuity extends HttpServlet implements Serializable {
 		request.setAttribute("genders",  genders);
 		List<MaritalStatus> marital_statuses = maritalStatusEJB.find();
 		request.setAttribute("maritalStatuses",  marital_statuses);
-		List<AnnuityProduct> annuityProducts = null;
-		try {
-			annuityProducts = helper.getAnnuityProducts();
-			
-			System.out.println("The Annuity Products passed: " + annuityProducts);
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		List<AnnuityProduct> annuityProducts;
+		annuityProducts = apiEJB.getAnnuityProducts();
+		jLogger.i("The Annuity Products passed: " + annuityProducts);
 		request.setAttribute("annuityProducts", annuityProducts);
 		request.setAttribute("noMenu", false);
 		Help help = helpEJB.findHelp(Constants.PAGE_ANNUITY_QUOTATION);
 		request.setAttribute("help", help);
 		PageContent content = pageContentEJB.findPageContent(Constants.PAGE_ANNUITY_QUOTATION);
 		request.setAttribute("content", content);
-		helper.logActivity(Constants.PAGE_ANNUITY_QUOTATION, "accesed annuity quotation page", "0", null, null);
+		logActivity(Constants.PAGE_ANNUITY_QUOTATION, "accesed annuity quotation page", "0", null, null);
 		request.getRequestDispatcher("annuity-quotation.jsp").forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-    	PrintWriter out = response.getWriter();
-    	
-      /*String[] names = request.getParameter("fullName").split(" ");
-    	String firstName, lastName, otherNames;
-        firstName = lastName = otherNames = null;
-		if(names.length > 0)
-		{
-			firstName = names[0];
-		}
-        if(names.length > 1)
-        {
-            lastName = names[1];
-        }
-        if(names.length > 2)
-        {
-            otherNames = names[2];
-        }
-        else if(names.length ==  0)
-        {
-            firstName = "";
-            
-           System.out.println("************* First name is: " + firstName+ " ***********************");
-            
-            lastName = "";
-            
-            System.out.println("************* Last name is: " + lastName+ " ***********************");
-            
-            otherNames = "";
-            
-            System.out.println("************* Other name is: " + otherNames+ " ***********************");
-            
-        }*/
-    	
-
-		DateFormat format = new SimpleDateFormat(DD_MM_YYYY, Locale.ENGLISH);
+    	DateFormat format;
 		Date purchaseDate;
 		Date pensionStartDate;
 		Date dateOfBirth;
 		Date spouseDateOfBirth;
 
-    	purchaseDate = helper.dateFromString(request.getParameter("purchaseDate"), DD_MM_YYYY);
+    	purchaseDate = helper.dateFromString(this.get(request, "purchaseDate"), DD_MM_YYYY);
     	
-    	System.out.println("************* Purchase date is: " + purchaseDate+ " ***********************");
+    	jLogger.i("************* Purchase date is: " + purchaseDate+ " ***********************");
     	
-    	pensionStartDate = helper.dateFromString(request.getParameter("commencementDate"), DD_MM_YYYY);
+    	pensionStartDate = helper.dateFromString(this.get(request, "commencementDate"), DD_MM_YYYY);
     	
-    	System.out.println("************* Pension start date is: " + pensionStartDate+ " ***********************");
+    	jLogger.i("************* Pension start date is: " + pensionStartDate+ " ***********************");
     	
     	format = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
 
-    	dateOfBirth = helper.dateFromString(request.getParameter("dateOfBirth"), DD_MM_YYYY);
+    	dateOfBirth = helper.dateFromString(this.get(request, "dateOfBirth"), DD_MM_YYYY);
     	
-    	System.out.println("************* Date of birth is: " + dateOfBirth+ " ***********************");
+    	jLogger.i("************* Date of birth is: " + dateOfBirth+ " ***********************");
     	
-    	spouseDateOfBirth = helper.dateFromString(request.getParameter("spouseDateOfBirth"), DD_MM_YYYY);
+    	spouseDateOfBirth = helper.dateFromString(this.get(request, "spouseDateOfBirth"), DD_MM_YYYY);
     	
-    	System.out.println("************* Spouse Date of birth is: " + spouseDateOfBirth+ " ***********************");
-		
-    	
-    	try {
-    		
-    		if(spouseDateOfBirth == null) {
-        		
+    	jLogger.i("************* Spouse Date of birth is: " + spouseDateOfBirth+ " ***********************");
+		if(spouseDateOfBirth == null) {
         		spouseDateOfBirth = new Date();
-        	}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
     	
     	
     	//String firstName, lastName, otherNames;
     	
-    	String firstName = request.getParameter("firstName");
-    	String lastName = request.getParameter("lastName");
-    	String otherNames = request.getParameter("otherNames");
-    	
-    	try {
+    	String firstName = this.get(request, "firstName");
+    	String lastName = this.get(request, "lastName");
+    	String otherNames = this.get(request, "otherNames");
     		
-    		if(otherNames == null) {
-    			
-    			otherNames = "";
-    		}
-    		
-    		System.out.println("************* Other name is: " + otherNames+ " ***********************");
-			
-		} catch (Exception e) {
-			// TODO: handle exception
+		if(otherNames == null) {
+
+			otherNames = "";
 		}
+
+		jLogger.i("************* Other name is: " + otherNames+ " ***********************");
+
     	
-		String calculationMode = request.getParameter("calculationMode");
+		String calculationMode = this.get(request, "calculationMode");
 		
-		System.out.println("************* Calculation Mode is : " + calculationMode + " ***********************");
+		jLogger.i("************* Calculation Mode is : " + calculationMode + " ***********************");
 		
-		String targetPension = request.getParameter("targetPension");
+		String targetPension = this.get(request, "targetPension");
 		
-		System.out.println("************* Target Pension is : " + targetPension + " ***********************");
+		jLogger.i("************* Target Pension is : " + targetPension + " ***********************");
 		
-		String spouseReversal = request.getParameter("spouseReversal");
+		String spouseReversal = this.get(request, "spouseReversal");
 		
-		System.out.println("************* Spouse reversal is : " + spouseReversal + " ***********************");
+		jLogger.i("************* Spouse reversal is : " + spouseReversal + " ***********************");
 		
 		Boolean displayable = Boolean.TRUE;
 		
 		
-		//Boolean displayable = Boolean.valueOf(request.getParameter("displayable") != null);
+		//Boolean displayable = Boolean.valueOf(this.get(request, "displayable") != null);
 				
-		System.out.println("Value of displayable is :::::::::::::::::::::::::::>  " + displayable);
+		jLogger.i("Value of displayable is :::::::::::::::::::::::::::>  " + displayable);
 		
-		Gender gender = helper.genderById(Long.valueOf(request.getParameter("gender")));
+		Gender gender = genderEJB.findById(helper.toLong(this.get(request, "gender")));
 		
-		System.out.println("************* Gender is : " + gender.getName() + " ***********************");
+		jLogger.i("************* Gender is : " + gender.getName() + " ***********************");
 		
-		Gender spouseGender = helper.genderById(Long.valueOf(request.getParameter("spouseGender")));
+		Gender spouseGender = genderEJB.findById(helper.toLong(this.get(request, "spouseGender")));
 		
-		System.out.println("************* Spouse Gender is : " + spouseGender.getName() + " ***********************");
+		jLogger.i("************* Spouse Gender is : " + spouseGender.getName() + " ***********************");
 		
-		String productID = request.getParameter("annuityProduct");
-		System.out.println("************* Product Id is : " + productID + " ***********************");
-		
-    	try {
-    		String result = helper.getAnnuityQuote(calculationMode, productID, lastName, firstName, otherNames, request.getParameter("idNumber"), request.getParameter("residentialAddress"), request.getParameter("emailAddress"), request.getParameter("phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), request.getParameter("guaranteePeriod"), request.getParameter("annualPensionIncrease"), request.getParameter("paymentMode"), request.getParameter("paymentFrequency"), request.getParameter("registeredPurchasePrice"), request.getParameter("unRegPurchasePrice"), targetPension, request.getParameter("annuityMode"), spouseReversal, displayable, spouseGender.getName(), format.format(spouseDateOfBirth));
-			out.write(result);
-		} catch (JSONException e) {
-
-				out.write(helper.result(false, "An error was encountered processing your query. Please try again or contact the administrator").toString());
-
-		}
+		String productID = this.get(request, "annuityProduct");
+		jLogger.i("************* Product Id is : " + productID + " ***********************");
+		this.respond(response, true, "", apiEJB.getAnnuityQuote(calculationMode, productID, lastName, firstName, otherNames, this.get(request, "idNumber"), this.get(request, "residentialAddress"), this.get(request, "emailAddress"), this.get(request, "phoneNumber"), format.format(purchaseDate), format.format(pensionStartDate), format.format(dateOfBirth), gender.getName(), this.get(request, "guaranteePeriod"), this.get(request, "annualPensionIncrease"), this.get(request, "paymentMode"), this.get(request, "paymentFrequency"), this.get(request, "registeredPurchasePrice"), this.get(request, "unRegPurchasePrice"), targetPension, this.get(request, "annuityMode"), spouseReversal, displayable, spouseGender.getName(), format.format(spouseDateOfBirth)));
 		
 	}
 	

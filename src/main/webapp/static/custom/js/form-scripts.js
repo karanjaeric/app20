@@ -375,29 +375,16 @@ $(document)
 													dataType : 'json',
 													success : function(json) {
 														stop_wait();
-														var success = false;
-														var message = null;
-														$
-																.each(
-																		json,
-																		function(
-																				key,
-																				value) {
-																			if (key == 'success'
-																					&& value == true) {
-																				$("form#"
-																						+ form)[0]
-																						.reset();
-																				window.location.href = $(
-																						'#base_url')
-																						.val()
-																						+ 'admin';
-																				success = true;
-																			}
-																			if (key == 'message') {
-																				message = value;
-																			}
-																		});
+														if(json.success)
+														{
+															$("form#"
+																+ form)[0]
+																.reset();
+															window.location.href = $(
+																	'#base_url')
+																	.val()
+																+ 'admin';
+														}
 														if (message == null) {
 															message = 'Oops! We are sorry, but something unexpected just went wrong. Please try again';
 														}

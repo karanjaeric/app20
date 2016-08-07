@@ -5,11 +5,8 @@ import com.fundmaster.mss.common.Constants;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 @Entity
 @Table (name = "tbl_sponsors")
 public class Sponsor extends GenericModel<Sponsor> implements Serializable{
@@ -38,12 +35,14 @@ public class Sponsor extends GenericModel<Sponsor> implements Serializable{
 	}
 
 	private String employerRefNo;
+	@ManyToOne
 	private Sector sector;
 	private String emailAddress;
 	private String phoneNumber;
 	private String companyAddress;
 	private String city;
 	private String scheme;
+	@ManyToOne
 	private Country country;
 	private String agentId;
 	public String getAgentId() {

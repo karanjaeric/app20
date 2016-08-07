@@ -13,12 +13,11 @@ public class SettingDAO extends GenericDAOImpl<Setting, Long> {
     public SettingDAO(EntityManager entityManager)
     {
         super(Setting.class, entityManager);
-        EntityManager em = entityManager;
     }
 
     public Setting find()
     {
         List<Setting> settingList = this.findAll();
-        return settingList.size() > 0 ? settingList.get(0) : null;
+        return settingList != null && settingList.size() > 0 ? settingList.get(0) : null;
     }
 }

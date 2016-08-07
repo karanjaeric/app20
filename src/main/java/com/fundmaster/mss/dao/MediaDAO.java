@@ -10,7 +10,7 @@ import java.util.List;
  * Created by bryanitur on 1/29/2016.
  */
 public class MediaDAO extends GenericDAOImpl<Media, Long> {
-    private EntityManager em;
+    private final EntityManager em;
     public MediaDAO(EntityManager entityManager)
     {
         super(Media.class, entityManager);
@@ -22,9 +22,9 @@ public class MediaDAO extends GenericDAOImpl<Media, Long> {
         List<Media> entities;
         String field = getField(profile);
         if(profile.equals(Constants.MEMBER_PROFILE))
-            entities = em.createQuery("SELECT m FROM Media m WHERE scheme=:scheme AND m." + field + " = 1 AND (memberId =:member_id OR memberId =:null_member)").setParameter("member_id", Long.valueOf(memberId)).setParameter("null_member",  Long.valueOf("0")).setParameter("scheme", schemeID).getResultList();
+            entities = em.createQuery("SELECT m FROM Media m WHERE m.schemeID=:scheme AND m." + field + " = 1 AND (memberId =:member_id OR memberId =:null_member)").setParameter("member_id", Long.valueOf(memberId)).setParameter("null_member",  Long.valueOf("0")).setParameter("scheme", schemeID).getResultList();
         else
-            entities = em.createQuery("SELECT m FROM Media m WHERE scheme=:scheme AND m." + field + " = 1").setParameter("scheme", schemeID).getResultList();
+            entities = em.createQuery("SELECT m FROM Media m WHERE m.schemeID=:scheme AND m." + field + " = 1").setParameter("scheme", schemeID).getResultList();
 
         return entities;
     }

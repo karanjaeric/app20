@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import org.hibernate.type.BlobType;
 @Entity
 @Table (name = "tbl_media")
 public class Media extends GenericModel<Media>  implements Serializable {
@@ -45,7 +43,7 @@ public class Media extends GenericModel<Media>  implements Serializable {
 	private Blob file;
 	
 	
-	String path;
+	private String path;
 
 	public String getPath() {
 		return path;

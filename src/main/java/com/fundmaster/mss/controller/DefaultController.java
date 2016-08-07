@@ -8,35 +8,23 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.model.Banner;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.Country;
-import com.fundmaster.mss.model.Gender;
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.Logo;
-import com.fundmaster.mss.model.MaritalStatus;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.PageContent;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Theme;
+import com.fundmaster.mss.model.*;
 
 @WebServlet(name = "DefaultController", urlPatterns = {"/index"})
-public class DefaultController extends HttpServlet implements Serializable {
+public class DefaultController extends BaseServlet implements Serializable {
 
 	public DefaultController() {
 		// TODO Auto-generated constructor stub
 	}
 	private static final long serialVersionUID = 1L;
-	@EJB
-	Helper helper;
+
+	Helper helper = new Helper();
 	@EJB
 	ActivityLogEJB activityLogEJB;
 	@EJB
@@ -66,14 +54,14 @@ public class DefaultController extends HttpServlet implements Serializable {
 	@EJB
 	ProfileLoginFieldEJB profileLoginFieldEJB;
 	@EJB
-	BannerEJB bannerEJB;
+	ImageBannerEJB imageBannerEJB;
 	@EJB
 	LogoEJB logoEJB;
 	@EJB
 	PermissionEJB permissionEJB;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-		helper.logActivity("HOME", "accesed home page", "0", null, null);
+		logActivity("HOME", "accesed home page", "0", null, null);
 		List<Country> countries = countryEJB.find();
 		request.setAttribute("countries",  countries);
 		List<Gender> genders = genderEJB.find();
@@ -86,12 +74,12 @@ public class DefaultController extends HttpServlet implements Serializable {
 		request.setAttribute("social", social);
 		Setting settings = settingEJB.find();
 		request.setAttribute("settings", settings);
-		String plf = helper.getLoginField(Constants.MEMBER_PROFILE);
+		String plf = profileLoginFieldEJB.findByProfile(Constants.MEMBER_PROFILE);
 		request.setAttribute("plf", plf);
 		Menu menu = menuEJB.find();
 		request.setAttribute("menu", menu);
-		List<Banner> banners = bannerEJB.find();
-		request.setAttribute("banners", banners);
+		List<com.fundmaster.mss.model.ImageBanner> imageBanners = imageBannerEJB.find();
+		request.setAttribute("imageBanners", imageBanners);
 	
 		Theme theme = themeEJB.find();
 		request.setAttribute("theme", theme);

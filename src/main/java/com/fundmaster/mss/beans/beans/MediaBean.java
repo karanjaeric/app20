@@ -23,6 +23,12 @@ public class MediaBean implements MediaEJB {
     private EntityManager entityManager;
 
     @Override
+    public Media findById(long id) {
+        MediaDAO dao = new MediaDAO( entityManager);
+        return dao.findById(id);
+    }
+
+    @Override
     public Media add(Media media) {
         MediaDAO dao = new MediaDAO(entityManager);
         return dao.save(media);

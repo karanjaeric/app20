@@ -22,7 +22,7 @@ public class ActivityLogBean implements ActivityLogEJB {
     @PersistenceContext(unitName = Constants.MYSQL_PERSISTENCE_UNIT)
     private EntityManager entityManager;
     @Override
-    public ActivityLog add(ActivityLog activityLog) {
+    public void add(ActivityLog activityLog) {
         ActivityLogDAO dao = new ActivityLogDAO(entityManager);
         return dao.save(activityLog);
     }

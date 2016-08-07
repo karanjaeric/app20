@@ -12,7 +12,6 @@ public class MemberPermissionDAO extends GenericDAOImpl<MemberPermission, Long> 
     public MemberPermissionDAO(EntityManager entityManager)
     {
         super(MemberPermission.class, entityManager);
-        EntityManager em = entityManager;
     }
 
     public MemberPermission find()

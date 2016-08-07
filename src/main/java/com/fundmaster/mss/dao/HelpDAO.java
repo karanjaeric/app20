@@ -9,7 +9,7 @@ import java.util.List;
  * Created by bryanitur on 1/29/2016.
  */
 public class HelpDAO extends GenericDAOImpl<Help, Long> {
-    private EntityManager em;
+    private final EntityManager em;
     public HelpDAO(EntityManager entityManager)
     {
         super(Help.class, entityManager);

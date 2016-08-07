@@ -1,34 +1,31 @@
 package com.fundmaster.mss.controller;
 
+import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
 
 
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
-public class LoginController extends HttpServlet implements Serializable {
+public class LoginController extends BaseServlet implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@EJB
-	Helper helper;
+
+	Helper helper = new Helper();
 	@EJB
 	ProfileNameEJB profileNameEJB;
 	@EJB
@@ -56,15 +53,14 @@ public class LoginController extends HttpServlet implements Serializable {
 	@EJB
 	ProfileLoginFieldEJB profileLoginFieldEJB;
 	@EJB
-	BannerEJB bannerEJB;
+	ImageBannerEJB imageBannerEJB;
 	@EJB
 	PermissionEJB permissionEJB;
 	
 	JLogger JLogger = new JLogger(this.getClass());
 	
-	public LoginController() {
-		super();
-	}
+	@EJB
+	ApiEJB apiEJB;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
@@ -88,7 +84,7 @@ public class LoginController extends HttpServlet implements Serializable {
 		if(session != null)
 		{ 
 			try {
-				if((session.getAttribute(Constants.LOGIN).equals(true) && (session.getAttribute(Constants.U_PROFILE).equals(Constants.ADMIN_PROFILE) || helper.isManager(request))))
+				if((session.getAttribute(Constants.LOGIN).equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.ADMIN_PROFILE) || helper.isManager(request))))
 				{
 					response.sendRedirect(getServletContext().getContextPath() + "/admin");
 					
@@ -117,65 +113,9 @@ public class LoginController extends HttpServlet implements Serializable {
 			HttpServletResponse response) throws ServletException, IOException {
 		/* On Successful Authentication */
 		HttpSession session = request.getSession();
-    	PrintWriter out = response.getWriter();
     	
-		User u = helper.login(request.getParameter("username"), request.getParameter("password"));
-		
-		/*if(u != null)
-		{
-			if(u.isStatus())
-			{
-				 JSONObject res = null;
-				try {
-					 res = helper.memberExists(u.getUserProfile(), u.getUsername());
-				} catch (JSONException je) {
-					// TODO Auto-generated catch block
-					jLogger.i("JSON Exception was detected: " + je.getMessage());
-				}
-				
-				try {
-					if((res != null && res.get("success").equals(true)) && !res.get("memberId").toString().equals("0"))
-					{
-						session.setAttribute(Constants.USER, u.getUsername());
-						session.setAttribute(Constants.UID, u.getId());
-						session.setAttribute(Constants.PROFILE_ID, res.get("memberId"));
-						session.setAttribute(Constants.LOGIN, true);
-						session.setAttribute(Constants.U_PROFILE, res.get("profile"));
-						helper.resetAttempt(request.getParameter("username"));
-						helper.logActivity(Constants.AL, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
+		User u = userEJB.findUser(this.get(request, "username"), this.get(request, "password"));
 
-							out.write(helper.result(true, "login successful").toString());
-
-					}
-					else
-					{
-							out.write(helper.result(false, "Login failed.<br /> Invalid username and/or password.<br /> Please try again").toString());
-
-					}
-				} catch (JSONException je) {
-
-						out.write(helper.result(false, "Login failed.<br /> Could not verify your credentials with Xi.<br /> Please try again").toString());
-
-				}
-			}
-			else
-			{
-				helper.logAttempt(request.getParameter("username"));
-
-					out.write(helper.result(false, "Login Failed!<br />You account has been locked or de-activated. Contact the administrator").toString());
-
-			}
-		}
-		else
-		{
-			helper.logActivity(Constants.AL, "login attempt", "0", null, null);
-			helper.logAttempt(request.getParameter("username"));
-
-				out.write(helper.result(false, "Login failed.<br /> Invalid username and/or password.<br /> Please try again").toString());
-
-			
-		}*/
-		
 		if(u != null)
 		{
 
@@ -183,61 +123,61 @@ public class LoginController extends HttpServlet implements Serializable {
 			{
 				try {
 					if(u.getUserProfile().equals(Constants.ADMIN_PROFILE)  || u.getUserProfile().equals(Constants.SPONSOR) || u.getUserProfile().equals(Constants.AGENT_PROFILE)
-							|| u.getUserProfile().equals("TRUSTEE") || u.getUserProfile().equals(Constants.MANAGER) || u.getUserProfile().equals("CUSTOMER_RELATIONSHIP_EXECUTIVE")
-							|| u.getUserProfile().equals("CUSTOMER_RELATIONSHIP_MANAGER")
+							|| u.getUserProfile().equals(Constants.TRUSTEE) || u.getUserProfile().equals(Constants.MANAGER) || u.getUserProfile().equals(Constants.CUSTOMER_RELATIONSHIP_EXECUTIVE)
+							|| u.getUserProfile().equals(Constants.CUSTOMER_RELATIONSHIP_MANAGER)
 							)
 					{
-						JSONObject res = helper.memberExists(u.getUserProfile(), u.getUsername());
-						if(res.get("success").equals(true) && Long.valueOf(res.get("memberId").toString()) != 0)
+						XiMember xiMember = apiEJB.memberExists(u.getUserProfile(), u.getUsername());
+						if(xiMember != null && xiMember.getId() > 0)
 						{
 							session.setAttribute(Constants.USER, u.getUsername());
 							session.setAttribute(Constants.UID, u.getId());
-							session.setAttribute(Constants.PROFILE_ID, res.get("memberId"));
+							session.setAttribute(Constants.PROFILE_ID, xiMember.getId());
 							session.setAttribute(Constants.LOGIN, true);
-							session.setAttribute(Constants.U_PROFILE, res.get("profile"));
+							session.setAttribute(Constants.U_PROFILE, u.getUserProfile());
 							
-							helper.resetAttempt(request.getParameter("username"));
-							helper.logActivity(Constants.AL, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
+							resetAttempt(this.get(request, "username"));
+							logActivity(Constants.AL, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
 							
-							out.write(helper.result(true, "login successful").toString());
+							this.respond(response, true, "login successful", null);
 							
 						}
 						else
 							{
-							out.write(helper.result(false, "Login failed.<br /> Invalid username and/or password.<br /> Please try again").toString());
+							this.respond(response, false, "Login failed.<br /> Invalid username and/or password.<br /> Please try again", null);
 
 							}
 					}
 					else
 					{
-						helper.logActivity(Constants.AL, "login attempt", "0", null, null);
+						logActivity(Constants.AL, "login attempt", "0", null, null);
 
-							out.write(helper.result(false, "Login Failed!<br />Invalid username and/or password<br />Please try again").toString());
+							this.respond(response, false, "Login Failed!<br />Invalid username and/or password<br />Please try again", null);
 
 					}
-				} catch (NullPointerException | JSONException npje) {
+				} catch (NullPointerException npe) {
 					// TODO Auto-generated catch block
-					helper.logActivity(Constants.AL, "login attempt", "0", null, null);
+					logActivity(Constants.AL, "login attempt", "0", null, null);
 
-						out.write(helper.result(false, "Login Failed!<br />Invalid username and/or password<br />Please try again").toString());
+						this.respond(response, false, "Login Failed!<br />Invalid username and/or password<br />Please try again", null);
 
 				}
 			}
 			else
 			{
-				helper.logAttempt(request.getParameter("username"));
+				logAttempt(this.get(request, "username"));
 
-					out.write(helper.result(false, "Login Failed!<br />You account has been locked or de-activated. Contact the administrator").toString());
+					this.respond(response, false, "Login Failed!<br />You account has been locked or de-activated. Contact the administrator", null);
 
 			}
 			
 		}
 		else
 		{
-			helper.logActivity(Constants.AL, "login attempt", "0", null, null);
-			helper.logAttempt(request.getParameter("username"));
+			logActivity(Constants.AL, "login attempt", "0", null, null);
+			logAttempt(this.get(request, "username"));
 
-				out.write(helper.result(false, "Login Failed!<br />Invalid username and/or password<br />Please try again").toString());
+				this.respond(response, false, "Login Failed!<br />Invalid username and/or password<br />Please try again", null);
 
 			
 		}

@@ -11,6 +11,5 @@ public class SocialDAO extends GenericDAOImpl<Social, Long> {
     public SocialDAO(EntityManager entityManager)
     {
         super(Social.class, entityManager);
-        EntityManager em = entityManager;
     }
 }

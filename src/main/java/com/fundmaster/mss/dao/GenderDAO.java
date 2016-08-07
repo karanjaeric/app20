@@ -11,6 +11,5 @@ public class GenderDAO extends GenericDAOImpl<Gender, Long> {
     public GenderDAO(EntityManager entityManager)
     {
         super(Gender.class, entityManager);
-        EntityManager em = entityManager;
     }
 }

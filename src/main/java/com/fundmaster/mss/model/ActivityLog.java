@@ -28,13 +28,13 @@ public class ActivityLog extends GenericModel<ActivityLog> implements Serializab
 	@Column (name = "description", nullable = false)
 	private
 	String description;
-	@Column (name = "userProfile", nullable = true)
+	@Column (name = "userProfile")
 	private
 	String userProfile;
 	@Column (name = "datetime", nullable = false)
 	private
 	Date datetime;
-	@Column (name = "user_id", nullable = true)
+	@Column (name = "user_id")
 	private
 	Long userID;
 	public Long getUserID() {
@@ -57,7 +57,7 @@ public class ActivityLog extends GenericModel<ActivityLog> implements Serializab
 		this.userProfile = userProfile;
 	}
 
-	@Column (name = "scheme", nullable = true)
+	@Column (name = "scheme")
 	private
 	String scheme;
 	private String access_menu;

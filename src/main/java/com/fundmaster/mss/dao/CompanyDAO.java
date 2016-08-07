@@ -12,7 +12,6 @@ public class CompanyDAO extends GenericDAOImpl<Company, Long> {
     public CompanyDAO(EntityManager entityManager)
     {
         super(Company.class, entityManager);
-        EntityManager em = entityManager;
     }
 
     public Company find()

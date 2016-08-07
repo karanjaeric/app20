@@ -13,8 +13,8 @@ public interface SchemeManagerEJB {
 
     SchemeMemberManager findByUserID(Long userID);
     List<SchemeMemberManager> findAllBySchemeID(String schemeID);
-    SchemeMemberManager add(SchemeMemberManager schemeMemberManager);
+    void add(SchemeMemberManager schemeMemberManager);
     boolean delete(SchemeMemberManager schemeMemberManager);
     SchemeMemberManager findById(long id);
-
+    List<SchemeMemberManager> findAll();
 }

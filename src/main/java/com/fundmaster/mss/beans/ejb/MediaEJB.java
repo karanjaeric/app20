@@ -15,4 +15,5 @@ public interface MediaEJB {
     Media edit(Media media);
     List<Media> findAll(String schemeID, String profile, String memberId);
     boolean delete(Media media);
+    Media findById(long id);
 }

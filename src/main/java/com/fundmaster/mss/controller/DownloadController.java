@@ -12,21 +12,21 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fundmaster.mss.beans.ejb.MediaEJB;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.Media;
 
 @WebServlet(name = "DownloadController", urlPatterns = { "/downloads/*" })
 @MultipartConfig
-public class DownloadController extends HttpServlet implements Serializable {
+public class DownloadController extends BaseServlet implements Serializable {
 	
 	JLogger JLogger = new JLogger(this.getClass());
-	@EJB
-	Helper helper;
+
+    Helper helper = new Helper();
 	
 	public DownloadController() {
 		// TODO Auto-generated constructor stub
@@ -34,10 +34,12 @@ public class DownloadController extends HttpServlet implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
+	@EJB
+	MediaEJB mediaEJB;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		Media m = helper.getMediaById(helper.toLong(request.getPathInfo().substring(1)));
+		Media m = mediaEJB.findById(helper.toLong(request.getPathInfo().substring(1)));
 		
 		try {
 			String filename = m.getName();

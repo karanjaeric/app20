@@ -41,6 +41,12 @@ public class Constants implements Serializable {
 	public static final String NUMBER_ZER0 = "0.00";
 	public static final String EMAIL = "EMAIL";
 	public static final String ALL = "ALL";
+	public static final String CUSTOMER_RELATIONSHIP_EXECUTIVE = "CUSTOMER_RELATIONSHIP_EXECUTIVE";
+	public static final String CUSTOMER_RELATIONSHIP_MANAGER = "CUSTOMER_RELATIONSHIP_MANAGER";
+	public static final String TRUSTEE = "TRUSTEE";
+	public static final String FUND_MANAGER = "FUND_MANAGER";
+	public static final String PENSIONER = "PENSIONER";
+	public static final String CUSTODIAN = "CUSTODIAN";
 	public static int RECORD_COUNT = 0;
 	public static String BASE_URL;
 

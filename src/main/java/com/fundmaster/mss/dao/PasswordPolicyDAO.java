@@ -11,6 +11,5 @@ public class PasswordPolicyDAO extends GenericDAOImpl<PasswordPolicy, Long> {
     public PasswordPolicyDAO(EntityManager entityManager)
     {
         super(PasswordPolicy.class, entityManager);
-        EntityManager em = entityManager;
     }
 }

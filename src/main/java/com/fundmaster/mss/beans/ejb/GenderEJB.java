@@ -15,5 +15,5 @@ public interface GenderEJB {
     Gender edit(Gender gender);
     List<Gender> find();
     boolean delete(Gender gender);
-
+    Gender findById(long id);
 }

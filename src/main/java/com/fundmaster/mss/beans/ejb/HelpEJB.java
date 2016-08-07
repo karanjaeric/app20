@@ -12,7 +12,7 @@ import java.util.List;
 public interface HelpEJB {
 
     Help add(Help help);
-    Help edit(Help help);
+    void edit(Help help);
     List<Help> find();
     boolean delete(Help help);
     Help findHelp(String page);

@@ -32,7 +32,11 @@ public class SchemeManagerBean implements SchemeManagerEJB {
         SchemeMemberManagerDAO dao = new SchemeMemberManagerDAO(entityManager);
         return dao.findById(id);
     }
-
+    @Override
+    public List<SchemeMemberManager> findAll() {
+        SchemeMemberManagerDAO dao = new SchemeMemberManagerDAO(entityManager);
+        return dao.findAll();
+    }
     @Override
     public List<SchemeMemberManager> findAllBySchemeID(String schemeID) {
         SchemeMemberManagerDAO dao = new SchemeMemberManagerDAO(entityManager);
@@ -40,7 +44,7 @@ public class SchemeManagerBean implements SchemeManagerEJB {
     }
 
     @Override
-    public SchemeMemberManager add(SchemeMemberManager schemeMemberManager) {
+    public void add(SchemeMemberManager schemeMemberManager) {
         SchemeMemberManagerDAO dao = new SchemeMemberManagerDAO(entityManager);
         return dao.save(schemeMemberManager);
     }

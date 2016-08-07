@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import nl.captcha.Captcha;
 import nl.captcha.servlet.CaptchaServletUtil;
 @WebServlet(name = "Capture", urlPatterns = {"/captcha", "/captcha/", "/captcha/?*"})
-public class Capture extends HttpServlet{
+public class Capture extends BaseServlet{
 
 	/**
 	 * 
@@ -30,6 +29,7 @@ public class Capture extends HttpServlet{
 	    if ( !sImgType.equalsIgnoreCase("png") && !sImgType.equalsIgnoreCase("jpg") &&
 	    !sImgType.equalsIgnoreCase("jpeg") )
 	    {
+
 		}
 	  }
 

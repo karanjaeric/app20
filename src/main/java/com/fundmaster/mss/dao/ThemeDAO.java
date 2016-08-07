@@ -12,7 +12,6 @@ public class ThemeDAO extends GenericDAOImpl<Theme, Long> {
     public ThemeDAO (EntityManager entityManager)
     {
         super(Theme.class, entityManager);
-        EntityManager em = entityManager;
     }
 
     public Theme find()

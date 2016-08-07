@@ -6,7 +6,6 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,14 +20,14 @@ import com.fundmaster.mss.model.Setting;
 import com.fundmaster.mss.model.Social;
 import com.fundmaster.mss.model.Theme;
 @WebServlet(name = "Contact", urlPatterns = {"/contact-us"})
-public class Contact extends HttpServlet implements Serializable {
+public class Contact extends BaseServlet implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@EJB
-	Helper helper;
+
+	Helper helper = new Helper();
 	@EJB
 	ProfileNameEJB profileNameEJB;
 	@EJB
@@ -56,7 +55,7 @@ public class Contact extends HttpServlet implements Serializable {
 	@EJB
 	ProfileLoginFieldEJB profileLoginFieldEJB;
 	@EJB
-	BannerEJB bannerEJB;
+	ImageBannerEJB imageBannerEJB;
 	@EJB
 	PermissionEJB permissionEJB;
 	public Contact() {
@@ -80,7 +79,7 @@ public class Contact extends HttpServlet implements Serializable {
 		request.setAttribute("settings", settings);
 		PageContent content = pageContentEJB.findPageContent(Constants.PAGE_CONTACT_US);
 		request.setAttribute("content", content);
-		helper.logActivity(Constants.PAGE_CONTACT_US, "accesed contact us page", "0", null, null);
+		logActivity(Constants.PAGE_CONTACT_US, "accesed contact us page", "0", null, null);
 		request.getRequestDispatcher("contact-us.jsp").forward(request, response);
 	}
 }

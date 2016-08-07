@@ -7,14 +7,13 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fundmaster.mss.beans.ejb.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.model.Banner;
+import com.fundmaster.mss.model.ImageBanner;
 import com.fundmaster.mss.model.Company;
 import com.fundmaster.mss.model.Country;
 import com.fundmaster.mss.model.Gender;
@@ -29,13 +28,11 @@ import com.fundmaster.mss.model.Theme;
 import com.fundmaster.mss.model.User;
 
 @WebServlet(name = "Activate", urlPatterns = {"/activate/*"})
-public class Activate extends HttpServlet implements Serializable {
+public class Activate extends BaseServlet implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -347116347501412506L;
-    @EJB
-	Helper helper;
     @EJB
     UserEJB userEJB;
     @EJB
@@ -61,10 +58,10 @@ public class Activate extends HttpServlet implements Serializable {
     @EJB
     ProfileLoginFieldEJB profileLoginFieldEJB;
     @EJB
-    BannerEJB bannerEJB;
+	ImageBannerEJB imageBannerEJB;
     @EJB
     LogoEJB logoEJB;
-    
+    Helper helper = new Helper();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
 		User u = userEJB.findBySecurityCode(request.getQueryString());
@@ -95,16 +92,14 @@ public class Activate extends HttpServlet implements Serializable {
 		request.setAttribute("social", social);
 		Setting settings = settingEJB.find();
 		request.setAttribute("settings", settings);
-		String plf = helper.getLoginField(Constants.MEMBER_PROFILE);
+		String plf = profileLoginFieldEJB.findByProfile(Constants.MEMBER_PROFILE);
 		request.setAttribute("plf", plf);
 		Menu menu = menuEJB.find();
 		request.setAttribute("menu", menu);
-		List<Banner> banners = bannerEJB.find();
-		request.setAttribute("banners", banners);
+		List<ImageBanner> imageBanners = imageBannerEJB.find();
+		request.setAttribute("imageBanners", imageBanners);
 		List<Logo> logos = logoEJB.find();
 		request.setAttribute("logos", logos);
-		/*List<Logo> logos = logoEJB.find();
-		request.setAttribute("logos", logos);*/
 		Theme theme = themeEJB.find();
 		request.setAttribute("theme", theme);
 		Help help = helpEJB.findHelp(Constants.PAGE_HOME);

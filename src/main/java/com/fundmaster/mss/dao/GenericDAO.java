@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by bryanitur on 9/15/15.
  */
-public interface GenericDAO<T> {
+interface GenericDAO<T> {
 
     T save(T entity);
 

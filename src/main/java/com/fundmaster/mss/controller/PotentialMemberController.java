@@ -1,18 +1,16 @@
 package com.fundmaster.mss.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
+
+import com.fundmaster.mss.api.ApiEJB;
 
 import com.fundmaster.mss.beans.ejb.CompanyEJB;
 import com.fundmaster.mss.beans.ejb.CountryEJB;
@@ -40,12 +38,12 @@ import com.fundmaster.mss.model.Social;
 import com.fundmaster.mss.model.Theme;
 
 @WebServlet(name = "PotentialMemberController", urlPatterns = {"/potential-member"})
-public class PotentialMemberController extends HttpServlet implements Serializable {
+public class PotentialMemberController extends BaseServlet implements Serializable {
 	
 	private static final String REQUEST_ACTION = "ACTION";
-	
-	@EJB
-	Helper helper;
+
+
+	Helper helper = new Helper();
 	
 	@EJB
 	CompanyEJB companyEJB;
@@ -82,10 +80,8 @@ public class PotentialMemberController extends HttpServlet implements Serializab
 	
 	private static final long serialVersionUID = 1L;
 	
-	public PotentialMemberController() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	@EJB
+	ApiEJB apiEJB;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -110,46 +106,22 @@ public class PotentialMemberController extends HttpServlet implements Serializab
 		List<MaritalStatus> marital_statuses = maritalStatusEJB.find();
 		request.setAttribute("maritalStatuses",  marital_statuses);
 		
-		List<Scheme> memberSchemes = null;
-		/*try {
-			memberSchemes = helper.getSchemes(0, 10000);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
-		try {
-			memberSchemes = helper.getSchemeByPlanType("INDIVIDUAL_PENSION_FUND");
-			
-			
-		} catch (JSONException e) {
-		  e.printStackTrace();
-		}
-		
+		List<Scheme> memberSchemes = apiEJB.getSchemeByPlanType("INDIVIDUAL_PENSION_FUND");
 		request.setAttribute("memberSchemes", memberSchemes);
 		
 		PageContent content = pageContentEJB.findPageContent(Constants.PAGE_POTENTIAL_MEMBER);
 		request.setAttribute("content", content);
-		helper.logActivity(Constants.PAGE_POTENTIAL_MEMBER, "accesed Potential Member page", "0", null, null);
+		logActivity(Constants.PAGE_POTENTIAL_MEMBER, "accesed Potential Member page", "0", null, null);
 		request.getRequestDispatcher("potential-member.jsp").forward(request, response);
 				
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		PrintWriter out = response.getWriter();
-		
-		try {
 			
-			if (request.getParameter(REQUEST_ACTION).equals("ADD_MEMBER")) {
-				JSONObject result = helper.createMember(request);
-				out.write(result.toString());
+			if (this.get(request, REQUEST_ACTION).equals("ADD_MEMBER")) {
+				this.createMember(request, response);
 			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 	}
 

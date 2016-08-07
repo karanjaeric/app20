@@ -9,7 +9,7 @@ import java.util.List;
  * Created by bryanitur on 1/29/2016.
  */
 public class SponsorDAO extends GenericDAOImpl<Sponsor, Long> {
-        private EntityManager em;
+        private final EntityManager em;
         public SponsorDAO(EntityManager entityManager)
         {
             super(Sponsor.class, entityManager);

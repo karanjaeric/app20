@@ -12,7 +12,7 @@ import org.jboss.logging.Logger;
  */
 public class JLogger<T> {
 
-    private Class<T> clazz;
+    private final Class<T> clazz;
 
     public JLogger(Class clazz)
     {

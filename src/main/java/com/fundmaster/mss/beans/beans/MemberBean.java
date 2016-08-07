@@ -37,7 +37,11 @@ public class MemberBean implements MemberEJB {
         MemberDAO dao = new MemberDAO(entityManager);
         return dao.findById(id);
     }
-
+    @Override
+    public int countAll(String search) {
+        MemberDAO dao = new MemberDAO(entityManager);
+        return dao.countAll(search);
+    }
     @Override
     public List<Member> findAll(String agentId, String search, int offset, int limit) {
         MemberDAO dao = new MemberDAO(entityManager);

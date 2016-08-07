@@ -38,4 +38,9 @@ public class MaritalStatusBean implements MaritalStatusEJB {
         MaritalStatusDAO dao = new MaritalStatusDAO(entityManager);
         return dao.findAll();
     }
+    @Override
+    public MaritalStatus findById(long id) {
+        MaritalStatusDAO dao = new MaritalStatusDAO(entityManager);
+        return dao.findById(id);
+    }
 }

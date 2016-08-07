@@ -9,7 +9,7 @@ import java.util.List;
  * Created by bryanitur on 1/29/2016.
  */
 public class UsedPasswordDAO extends GenericDAOImpl<UsedPassword, Long> {
-    private EntityManager em;
+    private final EntityManager em;
     public UsedPasswordDAO(EntityManager entityManager)
     {
         super(UsedPassword.class, entityManager);

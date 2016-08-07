@@ -16,5 +16,5 @@ public interface MemberEJB {
     List<Member> findAll(String agentId, String search, int offset, int limit);
     boolean delete(Member member);
     Member findById(long id);
-
+    int countAll(String search);
 }

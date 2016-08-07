@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans.ejb;
 
-import com.fundmaster.mss.model.ProfileLoginField;
 import com.fundmaster.mss.model.ProfileName;
 
 import javax.ejb.Local;

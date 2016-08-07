@@ -34,8 +34,8 @@ import java.util.*;
 public class ApiBean implements ApiEJB {
     @EJB
     SettingEJB settingEJB;
-    Helper helper = new Helper();
-    private JLogger jLogger = new JLogger(this.getClass());
+    private final Helper helper = new Helper();
+    private final JLogger jLogger = new JLogger(this.getClass());
 
     @EJB
     ProfileLoginFieldEJB profileLoginFieldEJB;
@@ -43,6 +43,28 @@ public class ApiBean implements ApiEJB {
     InterestRateColumnEJB interestRateColumnEJB;
     @EJB
     BenefitsCalculationEJB benefitsCalculationEJB;
+
+    @Override
+    public List<Scheme> getSchemes(int start, int count) {
+        try {
+            JSONObject response = URLGet(APICall.SCHEME_GETSCHEMES + "/?start=" + start + "&size=" + count);
+            return this.schemesFromJSON(response);
+        }   catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public JSONObject getAnnuityQuote(String calculationMode, String productID, String lastName, String firstName, String otherNames, String idNumber, String address, String email, String phoneNumber, String purchaseDate, String pensionStartDate, String dateOfBirth, String gender, String guaranteedPercentage, String annuityIncrement, String paymentMode, String paymentFrequency, String registeredPurchasePrice, String unRegisteredPurchasePrice, String targetPension, String annuityMode, String spouseReversal, Boolean displayable, String spouseGender, String spouseDateOfBirth) {
+        String urlParameters = "productId=" + productID + "&" + "surname=" + lastName + "&" + "firstName=" + firstName + "&" + "otherNames=" + otherNames + "&" + "idNo=" + idNumber + "&" + "address=" + address + "&" + "email=" + email + "&" + "mobileNo=" + phoneNumber + "&" + "purchaseDate=" + purchaseDate + "&" + "pensionStartDate=" + pensionStartDate + "&" + "dob=" + dateOfBirth + "&" + "gender=" + gender.toUpperCase() + "&" + "guaranteedPerc=" + guaranteedPercentage + "&" + "annuityIncrement=" + annuityIncrement + "&" + "paymentMode=" + paymentMode + "&" + "paymentFrequency=" + paymentFrequency + "&" + "spouseReversal=" + spouseReversal + "&" + "displayable=" + displayable + "&" + "dobSpouse=" + spouseDateOfBirth + "&" + "spouseGender=" + spouseGender.toUpperCase() + "&" + "regPurchasePrice=" + registeredPurchasePrice + "&" + "unRegPurchasePrice=" + unRegisteredPurchasePrice + "&" + "calcMode=" + calculationMode + "&" + "targetPension=" + targetPension + "&" + "agentId=" + "0" + "&" + "annuityMode=" + annuityMode;
+        try {
+            return URLPost(APICall.ANNUITY_QUOTE_GETQUOTE, urlParameters, "application/x-www-form-urlencoded");
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
 
     @Override
     public List<Scheme> getSchemeByPlanType(String planType) {
@@ -94,9 +116,10 @@ public class ApiBean implements ApiEJB {
 
     @Override
     public List<Scheme> getSchemeBySchemeModeAndPlanType(String schemeMode, String planType) {
-        JSONObject response;
+        JSONObject response = null;
         try {
             response = URLGet(APICall.SCHEME_GET_SCHEME_BY_SCHEME_MODE_AND_PLAN_TYPE + schemeMode + "/" + planType);
+            jLogger.i("Gotten response " + response);
             if(response.getBoolean(Fields.SUCCESS))
             {
                 return this.schemesFromJSON(response);
@@ -106,7 +129,7 @@ public class ApiBean implements ApiEJB {
                 return null;
             }
         }  catch (JSONException je) {
-            jLogger.e("We have a json exception " + je.getMessage());
+            jLogger.e("We have a json exception " + je.getMessage() + response);
             return null;
         }
     }
@@ -204,7 +227,7 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public BigDecimal getMemberBalances(String memberID) {
+    public JSONObject getMemberBalances(String memberID) {
         try {
             JSONObject response = URLGet(APICall.GET_MEMBER_BALANCES + memberID);
             if(response.getBoolean(Fields.SUCCESS))
@@ -216,10 +239,10 @@ public class ApiBean implements ApiEJB {
                     JSONObject obj = res.getJSONObject(i);
                     total = obj.getDouble(Fields.TOTAL);
                 }
-                return helper.toBigDecimal(total);
+                return new JSONObject().put(Fields.SUCCESS, true).put("total", total);
             }
             else
-                return BigDecimal.ZERO;
+                return null;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
@@ -319,9 +342,9 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public JSONObject searchProfilesJSON(String search, String identifier, String profile, String schemeID) {
+    public JSONObject searchProfilesJSON(String search, String identifier, String profile, String schemeID, int start, int end) {
         try {
-            return URLPost(APICall.SEARCH_FOR_MEMBER_DETAILS + identifier + "/" + search + "/" + profile + "/" + schemeID + "/0/20", "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            return URLPost(APICall.SEARCH_FOR_MEMBER_DETAILS + identifier + "/" + search + "/" + profile + "/" + schemeID + "/" + start + "/" + end, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
         }  catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
@@ -329,11 +352,22 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public String getReasonsForExit() {
+    public List<XiMember> searchProfiles(String search, String identifier, String profile, String schemeID, int start, int end) {
+        try {
+            JSONObject response = URLPost(APICall.SEARCH_FOR_MEMBER_DETAILS + identifier + "/" + search + "/" + profile + "/" + schemeID + "/" + start + "/" + end, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            return this.xiMembersFromJSON(response);
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public JSONObject getReasonsForExit() {
         JSONObject response;
         try {
             response = URLGet(APICall.SCHEME_GET_REASONS_FOR_EXIT + Constants.ALL);
-            return response.toString();
+            return response;
         }  catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
@@ -341,26 +375,23 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public long getExitsInYear(String schemeID) {
-        JSONObject response;
+    public JSONObject getExitsInYear(String schemeID) {
         try {
-            response = URLGet(APICall.SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR + schemeID);
-            return response.getJSONArray(Constants.ROWS).length();
+            return URLGet(APICall.SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR + schemeID);
+
         }  catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
-            return 0;
+            return null;
         }
     }
 
     @Override
-    public BigDecimal getAgentCommission(String agentID) {
-        JSONObject response;
+    public JSONObject getAgentCommission(String agentID) {
         try {
-            response = URLGet(APICall.COMMISSIONS_GET + agentID);
-            return helper.toBigDecimal(response.getDouble(Fields.COMMISSIONTOTAL));
+            return URLGet(APICall.COMMISSIONS_GET + agentID);
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
-            return BigDecimal.ZERO;
+            return null;
         }
     }
 
@@ -390,13 +421,13 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public List<Scheme> searchSchemes(String search) {
+    public JSONObject searchSchemes(String search) {
         JSONObject response;
         try {
             response = URLGet(APICall.SCHEME_GET_SCHEME_BY_NAME + search);
             if(response.getBoolean(Fields.SUCCESS))
             {
-                return this.schemesFromJSON(response);
+                return response;
             }
             else
                 return null;
@@ -459,19 +490,18 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public long getNewMembersInYear(String schemeID, String profileID) {
+    public JSONObject getNewMembersInYear(String schemeID, String profileID) {
         JSONObject response;
         try {
             response = URLPost(APICall.NEW_MEMBER_LISTING_WITHIN_YEAR + schemeID+"/"+profileID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
-            return response.getJSONArray(Constants.ROWS).length();
+            return response;
         }  catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
-            return 0;
+            return null;
         }
     }
-
     @Override
-    public List<Beneficiary> getBeneficiaries(String memberID) {
+    public List<Beneficiary> getBeneficiariesList(String memberID) {
         JSONObject response;
         try {
             response = URLPost(APICall.GET_MEMBER_BENEFICIARIES + memberID,"", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
@@ -480,26 +510,12 @@ public class ApiBean implements ApiEJB {
                 JSONArray res = (JSONArray) response.get(Constants.ROWS);
                 List<Beneficiary> beneficiaries = new ArrayList<>();
                 for(int i = 0; i < res.length(); i ++)
+
                 {
-                    JSONObject jsonObject = res.getJSONObject(i);
+                    JSONObject obj = res.getJSONObject(i);
                     Beneficiary beneficiary = new Beneficiary();
-                    beneficiary.setId(jsonObject.getLong(Fields.ID));
-                    beneficiary.setMemberId(jsonObject.getLong(Fields.MEMBER_NO));
-                    beneficiary.setRelationship(jsonObject.getString(Fields.RELATIONSHIP));
-                    beneficiary.setRelShipCategory(jsonObject.getString(Fields.CATEGORY));
-                    beneficiary.setSurname(jsonObject.getString(Fields.SURNAME));
-                    beneficiary.setFirstname(jsonObject.getString(Fields.FIRSTNAME));
-                    beneficiary.setOthernames(jsonObject.getString(Fields.OTHERNAMES));
-                    beneficiary.setName(jsonObject.getString(Fields.NAME));
-                    beneficiary.setDob(jsonObject.getString(Fields.DOB));
-                    beneficiary.setGender(jsonObject.getString(Fields.GENDER));
-                    beneficiary.setMonthlyEntitlement(jsonObject.getString(Fields.MONTHLY_ENTITLEMENT));
-                    beneficiary.setLumpsumEntitlement(jsonObject.getString(Fields.LUMPSUM_ENTITLEMENT));
-                    beneficiary.setIdNo(jsonObject.getString(Fields.ID_NO));
-                    beneficiary.setPostalAddress(jsonObject.getString(Fields.ADDRESS));
-                    beneficiary.setMstatus(jsonObject.getString(Fields.MSTATUS));
-                    beneficiary.setPhysicalCondition(jsonObject.getString(Fields.PHYSICAL_CONDITION));
-                    beneficiary.setDateOfAppointment(jsonObject.getString(Fields.DATE_OF_APPOINTMENT));
+                    beneficiary.setName(helper.toString(obj.get("name")));
+                    beneficiary.setLumpsumEntitlement(helper.toString(obj.get("lumpsumEntitlement")));
                     beneficiaries.add(beneficiary);
                 }
                 return beneficiaries;
@@ -515,11 +531,42 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public String getSchemeContributions(String schemeID, String profileID) {
+    public JSONObject getBeneficiaries(String memberID) {
+        JSONObject response;
+        try {
+            response = URLPost(APICall.GET_MEMBER_BENEFICIARIES + memberID,"", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                JSONArray res = (JSONArray) response.get(Constants.ROWS);
+                JSONArray resp = new JSONArray();
+                for(int i = 0; i < res.length(); i ++)
+
+                {
+                    JSONObject obj = res.getJSONObject(i);
+                    JSONObject beneficiary = new JSONObject();
+                    beneficiary.put("name", obj.get("name"));
+                    beneficiary.put("amount", obj.get("lumpsumEntitlement"));
+                    resp.put(beneficiary);
+                }
+
+                return new JSONObject().put(Fields.SUCCESS, true).put(Constants.ROWS, resp);
+            }
+            else
+            {
+                return null;
+            }
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public JSONObject getSchemeContributions(String schemeID, String profileID) {
         JSONObject response;
         try {
             response = URLGet(APICall.SCHEME_GETTOTALSCHEMECONTRIBUTIONS + schemeID + "/" + profileID);
-            return  response.toString();
+            return  response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
@@ -527,7 +574,7 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public String getMemberContributions(String memberID) {
+    public JSONObject getMemberContributions(String memberID) {
         JSONObject response;
         try {
             response = URLGet(APICall.GETMEMBERCONTRIBUTIONS + memberID);
@@ -573,7 +620,7 @@ public class ApiBean implements ApiEJB {
                     }
                     json_array.put(new JSONObject().put(Fields.YEAR, aYear).put(Fields.TOTAL, round(yearTotal))).put(data);
                 }
-                return new JSONObject().put(Fields.SUCCESS, true).put(Constants.ROWS, json_array).toString();
+                return new JSONObject().put(Fields.SUCCESS, true).put(Constants.ROWS, json_array);
             }
             else
                 return null;
@@ -612,35 +659,21 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public BigDecimal getMemberCummulativeInterest(String memberID) {
-        JSONObject response;
+    public JSONObject getMemberCummulativeInterest(String memberID) {
         try {
-            response = URLPost(APICall.GET_MEMBER_CUMMULATIVE_INTEREST + memberID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
-            return helper.toBigDecimal(response.getDouble(Fields.CUMMULATIVE_INTEREST));
-        } catch (JSONException je) {
+             return URLPost(APICall.GET_MEMBER_CUMMULATIVE_INTEREST + memberID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
-            return BigDecimal.ZERO;
+            return null;
         }
     }
 
     @Override
-    public long getAccountingPeriod(String date, String schemeID) {
+    public JSONObject getAccountingPeriod(String date, String schemeID) {
         JSONObject response;
         try {
             response = URLPost(APICall.GET_ACCOUNTING_PERIOD_FROM_DATE_FOR_SCHEME + date + "/" + schemeID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
-            return response.getLong(Fields.ACCOUNTING_PERIOD_ID);
-        } catch (JSONException je) {
-            jLogger.e("We have a json exception " + je.getMessage());
-            return 0;
-        }
-    }
-
-    @Override
-    public BigDecimal getFundValueAsAt(String date, String periodType, String schemeID, String profileID) {
-        JSONObject response;
-        try {
-            response = URLGet(APICall.SCHEME_GET_FUND_VALUE_AS_AT + date + "/" + periodType + "/" + schemeID+"/"+profileID);
-            return helper.toBigDecimal(response.getDouble(Fields.FUND_VALUE));
+            return response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
@@ -648,12 +681,22 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public String getSchemeCurrency(String schemeID) {
+    public JSONObject getFundValueAsAt(String date, String periodType, String schemeID, String profileID) {
+        try {
+            return  URLGet(APICall.SCHEME_GET_FUND_VALUE_AS_AT + date + "/" + periodType + "/" + schemeID+"/"+profileID);
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public JSONObject getSchemeCurrency(String schemeID) {
         JSONObject response;
         try {
             response = URLGet(APICall.SCHEME_GET_SCHEME_BASE_CURRENCY + schemeID);
             response = response.getJSONObject(Fields.CURRENCY);
-            return response.getString(Fields.CODE);
+            return response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
@@ -661,13 +704,11 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public BigDecimal getMemberAverageInterest(String memberID) {
-        JSONObject response;
+    public JSONObject getMemberAverageInterest(String memberID) {
         try {
-            response = URLPost(APICall.GET_MEMBER_AVERAGE_INTEREST + memberID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
-            return helper.toBigDecimal(response.getDouble(Fields.AVERAGE_INTEREST));
-        } catch (JSONException je) {
-            return BigDecimal.ZERO;
+            return URLPost(APICall.GET_MEMBER_AVERAGE_INTEREST + memberID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            } catch (JSONException je) {
+            return null;
         }
 
     }
@@ -747,8 +788,11 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLPost(APICall.CHECK_MEMBER_EXISTS + ordinal  + "/" + value + "/" + profile, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            jLogger.i("Response is: " + response);
             XiMember xiMember = new XiMember();
             xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
+            xiMember.setSchemeId(helper.toString(response.get(Fields.SCHEME_ID)));
+            xiMember.setProfile(response.getString(Fields.PROFILE));
             return xiMember;
         } catch (JSONException je) {
             jLogger.e("We have a json exception checking if the member exists");
@@ -775,6 +819,7 @@ public class ApiBean implements ApiEJB {
     private JSONObject URLGet(String link) throws JSONException {
         Setting setting = this.getSettings();
         link = setting.getXiPath() + link;
+        jLogger.i("Http Calling " + link + "....");
         return isHttps(link) ? HttpsGet(link) : HttpGet(link);
     }
     private HttpsURLConnection setHttpsHeaders(Setting settings, HttpsURLConnection httpsConn, String method, String encoding, String params)
@@ -854,7 +899,7 @@ public class ApiBean implements ApiEJB {
                             Charset.defaultCharset());
                     sb = this.readInputStream(in);
                     in.close();
-                    return sb != null ? new JSONObject(sb.toString()) : null;
+                    return sb != null ? new JSONObject(sb.toString().trim()) : null;
                 }
                 else
                 {
@@ -887,14 +932,17 @@ public class ApiBean implements ApiEJB {
     {
 
         Setting settings = settingEJB.find();
-        if(settings.isEncrypt())
+        if(settings != null)
         {
-            settings.setXiPath(decrypt(settings.getXiPath()));
-            settings.setPassword(decrypt(settings.getPassword()));
-            settings.setUsername(decrypt(settings.getUsername()));
-            settings.setXiReportPath(decrypt(settings.getXiReportPath()));
-            settings.setXiReportUsername(decrypt(settings.getXiReportUsername()));
-            settings.setXiReportPassword(decrypt(settings.getXiReportPassword()));
+            if(settings.isEncrypt())
+            {
+                settings.setXiPath(decrypt(settings.getXiPath()));
+                settings.setPassword(decrypt(settings.getPassword()));
+                settings.setUsername(decrypt(settings.getUsername()));
+                settings.setXiReportPath(decrypt(settings.getXiReportPath()));
+                settings.setXiReportUsername(decrypt(settings.getXiReportUsername()));
+                settings.setXiReportPassword(decrypt(settings.getXiReportPassword()));
+            }
         }
         return settings;
     }
@@ -922,7 +970,7 @@ public class ApiBean implements ApiEJB {
                         Charset.defaultCharset());
                 sb = this.readInputStream(in);
                 in.close();
-                return sb != null ? new JSONObject(sb) : null;
+                return sb != null ? new JSONObject(sb.toString().trim()) : null;
             }
             else
             {
@@ -937,6 +985,7 @@ public class ApiBean implements ApiEJB {
     private JSONObject URLPost(String link, String params, String encoding) throws JSONException {
         Setting setting = this.getSettings();
         link = setting.getXiPath() + link;
+        jLogger.i("Http Calling " + link + "....");
         return isHttps(link) ? HttpsPost(link, params, encoding) : HttpPost(link, params, encoding);
     }
     private JSONObject HttpsPost(String link, String params, String encoding) throws JSONException
@@ -971,6 +1020,9 @@ public class ApiBean implements ApiEJB {
         } catch (IOException ioe) {
             jLogger.e("We have an IO exception" + ioe.getMessage());
             return this.technicalError(ioe.getMessage());
+        } catch (NullPointerException npe) {
+            jLogger.e("We have a Null Pointer Exception " + npe.getMessage());
+            return this.technicalError(npe.getMessage());
         }
     }
     private StringBuilder readInputStream(InputStreamReader in)
@@ -983,9 +1035,11 @@ public class ApiBean implements ApiEJB {
                 sb.append((char) cp);
             }
             bufferedReader.close();
+            jLogger.i("Response is " + sb.toString());
             return sb;
         } catch (IOException ioe)
         {
+                jLogger.i("Response is null");
             return null;
         }
     }
@@ -1026,8 +1080,10 @@ public class ApiBean implements ApiEJB {
                     }
                     bufferedReader.close();
                     in.close();
+                    return new JSONObject(sb.toString().trim());
                 }
-                return sb != null ? new JSONObject(sb) : null;
+                else
+                    return null;
             }
             else
             {
@@ -1052,6 +1108,8 @@ public class ApiBean implements ApiEJB {
     {
         XiMember xiMember = new XiMember();
         try {
+            xiMember.setId(jsonObject.getLong(Fields.MEMBER_ID));
+            xiMember.setSchemeId(jsonObject.getString(Fields.SCHEME_ID));
             xiMember.setId(jsonObject.getLong(Fields.ID));
             xiMember.setMbio_id(jsonObject.getString(Fields.MBIO_ID));
             xiMember.setMemberNo(jsonObject.getString(Fields.MEMBER_NO));
@@ -1072,18 +1130,16 @@ public class ApiBean implements ApiEJB {
             xiMember.setDateOfBirth(jsonObject.getString(Fields.DOB));
             xiMember.setMaritalStatus(jsonObject.getString(Fields.MARITAL_STATUS));
             xiMember.setDateJoinedScheme(jsonObject.getString(Fields.DATE_JOINED_SCHEME));
-            xiMember.setSchemeId(jsonObject.getString(Fields.SCHEME_ID));
             xiMember.setTown(jsonObject.getString(Fields.TOWN));
             xiMember.setCountry(jsonObject.getString(Fields.COUNTRY));
             xiMember.setAnnualPensionableSalary(jsonObject.getString(Fields.CURRENT_ANNUAL_PENSIONABLE_SALARY));
             xiMember.setFirstname(jsonObject.getString(Fields.FIRSTNAME));
             xiMember.setSurname(jsonObject.getString(Fields.SURNAME));
             xiMember.setOthernames(jsonObject.getString(Fields.OTHERNAMES));
-            return xiMember;
         } catch (JSONException je) {
             jLogger.e("We have a json exception extracting member" + je.getMessage());
-            return null;
         }
+        return xiMember;
     }
     private List<SchemeReceipt> schemeReceiptsFromJSON(JSONObject response)
     {
@@ -1214,7 +1270,7 @@ public class ApiBean implements ApiEJB {
                 JSONObject jsonObject = res.getJSONObject(i);
                 Scheme scheme = new Scheme();
                 scheme.setId(jsonObject.getLong(Fields.ID));
-                scheme.setName(jsonObject.getString(Fields.NAME));
+                scheme.setName(jsonObject.getString(Fields.SCHEME_NAME));
                 scheme.setPlanType(jsonObject.getString(Fields.PLAN_TYPE));
                 schemes.add(scheme);
             }

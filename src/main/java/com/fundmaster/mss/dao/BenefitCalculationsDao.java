@@ -12,7 +12,6 @@ public class BenefitCalculationsDao extends GenericDAOImpl<BenefitCalculation, L
     public BenefitCalculationsDao(EntityManager entityManager)
     {
         super(BenefitCalculationsDao.class, entityManager);
-        EntityManager em = entityManager;
     }
 
     public BenefitCalculation find()

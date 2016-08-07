@@ -16,4 +16,5 @@ public interface SponsorEJB {
     List<Sponsor> findAll(String agentId, String search, int offset, int limit);
     boolean delete(Sponsor sponsor);
     Sponsor findById(long id);
+    int countAll(String search);
 }

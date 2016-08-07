@@ -9,7 +9,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+import java.util.List;
 /**
  * Created by bryanitur on 1/30/2016.
  */
@@ -33,5 +33,14 @@ public class ProfileLoginFieldBean implements ProfileLoginFieldEJB {
         return profileLoginField == null ? null : profileLoginField.getOrdinal();
     }
 
-
+    @Override
+    public ProfileLoginField find(String profile) {
+        ProfileLoginFieldDAO dao = new ProfileLoginFieldDAO(entityManager);
+        return dao.findByProfile(profile);
+    }
+    @Override
+    public List<ProfileLoginField> find() {
+        ProfileLoginFieldDAO dao = new ProfileLoginFieldDAO(entityManager);
+        return dao.findAll();
+    }
 }

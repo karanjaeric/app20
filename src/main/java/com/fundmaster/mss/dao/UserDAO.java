@@ -9,7 +9,7 @@ import java.util.List;
  * Created by bryanitur on 1/29/2016.
  */
 public class UserDAO extends GenericDAOImpl<User, Long> {
-    private EntityManager em;
+    private final EntityManager em;
     public UserDAO(EntityManager entityManager)
     {
         super(User.class, entityManager);
