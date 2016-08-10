@@ -1,6 +1,7 @@
 package com.fundmaster.mss.dao;
 
 import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.ActivityLog;
 import com.fundmaster.mss.model.PieObject;
 
@@ -13,6 +14,7 @@ import java.util.List;
  */
 public class ActivityLogDAO extends GenericDAOImpl<ActivityLog, Long> {
     private final EntityManager em;
+    Helper helper = new Helper();
     public ActivityLogDAO(EntityManager entityManager)
     {
         super(ActivityLog.class, entityManager);
@@ -23,7 +25,7 @@ public class ActivityLogDAO extends GenericDAOImpl<ActivityLog, Long> {
         // TODO Auto-generated method stub
 
         @SuppressWarnings("unchecked")
-        List<ActivityLog> logs = em.createQuery("SELECT a FROM ActivityLog a WHERE a.userID=:user_id order by a.id desc").setParameter("user_id", user_id).setMaxResults(10).getResultList();
+        List<ActivityLog> logs = em.createQuery("SELECT a FROM ActivityLog a WHERE a.userID=:user_id order by a.id desc").setParameter("user_id", helper.toLong(user_id)).setMaxResults(10).getResultList();
 
         return logs;
     }

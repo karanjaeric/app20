@@ -1,10 +1,14 @@
 	function format_no(yourNumber) {
-	    //Seperates the components of the number
-	    var n= yourNumber.toString().split(".");
-	    //Comma-fies the first part
-	    n[0] = n[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	    //Combines the two sections
-	    return n.join(".");
+	    if(typeof	yourNumber != 'undefined')
+		{
+			//Seperates the components of the number
+			var n= yourNumber.toString().split(".");
+			//Comma-fies the first part
+			n[0] = n[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			//Combines the two sections
+			return n.join(".");
+		}
+		return yourNumber;
 	}
 	/*document.onmousedown=disableclick;
 	function disableclick(event)
@@ -14,6 +18,10 @@
 	     return false;    
 	   }
 	} */
+	function hasKey(json, key)
+	{
+		return json.hasOwnProperty(key);
+	}
 	function reload()
 	{
 		if($('#scheme_id').val() != '')

@@ -111,7 +111,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="surname" class="col-sm-5 control-label">Surname:</label>
+			<label for="ben_surname" class="col-sm-5 control-label">Surname:</label>
 			<div class="col-sm-7">
 				<input type="text" name="surname" id="ben_surname" placeholder="Surname" class="form-control  input-sm" />
 			</div>

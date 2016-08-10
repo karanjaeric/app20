@@ -2,7 +2,10 @@ package com.fundmaster.mss.beans.beans;
 
 import com.fundmaster.mss.beans.ejb.UserEJB;
 import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.dao.UserDAO;
+import com.fundmaster.mss.model.Help;
 import com.fundmaster.mss.model.User;
 
 import javax.ejb.Local;
@@ -17,10 +20,10 @@ import java.util.List;
 @Local
 @Stateless
 public class UserBean implements UserEJB {
-
     @PersistenceContext(unitName = Constants.MYSQL_PERSISTENCE_UNIT)
     private EntityManager entityManager;
-
+    JLogger jLogger = new JLogger(this.getClass());
+    Helper helper = new Helper();
     @Override
     public User findByUsername(String username) {
         UserDAO dao = new UserDAO(entityManager);
@@ -36,6 +39,8 @@ public class UserBean implements UserEJB {
     @Override
     public User findUser(String username, String password) {
         UserDAO dao = new UserDAO(entityManager);
+        password = helper.encrypt(password);
+        jLogger.i("Username is : " + username + ", Password is: " + password);
         return dao.findUser(username, password);
     }
 
@@ -53,6 +58,7 @@ public class UserBean implements UserEJB {
 
     @Override
     public User edit(User user) {
+
         UserDAO dao = new UserDAO(entityManager);
         return dao.merge(user);
     }

@@ -10,7 +10,7 @@
 		<h3 class="text-center"><small>SCHEME MEMBERSHIP</small></h3>
 		<table class="table table-responsive table-striped">
 			<tr><td>ACTIVE MEMBERS</td><td id="active_members">--</td></tr>
-			<tr><td>DEFFERRED MEMBERS</td><td id="deferred_members">--</td></tr>
+			<tr><td>DEFERRED MEMBERS</td><td id="deferred_members">--</td></tr>
 			<tr><td>PENSIONERS</td><td id="pensioner_members">--</td></tr>
 			<tr><td>EXITS IN CURRENT YEAR</td><td id="exits_in_year">--</td></tr>
 			<tr><td>NEW MEMBERS</td><td id="new_members">--</td></tr>
@@ -46,8 +46,6 @@
 			function initialize()
 			{
 				start_wait();
-
-
 				/* Get Agent Commission if agent profile */
 				
 				
@@ -59,6 +57,7 @@
 				        data: {ACTION:'AGENT_COMMISSION'},
 				        dataType: 'json',
 				        success: function(json) {
+                            console.log(json);
 							if(json.success)
 							{
 								$('#commissions').html(json.commissiontotal);
@@ -66,6 +65,21 @@
 				        }
 					});
 				}
+
+				$.ajax({
+					url: $('#base_url').val() + 'admin',
+					type: 'post',
+					data: {ACTION:'ML'},
+					dataType: 'json',
+					success: function(json) {
+						console.log(json);
+						if(json.success)
+						{
+							json = $.parseJSON(json.data);
+							member_panel(json);
+						}
+					}
+				});
 
 				/* Load new members */
 				
@@ -75,21 +89,12 @@
 				        data: {ACTION:'NEW'},
 				        dataType: 'json',
 				        success: function(json) {
+							console.log("New Members: ");
+                            console.log(json);
 							if(json.success)
+                                json = $.parseJSON(json.data);
 							{
-								$.each(json, function(key, value) {
-						        	if(key == 'rows')
-						           	{
-							           	var new_members = 0;
-						        		for ( var i = 0; i < json.rows.length; i++) {
-							        		
-						        			new_members += 1;
-						            		
-						        		}
-										$('#new_members').html(new_members);
-										stop_wait();
-						           	}
-								});
+                                $('#new_members').html(json.totalcount);
 							}
 				        }
 					});
@@ -103,22 +108,14 @@
 			        data: {ACTION:'EXITS'},
 			        dataType: 'json',
 			        success: function(json) {
+						console.log("Exits in Year: ");
+                        console.log(json);
 						if(json.success)
 						{
-							$.each(json, function(key, value) {
-					        	if(key == 'rows')
-					           	{
-						           	var exits = 0;
-					        		for ( var i = 0; i < json.rows.length; i++) {
-						        		
-					            		exits += 1;
-					            		
-					        		}
-									$('#exits_in_year').html(exits);
-					           	}
-							});
+                            json = $.parseJSON(json.data);
+                            $('#exits_in_year').html(json.totalcount);
+                            stop_wait();
 						}
-						
 						
 			        }
 			        
@@ -132,13 +129,16 @@
 				        data: {ACTION:'SC'},
 				        dataType: 'json',
 				        success: function(json) {
+                            console.log(json);
+							console.log("Scheme Contributions: ");
+                            console.log(json);
 							if(json.success)
 							{
+                                json = $.parseJSON(json.data);
 								bar_graph(json);
 							}
 				            else
 			    	        {
-			    	            stop_wait();
 			    	            bootbox.alert('<p class="text-center">' + json.message + '</p>');
 			        	    }
 							
@@ -153,47 +153,44 @@
 			        data: {ACTION:'CURR'},
 			        dataType: 'json',
 			        success: function(json) {
+                        console.log("Currency: ");
+                        console.log(json);
 						if(json.success)
 						{
-							currency = json.currency[0]['code'];
+                            json = $.parseJSON(json.data);
+							currency = hasKey(json, "code") ? json.code : "KES";
 							$.ajax({
 						        url: $('#base_url').val() + 'admin',
 						        type: 'post',
 						        data: {ACTION:'AP'},
 						        dataType: 'json',
 						        success: function(json) {
+									console.log("Accounting Period: ");
+									console.log(json);
 						            if(json.success)
 					   	            {
+                                        json = $.parseJSON(json.data);
 										$.ajax({
 											url: $('#base_url').val() + 'admin',
 											type: 'post',
-											data: {ACTION:'ML'},
+											data: {ACTION:'FV', schemeID: $('#schemeID').val(), accountingPeriodId: json.accountingPeriodId},
 											dataType: 'json',
 											success: function(json) {
+                                                console.log("FV");
+												console.log(json);
 												if(json.success)
 												{
-													member_panel(json);
-													$.ajax({
-														url: $('#base_url').val() + 'admin',
-														type: 'post',
-														data: {ACTION:'FV', schemeID: $('#schemeID').val(), accountingPeriodId: json.accountingPeriodId},
-														dataType: 'json',
-														success: function(json) {
-															if(json.success)
-															{
-																$('#fund-value').html(currency + ' ' + format_no(json.fundValue));
+                                                    json = $.parseJSON(json.data);
+													$('#fund-value').html(currency + ' ' + format_no(json.fundValue));
 
-															}
-															else
-															{
-																stop_wait();
-																bootbox.alert('<p class="text-center">' + json.message + '</p>');
-															}
-														}
-													});
 												}
+												else
+												{
+													bootbox.alert('<p class="text-center">' + json.message + '</p>');
+												}
+												stop_wait();
 											}
-										})
+										});
 
 					   	            }
 

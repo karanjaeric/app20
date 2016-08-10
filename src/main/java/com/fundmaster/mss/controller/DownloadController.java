@@ -27,11 +27,6 @@ public class DownloadController extends BaseServlet implements Serializable {
 	JLogger JLogger = new JLogger(this.getClass());
 
     Helper helper = new Helper();
-	
-	public DownloadController() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -75,9 +70,10 @@ public class DownloadController extends BaseServlet implements Serializable {
 			outStream.close();
 			
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 				response.getWriter().print("SQL Error: " + e.getMessage());
-			}
+			} catch (IOException ie) {
+				response.getWriter().print("IO Exception: " + ie.getMessage());
+		}
 	}
 }

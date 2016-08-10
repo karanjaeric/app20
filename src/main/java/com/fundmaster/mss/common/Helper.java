@@ -100,25 +100,18 @@ public class Helper {
     public String encrypt(String string)
     {
         try {
-            Crypta crypt = new Crypta();
-            string = crypt.encrypt(string);
-        } catch (Exception e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(string.getBytes());
+            byte byteData[] = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < byteData.length; i++) {
+                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException nsae) {
+            return string;
         }
-        return string;
-    }
 
-    private String decrypt(String string)
-    {
-        try {
-            Crypta crypt = new Crypta();
-            string = crypt.decrypt(string);
-        } catch (Exception e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        return string;
     }
 
     public String hash(String password)
@@ -157,7 +150,7 @@ public class Helper {
         try {
             obj.put(Helper.SUCCESS, status);
             obj.put(Helper.MESSAGE, message);
-            obj.put("data", json);
+            obj.put("data", json != null ? json.toString() : json);
             return obj.toString();
         } catch (JSONException je) {
             return null;
@@ -252,7 +245,7 @@ public class Helper {
     public boolean isManager(HttpServletRequest request)
     {
         HttpSession session = request.getSession(false);
-        return session != null && session.getAttribute(Constants.MANAGER_PROFILE).equals(Constants.MANAGER);
+        return session != null && session.getAttribute(Constants.MANAGER_PROFILE) != null && session.getAttribute(Constants.MANAGER_PROFILE).equals(Constants.MANAGER);
     }
 
     public String shorterUUID(String uuid, int index)

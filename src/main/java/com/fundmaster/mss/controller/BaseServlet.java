@@ -48,7 +48,7 @@ public class BaseServlet extends HttpServlet {
     private boolean isManager(HttpServletRequest request)
     {
         HttpSession session = request.getSession(false);
-        return session != null && session.getAttribute(Constants.MANAGER_PROFILE).equals(Constants.MANAGER);
+        return session != null && session.getAttribute(Constants.MANAGER_PROFILE) != null && session.getAttribute(Constants.MANAGER_PROFILE).equals(Constants.MANAGER);
     }
     @EJB
     AuditTrailEJB auditTrailEJB;
@@ -88,9 +88,10 @@ public class BaseServlet extends HttpServlet {
         if(user != null)
         {
             user.setAttempt(user.getAttempt() + 1);
+            jLogger.i("Attempt is: " + user.getAttempt() + ", Policy Count is: " + policy.getLock_after_count_of());
             if(user.getAttempt() >= policy.getLock_after_count_of())
             {
-                user.setStatus(false);
+                 user.setStatus(false);
             }
             userEJB.edit(user);
         }

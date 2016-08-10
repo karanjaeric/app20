@@ -15,11 +15,11 @@ public class Sponsor extends GenericModel<Sponsor> implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public Sponsor() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private

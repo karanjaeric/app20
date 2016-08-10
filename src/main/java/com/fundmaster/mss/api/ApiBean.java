@@ -46,6 +46,7 @@ public class ApiBean implements ApiEJB {
 
     @Override
     public List<Scheme> getSchemes(int start, int count) {
+        jLogger.i("Running getSchemes " + start + " : " + count);
         try {
             JSONObject response = URLGet(APICall.SCHEME_GETSCHEMES + "/?start=" + start + "&size=" + count);
             return this.schemesFromJSON(response);
@@ -142,15 +143,15 @@ public class ApiBean implements ApiEJB {
             if(response.getBoolean(Fields.SUCCESS))
             {
                 BenefitCalculation benefitCalculation=new BenefitCalculation();
-                benefitCalculation.setAge(new BigDecimal(yourAge==null? Constants.NUMBER_ZER0 :yourAge));
+                benefitCalculation.setAge(helper.toBigDecimal(helper.toLong(yourAge)));
                 benefitCalculation.setEmail(email);
-                benefitCalculation.setInflationrate(new BigDecimal(inflationRate==null? Constants.NUMBER_ZER0 :inflationRate));
-                benefitCalculation.setMothnlycontrib(new BigDecimal(contributions==null? Constants.NUMBER_ZER0 :contributions));
+                benefitCalculation.setInflationrate(helper.toBigDecimal(helper.toLong(inflationRate)));
+                benefitCalculation.setMothnlycontrib(helper.toBigDecimal(helper.toLong(contributions)));
                 benefitCalculation.setRequestdate(new Date());
                 benefitCalculation.setPhone(phone);
-                benefitCalculation.setProjectedage(new BigDecimal(yearsToProject==null? Constants.NUMBER_ZER0 :yearsToProject));
-                benefitCalculation.setReturnrate(new BigDecimal(rateOfReturn==null? Constants.NUMBER_ZER0 :rateOfReturn));
-                benefitCalculation.setSalarygrowth(new BigDecimal(salaryEscalationRate==null? Constants.NUMBER_ZER0 :salaryEscalationRate));
+                benefitCalculation.setProjectedage(helper.toBigDecimal(helper.toLong(yearsToProject)));
+                benefitCalculation.setReturnrate(helper.toBigDecimal(helper.toLong(rateOfReturn)));
+                benefitCalculation.setSalarygrowth(helper.toBigDecimal(helper.toLong(salaryEscalationRate)));
                 benefitsCalculationEJB.add(benefitCalculation);
             }
             return response;
@@ -695,7 +696,7 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLGet(APICall.SCHEME_GET_SCHEME_BASE_CURRENCY + schemeID);
-            response = response.getJSONObject(Fields.CURRENCY);
+            response = response.getJSONArray(Fields.CURRENCY).getJSONObject(0);
             return response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
@@ -791,11 +792,11 @@ public class ApiBean implements ApiEJB {
             jLogger.i("Response is: " + response);
             XiMember xiMember = new XiMember();
             xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
-            xiMember.setSchemeId(helper.toString(response.get(Fields.SCHEME_ID)));
+            //xiMember.setSchemeId(helper.toString(response.get(Fields.SCHEME_ID)));
             xiMember.setProfile(response.getString(Fields.PROFILE));
             return xiMember;
         } catch (JSONException je) {
-            jLogger.e("We have a json exception checking if the member exists");
+            jLogger.e("We have a json exception checking if the member exists" + je.getMessage());
             return null;
         }
     }
@@ -1106,6 +1107,7 @@ public class ApiBean implements ApiEJB {
     }
     private XiMember xiMemberFromJson(JSONObject jsonObject)
     {
+
         XiMember xiMember = new XiMember();
         try {
             xiMember.setId(jsonObject.getLong(Fields.MEMBER_ID));
@@ -1248,6 +1250,10 @@ public class ApiBean implements ApiEJB {
     private List<XiMember> xiMembersFromJSON(JSONObject response) {
         try {
             Constants.RECORD_COUNT = response.getInt(Fields.TOTALCOUNT);
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception extracting members" + je.getMessage());
+        }
+        try {
             List<XiMember> xiMembers = new ArrayList<>();
             JSONArray res = (JSONArray) response.get(Constants.ROWS);
             for (int i = 0; i < res.length(); i++) {
@@ -1274,6 +1280,7 @@ public class ApiBean implements ApiEJB {
                 scheme.setPlanType(jsonObject.getString(Fields.PLAN_TYPE));
                 schemes.add(scheme);
             }
+            jLogger.i("Schemes found are " + schemes.size());
             return schemes;
         } catch (JSONException je) {
             jLogger.e("We have a json exception extracting schemes" + je.getMessage());

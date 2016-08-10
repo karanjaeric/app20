@@ -20,8 +20,7 @@ public class PermissionDAO extends GenericDAOImpl<Permission, Long> {
         // TODO Auto-generated method stub
 
         @SuppressWarnings("unchecked")
-        List<Permission> logs = em.createQuery("SELECT p FROM Permission p WHERE profile=:profile").setParameter("profile", profile).getResultList();
-
-        return logs.get(0);
+        List<Permission> permissions = em.createQuery("SELECT p FROM Permission p WHERE p.profile=:profile").setParameter("profile", profile).getResultList();
+        return permissions != null && permissions.size() > 0 ? permissions.get(0) : null;
     }
 }

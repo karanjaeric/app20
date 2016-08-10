@@ -108,7 +108,8 @@ public class LoginController extends BaseServlet implements Serializable {
 			request.getRequestDispatcher("admin_login.jsp").forward(request, response);
 			
 		}
-	} 
+	}
+	JLogger jLogger = new JLogger(this.getClass());
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* On Successful Authentication */
@@ -118,7 +119,7 @@ public class LoginController extends BaseServlet implements Serializable {
 
 		if(u != null)
 		{
-
+			jLogger.i("User found was " + u.getUsername());
 			if(u.isStatus())
 			{
 				try {
@@ -130,6 +131,7 @@ public class LoginController extends BaseServlet implements Serializable {
 						XiMember xiMember = apiEJB.memberExists(u.getUserProfile(), u.getUsername());
 						if(xiMember != null && xiMember.getId() > 0)
 						{
+							jLogger.i("XiMember found was " + xiMember.getId());
 							session.setAttribute(Constants.USER, u.getUsername());
 							session.setAttribute(Constants.UID, u.getId());
 							session.setAttribute(Constants.PROFILE_ID, xiMember.getId());
@@ -144,7 +146,8 @@ public class LoginController extends BaseServlet implements Serializable {
 						}
 						else
 							{
-							this.respond(response, false, "Login failed.<br /> Invalid username and/or password.<br /> Please try again", null);
+								jLogger.i("Xi Member was not found");
+							this.respond(response, false, "Login failed.<br /> We were unable to authenticate you against FundMaster Xi.<br /> Please try again", null);
 
 							}
 					}

@@ -165,57 +165,50 @@ public class Admin extends BaseServlet implements Serializable {
                     PasswordPolicy policy = passwordPolicyEJB.find();
                     request.setAttribute("policy", policy);
                     request.setAttribute("username", this.getSessKey(request, Constants.USER));
-                    if (schemes != null && schemes.size() == 1) {
-                        try {
-                            if (this.getSessKey(request, Constants.SCHEME_ID) == null) {
-                                session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
-                                session.setAttribute(Constants.SCHEME_ID, schemes.get(0).getId().toString());
-                                session.setAttribute(Constants.SCHEME_NAME, schemes.get(0).getName());
-                                request.setAttribute("scheme_id", schemes.get(0).getId().toString());
-                            } else {
-                                for (Scheme scheme : schemes) {
-                                    if (this.getSessKey(request, Constants.SCHEME_ID)
-                                            .equals(String.valueOf(scheme.getId()))) {
-                                        session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
-                                        break;
-                                    }
-                                }
-                                request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
-                            }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                            session.setAttribute(Constants.SCHEME_ID, String.valueOf(schemes.get(0).getId()));
+                    if (schemes != null && schemes.size() > 0) {
+                        jLogger.i("We have the schemes");
+                        if (this.getSessKey(request, Constants.SCHEME_ID) == null || this.getSessKey(request, Constants.SCHEME_ID).isEmpty()) {
+                            jLogger.i("Session Scheme Id is null");
+                            session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
+                            session.setAttribute(Constants.SCHEME_ID, schemes.get(0).getId().toString());
                             session.setAttribute(Constants.SCHEME_NAME, schemes.get(0).getName());
+                            request.setAttribute("scheme_id", schemes.get(0).getId().toString());
+                        } else {
+                            jLogger.i("Session Scheme Id is not null, it is: " + this.getSessKey(request, Constants.SCHEME_ID));
+                            for (Scheme scheme : schemes) {
+                                if (this.getSessKey(request, Constants.SCHEME_ID)
+                                        .equals(helper.toString(scheme.getId()))) {
+                                    session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
+                                    break;
+                                }
+                            }
+                            request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
                         }
-                    } else if (this.getSessKey(request, Constants.SCHEME_ID) != null) {
+                    } else if (this.getSessKey(request, Constants.SCHEME_ID) != null && !this.getSessKey(request, Constants.SCHEME_ID).isEmpty()) {
+                        jLogger.i("Scheme ID is null here");
                         if (schemes != null)
                             for (Scheme scheme : schemes) {
                                 if (scheme.getId() == helper.toLong(this.getSessKey(request, Constants.SCHEME_ID))) {
-                                    try {
-                                        if (this.getSessKey(request, Constants.SCHEME_ID) == null) {
-                                            session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
-                                            session.setAttribute(Constants.SCHEME_ID, scheme.getId().toString());
-                                            session.setAttribute(Constants.SCHEME_NAME, scheme.getName());
-                                            request.setAttribute("scheme_id", scheme.getId().toString());
-                                        } else {
-                                            for (Scheme scheme1 : schemes) {
-                                                if (this.getSessKey(request, Constants.SCHEME_ID)
-                                                        .equals(String.valueOf(scheme1.getId()))) {
-                                                    session.setAttribute(Constants.SCHEME_TYPE, scheme1.getPlanType());
-                                                    break;
-                                                }
-                                            }
-                                            request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
-                                        }
-                                    } catch (NullPointerException npe) {
-                                        npe.printStackTrace();
-                                        session.setAttribute(Constants.SCHEME_ID, String.valueOf(scheme.getId()));
+                                    if (this.getSessKey(request, Constants.SCHEME_ID) == null) {
+                                        session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
+                                        session.setAttribute(Constants.SCHEME_ID, scheme.getId().toString());
                                         session.setAttribute(Constants.SCHEME_NAME, scheme.getName());
+                                        request.setAttribute("scheme_id", scheme.getId().toString());
+                                    } else {
+                                        for (Scheme scheme1 : schemes) {
+                                            if (this.getSessKey(request, Constants.SCHEME_ID)
+                                                    .equals(String.valueOf(scheme1.getId()))) {
+                                                session.setAttribute(Constants.SCHEME_TYPE, scheme1.getPlanType());
+                                                break;
+                                            }
+                                        }
+                                        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
                                     }
                                     break;
                                 }
                             }
                     }
+                    jLogger.i("Scheme Set for " + this.getSessKey(request, Constants.SCHEME_ID));
                     request.setAttribute("path", "admin");
                     request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
                     Permission permissions = getPermissions(request);
@@ -227,7 +220,7 @@ public class Admin extends BaseServlet implements Serializable {
                         request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
                     else {
                         List<XiMember> due4retirement = apiEJB.due4Retirement(this.getSessKey(request, Constants.SCHEME_ID));
-                        request.setAttribute("retirement", due4retirement);
+                        request.setAttribute("retirement", due4retirement.size());
                         request.getRequestDispatcher("admin.jsp").forward(request, response);
                     }
                 }
@@ -1097,8 +1090,8 @@ public class Admin extends BaseServlet implements Serializable {
                     .put("sponsor.address.fixedPhone", sp.getPhoneNumber())
                     .put("sponsor.address.email", sp.getEmailAddress())
                     .put("sponsor.address.town", sp.getCity())
-                    .put("sponsor.address.country", sp.getCountry().getName())
-                    .put("sponsor.sector", sp.getSector().getName())
+                    .put("sponsor.address.country", sp.getCountry() != null ? sp.getCountry().getName() : null)
+                    .put("sponsor.sector", sp.getSector() != null ? sp.getSector().getName() : null)
                     .put("sponsor.employerpin", sp.getEmployerRefNo())
                     .put("sponsor.pin", sp.getPinNumber())
                     .put("sponsor.status", "POTENTIAL_SPONSOR");
@@ -1325,7 +1318,7 @@ public class Admin extends BaseServlet implements Serializable {
                         attachment_name = fileName;
                         attachment_path = fullpath;
                         attachment = true;
-                    } catch (Exception e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }

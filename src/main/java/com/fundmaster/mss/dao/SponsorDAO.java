@@ -18,21 +18,18 @@ public class SponsorDAO extends GenericDAOImpl<Sponsor, Long> {
 
     public List<Sponsor> findAll(String agentId, String search, int offset, int limit) {
         // TODO Auto-generated method stub
-        String query;
+        String query = "SELECT s FROM Sponsor s";
         if(agentId != null && search != null)
         {
-            query = "WHERE agentId = '" + agentId + "' AND name LIKE '%" + search + "%'";
+            query += " WHERE s.agentId = '" + agentId + "' AND s.companyName LIKE '%" + search + "%'";
         }
         else if(agentId != null)
         {
-            query = "WHERE agentId = '" + agentId + "'";
+            query += " WHERE s.agentId = '" + agentId + "'";
         }
         else if(search != null)
         {
-            query = "WHERE name LIKE '%" + search + "%'";
-        }
-        else {
-            query = "SELECT s FROM Sponsor s";
+            query += " WHERE s.companyName LIKE '%" + search + "%'";
         }
         @SuppressWarnings("unchecked")
         List<Sponsor> entities = em.createQuery(query)
@@ -49,7 +46,7 @@ public class SponsorDAO extends GenericDAOImpl<Sponsor, Long> {
         List<Sponsor> Sponsors;
         String query_string;
         if(search != null)
-            query_string = "SELECT s FROM Sponsor s WHERE name like '%" + search + "%'";
+            query_string = "SELECT s FROM Sponsor s WHERE s.companyName like '%" + search + "%'";
 
         else
 

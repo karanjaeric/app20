@@ -377,6 +377,7 @@ $(document)
 													dataType : 'json',
 													success : function(json) {
 														stop_wait();
+														console.log(json);
 														if(json.success)
 														{
 															$("form#"
@@ -394,10 +395,10 @@ $(document)
 																'hide');
 														$('#' + btn).val(
 																btn_text);
-														if (!success)
+														if (!json.success)
 															bootbox
 																	.alert('<p class="text-center">'
-																			+ message
+																			+ json.message
 																			+ '</p>');
 													}
 												});

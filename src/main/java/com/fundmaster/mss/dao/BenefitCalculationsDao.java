@@ -11,7 +11,7 @@ import java.util.List;
 public class BenefitCalculationsDao extends GenericDAOImpl<BenefitCalculation, Long> {
     public BenefitCalculationsDao(EntityManager entityManager)
     {
-        super(BenefitCalculationsDao.class, entityManager);
+        super(BenefitCalculation.class, entityManager);
     }
 
     public BenefitCalculation find()

@@ -24,7 +24,8 @@
 						</div>
 						<button class="btn btn-warning btn-block" type="submit">
 							<strong>LOGIN</strong>
-						</button>
+						</button><br />
+						<a href="javascript:void(0);" id="pwd-reset-btn" class="btn btn-info">Forgot Your Password?</a>
 					</fieldset>
 				</form>
 

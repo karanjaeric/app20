@@ -148,7 +148,7 @@ public class Register extends BaseServlet implements Serializable {
                             u.setProfileID(member.getId());
                             u.setUserProfile(member.getProfile());
                             u.setUsername(this.get(request, "idNumber"));
-                            u.setPassword(this.get(request, "password"));
+                            u.setPassword(helper.encrypt(this.get(request, "password")));
                             Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
                             u.setPassword_expiry(password_expiry);
                             String securityCode = UUID.randomUUID().toString();
@@ -156,7 +156,7 @@ public class Register extends BaseServlet implements Serializable {
                             userEJB.edit(u);
                             String email_address = null;
                             String schemeId = null;
-                            boolean proceed = false;
+                            boolean proceed;
                             if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 email_address = m.getEmailAddress();

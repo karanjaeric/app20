@@ -57,7 +57,7 @@
 </div>
 <div class="modal fade" id="wait-dialog" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-body">
-                <p class="text-center masked-bg"><img src="static/images/wait.gif" alt="Please wait..." /><br/>Please wait...</p>
+                <p class="text-center masked-bg"><img src="static/images/wait.gif" alt="Please wait..." /><br/>Please wait...<br /><small onclick="stop_wait();">cancel</small></p>
         </div>
 </div>
 <input type="hidden" id="base_url" value="<%=request.getContextPath()%>/" />
