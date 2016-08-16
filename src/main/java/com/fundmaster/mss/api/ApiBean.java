@@ -1,9 +1,9 @@
 package com.fundmaster.mss.api;
 
-import com.fundmaster.mss.beans.ejb.BenefitsCalculationEJB;
-import com.fundmaster.mss.beans.ejb.InterestRateColumnEJB;
-import com.fundmaster.mss.beans.ejb.ProfileLoginFieldEJB;
-import com.fundmaster.mss.beans.ejb.SettingEJB;
+import com.fundmaster.mss.beans.BenefitsCalculationBeanI;
+import com.fundmaster.mss.beans.InterestRateColumnBeanI;
+import com.fundmaster.mss.beans.ProfileLoginFieldBeanI;
+import com.fundmaster.mss.beans.SettingBeanI;
 import com.fundmaster.mss.common.*;
 import com.fundmaster.mss.model.*;
 import org.json.JSONArray;
@@ -18,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -33,16 +32,16 @@ import java.util.*;
 @Local
 public class ApiBean implements ApiEJB {
     @EJB
-    SettingEJB settingEJB;
+    SettingBeanI settingBeanI;
     private final Helper helper = new Helper();
     private final JLogger jLogger = new JLogger(this.getClass());
 
     @EJB
-    ProfileLoginFieldEJB profileLoginFieldEJB;
+    ProfileLoginFieldBeanI profileLoginFieldBeanI;
     @EJB
-    InterestRateColumnEJB interestRateColumnEJB;
+    InterestRateColumnBeanI interestRateColumnBeanI;
     @EJB
-    BenefitsCalculationEJB benefitsCalculationEJB;
+    BenefitsCalculationBeanI benefitsCalculationBeanI;
 
     @Override
     public List<Scheme> getSchemes(int start, int count) {
@@ -152,7 +151,7 @@ public class ApiBean implements ApiEJB {
                 benefitCalculation.setProjectedage(helper.toBigDecimal(helper.toLong(yearsToProject)));
                 benefitCalculation.setReturnrate(helper.toBigDecimal(helper.toLong(rateOfReturn)));
                 benefitCalculation.setSalarygrowth(helper.toBigDecimal(helper.toLong(salaryEscalationRate)));
-                benefitsCalculationEJB.add(benefitCalculation);
+                benefitsCalculationBeanI.add(benefitCalculation);
             }
             return response;
         }  catch (JSONException je) {
@@ -170,7 +169,7 @@ public class ApiBean implements ApiEJB {
             {
                 JSONArray res = (JSONArray) response.get(Constants.ROWS);
                 JSONArray jsonarray = new JSONArray();
-                InterestRateColumns irc = interestRateColumnEJB.find();
+                InterestRateColumns irc = interestRateColumnBeanI.find();
                 Map<String, Boolean> temp = new HashMap<>();
                 temp.put(Fields.SUCCESS, true);
                 jsonarray.put(temp);
@@ -716,7 +715,7 @@ public class ApiBean implements ApiEJB {
 
     @Override
     public List<Scheme> getProfileSchemes(String user, String profile) {
-        String ordinal = profileLoginFieldEJB.findByProfile(profile);
+        String ordinal = profileLoginFieldBeanI.findByProfile(profile);
         JSONObject response;
         try {
             response = URLPost(APICall.GET_MEMBER_SCHEMES + ordinal + "/" + user + "/" + profile, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
@@ -746,7 +745,7 @@ public class ApiBean implements ApiEJB {
 
     @Override
     public XiMember memberExistsInScheme(String profile, String value, String schemeID) {
-        String ordinal = profileLoginFieldEJB.findByProfile(profile);
+        String ordinal = profileLoginFieldBeanI.findByProfile(profile);
         JSONObject response;
         try {
             response = URLGet(APICall.CHECK_MEMBER_EXISTS_IN_SCHEME + ordinal + "/" + value + "/" + profile + "/" + schemeID);
@@ -785,7 +784,7 @@ public class ApiBean implements ApiEJB {
 
     @Override
     public XiMember memberExists(String profile, String value) {
-        String ordinal = profileLoginFieldEJB.findByProfile(profile);
+        String ordinal = profileLoginFieldBeanI.findByProfile(profile);
         JSONObject response;
         try {
             response = URLPost(APICall.CHECK_MEMBER_EXISTS + ordinal  + "/" + value + "/" + profile, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
@@ -932,7 +931,7 @@ public class ApiBean implements ApiEJB {
     private Setting getSettings()
     {
 
-        Setting settings = settingEJB.find();
+        Setting settings = settingBeanI.find();
         if(settings != null)
         {
             if(settings.isEncrypt())

@@ -1,7 +1,7 @@
 package com.fundmaster.mss.controller;
 
 import com.fundmaster.mss.api.ApiEJB;
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
@@ -25,37 +25,37 @@ public class InterestRateController extends BaseServlet implements Serializable 
 
 	Helper helper = new Helper();
 	@EJB
-	ProfileNameEJB profileNameEJB;
+	ProfileNameBeanI profileNameBeanI;
 	@EJB
-	UserEJB userEJB;
+	UserBeanI userBeanI;
 	@EJB
-	CountryEJB countryEJB;
+	CountryBeanI countryBeanI;
 	@EJB
-	SettingEJB settingEJB;
+	SettingBeanI settingBeanI;
 	@EJB
-	GenderEJB genderEJB;
+	GenderBeanI genderBeanI;
 	@EJB
-	CompanyEJB companyEJB;
+	CompanyBeanI companyBeanI;
 	@EJB
-	SocialEJB socialEJB;
+	SocialBeanI socialBeanI;
 	@EJB
-	MenuEJB menuEJB;
+	MenuBeanI menuBeanI;
 	@EJB
-	InterestRateColumnEJB interestEJB;
+	InterestRateColumnBeanI interestEJB;
 	@EJB
-	ThemeEJB themeEJB;
+	ThemeBeanI themeBeanI;
 	@EJB
-	HelpEJB helpEJB;
+	HelpBeanI helpBeanI;
 	@EJB
-	PageContentEJB pageContentEJB;
+	PageContentBeanI pageContentBeanI;
 	@EJB
-	MaritalStatusEJB maritalStatusEJB;
+	MaritalStatusBeanI maritalStatusBeanI;
 	@EJB
-	ProfileLoginFieldEJB profileLoginFieldEJB;
+	ProfileLoginFieldBeanI profileLoginFieldBeanI;
 	@EJB
-	ImageBannerEJB imageBannerEJB;
+	ImageBannerBeanI imageBannerBeanI;
 	@EJB
-	PermissionEJB permissionEJB;
+	PermissionBeanI permissionBeanI;
 	JLogger JLogger = new JLogger(this.getClass());
 	@EJB
 	ApiEJB apiEJB;
@@ -63,24 +63,24 @@ public class InterestRateController extends BaseServlet implements Serializable 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
-		Company company = companyEJB.find();
+		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
-		Social social = socialEJB.find();
+		Social social = socialBeanI.find();
 		request.setAttribute("social", social);
 		List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
 		request.setAttribute("schemes", schemes);
-		Menu menu = menuEJB.find();
+		Menu menu = menuBeanI.find();
 		request.setAttribute("menu", menu);
 		InterestRateColumns interest = interestEJB.find();
 		request.setAttribute("interest", interest);
-		Theme theme = themeEJB.find();
+		Theme theme = themeBeanI.find();
 		request.setAttribute("theme", theme);
 		request.setAttribute("noMenu", false);
-		Help help = helpEJB.findHelp(Constants.PAGE_INTEREST_RATES);
+		Help help = helpBeanI.findHelp(Constants.PAGE_INTEREST_RATES);
 		request.setAttribute("help", help);
-		Setting settings = settingEJB.find();
+		Setting settings = settingBeanI.find();
 		request.setAttribute("settings", settings);
-		PageContent content = pageContentEJB.findPageContent(Constants.PAGE_INTEREST_RATES);
+		PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_INTEREST_RATES);
 		request.setAttribute("content", content);
 		logActivity(Constants.PAGE_INTEREST_RATES, "accesed interest rates page", "0", null, null);
 		request.getRequestDispatcher("interest-rate.jsp").forward(request, response);

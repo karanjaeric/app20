@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.*;
@@ -26,70 +26,70 @@ public class DefaultController extends BaseServlet implements Serializable {
 
 	Helper helper = new Helper();
 	@EJB
-	ActivityLogEJB activityLogEJB;
+	ActivityLogBeanI activityLogBeanI;
 	@EJB
-	ProfileNameEJB profileNameEJB;
+	ProfileNameBeanI profileNameBeanI;
 	@EJB
-	UserEJB userEJB;
+	UserBeanI userBeanI;
 	@EJB
-	CountryEJB countryEJB;
+	CountryBeanI countryBeanI;
 	@EJB
-	SettingEJB settingEJB;
+	SettingBeanI settingBeanI;
 	@EJB
-	GenderEJB genderEJB;
+	GenderBeanI genderBeanI;
 	@EJB
-	CompanyEJB companyEJB;
+	CompanyBeanI companyBeanI;
 	@EJB
-	SocialEJB socialEJB;
+	SocialBeanI socialBeanI;
 	@EJB
-	MenuEJB menuEJB;
+	MenuBeanI menuBeanI;
 	@EJB
-	ThemeEJB themeEJB;
+	ThemeBeanI themeBeanI;
 	@EJB
-	HelpEJB helpEJB;
+	HelpBeanI helpBeanI;
 	@EJB
-	PageContentEJB pageContentEJB;
+	PageContentBeanI pageContentBeanI;
 	@EJB
-	MaritalStatusEJB maritalStatusEJB;
+	MaritalStatusBeanI maritalStatusBeanI;
 	@EJB
-	ProfileLoginFieldEJB profileLoginFieldEJB;
+	ProfileLoginFieldBeanI profileLoginFieldBeanI;
 	@EJB
-	ImageBannerEJB imageBannerEJB;
+	ImageBannerBeanI imageBannerBeanI;
 	@EJB
-	LogoEJB logoEJB;
+	LogoBeanI logoBeanI;
 	@EJB
-	PermissionEJB permissionEJB;
+	PermissionBeanI permissionBeanI;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 		logActivity("HOME", "accesed home page", "0", null, null);
-		List<Country> countries = countryEJB.find();
+		List<Country> countries = countryBeanI.find();
 		request.setAttribute("countries",  countries);
-		List<Gender> genders = genderEJB.find();
+		List<Gender> genders = genderBeanI.find();
 		request.setAttribute("genders",  genders);
-		List<MaritalStatus> marital_statuses = maritalStatusEJB.find();
+		List<MaritalStatus> marital_statuses = maritalStatusBeanI.find();
 		request.setAttribute("maritalStatuses",  marital_statuses);
-		Company company = companyEJB.find();
+		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
-		Social social = socialEJB.find();
+		Social social = socialBeanI.find();
 		request.setAttribute("social", social);
-		Setting settings = settingEJB.find();
+		Setting settings = settingBeanI.find();
 		request.setAttribute("settings", settings);
-		String plf = profileLoginFieldEJB.findByProfile(Constants.MEMBER_PROFILE);
+		String plf = profileLoginFieldBeanI.findByProfile(Constants.MEMBER_PROFILE);
 		request.setAttribute("plf", plf);
-		Menu menu = menuEJB.find();
+		Menu menu = menuBeanI.find();
 		request.setAttribute("menu", menu);
-		List<com.fundmaster.mss.model.ImageBanner> imageBanners = imageBannerEJB.find();
+		List<com.fundmaster.mss.model.ImageBanner> imageBanners = imageBannerBeanI.find();
 		request.setAttribute("imageBanners", imageBanners);
 	
-		Theme theme = themeEJB.find();
+		Theme theme = themeBeanI.find();
 		request.setAttribute("theme", theme);
 		
-		List<Logo> logos = logoEJB.find();
+		List<Logo> logos = logoBeanI.find();
 		request.setAttribute("logos", logos);
 		
-		Help help = helpEJB.findHelp(Constants.PAGE_HOME);
+		Help help = helpBeanI.findHelp(Constants.PAGE_HOME);
 		request.setAttribute("help", help);
-		PageContent content = pageContentEJB.findPageContent(Constants.PAGE_HOME);
+		PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_HOME);
 		request.setAttribute("content", content);
 		request.setAttribute("noMenu", false);
 		request.getRequestDispatcher("index.jsp").forward(request, response);

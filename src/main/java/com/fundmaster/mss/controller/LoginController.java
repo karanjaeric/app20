@@ -1,7 +1,7 @@
 package com.fundmaster.mss.controller;
 
 import com.fundmaster.mss.api.ApiEJB;
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
@@ -27,35 +27,35 @@ public class LoginController extends BaseServlet implements Serializable {
 
 	Helper helper = new Helper();
 	@EJB
-	ProfileNameEJB profileNameEJB;
+	ProfileNameBeanI profileNameBeanI;
 	@EJB
-	UserEJB userEJB;
+	UserBeanI userBeanI;
 	@EJB
-	CountryEJB countryEJB;
+	CountryBeanI countryBeanI;
 	@EJB
-	SettingEJB settingEJB;
+	SettingBeanI settingBeanI;
 	@EJB
-	GenderEJB genderEJB;
+	GenderBeanI genderBeanI;
 	@EJB
-	CompanyEJB companyEJB;
+	CompanyBeanI companyBeanI;
 	@EJB
-	SocialEJB socialEJB;
+	SocialBeanI socialBeanI;
 	@EJB
-	MenuEJB menuEJB;
+	MenuBeanI menuBeanI;
 	@EJB
-	ThemeEJB themeEJB;
+	ThemeBeanI themeBeanI;
 	@EJB
-	HelpEJB helpEJB;
+	HelpBeanI helpBeanI;
 	@EJB
-	PageContentEJB pageContentEJB;
+	PageContentBeanI pageContentBeanI;
 	@EJB
-	MaritalStatusEJB maritalStatusEJB;
+	MaritalStatusBeanI maritalStatusBeanI;
 	@EJB
-	ProfileLoginFieldEJB profileLoginFieldEJB;
+	ProfileLoginFieldBeanI profileLoginFieldBeanI;
 	@EJB
-	ImageBannerEJB imageBannerEJB;
+	ImageBannerBeanI imageBannerBeanI;
 	@EJB
-	PermissionEJB permissionEJB;
+	PermissionBeanI permissionBeanI;
 	
 	JLogger JLogger = new JLogger(this.getClass());
 	
@@ -68,17 +68,17 @@ public class LoginController extends BaseServlet implements Serializable {
 		/* Check if user is already authenticated */
 		HttpSession session = request.getSession(false);
 		
-		Company company = companyEJB.find();
+		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
-		Social social = socialEJB.find();
+		Social social = socialBeanI.find();
 		request.setAttribute("social", social);
-		Menu menu = menuEJB.find();
+		Menu menu = menuBeanI.find();
 		request.setAttribute("menu", menu);
-		Theme theme = themeEJB.find();
+		Theme theme = themeBeanI.find();
 		request.setAttribute("theme", theme);
-		Setting settings = settingEJB.find();
+		Setting settings = settingBeanI.find();
 		request.setAttribute("settings", settings);
-		Help help = helpEJB.findHelp(Constants.PAGE_LOGIN);
+		Help help = helpBeanI.findHelp(Constants.PAGE_LOGIN);
 		request.setAttribute("help", help);
 		
 		if(session != null)
@@ -115,7 +115,7 @@ public class LoginController extends BaseServlet implements Serializable {
 		/* On Successful Authentication */
 		HttpSession session = request.getSession();
     	
-		User u = userEJB.findUser(this.get(request, "username"), this.get(request, "password"));
+		User u = userBeanI.findUser(this.get(request, "username"), this.get(request, "password"));
 
 		if(u != null)
 		{

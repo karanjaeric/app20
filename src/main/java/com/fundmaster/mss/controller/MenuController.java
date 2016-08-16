@@ -1,6 +1,6 @@
 package com.fundmaster.mss.controller;
 
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Actions;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.*;
@@ -22,43 +22,43 @@ public class MenuController extends BaseServlet implements Serializable {
 
     Helper helper = new Helper();
 	@EJB
-	ProfileNameEJB profileNameEJB;
+    ProfileNameBeanI profileNameBeanI;
     @EJB
-    UserEJB userEJB;
+    UserBeanI userBeanI;
     @EJB
-    CountryEJB countryEJB;
+    CountryBeanI countryBeanI;
     @EJB
-    SettingEJB settingEJB;
+    SettingBeanI settingBeanI;
     @EJB
-    GenderEJB genderEJB;
+    GenderBeanI genderBeanI;
     @EJB
-    CompanyEJB companyEJB;
+    CompanyBeanI companyBeanI;
     @EJB
-    SocialEJB socialEJB;
+    SocialBeanI socialBeanI;
     @EJB
-    MenuEJB menuEJB;
+    MenuBeanI menuBeanI;
     @EJB
-    ThemeEJB themeEJB;
+    ThemeBeanI themeBeanI;
     @EJB
-    HelpEJB helpEJB;
+    HelpBeanI helpBeanI;
     @EJB
-    PageContentEJB pageContentEJB;
+    PageContentBeanI pageContentBeanI;
     @EJB
-    MaritalStatusEJB maritalStatusEJB;
+    MaritalStatusBeanI maritalStatusBeanI;
     @EJB
-    ProfileLoginFieldEJB profileLoginFieldEJB;
+    ProfileLoginFieldBeanI profileLoginFieldBeanI;
     @EJB
-	ImageBannerEJB imageBannerEJB;
+    ImageBannerBeanI imageBannerBeanI;
     @EJB
-    LogoEJB logoEJB;
+    LogoBeanI logoBeanI;
     @EJB
-    PermissionEJB permissionEJB;
+    PermissionBeanI permissionBeanI;
     @EJB
-    PasswordPolicyEJB passwordPolicyEJB;
+    PasswordPolicyBeanI passwordPolicyBeanI;
 	@EJB
-	InterestRateColumnEJB interestRateColumnEJB;
+    InterestRateColumnBeanI interestRateColumnBeanI;
     @EJB
-    MemberPermissionEJB memberPermissionEJB;
+    MemberPermissionBeanI memberPermissionBeanI;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 		String REPO_FOLDER = "menu";
@@ -94,22 +94,22 @@ public class MenuController extends BaseServlet implements Serializable {
         request.getRequestDispatcher(REPO_FOLDER + "/analytics.jsp").forward(request, response);
     }
     private void showUserAccessControl(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
-        MemberPermission memberPermission = memberPermissionEJB.find();
+        MemberPermission memberPermission = memberPermissionBeanI.find();
         request.setAttribute("memberPermission", memberPermission);
-        List<ProfileLoginField> pfs = profileLoginFieldEJB.find();
+        List<ProfileLoginField> pfs = profileLoginFieldBeanI.find();
         request.setAttribute("plfs", pfs);
-        List<ProfileName> profileNames = profileNameEJB.find();
+        List<ProfileName> profileNames = profileNameBeanI.find();
         request.setAttribute("profileNames", profileNames);
         List<Ordinal> ordinals = helper.getOrdinals();
         request.setAttribute("ordinals", ordinals);
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
-        PasswordPolicy policy = passwordPolicyEJB.find();
+        PasswordPolicy policy = passwordPolicyBeanI.find();
         request.setAttribute("policy", policy);
         request.getRequestDispatcher(REPO_FOLDER + "/uac.jsp").forward(request, response);
     }
     private void showMedia(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
-        List<ProfileName> profiles = profileNameEJB.find();
+        List<ProfileName> profiles = profileNameBeanI.find();
         request.setAttribute("profiles", profiles);
         request.getRequestDispatcher(REPO_FOLDER + "/media.jsp").forward(request, response);
     }
@@ -128,25 +128,25 @@ public class MenuController extends BaseServlet implements Serializable {
         request.getRequestDispatcher(REPO_FOLDER + "/scheme.jsp").forward(request, response);
     }
     private void showSetup(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
-        List<Country> countries = countryEJB.find();
+        List<Country> countries = countryBeanI.find();
         request.setAttribute("countries",  countries);
-        Company company = companyEJB.find();
+        Company company = companyBeanI.find();
         request.setAttribute("company", company);
-        Social social = socialEJB.find();
+        Social social = socialBeanI.find();
         request.setAttribute("social", social);
-        Menu menu = menuEJB.find();
+        Menu menu = menuBeanI.find();
         request.setAttribute("menu", menu);
-        Setting settings = settingEJB.find();
+        Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
-        Theme theme = themeEJB.find();
+        Theme theme = themeBeanI.find();
         request.setAttribute("theme", theme);
-        List<ImageBanner> imageBanners = imageBannerEJB.find();
+        List<ImageBanner> imageBanners = imageBannerBeanI.find();
         request.setAttribute("imageBanners", imageBanners);
-        List<Logo> logos = logoEJB.find();
+        List<Logo> logos = logoBeanI.find();
         request.setAttribute("logos", logos);
         List<Ordinal> ordinals = helper.getOrdinals();
         request.setAttribute("ordinals", ordinals);
-        InterestRateColumns irc = interestRateColumnEJB.find();
+        InterestRateColumns irc = interestRateColumnBeanI.find();
         request.setAttribute("interestRateColumns", irc);
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);

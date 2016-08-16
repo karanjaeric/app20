@@ -1,7 +1,7 @@
 package com.fundmaster.mss.controller;
 
 import com.fundmaster.mss.api.ApiEJB;
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Actions;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
@@ -33,14 +33,14 @@ public class Dashboard extends BaseServlet implements Serializable {
 
     Helper helper = new Helper();
     @EJB
-    AuditTrailEJB auditTrailEJB;
+    AuditTrailBeanI auditTrailBeanI;
     @EJB
-    UserEJB userEJB;
+    UserBeanI userBeanI;
     @EJB
     ApiEJB apiEJB;
 
     @EJB
-    InterestRateColumnEJB interestRateColumnEJB;
+    InterestRateColumnBeanI interestRateColumnBeanI;
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -160,7 +160,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showMemberBalanceHistory(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-        Setting settings = settingEJB.find();
+        Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String member_id;
@@ -174,7 +174,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-        PageContent content = pageContentEJB.findPageContent(Constants.PAGE_WHAT_IF_ANALYSIS);
+        PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_WHAT_IF_ANALYSIS);
         request.setAttribute("content", content);
         request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
         logActivity("WHAT IF ANALYSIS", "Accessed what if analysis page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
@@ -182,9 +182,9 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.getRequestDispatcher("what-if-content.jsp").forward(request, response);
     }
 @EJB
-MediaEJB mediaEJB;
+MediaBeanI mediaBeanI;
     private void showMemberMedia(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-        List<Media> medias = mediaEJB.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
+        List<Media> medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
         request.setAttribute("medias", medias);
         logActivity("MEDIA FILES", "Accessed media & files (documents)", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed media & files (documents)");
@@ -192,7 +192,7 @@ MediaEJB mediaEJB;
     }
 
     private void showMemberBenefitProjections(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-        Setting setting = settingEJB.find();
+        Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("planType", this.getSessKey(request, Constants.SCHEME_TYPE));
@@ -207,7 +207,7 @@ MediaEJB mediaEJB;
     }
 
     private void showMemberStatementOfAccount(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-        Setting setting = settingEJB.find();
+        Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String member_id;
@@ -221,9 +221,9 @@ MediaEJB mediaEJB;
     }
 
     private void showMemberContributionHistory(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-        Company company = companyEJB.find();
+        Company company = companyBeanI.find();
         request.setAttribute("company", company);
-        Setting settings = settingEJB.find();
+        Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String member_id;
@@ -236,34 +236,34 @@ MediaEJB mediaEJB;
         request.getRequestDispatcher("member/contribution_history.jsp").forward(request, response);
     }
 @EJB
-SocialEJB socialEJB;
+SocialBeanI socialBeanI;
     @EJB
-    SectorEJB sectorEJB;
+    SectorBeanI sectorBeanI;
     @EJB
-    GenderEJB genderEJB;
+    GenderBeanI genderBeanI;
     @EJB
-    MaritalStatusEJB maritalStatusEJB;
+    MaritalStatusBeanI maritalStatusBeanI;
     @EJB
-    CompanyEJB companyEJB;
+    CompanyBeanI companyBeanI;
     @EJB
-    MemberPermissionEJB memberPermissionEJB;
+    MemberPermissionBeanI memberPermissionBeanI;
     private void showMemberPersonalInformation(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         //System.out.println("request.getParameter  "+this.get(request, "memberID") +" Alt: "+ this.getSessKey(request, Constants.PROFILE_ID));
-        List<Country> countries = countryEJB.find();
+        List<Country> countries = countryBeanI.find();
         request.setAttribute("countries", countries);
-        List<Gender> genders = genderEJB.find();
+        List<Gender> genders = genderBeanI.find();
         request.setAttribute("genders", genders);
-        List<MaritalStatus> marital_statuses = maritalStatusEJB.find();
+        List<MaritalStatus> marital_statuses = maritalStatusBeanI.find();
         request.setAttribute("maritalStatuses", marital_statuses);
-        Company company = companyEJB.find();
+        Company company = companyBeanI.find();
         request.setAttribute("company", company);
-        Social social = socialEJB.find();
+        Social social = socialBeanI.find();
         request.setAttribute("social", social);
-        List<Sector> sectors = sectorEJB.find();
+        List<Sector> sectors = sectorBeanI.find();
         request.setAttribute("sectors", sectors);
         List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
         request.setAttribute("schemes", schemes);
-        MemberPermission memberPermission = memberPermissionEJB.find();
+        MemberPermission memberPermission = memberPermissionBeanI.find();
         request.setAttribute("memberPermission", memberPermission);
         XiMember m;
         String member_id;
@@ -309,7 +309,7 @@ SocialEJB socialEJB;
         } catch (NumberFormatException nfe) {
             batch = 1;
         }
-        int count = userEJB.countAll(search);
+        int count = userBeanI.countAll(search);
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
@@ -322,7 +322,7 @@ SocialEJB socialEJB;
         request.setAttribute("per_page", PER_PAGE);
         request.setAttribute("search", search);
         request.setAttribute("pages", pages);
-        users = userEJB.findAll(search, start, PER_PAGE);
+        users = userBeanI.findAll(search, start, PER_PAGE);
         request.setAttribute("users", users);
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
@@ -348,7 +348,7 @@ SocialEJB socialEJB;
         } catch (NumberFormatException nfe) {
             batch = 1;
         }
-        int count = auditTrailEJB.countAll(search);
+        int count = auditTrailBeanI.countAll(search);
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
@@ -360,7 +360,7 @@ SocialEJB socialEJB;
         request.setAttribute("page", page);
         request.setAttribute("per_page", PER_PAGE);
         request.setAttribute("search", search);
-        List<AuditTrail> auditTrails = auditTrailEJB.findAll(search, start, PER_PAGE);
+        List<AuditTrail> auditTrails = auditTrailBeanI.findAll(search, start, PER_PAGE);
         request.setAttribute("auditTrails", auditTrails);
         request.setAttribute("pages", pages);
         logActivity("AUDIT TRAIL", "Viewed Audit Trails", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
@@ -390,7 +390,7 @@ SocialEJB socialEJB;
         } catch (NumberFormatException nfe) {
             batch = 1;
         }
-        int count = sponsorEJB.countAll(search);
+        int count = sponsorBeanI.countAll(search);
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
@@ -405,13 +405,13 @@ SocialEJB socialEJB;
         String agentId = null;
         if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
             agentId = this.getSessKey(request, Constants.PROFILE_ID);
-        List<Sponsor> sponsors = sponsorEJB.findAll(agentId, search, start, PER_PAGE);
+        List<Sponsor> sponsors = sponsorBeanI.findAll(agentId, search, start, PER_PAGE);
         request.setAttribute("sponsors", sponsors);
 
-        List<Sector> sectors = sectorEJB.find();
+        List<Sector> sectors = sectorBeanI.find();
         request.setAttribute("sectors", sectors);
 
-        List<Country> countries = countryEJB.find();
+        List<Country> countries = countryBeanI.find();
         request.setAttribute("countries", countries);
         request.setAttribute("pages", pages);
         List<Scheme> sponsorSchemes;
@@ -437,7 +437,7 @@ SocialEJB socialEJB;
         } catch (NumberFormatException nfe) {
             batch = 1;
         }
-        int count = memberEJB.countAll(search);
+        int count = memberBeanI.countAll(search);
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
@@ -452,14 +452,14 @@ SocialEJB socialEJB;
         String agentId = null;
         if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
             agentId = this.getSessKey(request, Constants.PROFILE_ID);
-        List<Member> members = memberEJB.findAll(agentId, search, start, PER_PAGE);
+        List<Member> members = memberBeanI.findAll(agentId, search, start, PER_PAGE);
         request.setAttribute("members", members);
         request.setAttribute("pages", pages);
-        List<Country> countries = countryEJB.find();
+        List<Country> countries = countryBeanI.find();
         request.setAttribute("countries", countries);
-        List<Gender> genders = genderEJB.find();
+        List<Gender> genders = genderBeanI.find();
         request.setAttribute("genders", genders);
-        List<MaritalStatus> marital_statuses = maritalStatusEJB.find();
+        List<MaritalStatus> marital_statuses = maritalStatusBeanI.find();
         request.setAttribute("maritalStatuses", marital_statuses);
         List<Scheme> memberSchemes = apiEJB.getSchemeByPlanType("INDIVIDUAL_PENSION_FUND");
         request.setAttribute("memberSchemes", memberSchemes);
@@ -467,7 +467,7 @@ SocialEJB socialEJB;
     }
 
     private void showMedia(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
-        List<Media> medias = mediaEJB.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
+        List<Media> medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
         request.setAttribute("medias", medias);
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
@@ -644,9 +644,9 @@ SocialEJB socialEJB;
         request.getRequestDispatcher(REPO_FOLDER + "/scheme.jsp").forward(request, response);
     }
 @EJB
-    SchemeManagerEJB schemeManagerEJB;
+SchemeManagerBeanI schemeManagerBeanI;
     private void showSchemeManagers(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
-        List<SchemeMemberManager> schememanagers = schemeManagerEJB.findAll();
+        List<SchemeMemberManager> schememanagers = schemeManagerBeanI.findAll();
         request.setAttribute("schememanagers", schememanagers);
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
@@ -664,18 +664,18 @@ SocialEJB socialEJB;
     }
 
     @EJB
-    PageContentEJB pageContentEJB;
+    PageContentBeanI pageContentBeanI;
     private void showPageContent(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
-        List<PageContent> contents = pageContentEJB.find();
+        List<PageContent> contents = pageContentBeanI.find();
         request.setAttribute("contents", contents);
         logActivity("PAGE CONTENT", "Accessed page content", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed page content");
         request.getRequestDispatcher(REPO_FOLDER + "/page_content.jsp").forward(request, response);
     }
     @EJB
-    ContactCategoryEJB contactCategoryEJB;
+    ContactCategoryBeanI contactCategoryBeanI;
     private void showContactReasons(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
-        List<ContactCategory> contactReasons = contactCategoryEJB.find();
+        List<ContactCategory> contactReasons = contactCategoryBeanI.find();
         request.setAttribute("contactReasons", contactReasons);
         logActivity("CONTACT CATEGORIES", "Viewed email contact categories", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed email contact categories");
@@ -690,26 +690,26 @@ SocialEJB socialEJB;
 
     private void showAnalyticsReport(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         if (this.get(request, "report").equals("locked_user_accounts")) {
-            List<User> users = userEJB.findByStatus();
+            List<User> users = userBeanI.findByStatus();
             request.setAttribute("users", users);
             Permission permissions = getPermissions(request);
             request.setAttribute("permissions", permissions);
             request.getRequestDispatcher(REPO_FOLDER + "/locked_accounts.jsp").forward(request, response);
         } else if (this.get(request, "report").equals("frequent_users")) {
             SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
-            List<AuditTrail> auditTrails = auditTrailEJB.frequenters(format.format(helper.dateFromString(this.get(request, "from"), DD_MM_YYYY)), format.format(helper.dateFromString(this.get(request, "to"), DD_MM_YYYY)));
+            List<AuditTrail> auditTrails = auditTrailBeanI.frequenters(format.format(helper.dateFromString(this.get(request, "from"), DD_MM_YYYY)), format.format(helper.dateFromString(this.get(request, "to"), DD_MM_YYYY)));
             request.setAttribute("users", auditTrails);
             request.getRequestDispatcher(REPO_FOLDER + "/frequent_users.jsp").forward(request, response);
         } else if (this.get(request, "report").equals("non_frequent_users")) {
             SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
-            List<User> users = userEJB.dormants(format.format(helper.dateFromString(this.get(request, "from"), DD_MM_YYYY)), format.format(helper.dateFromString(this.get(request, "to"), DD_MM_YYYY)));
+            List<User> users = userBeanI.dormants(format.format(helper.dateFromString(this.get(request, "from"), DD_MM_YYYY)), format.format(helper.dateFromString(this.get(request, "to"), DD_MM_YYYY)));
             request.setAttribute("users", users);
             request.getRequestDispatcher(REPO_FOLDER + "/non_frequent_users.jsp").forward(request, response);
         }
     }
 
     private void showSponsorView(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
-        Sponsor sponsor = sponsorEJB.findById(helper.toLong(this.get(request, "id")));
+        Sponsor sponsor = sponsorBeanI.findById(helper.toLong(this.get(request, "id")));
         request.setAttribute("sponsor", sponsor);
         logActivity("PORTAL MEMBERS", "Viewed sponsor details for potential sponsor", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed sponsor details for a potential sponsor");
@@ -718,7 +718,7 @@ SocialEJB socialEJB;
 
     private void showPortalMemberView(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         String memberID = this.get(request, "id");
-        Member m = memberEJB.findById(helper.toLong(memberID));
+        Member m = memberBeanI.findById(helper.toLong(memberID));
         request.setAttribute("member", m);
         logActivity("PORTAL MEMBERS", "Viewed member details for potential member", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member details for a potential member");
@@ -727,7 +727,7 @@ SocialEJB socialEJB;
 
     private void showPotentialMembers(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         String memberID = this.get(request, "id");
-        Member m = memberEJB.findById(helper.toLong(memberID));
+        Member m = memberBeanI.findById(helper.toLong(memberID));
         request.setAttribute("member", m);
         logActivity("PORTAL MEMBERS", "Viewed member details for potential member", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member details for a potential member");
@@ -735,9 +735,9 @@ SocialEJB socialEJB;
     }
 
     @EJB
-    HelpEJB helpEJB;
+    HelpBeanI helpBeanI;
     private void showHelp(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
-        List<Help> helps = helpEJB.find();
+        List<Help> helps = helpBeanI.find();
         request.setAttribute("helps", helps);
         logActivity("HELP CONTENT", "Accessed help content", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed help content");
@@ -768,7 +768,7 @@ SocialEJB socialEJB;
         request.setAttribute("page", page);
         request.setAttribute("per_page", PER_PAGE);
         request.setAttribute("search", search);
-        calclogs = benefitsCalculationEJB.findAll(start, PER_PAGE);
+        calclogs = benefitsCalculationBeanI.findAll(start, PER_PAGE);
         int count = Constants.RECORD_COUNT;
         int pages = (count / PER_PAGE);
         request.setAttribute("pages", pages);
@@ -778,15 +778,15 @@ SocialEJB socialEJB;
         request.getRequestDispatcher(REPO_FOLDER + "/calc-log.jsp").forward(request, response);
     }
     @EJB
-    BenefitsCalculationEJB benefitsCalculationEJB;
+    BenefitsCalculationBeanI benefitsCalculationBeanI;
     @EJB
-    MenuEJB menuEJB;
+    MenuBeanI menuBeanI;
     private void showSetup(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
-        Company company = companyEJB.find();
+        Company company = companyBeanI.find();
         request.setAttribute("company", company);
-        InterestRateColumns interest = interestRateColumnEJB.find();
+        InterestRateColumns interest = interestRateColumnBeanI.find();
         request.setAttribute("interest", interest);
-        Menu menu = menuEJB.find();
+        Menu menu = menuBeanI.find();
         request.setAttribute("menu", menu);
         logActivity("SETUP", "Accessed setup menu and details", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed setup menu and details");

@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fundmaster.mss.beans.ejb.MediaEJB;
+import com.fundmaster.mss.beans.MediaBeanI;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.Media;
@@ -30,11 +30,11 @@ public class DownloadController extends BaseServlet implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	MediaEJB mediaEJB;
+	MediaBeanI mediaBeanI;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		Media m = mediaEJB.findById(helper.toLong(request.getPathInfo().substring(1)));
+		Media m = mediaBeanI.findById(helper.toLong(request.getPathInfo().substring(1)));
 		
 		try {
 			String filename = m.getName();

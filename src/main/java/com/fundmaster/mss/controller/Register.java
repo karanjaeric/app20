@@ -1,7 +1,7 @@
 package com.fundmaster.mss.controller;
 
 import com.fundmaster.mss.api.ApiEJB;
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.*;
@@ -24,77 +24,77 @@ public class Register extends BaseServlet implements Serializable {
 
     Helper helper = new Helper();
     @EJB
-    ProfileNameEJB profileNameEJB;
+    ProfileNameBeanI profileNameBeanI;
     @EJB
-    CountryEJB countryEJB;
+    CountryBeanI countryBeanI;
     @EJB
-    SettingEJB settingEJB;
+    SettingBeanI settingBeanI;
     @EJB
-    GenderEJB genderEJB;
+    GenderBeanI genderBeanI;
     @EJB
-    CompanyEJB companyEJB;
+    CompanyBeanI companyBeanI;
     @EJB
-    SocialEJB socialEJB;
+    SocialBeanI socialBeanI;
     @EJB
-    MenuEJB menuEJB;
+    MenuBeanI menuBeanI;
     @EJB
-    ThemeEJB themeEJB;
+    ThemeBeanI themeBeanI;
     @EJB
-    HelpEJB helpEJB;
+    HelpBeanI helpBeanI;
     @EJB
-    PageContentEJB pageContentEJB;
+    PageContentBeanI pageContentBeanI;
     @EJB
-    MaritalStatusEJB maritalStatusEJB;
+    MaritalStatusBeanI maritalStatusBeanI;
     @EJB
-    ProfileLoginFieldEJB profileLoginFieldEJB;
+    ProfileLoginFieldBeanI profileLoginFieldBeanI;
     @EJB
-    ImageBannerEJB imageBannerEJB;
+    ImageBannerBeanI imageBannerBeanI;
     @EJB
-    PermissionEJB permissionEJB;
+    PermissionBeanI permissionBeanI;
     @EJB
-    SectorEJB sectorEJB;
+    SectorBeanI sectorBeanI;
     @EJB
-    UserEJB userEJB;
+    UserBeanI userBeanI;
     @EJB
     ApiEJB apiEJB;
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Country> countries = countryEJB.find();
+        List<Country> countries = countryBeanI.find();
         request.setAttribute("countries", countries);
-        List<Gender> genders = genderEJB.find();
+        List<Gender> genders = genderBeanI.find();
         request.setAttribute("genders", genders);
-        List<MaritalStatus> marital_statuses = maritalStatusEJB.find();
+        List<MaritalStatus> marital_statuses = maritalStatusBeanI.find();
         request.setAttribute("maritalStatuses", marital_statuses);
-        Company company = companyEJB.find();
+        Company company = companyBeanI.find();
         request.setAttribute("company", company);
-        Social social = socialEJB.find();
+        Social social = socialBeanI.find();
         request.setAttribute("social", social);
-        List<Sector> sectors = sectorEJB.find();
+        List<Sector> sectors = sectorBeanI.find();
         request.setAttribute("sectors", sectors);
-        List<ProfileName> profileNames = profileNameEJB.find();
+        List<ProfileName> profileNames = profileNameBeanI.find();
         request.setAttribute("profileNames", profileNames);
         List<Scheme> sponsorSchemes = apiEJB.getSchemeBySchemeModeAndPlanType(UMBRELLA, INDIVIDUAL_PENSION_FUND);
         request.setAttribute("sponsorSchemes", sponsorSchemes);
         List<Scheme> memberSchemes = apiEJB.getSchemeByPlanType(INDIVIDUAL_PENSION_FUND);
         request.setAttribute("memberSchemes", memberSchemes);
-        Menu menu = menuEJB.find();
+        Menu menu = menuBeanI.find();
         request.setAttribute("menu", menu);
-        Setting settings = settingEJB.find();
+        Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
-        List<ProfileLoginField> plf = profileLoginFieldEJB.find();
+        List<ProfileLoginField> plf = profileLoginFieldBeanI.find();
         request.setAttribute("loginFields", plf);
         List<PensionProduct> pensionProducts = null;
         request.setAttribute("pensionProducts", pensionProducts);
-        Theme theme = themeEJB.find();
+        Theme theme = themeBeanI.find();
         request.setAttribute("theme", theme);
         request.setAttribute("noMenu", false);
-        Help help = helpEJB.findHelp(Constants.PAGE_REGISTER);
+        Help help = helpBeanI.findHelp(Constants.PAGE_REGISTER);
         request.setAttribute("help", help);
-        PageContent content = pageContentEJB.findPageContent(Constants.PAGE_REGISTER);
+        PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_REGISTER);
         request.setAttribute("content", content);
-        PasswordPolicy policy = passwordPolicyEJB.find();
+        PasswordPolicy policy = passwordPolicyBeanI.find();
         request.setAttribute("policy", policy);
         logActivity(Constants.PAGE_REGISTER, "accesed registration page", "0", null, null);
         request.getRequestDispatcher("register.jsp").forward(request, response);
@@ -134,16 +134,16 @@ public class Register extends BaseServlet implements Serializable {
         boolean passedCaptchaTest = captcha.isCorrect(inputChars);
         session.invalidate();
         if (passedCaptchaTest) {
-            Setting settings = settingEJB.find();
+            Setting settings = settingBeanI.find();
             if (this.get(request, "type").equalsIgnoreCase("member")) {
                 this.createMember(request, response);
             } else if (this.get(request, "type").equalsIgnoreCase("sponsor")) {
                 this.addSponsor(response, request);
             } else if (this.get(request, "type").equals("EXISTING")) {
-                PasswordPolicy policy = passwordPolicyEJB.find();
+                PasswordPolicy policy = passwordPolicyBeanI.find();
                     XiMember member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
                     if (member != null && member.getId() > 0) {
-                        if (userEJB.findUserByUsernameAndProfile(this.get(request, "idNumber"), member.getProfile()) == null) {
+                        if (userBeanI.findUserByUsernameAndProfile(this.get(request, "idNumber"), member.getProfile()) == null) {
                             User u = new User();
                             u.setProfileID(member.getId());
                             u.setUserProfile(member.getProfile());
@@ -153,7 +153,7 @@ public class Register extends BaseServlet implements Serializable {
                             u.setPassword_expiry(password_expiry);
                             String securityCode = UUID.randomUUID().toString();
                             u.setSecurityCode(securityCode);
-                            userEJB.edit(u);
+                            userBeanI.edit(u);
                             String email_address = null;
                             String schemeId = null;
                             boolean proceed;
@@ -179,7 +179,7 @@ public class Register extends BaseServlet implements Serializable {
                             System.out.println("Email " + email_address);
                             if (proceed) {
                                 System.out.println("Trying to send mail");
-                                Company company = companyEJB.find();
+                                Company company = companyBeanI.find();
                                 apiEJB.sendEmail(email_address, company.getEmail(), null, "MSS Portal Account Activation Instructions", "Dear " + u.getUserProfile() + ", " +
                                         "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
                                         "Please click this link '" + settings.getPortalBaseURL() + "activate?" + securityCode + "' to complete the activation process", schemeId, false, null);

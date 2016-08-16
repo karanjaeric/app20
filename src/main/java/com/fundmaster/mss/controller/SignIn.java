@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fundmaster.mss.api.ApiEJB;
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.*;
 import org.json.JSONException;
@@ -30,35 +30,35 @@ public class SignIn extends BaseServlet implements Serializable {
 
     Helper helper = new Helper();
 	@EJB
-	ProfileNameEJB profileNameEJB;
+	ProfileNameBeanI profileNameBeanI;
 	@EJB
-	UserEJB userEJB;
+	UserBeanI userBeanI;
 	@EJB
-	CountryEJB countryEJB;
+	CountryBeanI countryBeanI;
 	@EJB
-	SettingEJB settingEJB;
+	SettingBeanI settingBeanI;
 	@EJB
-	GenderEJB genderEJB;
+	GenderBeanI genderBeanI;
 	@EJB
-	CompanyEJB companyEJB;
+	CompanyBeanI companyBeanI;
 	@EJB
-	SocialEJB socialEJB;
+	SocialBeanI socialBeanI;
 	@EJB
-	MenuEJB menuEJB;
+	MenuBeanI menuBeanI;
 	@EJB
-	ThemeEJB themeEJB;
+	ThemeBeanI themeBeanI;
 	@EJB
-	HelpEJB helpEJB;
+	HelpBeanI helpBeanI;
 	@EJB
-	PageContentEJB pageContentEJB;
+	PageContentBeanI pageContentBeanI;
 	@EJB
-	MaritalStatusEJB maritalStatusEJB;
+	MaritalStatusBeanI maritalStatusBeanI;
 	@EJB
-	ProfileLoginFieldEJB profileLoginFieldEJB;
+	ProfileLoginFieldBeanI profileLoginFieldBeanI;
 	@EJB
-	ImageBannerEJB imageBannerEJB;
+	ImageBannerBeanI imageBannerBeanI;
 	@EJB
-	PermissionEJB permissionEJB;
+	PermissionBeanI permissionBeanI;
 	@EJB
 	ApiEJB apiEJB;
 	public SignIn() {
@@ -93,20 +93,20 @@ public class SignIn extends BaseServlet implements Serializable {
 					
 				{
 					
-					Company company = companyEJB.find();
+					Company company = companyBeanI.find();
 					request.setAttribute("company", company);
-					Social social = socialEJB.find();
+					Social social = socialBeanI.find();
 					request.setAttribute("social", social);
-					Setting settings = settingEJB.find();
+					Setting settings = settingBeanI.find();
 					request.setAttribute("settings", settings);
-					List<ProfileLoginField> plf = profileLoginFieldEJB.find();
+					List<ProfileLoginField> plf = profileLoginFieldBeanI.find();
 					request.setAttribute("loginFields", plf);
-					Menu menu = menuEJB.find();
+					Menu menu = menuBeanI.find();
 					request.setAttribute("menu", menu);
-					Theme theme = themeEJB.find();
+					Theme theme = themeBeanI.find();
 					request.setAttribute("theme", theme);
 					request.setAttribute("noMenu", false);
-					Help help = helpEJB.findHelp(Constants.PAGE_SIGN_IN);
+					Help help = helpBeanI.findHelp(Constants.PAGE_SIGN_IN);
 					request.setAttribute("help", help);
 					logActivity(Constants.PAGE_SIGN_IN, "accesed home page", "0", null, null);
 					request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -114,13 +114,13 @@ public class SignIn extends BaseServlet implements Serializable {
 				}
 	}
 	@EJB
-	SchemeManagerEJB schemeManagerEJB;
+	SchemeManagerBeanI schemeManagerBeanI;
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
     	
-		User u = userEJB.findUser(this.get(request, "username"), this.get(request, "password"));
+		User u = userBeanI.findUser(this.get(request, "username"), this.get(request, "password"));
 		if(u != null)
 		{
 
@@ -142,7 +142,7 @@ public class SignIn extends BaseServlet implements Serializable {
 							session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
 							resetAttempt(this.get(request, "username"));
 							logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
-							SchemeMemberManager smm = schemeManagerEJB.findByUserID(u.getId());
+							SchemeMemberManager smm = schemeManagerBeanI.findByUserID(u.getId());
 							String link = "member";
 							if(smm != null)
 							{

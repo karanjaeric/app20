@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fundmaster.mss.beans.ejb.LogoEJB;
+import com.fundmaster.mss.beans.LogoBeanI;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.Logo;
@@ -37,11 +37,11 @@ public class LogoController extends BaseServlet implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@EJB
-	LogoEJB logoEJB;
+	LogoBeanI logoBeanI;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		Logo lg = logoEJB.findById(helper.toLong(request.getPathInfo().substring(1)));
+		Logo lg = logoBeanI.findById(helper.toLong(request.getPathInfo().substring(1)));
 
 			try {
 				String fileName = lg.getName();

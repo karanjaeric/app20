@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.Company;
@@ -29,55 +29,55 @@ public class Contact extends BaseServlet implements Serializable {
 
 	Helper helper = new Helper();
 	@EJB
-	ProfileNameEJB profileNameEJB;
+	ProfileNameBeanI profileNameBeanI;
 	@EJB
-	UserEJB userEJB;
+	UserBeanI userBeanI;
 	@EJB
-	CountryEJB countryEJB;
+	CountryBeanI countryBeanI;
 	@EJB
-	SettingEJB settingEJB;
+	SettingBeanI settingBeanI;
 	@EJB
-	GenderEJB genderEJB;
+	GenderBeanI genderBeanI;
 	@EJB
-	CompanyEJB companyEJB;
+	CompanyBeanI companyBeanI;
 	@EJB
-	SocialEJB socialEJB;
+	SocialBeanI socialBeanI;
 	@EJB
-	MenuEJB menuEJB;
+	MenuBeanI menuBeanI;
 	@EJB
-	ThemeEJB themeEJB;
+	ThemeBeanI themeBeanI;
 	@EJB
-	HelpEJB helpEJB;
+	HelpBeanI helpBeanI;
 	@EJB
-	PageContentEJB pageContentEJB;
+	PageContentBeanI pageContentBeanI;
 	@EJB
-	MaritalStatusEJB maritalStatusEJB;
+	MaritalStatusBeanI maritalStatusBeanI;
 	@EJB
-	ProfileLoginFieldEJB profileLoginFieldEJB;
+	ProfileLoginFieldBeanI profileLoginFieldBeanI;
 	@EJB
-	ImageBannerEJB imageBannerEJB;
+	ImageBannerBeanI imageBannerBeanI;
 	@EJB
-	PermissionEJB permissionEJB;
+	PermissionBeanI permissionBeanI;
 	public Contact() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
-		Company company = companyEJB.find();
+		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
-		Social social = socialEJB.find();
+		Social social = socialBeanI.find();
 		request.setAttribute("social", social);
-		Menu menu = menuEJB.find();
+		Menu menu = menuBeanI.find();
 		request.setAttribute("menu", menu);
-		Theme theme = themeEJB.find();
+		Theme theme = themeBeanI.find();
 		request.setAttribute("theme", theme);
 		request.setAttribute("noMenu", false);
-		Help help = helpEJB.findHelp(Constants.PAGE_CONTACT_US);
+		Help help = helpBeanI.findHelp(Constants.PAGE_CONTACT_US);
 		request.setAttribute("help", help);
-		Setting settings = settingEJB.find();
+		Setting settings = settingBeanI.find();
 		request.setAttribute("settings", settings);
-		PageContent content = pageContentEJB.findPageContent(Constants.PAGE_CONTACT_US);
+		PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_CONTACT_US);
 		request.setAttribute("content", content);
 		logActivity(Constants.PAGE_CONTACT_US, "accesed contact us page", "0", null, null);
 		request.getRequestDispatcher("contact-us.jsp").forward(request, response);

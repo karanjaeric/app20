@@ -2,30 +2,87 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb972854-9642-4822-9ef8-855f116f8391" name="Default" comment="">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ActivityLogBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ActivityLogBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/AuditTrailBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/AuditTrailBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/BenefitsCalculationBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/BenefitsCalculationBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/CompanyBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CompanyBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ContactCategoryBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ContactCategoryBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/CountryBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CountryBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/GenderBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/GenderBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/HelpBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/HelpBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ImageBannerBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ImageBannerBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/InterestRateColumnBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/LogoBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/LogoBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MaritalStatusBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MaritalStatusBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MediaBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MediaBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MemberBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MemberBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MemberPermissionBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MemberPermissionBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MenuBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MenuBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/PageContentBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PageContentBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/PasswordPolicyBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PasswordPolicyBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/PermissionBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PermissionBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ProfileLoginFieldBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ProfileLoginFieldBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ProfileNameBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ProfileNameBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SchemeManagerBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SchemeManagerBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SectorBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SectorBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SettingBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SettingBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SocialBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SocialBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SponsorBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SponsorBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ThemeBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ThemeBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/UsedPasswordBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UsedPasswordBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/UserBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UserBean.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ActivityLogEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ActivityLogBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/AuditTrailEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/AuditTrailBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/BenefitsCalculationEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/BenefitsCalculationBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/CompanyEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CompanyBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ContactCategoryEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ContactCategoryBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/CountryEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CountryBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/GenderEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/GenderBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/HelpEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/HelpBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ImageBannerEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ImageBannerBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/InterestRateColumnEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/LogoEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/LogoBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MaritalStatusEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MaritalStatusBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MediaEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MediaBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MemberEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MemberBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MemberPermissionEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MemberPermissionBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MenuEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MenuBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/PageContentEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PageContentBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/PasswordPolicyEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PasswordPolicyBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/PermissionEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PermissionBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ProfileLoginFieldEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ProfileLoginFieldBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ProfileNameEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ProfileNameBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SchemeManagerEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SchemeManagerBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SectorEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SectorBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SettingEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SettingBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SocialEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SocialBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SponsorEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SponsorBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ThemeEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ThemeBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/UsedPasswordEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UsedPasswordBeanI.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/UserEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UserBeanI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/UserBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/UserBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Activate.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Activate.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Admin.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Admin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Annuity.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Annuity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Banner.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Banner.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/BaseServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/BaseServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Contact.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Contact.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Dashboard.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Dashboard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DataController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DataController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DefaultController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DefaultController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DownloadController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DownloadController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/InterestRateController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/InterestRateController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LogoController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LogoController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MenuController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MenuController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PasswordResetController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PasswordResetController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialMemberController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialMemberController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialSponserController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialSponserController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Register.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Register.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/ActivityLogDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/ActivityLogDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/BenefitCalculationsDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/BenefitCalculationsDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/PermissionDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/PermissionDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/SponsorDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/SponsorDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/model/Sponsor.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/model/Sponsor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/admin_login.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/admin_login.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/dashboard.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/dashboard.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/dashboard/VIEW_POTENTIAL_MEMBER.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/dashboard/VIEW_POTENTIAL_MEMBER.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/includes/partial/admin_footer.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/includes/partial/admin_footer.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/includes/partial/footer.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/includes/partial/footer.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/member/beneficiary.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/member/beneficiary.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/custom/assets/styles.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/custom/assets/styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/custom/css/styles.admin.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/custom/css/styles.admin.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/custom/js/form-scripts.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/custom/js/form-scripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/custom/js/scripts.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/custom/js/scripts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignIn.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignIn.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/WhatIfAnalysis.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/WhatIfAnalysis.java" />
     </list>
     <ignored path="Mss.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,121 +119,101 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="ImageBannerBean.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ImageBannerBean.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ImageBannerBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1040">
-              <caret line="54" column="16" selection-start-line="54" selection-start-column="16" selection-end-line="54" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#7277#7278#0" expanded="false" />
-                <element signature="e#7325#7326#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Admin.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Admin.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-325">
-              <caret line="253" column="22" selection-start-line="253" selection-start-column="22" selection-end-line="253" selection-end-column="22" />
+            <state relative-caret-position="234">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PermissionDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/PermissionDAO.java">
+      <file leaf-file-name="InterestRateColumnBean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="22" column="90" selection-start-line="22" selection-start-column="90" selection-end-line="22" selection-end-column="90" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoginController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3510">
-              <caret line="149" column="135" selection-start-line="149" selection-start-column="135" selection-end-line="149" selection-end-column="135" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SignIn.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignIn.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2626">
-              <caret line="122" column="30" selection-start-line="122" selection-start-column="30" selection-end-line="122" selection-end-column="30" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#1366#1367#0" expanded="false" />
-                <element signature="e#1380#1381#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scripts.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/custom/js/scripts.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
-              <folding>
-                <marker date="1470648976038" expanded="true" signature="8243:8254" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WhatIfAnalysis.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/WhatIfAnalysis.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="691">
-              <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
+            <state relative-caret-position="234">
+              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApiBean.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ActivityLogBeanI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ActivityLogBeanI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BenefitsCalculationBean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/BenefitsCalculationBean.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CompanyBean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CompanyBean.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContactCategoryBean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ContactCategoryBean.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CountryBean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CountryBean.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ApiBean.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="18486">
-              <caret line="735" column="19" selection-start-line="735" selection-start-column="19" selection-end-line="735" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <caret line="734" column="19" selection-start-line="734" selection-start-column="19" selection-end-line="734" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApiEJB.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiEJB.java">
+      <file leaf-file-name="GenderBean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/GenderBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state relative-caret-position="234">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HelpBean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/HelpBean.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -203,8 +240,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MemberBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MemberEJB.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/CalcLogDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/BenefitsCalculationEJB.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/model/ActivityLog.java" />
@@ -251,9 +286,11 @@
         <option value="$PROJECT_DIR$/src/main/webapp/static/custom/css/styles.admin.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/custom/assets/styles.css" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Admin.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/PermissionDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Admin.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBeanI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBean.java" />
       </list>
     </option>
   </component>
@@ -277,9 +314,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="1855" />
-    <option name="height" value="1056" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -306,9 +343,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -607,128 +643,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="beans" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="api" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1325,15 +1242,16 @@
       <workItem from="1470725051889" duration="15468000" />
       <workItem from="1470771285501" duration="45000" />
       <workItem from="1470811709050" duration="715000" />
+      <workItem from="1471338649336" duration="549000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="276156000" />
+    <option name="totallyTimeSpent" value="276705000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1349,7 +1267,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21886793" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26792452" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21815519" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1427,140 +1345,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LogoController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MenuController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PasswordResetController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialMemberController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialSponserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="47" column="33" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/InterestRateController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-968">
-          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/annuity-quotation.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/AuditTrailBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="988">
-          <caret line="47" column="27" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/HelpBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="806">
-          <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ActivityLogBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SchemeManagerBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1014">
-          <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/login.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="34" selection-end-column="119" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/includes/partial/header.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-312">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/admin_login.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="27" column="119" selection-start-line="27" selection-start-column="119" selection-end-line="27" selection-end-column="119" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/ActivityLogDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="27" column="167" selection-start-line="27" selection-start-column="167" selection-end-line="27" selection-end-column="167" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="633" column="19" selection-start-line="633" selection-start-column="19" selection-end-line="633" selection-end-column="19" />
-          <folding>
-            <element signature="e#23072#23073#0" expanded="false" />
-            <element signature="e#23112#23113#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SponsorBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/APICall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="16" column="56" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/dashboard/VIEW_POTENTIAL_MEMBER.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -1596,7 +1380,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/UserEJB.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UserBeanI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
           <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
@@ -1607,7 +1391,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1373">
           <caret line="84" column="60" selection-start-line="84" selection-start-column="60" selection-end-line="84" selection-end-column="60" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1622,10 +1405,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="55" column="37" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
-          <folding>
-            <marker date="1470732548301" expanded="true" signature="10817:10831" ph="..." />
-            <marker date="1470732548301" expanded="true" signature="10906:10925" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1641,7 +1420,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1652,7 +1430,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/UserBean.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UserBean.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="41" column="31" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
@@ -1663,13 +1441,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/BenefitsCalculationBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1698,7 +1469,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="366">
           <caret line="59" column="131" selection-start-line="59" selection-start-column="131" selection-end-line="59" selection-end-column="175" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1706,7 +1476,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="78">
           <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1734,16 +1503,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ImageBannerBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/common/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1040">
@@ -1752,16 +1511,6 @@
             <element signature="imports" expanded="false" />
             <element signature="e#7277#7278#0" expanded="false" />
             <element signature="e#7325#7326#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18486">
-          <caret line="735" column="19" selection-start-line="735" selection-start-column="19" selection-end-line="735" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1790,20 +1539,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3510">
           <caret line="149" column="135" selection-start-line="149" selection-start-column="135" selection-end-line="149" selection-end-column="135" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignIn.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2626">
-          <caret line="122" column="30" selection-start-line="122" selection-start-column="30" selection-end-line="122" selection-end-column="30" />
+          <caret line="122" column="32" selection-start-line="122" selection-start-column="32" selection-end-line="122" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#1366#1367#0" expanded="false" />
-            <element signature="e#1380#1381#0" expanded="false" />
+            <element signature="e#1422#1423#0" expanded="false" />
+            <element signature="e#1436#1437#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1820,16 +1567,186 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/WhatIfAnalysis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
+        <state relative-caret-position="1404">
           <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Admin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-325">
+        <state relative-caret-position="26">
           <caret line="253" column="22" selection-start-line="253" selection-start-column="22" selection-end-line="253" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/AuditTrailBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/BenefitsCalculationBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CompanyBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ContactCategoryBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CountryBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/GenderBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/HelpBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ImageBannerBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ActivityLogBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/AuditTrailBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/BenefitsCalculationBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CompanyBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ContactCategoryBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CountryBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/GenderBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/HelpBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ImageBannerBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ActivityLogBeanI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18486">
+          <caret line="734" column="19" selection-start-line="734" selection-start-column="19" selection-end-line="734" selection-end-column="19" />
           <folding />
         </state>
       </provider>

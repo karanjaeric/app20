@@ -1,7 +1,7 @@
 package com.fundmaster.mss.controller;
 
 import com.fundmaster.mss.api.ApiEJB;
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
@@ -24,23 +24,23 @@ public class BaseServlet extends HttpServlet {
     private final JLogger jLogger = new JLogger(this.getClass());
     final Helper helper = new Helper();
     @EJB
-    CountryEJB countryEJB;
+    CountryBeanI countryBeanI;
     @EJB
-    SettingEJB settingEJB;
+    SettingBeanI settingBeanI;
     @EJB
-    SectorEJB sectorEJB;
+    SectorBeanI sectorBeanI;
     @EJB
-    SponsorEJB sponsorEJB;
+    SponsorBeanI sponsorBeanI;
     @EJB
     ApiEJB apiEJB;
     @EJB
-    GenderEJB genderEJB;
+    GenderBeanI genderBeanI;
     @EJB
-    MaritalStatusEJB maritalStatusEJB;
+    MaritalStatusBeanI maritalStatusBeanI;
     @EJB
-    MemberEJB memberEJB;
+    MemberBeanI memberBeanI;
     @EJB
-    PermissionEJB permissionEJB;
+    PermissionBeanI permissionBeanI;
     String get(HttpServletRequest req, String param)
     {
         return helper.toString(req.getParameter(param));
@@ -51,7 +51,7 @@ public class BaseServlet extends HttpServlet {
         return session != null && session.getAttribute(Constants.MANAGER_PROFILE) != null && session.getAttribute(Constants.MANAGER_PROFILE).equals(Constants.MANAGER);
     }
     @EJB
-    AuditTrailEJB auditTrailEJB;
+    AuditTrailBeanI auditTrailBeanI;
     private void logAuditTrail(String username, Date date, String profile, String description)
     {
         AuditTrail at = new AuditTrail();
@@ -59,32 +59,32 @@ public class BaseServlet extends HttpServlet {
         at.setProfile(profile);
         at.setUsername(username);
         at.setDatetime(date);
-        auditTrailEJB.add(at);
+        auditTrailBeanI.add(at);
     }
     @EJB
-    ActivityLogEJB activityLogEJB;
+    ActivityLogBeanI activityLogBeanI;
     void logActivity(String access_menu, String description, String userID, String scheme, String userProfile)
     {
-        activityLogEJB.add(new ActivityLog(description, new Date(), helper.toLong(userID), scheme, access_menu, userProfile));
+        activityLogBeanI.add(new ActivityLog(description, new Date(), helper.toLong(userID), scheme, access_menu, userProfile));
 
     }
     @EJB
-    UserEJB userEJB;
+    UserBeanI userBeanI;
     void resetAttempt(String username)
     {
-        User user = userEJB.findByUsername(username);
+        User user = userBeanI.findByUsername(username);
         if(user != null)
         {
             user.setAttempt(0);
         }
-        userEJB.edit(user);
+        userBeanI.edit(user);
     }
     @EJB
-    PasswordPolicyEJB passwordPolicyEJB;
+    PasswordPolicyBeanI passwordPolicyBeanI;
     void logAttempt(String username)
     {
-        User user = userEJB.findByUsername(username);
-        PasswordPolicy policy = passwordPolicyEJB.find();
+        User user = userBeanI.findByUsername(username);
+        PasswordPolicy policy = passwordPolicyBeanI.find();
         if(user != null)
         {
             user.setAttempt(user.getAttempt() + 1);
@@ -93,7 +93,7 @@ public class BaseServlet extends HttpServlet {
             {
                  user.setStatus(false);
             }
-            userEJB.edit(user);
+            userBeanI.edit(user);
         }
     }
     void audit(HttpSession session, String description)
@@ -107,29 +107,29 @@ public class BaseServlet extends HttpServlet {
 
         if(isManager(request))
         {
-            permissions = permissionEJB.findByProfile(Constants.MANAGER);
+            permissions = permissionBeanI.findByProfile(Constants.MANAGER);
         }
 
         else
 
-            permissions = permissionEJB.findByProfile(getSessKey(request, Constants.U_PROFILE));
+            permissions = permissionBeanI.findByProfile(getSessKey(request, Constants.U_PROFILE));
 
         return permissions;
     }
     void createMember(HttpServletRequest request, HttpServletResponse response)
     {
         HttpSession session = request.getSession(false);
-        Setting settings = settingEJB.find();
-        Country ctry = countryEJB.findById(helper.toLong(this.get(request, "country")));
+        Setting settings = settingBeanI.find();
+        Country ctry = countryBeanI.findById(helper.toLong(this.get(request, "country")));
 
         jLogger.i("Being passed from frontend ======================>  " + get(request, "country"));
         jLogger.i("The country is =============================>  " + ctry.getName());
 
         String country = ctry.getName();
 
-        Gender gender = genderEJB.findById(helper.toLong(get(request, "gender")));
+        Gender gender = genderBeanI.findById(helper.toLong(get(request, "gender")));
 
-        MaritalStatus mStatus = maritalStatusEJB.findById(Long.valueOf(get(request, "maritalStatus")));
+        MaritalStatus mStatus = maritalStatusBeanI.findById(Long.valueOf(get(request, "maritalStatus")));
         String date_string = request.getParameter("dateOfBirth");
         DateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
         Date date = null;
@@ -173,7 +173,7 @@ public class BaseServlet extends HttpServlet {
             boolean status;
             switch (settings.getMemberOnboarding()) {
                 case Constants.MSS:
-                    if (memberEJB.add(m) != null)
+                    if (memberBeanI.add(m) != null)
                         this.respond(response, true, "Member details successfully saved", null);
                     else
                         this.respond(response, false, "Member details could not be saved", null);
@@ -185,7 +185,7 @@ public class BaseServlet extends HttpServlet {
                 case Constants.BOTH:
                     status = apiEJB.saveOrUpdateMember(xtractMemberFromRequest(request).toString());
                     if(status)
-                        if (memberEJB.add(m) != null)
+                        if (memberBeanI.add(m) != null)
                             this.respond(response, true, "Member details were successfully saved", null);
                         else
                             this.respond(response, false, "Could not save the member", null);
@@ -197,14 +197,14 @@ public class BaseServlet extends HttpServlet {
     }
     JSONObject xtractMemberFromRequest(HttpServletRequest request)
     {
-        Country ctry = countryEJB.findById(helper.toLong(get(request, "country")));
+        Country ctry = countryBeanI.findById(helper.toLong(get(request, "country")));
 
         jLogger.i("Being passed from frontend ======================>  " + get(request, "country"));
         jLogger.i("The country is =============================>  " + ctry.getName());
 
         String country = ctry.getName();
-        Gender gender = genderEJB.findById(helper.toLong(get(request, "gender")));
-        MaritalStatus mStatus = maritalStatusEJB.findById(helper.toLong(get(request, "maritalStatus")));
+        Gender gender = genderBeanI.findById(helper.toLong(get(request, "gender")));
+        MaritalStatus mStatus = maritalStatusBeanI.findById(helper.toLong(get(request, "maritalStatus")));
 
         String date_string = get(request, "dateOfBirth");
         DateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
@@ -259,20 +259,20 @@ public class BaseServlet extends HttpServlet {
         sponsor.setCity(this.get(request, "city"));
         sponsor.setCompanyAddress(this.get(request, "address"));
         sponsor.setCompanyName(this.get(request, "name"));
-        Country country = countryEJB.findById(helper.toLong(this.get(request, "country")));
+        Country country = countryBeanI.findById(helper.toLong(this.get(request, "country")));
         sponsor.setCountry(country);
         sponsor.setEmailAddress(this.get(request, "email"));
         sponsor.setEmployerRefNo(this.get(request, "employerNo"));
         sponsor.setPhoneNumber(this.get(request, "phone"));
         sponsor.setPinNumber(this.get(request, "pinNo"));
         sponsor.setScheme(this.get(request, "scheme"));
-        Setting settings = settingEJB.find();
+        Setting settings = settingBeanI.find();
         if(session != null && session.getAttribute(Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
         {
             sponsor.setAgentId();
         }
 
-        Sector sector = sectorEJB.findById(helper.toLong(this.get(request, "sector")));
+        Sector sector = sectorBeanI.findById(helper.toLong(this.get(request, "sector")));
         sponsor.setSector(sector);
 
         if(settings != null && settings.getSponsorOnboarding().equals(Constants.BOTH)) {
@@ -285,7 +285,7 @@ public class BaseServlet extends HttpServlet {
             switch (settings.getSponsorOnboarding()) {
                 case Constants.MSS:
                 {
-                    if(sponsorEJB.add(sponsor) != null)
+                    if(sponsorBeanI.add(sponsor) != null)
                         this.respond(response, true, "Sponsor details have been successfully saved.", null);
                     else
                         this.respond(response, false, "Sponsor details could not be saved. We apologise for the inconvenience.", null);
@@ -298,7 +298,7 @@ public class BaseServlet extends HttpServlet {
                     status = apiEJB.saveOrUpdateSponsor(xtractSponsorFromRequest(request).toString());
                     if(status)
                     {
-                        if(sponsorEJB.add(sponsor) != null)
+                        if(sponsorBeanI.add(sponsor) != null)
                             this.respond(response, true, "Sponsor details have been successfully saved.", null);
                         else
                             this.respond(response, false, "Sponsor details could not be saved. We apologise for the inconvenience.", null);
@@ -311,11 +311,11 @@ public class BaseServlet extends HttpServlet {
         }
     }
     JSONObject xtractSponsorFromRequest(HttpServletRequest request) {
-        Country ctry = countryEJB.findById(helper.toLong(this.get(request, "country")));
+        Country ctry = countryBeanI.findById(helper.toLong(this.get(request, "country")));
         jLogger.i("Being passed from frontend ======================>  " + this.get(request, "country"));
         jLogger.i("The country is =============================>  " + ctry.getName());
         String country = ctry.getName();
-        Sector sectr = sectorEJB.findById(helper.toLong(this.get(request, "sector")));
+        Sector sectr = sectorBeanI.findById(helper.toLong(this.get(request, "sector")));
         String sector = sectr.getName();
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         String date_string = this.get(request, "applicationDate");

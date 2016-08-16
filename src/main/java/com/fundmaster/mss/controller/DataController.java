@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import org.json.JSONException;
@@ -29,35 +29,35 @@ public class DataController extends BaseServlet implements Serializable {
 
 	Helper helper = new Helper();
 	@EJB
-	ProfileNameEJB profileNameEJB;
+	ProfileNameBeanI profileNameBeanI;
 	@EJB
-	UserEJB userEJB;
+	UserBeanI userBeanI;
 	@EJB
-	CountryEJB countryEJB;
+	CountryBeanI countryBeanI;
 	@EJB
-	SettingEJB settingEJB;
+	SettingBeanI settingBeanI;
 	@EJB
-	GenderEJB genderEJB;
+	GenderBeanI genderBeanI;
 	@EJB
-	CompanyEJB companyEJB;
+	CompanyBeanI companyBeanI;
 	@EJB
-	SocialEJB socialEJB;
+	SocialBeanI socialBeanI;
 	@EJB
-	MenuEJB menuEJB;
+	MenuBeanI menuBeanI;
 	@EJB
-	ThemeEJB themeEJB;
+	ThemeBeanI themeBeanI;
 	@EJB
-	HelpEJB helpEJB;
+	HelpBeanI helpBeanI;
 	@EJB
-	PageContentEJB pageContentEJB;
+	PageContentBeanI pageContentBeanI;
 	@EJB
-	MaritalStatusEJB maritalStatusEJB;
+	MaritalStatusBeanI maritalStatusBeanI;
 	@EJB
-	ProfileLoginFieldEJB profileLoginFieldEJB;
+	ProfileLoginFieldBeanI profileLoginFieldBeanI;
 	@EJB
-	ImageBannerEJB imageBannerEJB;
+	ImageBannerBeanI imageBannerBeanI;
 	@EJB
-	PermissionEJB permissionEJB;
+	PermissionBeanI permissionBeanI;
 	private final JLogger JLogger = new JLogger(this.getClass());
 	public DataController() {
 		// TODO Auto-generated constructor stub
@@ -67,7 +67,7 @@ public class DataController extends BaseServlet implements Serializable {
         	PrintWriter out = response.getWriter();
         	if(this.get(request, "DATA").equals("HELP"))
         	{
-        		Help h = helpEJB.findById(helper.toLong(this.get(request, "ID")));
+        		Help h = helpBeanI.findById(helper.toLong(this.get(request, "ID")));
         		JSONObject obj = new JSONObject();
         		try {
 					obj.put("id", h.getId())
@@ -81,7 +81,7 @@ public class DataController extends BaseServlet implements Serializable {
         	}
         	if(this.get(request, "DATA").equals("PAGE_CONTENT"))
         	{
-        		PageContent h = pageContentEJB.findById(helper.toLong(this.get(request, "ID")));
+        		PageContent h = pageContentBeanI.findById(helper.toLong(this.get(request, "ID")));
         		JSONObject obj = new JSONObject();
         		try {
 					obj.put("id", h.getId())

@@ -12,18 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fundmaster.mss.api.ApiEJB;
 
-import com.fundmaster.mss.beans.ejb.CompanyEJB;
-import com.fundmaster.mss.beans.ejb.CountryEJB;
-import com.fundmaster.mss.beans.ejb.GenderEJB;
-import com.fundmaster.mss.beans.ejb.HelpEJB;
-import com.fundmaster.mss.beans.ejb.MaritalStatusEJB;
-import com.fundmaster.mss.beans.ejb.MenuEJB;
-import com.fundmaster.mss.beans.ejb.PageContentEJB;
-import com.fundmaster.mss.beans.ejb.SchemeManagerEJB;
-import com.fundmaster.mss.beans.ejb.SectorEJB;
-import com.fundmaster.mss.beans.ejb.SettingEJB;
-import com.fundmaster.mss.beans.ejb.SocialEJB;
-import com.fundmaster.mss.beans.ejb.ThemeEJB;
+import com.fundmaster.mss.beans.CompanyBeanI;
+import com.fundmaster.mss.beans.CountryBeanI;
+import com.fundmaster.mss.beans.GenderBeanI;
+import com.fundmaster.mss.beans.HelpBeanI;
+import com.fundmaster.mss.beans.MaritalStatusBeanI;
+import com.fundmaster.mss.beans.MenuBeanI;
+import com.fundmaster.mss.beans.PageContentBeanI;
+import com.fundmaster.mss.beans.SchemeManagerBeanI;
+import com.fundmaster.mss.beans.SectorBeanI;
+import com.fundmaster.mss.beans.SettingBeanI;
+import com.fundmaster.mss.beans.SocialBeanI;
+import com.fundmaster.mss.beans.ThemeBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.Company;
@@ -48,40 +48,40 @@ private static final String REQUEST_ACTION = "ACTION";
 	Helper helper = new Helper();
 	
 	@EJB
-	CompanyEJB companyEJB;
+	CompanyBeanI companyBeanI;
 	
 	@EJB
-	SocialEJB socialEJB;
+	SocialBeanI socialBeanI;
 	
 	@EJB
-	MenuEJB menuEJB;
+	MenuBeanI menuBeanI;
 	
 	@EJB
-	ThemeEJB themeEJB;
+	ThemeBeanI themeBeanI;
 	
 	@EJB
-	HelpEJB helpEJB;
+	HelpBeanI helpBeanI;
 	
 	@EJB
-	SettingEJB settingEJB;
+	SettingBeanI settingBeanI;
 	
 	@EJB
-	PageContentEJB pageContentEJB;
+	PageContentBeanI pageContentBeanI;
 	
 	@EJB
-	CountryEJB countryEJB;
+	CountryBeanI countryBeanI;
 	
 	@EJB
-	SectorEJB sectorEJB;
+	SectorBeanI sectorBeanI;
 	
 	@EJB
-	GenderEJB genderEJB;
+	GenderBeanI genderBeanI;
 	
 	@EJB
-	MaritalStatusEJB maritalStatusEJB;
+	MaritalStatusBeanI maritalStatusBeanI;
 	
 	@EJB
-	SchemeManagerEJB schemeManagerEJB;
+	SchemeManagerBeanI schemeManagerBeanI;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -91,36 +91,36 @@ private static final String REQUEST_ACTION = "ACTION";
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		Company company = companyEJB.find();
+		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
-		Social social = socialEJB.find();
+		Social social = socialBeanI.find();
 		request.setAttribute("social", social);
-		Menu menu = menuEJB.find();
+		Menu menu = menuBeanI.find();
 		request.setAttribute("menu", menu);
-		Theme theme = themeEJB.find();
+		Theme theme = themeBeanI.find();
 		request.setAttribute("theme", theme);
 		request.setAttribute("noMenu", false);
-		Help help = helpEJB.findHelp(Constants.PAGE_POTENTIAL_SPONSOR);
+		Help help = helpBeanI.findHelp(Constants.PAGE_POTENTIAL_SPONSOR);
 		request.setAttribute("help", help);
-		Setting settings = settingEJB.find();
+		Setting settings = settingBeanI.find();
 		request.setAttribute("settings", settings);
 		
-		List<Gender> genders = genderEJB.find();
+		List<Gender> genders = genderBeanI.find();
 		request.setAttribute("genders",  genders);
-		List<MaritalStatus> marital_statuses = maritalStatusEJB.find();
+		List<MaritalStatus> marital_statuses = maritalStatusBeanI.find();
 		request.setAttribute("maritalStatuses",  marital_statuses);
 		
-		List<Sector> sectors = sectorEJB.find();
+		List<Sector> sectors = sectorBeanI.find();
 		request.setAttribute("sectors", sectors);
 		
-		List<Country> countries = countryEJB.find();
+		List<Country> countries = countryBeanI.find();
 		request.setAttribute("countries",  countries);
 		
 		List<Scheme> sponsorSchemes = apiEJB.getSchemeBySchemeModeAndPlanType("UMBRELLA", "INDIVIDUAL_PENSION_FUND");
 
 		request.setAttribute("sponsorSchemes", sponsorSchemes);
 		
-		PageContent content = pageContentEJB.findPageContent(Constants.PAGE_POTENTIAL_SPONSOR);
+		PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_POTENTIAL_SPONSOR);
 		request.setAttribute("content", content);
 		logActivity(Constants.PAGE_POTENTIAL_SPONSOR, "accesed Potential Sponsor page", "0", null, null);
 		request.getRequestDispatcher("potential-sponsor.jsp").forward(request, response);

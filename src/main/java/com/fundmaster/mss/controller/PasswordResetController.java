@@ -1,7 +1,7 @@
 package com.fundmaster.mss.controller;
 
 import com.fundmaster.mss.api.ApiEJB;
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.model.*;
@@ -26,53 +26,53 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
 	Helper helper = new Helper();
 	@EJB
-	UsedPasswordEJB usedPasswordEJB;
+	UsedPasswordBeanI usedPasswordBeanI;
 	@EJB
-	ProfileNameEJB profileNameEJB;
+	ProfileNameBeanI profileNameBeanI;
 	@EJB
-	UserEJB userEJB;
+	UserBeanI userBeanI;
 	@EJB
-	CountryEJB countryEJB;
+	CountryBeanI countryBeanI;
 	@EJB
-	SettingEJB settingEJB;
+	SettingBeanI settingBeanI;
 	@EJB
-	GenderEJB genderEJB;
+	GenderBeanI genderBeanI;
 	@EJB
-	CompanyEJB companyEJB;
+	CompanyBeanI companyBeanI;
 	@EJB
-	SocialEJB socialEJB;
+	SocialBeanI socialBeanI;
 	@EJB
-	MenuEJB menuEJB;
+	MenuBeanI menuBeanI;
 	@EJB
-	ThemeEJB themeEJB;
+	ThemeBeanI themeBeanI;
 	@EJB
-	HelpEJB helpEJB;
+	HelpBeanI helpBeanI;
 	@EJB
-	PageContentEJB pageContentEJB;
+	PageContentBeanI pageContentBeanI;
 	@EJB
-	MaritalStatusEJB maritalStatusEJB;
+	MaritalStatusBeanI maritalStatusBeanI;
 	@EJB
-	ProfileLoginFieldEJB profileLoginFieldEJB;
+	ProfileLoginFieldBeanI profileLoginFieldBeanI;
 	@EJB
-	ImageBannerEJB imageBannerEJB;
+	ImageBannerBeanI imageBannerBeanI;
 	@EJB
-	PermissionEJB permissionEJB;
+	PermissionBeanI permissionBeanI;
 	@EJB
-	PasswordPolicyEJB passwordPolicyEJB;
+	PasswordPolicyBeanI passwordPolicyBeanI;
 	@EJB
 	ApiEJB apiEJB;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
 		
-		Company company = companyEJB.find();
+		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
-		Setting settings = settingEJB.find();
+		Setting settings = settingBeanI.find();
 		request.setAttribute("settings", settings);
-		Social social = socialEJB.find();
+		Social social = socialBeanI.find();
 		request.setAttribute("social", social);
-		Menu menu = menuEJB.find();
+		Menu menu = menuBeanI.find();
 		request.setAttribute("menu", menu);
-		Theme theme = themeEJB.find();
+		Theme theme = themeBeanI.find();
 		request.setAttribute("theme", theme);
 		request.setAttribute("noMenu", false);
 		request.getRequestDispatcher("password-reset.jsp").forward(request, response);
@@ -82,19 +82,19 @@ public class PasswordResetController extends BaseServlet implements Serializable
 			HttpServletResponse response) throws ServletException, IOException {
 		if(this.get(request, "ACTION").equals("RESET_PASSWORD"))
 		{
-			PasswordPolicy policy = passwordPolicyEJB.find();
+			PasswordPolicy policy = passwordPolicyBeanI.find();
 			String securityCode = this.get(request, "securityCode");
-			User u = userEJB.findBySecurityCode(securityCode);
+			User u = userBeanI.findBySecurityCode(securityCode);
 			if(u != null) {
 				if(u.getSecurityCode().equalsIgnoreCase(securityCode))
 				{
-					if(!(usedPasswordEJB.isUsed(this.get(request, "newPassword")) && policy.isPassword_reuse()))
+					if(!(usedPasswordBeanI.isUsed(this.get(request, "newPassword")) && policy.isPassword_reuse()))
 					{
 							Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
 							u.setPassword_expiry(password_expiry);
 							u.setPassword(helper.hash(this.get(request, "newPassword")));
 							u.setSecurityCode(null);
-							if(userEJB.edit(u) != null)
+							if(userBeanI.edit(u) != null)
 								this.respond(response, true, "Your password has been reset successfully", null);
 							else
 								this.respond(response, false, "Sorry, your password could not be reset", null);
@@ -120,14 +120,14 @@ public class PasswordResetController extends BaseServlet implements Serializable
 		}
 		else if(this.get(request, "ACTION").equals("REQUEST_RESET"))
 		{
-			Setting settings = settingEJB.find();
+			Setting settings = settingBeanI.find();
 			Constants.BASE_URL = request.getContextPath() + "password-reset";
-			User u = userEJB.findUserByUsernameAndProfile(this.get(request, "email"), Constants.MEMBER_PROFILE);
+			User u = userBeanI.findUserByUsernameAndProfile(this.get(request, "email"), Constants.MEMBER_PROFILE);
 			if(u != null)
 			{
 				String securityCode = UUID.randomUUID().toString();
 				u.setSecurityCode(securityCode);
-				Company company = companyEJB.find();
+				Company company = companyBeanI.find();
 				XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(),null);
 
 				boolean status = apiEJB.sendEmail(m.getEmailAddress(),company.getEmail(), null, "Password Reset Instructions", "Dear " + u.getUserProfile() + ", " +
@@ -137,7 +137,7 @@ public class PasswordResetController extends BaseServlet implements Serializable
 						" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);
 				if(status)
 				{
-					if(userEJB.edit(u) != null)
+					if(userBeanI.edit(u) != null)
 						this.respond(response, true, "The password reset instructions have been sent to your email address", null);
 					else
 						this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);

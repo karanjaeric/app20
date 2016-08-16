@@ -1,7 +1,7 @@
 package com.fundmaster.mss.controller;
 
 import com.fundmaster.mss.api.ApiEJB;
-import com.fundmaster.mss.beans.ejb.*;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Actions;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
@@ -33,31 +33,31 @@ public class MemberController extends BaseServlet implements Serializable {
 
     Helper helper = new Helper();
 	@EJB
-	UserEJB userEJB;
+	UserBeanI userBeanI;
 	@EJB
-	CountryEJB countryEJB;
+	CountryBeanI countryBeanI;
 	@EJB
-	SettingEJB settingEJB;
+	SettingBeanI settingBeanI;
 	@EJB
-	GenderEJB genderEJB;
+	GenderBeanI genderBeanI;
 	@EJB
-	CompanyEJB companyEJB;
+	CompanyBeanI companyBeanI;
 	@EJB
-	SocialEJB socialEJB;
+	SocialBeanI socialBeanI;
 	@EJB
-	MenuEJB menuEJB;
+	MenuBeanI menuBeanI;
 	@EJB
-	ThemeEJB themeEJB;
+	ThemeBeanI themeBeanI;
 	@EJB
-	HelpEJB helpEJB;
+	HelpBeanI helpBeanI;
 	@EJB
-	PageContentEJB pageContentEJB;
+	PageContentBeanI pageContentBeanI;
 	@EJB
-	MaritalStatusEJB maritalStatusEJB;
+	MaritalStatusBeanI maritalStatusBeanI;
 	@EJB
-	ProfileLoginFieldEJB profileLoginFieldEJB;
+	ProfileLoginFieldBeanI profileLoginFieldBeanI;
 	@EJB
-	ImageBannerEJB imageBannerEJB;
+	ImageBannerBeanI imageBannerBeanI;
 	private final JLogger JLogger = new JLogger(this.getClass());
 	@EJB
 	ApiEJB apiEJB;
@@ -74,9 +74,9 @@ public class MemberController extends BaseServlet implements Serializable {
 				}
 				else
 				{
-					List<ActivityLog> activityLogs = activityLogEJB.findAllByUserID(this.getSessKey(request, Constants.UID));
+					List<ActivityLog> activityLogs = activityLogBeanI.findAllByUserID(this.getSessKey(request, Constants.UID));
 					request.setAttribute("activityLogs", activityLogs);
-					Company company = companyEJB.find();
+					Company company = companyBeanI.find();
 					request.setAttribute("company", company);
 					request.setAttribute("username", this.getSessKey(request, Constants.USER));
 					request.setAttribute("path", "member");
@@ -160,10 +160,10 @@ public class MemberController extends BaseServlet implements Serializable {
 							}
 					}
 					request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
-					List<ContactCategory> contactReasons = contactCategoryEJB.find();
+					List<ContactCategory> contactReasons = contactCategoryBeanI.find();
 					request.setAttribute("contactReasons", contactReasons);
 					request.setAttribute("isManager", helper.isManager(request));
-					PasswordPolicy policy = passwordPolicyEJB.find();
+					PasswordPolicy policy = passwordPolicyBeanI.find();
 					request.setAttribute("policy", policy);
 					if((schemes != null ? schemes.size() : 0) > 1 && this.getSessKey(request, Constants.SCHEME_ID) == null)
 						request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
@@ -181,9 +181,9 @@ public class MemberController extends BaseServlet implements Serializable {
 		} 
 	}
     @EJB
-    PasswordPolicyEJB passwordPolicyEJB;
+	PasswordPolicyBeanI passwordPolicyBeanI;
     @EJB
-    ContactCategoryEJB contactCategoryEJB;
+	ContactCategoryBeanI contactCategoryBeanI;
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
@@ -237,11 +237,11 @@ public class MemberController extends BaseServlet implements Serializable {
     }
 
     private void preChangePassword(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        User u = userEJB.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
+        User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
         String securityCode = helper.shorterUUID(UUID.randomUUID().toString(), 1);
 			/* Shorter code is more user friendly... the UUID was way too long :) */
         u.setSecurityCode(securityCode);
-        userEJB.edit(u);
+        userBeanI.edit(u);
         XiMember m = null;
         List<Scheme> schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
         if(schemes != null && schemes.size() >= 1) {
@@ -257,7 +257,7 @@ public class MemberController extends BaseServlet implements Serializable {
         if(m != null)
             session.setAttribute(Constants.PROFILE_ID,m.getId());
         try {
-            Company company = companyEJB.find();
+            Company company = companyBeanI.find();
             boolean status = apiEJB.sendEmail(m != null ? m.getEmailAddress() : null,company.getEmail(), null,"Change Password Request", "Dear " + u.getUsername() + ", " +
                     "You recently requested to change your password. " +
                     "Here is your security code:" +

@@ -16,7 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fundmaster.mss.beans.ejb.ImageBannerEJB;
+import com.fundmaster.mss.beans.ImageBannerBeanI;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.ImageBanner;
@@ -38,11 +38,11 @@ public class Banner extends BaseServlet implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@EJB
-    ImageBannerEJB imageBannerEJB;
+	ImageBannerBeanI imageBannerBeanI;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		ImageBanner bn = imageBannerEJB.findById(helper.toLong(request.getPathInfo().substring(1)));
+		ImageBanner bn = imageBannerBeanI.findById(helper.toLong(request.getPathInfo().substring(1)));
 		
 
 			String fileName = bn.getName();
