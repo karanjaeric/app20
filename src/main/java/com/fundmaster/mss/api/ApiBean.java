@@ -791,7 +791,6 @@ public class ApiBean implements ApiEJB {
             jLogger.i("Response is: " + response);
             XiMember xiMember = new XiMember();
             xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
-            //xiMember.setSchemeId(helper.toString(response.get(Fields.SCHEME_ID)));
             xiMember.setProfile(response.getString(Fields.PROFILE));
             return xiMember;
         } catch (JSONException je) {
@@ -1109,7 +1108,6 @@ public class ApiBean implements ApiEJB {
 
         XiMember xiMember = new XiMember();
         try {
-            xiMember.setId(jsonObject.getLong(Fields.MEMBER_ID));
             xiMember.setSchemeId(jsonObject.getString(Fields.SCHEME_ID));
             xiMember.setId(jsonObject.getLong(Fields.ID));
             xiMember.setMbio_id(jsonObject.getString(Fields.MBIO_ID));

@@ -2,87 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb972854-9642-4822-9ef8-855f116f8391" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ActivityLogBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ActivityLogBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/AuditTrailBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/AuditTrailBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/BenefitsCalculationBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/BenefitsCalculationBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/CompanyBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CompanyBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ContactCategoryBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ContactCategoryBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/CountryBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CountryBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/GenderBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/GenderBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/HelpBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/HelpBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ImageBannerBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ImageBannerBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/InterestRateColumnBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/LogoBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/LogoBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MaritalStatusBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MaritalStatusBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MediaBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MediaBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MemberBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MemberBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MemberPermissionBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MemberPermissionBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/MenuBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MenuBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/PageContentBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PageContentBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/PasswordPolicyBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PasswordPolicyBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/PermissionBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PermissionBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ProfileLoginFieldBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ProfileLoginFieldBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ProfileNameBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ProfileNameBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SchemeManagerBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SchemeManagerBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SectorBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SectorBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SettingBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SettingBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SocialBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SocialBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/SponsorBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SponsorBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/ThemeBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ThemeBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/UsedPasswordBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UsedPasswordBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/beans/UserBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UserBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ActivityLogEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ActivityLogBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/AuditTrailEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/AuditTrailBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/BenefitsCalculationEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/BenefitsCalculationBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/CompanyEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CompanyBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ContactCategoryEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ContactCategoryBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/CountryEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/CountryBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/GenderEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/GenderBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/HelpEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/HelpBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ImageBannerEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ImageBannerBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/InterestRateColumnEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/LogoEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/LogoBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MaritalStatusEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MaritalStatusBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MediaEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MediaBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MemberEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MemberBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MemberPermissionEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MemberPermissionBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/MenuEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/MenuBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/PageContentEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PageContentBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/PasswordPolicyEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PasswordPolicyBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/PermissionEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/PermissionBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ProfileLoginFieldEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ProfileLoginFieldBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ProfileNameEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ProfileNameBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SchemeManagerEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SchemeManagerBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SectorEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SectorBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SettingEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SettingBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SocialEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SocialBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/SponsorEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/SponsorBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/ThemeEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ThemeBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/UsedPasswordEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UsedPasswordBeanI.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/ejb/UserEJB.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/UserBeanI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Activate.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Activate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Admin.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Admin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Annuity.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Annuity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Banner.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Banner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/BaseServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/BaseServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Contact.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Contact.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Dashboard.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Dashboard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DataController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DataController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DefaultController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DefaultController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DownloadController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/DownloadController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/InterestRateController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/InterestRateController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LogoController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LogoController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MemberController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MenuController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/MenuController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PasswordResetController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PasswordResetController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialMemberController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialMemberController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialSponserController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/PotentialSponserController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Register.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Register.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignIn.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/SignIn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/WhatIfAnalysis.java" afterPath="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/WhatIfAnalysis.java" />
     </list>
     <ignored path="Mss.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -123,7 +44,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
               <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,7 +56,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
               <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -143,7 +68,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="442">
               <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -153,7 +80,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="208">
               <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -163,7 +92,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
               <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -173,7 +104,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
               <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -183,7 +116,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
               <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -191,8 +126,8 @@
       <file leaf-file-name="ApiBean.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18486">
-              <caret line="734" column="19" selection-start-line="734" selection-start-column="19" selection-end-line="734" selection-end-column="19" />
+            <state relative-caret-position="249">
+              <caret line="786" column="39" selection-start-line="786" selection-start-column="39" selection-end-line="786" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -203,7 +138,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
               <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -213,7 +150,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
               <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -285,12 +224,12 @@
         <option value="$PROJECT_DIR$/src/main/webapp/includes/partial/admin_footer.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/custom/css/styles.admin.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/custom/assets/styles.css" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/dao/PermissionDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/LoginController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/controller/Admin.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBeanI.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/beans/InterestRateColumnBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java" />
       </list>
     </option>
   </component>
@@ -314,9 +253,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="-4" />
+    <option name="y" value="24" />
     <option name="width" value="1855" />
-    <option name="height" value="1084" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -345,6 +284,7 @@
     <panes>
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -353,299 +293,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="member" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="includes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="partial" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MSS.V2.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mss" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1242,51 +891,52 @@
       <workItem from="1470725051889" duration="15468000" />
       <workItem from="1470771285501" duration="45000" />
       <workItem from="1470811709050" duration="715000" />
-      <workItem from="1471338649336" duration="549000" />
+      <workItem from="1471338649336" duration="1246000" />
+      <workItem from="1471427012096" duration="176000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="276705000" />
+    <option name="totallyTimeSpent" value="277578000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
-    <editor active="false" />
+    <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4234801" sideWeight="0.52122986" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917318" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26792452" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21815519" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="EJB" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917318" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3207547" sideWeight="0.7239583" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26738545" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35115305" sideWeight="0.47877014" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="EJB" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32180294" sideWeight="0.47864506" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46226415" sideWeight="0.49583334" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3207547" sideWeight="0.7239583" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4726989" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35115305" sideWeight="0.47877014" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1412,7 +1062,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1917">
           <caret line="82" column="53" selection-start-line="82" selection-start-column="53" selection-end-line="82" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1497,9 +1146,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5304">
           <caret line="227" column="22" selection-start-line="227" selection-start-column="22" selection-end-line="227" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1507,11 +1153,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1040">
           <caret line="54" column="16" selection-start-line="54" selection-start-column="16" selection-end-line="54" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#7277#7278#0" expanded="false" />
-            <element signature="e#7325#7326#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1519,9 +1160,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
           <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1529,9 +1167,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="494">
           <caret line="22" column="90" selection-start-line="22" selection-start-column="90" selection-end-line="22" selection-end-column="90" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1539,7 +1174,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3510">
           <caret line="149" column="135" selection-start-line="149" selection-start-column="135" selection-end-line="149" selection-end-column="135" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1547,11 +1181,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2626">
           <caret line="122" column="32" selection-start-line="122" selection-start-column="32" selection-end-line="122" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1422#1423#0" expanded="false" />
-            <element signature="e#1436#1437#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1559,9 +1188,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="494">
           <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
-          <folding>
-            <marker date="1470648976038" expanded="true" signature="8243:8254" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1569,9 +1195,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1404">
           <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1579,7 +1202,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26">
           <caret line="253" column="22" selection-start-line="253" selection-start-column="22" selection-end-line="253" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1587,7 +1209,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1595,7 +1216,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1603,7 +1223,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1611,7 +1230,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1619,7 +1237,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1627,7 +1244,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1635,7 +1251,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1643,7 +1258,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1651,7 +1265,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1659,7 +1272,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1667,7 +1279,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1675,7 +1286,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1683,7 +1296,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1691,7 +1306,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1699,7 +1316,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1707,7 +1326,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1715,7 +1336,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1723,7 +1346,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1731,7 +1356,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1739,14 +1366,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fundmaster/mss/api/ApiBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18486">
-          <caret line="734" column="19" selection-start-line="734" selection-start-column="19" selection-end-line="734" selection-end-column="19" />
+        <state relative-caret-position="249">
+          <caret line="786" column="39" selection-start-line="786" selection-start-column="39" selection-end-line="786" selection-end-column="39" />
           <folding />
         </state>
       </provider>
