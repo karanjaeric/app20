@@ -10,13 +10,13 @@
   
   <c:if test="${ count == 0 }">
     <div class="item active">
-     <img src= "${pageContext.request.contextPath}/imageBanners/${ imageBanner.id }"style="float:center;">
+     <img src= "${pageContext.request.contextPath}/banners/${ imageBanner.id }"style="float:center;">
       <c:set var="count" value="${count + 1}" scope="page"/>
     </div>
      </c:if>
   <c:if test="${ count > 0 }">  
    <div class="item">
-      <img src="${pageContext.request.contextPath}/imageBanners/${ imageBanner.id }" style="float:center;">
+      <img src="${pageContext.request.contextPath}/banners/${ imageBanner.id }" style="float:center;">
       <c:set var="count" value="${count + 1}" scope="page"/>
     </div>
   </c:if>

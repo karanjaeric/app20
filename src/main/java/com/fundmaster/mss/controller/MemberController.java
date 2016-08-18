@@ -219,6 +219,7 @@ public class MemberController extends BaseServlet implements Serializable {
                 break;
             case Actions.CURR:
                 schemeCurrency(response, apiEJB.getSchemeCurrency(this.getSessKey(request, Constants.SCHEME_ID)));
+
                 break;
             case Actions.BD:
                 getBeneficiaries(response, apiEJB.getBeneficiaries(this.getSessKey(request, Constants.PROFILE_ID)));

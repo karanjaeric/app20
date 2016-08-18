@@ -76,7 +76,10 @@ $(document).ready(function () {
 	        success: function(json) {
 				if(json.success)
 				{
-					currency = json.currency[0]['code'];
+
+					json = $.parseJSON(json.data);
+					currency = hasKey(json, "code") ? json.code : "KES";
+
 					/* Load Member Closing Balance */
 					$.ajax({
 				        url: $('#base_url').val() + 'member',
@@ -85,7 +88,9 @@ $(document).ready(function () {
 				        dataType: 'json',
 				        success: function(json) {
 				            if(json.success)
-			   	            {	   	            
+			   	            {
+
+								json = $.parseJSON(json.data);
 				            	$('#accummulated-benefits').html(currency + " " + format_no(json.total));
 			   	            }
 				            else
@@ -103,6 +108,8 @@ $(document).ready(function () {
 				    	        success: function(json) {
 				    	            if(json.success)
 				       	            {
+
+										json = $.parseJSON(json.data);
 				    	            	bar_graph(json);
 				       	            }
 				    	            else
@@ -120,6 +127,8 @@ $(document).ready(function () {
 				    	    	        success: function(json) {
 				    	    	            if(json.success)
 				    	       	            {
+
+												json = $.parseJSON(json.data);
 				    	    	            	pie_chart(json);
 				    	       	            }
 				    	    	            else
@@ -137,6 +146,8 @@ $(document).ready(function () {
 				    	    	    	        success: function(json) {
 				    	    	    	            if(json.success)
 				    	    	       	            {
+
+														json = $.parseJSON(json.data);
 				    	    	    	            	$('#cummulative-interests').html(currency + ' ' + format_no(json.cummulativeInterest));
 				    	    	       	            }
 				    	    	    	            else
@@ -153,6 +164,8 @@ $(document).ready(function () {
 				    	    	    	    	        success: function(json) {
 				    	    	    	    	            if(json.success)
 				    	    	    	       	            {
+
+																json = $.parseJSON(json.data);
 				    	    	    	    	            	$('#average-interests').html(format_no(json.averageInterest));
 				    	    	    	       	            }
 				    	    	    	    	            else
