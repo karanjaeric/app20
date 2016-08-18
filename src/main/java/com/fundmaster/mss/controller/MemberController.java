@@ -58,7 +58,7 @@ public class MemberController extends BaseServlet implements Serializable {
 	ProfileLoginFieldBeanI profileLoginFieldBeanI;
 	@EJB
 	ImageBannerBeanI imageBannerBeanI;
-	private final JLogger JLogger = new JLogger(this.getClass());
+	private final JLogger jLogger = new JLogger(this.getClass());
 	@EJB
 	ApiEJB apiEJB;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -90,7 +90,7 @@ public class MemberController extends BaseServlet implements Serializable {
 					request.setAttribute("member_id", m.getId());
 					session.setAttribute(Constants.PROFILE_ID,m.getId());
 					if(schemes != null && schemes.size() > 0) {
-						JLogger.i("Scheme is not null. email: "+ this.getSessKey(request, Constants.USER));
+						jLogger.i("Scheme is not null. email: "+ this.getSessKey(request, Constants.USER));
 						if(this.getSessKey(request, Constants.SCHEME_ID) == null)
 						{
 							m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),schemes.get(0).getId().toString());
@@ -99,18 +99,19 @@ public class MemberController extends BaseServlet implements Serializable {
 						{
 							m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.SCHEME_ID));
 						}
-
 					}
-					request.setAttribute("member", m);
                     if(m==null)
                     {
                         m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
                     }
+					request.setAttribute("member", m);
                     session.setAttribute(Constants.PROFILE_ID,m.getId());
 
 
 					if(schemes != null && schemes.size() == 1)
 					{
+						jLogger.i("Executing this script: 1" );
+						jLogger.i("Member is " + m.getId());
 						try {
 
 							if(this.getSessKey(request, Constants.SCHEME_ID) == null)
@@ -126,13 +127,14 @@ public class MemberController extends BaseServlet implements Serializable {
 							}
 						} catch(NullPointerException npe)
 						{
-                            JLogger.e("NullPointerException was detected: " + npe.getMessage());
+                            jLogger.e("NullPointerException was detected: " + npe.getMessage());
                             session.setAttribute(Constants.SCHEME_ID, String.valueOf(schemes.get(0).getId()));
 						}
 					}
 
 					else if(this.getSessKey(request, Constants.SCHEME_ID) != null)
 					{
+						jLogger.i("Executing this script: 2" );
 						if(schemes != null)
 							for(Scheme scheme : schemes)
 							{
@@ -153,12 +155,14 @@ public class MemberController extends BaseServlet implements Serializable {
 										}
 									} catch(NullPointerException npe)
 									{
-										JLogger.e("NullPointerException was detected: " + npe.getMessage());
+										jLogger.e("NullPointerException was detected: " + npe.getMessage());
 										session.setAttribute(Constants.SCHEME_ID, String.valueOf(scheme.getId()));
 									}
 								}
 							}
 					}
+
+					jLogger.i("Member found is: " + m.getId() );
 					request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
 					List<ContactCategory> contactReasons = contactCategoryBeanI.find();
 					request.setAttribute("contactReasons", contactReasons);
@@ -176,7 +180,7 @@ public class MemberController extends BaseServlet implements Serializable {
 		}
 		catch (NullPointerException npe)
 		{
-			JLogger.e("NullPointerException or JSONException was detected: " + npe.getMessage());
+			jLogger.e("NullPointerException or JSONException was detected: " + npe.getMessage());
 			response.sendRedirect(getServletContext().getContextPath() + "/sign-in");			
 		} 
 	}
@@ -243,9 +247,12 @@ public class MemberController extends BaseServlet implements Serializable {
 			/* Shorter code is more user friendly... the UUID was way too long :) */
         u.setSecurityCode(securityCode);
         userBeanI.edit(u);
+
         XiMember m = null;
+
         List<Scheme> schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
-        if(schemes != null && schemes.size() >= 1) {
+
+        if(schemes != null && schemes.size() > 0) {
             if(this.getSessKey(request, Constants.SCHEME_ID) == null)
             {
                 m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),schemes.get(0).getId().toString());
@@ -254,7 +261,9 @@ public class MemberController extends BaseServlet implements Serializable {
             {
                 m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.SCHEME_ID));
             }
+
         }
+
         if(m != null)
             session.setAttribute(Constants.PROFILE_ID,m.getId());
         try {
@@ -294,7 +303,7 @@ public class MemberController extends BaseServlet implements Serializable {
     private void changeScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         audit(session, "Switched between schemes from scheme #" + this.getSessKey(request, Constants.SCHEME_ID)
                 + " to scheme #" + this.get(request, "schemeID"));
-        JLogger.i("Switched between schemes from scheme #" + this.getSessKey(request, Constants.SCHEME_ID)
+        jLogger.i("Switched between schemes from scheme #" + this.getSessKey(request, Constants.SCHEME_ID)
                 + " to scheme #" + this.get(request, "schemeID"));
         session.setAttribute(Constants.SCHEME_ID, this.get(request, "schemeID"));
         this.respond(response, true, "Scheme changed successfully", null);
@@ -309,7 +318,7 @@ public class MemberController extends BaseServlet implements Serializable {
             date = format_from.parse(date_string);
         } catch (ParseException pe) {
             // TODO Auto-generated catch block
-            JLogger.e("ParseException was detected: " + pe.getMessage());
+            jLogger.e("ParseException was detected: " + pe.getMessage());
         }
         this.respond(response, true, "", apiEJB.getAccountingPeriod(format.format(date), this.getSessKey(request, Constants.SCHEME_ID)));
     }

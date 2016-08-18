@@ -5,6 +5,7 @@ import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Actions;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
 
 import javax.ejb.EJB;
@@ -38,7 +39,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     UserBeanI userBeanI;
     @EJB
     ApiEJB apiEJB;
-
+    JLogger jLogger = new JLogger(this.getClass());
     @EJB
     InterestRateColumnBeanI interestRateColumnBeanI;
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -265,15 +266,21 @@ SocialBeanI socialBeanI;
         request.setAttribute("schemes", schemes);
         MemberPermission memberPermission = memberPermissionBeanI.find();
         request.setAttribute("memberPermission", memberPermission);
+
         XiMember m;
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null)
+        if (member_id == null || member_id.isEmpty())
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("Member ID is: " + member_id);
         m = apiEJB.getMemberDetails(member_id, null);
         request.setAttribute("member", m);
+        jLogger.i("Member Id found is " + m.getId());
+
         List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(member_id);
         request.setAttribute("beneficiaries", beneficiaries);
+
+
         logActivity("MEMBER PERSONAL INFORMATION", "Viewed editable member personal information", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed  editable  member personal information");
         request.getRequestDispatcher("member/personal_information.jsp").forward(request, response);

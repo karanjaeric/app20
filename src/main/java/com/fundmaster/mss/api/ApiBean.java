@@ -505,16 +505,22 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLPost(APICall.GET_MEMBER_BENEFICIARIES + memberID,"", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+
             if(response.getBoolean(Fields.SUCCESS))
             {
                 JSONArray res = (JSONArray) response.get(Constants.ROWS);
                 List<Beneficiary> beneficiaries = new ArrayList<>();
+
                 for(int i = 0; i < res.length(); i ++)
 
                 {
                     JSONObject obj = res.getJSONObject(i);
                     Beneficiary beneficiary = new Beneficiary();
                     beneficiary.setName(helper.toString(obj.get("name")));
+                    beneficiary.setFirstname(helper.toString(obj.get("firstname")));
+                    beneficiary.setSurname(helper.toString(obj.get("surname")));
+                    beneficiary.setOthernames(helper.toString(obj.get("othernames")));
+                    beneficiary.setRelationship(helper.toString(obj.get("relationship")));
                     beneficiary.setLumpsumEntitlement(helper.toString(obj.get("lumpsumEntitlement")));
                     beneficiaries.add(beneficiary);
                 }
