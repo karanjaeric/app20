@@ -696,6 +696,7 @@ public class ApiBean implements ApiEJB {
         try {
             response = URLGet(APICall.SCHEME_GET_SCHEME_BASE_CURRENCY + schemeID);
             response = response.getJSONArray(Fields.CURRENCY).getJSONObject(0);
+            jLogger.i("This is the response for currency >>>>>>>>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<");
             return response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
@@ -788,10 +789,12 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLPost(APICall.CHECK_MEMBER_EXISTS + ordinal  + "/" + value + "/" + profile, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
-            jLogger.i("Response is: " + response);
+            jLogger.i("Response of member exists is: " + response);
             XiMember xiMember = new XiMember();
             xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
             xiMember.setProfile(response.getString(Fields.PROFILE));
+            Long Scheme_id = helper.toLong(response.get(Fields.SCHEME_ID));
+            xiMember.setSchemeId(Long.toString(Scheme_id));
             return xiMember;
         } catch (JSONException je) {
             jLogger.e("We have a json exception checking if the member exists" + je.getMessage());
@@ -1271,9 +1274,12 @@ public class ApiBean implements ApiEJB {
             JSONArray res = (JSONArray) response.get(Constants.ROWS);
             for(int i = 0; i < res.length(); i++){
                 JSONObject jsonObject = res.getJSONObject(i);
+                jLogger.i("The json object >>>>>>>>>>>>>>>>> " + jsonObject);
                 Scheme scheme = new Scheme();
                 scheme.setId(jsonObject.getLong(Fields.ID));
-                scheme.setName(jsonObject.getString(Fields.SCHEME_NAME));
+                jLogger.i("The scheme id is >>>>>>> " + jsonObject.getLong(Fields.ID));
+                scheme.setName(jsonObject.getString("name"));
+                jLogger.i("The scheme name >>>>>>>>>>>>> " + jsonObject.getString("name"));
                 scheme.setPlanType(jsonObject.getString(Fields.PLAN_TYPE));
                 schemes.add(scheme);
             }

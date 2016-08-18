@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +29,7 @@ public class SignIn extends BaseServlet implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	JLogger jLogger = new JLogger(this.getClass());
     Helper helper = new Helper();
 	@EJB
 	ProfileNameBeanI profileNameBeanI;
@@ -134,7 +136,7 @@ public class SignIn extends BaseServlet implements Serializable {
 						{
 							
 							session.setAttribute(Constants.USER, u.getUsername());
-							
+
 							session.setAttribute(Constants.UID, u.getId());
 							session.setAttribute(Constants.PROFILE_ID, member.getId());
 							session.setAttribute(Constants.LOGIN, true);

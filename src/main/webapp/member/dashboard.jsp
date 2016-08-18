@@ -76,7 +76,9 @@ $(document).ready(function () {
 	        success: function(json) {
 				if(json.success)
 				{
-					currency = json.currency[0]['code'];
+
+					currency = json.data[0]['code'];
+
 					/* Load Member Closing Balance */
 					$.ajax({
 				        url: $('#base_url').val() + 'member',

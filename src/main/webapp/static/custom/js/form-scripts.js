@@ -459,22 +459,17 @@ $(document)
 														stop_wait();
 														var message = null;
 														var success = false;
-														$
-																.each(
+														$ .each(
 																		json,
-																		function(
-																				key,
-																				value) {
-																			if (key == 'success'
-																					&& value == true) {
+																		function(key, value) {
+																			if (key == 'success' && value == true) {
 																				success = true;
-																				$("form#"
-																						+ form)[0]
+																				$("form#" + form)[0]
 																						.reset();
 																				window.location.href = $(
 																						'#base_url')
-																						.val()
-																						+ json.message;
+																						.val() + 'member';
+
 																			}
 																			if (key == 'message') {
 																				message = value;
