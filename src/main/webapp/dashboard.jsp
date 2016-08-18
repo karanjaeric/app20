@@ -75,8 +75,8 @@
 						console.log(json);
 						if(json.success)
 						{
-							json = $.parseJSON(json.data);
-							member_panel(json);
+							json = $.parseJSON(json.stats);
+							member_panel(json.stats);
 						}
 					}
 				});

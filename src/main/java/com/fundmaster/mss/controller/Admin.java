@@ -155,18 +155,26 @@ public class Admin extends BaseServlet implements Serializable {
                     List<ActivityLog> activityLogs = activityLogBeanI.findAllByUserID(this.getSessKey(request, Constants.UID));
                     request.setAttribute("activityLogs", activityLogs);
                     request.setAttribute("company", company);
+
                     List<Scheme> schemes;
-                    if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.ADMIN_PROFILE))
+
+                    if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.ADMIN_PROFILE)) {
+
                         schemes = apiEJB.getSchemes(0, 10000);
-                    else
+                    }
+                    else {
                         schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER),
                                 this.getSessKey(request, Constants.U_PROFILE));
+                    }
+
                     request.setAttribute("schemes", schemes);
                     PasswordPolicy policy = passwordPolicyBeanI.find();
                     request.setAttribute("policy", policy);
                     request.setAttribute("username", this.getSessKey(request, Constants.USER));
+
                     if (schemes != null && schemes.size() > 0) {
                         jLogger.i("We have the schemes");
+
                         if (this.getSessKey(request, Constants.SCHEME_ID) == null || this.getSessKey(request, Constants.SCHEME_ID).isEmpty()) {
                             jLogger.i("Session Scheme Id is null");
                             session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
@@ -208,6 +216,7 @@ public class Admin extends BaseServlet implements Serializable {
                                 }
                             }
                     }
+
                     jLogger.i("Scheme Set for " + this.getSessKey(request, Constants.SCHEME_ID));
                     request.setAttribute("path", "admin");
                     request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
@@ -216,11 +225,14 @@ public class Admin extends BaseServlet implements Serializable {
                     List<ContactCategory> contactReasons = contactCategoryBeanI.find();
                     request.setAttribute("contactReasons", contactReasons);
                     request.setAttribute("isManager", helper.isManager(request));
+
                     if ((schemes != null ? schemes.size() : 0) > 1 && this.getSessKey(request, Constants.SCHEME_ID) == null)
                         request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
                     else {
+
                         List<XiMember> due4retirement = apiEJB.due4Retirement(this.getSessKey(request, Constants.SCHEME_ID));
                         request.setAttribute("retirement", due4retirement.size());
+                        
                         request.getRequestDispatcher("admin.jsp").forward(request, response);
                     }
                 }

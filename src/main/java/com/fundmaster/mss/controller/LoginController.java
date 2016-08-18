@@ -120,6 +120,7 @@ public class LoginController extends BaseServlet implements Serializable {
 		if(u != null)
 		{
 			jLogger.i("User found was " + u.getUsername());
+
 			if(u.isStatus())
 			{
 				try {
@@ -129,9 +130,11 @@ public class LoginController extends BaseServlet implements Serializable {
 							)
 					{
 						XiMember xiMember = apiEJB.memberExists(u.getUserProfile(), u.getUsername());
+
 						if(xiMember != null && xiMember.getId() > 0)
 						{
 							jLogger.i("XiMember found was " + xiMember.getId());
+
 							session.setAttribute(Constants.USER, u.getUsername());
 							session.setAttribute(Constants.UID, u.getId());
 							session.setAttribute(Constants.PROFILE_ID, xiMember.getId());

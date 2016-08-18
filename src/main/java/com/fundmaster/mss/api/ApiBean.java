@@ -45,7 +45,9 @@ public class ApiBean implements ApiEJB {
 
     @Override
     public List<Scheme> getSchemes(int start, int count) {
+
         jLogger.i("Running getSchemes " + start + " : " + count);
+
         try {
             JSONObject response = URLGet(APICall.SCHEME_GETSCHEMES + "/?start=" + start + "&size=" + count);
             return this.schemesFromJSON(response);
@@ -293,6 +295,7 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLGet(APICall.MEMBER_STATISTICS_STATUS_DISTRIBUTION + schemeID+"/"+profileID);
+
             if(response.getBoolean(Fields.SUCCESS))
             {
                 return response;
@@ -795,7 +798,9 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLPost(APICall.CHECK_MEMBER_EXISTS + ordinal  + "/" + value + "/" + profile, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+
             jLogger.i("Response of member exists is: " + response);
+
             XiMember xiMember = new XiMember();
             xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
             xiMember.setProfile(response.getString(Fields.PROFILE));
@@ -1284,8 +1289,8 @@ public class ApiBean implements ApiEJB {
                 Scheme scheme = new Scheme();
                 scheme.setId(jsonObject.getLong(Fields.ID));
                 jLogger.i("The scheme id is >>>>>>> " + jsonObject.getLong(Fields.ID));
-                scheme.setName(jsonObject.getString("name"));
-                jLogger.i("The scheme name >>>>>>>>>>>>> " + jsonObject.getString("name"));
+                scheme.setName(jsonObject.getString("schemeName"));
+                jLogger.i("The scheme name >>>>>>>>>>>>> " + jsonObject.getString("schemeName"));
                 scheme.setPlanType(jsonObject.getString(Fields.PLAN_TYPE));
                 schemes.add(scheme);
             }
