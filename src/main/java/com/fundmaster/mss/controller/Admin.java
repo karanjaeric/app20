@@ -884,6 +884,7 @@ public class Admin extends BaseServlet implements Serializable {
     private void getFundValueAsAt(HttpServletRequest request, HttpServletResponse response) {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = new Date();
+        jLogger.i("The accounting period is >>>>>>>>>>>>>>>>>>>>>> " + this.get(request, "accountingPeriodId") + " <<<<<<<<<<<<<<<");
         this.respond(response, true, "", apiEJB.getFundValueAsAt(format.format(date), this.get(request, "accountingPeriodId"),
                 this.getSessKey(request, Constants.SCHEME_ID),
                 this.getSessKey(request, Constants.PROFILE_ID)));

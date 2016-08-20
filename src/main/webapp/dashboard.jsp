@@ -75,8 +75,8 @@
 						console.log(json);
 						if(json.success)
 						{
-							json = $.parseJSON(json.stats);
-							member_panel(json.stats);
+							json = $.parseJSON(json.data);
+							member_panel(json);
 						}
 					}
 				});
@@ -210,10 +210,10 @@
 					$.each(json, function(key, value) {
 			        	if(key == 'stats')
 			           	{
-								$('#active_members').html(format_no(value['active']));
-								$('#deferred_members').html(format_no(value['defered']));
-								$('#pensioner_members').html(format_no(value['pensioners']));
-							     $('#exits_in_year').html(format_no(value['exits']));
+								$('#active_members').html(format_no(value['Active_Members']));
+								$('#deferred_members').html(format_no(value['Deferred_Members']));
+								$('#pensioner_members').html(format_no(value['Active_Pensioners']));
+							    $('#exits_in_year').html(format_no(value['Exited_Members']));
 			           	}
 					});
 				}

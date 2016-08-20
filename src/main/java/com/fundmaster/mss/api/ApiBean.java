@@ -691,8 +691,10 @@ public class ApiBean implements ApiEJB {
 
     @Override
     public JSONObject getFundValueAsAt(String date, String periodType, String schemeID, String profileID) {
+        JSONObject response;
         try {
-            return  URLGet(APICall.SCHEME_GET_FUND_VALUE_AS_AT + date + "/" + periodType + "/" + schemeID+"/"+profileID);
+            response =  URLGet(APICall.SCHEME_GET_FUND_VALUE_AS_AT + date + "/" + periodType + "/" + schemeID+"/"+profileID);
+            return response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
