@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="includes/partial/header.jsp" />
+
 <div class="imageBanner-image container">
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
 

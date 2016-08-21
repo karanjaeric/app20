@@ -105,11 +105,11 @@ body {
 }
 </style>
 </head>
+
 <body oncontextmenu="return false">
 <input type="hidden" name="message" id="message" value="${ message }" />
-								<c:if test="${noMenu == 'FALSE'}">
-		<nav id="main-nav" class="navbar navbar-default navbar-fixed-top"
-			role="imageBanner">
+    <c:if test="${noMenu == 'FALSE'}">
+		<nav id="main-nav" class="navbar navbar-default navbar-fixed-top" role="imageBanner">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"data-target=".navbar-collapse">
@@ -223,5 +223,6 @@ body {
 			</div>
 			<!--/.container-->
 		</nav>
-		</c:if>
+     </c:if>
+</body>
 		<!--/nav-->
