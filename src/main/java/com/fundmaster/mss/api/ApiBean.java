@@ -691,6 +691,9 @@ public class ApiBean implements ApiEJB {
 
     @Override
     public JSONObject getFundValueAsAt(String date, String periodType, String schemeID, String profileID) {
+
+        profileID = "0";
+
         JSONObject response;
         try {
             response =  URLGet(APICall.SCHEME_GET_FUND_VALUE_AS_AT + date + "/" + periodType + "/" + schemeID+"/"+profileID);
