@@ -217,6 +217,11 @@
 									success : function(json) {
 										stop_wait();
 										if (json.success) {
+
+											console.log(json)
+
+											json = $.parseJSON(json.data);
+
 											$('.results').removeClass('hide');
 											$('#projectedROR').html(format_no(json.projectedROR));
 											$('#projectedContrs').html(format_no(json.projectedContrs));
