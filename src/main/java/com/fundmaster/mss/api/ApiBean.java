@@ -519,6 +519,8 @@ public class ApiBean implements ApiEJB {
                 {
                     JSONObject obj = res.getJSONObject(i);
                     Beneficiary beneficiary = new Beneficiary();
+                    beneficiary.setId(helper.toLong(obj.get("id")));
+                    jLogger.i("The beneficiary Id is >>>>>>>>>>>> " + helper.toLong(obj.get("id")) + " <<<<<<<<<<<<<");
                     beneficiary.setName(helper.toString(obj.get("name")));
                     beneficiary.setFirstname(helper.toString(obj.get("firstname")));
                     beneficiary.setSurname(helper.toString(obj.get("surname")));
@@ -553,6 +555,7 @@ public class ApiBean implements ApiEJB {
                 {
                     JSONObject obj = res.getJSONObject(i);
                     JSONObject beneficiary = new JSONObject();
+                    beneficiary.put("id", obj.get("id"));
                     beneficiary.put("name", obj.get("name"));
                     beneficiary.put("amount", obj.get("lumpsumEntitlement"));
                     resp.put(beneficiary);
