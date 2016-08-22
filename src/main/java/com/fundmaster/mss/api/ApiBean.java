@@ -527,6 +527,10 @@ public class ApiBean implements ApiEJB {
                     beneficiary.setOthernames(helper.toString(obj.get("othernames")));
                     beneficiary.setRelationship(helper.toString(obj.get("relationship")));
                     beneficiary.setLumpsumEntitlement(helper.toString(obj.get("lumpsumEntitlement")));
+                    beneficiary.setMstatus(helper.toString(obj.get("mstatus")));
+                    beneficiary.setGender(helper.toString(obj.get("partnerNumber")));
+                    beneficiary.setStatus(helper.toString(obj.get("status")));
+                    beneficiary.setRelShipCategory(helper.toString(obj.get("category")));
                     beneficiaries.add(beneficiary);
                 }
                 return beneficiaries;
@@ -554,10 +558,17 @@ public class ApiBean implements ApiEJB {
 
                 {
                     JSONObject obj = res.getJSONObject(i);
+                    jLogger.i("The benef data from Xi >>>>>>>>>>>>>>>>  " + obj + " <<<<<<<<<<<<<<<<<<<");
                     JSONObject beneficiary = new JSONObject();
                     beneficiary.put("id", obj.get("id"));
+                    //beneficiary.put("gender", obj.get("partnerNumber"));
+                    //beneficiary.put("mstatus", obj.get("mstatus"));
+                    beneficiary.put("relationship", obj.get("relationship"));
+                    //beneficiary.put("category", obj.get("category"));
+                    //beneficiary.put("status", obj.get("status"));
                     beneficiary.put("name", obj.get("name"));
                     beneficiary.put("amount", obj.get("lumpsumEntitlement"));
+
                     resp.put(beneficiary);
                 }
 
@@ -812,6 +823,7 @@ public class ApiBean implements ApiEJB {
             XiMember xiMember = new XiMember();
             xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
             xiMember.setProfile(response.getString(Fields.PROFILE));
+            xiMember.setEmailAddress(response.getString(Fields.EMAIL));
             Long Scheme_id = helper.toLong(response.get(Fields.SCHEME_ID));
             xiMember.setSchemeId(Long.toString(Scheme_id));
             return xiMember;
