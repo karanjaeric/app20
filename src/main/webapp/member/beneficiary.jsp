@@ -58,9 +58,9 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="relShipCategory" class="col-sm-5 control-label">Relationship Category:</label>
+			<label for="relationshipCategory" class="col-sm-5 control-label">Relationship Category:</label>
 			<div class="col-sm-7">
-				<select name="relShipCategory" id="relShipCategory" class="form-control input-sm">
+				<select name="relationshipCategory" id="relationshipCategory" class="form-control input-sm">
 					<option ${ ben.relShipCategory == 'NEXT_OF_KIN' ? 'selected="selected"' : '' }>NEXT_OF_KIN</option>
 					<option ${ ben.relShipCategory == 'BENEFICIARY' ? 'selected="selected"' : '' }>BENEFICIARY</option>
 					<option ${ ben.relShipCategory == 'BOTH' ? 'selected="selected"' : '' }>BOTH</option>
@@ -155,9 +155,9 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="relShipCategory" class="col-sm-5 control-label">Relationship Category:</label>
+			<label for="relationshipCategory" class="col-sm-5 control-label">Relationship Category:</label>
 			<div class="col-sm-7">
-				<select name="relShipCategory" id="relShipCategory" class="form-control input-sm">
+				<select name="relationshipCategory" id="relationshipCategory" class="form-control input-sm">
 					<option>NEXT_OF_KIN</option>
 					<option>BENEFICIARY</option>
 					<option>BOTH</option>
