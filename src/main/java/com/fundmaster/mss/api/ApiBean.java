@@ -295,7 +295,6 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLGet(APICall.MEMBER_STATISTICS_STATUS_DISTRIBUTION + schemeID+"/"+profileID);
-
             if(response.getBoolean(Fields.SUCCESS))
             {
                 return response;
@@ -519,12 +518,12 @@ public class ApiBean implements ApiEJB {
                 {
                     JSONObject obj = res.getJSONObject(i);
                     Beneficiary beneficiary = new Beneficiary();
-                    beneficiary.setName(helper.toString(obj.get("name")));
-                    beneficiary.setFirstname(helper.toString(obj.get("firstname")));
-                    beneficiary.setSurname(helper.toString(obj.get("surname")));
-                    beneficiary.setOthernames(helper.toString(obj.get("othernames")));
-                    beneficiary.setRelationship(helper.toString(obj.get("relationship")));
-                    beneficiary.setLumpsumEntitlement(helper.toString(obj.get("lumpsumEntitlement")));
+                    beneficiary.setName(helper.toString(obj.get(Fields.NAME)));
+                    beneficiary.setFirstname(helper.toString(obj.get(Fields.FIRSTNAME)));
+                    beneficiary.setSurname(helper.toString(obj.get(Fields.SURNAME)));
+                    beneficiary.setOthernames(helper.toString(obj.get(Fields.OTHERNAMES)));
+                    beneficiary.setRelationship(helper.toString(obj.get(Fields.RELATIONSHIP)));
+                    beneficiary.setLumpsumEntitlement(helper.toString(obj.get(Fields.LUMPSUM_ENTITLEMENT)));
                     beneficiaries.add(beneficiary);
                 }
                 return beneficiaries;
@@ -553,8 +552,8 @@ public class ApiBean implements ApiEJB {
                 {
                     JSONObject obj = res.getJSONObject(i);
                     JSONObject beneficiary = new JSONObject();
-                    beneficiary.put("name", obj.get("name"));
-                    beneficiary.put("amount", obj.get("lumpsumEntitlement"));
+                    beneficiary.put(Fields.NAME, obj.get(Fields.NAME));
+                    beneficiary.put(Fields.AMOUNT, obj.get(Fields.LUMPSUM_ENTITLEMENT));
                     resp.put(beneficiary);
                 }
 
