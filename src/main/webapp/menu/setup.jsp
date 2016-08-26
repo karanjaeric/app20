@@ -64,7 +64,7 @@
 						<table class="table table-responsive">
 						<tr><th>IMAGE</th><th>ACTION</th></tr>
 						<c:forEach var="imageBanner" items="${imageBanners}">
-						<tr><td><img src="${pageContext.request.contextPath}/imageBanners/${ imageBanner.id }" width="100" /></td><td><a class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="remove_banner('${ imageBanner.id}');"><i class="glyphicon glyphicon-trash"></i>&nbsp;REMOVE</a></td></tr>
+						<tr><td><img src="${pageContext.request.contextPath}/banners/${ imageBanner.id }" width="100" /></td><td><a class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="remove_banner('${ imageBanner.id}');"><i class="glyphicon glyphicon-trash"></i>&nbsp;REMOVE</a></td></tr>
 						</c:forEach>
 						</table>
 						<input type="hidden" name="ACTION" id="ACTION" value="BANNER" />

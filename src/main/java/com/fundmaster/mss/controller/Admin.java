@@ -575,10 +575,11 @@ public class Admin extends BaseServlet implements Serializable {
                 savePath = fullpath + File.separator + BANNER_DIR + File.separator + fileName;
                 part.write(savePath);
                 jLogger.i("Where the banner is saved ================>  " + savePath);
+
                 //Save banner to database as blob
                 File file = new File(savePath);
                 byte[] bFile = new byte[(int) file.length()];
-/*
+
                 try {
                     FileInputStream fileInputStream = new FileInputStream(file);
 
@@ -589,7 +590,7 @@ public class Admin extends BaseServlet implements Serializable {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                */
+
                 //convert to blob
                 Blob fileBlob;
                 try {
