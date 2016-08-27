@@ -5,6 +5,7 @@
 				</h3>
 				<form class="form-horizontal" method="post" id="pi-form">
 				<input type="hidden" id="member_id" value="${ member.id }" />
+					<input type="hidden" id="member_no" value="${ member.memberNo }" />
 				<div class="row">
 						<div class="col-md-6">
 							<fieldset>
@@ -77,12 +78,12 @@
 										<c:forEach var="maritalStatus" items="${maritalStatuses}">
 							                <c:choose>
 								                <c:when test="${member.maritalStatus == maritalStatus.name }">
-								                	<option value="${maritalStatus.id}" selected="selected">
+								                	<option value="${maritalStatus.name}" selected="selected">
 									                    ${maritalStatus.name}
 									                </option>
 								                </c:when>
 								                <c:otherwise>
-								                	<option value="${maritalStatus.id}">
+								                	<option value="${maritalStatus.name}">
 									                    ${maritalStatus.name}
 									                </option>
 								                </c:otherwise>
@@ -122,11 +123,10 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="residentialAddress" class="col-sm-6 control-label">Residential
-										Address:</label>
-									<div class="col-sm-6"><input type="text" name="residentialAddress"
-										class="form-control  input-sm" id="residentialAddress"
-										placeholder="Residential Address" value="${ member.postalAddress }" ${memberPermission.postalAddress == 'TRUE' ? '' : 'disabled'}>
+									<label for="postalAddress" class="col-sm-6 control-label">Postal Address:</label>
+									<div class="col-sm-6"><input type="text" name="postalAddress"
+										class="form-control  input-sm" id="postalAddress"
+										placeholder="Postal Address" value="${ member.postalAddress }" ${memberPermission.postalAddress == 'TRUE' ? '' : 'disabled'}>
 									</div>
 								</div>
 								<div class="form-group">
@@ -347,7 +347,7 @@
 											}
 										}
 									},
-									residentialAddress: {
+									postalAddress: {
 										validators : {
 											notEmpty : {
 												message : 'Please select your postal/residential address'
@@ -385,6 +385,8 @@
 												ACTION: 'UPDATE_MEMBER',
 												memberID: $('#member_id')
 														.val(),
+												memberNo: $('#member_no')
+														.val(),
 												firstname : $('#firstname')
 														.val(),
 												surname : $('#surname')
@@ -403,9 +405,11 @@
 														.val(),
 												phoneNumber: $('#phoneNumber')
 														.val(),
-												postalAddress: $('#residentialAddress')
+												postalAddress: $('#postalAddress')
 														.val(),
 												city: $('#city')
+														.val(),
+												country: $('#country')
 														.val(),
 												currentAnnualPensionableSalary: $('#currentAnnualPensionableSalary')
 														.val()

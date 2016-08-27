@@ -1276,13 +1276,16 @@ public class Admin extends BaseServlet implements Serializable {
         String firstname = this.get(request, "firstname");
         String surname = this.get(request, "surname");
         String othernames = this.get(request, "othernames");
+        String memberNo = this.get(request, "memberNo");
         String postalAddress = this.get(request, "postalAddress");
+        jLogger.i("The postal address >>>>>>>>>>>> " + postalAddress  + " <<<<<<<<<<<<");
         String maritalStatus = this.get(request, "maritalStatus");
         String phoneNumber = this.get(request, "phoneNumber");
         String emailAddress = this.get(request, "emailAddress");
         String memberID = this.get(request, "memberID");
         String salary = this.get(request, "currentAnnualPensionableSalary");
         String city = this.get(request, "city");
+        String country = this.get(request, "country");
         DateFormat df = new SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH);
         Date dob = null;
         try {
@@ -1296,13 +1299,21 @@ public class Admin extends BaseServlet implements Serializable {
         DateFormat format_ = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         try {
             member.put("member.surname", surname).put("member.firstname", firstname)
-                    .put("member.othernames", othernames).put("member.person.biodata.town", city)
-                    .put("member.dob", format_.format(dob)).put("member.id", memberID).put("member.gender", gender)
-                    .put("member.mbshipStatus", status).put("member.address.email", emailAddress)
-                    .put("member.person.biodata.cellPhone", phoneNumber)
+                    .put("member.othernames", othernames)
+                    .put("member.person.biodata.town", city)
+                    .put("member.dob", format_.format(dob))
+                    .put("member.id", memberID)
+                    .put("member.memberNo", memberNo)
+                    .put("member.gender", gender)
+                    .put("member.mbshipStatus", status)
+                    .put("member.address.email", emailAddress)
+                    .put("member.address.fixedPhone", phoneNumber)
                     .put("member.currentAnnualPensionableSalary", salary)
-                    .put("member.person.biodata.postalAddress", postalAddress)
+                    .put("member.address.postalAddress", postalAddress)
+                    .put("member.country", country)
+                    .put("member.address.town", city)
                     .put("member.maritalStatus", maritalStatus);
+
             boolean status_ = apiEJB.saveOrUpdateMember(member.toString());
             this.respond(response, status_, status_ ? "Member details were successfully saved" : "Member details could not be saved", null);
         } catch (JSONException e) {

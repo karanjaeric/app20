@@ -63,6 +63,7 @@ public class Fields {
     public static final String DEPARTMENT = "department";
     public static final String EMAIL = "email";
     public static final String CELL_PHONE = "cellPhone";
+    public static final String FIXED_PHONE = "fixedPhone";
     public static final String POSTAL_ADDRESS = "postalAddress";
     public static final String PIN_NO = "pinNo";
     public static final String TERMINATE_COVER = "terminateCover";
