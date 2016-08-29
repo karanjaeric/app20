@@ -629,7 +629,7 @@ public class Admin extends BaseServlet implements Serializable {
                 //Save banner to database as blob
                 File file = new File(savePath);
                 byte[] bFile = new byte[(int) file.length()];
-/*
+
                 try {
                     FileInputStream fileInputStream = new FileInputStream(file);
 
@@ -640,9 +640,9 @@ public class Admin extends BaseServlet implements Serializable {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-*/
+
                 try {
-//convert to blob
+                    //convert to blob
                     Blob fileBlob;
                     fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
                     try {
