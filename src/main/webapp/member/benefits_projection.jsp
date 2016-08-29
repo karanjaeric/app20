@@ -57,6 +57,8 @@ var array = {};
 		        success: function(json) {
 		            if(json.success)
 	   	            {
+						json = $.parseJSON(json.data);
+						console.log(json);
 	                   	var combo = "<select id=\"reason\" name=\"reason\" class=\"form-control\"><option>--Select Reason--</option>";
 		            	$.each(json, function(key, value) {
 		             		if(key == 'rows')
