@@ -34,8 +34,8 @@
 																	placeholder="Application Date">
 															</div>
 															<div class="form-group">
-																<label for="pinNumber" class="control-label">PIN Number:</label> <input type="text" name="pinNumber" class="form-control"
-																	id="pinNumber" placeholder="PIN Number">
+																<label for="pinNumber" class="control-label">TAX Number:</label> <input type="text" name="pinNumber" class="form-control"
+																	id="pinNumber" placeholder="TAX Number">
 															</div>
 															<div class="form-group">
 																<label for="employerNumber" class="control-label">Employer Ref/No:</label> <input type="text" name="employerNumber" class="form-control"

@@ -13,7 +13,7 @@
 					<tr><td>PHONE NUMBER</td><td>${member.phoneNumber }</td></tr>
 					<tr><td>EMAIL ADDRESS</td><td>${member.emailAddress }</td></tr>
 					<tr><td>MEMBER NUMBER</td><td>${member.memberNo }</td></tr>
-					<tr><td>PIN NUMBER</td><td>${member.pinNo }</td></tr>
+					<tr><td>TAX NUMBER</td><td>${member.pinNo }</td></tr>
 					<tr><td>ANNUAL PEN. SALARY</td><td>${member.annualPensionableSalary }</td></tr>
 					<tr><td>CITY/TOWN</td><td>${member.town }</td></tr>
 				</table>

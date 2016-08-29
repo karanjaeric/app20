@@ -1341,15 +1341,19 @@ public class Admin extends BaseServlet implements Serializable {
             String memberID = this.get(request, "memberID");
             jLogger.i("The member Id passed is <<<<<<<<<<< " + memberID + " >>>>>>>>>>");
             String relationshipCategory = this.get(request, "relationshipCategory");
+            jLogger.i("The relationship category >>>>>>>>>>>>>>>>>> " + relationshipCategory + " <<<<<<<<<<<<<<<<<<<");
             String surname = this.get(request, "surname");
             String lumpsum = this.get(request, "lumpsum");
             String firstname = this.get(request, "firstname");
             jLogger.i("First name to be passed: " + firstname);
             String gender = this.get(request, "gender");
-            String maritalStatus = this.get(request, "maritalStatus");
+            jLogger.i("The gender is >>>>>>>>>>>>>> " + gender + " <<<<<<<<<<<<<<<<<");
+            String maritalStatus = this.get(request, "mStatus");
+            jLogger.i("Marital status is >>>>>>>>>>>>>>>> " + maritalStatus + " <<<<<<<<<<<<<<<<<");
             String status = this.get(request, "status");
             String othernames = this.get(request, "othernames");
             String relationship = this.get(request, "relationship");
+            jLogger.i("The relationship >>>>>>>>>>>>>>>> " + relationship + " <<<<<<<<<<<<<<<<<<<");
             String attachment_url = attachment_path;
             jLogger.i("Attachment URL is ::::::::::::::::::> " + attachment_url);
             try {
@@ -1357,7 +1361,8 @@ public class Admin extends BaseServlet implements Serializable {
                     b.put("ben.memberId", memberID).put("ben.relationship", relationship)
                             .put("ben.attachmentname", attachment_name)
                             .put("beneficiary.id", beneficiary_id)
-                            .put("ben.relShipCategory", relationshipCategory).put("ben.surname", surname)
+                            .put("ben.relShipCategory", relationshipCategory)
+                            .put("ben.surname", surname)
                             .put("ben.firstname", firstname).put("ben.othernames", othernames).put("ben.dob", "")
                             .put("ben.gender", gender).put("ben.monthlyEntitlement", 0)
                             .put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")

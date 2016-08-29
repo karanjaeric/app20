@@ -188,7 +188,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="pinNo" class="col-sm-6 control-label">PIN Number:</label>
+									<label for="pinNo" class="col-sm-6 control-label">TAX Number:</label>
 									<div class="col-sm-6">
 									<input type="text" name="pinNo" id="pinNo" placeholder="PIN Number" class="form-control  input-sm" value="${ member.pinNo }" ${memberPermission.pinNo == 'TRUE' ? '' : 'disabled'}/>
 									</div>

@@ -4,6 +4,7 @@ import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
 import nl.captcha.Captcha;
 
@@ -58,6 +59,8 @@ public class Register extends BaseServlet implements Serializable {
     @EJB
     ApiEJB apiEJB;
     private static final long serialVersionUID = 1L;
+
+    JLogger jLogger = new JLogger(this.getClass());
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -127,12 +130,14 @@ public class Register extends BaseServlet implements Serializable {
 
         // Validate whether input from user is correct.
         System.out.println("Validating - inputChars are: " + inputChars);
+
         HttpSession session = request.getSession(true);
         Captcha captcha = (Captcha) session.getAttribute(Captcha.NAME);
         request.setCharacterEncoding("UTF-8"); // Do this so we can capture non-Latin chars
 
         boolean passedCaptchaTest = captcha.isCorrect(inputChars);
         session.invalidate();
+
         if (passedCaptchaTest) {
             Setting settings = settingBeanI.find();
             if (this.get(request, "type").equalsIgnoreCase("member")) {
@@ -140,8 +145,10 @@ public class Register extends BaseServlet implements Serializable {
             } else if (this.get(request, "type").equalsIgnoreCase("sponsor")) {
                 this.addSponsor(response, request);
             } else if (this.get(request, "type").equals("EXISTING")) {
+
                 PasswordPolicy policy = passwordPolicyBeanI.find();
-                    XiMember member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
+                XiMember member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
+
                     if (member != null && member.getId() > 0) {
                         if (userBeanI.findUserByUsernameAndProfile(this.get(request, "idNumber"), member.getProfile()) == null) {
                             User u = new User();
@@ -157,19 +164,25 @@ public class Register extends BaseServlet implements Serializable {
                             String email_address = null;
                             String schemeId = null;
                             boolean proceed;
+
                             if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 email_address = m.getEmailAddress();
                                 schemeId = member.getSchemeId();
                                 proceed = helper.isEmailAddress(email_address);
-                            } else {
-                                    member = apiEJB.getMemberDetails(u.getUserProfile(), this.get(request, "idNumber"));
+                            }
+                            else {
+                                    member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
+
                                     if (member != null) {
-                                        email_address = helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");
+
+                                        email_address =  member.getEmailAddress(); /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
+
                                         /*JSONArray json = (JSONArray) resp.get("rows");
                                         JSONObject provider = json.getJSONObject(0);
                                         email_address = provider.getString("user.email");
                                         schemeId = provider.get("user.schemeId").toString();*/
+
                                         proceed = helper.isEmailAddress(email_address);
                                     }
                                     else
