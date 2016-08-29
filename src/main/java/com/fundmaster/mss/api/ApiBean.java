@@ -590,6 +590,7 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLGet(APICall.SCHEME_GETTOTALSCHEMECONTRIBUTIONS + schemeID + "/" + profileID);
+            jLogger.i("Scheme contributions json resp >>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<");
             return  response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
@@ -602,6 +603,7 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLGet(APICall.GETMEMBERCONTRIBUTIONS + memberID);
+            jLogger.i("Member contr json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;

@@ -193,6 +193,8 @@ $('#member-search').bootstrapValidator({
     	            	html = "<tr><th>NAME</th><th>EMAIL ADDRESS</th><th>ACTION</th></tr>";
         	            if(json.success)
     					{
+							json = $.parseJSON(json.data);
+							console.log(json);
     						$.each(json, function(key, value) {
     				        	if(key == 'rows')
     				           	{
