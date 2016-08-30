@@ -45,7 +45,7 @@ public interface ApiEJB {
     List<SchemeReceipt> getSchemeReceipts(String schemeID, int start, int count);
     List<BenefitPayment> getBenefitPayments(String schemeID, int start, int count);
     JSONObject getMemberBalances(String memberID);
-    JSONObject getSchemeInterestRates(String schemeID);
+    String getSchemeInterestRates(String schemeID);
     JSONObject calculateWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate, String inflationRate,String email,String phone,String yourAge);
     List<Scheme> getSchemeBySchemeModeAndPlanType(String schemeMode, String planType);
     List<AnnuityProduct> getAnnuityProducts();

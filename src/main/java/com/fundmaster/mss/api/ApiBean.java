@@ -163,13 +163,15 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public JSONObject getSchemeInterestRates(String schemeID) {
+    public String getSchemeInterestRates(String schemeID) {
         JSONObject response;
         try {
             response = URLGet(APICall.SCHEME_GET_SCHEME_INTEREST_RATES + schemeID);
+            jLogger.i("Scheme interest response >>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<");
             if(response.getBoolean(Fields.SUCCESS))
             {
                 JSONArray res = (JSONArray) response.get(Constants.ROWS);
+                jLogger.i("Res is  >>>>>>>>>>>> " + res + " <<<<<<<<<<<<");
                 JSONArray jsonarray = new JSONArray();
                 InterestRateColumns irc = interestRateColumnBeanI.find();
                 Map<String, Boolean> temp = new HashMap<>();
@@ -216,7 +218,10 @@ public class ApiBean implements ApiEJB {
                     }
                     jsonarray.put(obj);
                 }
-                return new JSONObject(jsonarray);
+                jLogger.i("The final array >>>>>>>>>>>>>>>> " + jsonarray + " <<<<<<<<<<<<<");
+
+                return "{\"success\": true,\"rows\":" + jsonarray.toString() + "}";
+                //return new JSONObject(jsonarray);
             }
             else
             {

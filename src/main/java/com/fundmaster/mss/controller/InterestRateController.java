@@ -6,6 +6,7 @@ import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
+import org.json.JSONException;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.List;
 @WebServlet(name = "InterestRateController", urlPatterns = {"/interest-rates"})
@@ -88,9 +90,28 @@ public class InterestRateController extends BaseServlet implements Serializable 
 	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		PrintWriter out = response.getWriter();
 		if(this.get(request, "scheme") != null)
 		{
-			this.respond(response, true, "", apiEJB.getSchemeInterestRates(this.get(request, "scheme")));
+			//this.respond(response, true, "", apiEJB.getSchemeInterestRates(this.get(request, "scheme")));
+
+			String interestRates = null;
+			try {
+				interestRates = apiEJB.getSchemeInterestRates(request.getParameter("scheme"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				System.out.println("Interest rates "+interestRates);
+				out.write(interestRates);
+			}
+			catch (NullPointerException npe)
+			{
+				//out.write(this.respond(response, false, "Failed to obtain interest rates history", null));
+
+			}
 		}
 		
 	}

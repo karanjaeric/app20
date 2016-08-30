@@ -64,16 +64,14 @@ $(document)
 										// Get the form instance
 										$
 												.ajax({
-													url : $('#base_url').val()
-															+ 'interest-rates',
+													url : $('#base_url').val() + 'interest-rates',
 													type : 'post',
 													data : {
-														scheme : $('#scheme')
-																.val()
+														scheme : $('#scheme').val()
 													},
 													dataType : 'json',
 													success : function(json) {
-														json = $.parseJSON(json.data);
+														console.log(json);
 														stop_wait();
 														var message = 'Oops! We are sorry, but something unexpected just happend and we were unable to process your request. Please try again';
 														if (json.success == true) {
