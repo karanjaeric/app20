@@ -38,7 +38,7 @@ public class UserBean implements UserBeanI {
     @Override
     public User findUser(String username, String password) {
         UserDAO dao = new UserDAO(entityManager);
-        password = helper.encrypt(password);
+        password = helper.hash(password);
         jLogger.i("Username is : " + username + ", Password is: " + password);
         return dao.findUser(username, password);
     }

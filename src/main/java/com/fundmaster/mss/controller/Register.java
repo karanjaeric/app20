@@ -144,7 +144,8 @@ public class Register extends BaseServlet implements Serializable {
                 this.createMember(request, response);
             } else if (this.get(request, "type").equalsIgnoreCase("sponsor")) {
                 this.addSponsor(response, request);
-            } else if (this.get(request, "type").equals("EXISTING")) {
+            }
+            else if (this.get(request, "type").equals("EXISTING")) {
 
                 PasswordPolicy policy = passwordPolicyBeanI.find();
                 XiMember member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
@@ -155,7 +156,7 @@ public class Register extends BaseServlet implements Serializable {
                             u.setProfileID(member.getId());
                             u.setUserProfile(member.getProfile());
                             u.setUsername(this.get(request, "idNumber"));
-                            u.setPassword(helper.encrypt(this.get(request, "password")));
+                            u.setPassword(helper.hash(this.get(request, "password")));
                             Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
                             u.setPassword_expiry(password_expiry);
                             String securityCode = UUID.randomUUID().toString();
