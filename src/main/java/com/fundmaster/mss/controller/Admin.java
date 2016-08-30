@@ -506,16 +506,30 @@ public class Admin extends BaseServlet implements Serializable {
                 // Get absolute path (fullpath)
                 String fullpath = request.getServletContext().getRealPath("");
                 String savePath = fullpath + File.separator + MEDIA_DIR;
-                //jLogger.i("full path is:" + savePath);
+
                 File fileSaveDir = new File(savePath);
                 if (!fileSaveDir.exists()) {
                     fileSaveDir.mkdir();
                 }
                 savePath = fullpath + File.separator + MEDIA_DIR + File.separator + fileName;
                 part.write(savePath);
+
                 jLogger.i("Complete file path is: " + savePath);
+
                 File file = new File(savePath);
                 byte[] bFile = new byte[(int) file.length()];
+
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(file);
+
+                    //Convert file into array of bytes
+                    fileInputStream.read(bFile);
+                    fileInputStream.close();
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
                 Blob fileBlob;
                 try {
                     fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
