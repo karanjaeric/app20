@@ -2,6 +2,7 @@ package com.fundmaster.mss.controller;
 import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Fields;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
@@ -441,7 +442,17 @@ public class Admin extends BaseServlet implements Serializable {
         }
     }
     private void mostAccessedByMembers(HttpServletResponse response) {
-        this.respond(response, true, "", new JSONObject(activityLogBeanI.mostAccessedByMembers()));
+
+        List<PieObject> poList = activityLogBeanI.mostAccessedByMembers();
+        try {
+            JSONObject access_list = new JSONObject().put(Fields.SUCCESS, true);
+            for (PieObject aPoList : poList) {
+                access_list.put(aPoList.getName(), aPoList.getCount());
+            }
+            this.respond(response, true, "", access_list);
+        } catch (JSONException je) {
+            this.respond(response, false, "Json exception just occured", null);
+        }
     }
     private void updateProfileLoginFields(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<ProfileLoginField> pfs = profileLoginFieldBeanI.find();
@@ -1075,12 +1086,32 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "We are sorry, the user status could not be changed", null);
     }
     private void getMostAccessedByManagers(HttpServletResponse response) {
-        this.respond(response, true, "", new JSONObject(activityLogBeanI.mostAccessedByManagers()));
+
+        List<PieObject> poList = activityLogBeanI.mostAccessedByManagers();
+        try {
+            JSONObject access_list = new JSONObject().put(Fields.SUCCESS, true);
+            for (PieObject aPoList : poList) {
+                access_list.put(aPoList.getName(), aPoList.getCount());
+            }
+            this.respond(response, true, "", access_list);
+        } catch (JSONException je) {
+            this.respond(response, false, "Json exception just occured", null);
+        }
     }
     @EJB
     ActivityLogBeanI activityLogBeanI;
     private void getProfileAccess(HttpServletResponse response) {
-        this.respond(response, true, "", new JSONObject(activityLogBeanI.findAccessByProfile()));
+
+        List<PieObject> poList = activityLogBeanI.findAccessByProfile();
+        try {
+            JSONObject access_list = new JSONObject().put(Fields.SUCCESS, true);
+            for (PieObject aPoList : poList) {
+                access_list.put(aPoList.getName(), aPoList.getCount());
+            }
+            this.respond(response, true, "", access_list);
+        } catch (JSONException je) {
+            this.respond(response, false, "Json exception just occured", null);
+        }
     }
     private void searchMember(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         JSONObject result = apiEJB.searchProfilesJSON(this.get(request, "search"),
@@ -1180,7 +1211,16 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "Potential sponsor record could not be deleted", null);
     }
     private void getFrontPageAccessByPage(HttpServletResponse response) {
-        this.respond(response, true, "", new JSONObject(activityLogBeanI.findByFrontPageAccess()));
+        List<PieObject> poList = activityLogBeanI.findByFrontPageAccess();
+        try {
+            JSONObject access_list = new JSONObject().put(Fields.SUCCESS, true);
+            for (PieObject aPoList : poList) {
+                access_list.put(aPoList.getName(), aPoList.getCount());
+            }
+            this.respond(response, true, "", access_list);
+        } catch (JSONException je) {
+            this.respond(response, false, "Json exception just occured", null);
+        }
     }
     private void editProfileLoginFields(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String[] profiles = helper.listProfiles();

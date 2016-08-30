@@ -704,7 +704,9 @@ SchemeManagerBeanI schemeManagerBeanI;
             request.getRequestDispatcher(REPO_FOLDER + "/locked_accounts.jsp").forward(request, response);
         } else if (this.get(request, "report").equals("frequent_users")) {
             SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
-            List<AuditTrail> auditTrails = auditTrailBeanI.frequenters(format.format(helper.dateFromString(this.get(request, "from"), DD_MM_YYYY)), format.format(helper.dateFromString(this.get(request, "to"), DD_MM_YYYY)));
+            String from = format.format(helper.dateFromString(this.get(request, "from"), DD_MM_YYYY));
+            String to = format.format(helper.dateFromString(this.get(request, "to"), DD_MM_YYYY));
+            List<AuditTrail> auditTrails = auditTrailBeanI.frequenters(from, to);
             request.setAttribute("users", auditTrails);
             request.getRequestDispatcher(REPO_FOLDER + "/frequent_users.jsp").forward(request, response);
         } else if (this.get(request, "report").equals("non_frequent_users")) {

@@ -1,9 +1,12 @@
 package com.fundmaster.mss.common;
 
+import com.fundmaster.mss.dao.ActivityLogDAO;
 import com.fundmaster.mss.model.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -41,7 +44,6 @@ public class Helper {
      */
     private final JLogger jLogger = new JLogger(this.getClass());
     public static final long serialVersionUID = 1L;
-
 
     public String getOrdinalKey(String ordinal)
     {
@@ -273,9 +275,6 @@ public class Helper {
                 return true;
         return false;
     }
-
-
-
 
 
 }

@@ -63,7 +63,7 @@ public class AuditTrail extends GenericModel<AuditTrail> implements Serializable
 		return profile;
 	}
 
-	public AuditTrail(long id, Date datetime, String username,
+	/*public AuditTrail(long id, Date datetime, String username,
 			String description, String profile, Integer version) {
 		super();
 		this.id = id;
@@ -72,6 +72,12 @@ public class AuditTrail extends GenericModel<AuditTrail> implements Serializable
 		this.description = description;
 		this.profile = profile;
 		this.version = version;
+	}*/
+
+	public AuditTrail(String username, String profile) {
+		super();
+		this.username = username;
+		this.profile = profile;
 	}
 
 	public void setProfile(String profile) {

@@ -42,9 +42,7 @@ $(document).ready(function(){
 
 	$('.datepicker').datetimepicker({format: 'dd-mm-yyyy'});
 	$('#dateTo')
-	.datetimepicker({
-	    format: 'dd-mm-yyyy'
-	})
+	.datetimepicker({ format: 'dd-mm-yyyy' })
 	.on('changeDate', function(e) {
 	    // Revalidate the date field
 	    $('#ch-form').bootstrapValidator('revalidateField', 'dateTo');

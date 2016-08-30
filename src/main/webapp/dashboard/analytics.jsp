@@ -40,6 +40,8 @@
     	        data: {ACTION:'FRONTPAGE_ACCESS'},
     	        dataType: 'json',
     	        success: function(json) {
+                    console.log(json.data);
+                    json = $.parseJSON(json.data);
         	        if(json.success)
         	        {
         	        	var total = 0;
@@ -56,6 +58,8 @@
     	        data: {ACTION:'PROFILE_ACCESS'},
     	        dataType: 'json',
     	        success: function(json) {
+                    console.log(json.data);
+                    json = $.parseJSON(json.data);
         	        if(json.success)
         	        {
         	        	var total = 0;
@@ -72,6 +76,8 @@
     	        data: {ACTION:'MOST_BY_MEMBER'},
     	        dataType: 'json',
     	        success: function(json) {
+                    console.log(json.data);
+                    json = $.parseJSON(json.data);
         	        if(json.success)
         	        {
         	        	var total = 0;
@@ -88,6 +94,8 @@
     	        data: {ACTION:'MOST_BY_MANAGER'},
     	        dataType: 'json',
     	        success: function(json) {
+                    console.log(json.data);
+                    json = $.parseJSON(json.data);
         	        if(json.success)
         	        {
         	        	var total = 0;

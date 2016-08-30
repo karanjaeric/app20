@@ -1,8 +1,10 @@
 package com.fundmaster.mss.dao;
 
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.AuditTrail;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +12,7 @@ import java.util.List;
  */
 public class AuditTrailDAO extends GenericDAOImpl<AuditTrail, Long>{
     private final EntityManager em;
+    private final com.fundmaster.mss.common.JLogger jLogger = new JLogger(this.getClass());
     public AuditTrailDAO(EntityManager entityManager)
     {
         super(AuditTrail.class, entityManager);
@@ -28,11 +31,20 @@ public class AuditTrailDAO extends GenericDAOImpl<AuditTrail, Long>{
 
     public List<AuditTrail> frequenters(String from, String to) {
         // TODO Auto-generated method stub
-        String query_string = "SELECT a FROM AuditTrail a WHERE DATE(datetime) >= '" + from + "' AND DATE(datetime) <= '" + to + "' GROUP BY username";
-        @SuppressWarnings("unchecked")
-        List<AuditTrail> entities = em.createQuery(query_string)
-                .getResultList();
+        String query_string = "SELECT distinct username, profile FROM AuditTrail a WHERE DATE(datetime) >= '" + from + "' AND DATE(datetime) <= '" + to + "' ";
 
+
+        @SuppressWarnings("unchecked")
+        List<Object[]> results = em.createQuery(query_string).getResultList();
+        jLogger.i("results returned >>>>>>>>>>>>>>> " + results + " <<<<<<<<<<<<<<<<");
+
+        List<AuditTrail> entities = new ArrayList<>() ;
+        for (Object[] result : results) {
+
+            AuditTrail audit = new AuditTrail(result[0].toString(), result[1].toString());
+            entities.add(audit);
+        }
+        jLogger.i("Entities now are >>>>>>>>>>>>>>>>> " + entities + " <<<<<<<<<<<<<<");
         return entities;
     }
 
