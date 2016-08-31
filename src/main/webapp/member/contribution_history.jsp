@@ -37,10 +37,16 @@
 		
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#dateFrom').on('changeDate', function(ev){
-		    $(this).datepicker('hide');
-		});
 		$('.datepicker').datepicker(
+		$('#dateFrom')
+		.datepicker({
+			format: 'dd-mm-yyyy'
+		})
+		.on('changeDate', function(e) {
+			$(this).datepicker('hide');
+			// Revalidate the date field
+			$('#ch-form').bootstrapValidator('revalidateField', 'dateTo');
+		}),
 		$('#dateTo')
         .datepicker({
             format: 'dd-mm-yyyy'
