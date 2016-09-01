@@ -37,22 +37,27 @@
 		
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('.datepicker').datepicker(
-		$('#dateFrom')
-		.datepicker({
-			format: 'dd-mm-yyyy'
+		$('.datepicker').datetimepicker(
+		$('#dateFrom').datetimepicker({
+			format: 'dd-mm-yyyy',
+			startView: 'month',
+			minView: 'month',
+			autoclose: true
 		})
 		.on('changeDate', function(e) {
-			$(this).datepicker('hide');
+			$(this).datetimepicker('hide');
 			// Revalidate the date field
 			$('#ch-form').bootstrapValidator('revalidateField', 'dateTo');
 		}),
 		$('#dateTo')
-        .datepicker({
-            format: 'dd-mm-yyyy'
-        })
+        .datetimepicker({
+			format: 'dd-mm-yyyy',
+			startView: 'month',
+			minView: 'month',
+			autoclose: true
+		})
         .on('changeDate', function(e) {
-		    $(this).datepicker('hide');
+		    $(this).datetimepicker('hide');
             // Revalidate the date field
             $('#ch-form').bootstrapValidator('revalidateField', 'dateTo');
         }));

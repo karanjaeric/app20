@@ -83,13 +83,20 @@ var array = {};
 		    });			
 		}
 		initialize();
-		$('.datepicker').datepicker({format: 'dd-mm-yyyy'});
-		$('#dateTo')
-        .datepicker({
-            format: 'dd-mm-yyyy'
+		$('.datepicker').datetimepicker({
+			format: 'dd-mm-yyyy',
+			startView: 'month',
+			minView: 'month',
+			autoclose: true
+		});
+		$('#dateTo').datetimepicker({
+			format: 'dd-mm-yyyy',
+			startView: 'month',
+			minView: 'month',
+			autoclose: true
         })
         .on('changeDate', function(e) {
-		    $(this).datepicker('hide');
+		    $(this).datetimepicker('hide');
             // Revalidate the date field
             $('#bp-form').bootstrapValidator('revalidateField', 'dateTo');
         });
