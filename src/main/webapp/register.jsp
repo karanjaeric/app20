@@ -177,9 +177,9 @@
 													<c:forEach var="field" items="${loginFields}">
 														<c:choose>
 															<c:when test="${field.profile == 'SPONSOR' }">
-																<label for="sponsorIdNumber" class="control-label">TAX Number:</label>
+																<label for="sponsorIdNumber" class="control-label">${ field.ordinal }:</label>
 																<input type="text" name="sponsorIdNumber" class="form-control input-sm"
-																	id="sponsorIdNumber" placeholder="TAX Number:">
+																	id="sponsorIdNumber" placeholder="${ field.ordinal}">
 															</c:when>
 														</c:choose>
 													</c:forEach>

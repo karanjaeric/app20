@@ -747,6 +747,12 @@ public class ApiBean implements ApiEJB {
     @Override
     public List<Scheme> getProfileSchemes(String user, String profile) {
         String ordinal = profileLoginFieldBeanI.findByProfile(profile);
+        if (ordinal.equals("TAX_NUMBER")) {
+            ordinal = "PIN";
+        }
+
+        jLogger.i(" Ordinal is >>>>>>>>>>>> " + ordinal + " <<<<<<<<<<<<<<<<<<<<<");
+
         JSONObject response;
         try {
             response = URLPost(APICall.GET_MEMBER_SCHEMES + ordinal + "/" + user + "/" + profile, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
@@ -816,6 +822,11 @@ public class ApiBean implements ApiEJB {
     @Override
     public XiMember memberExists(String profile, String value) {
         String ordinal = profileLoginFieldBeanI.findByProfile(profile);
+        jLogger.i("Ordinal is >>>>>>>>> " + ordinal + " <<<<<<<<<<<<<");
+        if (ordinal.equals("TAX_NUMBER")) {
+            ordinal = "PIN";
+        }
+        jLogger.i("Now ordinal >>>>>>>>>>>> " + ordinal + " <<<<<<<<<<<<<");
         JSONObject response;
         try {
             response = URLPost(APICall.CHECK_MEMBER_EXISTS + ordinal  + "/" + value + "/" + profile, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);

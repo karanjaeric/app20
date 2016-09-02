@@ -1228,6 +1228,7 @@ public class Admin extends BaseServlet implements Serializable {
         for (String profile : profiles) {
             ProfileLoginField plf = profileLoginFieldBeanI.find(profile);
             plf.setOrdinal(this.get(request, plf.getProfile()));
+            jLogger.i("Ordinal to be set >>>>>>>>>>> " + this.get(request, plf.getProfile()) + " <<<<<<<<<<<<<<<");
             plf.setPublished(this.get(request, plf.getProfile() + "_PUBLISHED").equalsIgnoreCase("true"));
             status = status && profileLoginFieldBeanI.edit(plf) != null;
         }

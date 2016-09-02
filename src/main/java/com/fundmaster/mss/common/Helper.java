@@ -171,7 +171,7 @@ public class Helper {
         }
 }
 
-    public List<Ordinal> getOrdinals()
+    /*public List<Ordinal> getOrdinals()
     {
         List<Ordinal> ordinals = new ArrayList<>();
         for(int i = 0; i < names.length; i ++)
@@ -180,6 +180,36 @@ public class Helper {
             ordinal.setName(ux_names[i]);
             ordinal.setCode(names[i]);
         }
+        return ordinals;
+    }*/
+
+    public List<Ordinal> getOrdinals()
+    {
+        Ordinal ordinal = new Ordinal(Long.valueOf("1").longValue(), "MEMBER_NO", "Member Number");
+        Ordinal ordinal2 = new Ordinal(Long.valueOf("2").longValue(), "NATIONAL", "National ID");
+        Ordinal ordinal3 = new Ordinal(Long.valueOf("3").longValue(), "VOTER", "Voter Number");
+        Ordinal ordinal4 = new Ordinal(Long.valueOf("4").longValue(), "PASSPORT", "Passport Number");
+        Ordinal ordinal5 = new Ordinal(Long.valueOf("5").longValue(), "PENNO", "Pension Number");
+        Ordinal ordinal6 = new Ordinal(Long.valueOf("6").longValue(), "DRIVER", "Driver Licence Number");
+        Ordinal ordinal7 = new Ordinal(Long.valueOf("7").longValue(), "STAFF", "Staff Number");
+        Ordinal ordinal8 = new Ordinal(Long.valueOf("8").longValue(), "TAX_NUMBER", "PIN Number");
+        Ordinal ordinal9 = new Ordinal(Long.valueOf("9").longValue(), "EMAIL", "Email Address");
+        Ordinal ordinal10 = new Ordinal(Long.valueOf("10").longValue(), "NHIF", "NHIF Number");
+        Ordinal ordinal11 = new Ordinal(Long.valueOf("11").longValue(), "PHONE", "Phone Number");
+        Ordinal ordinal12 = new Ordinal(Long.valueOf("12").longValue(), "MEMBER_NO", "Member ID");
+        List<Ordinal> ordinals = new ArrayList<>();
+        ordinals.add(ordinal);
+        ordinals.add(ordinal2);
+        ordinals.add(ordinal3);
+        ordinals.add(ordinal4);
+        ordinals.add(ordinal5);
+        ordinals.add(ordinal6);
+        ordinals.add(ordinal7);
+        ordinals.add(ordinal8);
+        ordinals.add(ordinal9);
+        ordinals.add(ordinal10);
+        ordinals.add(ordinal11);
+        ordinals.add(ordinal12);
         return ordinals;
     }
 

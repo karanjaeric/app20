@@ -3,6 +3,7 @@ package com.fundmaster.mss.controller;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Actions;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
 
 import javax.ejb.EJB;
@@ -21,6 +22,8 @@ public class MenuController extends BaseServlet implements Serializable {
 	private static final long serialVersionUID = 1L;
 
     Helper helper = new Helper();
+    JLogger jLogger = new JLogger(this.getClass());
+
 	@EJB
     ProfileNameBeanI profileNameBeanI;
     @EJB
@@ -101,6 +104,7 @@ public class MenuController extends BaseServlet implements Serializable {
         List<ProfileName> profileNames = profileNameBeanI.find();
         request.setAttribute("profileNames", profileNames);
         List<Ordinal> ordinals = helper.getOrdinals();
+        jLogger.i("Ordinals are >>>>>>>>>>> " + ordinals + " <<<<<<<<<<<<<<");
         request.setAttribute("ordinals", ordinals);
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
