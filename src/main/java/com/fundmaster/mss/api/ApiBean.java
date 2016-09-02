@@ -447,6 +447,11 @@ public class ApiBean implements ApiEJB {
 
     @Override
     public List<XiMember> due4Retirement(String schemeID) {
+
+        if (schemeID == null || schemeID.isEmpty()) {
+            schemeID = "0";
+        }
+
         JSONObject response;
         try {
             response = URLGet(APICall.GET_MEMBERS_DUE_FOR_RETIREMENT + schemeID + "/0/100000");

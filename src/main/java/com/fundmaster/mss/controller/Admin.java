@@ -158,10 +158,15 @@ public class Admin extends BaseServlet implements Serializable {
                     request.setAttribute("company", company);
 
                     List<Scheme> schemes;
-
                     if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.ADMIN_PROFILE)) {
 
-                        schemes = apiEJB.getSchemes(0, 10000);
+                        try {
+                            schemes = apiEJB.getSchemes(0, 10000);
+                        } catch (Exception e) {
+                            schemes = null;
+                            e.printStackTrace();
+                        }
+
                     }
                     else {
                         schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER),

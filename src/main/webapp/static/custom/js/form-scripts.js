@@ -378,13 +378,9 @@ $(document)
 														console.log(json);
 														if(json.success)
 														{
-															$("form#"
-																+ form)[0]
+															$("form#" + form)[0]
 																.reset();
-															window.location.href = $(
-																	'#base_url')
-																	.val()
-																+ 'admin';
+															window.location.href = $('#base_url').val() + 'admin';
 														}
 														if (message == null) {
 															message = 'Oops! We are sorry, but something unexpected just went wrong. Please try again';
