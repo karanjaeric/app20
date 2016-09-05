@@ -9,6 +9,7 @@ import com.fundmaster.mss.model.User;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;

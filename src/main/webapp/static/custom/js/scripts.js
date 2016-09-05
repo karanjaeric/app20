@@ -799,7 +799,7 @@ $('#form-reset-password').bootstrapValidator({
            bootbox.alert(json.message);
            if(json.success)
            	setTimeout(function() {
-               	window.location.href = $('#base_url').val() + "sign-in";
+               	window.location.href = $('#base_url').val();
                	}, 3000);
         }
     });

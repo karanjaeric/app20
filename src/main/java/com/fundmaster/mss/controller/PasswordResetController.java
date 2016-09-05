@@ -4,6 +4,7 @@ import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
 
 import javax.ejb.EJB;
@@ -25,6 +26,8 @@ public class PasswordResetController extends BaseServlet implements Serializable
 	private static final long serialVersionUID = -6085562604717440895L;
 
 	Helper helper = new Helper();
+	private final JLogger jLogger = new JLogger(this.getClass());
+
 	@EJB
 	UsedPasswordBeanI usedPasswordBeanI;
 	@EJB
@@ -122,22 +125,43 @@ public class PasswordResetController extends BaseServlet implements Serializable
 		{
 			Setting settings = settingBeanI.find();
 			Constants.BASE_URL = request.getContextPath() + "password-reset";
-			User u = userBeanI.findUserByUsernameAndProfile(this.get(request, "email"), Constants.MEMBER_PROFILE);
-			if(u != null)
+
+			String userEmail = this.get(request, "email");
+			User usr = userBeanI.findByUsername(userEmail);
+			String userProfile = usr.getUserProfile();
+
+			if(usr != null)
 			{
 				String securityCode = UUID.randomUUID().toString();
-				u.setSecurityCode(securityCode);
+				usr.setSecurityCode(securityCode);
 				Company company = companyBeanI.find();
-				XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(),null);
 
-				boolean status = apiEJB.sendEmail(m.getEmailAddress(),company.getEmail(), null, "Password Reset Instructions", "Dear " + u.getUserProfile() + ", " +
+				XiMember m = null;
 
-						"You recently requested to change your password. " +
-						"Your security code is: " + securityCode +
-						" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);
+				if (usr.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+					 m = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
+				}
+				else {
+					 m = apiEJB.memberExists(userProfile, userEmail);
+
+				}
+
+				boolean status = false;
+
+				try {
+					status = apiEJB.sendEmail(m.getEmailAddress(),company.getEmail(), null, "Password Reset Instructions", "Dear " + usr.getUserProfile() + ", " +
+
+							"You recently requested to change your password. " +
+							"Your security code is: " + securityCode +
+							" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+
 				if(status)
 				{
-					if(userBeanI.edit(u) != null)
+					if(userBeanI.edit(usr) != null)
 						this.respond(response, true, "The password reset instructions have been sent to your email address", null);
 					else
 						this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
