@@ -33,13 +33,15 @@ public class Dashboard extends BaseServlet implements Serializable {
 
 
     Helper helper = new Helper();
+    JLogger jLogger = new JLogger(this.getClass());
+
     @EJB
     AuditTrailBeanI auditTrailBeanI;
     @EJB
     UserBeanI userBeanI;
     @EJB
     ApiEJB apiEJB;
-    JLogger jLogger = new JLogger(this.getClass());
+
     @EJB
     InterestRateColumnBeanI interestRateColumnBeanI;
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
