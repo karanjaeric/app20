@@ -69,7 +69,9 @@ public class DefaultController extends BaseServlet implements Serializable {
 		List<MaritalStatus> marital_statuses = maritalStatusBeanI.find();
 		request.setAttribute("maritalStatuses",  marital_statuses);
 		Company company = companyBeanI.find();
-		request.setAttribute("company", company);
+		if (company != null) {
+			request.setAttribute("company", company);
+		}
 		Social social = socialBeanI.find();
 		request.setAttribute("social", social);
 		Setting settings = settingBeanI.find();

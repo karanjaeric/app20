@@ -16,7 +16,10 @@ public class CompanyDAO extends GenericDAOImpl<Company, Long> {
 
     public Company find()
     {
-        List<Company> companyList = this.findAll();
-        return companyList.size() > 0 ? companyList.get(0) : null;
+        List<Company> companyList = findAll();
+        if(companyList != null) {
+            return companyList.size() > 0 ? companyList.get(0) : null;
+        }
+        return null;
     }
 }
