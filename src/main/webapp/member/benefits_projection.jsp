@@ -84,13 +84,13 @@ var array = {};
 		}
 		initialize();
 		$('.datepicker').datetimepicker({
-			format: 'dd-mm-yyyy',
+			format: 'mm-dd-yyyy',
 			startView: 'month',
 			minView: 'month',
 			autoclose: true
 		});
 		$('#dateTo').datetimepicker({
-			format: 'dd-mm-yyyy',
+			format: 'mm-dd-yyyy',
 			startView: 'month',
 			minView: 'month',
 			autoclose: true

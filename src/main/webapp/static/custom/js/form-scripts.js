@@ -2357,8 +2357,7 @@ $(document)
 																				+ 'admin';
 																	}, 5000);
 														}
-														bootbox
-																.alert('<p class="text-center">'
+														bootbox.alert('<p class="text-center">'
 																		+ json.message
 																		+ '</p>');
 														if(json.captcha || !json.success)

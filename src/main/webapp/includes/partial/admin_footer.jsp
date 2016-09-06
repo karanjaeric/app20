@@ -9,10 +9,8 @@
 <script src="static/bootstrap-3.3.5/js/bootstrap-filestyle.min.js"></script>
 <script type="text/javascript" src="static/bootstrap-3.3.5/js/bootstrapValidator.min.js"></script>
 <script src="static/custom/vendors/easypiechart/jquery.easy-pie-chart.js"></script>
-<script type="text/javascript"
-	src="static/bootstrap-3.3.5/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript"
-	src="static/custom/js/bootbox.min.js"></script>
+<script type="text/javascript" src="static/bootstrap-3.3.5/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="static/custom/js/bootbox.min.js"></script>
 <script src="static/custom/js/scripts.js"></script>
 <script src="static/custom/js/form-scripts.js"></script>
 <script type="text/javascript" src="static/custom/js/highcharts-custom.js"></script>
