@@ -310,8 +310,8 @@ public class MemberController extends BaseServlet implements Serializable {
     }
 
     private void getAccountingPeriod(HttpServletRequest request, HttpServletResponse response) {
-        DateFormat format_from = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-        DateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        DateFormat format_from = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("MMM-dd-yyyy", Locale.ENGLISH);
         String date_string = this.get(request, "date");
         Date date = null;
         try {

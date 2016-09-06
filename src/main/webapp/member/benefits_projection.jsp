@@ -150,11 +150,9 @@ var array = {};
 	
 	function parseDate(str){
         var parts = str.split("-");
-        var dt = new Date(parseInt(parts[2], 10),
-                          parseInt(parts[1], 10) - 1,
-                          parseInt(parts[0], 10));
+        var dt = new Date(parseInt(parts[2], 10), parseInt(parts[0], 10), parseInt(parts[1], 10));
         str = dt.getMonth() + '/' + dt.getDate() + '/' + dt.getFullYear();
-        
+        console.log(str);
         return str;
 	}
 	
