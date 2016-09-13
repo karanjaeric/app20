@@ -283,7 +283,7 @@ public class Admin extends BaseServlet implements Serializable {
                 editBeneficiary(request, response, out, FILE_SEPERATOR, SCHEME_DOC_ROOT_FOLDER, scheme_doc_folder);
                 break;
             case UPDATE_MEMBER:
-                updateMember(request, response);
+                updateMember(request, response, out, FILE_SEPERATOR, SCHEME_DOC_ROOT_FOLDER, scheme_doc_folder);
                 break;
             case GET_BENEFICIARY:
                 showMemberBeneficiary(request, response);
@@ -1331,54 +1331,154 @@ public class Admin extends BaseServlet implements Serializable {
         request.setAttribute("type", this.get(request, "type"));
         request.getRequestDispatcher("member/beneficiary.jsp").forward(request, response);
     }
-    private void updateMember(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject member = new JSONObject();
-        String firstname = this.get(request, "firstname");
-        String surname = this.get(request, "surname");
-        String othernames = this.get(request, "othernames");
-        String memberNo = this.get(request, "memberNo");
-        String postalAddress = this.get(request, "postalAddress");
-        jLogger.i("The postal address >>>>>>>>>>>> " + postalAddress  + " <<<<<<<<<<<<");
-        String maritalStatus = this.get(request, "maritalStatus");
-        String phoneNumber = this.get(request, "phoneNumber");
-        String emailAddress = this.get(request, "emailAddress");
-        String memberID = this.get(request, "memberID");
-        String salary = this.get(request, "currentAnnualPensionableSalary");
-        String city = this.get(request, "city");
-        String country = this.get(request, "country");
-        DateFormat df = new SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH);
-        Date dob = null;
-        try {
-            dob = df.parse(this.get(request, "dateOfBirth"));
-        } catch (ParseException e2) {
-            // TODO Auto-generated catch block
-            e2.printStackTrace();
-        }
-        String status = "ACTIVE";
-        String gender = this.get(request, "gender").toUpperCase();
-        DateFormat format_ = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        try {
-            member.put("member.surname", surname).put("member.firstname", firstname)
-                    .put("member.othernames", othernames)
-                    .put("member.person.biodata.town", city)
-                    .put("member.dob", format_.format(dob))
-                    .put("member.id", memberID)
-                    .put("member.memberNo", memberNo)
-                    .put("member.gender", gender)
-                    .put("member.mbshipStatus", status)
-                    .put("member.address.email", emailAddress)
-                    .put("member.address.fixedPhone", phoneNumber)
-                    .put("member.currentAnnualPensionableSalary", salary)
-                    .put("member.address.postalAddress", postalAddress)
-                    .put("member.country", country)
-                    .put("member.address.town", city)
-                    .put("member.maritalStatus", maritalStatus);
+    private void updateMember(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String FILE_SEPERATOR, String SCHEME_DOC_ROOT_FOLDER, String scheme_doc_folder) {
 
-            boolean status_ = apiEJB.saveOrUpdateMember(member.toString());
-            this.respond(response, status_, status_ ? "Member details were successfully saved" : "Member details could not be saved", null);
-        } catch (JSONException e) {
-            this.respond(response, false, "Sorry, something didn't work out right. Couldn't save the member details", null);
+        boolean attachment = false;
+        String attachment_path = null;
+        String attachment_name = null;
+
+        try {
+            for (Part part : request.getParts()) {
+                String fileName = extractFileName(part);
+                if (!fileName.equals("")) {
+                    jLogger.i("File name is :::::::::" + fileName);
+                    File path = new File(getServletContext().getRealPath("/"));
+                    if (scheme_doc_folder == null) {
+                        scheme_doc_folder = path.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getPath() + FILE_SEPERATOR + SCHEME_DOC_ROOT_FOLDER;
+                        helper.createFolderIfNotExists(scheme_doc_folder);
+                    }
+                    try {
+                        String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
+                        String fullpath = scheme_doc_folder + FILE_SEPERATOR + fileName;
+                        jLogger.i("full path is:" + fullpath);
+                        part.write(fullpath);
+                        jLogger.i("Complete file path is: " + fullpath);
+                        attachment_name = fileName;
+                        attachment_path = fullpath;
+                        attachment = true;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            String memberID = this.get(request, "memberID");
+            XiMember mbr = apiEJB.getMemberDetails(memberID, null);
+
+            jLogger.i("Attachment has been uploaded >>>>>>>> " + attachment + " <<<<<<<<<<<");
+            JSONObject member = new JSONObject();
+            String firstname = this.get(request, "firstname");
+            if (firstname == "" || firstname == null) {
+                firstname = mbr.getFirstname();
+            }
+
+            String surname = this.get(request, "surname");
+            if (surname == "" || surname == null) {
+                surname = mbr.getSurname();
+            }
+            jLogger.i( " Surname  & firstname " + surname + " " + firstname);
+
+            String othernames = this.get(request, "othernames");
+            if (othernames == "" || othernames == null) {
+                othernames = mbr.getOthernames();
+            }
+
+            String memberNo = this.get(request, "memberNo");
+            if (memberNo == "" || memberNo == null) {
+                memberNo = mbr.getMemberNo();
+            }
+
+            String postalAddress = this.get(request, "postalAddress");
+            if (postalAddress == "" || postalAddress == null) {
+                postalAddress = mbr.getPostalAddress();
+            }
+            jLogger.i("The postal address >>>>>>>>>>>> " + postalAddress  + " <<<<<<<<<<<<");
+
+            String maritalStatus = this.get(request, "maritalStatus");
+            if (maritalStatus == "" || maritalStatus == null) {
+                maritalStatus = mbr.getMaritalStatus();
+            }
+
+            String phoneNumber = this.get(request, "phoneNumber");
+            if (phoneNumber == "" || phoneNumber == null) {
+                phoneNumber = mbr.getPhoneNumber();
+            }
+
+            String emailAddress = this.get(request, "emailAddress");
+            if (emailAddress == "" || emailAddress == null) {
+                emailAddress = mbr.getEmailAddress();
+            }
+
+            String salary = this.get(request, "currentAnnualPensionableSalary");
+            if (salary == "" || salary == null) {
+                salary = mbr.getAnnualPensionableSalary();
+            }
+
+            String city = this.get(request, "city");
+            if (city == "" || city == null) {
+                city = mbr.getTown();
+            }
+
+            String country = this.get(request, "country");
+            if (country == "" || country == null) {
+                country = mbr.getCountry();
+            }
+
+            String attachment_url = attachment_path;
+            jLogger.i("Attachment URL is ::::::::::::::::::> " + attachment_url);
+
+            String dateOfBirth = this.get(request, "dateOfBirth");
+            if (dateOfBirth == "" || dateOfBirth == null) {
+                dateOfBirth = mbr.getDateOfBirth();
+            }
+            jLogger.i("Date of birth from user >>>>>>>>>>>>> " + dateOfBirth + " <<<<<<<<<<<<<<<<");
+            DateFormat df = new SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH);
+            Date dob = null;
+            try {
+                dob = df.parse(dateOfBirth);
+            } catch (ParseException e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+            String status = "ACTIVE";
+
+            String gender = this.get(request, "gender").toUpperCase();
+            if (gender == "" || gender == null) {
+                gender = mbr.getGender().toUpperCase();
+            }
+            jLogger.i("Gender is >>>>>>>>>> " + gender + " <<<<<<<<<<<<<");
+
+            DateFormat format_ = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            try {
+                member.put("member.surname", surname).put("member.firstname", firstname)
+                        .put("member.othernames", othernames)
+                        .put("member.attachmentname", attachment_name)
+                        .put("member.person.biodata.town", city)
+                        .put("member.dob", format_.format(dob))
+                        .put("member.id", memberID)
+                        .put("member.memberNo", memberNo)
+                        .put("member.gender", gender)
+                        .put("member.mbshipStatus", status)
+                        .put("member.address.email", emailAddress)
+                        .put("member.address.fixedPhone", phoneNumber)
+                        .put("member.currentAnnualPensionableSalary", salary)
+                        .put("member.address.postalAddress", postalAddress)
+                        .put("member.country", country)
+                        .put("member.address.town", city)
+                        .put("member.maritalStatus", maritalStatus);
+                if (attachment)
+                    member.put("member.attachment", attachment_url);
+                else
+                    member.put("member.attachment", new ArrayList<String>());
+
+                boolean status_ = apiEJB.saveOrUpdateMember(member.toString());
+                this.respond(response, status_, status_ ? "Member details were successfully saved" : "Member details could not be saved", null);
+            } catch (JSONException e) {
+                this.respond(response, false, "Sorry, something didn't work out right. Couldn't save the member details", null);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+
     }
     private void editBeneficiary(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String FILE_SEPERATOR, String SCHEME_DOC_ROOT_FOLDER, String scheme_doc_folder) {
         boolean attachment = false;

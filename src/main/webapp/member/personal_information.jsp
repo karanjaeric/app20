@@ -6,6 +6,7 @@
 				<form class="form-horizontal" method="post" id="pi-form">
 				<input type="hidden" id="member_id" value="${ member.id }" />
 					<input type="hidden" id="member_no" value="${ member.memberNo }" />
+					<input type="hidden" name="ACTION" id="ACTION" value="UPDATE_MEMBER" />
 				<div class="row">
 						<div class="col-md-6">
 							<fieldset>
@@ -211,6 +212,12 @@
 									<input type="text" name="policyNo" id="policyNo" placeholder="Policy Number" class="form-control  input-sm" value="${ member.policyNo }" ${memberPermission.policyNo == 'TRUE' ? '' : 'disabled'}/>
 									</div>
 								</div>
+								<div class="form-group">
+									<label for="attachment" class="col-sm-6 control-label">Upload Document:</label>
+									<div class="col-sm-6">
+										<input type="file" id="attachment" name="attachment" class="filestyle">
+									</div>
+								</div>
 							</fieldset>
 						</div>
 						<div class="col-md-6">
@@ -367,6 +374,14 @@
 												message : 'Please select your country'
 											}
 										}
+									},
+									file: {
+										validators : {
+											extension: 'jpeg,jpg,png,doc,docx,pdf,xls,txt',
+											type: 'image/jpeg,image/png,application/msword,application/pdf,application/vnd.ms-excel,',
+											maxSize: 2097152,   // 2048 * 1024
+											message: 'The selected file is not valid'
+										}
 									}
 								}
 							})
@@ -376,12 +391,22 @@
 								start_wait();
 								// Prevent form submission
 								e.preventDefault();
+
 								// Get the form instance
-								$
-										.ajax({
+								var form = "pi-form";
+								var formData = new FormData($(this)[0]);
+
+								memberID = $('#member_id').val();
+								formData.append("memberID", memberID);
+
+								memberNo = $('#member_no').val();
+								formData.append("memberNo", memberNo);
+
+								$.ajax({
 											url : $('#base_url').val() + 'admin',
 											type : 'post',
-											data : {
+											data: formData,
+											/*data : {
 												ACTION: 'UPDATE_MEMBER',
 												memberID: $('#member_id')
 														.val(),
@@ -413,8 +438,11 @@
 														.val(),
 												currentAnnualPensionableSalary: $('#currentAnnualPensionableSalary')
 														.val()
-											},
+											},*/
 											dataType : 'json',
+											cache: false,
+											contentType: false,
+											processData: false,
 											success : function(json) {
 												stop_wait();
 													bootbox
