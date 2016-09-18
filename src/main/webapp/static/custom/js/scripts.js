@@ -314,6 +314,18 @@ $(document).ready(function(){
 		switch_page('ANALYTICS');
 		
     });
+
+	/***	AGENTS ONLY MENU ****/
+
+	$('#commissions-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#commissions-main-li').addClass('active');
+
+		switch_page('COMMISSIONS');
+
+	});
 	
 	/***	MEMBERS ONLY MENU ****/
 	

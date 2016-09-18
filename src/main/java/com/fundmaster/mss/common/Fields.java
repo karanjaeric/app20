@@ -95,4 +95,7 @@ public class Fields {
     public static final String PRODUCT_DATE = "product_date";
     public static final String SCHEME_NAME = "schemeName";
     public static final String PROFILE = "profile";
+    public static final String COMMISSION = "commission";
+    public static final String CONTRIBUTION = "contr";
+    public static final String NET = "net";
 }

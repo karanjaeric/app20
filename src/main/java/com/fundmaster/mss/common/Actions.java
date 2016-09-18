@@ -44,6 +44,7 @@ public class Actions {
     public static final String AUDIT_TRAIL = "AUDIT_TRAIL";
     public static final String USER = "USER";
     public static final String UAC = "UAC";
+    public static final String COMMISSIONS = "COMMISSIONS";
     public static final String ANALYTICS = "ANALYTICS";
     public static final String PAGE_CONTENT = "PAGE_CONTENT";
     public static final String SCHEME = "SCHEME";

@@ -128,6 +128,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                     break;
                 case Actions.ANALYTICS:
                     showAnalytics(request, response, session, REPO_FOLDER);
+
+                case Actions.COMMISSIONS:
+                    showAgentCommissions(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
                     break;
             }
         }
@@ -162,6 +165,67 @@ public class Dashboard extends BaseServlet implements Serializable {
         }
     }
 
+    private void showAgentCommissions(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                      String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
+
+        int page;
+        int batch;
+
+        //batch = getIntegerFromString(this.get(request, "batch"));
+        try {
+            batch = Integer.parseInt(this.get(request, "batch"));
+        } catch (NumberFormatException nfe) {
+            batch = 1;
+        }
+        jLogger.i("batch is >>>>>>>>>>>>>>> " + batch + " <<<<<<<<<<<<<<<<<<" );
+
+        //page = getIntegerFromString(this.get(request, "page"));
+        try {
+            page = Integer.parseInt(this.get(request, "page"));
+            jLogger.i("Page (1) is >>>>>>>>>>>>>>>>>>>>>> " + page + " <<<<<<<<<<<<");
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            page = 1;
+        }
+        jLogger.i("Page (2) is >>>>>>>>>>>>>>>>>>>>>> " + page + " <<<<<<<<<<<<");
+
+        int count = Constants.RECORD_COUNT;
+        int pages = (count / PER_PAGE);
+        int start = (PER_PAGE * (page - 1)) * (batch - 1);
+        int begin = ((batch * BATCH) - BATCH) + 1;
+        if (begin < 1)
+            begin = 1;
+        request.setAttribute("begin", begin);
+        request.setAttribute("pages", pages);
+        request.setAttribute("per_page", PER_PAGE);
+        request.setAttribute("batch", batch);
+        request.setAttribute("page", page);
+
+        String agent_id;
+        agent_id = this.get(request, "memberID");
+
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
+            agent_id = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("agent_id", agent_id);
+
+        List<AgentCommission> agentCommissions = apiEJB.getAgentCommissions(agent_id, start, PER_PAGE);
+        request.setAttribute("commissions", agentCommissions);
+        request.setAttribute("pages", pages);
+        logActivity("AGENT COMMISSIONS", "Viewed agents commissions", this.getSessKey(request, Constants.UID),
+                this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed agents commissions");
+        request.getRequestDispatcher(REPO_FOLDER + "/agent_commissions.jsp").forward(request, response);
+    }
+
+    private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_WHAT_IF_ANALYSIS);
+        request.setAttribute("content", content);
+        request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
+        logActivity("WHAT IF ANALYSIS", "Accessed what if analysis page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Accessed what if analysis page");
+        request.getRequestDispatcher("what-if-content.jsp").forward(request, response);
+    }
+
     private void showMemberBalanceHistory(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
@@ -176,14 +240,6 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.getRequestDispatcher("member/balance_history.jsp").forward(request, response);
     }
 
-    private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-        PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_WHAT_IF_ANALYSIS);
-        request.setAttribute("content", content);
-        request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
-        logActivity("WHAT IF ANALYSIS", "Accessed what if analysis page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
-        this.audit(session, "Accessed what if analysis page");
-        request.getRequestDispatcher("what-if-content.jsp").forward(request, response);
-    }
 @EJB
 MediaBeanI mediaBeanI;
     private void showMemberMedia(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {

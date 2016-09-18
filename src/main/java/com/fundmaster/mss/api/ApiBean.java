@@ -296,6 +296,26 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public List<AgentCommission> getAgentCommissions(String agentId, int start, int count) {
+        Constants.RECORD_COUNT = 0;
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_AGENT_COMMISSIONS +  agentId);
+            if(response.get(Fields.SUCCESS).equals(true))
+            {
+                return this.agentCommissionsFromJSON(response);
+            }
+            else
+            {
+                return null;
+            }
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public JSONObject listMembers(String schemeID, String profileID) {
         JSONObject response;
         try {
@@ -1224,7 +1244,29 @@ public class ApiBean implements ApiEJB {
             return null;
         }
     }
-    private List<BenefitPayment> benefitPaymentsFromJSON(JSONObject response)
+
+    private List<AgentCommission> agentCommissionsFromJSON(JSONObject response) {
+        List<AgentCommission> agentCommissions = new ArrayList<>();
+        try {
+            Constants.RECORD_COUNT = response.getInt(Fields.TOTALCOUNT);
+            JSONArray res = (JSONArray) response.get(Constants.ROWS);
+            for (int i = 0; i < res.length(); i++) {
+                JSONObject receipt = res.getJSONObject(i);
+                AgentCommission agentCommission = new AgentCommission();
+                agentCommission.setCommission(receipt.get(Fields.COMMISSION).toString());
+                agentCommission.setMonth(receipt.get(Fields.MONTH).toString());
+                agentCommission.setYear(receipt.get(Fields.YEAR).toString());
+                agentCommission.setContr(receipt.get(Fields.CONTRIBUTION).toString());
+                agentCommission.setNet(receipt.get(Fields.NET).toString());
+                agentCommissions.add(agentCommission);
+            }
+            return agentCommissions;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception extracting receipts " + je.getMessage());
+            return null;
+        }
+    }
+            private List<BenefitPayment> benefitPaymentsFromJSON(JSONObject response)
     {
         try {
             Constants.RECORD_COUNT = response.getInt(Fields.TOTALCOUNT);
