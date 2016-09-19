@@ -87,6 +87,12 @@
 								class="fa fa-chevron-right"></i> COMMISSIONS</a></li>
 						</c:if>
 
+						<c:if test="${profile == 'AGENT' }">
+						<li id="clients-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-user"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> CLIENTS</a></li>
+						</c:if>
+
 						<li id="calc-log"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-flash"></i>&nbsp;<i
 								class="fa fa-chevron-right"></i>CALCULATOR LOG</a></li>

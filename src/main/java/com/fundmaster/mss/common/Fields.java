@@ -98,4 +98,6 @@ public class Fields {
     public static final String COMMISSION = "commission";
     public static final String CONTRIBUTION = "contr";
     public static final String NET = "net";
+    public static final String CLIENT_TYPE = "clientType";
+
 }

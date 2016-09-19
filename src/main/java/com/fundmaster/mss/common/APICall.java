@@ -17,6 +17,7 @@ public class APICall {
     public static final String SCHEME_GET_FUND_VALUE_AS_AT = "scheme/getfundvalueasat/";
     public static final String SCHEME_GET_FUND_VALUE = "scheme/getfundvalue/";
     public static final String GET_AGENT_COMMISSIONS = "agent/getagentcommissions/";
+    public static final String GET_AGENT_CLIENTS = "agent/getagentclients/";
     public static final String GET_ACCOUNTING_PERIOD_FROM_DATE_FOR_SCHEME = "getaccountingperiodfromdateforscheme/";
     public static final String GET_MEMBER_CUMMULATIVE_INTEREST = "getmembercummulativeinterest/";
     public static final String PROFILE_GET_PROFILES = "profile/getprofiles";

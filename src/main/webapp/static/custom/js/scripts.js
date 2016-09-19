@@ -326,6 +326,16 @@ $(document).ready(function(){
 		switch_page('COMMISSIONS');
 
 	});
+
+	$('#clients-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#clients-main-li').addClass('active');
+
+		switch_page('CLIENTS');
+
+	});
 	
 	/***	MEMBERS ONLY MENU ****/
 	

@@ -33,12 +33,6 @@
 				<div id="column-chart">
 				</div>
 			</div>
-			<c:if test="${ profile == 'AGENT' }">
-				<div class="col-md-2">
-					MY COMMISSIONS
-					<h3 class="numberCircle" id="commissions">--</h3>
-				</div>
-			</c:if>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -46,25 +40,6 @@
 			function initialize()
 			{
 				start_wait();
-				/* Get Agent Commission if agent profile */
-				
-				
-				if($('#profile').val() == 'AGENT')
-				{
-					$.ajax({
-				        url: $('#base_url').val() + 'admin',
-				        type: 'post',
-				        data: {ACTION:'AGENT_COMMISSION'},
-				        dataType: 'json',
-				        success: function(json) {
-                            console.log(json);
-							if(json.success)
-							{
-								$('#commissions').html(json.commissiontotal);
-							}
-				        }
-					});
-				}
 
 				$.ajax({
 					url: $('#base_url').val() + 'admin',

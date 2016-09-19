@@ -19,10 +19,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 @WebServlet(name = "Dashboard", urlPatterns = {"/dashboard"})
 public class Dashboard extends BaseServlet implements Serializable {
@@ -132,6 +129,10 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.COMMISSIONS:
                     showAgentCommissions(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
                     break;
+
+                case Actions.CLIENTS:
+                    showAgentClients(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
+                    break;
             }
         }
         if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE) || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
@@ -202,13 +203,68 @@ public class Dashboard extends BaseServlet implements Serializable {
             agent_id = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("agent_id", agent_id);
 
-        List<AgentCommission> agentCommissions = apiEJB.getAgentCommissions(agent_id, start, PER_PAGE);
+        List<AgentCommission> agentCommissions = new ArrayList<>();
+
+        try {
+            agentCommissions = apiEJB.getAgentCommissions(agent_id, start, PER_PAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        jLogger.i("Agent commissions returned >>>>>>>>>>>>>> " + agentCommissions + " <<<<<<<<<<<<<<<<");
+
         request.setAttribute("commissions", agentCommissions);
         request.setAttribute("pages", pages);
         logActivity("AGENT COMMISSIONS", "Viewed agents commissions", this.getSessKey(request, Constants.UID),
                 this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed agents commissions");
         request.getRequestDispatcher(REPO_FOLDER + "/agent_commissions.jsp").forward(request, response);
+    }
+
+    private void showAgentClients(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                      String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
+
+        int page;
+        int batch;
+
+        try {
+            batch = Integer.parseInt(this.get(request, "batch"));
+        } catch (NumberFormatException nfe) {
+            batch = 1;
+        }
+        try {
+            page = Integer.parseInt(this.get(request, "page"));
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            page = 1;
+        }
+
+        int count = Constants.RECORD_COUNT;
+        int pages = (count / PER_PAGE);
+        int start = (PER_PAGE * (page - 1)) * (batch - 1);
+        int begin = ((batch * BATCH) - BATCH) + 1;
+        if (begin < 1)
+            begin = 1;
+        request.setAttribute("begin", begin);
+        request.setAttribute("pages", pages);
+        request.setAttribute("per_page", PER_PAGE);
+        request.setAttribute("batch", batch);
+        request.setAttribute("page", page);
+
+        String agent_id;
+        agent_id = this.get(request, "memberID");
+
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
+            agent_id = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("agent_id", agent_id);
+
+        List<AgentClient> agentClients = apiEJB.getAgentClients(agent_id, start, PER_PAGE);
+        request.setAttribute("clients", agentClients);
+        request.setAttribute("pages", pages);
+        logActivity("AGENT CLIENTS", "Viewed agent clients", this.getSessKey(request, Constants.UID),
+                this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed agent clients");
+        request.getRequestDispatcher(REPO_FOLDER + "/agent_clients.jsp").forward(request, response);
     }
 
     private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
