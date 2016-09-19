@@ -171,23 +171,17 @@ public class Dashboard extends BaseServlet implements Serializable {
         int page;
         int batch;
 
-        //batch = getIntegerFromString(this.get(request, "batch"));
         try {
             batch = Integer.parseInt(this.get(request, "batch"));
         } catch (NumberFormatException nfe) {
             batch = 1;
         }
-        jLogger.i("batch is >>>>>>>>>>>>>>> " + batch + " <<<<<<<<<<<<<<<<<<" );
-
-        //page = getIntegerFromString(this.get(request, "page"));
         try {
             page = Integer.parseInt(this.get(request, "page"));
-            jLogger.i("Page (1) is >>>>>>>>>>>>>>>>>>>>>> " + page + " <<<<<<<<<<<<");
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
             page = 1;
         }
-        jLogger.i("Page (2) is >>>>>>>>>>>>>>>>>>>>>> " + page + " <<<<<<<<<<<<");
 
         int count = Constants.RECORD_COUNT;
         int pages = (count / PER_PAGE);
