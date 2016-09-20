@@ -1222,6 +1222,7 @@ public class ApiBean implements ApiEJB {
             xiMember.setDateOfBirth(jsonObject.getString(Fields.DOB));
             xiMember.setMaritalStatus(jsonObject.getString(Fields.MARITAL_STATUS));
             xiMember.setDateJoinedScheme(jsonObject.getString(Fields.DATE_JOINED_SCHEME));
+            jLogger.i("Date joined scheme is >>>>>>>>>>>>>>>>>> " + xiMember.getDateJoinedScheme() + " <<<<<<<<<<<<<<<");
             xiMember.setTown(jsonObject.getString(Fields.TOWN));
             xiMember.setCountry(jsonObject.getString(Fields.COUNTRY));
             xiMember.setAnnualPensionableSalary(jsonObject.getString(Fields.CURRENT_ANNUAL_PENSIONABLE_SALARY));
