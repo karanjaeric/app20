@@ -1391,7 +1391,6 @@ public class Admin extends BaseServlet implements Serializable {
             if (postalAddress == "" || postalAddress == null) {
                 postalAddress = mbr.getPostalAddress();
             }
-            jLogger.i("The postal address >>>>>>>>>>>> " + postalAddress  + " <<<<<<<<<<<<");
 
             String maritalStatus = this.get(request, "maritalStatus");
             if (maritalStatus == "" || maritalStatus == null) {
@@ -1459,7 +1458,7 @@ public class Admin extends BaseServlet implements Serializable {
                         .put("member.gender", gender)
                         .put("member.mbshipStatus", status)
                         .put("member.address.email", emailAddress)
-                        .put("member.address.fixedPhone", phoneNumber)
+                        .put("member.address.cellPhone", phoneNumber)
                         .put("member.currentAnnualPensionableSalary", salary)
                         .put("member.address.postalAddress", postalAddress)
                         .put("member.country", country)

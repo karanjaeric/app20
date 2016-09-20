@@ -1215,7 +1215,7 @@ public class ApiBean implements ApiEJB {
             xiMember.setTerminateCover(jsonObject.getString(Fields.TERMINATE_COVER));
             xiMember.setPinNo(jsonObject.getString(Fields.PIN_NO));
             xiMember.setPostalAddress(jsonObject.getString(Fields.POSTAL_ADDRESS));
-            xiMember.setPhoneNumber(jsonObject.getString(Fields.FIXED_PHONE));
+            xiMember.setPhoneNumber(jsonObject.getString(Fields.CELL_PHONE));
             xiMember.setEmailAddress(jsonObject.getString(Fields.EMAIL));
             xiMember.setGender(jsonObject.getString(Fields.GENDER));
             xiMember.setDepartment(jsonObject.getString(Fields.DEPARTMENT));
