@@ -591,11 +591,11 @@ public class ApiBean implements ApiEJB {
                     beneficiary.setRelationship(helper.toString(obj.get(Fields.RELATIONSHIP)));
                     beneficiary.setLumpsumEntitlement(helper.toString(obj.get(Fields.LUMPSUM_ENTITLEMENT)));
                     beneficiary.setMstatus(helper.toString(obj.get(Fields.MSTATUS)));
-                    beneficiary.setGender(helper.toString(obj.get(Fields.PARTNER_NUMBER)));
+                    jLogger.i("Marital status >>>>>>>>>>>>>>>> " + beneficiary.getMstatus() + " <<<<<<<<<<<<<<<<");
+                    beneficiary.setGender(helper.toString(obj.get(Fields.GENDER)));
                     beneficiary.setStatus(helper.toString(obj.get(Fields.STATUS)));
                     beneficiary.setRelShipCategory(helper.toString(obj.get(Fields.CATEGORY)));
                     beneficiary.setId(helper.toLong(obj.get(Fields.ID)));
-                    jLogger.i("The beneficiary Id is >>>>>>>>>>>> " + helper.toLong(obj.get("id")) + " <<<<<<<<<<<<<");
                     beneficiaries.add(beneficiary);
                 }
                 return beneficiaries;
