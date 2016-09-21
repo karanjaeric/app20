@@ -240,13 +240,27 @@ public class ApiBean implements ApiEJB {
             if(response.getBoolean(Fields.SUCCESS))
             {
                 JSONArray res = (JSONArray) response.get(Constants.ROWS);
-                double total = 0;
+                double totalReg = 0;
+                double totalUnreg = 0;
+                double finalTotal = 0;
+                String status = null;
                 for(int i = 0; i < res.length(); i ++)
                 {
                     JSONObject obj = res.getJSONObject(i);
-                    total = obj.getDouble(Fields.TOTAL);
+
+                    status = obj.get("status").toString();
+
+                    if (status.equals("Registered")) {
+                        totalReg = obj.getDouble(Fields.TOTAL);
+                    }
+                    if (status.equals("Unregistered")) {
+                        totalUnreg = obj.getDouble(Fields.TOTAL);
+                    }
+
+                    finalTotal = totalReg + totalUnreg;
+
                 }
-                return new JSONObject().put(Fields.SUCCESS, true).put("total", total);
+                return new JSONObject().put(Fields.SUCCESS, true).put("total", finalTotal);
             }
             else
                 return null;

@@ -90,7 +90,7 @@ $(document).ready(function () {
 				        success: function(json) {
 				            if(json.success)
 			   	            {
-
+								console.log(json);
 								json = $.parseJSON(json.data);
 				            	$('#accummulated-benefits').html(currency + " " + format_no(json.total));
 			   	            }

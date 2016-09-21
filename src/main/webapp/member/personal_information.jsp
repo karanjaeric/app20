@@ -194,7 +194,7 @@
 									<input type="text" name="pinNo" id="pinNo" placeholder="PIN Number" class="form-control  input-sm" value="${ member.pinNo }" ${memberPermission.pinNo == 'TRUE' ? '' : 'disabled'}/>
 									</div>
 								</div>
-								<div class="form-group">
+								<!--<div class="form-group">
 									<label for="currentAnnualPensionableSalary" class="col-sm-6 control-label">Annual Pen. Sal:</label>
 									<div class="col-sm-6"><input type="text" name="currentAnnualPensionableSalary" class="form-control  input-sm"
 										id="currentAnnualPensionableSalary" value="${ member.annualPensionableSalary }" placeholder="Annual Pensionable Salary" ${memberPermission.annualPensionableSalary == 'TRUE' ? '' : 'disabled'}>
@@ -205,7 +205,7 @@
 									<div class="col-sm-6">
 									<input type="text" name="staffNo" id="staffNo" placeholder="Staff Number" class="form-control  input-sm" value="${ member.staffNo }" ${memberPermission.staffNo == 'TRUE' ? '' : 'disabled'}/>
 									</div>
-								</div>
+								</div>-->
 								<div class="form-group">
 									<label for="policyNo" class="col-sm-6 control-label">Policy Number:</label>
 									<div class="col-sm-6">
