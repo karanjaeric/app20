@@ -44,7 +44,13 @@
 	<table class="table table-responsive table-striped" id="search-results">
 		<tr><th>NAME</th><th>ID/PPT NUMBER</th><th>DATE OF BIRTH</th><th>GENDER</th><th>PHONE NUMBER</th><th class="right">ACTION</th></tr>
 		<c:forEach var="member" items="${members}">
-		<tr><td>${ member.name }</td><td>${ member.idNumber }</td><td>${ member.dateOfBirth }</td><td>${ member.gender }</td><td>${ member.phoneNumber }</td><td class="right"><c:if test="${ permissions.member_edit }"><button class="btn btn-sm btn-warning" onclick="edit_member('${member.id}');"><i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</button></c:if>&nbsp;<c:if test="${ permissions.member_view }"><button onclick="view_member('${member.id}');" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;VIEW</button></c:if></td></tr>
+		<tr><td>${ member.name }</td><td>${ member.idNumber }</td><td>${ member.dateOfBirth }</td>
+			<td>${ member.gender }</td><td>${ member.phoneNumber }</td><td class="right">
+				<c:if test="${ permissions.member_edit }">
+					<button class="btn btn-sm btn-warning" onclick="edit_member('${member.id}');">
+						<i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</button></c:if>&nbsp;
+				<c:if test="${ permissions.member_view }"><button onclick="view_member('${member.id}');" class="btn btn-sm btn-info">
+					<i class="glyphicon glyphicon-eye-open"></i>&nbsp;VIEW</button></c:if></td></tr>
 		</c:forEach>
 	</table>
 	 <ul class="pagination pull-right">

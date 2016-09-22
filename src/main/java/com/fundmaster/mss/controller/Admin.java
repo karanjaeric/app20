@@ -65,6 +65,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String DELINK_SCHEME_MANAGER = "DELINK_SCHEME_MANAGER";
     private static final String ADD_SCHEME_MANAGER = "ADD_SCHEME_MANAGER";
     private static final String VIEW_MEMBER = "VIEW_MEMBER";
+    private static final String VIEW_BENEFICIARY = "VIEW_BENEFICIARY";
     private static final String CURR = "CURR";
     private static final String ML = "ML";
     private static final String PRE_CHANGE_PASSWORD = "PRE_CHANGE_PASSWORD";
@@ -368,6 +369,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case VIEW_MEMBER:
                 showMemberInformationView(request, response, session);
+                break;
+            case VIEW_BENEFICIARY:
+                showBeneficiaryInformationView(request, response, session);
                 break;
             case CURR:
                 getSchemeCurrency(request, response);
@@ -997,6 +1001,16 @@ public class Admin extends BaseServlet implements Serializable {
         audit(session, "Viewed member details for member #" + xm.getName());
         request.getRequestDispatcher("member/personal_information_view.jsp").forward(request, response);
     }
+
+    private void showBeneficiaryInformationView(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+
+        List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(this.get(request, "memberID"));
+        request.setAttribute("beneficiaries", beneficiaries);
+
+        request.setAttribute("beneficiary_id", this.get(request, "beneficiaryID"));
+        request.getRequestDispatcher("member/beneficiary_info_view.jsp").forward(request, response);
+    }
+
     private void addSchemeManager(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String profile = this.get(request, "profile");
         String email = this.get(request, "email");

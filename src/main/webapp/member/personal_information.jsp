@@ -228,7 +228,14 @@
 								<table class="table table-responsive table-striped">
 									<tr><th>NAME</th><th>RELATIONSHIP</th><th>ENTITLEMENT</th><th>ACTIONS</th></tr>
 									<c:forEach var="beneficiary" items="${ beneficiaries }">
-										<tr><td> ${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td><td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td><td><a class="btn btn-warning btn-sm" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')"><i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</a></td></tr>
+										<tr><td> ${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td>
+											<td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td>
+											<td><a class="btn btn-warning btn-sm" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">
+												<i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</a>&nbsp;
+
+												<a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="view_beneficiary('${beneficiary.id}')">
+													<i class="glyphicon glyphicon-eye-open">&nbsp;VIEW</i></a>
+											</td></tr>
 									</c:forEach>
 								</table>
 								<a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="add_beneficiary();">ADD BENEFICIARY</a>
@@ -269,6 +276,23 @@
 							$('#beneficiary-content').html(html);
 
 				        }
+					});
+				}
+
+				function view_beneficiary(id)
+				{
+					start_wait();
+					$.ajax({
+						url: $('#base_url').val() + 'admin',
+						type: 'post',
+						data: {ACTION:'VIEW_BENEFICIARY', beneficiaryID: id, memberID: $('#member_id').val()},
+						dataType: 'html',
+						success: function(html) {
+							$('#beneficiary-content2').html(html);
+							$('#modal-view-beneficiary').modal('show');
+
+							stop_wait();
+						}
 					});
 				}
 
@@ -587,6 +611,26 @@
 									});
 				});
 			</script>
+
+
+<div class="modal fade" id="modal-view-beneficiary" tabindex="-1" role="dialog" aria-labelledby="myModalLabelViewBeneficiary" aria-hidden="true">
+	<form role="form" id="form-view-beneficiary">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="myModalLabelViewMember">
+						<i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;VIEW BENEFICIARY DETAILS
+					</h4>
+				</div>
+				<div class="modal-body" id="beneficiary-content2">
+
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
 <div class="modal fade" id="modal-edit-beneficiary" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEditBeneficiary" aria-hidden="true">
 	<form role="form" id="form-edit-beneficiary" enctype="multipart/form-data">
 		<div class="modal-dialog large-modal">
