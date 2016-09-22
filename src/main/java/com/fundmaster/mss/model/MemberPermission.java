@@ -1,5 +1,7 @@
 package com.fundmaster.mss.model;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -42,6 +44,8 @@ public class MemberPermission extends GenericModel<MemberPermission> implements 
 	private Boolean schemeId;
 	private Boolean country;
 	private Boolean town;
+	private Boolean region;
+	private Boolean designation;
 	private Boolean annualPensionableSalary;
 	public Long getId() {
 		return id;
@@ -56,8 +60,8 @@ public class MemberPermission extends GenericModel<MemberPermission> implements 
 							Boolean pinNo, Boolean postalAddress,
 							Boolean phoneNumber, Boolean emailAddress, Boolean gender,
 							Boolean dateOfBirth, Boolean maritalStatus,
-							Boolean country,
-							Boolean town, Boolean annualPensionableSalary) {
+							Boolean country, Boolean department, Boolean designation,
+							Boolean town, Boolean annualPensionableSalary, Boolean region) {
 		super();
 		this.id = id;
 		this.mbio_id = false;
@@ -75,7 +79,8 @@ public class MemberPermission extends GenericModel<MemberPermission> implements 
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 		this.gender = gender;
-		this.department = false;
+		this.department = department;
+		this.designation = designation;
 		this.dateOfBirth = dateOfBirth;
 		this.maritalStatus = maritalStatus;
 		this.dateJoinedScheme = false;
@@ -83,7 +88,13 @@ public class MemberPermission extends GenericModel<MemberPermission> implements 
 		this.country = country;
 		this.town = town;
 		this.annualPensionableSalary = annualPensionableSalary;
+		this.region = region;
 	}
+
+	public Boolean getDesignation() {return designation;}
+	public void setDesignation(Boolean designation) {this.designation = designation;}
+	public Boolean getRegion() {return region;}
+	public void setRegion(Boolean region) {this.region = region;}
 	public Boolean getPartnerNo() {
 		return partnerNo;
 	}

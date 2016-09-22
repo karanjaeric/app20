@@ -138,6 +138,13 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label for="region" class="col-sm-6 control-label">Region:</label>
+									<div class="col-sm-6"><input
+											type="text" value="${ member.region }" name="region" class="form-control  input-sm" id="region"
+											placeholder="Region" ${memberPermission.region == 'TRUE' ? '' : 'disabled'}>
+									</div>
+								</div>
+								<div class="form-group">
 									<label for="country" class="col-sm-6 control-label">Country:</label>
 									<div class="col-sm-6"><select
 										name="country" id="country" class="form-control  input-sm" ${memberPermission.country == 'TRUE' ? '' : 'disabled'}>
@@ -173,6 +180,18 @@
 									<div class="col-sm-6"><input
 										type="text" name="memberNo" class="form-control  input-sm" id="memberNo"
 										placeholder="Member No" value="${ member.memberNo }"  ${memberPermission.memberNo == 'TRUE' ? '' : 'disabled'}>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="department" class="col-sm-6 control-label">Department:</label>
+									<div class="col-sm-6">
+										<input type="text" name="department" id="department" placeholder="Department" class="form-control  input-sm" value="${ member.department }" ${memberPermission.department == 'TRUE' ? '' : 'disabled'}/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="designation" class="col-sm-6 control-label">Designation:</label>
+									<div class="col-sm-6">
+										<input type="text" name="designation" id="designation" placeholder="Desgnation" class="form-control  input-sm" value="${ member.designation }" ${memberPermission.designation == 'TRUE' ? '' : 'disabled'}/>
 									</div>
 								</div>
 								<div class="form-group">

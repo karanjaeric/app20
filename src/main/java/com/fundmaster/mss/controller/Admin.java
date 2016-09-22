@@ -740,7 +740,10 @@ public class Admin extends BaseServlet implements Serializable {
                 this.get(request, "maritalStatus").equalsIgnoreCase("true"),
                 this.get(request, "country").equalsIgnoreCase("true"),
                 this.get(request, "town").equalsIgnoreCase("true"),
-                this.get(request, "annualPensionableSalary").equalsIgnoreCase("true"));
+                this.get(request, "annualPensionableSalary").equalsIgnoreCase("true"),
+                this.get(request, "designation").equalsIgnoreCase("true"),
+                this.get(request, "region").equalsIgnoreCase("true"),
+                this.get(request, "department").equalsIgnoreCase("true"));
         if (memberPermissionBeanI.edit(mp) != null) {
             audit(session, "Updated member edit permissions");
             this.respond(response, true, "Member edit permissions successfully saved", null);

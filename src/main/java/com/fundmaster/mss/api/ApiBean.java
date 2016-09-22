@@ -1236,13 +1236,17 @@ public class ApiBean implements ApiEJB {
             xiMember.setDateOfBirth(jsonObject.getString(Fields.DOB));
             xiMember.setMaritalStatus(jsonObject.getString(Fields.MARITAL_STATUS));
             xiMember.setDateJoinedScheme(jsonObject.getString(Fields.DATE_JOINED_SCHEME));
-            jLogger.i("Date joined scheme is >>>>>>>>>>>>>>>>>> " + xiMember.getDateJoinedScheme() + " <<<<<<<<<<<<<<<");
             xiMember.setTown(jsonObject.getString(Fields.TOWN));
             xiMember.setCountry(jsonObject.getString(Fields.COUNTRY));
             xiMember.setAnnualPensionableSalary(jsonObject.getString(Fields.CURRENT_ANNUAL_PENSIONABLE_SALARY));
             xiMember.setFirstname(jsonObject.getString(Fields.FIRSTNAME));
             xiMember.setSurname(jsonObject.getString(Fields.SURNAME));
             xiMember.setOthernames(jsonObject.getString(Fields.OTHERNAMES));
+            xiMember.setTitle(jsonObject.getString(Fields.TITLE));
+            xiMember.setDesignation(jsonObject.getString(Fields.DESIGNATION));
+            xiMember.setRegion(jsonObject.getString(Fields.REGION));
+            jLogger.i("Region is >>>>>>>>>>> " + xiMember.getRegion() + " <<<<<<<<<<<<<<<<");
+
         } catch (JSONException je) {
             jLogger.e("We have a json exception extracting member" + je.getMessage());
         }

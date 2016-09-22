@@ -99,5 +99,8 @@ public class Fields {
     public static final String CONTRIBUTION = "contr";
     public static final String NET = "net";
     public static final String CLIENT_TYPE = "clientType";
+    public static final String TITLE = "title";
+    public static final String DESIGNATION = "designation";
+    public static final String REGION = "region";
 
 }

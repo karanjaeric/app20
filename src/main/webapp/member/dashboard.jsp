@@ -6,6 +6,7 @@
 	<div class="col-md-6">
 	<h3 class="text-center"><small>MEMBER DETAILS</small></h3>
 				<table class="table table-responsive table-striped">
+					<tr><td>TITLE</td><td>${member.title }</td></tr>
 					<tr><td>NAME</td><td>${member.name }</td></tr>
 					<tr><td>DATE OF BIRTH</td><td>${member.dateOfBirth }</td></tr>
 					<tr><td>DATE OF JOINING SCHEME</td><td>${member.dateJoinedScheme }</td></tr>
