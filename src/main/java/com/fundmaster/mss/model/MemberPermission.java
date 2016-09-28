@@ -45,6 +45,8 @@ public class MemberPermission extends GenericModel<MemberPermission> implements 
 	private Boolean country;
 	private Boolean town;
 	private Boolean region;
+	private Boolean county;
+	private Boolean depot;
 	private Boolean designation;
 	private Boolean annualPensionableSalary;
 	public Long getId() {
@@ -61,7 +63,8 @@ public class MemberPermission extends GenericModel<MemberPermission> implements 
 							Boolean phoneNumber, Boolean emailAddress, Boolean gender,
 							Boolean dateOfBirth, Boolean maritalStatus,
 							Boolean country, Boolean department, Boolean designation,
-							Boolean town, Boolean annualPensionableSalary, Boolean region) {
+							Boolean town, Boolean annualPensionableSalary, Boolean region, Boolean county,
+							Boolean depot) {
 		super();
 		this.id = id;
 		this.mbio_id = false;
@@ -89,8 +92,25 @@ public class MemberPermission extends GenericModel<MemberPermission> implements 
 		this.town = town;
 		this.annualPensionableSalary = annualPensionableSalary;
 		this.region = region;
+		this.county = county;
+		this.depot = depot;
 	}
 
+	public Boolean getCounty() {
+		return county;
+	}
+
+	public void setCounty(Boolean county) {
+		this.county = county;
+	}
+
+	public Boolean getDepot() {
+		return depot;
+	}
+
+	public void setDepot(Boolean depot) {
+		this.depot = depot;
+	}
 	public Boolean getDesignation() {return designation;}
 	public void setDesignation(Boolean designation) {this.designation = designation;}
 	public Boolean getRegion() {return region;}

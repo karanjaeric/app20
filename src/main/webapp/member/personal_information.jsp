@@ -145,6 +145,20 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label for="county" class="col-sm-6 control-label">County:</label>
+									<div class="col-sm-6"><input
+											type="text" value="${ member.county }" name="county" class="form-control  input-sm" id="county"
+											placeholder="County" ${memberPermission.county == 'TRUE' ? '' : 'disabled'}>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="depot" class="col-sm-6 control-label">Station:</label>
+									<div class="col-sm-6"><input
+											type="text" value="${ member.depot }" name="depot" class="form-control  input-sm" id="depot"
+											placeholder="Station" ${memberPermission.depot == 'TRUE' ? '' : 'disabled'}>
+									</div>
+								</div>
+								<div class="form-group">
 									<label for="country" class="col-sm-6 control-label">Country:</label>
 									<div class="col-sm-6"><select
 										name="country" id="country" class="form-control  input-sm" ${memberPermission.country == 'TRUE' ? '' : 'disabled'}>

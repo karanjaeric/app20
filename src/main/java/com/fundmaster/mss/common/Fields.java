@@ -102,5 +102,7 @@ public class Fields {
     public static final String TITLE = "title";
     public static final String DESIGNATION = "designation";
     public static final String REGION = "region";
+    public static final String SUBREGION = "subregion";
+    public static final String DEPOT = "depot";
 
 }

@@ -677,6 +677,7 @@ public class ApiBean implements ApiEJB {
                     JSONObject jsonObject = res.getJSONObject(i);
                     if(!years.contains(jsonObject.get(Fields.YEAR).toString()))
                         years.add(jsonObject.get(Fields.YEAR).toString());
+                    jLogger.i("Years >>>>>>>>>>>>>> " + years + " <<<<<<<<<<<<<<<");
                 }
                 Set<String> hs = new HashSet<>();
                 hs.addAll(years);
@@ -1245,7 +1246,10 @@ public class ApiBean implements ApiEJB {
             xiMember.setTitle(jsonObject.getString(Fields.TITLE));
             xiMember.setDesignation(jsonObject.getString(Fields.DESIGNATION));
             xiMember.setRegion(jsonObject.getString(Fields.REGION));
-            jLogger.i("Region is >>>>>>>>>>> " + xiMember.getRegion() + " <<<<<<<<<<<<<<<<");
+            xiMember.setCounty(jsonObject.getString(Fields.SUBREGION));
+            jLogger.i("The county from Json >>>>>>>>>>>>>> " + xiMember.getCounty() + " <<<<<<<<<<<<<<<");
+            xiMember.setDepot(jsonObject.getString(Fields.DEPOT));
+            jLogger.i("The depot/station from Json >>>>>>>>>>>>>> " + xiMember.getDepot() + " <<<<<<<<<<<<<<<");
 
         } catch (JSONException je) {
             jLogger.e("We have a json exception extracting member" + je.getMessage());

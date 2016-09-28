@@ -73,16 +73,42 @@
 		        success: function(json) {
 		            if(json.success)
 	   	            {
+						var alternativeUrl = null;
+						var orientation = null;
+
+						$.ajax({
+							url:  res + '/reports/general?_eventName=base-url&schemeId=' + $('#scheme_id').val(),
+							data: '',
+							type:'get',
+							async: false,
+							/*dataType: 'json',*/
+							success:function(json){
+								console.log(json);
+								var json_string =  json;
+								var result =  $.parseJSON(json_string);
+								var base_url = result.base_url;
+								console.log(base_url);
+								alternativeUrl = result.alternativeUrl;
+								console.log(alternativeUrl);
+								orientation = result.orientation;
+								console.log(orientation);
+							}
+						});
+
 						json = $.parseJSON(json.data);
 						console.log(json.accountingPeriodId);
 						var url;
 		            	if($('#unitization').val() == 'YES')
 		            	{
-		            	    url = $('#reportPath').val() + 'members/ETL Member Statement.xdo?_xpf=~_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FETL%20Member%20Statement.xdo&_xmode=3&_xt=ETL%20Member%20Statement%20(Tier%202)&_xf=analyze&_xana=view&_paramsBASE=' + $('#xiRootPath').val() + 'Xi&_paramsmember_id=' + $('#member_id').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsadmin=1&_paramsap_id=' + json.accountingPeriodId + '&_paramsadmin=1&id=' + $('#username').val() + '&passwd=' + $('#password').val() + '';
+		            	    url = $('#reportPath').val() + 'members/ETL Member Statement.xdo?_xpf=~_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FETL%20Member%20Statement.xdo&_xmode=3&_xt=ETL%20Member%20Statement%20(Tier%202)&_xf=analyze&_xana=view&_paramsBASE='
+									+ $('#xiRootPath').val() + 'Xi&_paramsmember_id=' + $('#member_id').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsadmin=1&_paramsap_id=' + json.accountingPeriodId + '&_paramsadmin=1&id='
+									+ $('#username').val() + '&passwd=' + $('#password').val() + '&_paramsblankImage=' + alternativeUrl +'&_paramsalternativeUrl=' + alternativeUrl + '&_paramsorientation=' + orientation + '';
 		            	}
 		            	else
 		            	{
-		            	    url = $('#reportPath').val() + 'members/Provisional combined To Date.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FProvisional%20combined%20To%20Date.xdo&_xmode=3&_paramsBASE=' + $('#xiRootPath').val() + 'Xi&_paramsmember_id=' + $('#member_id').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsadmin=1&_paramsap_id=' + json.accountingPeriodId + '&_paramsadmin=1&id=' + $('#username').val() + '&passwd=' + $('#password').val() + '';
+		            	    url = $('#reportPath').val() + 'members/Provisional combined To Date.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FProvisional%20combined%20To%20Date.xdo&_xmode=3&_paramsBASE='
+									+ $('#xiRootPath').val() + 'Xi&_paramsmember_id=' + $('#member_id').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsadmin=1&_paramsap_id=' + json.accountingPeriodId + '&_paramsadmin=1&id='
+									+ $('#username').val() + '&passwd=' + $('#password').val() + '&_paramsblankImage=' + alternativeUrl +'&_paramsalternativeUrl=' + alternativeUrl + '&_paramsorientation=' + orientation + '';
 		            		 
 		            	}
 		   			 $("#sa-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');

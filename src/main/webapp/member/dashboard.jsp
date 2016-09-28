@@ -6,7 +6,6 @@
 	<div class="col-md-6">
 	<h3 class="text-center"><small>MEMBER DETAILS</small></h3>
 				<table class="table table-responsive table-striped">
-					<tr><td>TITLE</td><td>${member.title }</td></tr>
 					<tr><td>NAME</td><td>${member.name }</td></tr>
 					<tr><td>DATE OF BIRTH</td><td>${member.dateOfBirth }</td></tr>
 					<tr><td>DATE OF JOINING SCHEME</td><td>${member.dateJoinedScheme }</td></tr>
@@ -27,7 +26,7 @@
 		</div>
 	</div>
 	<div class="col-md-12 border-top">
-		<h3 class="text-center"><small>ACCUMMULATED BENEFITS:</small> <span id="accummulated-benefits"></span> &nbsp; <small>CUMMULATIVE INTEREST:</small> <span id="cummulative-interests"></span> &nbsp; <small>AVERAGE INTEREST RATE:</small> <span id="average-interests"></span></h3>
+		<h3 class="text-center"><small>ACCUMMULATED BENEFITS TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp; <small>CUMMULATIVE INTEREST TO DATE:</small> <span id="cummulative-interests"></span> <!--&nbsp; <small>AVERAGE INTEREST RATE:</small> <span id="average-interests"></span>--></h3>
 		<p>&nbsp;</p>
 	</div>
 	<div class="col-md-12 border-top">
