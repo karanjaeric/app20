@@ -45,7 +45,12 @@
 				</div>
 </div>
 <script type="text/javascript">
-var array = {};
+
+	var str = $('#xiRootPath').val();
+	var res = str.replace("/api/", "");
+	console.log(res);
+
+	var array = {};
 	$(document).ready(function(){
 		function initialize()
 		{

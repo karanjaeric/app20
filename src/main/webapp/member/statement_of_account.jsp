@@ -27,17 +27,22 @@
 				</div>
 </div>
 <script type="text/javascript">
+
+	var str = $('#xiRootPath').val();
+	var res = str.replace("/api/", "");
+	console.log(res);
+
 	$(document).ready(function(){
 		
 		$('.datepicker').datetimepicker({
-			format: 'dd-mm-yyyy',
+			format: 'mm-dd-yyyy',
 			startView: 'month',
 			minView: 'month',
 			autoclose: true
 		});
 		$('#asAt')
         .datetimepicker({
-			format: 'dd-mm-yyyy',
+			format: 'mm-dd-yyyy',
 			startView: 'month',
 			minView: 'month',
 			autoclose: true
@@ -65,6 +70,7 @@
 	        }
 		}).on('success.form.bv', function(e) {
 			start_wait();
+			console.log($('#asAt').val());
 			$.ajax({
 		        url: $('#base_url').val() + 'member',
 		        type: 'post',
