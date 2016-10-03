@@ -192,6 +192,7 @@ $(document).ready(function () {
 	}
 	initialize();
     // Build the chart
+
     
     function pie_chart(json)
     {
@@ -219,6 +220,7 @@ $(document).ready(function () {
 			if(beneficiary['y'] < 0)
 				beneficiary['y'] = 0;
 			slices.distributions.push(beneficiary);
+
     	$('#pie-chart').highcharts({
             chart: {
                 plotBackgroundColor: null,
@@ -230,7 +232,7 @@ $(document).ready(function () {
                 text: ''
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}</b>'
+                pointFormat: '{series.name}: <b>{point.percentage:,.1f}</b>'
             },
             plotOptions: {
                 pie: {
@@ -252,7 +254,25 @@ $(document).ready(function () {
 
     function bar_graph(json)
     {
-    	
+		/*(function (Highcharts) {
+			var tooltipFormatter = Highcharts.Point.prototype.tooltipFormatter;
+
+			Highcharts.Point.prototype.tooltipFormatter = function (pointFormat) {
+				var keys = this.options && Object.keys(this.options),
+						pointArrayMap = this.series.pointArrayMap,
+						tooltip;
+
+				if (keys.length) {
+					this.series.pointArrayMap = keys;
+				}
+
+				tooltip = tooltipFormatter.call(this, pointFormat);
+				this.series.pointArrayMap = pointArrayMap || ['y'];
+
+				return tooltip;
+			}
+		}(Highcharts));*/
+
         var series = {
                 years: []
         };
@@ -270,14 +290,14 @@ $(document).ready(function () {
             				year['name'] = row['year'];
             				year['y'] = row['total'];
             				year['drilldown'] = row['year'];
-            				series.years.push(year); 				
+            				series.years.push(year);
             				break;
 	            		}
         			}
         		}
            	}
     	});
-		
+
         var series2 = {
                 months: []
         };
@@ -300,7 +320,7 @@ $(document).ready(function () {
 								if(typeof value1['year'] === 'undefined')
 								{
 										$.each(value1, function(key2, value2){
-											
+
 											if(value2['year'] == row['year'])
 											{
 												if(data.length > 0)
@@ -308,7 +328,7 @@ $(document).ready(function () {
 													if(typeof value2['month'] !== 'undefined')
 													{
 														var last = data.pop();
-														
+
 														if(last[0] == value2['month'])
 														{
 															last[1] += parseFloat(value2['total']);
@@ -328,23 +348,24 @@ $(document).ready(function () {
 													data.push(monthData);
 												}
 											}
-										
+
 										});
-									
+
 								}
-									
+
 							});
 
 			            	month['data'] = data;
 
-            				series2.months.push(month);     				
+            				series2.months.push(month);
             				break;
 	            		}
         			}
         		}
            	}
     	});
-    	
+
+
     	$('#column-chart').highcharts({
             chart: {
                 type: 'column'
@@ -369,14 +390,14 @@ $(document).ready(function () {
                     borderWidth: 0,
                     dataLabels: {
                         enabled: false,
-                        format: '{point.y:.1f}'
+                        format: '{point.y:,.1f}'
                     }
                 }
             },
 
             tooltip: {
                 headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b><br/>'
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:,.2f}</b><br/>'
             },
 
             series: [{
