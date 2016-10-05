@@ -133,6 +133,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.CLIENTS:
                     showAgentClients(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
                     break;
+                case Actions.WITHDRAWAL_STATEMENT:
+                    showWithdrawalStatements(request, response, session, REPO_FOLDER);
+                    break;
             }
         }
         if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE) || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
@@ -265,6 +268,18 @@ public class Dashboard extends BaseServlet implements Serializable {
                 this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed agent clients");
         request.getRequestDispatcher(REPO_FOLDER + "/agent_clients.jsp").forward(request, response);
+    }
+
+    private void showWithdrawalStatements(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                          String REPO_FOLDER) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        logActivity("WITHDRAWAL STATEMENT", "Viewed withdrawal statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed withdrawal statement");
+        request.getRequestDispatcher(REPO_FOLDER + "/withdrawal_statement.jsp").forward(request, response);
     }
 
     private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {

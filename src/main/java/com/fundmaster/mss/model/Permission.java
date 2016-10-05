@@ -432,6 +432,8 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean operation_contribution_history,
 			boolean operation_balance_history,
 			boolean operation_statement_of_account,
+			boolean withdrawal_statement,
+			boolean reports,
 			boolean operation_benefit_projection, boolean media_upload,
 			boolean media_remove, boolean member_edit, boolean member_view) {
 		super();
@@ -445,6 +447,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.members = members;
 		this.operations = operations;
 		this.media = media;
+		this.reports = reports;
 		this.uac = uac;
 		this.analytics = analytics;
 		this.setup_company = setup_company;
@@ -470,6 +473,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.operation_balance_history = operation_balance_history;
 		this.operation_statement_of_account = operation_statement_of_account;
 		this.operation_benefit_projection = operation_benefit_projection;
+		this.withdrawal_statement = withdrawal_statement;
 		this.media_upload = media_upload;
 		this.media_remove = media_remove;
 		this.member_edit = member_edit;
@@ -495,10 +499,28 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	private boolean profile_privileges, member_edit_permissions, profile_login_username, scheme_managers, users, user_enable_disable, audit_trail;
 	
 	private boolean operation_personal_info, operation_contribution_history, operation_balance_history, operation_statement_of_account, operation_benefit_projection;
+
+	private boolean withdrawal_statement;
+
+	private boolean reports;
 	
 	private boolean media_upload, media_remove, profile_names;
 
-	
+	public boolean isReports() {
+		return reports;
+	}
+
+	public void setReports(boolean reports) {
+		this.reports = reports;
+	}
+
+	public boolean isWithdrawal_statement() {
+		return withdrawal_statement;
+	}
+
+	public void setWithdrawal_statement(boolean withdrawal_statement) {
+		this.withdrawal_statement = withdrawal_statement;
+	}
 
 	public boolean isProfile_names() {
 		return profile_names;

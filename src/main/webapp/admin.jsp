@@ -65,6 +65,13 @@
 								class="glyphicon glyphicon-user"></i>&nbsp;<i
 								class="fa fa-chevron-right"></i> MEMBER OPERATIONS</a></li>
 						</c:if>
+
+						<c:if test="${ permissions.withdrawal_statement == 'TRUE' }">
+						<li id="withdrawal-statement-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-file"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> WITHDRAWAL STATEMENT</a></li>
+						</c:if>
+
 						<c:if test="${ permissions.media == 'TRUE' }">
 							<li id="media-main-li"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-bookmark"></i>&nbsp;<i

@@ -56,6 +56,15 @@
      <div class="accordion-content">
           <p>Access to the schemes payments</p>
      </div>
+
+	<h2 class="accordion-header">REPORTS<span class="pull-right"><input type="checkbox" id="reports" class="form-control input-sm"  ${permissions.reports == 'TRUE' ? 'checked' : ''}/></span></h2>
+	<div class="accordion-content">
+		<p></p>
+		<table class="table table-responsive table-striped">
+			<tr><td>WITHDRAWAL STATEMENT</td><td><input type="checkbox" id="withdrawal_statement" class="form-control input-sm"  ${permissions.withdrawal_statement == 'TRUE' ? 'checked' : ''}/></td></tr>
+		</table>
+	</div>
+
      <h2 class="accordion-header">SCHEME MEMBERS<span class="pull-right"><input type="checkbox" id="members" class="form-control input-sm"  ${permissions.members == 'TRUE' ? 'checked' : ''}/></span></h2>
      <div class="accordion-content">
           <p>Access to the scheme members, edit and view member details</p>

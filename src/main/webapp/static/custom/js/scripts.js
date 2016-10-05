@@ -241,6 +241,16 @@ $(document).ready(function(){
 		switch_page('MEMBER_OPERATIONS');
 		
     });
+
+	$('#withdrawal-statement-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#withdrawal-statement-main-li').addClass('active');
+
+		switch_page('WITHDRAWAL_STATEMENT');
+
+	});
 	
 
 	
