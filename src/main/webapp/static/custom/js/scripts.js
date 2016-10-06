@@ -251,7 +251,16 @@ $(document).ready(function(){
 		switch_page('WITHDRAWAL_STATEMENT');
 
 	});
-	
+
+	$('#withdrawal-settlements-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#withdrawal-settlements-main-li').addClass('active');
+
+		switch_page('WITHDRAWAL_SETTLEMENTS');
+
+	});
 
 	
 	$('#media-main-li').click(function(){

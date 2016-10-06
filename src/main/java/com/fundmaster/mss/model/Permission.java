@@ -433,6 +433,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean operation_balance_history,
 			boolean operation_statement_of_account,
 			boolean withdrawal_statement,
+			boolean withdrawal_settlements,
 			boolean reports,
 			boolean operation_benefit_projection, boolean media_upload,
 			boolean media_remove, boolean member_edit, boolean member_view) {
@@ -474,6 +475,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.operation_statement_of_account = operation_statement_of_account;
 		this.operation_benefit_projection = operation_benefit_projection;
 		this.withdrawal_statement = withdrawal_statement;
+		this.withdrawal_settlements = withdrawal_settlements;
 		this.media_upload = media_upload;
 		this.media_remove = media_remove;
 		this.member_edit = member_edit;
@@ -502,6 +504,8 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	private boolean withdrawal_statement;
 
+	private boolean withdrawal_settlements;
+
 	private boolean reports;
 	
 	private boolean media_upload, media_remove, profile_names;
@@ -520,6 +524,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	public void setWithdrawal_statement(boolean withdrawal_statement) {
 		this.withdrawal_statement = withdrawal_statement;
+	}
+
+	public boolean isWithdrawal_settlements() {
+		return withdrawal_settlements;
+	}
+
+	public void setWithdrawal_settlements(boolean withdrawal_settlements) {
+		this.withdrawal_settlements = withdrawal_settlements;
 	}
 
 	public boolean isProfile_names() {

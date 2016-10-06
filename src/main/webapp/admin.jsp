@@ -72,6 +72,12 @@
 								class="fa fa-chevron-right"></i> WITHDRAWAL STATEMENT</a></li>
 						</c:if>
 
+						<c:if test="${ permissions.withdrawal_settlements == 'TRUE' }">
+						<li id="withdrawal-settlements-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-record"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> WITHDRAWAL SETTLEMENTS</a></li>
+						</c:if>
+
 						<c:if test="${ permissions.media == 'TRUE' }">
 							<li id="media-main-li"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-bookmark"></i>&nbsp;<i

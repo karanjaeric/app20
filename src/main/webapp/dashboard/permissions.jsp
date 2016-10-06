@@ -62,6 +62,7 @@
 		<p></p>
 		<table class="table table-responsive table-striped">
 			<tr><td>WITHDRAWAL STATEMENT</td><td><input type="checkbox" id="withdrawal_statement" class="form-control input-sm"  ${permissions.withdrawal_statement == 'TRUE' ? 'checked' : ''}/></td></tr>
+			<tr><td>WITHDRAWAL SETTLEMENTS</td><td><input type="checkbox" id="withdrawal_settlements" class="form-control input-sm"  ${permissions.withdrawal_settlements == 'TRUE' ? 'checked' : ''}/></td></tr>
 		</table>
 	</div>
 

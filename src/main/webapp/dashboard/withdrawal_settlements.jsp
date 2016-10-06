@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid section">
     <h3 class="text-center main-title">
-        <i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;WITHDRAWAL STATEMENT
+        <i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;WITHDRAWAL SETTLEMENTS
     </h3>
     <form class="form-inline" role="form" id="ws-form">
         <div class="form-group col-md-4">
@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-4">
             <button class="btn btn-primary">
-                SHOW STATEMENT
+                SHOW REPORT
             </button>
         </div>
     </form>
