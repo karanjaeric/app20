@@ -139,6 +139,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.WITHDRAWAL_SETTLEMENTS:
                     showWithdrawalSettlements(request, response, session, REPO_FOLDER);
                     break;
+                case Actions.MEMBER_MOVEMENT:
+                    showMemberMovements(request, response, session, REPO_FOLDER);
+                    break;
             }
         }
         if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE) || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
@@ -295,6 +298,18 @@ public class Dashboard extends BaseServlet implements Serializable {
         logActivity("WITHDRAWAL SETTLEMENTS", "Viewed withdrawal settlements", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed withdrawal settlements");
         request.getRequestDispatcher(REPO_FOLDER + "/withdrawal_settlements.jsp").forward(request, response);
+    }
+
+    private void showMemberMovements(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                           String REPO_FOLDER) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        logActivity("MEMBER MOVEMENT", "Viewed member movement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member movement");
+        request.getRequestDispatcher(REPO_FOLDER + "/member_movement.jsp").forward(request, response);
     }
 
     private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {

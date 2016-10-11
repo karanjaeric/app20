@@ -68,7 +68,7 @@ $(document).ready(function(){
 					receipts: $('#receipts').prop('checked'), payments: $('#payments').prop('checked'), members: $('#members').prop('checked'), member_operations: $('#member_operations').prop('checked'),
 					withdrawal_statement: $('#withdrawal_statement').prop('checked'), media: $('#media').prop('checked'), uac: $('#uac').prop('checked'), analytics: $('#analytics').prop('checked'), users: $('#users').prop('checked'),
 					user_enable_disable: $('#user_enable_disable').prop('checked'), withdrawal_settlements: $('#withdrawal_settlements').prop('checked'), audit_trail: $('#audit_trail').prop('checked'), portal_member_add: $('#portal_member_add').prop('checked'),
-					portal_member_view: $('#portal_member_view').prop('checked'), portal_member_delete: $('#portal_member_delete').prop('checked'), portal_member_process: $('#portal_member_process').prop('checked'),
+					portal_member_view: $('#portal_member_view').prop('checked'), member_movement: $('#member_movement').prop('checked'), portal_member_delete: $('#portal_member_delete').prop('checked'), portal_member_process: $('#portal_member_process').prop('checked'),
 					portal_sponsor_add: $('#portal_sponsor_add').prop('checked'), portal_sponsor_view: $('#portal_sponsor_view').prop('checked'), portal_sponsor_delete: $('#portal_sponsor_delete').prop('checked'),
 					portal_sponsor_process: $('#portal_sponsor_process').prop('checked'), portal_members: $('#portal_members').prop('checked'), portal_sponsors: $('#portal_sponsors').prop('checked'),
 					password_policy: $('#password_policy').prop('checked') },

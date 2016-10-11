@@ -262,6 +262,16 @@ $(document).ready(function(){
 
 	});
 
+	$('#member-movement-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#member-movement-main-li').addClass('active');
+
+		switch_page('MEMBER_MOVEMENT');
+
+	});
+
 	
 	$('#media-main-li').click(function(){
 		

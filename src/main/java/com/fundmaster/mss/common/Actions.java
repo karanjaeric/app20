@@ -51,5 +51,6 @@ public class Actions {
     public static final String SCHEME = "SCHEME";
     public static final String WITHDRAWAL_STATEMENT = "WITHDRAWAL_STATEMENT";
     public static final String WITHDRAWAL_SETTLEMENTS = "WITHDRAWAL_SETTLEMENTS";
+    public static final String MEMBER_MOVEMENT = "MEMBER_MOVEMENT";
 
 }

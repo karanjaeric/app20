@@ -759,6 +759,7 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLPost(APICall.GET_ACCOUNTING_PERIOD_FROM_DATE_FOR_SCHEME + date + "/" + schemeID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            jLogger.i("The response >>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
             return response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
