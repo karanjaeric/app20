@@ -75,6 +75,10 @@
 				</fieldset>
 				<p>&nbsp;</p>
 			</form>
+
+	<div class="container how-it-works">
+		${ content.text }
+	</div>
 		<h3>PROJECTED RESULTS</h3>
 		
 		<table class="table table-responsive table-striped results hide">

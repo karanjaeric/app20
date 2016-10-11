@@ -2,7 +2,7 @@
 <jsp:include page="includes/partial/header.jsp" />
 <div class="container">
 	<div class="main-content">
-		<c:if test="${ content.publish }">
+		<!--<c:if test="${ content.publish }">
 			<c:if test="${content.position == 'LEFT' }">
 				<div class="col-md-4 col-sm-6">
 					${ content.text }
@@ -38,7 +38,10 @@
 		</c:if>
 		<c:if test="${ content.publish == 'FALSE' }">
 			<jsp:include page="what-if-content.jsp" />
-		</c:if>
+		</c:if>-->
+
+		<jsp:include page="what-if-content.jsp" />
+
 	</div>
 </div>
 <jsp:include page="includes/partial/footer.jsp" />
