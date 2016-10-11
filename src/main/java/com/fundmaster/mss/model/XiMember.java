@@ -47,6 +47,15 @@ public class XiMember extends GenericModel<XiMember> implements Serializable{
 	private String county;
 	private String depot;
 	private String designation;
+	private String mbshipStatus;
+
+	public String getMbshipStatus() {
+		return mbshipStatus;
+	}
+
+	public void setMbshipStatus(String mbshipStatus) {
+		this.mbshipStatus = mbshipStatus;
+	}
 
 	public String getCounty() {
 		return county;
@@ -252,7 +261,7 @@ public class XiMember extends GenericModel<XiMember> implements Serializable{
 			String department, String dateOfBirth, String maritalStatus,
 			String dateJoinedScheme, String schemeId, String town, String country, String annualPensionableSalary,
 			String firstname, String surname, String othernames, String region, String designation, String county,
-					String depot) {
+					String depot, String mbshipStatus) {
 		super();
 		this.id = id;
 		this.mbio_id = mbio_id;
@@ -285,6 +294,7 @@ public class XiMember extends GenericModel<XiMember> implements Serializable{
 		this.designation = designation;
 		this.county = county;
 		this.depot = depot;
+		this.mbshipStatus = mbshipStatus;
 	}
 	
 }

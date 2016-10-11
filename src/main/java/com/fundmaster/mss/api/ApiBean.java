@@ -1248,9 +1248,8 @@ public class ApiBean implements ApiEJB {
             xiMember.setDesignation(jsonObject.getString(Fields.DESIGNATION));
             xiMember.setRegion(jsonObject.getString(Fields.REGION));
             xiMember.setCounty(jsonObject.getString(Fields.SUBREGION));
-            jLogger.i("The county from Json >>>>>>>>>>>>>> " + xiMember.getCounty() + " <<<<<<<<<<<<<<<");
+            xiMember.setMbshipStatus(jsonObject.getString(Fields.MBSHIP_STATUS));
             xiMember.setDepot(jsonObject.getString(Fields.DEPOT));
-            jLogger.i("The depot/station from Json >>>>>>>>>>>>>> " + xiMember.getDepot() + " <<<<<<<<<<<<<<<");
 
         } catch (JSONException je) {
             jLogger.e("We have a json exception extracting member" + je.getMessage());
@@ -1413,6 +1412,7 @@ public class ApiBean implements ApiEJB {
         try {
             List<XiMember> xiMembers = new ArrayList<>();
             JSONArray res = (JSONArray) response.get(Constants.ROWS);
+            jLogger.i("The response >>>>>>>>>> " + res + " <<<<<<<<<<<<<<<");
             for (int i = 0; i < res.length(); i++) {
                 JSONObject jsonObject = res.getJSONObject(i);
                 XiMember xiMember = this.xiMemberFromJson(jsonObject);
