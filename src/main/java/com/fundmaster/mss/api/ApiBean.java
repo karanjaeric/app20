@@ -882,6 +882,18 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public boolean uploadMemberDocument(String params) {
+        JSONObject response;
+        try {
+            response = URLPost(APICall.UPLOAD_MEMBER_DOCUMENT, params, Constants.APPLICATION_JSON);
+            return response.getBoolean(Fields.SUCCESS);
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception uploading document");
+            return false;
+        }
+    }
+
+    @Override
     public XiMember memberExists(String profile, String value) {
         String ordinal = profileLoginFieldBeanI.findByProfile(profile);
         jLogger.i("Ordinal is >>>>>>>>> " + ordinal + " <<<<<<<<<<<<<");

@@ -6,7 +6,7 @@
 				<form class="form-horizontal" method="post" id="pi-form">
 				<input type="hidden" id="member_id" value="${ member.id }" />
 					<input type="hidden" id="member_no" value="${ member.memberNo }" />
-					<input type="hidden" name="ACTION" id="ACTION" value="UPDATE_MEMBER" />
+					<!--<input type="hidden" name="ACTION" id="ACTION" value="UPDATE_MEMBER" />-->
 				<div class="row">
 						<div class="col-md-6">
 							<fieldset>
@@ -245,14 +245,10 @@
 									<input type="text" name="policyNo" id="policyNo" placeholder="Policy Number" class="form-control  input-sm" value="${ member.policyNo }" ${memberPermission.policyNo == 'TRUE' ? '' : 'disabled'}/>
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="attachment" class="col-sm-6 control-label">Upload Document:</label>
-									<div class="col-sm-6">
-										<input type="file" id="attachment" name="attachment" class="filestyle">
-									</div>
-								</div>
 							</fieldset>
+							<button class="btn btn-primary"  type="submit">UPDATE DETAILS</button>
 						</div>
+
 						<div class="col-md-6">
 							<fieldset>
 								<legend>
@@ -275,8 +271,37 @@
 							</fieldset>
 						</div>
 				</div>
-				<button class="btn btn-primary">UPDATE DETAILS</button>
+
 			</form>
+			<div class="row">
+
+			<div class="col-md-6" style="margin-bottom:15px">
+			<form role="form" id="form-upload-document">
+
+				<input type="hidden" name="ACTION" id="ACTION" value="UPLOAD_DOCUMENT" />
+
+				<fieldset>
+
+					<legend>
+						<i class="fa fa-upload"></i> &nbsp;Upload Document
+					</legend>
+
+					<div class="form-group">
+						<div class="col-sm-6">
+							<input type="file" class="filestyle" data-buttonName="btn-primary" id="attachment" name="attachment" data-buttonBefore="true" />
+						</div>
+					</div>
+
+				</fieldset>
+				<br>
+
+				<input class="btn btn-primary" type="submit" value="Upload File" id="btn-file">
+
+			</form>
+
+			</div>
+
+			</div>
 			</div>
 			<script type="text/javascript">
 				function add_beneficiary()
@@ -432,14 +457,6 @@
 											}
 										}
 									},
-									file: {
-										validators : {
-											extension: 'jpeg,jpg,png,doc,docx,pdf,xls,txt',
-											type: 'image/jpeg,image/png,application/msword,application/pdf,application/vnd.ms-excel,',
-											maxSize: 2097152,   // 2048 * 1024
-											message: 'The selected file is not valid'
-										}
-									}
 								}
 							})
 					.on(
@@ -451,19 +468,20 @@
 
 								// Get the form instance
 								var form = "pi-form";
-								var formData = new FormData($(this)[0]);
+								console.log('The form is: ' + form);
+								
+								/*var formData = new FormData($(this)[0]);
 
 								memberID = $('#member_id').val();
 								formData.append("memberID", memberID);
 
 								memberNo = $('#member_no').val();
-								formData.append("memberNo", memberNo);
+								formData.append("memberNo", memberNo);*/
 
 								$.ajax({
 											url : $('#base_url').val() + 'admin',
 											type : 'post',
-											data: formData,
-											/*data : {
+											data : {
 												ACTION: 'UPDATE_MEMBER',
 												memberID: $('#member_id')
 														.val(),
@@ -495,11 +513,8 @@
 														.val(),
 												currentAnnualPensionableSalary: $('#currentAnnualPensionableSalary')
 														.val()
-											},*/
+											},
 											dataType : 'json',
-											cache: false,
-											contentType: false,
-											processData: false,
 											success : function(json) {
 												stop_wait();
 													bootbox
@@ -642,6 +657,63 @@
 								        	        processData: false
 												});
 									});
+					$('#form-upload-document').bootstrapValidator({
+						message: 'This value is not valid',
+						feedbackIcons: {
+							valid: 'glyphicon glyphicon-ok',
+							invalid: 'glyphicon glyphicon-remove',
+							validating: 'glyphicon glyphicon-refresh'
+						},
+						fields: {
+							attachment: {
+
+								extension: 'doc,docx,xls,xlsx,pdf,jpg,jpeg,png,gif',
+								type: 'image/png,image/gif,image/jpg,image/jpeg',
+								maxSize: 100*1024*1024,   // 100 MB
+								message: 'The selected file is not valid, it should be (png,gif,jpg,jpeg) and 5 MB at maximum.'
+
+							}
+						}
+					})
+							.on('success.form.bv', function(e) {
+
+								start_wait();
+
+								// Prevent form submission
+								e.preventDefault();
+
+								// Get the form instance
+								 var form = "form-upload-document";
+								 var formData = new FormData($(this)[0]);
+
+								 memberID = $('#member_id').val();
+								 formData.append("memberID", memberID);
+
+								 memberNo = $('#member_no').val();
+								 formData.append("memberNo", memberNo);
+
+								//$('#' + btn).val('Please wait...');
+
+								$.ajax({
+									url : $('#base_url').val() + 'admin',
+									type : 'post',
+									data: formData,
+									dataType: 'json',
+									async: false,
+									cache: false,
+									contentType: false,
+									processData: false,
+									success : function(json) {
+										stop_wait();
+										bootbox
+												.alert('<p class="text-center">'
+														+ json.message
+														+ '</p>');
+									}
+								});
+
+							});
+
 				});
 			</script>
 

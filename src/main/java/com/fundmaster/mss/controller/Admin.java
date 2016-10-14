@@ -36,6 +36,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String ADMIN_PROFILE_NAMES = "PROFILE_NAMES";
     private static final String ADMIN_PWD_RESET = "ADMIN_PWD_RESET";
     private static final String EDIT_BENEFICIARY = "EDIT_BENEFICIARY";
+    private static final String UPLOAD_DOCUMENT = "UPLOAD_DOCUMENT";
     private static final String UPDATE_MEMBER = "UPDATE_MEMBER";
     private static final String GET_BENEFICIARY = "GET_BENEFICIARY";
     private static final String GET_PERMISSION = "GET_PERMISSION";
@@ -285,6 +286,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case UPDATE_MEMBER:
                 updateMember(request, response, out, FILE_SEPERATOR, SCHEME_DOC_ROOT_FOLDER, scheme_doc_folder);
+                break;
+            case UPLOAD_DOCUMENT:
+                uploadDocument(request, response, out, FILE_SEPERATOR, SCHEME_DOC_ROOT_FOLDER, scheme_doc_folder);
                 break;
             case GET_BENEFICIARY:
                 showMemberBeneficiary(request, response);
@@ -1356,38 +1360,12 @@ public class Admin extends BaseServlet implements Serializable {
     }
     private void updateMember(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String FILE_SEPERATOR, String SCHEME_DOC_ROOT_FOLDER, String scheme_doc_folder) {
 
-        boolean attachment = false;
-        String attachment_path = null;
-        String attachment_name = null;
 
         try {
-            for (Part part : request.getParts()) {
-                String fileName = extractFileName(part);
-                if (!fileName.equals("")) {
-                    jLogger.i("File name is :::::::::" + fileName);
-                    File path = new File(getServletContext().getRealPath("/"));
-                    if (scheme_doc_folder == null) {
-                        scheme_doc_folder = path.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getPath() + FILE_SEPERATOR + SCHEME_DOC_ROOT_FOLDER;
-                        helper.createFolderIfNotExists(scheme_doc_folder);
-                    }
-                    try {
-                        String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
-                        String fullpath = scheme_doc_folder + FILE_SEPERATOR + fileName;
-                        jLogger.i("full path is:" + fullpath);
-                        part.write(fullpath);
-                        jLogger.i("Complete file path is: " + fullpath);
-                        attachment_name = fileName;
-                        attachment_path = fullpath;
-                        attachment = true;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+
             String memberID = this.get(request, "memberID");
             XiMember mbr = apiEJB.getMemberDetails(memberID, null);
 
-            jLogger.i("Attachment has been uploaded >>>>>>>> " + attachment + " <<<<<<<<<<<");
             JSONObject member = new JSONObject();
             String firstname = this.get(request, "firstname");
             if (firstname == "" || firstname == null) {
@@ -1445,9 +1423,6 @@ public class Admin extends BaseServlet implements Serializable {
                 country = mbr.getCountry();
             }
 
-            String attachment_url = attachment_path;
-            jLogger.i("Attachment URL is ::::::::::::::::::> " + attachment_url);
-
             String dateOfBirth = this.get(request, "dateOfBirth");
             if (dateOfBirth == "" || dateOfBirth == null) {
                 dateOfBirth = mbr.getDateOfBirth();
@@ -1473,7 +1448,6 @@ public class Admin extends BaseServlet implements Serializable {
             try {
                 member.put("member.surname", surname).put("member.firstname", firstname)
                         .put("member.othernames", othernames)
-                        .put("member.attachmentname", attachment_name)
                         .put("member.person.biodata.town", city)
                         .put("member.dob", format_.format(dob))
                         .put("member.id", memberID)
@@ -1487,10 +1461,6 @@ public class Admin extends BaseServlet implements Serializable {
                         .put("member.country", country)
                         .put("member.address.town", city)
                         .put("member.maritalStatus", maritalStatus);
-                if (attachment)
-                    member.put("member.attachment", attachment_url);
-                else
-                    member.put("member.attachment", new ArrayList<String>());
 
                 boolean status_ = apiEJB.saveOrUpdateMember(member.toString());
                 this.respond(response, status_, status_ ? "Member details were successfully saved" : "Member details could not be saved", null);
@@ -1502,6 +1472,70 @@ public class Admin extends BaseServlet implements Serializable {
         }
 
     }
+
+    private void uploadDocument(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String FILE_SEPERATOR, String SCHEME_DOC_ROOT_FOLDER, String scheme_doc_folder) {
+
+        boolean attachment = false;
+        String attachment_path = null;
+        String attachment_name = null;
+
+        try {
+
+            for (Part part : request.getParts()) {
+                String fileName = extractFileName(part);
+                if (!fileName.equals("")) {
+                    jLogger.i("File name is :::::::::" + fileName);
+                    File path = new File(getServletContext().getRealPath("/"));
+                    if (scheme_doc_folder == null) {
+                        scheme_doc_folder = path.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getPath() + FILE_SEPERATOR + SCHEME_DOC_ROOT_FOLDER;
+                        helper.createFolderIfNotExists(scheme_doc_folder);
+                    }
+                    try {
+                        String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
+                        String fullpath = scheme_doc_folder + FILE_SEPERATOR + fileName;
+                        jLogger.i("full path is:" + fullpath);
+                        part.write(fullpath);
+                        jLogger.i("Complete file path is: " + fullpath);
+                        attachment_name = fileName;
+                        attachment_path = fullpath;
+                        attachment = true;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            jLogger.i("Attachment has been uploaded >>>>>>>> " + attachment + " <<<<<<<<<<<");
+
+            String attachment_url = attachment_path;
+            jLogger.i("Attachment URL is ::::::::::::::::::> " + attachment_url);
+
+            String memberID = this.get(request, "memberID");
+            XiMember mbr = apiEJB.getMemberDetails(memberID, null);
+
+            JSONObject member = new JSONObject();
+
+            try {
+                member.put("member.attachmentname", attachment_name)
+                        .put("member.id", memberID);
+                if (attachment)
+                    member.put("member.attachment", attachment_url);
+                else
+                    member.put("member.attachment", new ArrayList<String>());
+
+                boolean status_ = apiEJB.uploadMemberDocument(member.toString());
+
+                this.respond(response, status_, status_ ? "Document was successfully uploaded" : "Document was not uploaded", null);
+            } catch (JSONException e) {
+                this.respond(response, false, "Sorry, something didn't work out right. Couldn't upload document", null);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
     private void editBeneficiary(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String FILE_SEPERATOR, String SCHEME_DOC_ROOT_FOLDER, String scheme_doc_folder) {
         boolean attachment = false;
         String attachment_path = null;

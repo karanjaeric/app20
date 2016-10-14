@@ -14,6 +14,7 @@ public interface ApiEJB {
     XiMember memberExists(String profile, String value);
     boolean saveOrUpdateSponsor(String params);
     boolean saveOrUpdateMember(String params);
+    boolean uploadMemberDocument(String params);
     boolean saveOrUpdateBeneficiary(String params);
     XiMember memberExistsInScheme(String profile, String value, String schemeID);
     boolean uploadMemberDocument(String memberId, String docName, String docNotes, String docNum, String docTypeId);
