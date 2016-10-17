@@ -434,6 +434,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean operation_statement_of_account,
 			boolean withdrawal_statement,
 			boolean withdrawal_settlements,
+			boolean admin_fee_listing,
 			boolean reports,
 			boolean member_movement,
 			boolean operation_benefit_projection, boolean media_upload,
@@ -478,6 +479,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.operation_benefit_projection = operation_benefit_projection;
 		this.withdrawal_statement = withdrawal_statement;
 		this.withdrawal_settlements = withdrawal_settlements;
+		this.admin_fee_listing = admin_fee_listing;
 		this.media_upload = media_upload;
 		this.media_remove = media_remove;
 		this.member_edit = member_edit;
@@ -508,6 +510,8 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	private boolean withdrawal_settlements;
 
+	private boolean admin_fee_listing;
+
 	private boolean reports;
 
 	private boolean member_movement;
@@ -536,6 +540,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	public void setWithdrawal_settlements(boolean withdrawal_settlements) {
 		this.withdrawal_settlements = withdrawal_settlements;
+	}
+
+	public boolean isAdmin_fee_listing() {
+		return admin_fee_listing;
+	}
+
+	public void setAdmin_fee_listing(boolean admin_fee_listing) {
+		this.admin_fee_listing = admin_fee_listing;
 	}
 
 	public boolean isMember_movement() {

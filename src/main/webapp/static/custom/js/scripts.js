@@ -262,6 +262,16 @@ $(document).ready(function(){
 
 	});
 
+	$('#admin_fee_listing-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#admin_fee_listing-main-li').addClass('active');
+
+		switch_page('ADMIN_FEE_LISTING');
+
+	});
+
 	$('#member-movement-main-li').click(function(){
 
 		$('#main-menu.nav li').removeClass('active');

@@ -54,7 +54,7 @@
                             .on('changeDate', function(e) {
                                 $(this).datetimepicker('hide');
                                 // Revalidate the date field
-                                $('#ch-form').bootstrapValidator('revalidateField', 'dateTo');
+                                $('#ws-form').bootstrapValidator('revalidateField', 'dateTo');
                             }),
                     $('#dateTo')
                             .datetimepicker({
@@ -66,7 +66,7 @@
                             .on('changeDate', function(e) {
                                 $(this).datetimepicker('hide');
                                 // Revalidate the date field
-                                $('#ch-form').bootstrapValidator('revalidateField', 'dateTo');
+                                $('#ws-form').bootstrapValidator('revalidateField', 'dateTo');
                             }));
             $('#ws-form').bootstrapValidator({
                 message: 'This value is not valid',

@@ -78,6 +78,12 @@
 								class="fa fa-chevron-right"></i> WITHDRAWAL SETTLEMENTS</a></li>
 						</c:if>
 
+						<c:if test="${ permissions.admin_fee_listing == 'TRUE' }">
+						<li id="admin_fee_listing-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-open-file"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> ADMIN FEE LISTING</a></li>
+						</c:if>
+
 						<c:if test="${ permissions.media == 'TRUE' }">
 							<li id="media-main-li"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-bookmark"></i>&nbsp;<i
