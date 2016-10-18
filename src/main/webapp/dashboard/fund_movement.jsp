@@ -59,8 +59,11 @@
                         }
                     });
 
+                    json = $.parseJSON(json.data);
+                    var accountingPeriod = json.accountingPeriodId;
+                    console.log("Accounting period Id: " + accountingPeriod);
                     var url = $('#reportPath').val() + 'members/Fund Movement Summary (Detailed).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FFund%20Movement%20Summary%20(Detailed).xdo&_xmode=3&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsscheme_id=' + $('#scheme_id').val() +
-                            '&_paramsap_id=' + json.accountingPeriodId + '&_xt=Fund%20Movement%20Summary%20(Detailed)&_xf=analyze&_xana=view&_xautorun=false&_paramsadmin=3347&id='
+                            '&_paramsap_id=' + accountingPeriod + '&_xt=Fund%20Movement%20Summary%20(Detailed)&_xf=analyze&_xana=view&_xautorun=false&_paramsadmin=3347&id='
                             + $("#username").val() + '&passwd=' + $("#password").val() + '&_paramsblankImage=' + alternativeUrl +'&_paramsalternativeUrl=' + alternativeUrl + '&_paramsorientation=' + orientation;
                     $("#fm-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
                 }
