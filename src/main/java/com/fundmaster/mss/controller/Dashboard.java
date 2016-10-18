@@ -142,6 +142,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.MEMBER_MOVEMENT:
                     showMemberMovements(request, response, session, REPO_FOLDER);
                     break;
+                case Actions.FUND_MOVEMENT:
+                    showFundMovement(request, response, session, REPO_FOLDER);
+                    break;
                 case Actions.ADMIN_FEE_LISTING:
                     showAdminFeeListing(request, response, session, REPO_FOLDER);
                     break;
@@ -313,6 +316,18 @@ public class Dashboard extends BaseServlet implements Serializable {
         logActivity("MEMBER MOVEMENT", "Viewed member movement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member movement");
         request.getRequestDispatcher(REPO_FOLDER + "/member_movement.jsp").forward(request, response);
+    }
+
+    private void showFundMovement(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                     String REPO_FOLDER) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        logActivity("FUND MOVEMENT", "Viewed fund movement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed fund movement");
+        request.getRequestDispatcher(REPO_FOLDER + "/fund_movement.jsp").forward(request, response);
     }
 
     private void showAdminFeeListing(HttpServletRequest request, HttpServletResponse response, HttpSession session,

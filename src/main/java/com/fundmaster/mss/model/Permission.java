@@ -437,6 +437,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean admin_fee_listing,
 			boolean reports,
 			boolean member_movement,
+			boolean fund_movement,
 			boolean operation_benefit_projection, boolean media_upload,
 			boolean media_remove, boolean member_edit, boolean member_view) {
 		super();
@@ -452,6 +453,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.media = media;
 		this.reports = reports;
 		this.member_movement = member_movement;
+		this.fund_movement = fund_movement;
 		this.uac = uac;
 		this.analytics = analytics;
 		this.setup_company = setup_company;
@@ -515,6 +517,8 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	private boolean reports;
 
 	private boolean member_movement;
+
+	private boolean fund_movement;
 	
 	private boolean media_upload, media_remove, profile_names;
 
@@ -556,6 +560,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	public void setMember_movement(boolean member_movement) {
 		this.member_movement = member_movement;
+	}
+
+	public boolean isFund_movement() {
+		return fund_movement;
+	}
+
+	public void setFund_movement(boolean fund_movement) {
+		this.fund_movement = fund_movement;
 	}
 
 	public boolean isProfile_names() {

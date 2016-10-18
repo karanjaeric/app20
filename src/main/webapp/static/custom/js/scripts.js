@@ -282,6 +282,16 @@ $(document).ready(function(){
 
 	});
 
+	$('#fund-movement-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#fund-movement-main-li').addClass('active');
+
+		switch_page('FUND_MOVEMENT');
+
+	});
+
 	
 	$('#media-main-li').click(function(){
 		

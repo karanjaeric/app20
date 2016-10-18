@@ -65,6 +65,7 @@
 			<tr><td>WITHDRAWAL SETTLEMENTS</td><td><input type="checkbox" id="withdrawal_settlements" class="form-control input-sm"  ${permissions.withdrawal_settlements == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>MEMBER MOVEMENT</td><td><input type="checkbox" id="member_movement" class="form-control input-sm"  ${permissions.member_movement == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>ADMIN FEE LISTING</td><td><input type="checkbox" id="admin_fee_listing" class="form-control input-sm"  ${permissions.admin_fee_listing == 'TRUE' ? 'checked' : ''}/></td></tr>
+			<tr><td>FUND MOVEMENT</td><td><input type="checkbox" id="fund_movement" class="form-control input-sm"  ${permissions.fund_movement == 'TRUE' ? 'checked' : ''}/></td></tr>
 		</table>
 	</div>
 
