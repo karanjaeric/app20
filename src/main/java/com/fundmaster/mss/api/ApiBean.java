@@ -768,6 +768,19 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public JSONObject getAllAccountingPeriods(String schemeID) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_SCHEME_ACCOUNTING_PERIODS + schemeID);
+            jLogger.i("The response >>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public JSONObject getFundValueAsAt(String date, String periodType, String schemeID, String profileID) {
 
         profileID = "0";

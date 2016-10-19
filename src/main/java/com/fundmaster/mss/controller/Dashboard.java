@@ -312,6 +312,7 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
+
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         logActivity("MEMBER MOVEMENT", "Viewed member movement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member movement");

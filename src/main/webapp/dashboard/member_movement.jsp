@@ -12,11 +12,13 @@
         <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;MEMBER MOVEMENT
     </h3>
     <form class="form-inline" role="form" id="mv-form">
-        <div class="form-group col-md-6">
-            <label for="asAt" class="control-label">As At:</label> <input type="text" readonly="readonly" name="asAt"
-                                                                          class="form-control datepicker" id="asAt"
-                                                                          placeholder="As At">
+
+        <div class="col-md-6" id="divAccperiod">
+            <select id="accperiod" name="accperiod" class="form-control">
+                <option value="">--Select Accounting Period--</option>
+            </select>
         </div>
+
         <div class="col-md-6">
             <button class="btn btn-primary btn-sm">SHOW REPORT</button>
         </div>
@@ -33,28 +35,47 @@
 </div>
 <script type="text/javascript">
 
-
+    var array = {};
     $(document).ready(function(){
 
-        $('.datepicker').datetimepicker({
+        function initialize()
+        {
+            $.ajax({
+                url: $('#base_url').val() + 'admin',
+                type: 'post',
+                data: {ACTION:'PERIODS'},
+                dataType: 'json',
+                success: function(json) {
+                    if(json.success)
+                    {
+                        json = $.parseJSON(json.data);
+                        console.log(json);
 
-            format: 'dd-mm-yyyy',
-            startView: 'month',
-            minView: 'month',
-            autoclose: true
-        });
-        $('#asAt')
-                .datetimepicker({
-                    format: 'mm-dd-yyyy',
-                    startView: 'month',
-                    minView: 'month',
-                    autoclose: true
-                })
-                .on('changeDate', function(e) {
-                    $(this).datetimepicker('hide');
-                    // Revalidate the date field
-                    $('#sa-form').bootstrapValidator('revalidateField', 'asAt');
-                });
+                        var combo = "<select id=\"accperiod\" name=\"accperiod\" class=\"form-control\"><option>--Select Accounting Period--</option>";
+                        $.each(json, function(key, value) {
+                            if(key == 'rows')
+                            {
+                                for ( var i = 0; i < json.rows.length; i++) {
+                                    var row = json.rows[i];
+                                    combo = combo + "<option>" + row['name'] + "</option>";
+                                    array = json.rows;
+                                }
+                                combo = combo + "</select>";
+
+                            }
+                        });
+                        $('#divAccperiod').html(combo);
+                    }
+                    else
+                    {
+                        stop_wait();
+                        bootbox.alert('<p class="text-center">' + json.message + '</p>');
+                    }
+                }
+            });
+        }
+        initialize();
+
         $('#mv-form').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
@@ -73,8 +94,50 @@
             }
         }).on('success.form.bv', function(e) {
             start_wait();
-            console.log($('#asAt').val());
+
+            var str = $('#xiRootPath').val();
+            var res = str.replace("/api/", "");
+            console.log(res);
+
+            var alternativeUrl = null;
+            var orientation = null;
+
             $.ajax({
+                url:  res + '/reports/general?_eventName=base-url&schemeId=' + $('#scheme_id').val(),
+                data: '',
+                type:'get',
+                async: false,
+                /*dataType: 'json',*/
+                success:function(json){
+                    console.log(json);
+                    var json_string =  json;
+                    var result =  $.parseJSON(json_string);
+                    var base_url = result.base_url;
+                    console.log(base_url);
+                    alternativeUrl = result.alternativeUrl;
+                    console.log(alternativeUrl);
+                    orientation = result.orientation;
+                    console.log(orientation);
+                }
+            });
+
+            var toDate = getArray($('#accperiod').val());
+            console.log("To Date: " + toDate);
+            var parts = toDate.split("-");
+            var year = parts[0];
+            console.log('the final year ' + year);
+
+
+            var url =
+                    $('#reportPath').val() +"members/Member Movement Report.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report.xdo&_xmode=3&_paramsdateTo=" +
+                    "&_paramsyear_txn=" + year+  "&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation + "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
+                    + $('#scheme_id').val() + "&_xt=Member%20Movement%20Report&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+
+            $("#mv-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
+
+            stop_wait();
+
+            /*$.ajax({
                 url: $('#base_url').val() + 'member',
                 type: 'post',
                 data: {ACTION:'AP', date: $('#asAt').val()},
@@ -94,7 +157,7 @@
                             data: '',
                             type:'get',
                             async: false,
-                            /*dataType: 'json',*/
+
                             success:function(json){
                                 console.log(json);
                                 var json_string =  json;
@@ -120,6 +183,8 @@
 
                         console.log('the final year ' + year);
 
+                        var accPeriodId = getArray($('#accperiod').val());
+
                         var url =
                                 $('#reportPath').val() +"members/Member Movement Report.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report.xdo&_xmode=3&_paramsdateTo=" +
                                 "&_paramsyear_txn=" + year+  "&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation + "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
@@ -134,7 +199,19 @@
                         stop_wait();
                     }
                 }
-            });
+            });*/
         });
     });
+
+
+    function getArray(val){
+        for ( var i = 0; i < array.length; i++) {
+            var val = array[i].accperiod;
+            if(val == val){
+                return array[i].toDate;
+            }
+        }
+        return array;
+    }
+
 </script>

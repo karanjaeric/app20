@@ -72,6 +72,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String PRE_CHANGE_PASSWORD = "PRE_CHANGE_PASSWORD";
     private static final String CHANGE_PASSWORD = "CHANGE_PASSWORD";
     private static final String AP = "AP";
+    private static final String PERIODS = "PERIODS";
     private static final String FV = "FV";
     private static final String HELP = "HELP";
     private static final String REMOVE_BANNER = "REMOVE_BANNER";
@@ -391,6 +392,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case AP:
                 getAccountingPeriod(request, response);
+                break;
+            case PERIODS:
+                getAllAccountingPeriods(request, response);
                 break;
             case FV:
                 getFundValueAsAt(request, response);
@@ -938,6 +942,12 @@ public class Admin extends BaseServlet implements Serializable {
         Date date = new Date();
         this.respond(response, true, "", apiEJB.getAccountingPeriod(format.format(date), this.getSessKey(request, Constants.SCHEME_ID)));
     }
+
+    private void getAllAccountingPeriods(HttpServletRequest request, HttpServletResponse response) {
+
+        this.respond(response, true, "", apiEJB.getAllAccountingPeriods(this.getSessKey(request, Constants.SCHEME_ID)));
+    }
+
     private void changePassword(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         PasswordPolicy policy = passwordPolicyBeanI.find();
         String securityCode = this.get(request, "securityCode");

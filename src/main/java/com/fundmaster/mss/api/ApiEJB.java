@@ -23,6 +23,7 @@ public interface ApiEJB {
     JSONObject getSchemeCurrency(String schemeID);
     JSONObject getFundValueAsAt(String date,String periodType, String schemeID,String profileID);
     JSONObject getAccountingPeriod(String date, String schemeID);
+    JSONObject getAllAccountingPeriods(String schemeID);
     JSONObject getMemberCummulativeInterest(String memberID);
     List<UserProfile> getUserProfiles();
     JSONObject getMemberContributions(String memberID);
