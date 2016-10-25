@@ -115,6 +115,7 @@
 
                 var fromDate = (document.getElementById('dateFrom').value);
                 var toDate = (document.getElementById('dateTo').value);
+                console.log("Scheme id is: " + $('#scheme_id').val());
                 var url =
                         $('#reportPath').val() +"members/Withdrawal Settlements.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FWithdrawal Settlements.xdo&_xmode=3&_paramsto_date=" + toDate
                         + "&_paramsfrom_date=" + fromDate

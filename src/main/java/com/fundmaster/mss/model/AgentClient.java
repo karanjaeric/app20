@@ -16,6 +16,15 @@ public class AgentClient extends GenericModel<AgentClient> implements Serializab
     private Long id;
     private String clientType;
     private String name;
+    private String policyNo;
+
+    public String getPolicyNo() {
+        return policyNo;
+    }
+
+    public void setPolicyNo(String policyNo) {
+        this.policyNo = policyNo;
+    }
 
     public Long getId() {
         return id;
@@ -47,5 +56,6 @@ public class AgentClient extends GenericModel<AgentClient> implements Serializab
         this.id = id;
         this.clientType = clientType;
         this.name = name;
+        this.policyNo = policyNo;
     }
 }

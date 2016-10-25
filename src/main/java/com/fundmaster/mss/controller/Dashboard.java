@@ -301,6 +301,7 @@ public class Dashboard extends BaseServlet implements Serializable {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        jLogger.i("The schemeId passed: >>>>>>>> " + this.getSessKey(request, Constants.SCHEME_ID));
         logActivity("WITHDRAWAL SETTLEMENTS", "Viewed withdrawal settlements", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed withdrawal settlements");
         request.getRequestDispatcher(REPO_FOLDER + "/withdrawal_settlements.jsp").forward(request, response);

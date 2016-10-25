@@ -29,6 +29,7 @@
 
     $(document).ready(function(){
 
+
         $.ajax({
             url: $('#base_url').val() + 'admin',
             type: 'post',

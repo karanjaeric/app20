@@ -335,6 +335,7 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLGet(APICall.GET_AGENT_CLIENTS +  agentId);
+            jLogger.i("Response is: " + response);
 
             if(response.get(Fields.SUCCESS).equals(true))
             {
@@ -1347,6 +1348,7 @@ public class ApiBean implements ApiEJB {
                 AgentClient agentClient = new AgentClient();
                 agentClient.setClientType(receipt.get(Fields.CLIENT_TYPE).toString());
                 agentClient.setName(receipt.get(Fields.NAME).toString());
+                agentClient.setPolicyNo(receipt.get(Fields.POLICY_NO).toString());
                 agentClients.add(agentClient);
             }
             return agentClients;
