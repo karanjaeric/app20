@@ -66,6 +66,21 @@
 								class="fa fa-chevron-right"></i> MEMBER OPERATIONS</a></li>
 						</c:if>
 
+						<c:if test="${ permissions.media == 'TRUE' }">
+							<li id="media-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-bookmark"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> MEDIA</a></li>
+						</c:if>
+						<c:if test="${ permissions.uac == 'TRUE' }">
+							<li id="uac-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-tasks"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> ACCESS CONTROL</a></li>
+						</c:if>
+						<c:if test="${ permissions.member_movement == 'TRUE' }">
+						<li id="member-movement-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-paste"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> MEMBER MOVEMENT</a></li>
+						</c:if>
 						<c:if test="${ permissions.withdrawal_statement == 'TRUE' }">
 						<li id="withdrawal-statement-main-li"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-file"></i>&nbsp;<i
@@ -84,28 +99,6 @@
 								class="fa fa-chevron-right"></i> ADMIN FEE LISTING</a></li>
 						</c:if>
 
-						<c:if test="${ permissions.media == 'TRUE' }">
-							<li id="media-main-li"><a href="javascript:void(0);"><i
-								class="glyphicon glyphicon-bookmark"></i>&nbsp;<i
-								class="fa fa-chevron-right"></i> MEDIA</a></li>
-						</c:if>
-						<c:if test="${ permissions.uac == 'TRUE' }">
-							<li id="uac-main-li"><a href="javascript:void(0);"><i
-								class="glyphicon glyphicon-tasks"></i>&nbsp;<i
-								class="fa fa-chevron-right"></i> ACCESS CONTROL</a></li>
-						</c:if>
-						<c:if test="${permissions.analytics == 'TRUE' }">
-							<li id="analytics-main-li"><a href="javascript:void(0);"><i
-								class="glyphicon glyphicon-flash"></i>&nbsp;<i
-								class="fa fa-chevron-right"></i> ANALYTICS &amp; REPORTING</a></li>
-						</c:if>
-
-						<c:if test="${ permissions.member_movement == 'TRUE' }">
-						<li id="member-movement-main-li"><a href="javascript:void(0);"><i
-								class="glyphicon glyphicon-paste"></i>&nbsp;<i
-								class="fa fa-chevron-right"></i> MEMBER MOVEMENT</a></li>
-						</c:if>
-
 						<c:if test="${ permissions.fund_movement == 'TRUE' }">
 						<li id="fund-movement-main-li"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-credit-card"></i>&nbsp;<i
@@ -122,6 +115,11 @@
 						<li id="clients-main-li"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-user"></i>&nbsp;<i
 								class="fa fa-chevron-right"></i> CLIENTS</a></li>
+						</c:if>
+						<c:if test="${permissions.analytics == 'TRUE' }">
+						<li id="analytics-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-flash"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> ANALYTICS &amp; REPORTING</a></li>
 						</c:if>
 
 						<li id="calc-log"><a href="javascript:void(0);"><i
