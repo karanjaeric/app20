@@ -46,7 +46,7 @@
         $(document).ready(function(){
             $('.datepicker').datetimepicker(
                     $('#dateFrom').datetimepicker({
-                        format: 'dd-M-yyyy',
+                        format: 'dd-M-yy',
                         startView: 'month',
                         minView: 'month',
                         autoclose: true
@@ -58,7 +58,7 @@
                             }),
                     $('#dateTo')
                             .datetimepicker({
-                                format: 'dd-M-yyyy',
+                                format: 'dd-M-yy',
                                 startView: 'month',
                                 minView: 'month',
                                 autoclose: true
@@ -114,7 +114,9 @@
                 });
 
                 var fromDate = (document.getElementById('dateFrom').value);
+                console.log("From Date: " + fromDate);
                 var toDate = (document.getElementById('dateTo').value);
+                console.log("To date: " + toDate);
                 console.log("Scheme id is: " + $('#scheme_id').val());
                 var url =
                         $('#reportPath').val() +"members/Withdrawal Settlements.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FWithdrawal Settlements.xdo&_xmode=3&_paramsto_date=" + toDate
