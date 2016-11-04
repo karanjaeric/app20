@@ -52,7 +52,6 @@ public class Fields {
     public static final String LUMPSUM_TAX_FREE = "lumpsumTaxFree";
     public static final String TAXABLE_AMOUNT = "taxableAmount";
     public static final String WITH_HOLDING_TAX = "withHoldingTax";
-    public static final String NET_PAYMENT = "netPayment";
     public static final String TOTALCOUNT = "totalcount";
     public static final String CURRENT_ANNUAL_PENSIONABLE_SALARY = "currentAnnualPensionableSalary";
     public static final String COUNTRY = "country";
@@ -105,5 +104,12 @@ public class Fields {
     public static final String SUBREGION = "subregion";
     public static final String DEPOT = "depot";
     public static final String MBSHIP_STATUS = "mbshipStatus";
+    public static final String BENEFIT_PAYMENT_ID = "benefitPaymentId";
+    public static final String NET_PAYMENT = "netPayment";
+    public static final String CURRENT_STATUS = "currentStatus";
+    public static final String REASON_FOR_EXIT = "reasonForExit";
+    public static final String DATE_OF_EXIT = "dateOfExit";
+    public static final String PROCESSED = "processed";
+    public static final String SERVICE_PERIOD = "servicePeriod";
 
 }

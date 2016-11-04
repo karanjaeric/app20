@@ -89,6 +89,7 @@ public class MemberController extends BaseServlet implements Serializable {
 					XiMember m = apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
 					request.setAttribute("member_id", m.getId());
 					session.setAttribute(Constants.PROFILE_ID,m.getId());
+					request.setAttribute("MemberStatus", m.getMbshipStatus());
 					if(schemes != null && schemes.size() > 0) {
 						jLogger.i("Scheme is not null. email: "+ this.getSessKey(request, Constants.USER));
 						if(this.getSessKey(request, Constants.SCHEME_ID) == null)

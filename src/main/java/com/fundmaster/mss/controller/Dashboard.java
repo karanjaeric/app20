@@ -167,7 +167,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                     break;
                 case Actions.MEMBER_MEDIA_FILES:
                     showMemberMedia(request, response, session);
-
+                    break;
+                case Actions.MEMBER_CLAIMS:
+                    showMemberClaims(request, response, session);
                     break;
                 case Actions.MEMBER_WHAT_IF_ANALYSIS:
                     showWhatIfAnalysis(request, response, session);
@@ -375,6 +377,36 @@ MediaBeanI mediaBeanI;
         logActivity("MEDIA FILES", "Accessed media & files (documents)", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed media & files (documents)");
         request.getRequestDispatcher("member/media_files.jsp").forward(request, response);
+    }
+
+    private void showMemberClaims(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+
+        XiMember m;
+        String member_id;
+        member_id = this.get(request, "memberID");
+        if (member_id == null || member_id.isEmpty())
+            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("Member ID is: " + member_id);
+        m = apiEJB.getMemberDetails(member_id, null);
+        request.setAttribute("member", m);
+
+        String memberNumber = m.getMemberNo();
+        jLogger.i("Member Number found is " + memberNumber);
+
+        long schemeId = Long.parseLong(this.getSessKey(request, Constants.SCHEME_ID)) ;
+        jLogger.i("Scheme Id found is " + schemeId);
+
+        List<MemberClaims> memberClaims = apiEJB.getMemberClaims(memberNumber, schemeId);
+        request.setAttribute("claims", memberClaims);
+
+        logActivity("MEMBER CLAIMS", "Viewed member claims", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member claims");
+        request.getRequestDispatcher("member/claims.jsp").forward(request, response);
     }
 
     private void showMemberBenefitProjections(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {

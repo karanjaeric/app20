@@ -352,6 +352,32 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public List<MemberClaims> getMemberClaims(String memberNumber, long schemeId) {
+        Constants.RECORD_COUNT = 0;
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_EXITS_BENEFITS +"/" + memberNumber+"/"+schemeId);
+            jLogger.i("Response is: " + response);
+
+            jLogger.i("Hapa ndio inakwama... ");
+
+            if(response.get(Fields.SUCCESS).equals(true))
+            {
+                jLogger.i(">>>>>>>>>> We are here <<<<<<<<<<");
+                return this.memberClaimsFromJSON(response);
+            }
+            else
+            {
+                jLogger.i(">>>>>>>>>> Else We are here <<<<<<<<<<");
+                return null;
+            }
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public JSONObject listMembers(String schemeID, String profileID) {
         JSONObject response;
         try {
@@ -1352,6 +1378,36 @@ public class ApiBean implements ApiEJB {
                 agentClients.add(agentClient);
             }
             return agentClients;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception extracting agent clients " + je.getMessage());
+            return null;
+        }
+    }
+
+    private List<MemberClaims> memberClaimsFromJSON(JSONObject response) {
+        List<MemberClaims> memberClaims = new ArrayList<>();
+        try {
+            //Constants.RECORD_COUNT = response.getInt(Fields.TOTALCOUNT);
+            JSONArray res = (JSONArray) response.get(Constants.ROWS);
+            for (int i = 0; i < res.length(); i++) {
+                JSONObject receipt = res.getJSONObject(i);
+
+                MemberClaims memberClaims1 = new MemberClaims();
+                memberClaims1.setMemberNo(receipt.getLong(Fields.MEMBER_NO));
+                jLogger.i("Confirming memberNo: " + memberClaims1.getMemberNo());
+                memberClaims1.setBenefitPaymentId(receipt.getLong(Fields.BENEFIT_PAYMENT_ID));
+                memberClaims1.setMemberId(receipt.getLong(Fields.MEMBER_ID));
+                memberClaims1.setNetPayment(receipt.get(Fields.NET_PAYMENT).toString());
+                jLogger.i("Confirming Net Payment: " + memberClaims1.getNetPayment());
+                memberClaims1.setCurrentStatus(receipt.get(Fields.CURRENT_STATUS).toString());
+                jLogger.i("Confirming Status: " + memberClaims1.getCurrentStatus());
+                memberClaims1.setReasonForExit(receipt.get(Fields.REASON_FOR_EXIT).toString());
+                memberClaims1.setDateOfExit(receipt.get(Fields.DATE_OF_EXIT).toString());
+                memberClaims1.setProcessed(receipt.get(Fields.PROCESSED).toString());
+                memberClaims1.setServicePeriod(receipt.get(Fields.SERVICE_PERIOD).toString());
+                memberClaims.add(memberClaims1);
+            }
+            return memberClaims;
         } catch (JSONException je) {
             jLogger.e("We have a json exception extracting agent clients " + je.getMessage());
             return null;

@@ -455,6 +455,15 @@ $(document).ready(function(){
 		
 		m_switch("MF");
 	});
+
+	$('#member-claims-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#member-claims-li').addClass('active');
+
+		m_switch("MC");
+	});
 	
 	
 	$('#balances-history-li').click(function(){

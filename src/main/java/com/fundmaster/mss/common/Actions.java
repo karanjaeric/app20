@@ -21,6 +21,7 @@ public class Actions {
     public static final String MEMBER_STATEMENT_OF_ACCOUNT = "SA";
     public static final String MEMBER_BENEFIT_PROJECTIONS = "BP";
     public static final String MEMBER_MEDIA_FILES = "MF";
+    public static final String MEMBER_CLAIMS = "MC";
     public static final String MEMBER_WHAT_IF_ANALYSIS = "WIA";
     public static final String MEMBER_BALANCE_HISTORY = "BH";
     public static final String DASHBOARD_SETUP = "SETUP";

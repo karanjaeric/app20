@@ -42,6 +42,13 @@
 					<li id="media-files-li"><a href="javascript:void(0);"><i
 							class="glyphicon glyphicon-briefcase"></i>&nbsp;<i
 							class="fa fa-chevron-right"></i> MEDIA &amp; FILES</a></li>
+
+				<c:if test="${MemberStatus != 'Active' }">
+					<li id="member-claims-li"><a href="javascript:void(0);"><i
+							class="glyphicon glyphicon-folder-close"></i>&nbsp;<i
+							class="fa fa-chevron-right"></i> CLAIMS </a></li>
+				</c:if>
+
 				</ul>
 			</div>
 		</div>
