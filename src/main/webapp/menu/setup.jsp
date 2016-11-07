@@ -585,8 +585,12 @@
 							<input type="text" class="form-control"  id="emailAddress" name="emailAddress" placeholder="Email Address" value="${company.email}">
 						</div>
 						<div class="form-group">
-							<label class="control-label" for="email">Mailing Addresses:</label>
-							<input type="text" class="form-control"  id="email" name="email" placeholder="List of mailing addresses (comma separated)" value="${company.emailAddress}">
+							<label class="control-label" for="email">Mailing Address:</label>
+							<input type="text" class="form-control"  id="email" name="email" placeholder="Default mailing address" value="${company.emailAddress}">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="email">Marketing dept Email:</label>
+							<input type="text" class="form-control"  id="marketingEmail" name="marketingEmail" placeholder="Marketing team email address" value="${company.marketingEmail}">
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="city">Town/City:</label>
@@ -1000,6 +1004,13 @@
 		                    }
 		                }
 		            },
+					marketingEmail: {
+						validators: {
+							notEmpty: {
+								message: 'Please enter the mailing addresses'
+							}
+						}
+					},
 		            city: {
 		                validators: {
 		                    notEmpty: {
@@ -1029,7 +1040,10 @@
         		$.ajax({
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
-        	        data: {company_id: $('#company_id').val(), email: $('#email').val(), geolocation: $('#geolocation').val(), companyName: $('#companyName').val(), streetAddress: $('#streetAddress').val(), telephone: $('#telephone').val(), fax: $('#fax').val(), emailAddress: $('#emailAddress').val(), city: $('#city').val(), country: $('#country').val(), ACTION: 'COMPANY'},
+        	        data: {company_id: $('#company_id').val(), email: $('#email').val(), geolocation: $('#geolocation').val(),
+						companyName: $('#companyName').val(), streetAddress: $('#streetAddress').val(), telephone: $('#telephone').val(),
+						fax: $('#fax').val(), emailAddress: $('#emailAddress').val(), marketingEmail: $('#marketingEmail').val(),
+						city: $('#city').val(), country: $('#country').val(), ACTION: 'COMPANY'},
         	        dataType: 'json',
         	        success: function(json) {
         	            var html = null;

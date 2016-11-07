@@ -1713,8 +1713,8 @@ public class Admin extends BaseServlet implements Serializable {
         Company company = new Company(helper.toLong(this.get(request, "company_id")),
                 this.get(request, "companyName"), this.get(request, "streetAddress"),
                 this.get(request, "telephone"), this.get(request, "fax"),
-                this.get(request, "emailAddress"), this.get(request, "email"), this.get(request, "city"),
-                country, this.get(request, "geolocation"));
+                this.get(request, "emailAddress"), this.get(request, "email"),this.get(request, "marketingEmail"),
+                this.get(request, "city"), country, this.get(request, "geolocation"));
         if (companyBeanI.edit(company) != null) {
             audit(session, "Updated company details");
             this.respond(response, true, "success", null);

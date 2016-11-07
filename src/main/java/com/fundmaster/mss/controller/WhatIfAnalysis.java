@@ -4,6 +4,7 @@ import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
 
 import javax.ejb.EJB;
@@ -39,6 +40,9 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 
 	@EJB
 	ApiEJB apiEJB;
+
+	private final JLogger jLogger = new JLogger(this.getClass());
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
 		Company company = companyBeanI.find();
@@ -61,8 +65,28 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 	}
 	
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		this.respond(response, true, "", apiEJB.calculateWhatIfAnalysis(this.get(request, "yearsToProject"), this.get(request, "contributions"), this.get(request, "rateOfReturn"), this.get(request, "salaryEscalationRate"), this.get(request, "inflationRate"),this.get(request, "emailAddress"),this.get(request, "phoneNumber"),this.get(request, "yourAge")));
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String subject = "What-if-Analysis Calculator details";
+		jLogger.i("Subject: " + subject);
+		String message = "Hello," + System.lineSeparator() + "Here are the details from the calculator: " + System.lineSeparator() +
+				"Email: " + this.get(request, "emailAddress") + System.lineSeparator() + "Phone Number: " + this.get(request, "phoneNumber") +
+				System.lineSeparator(); /*+ "Age: " + this.get(request, "yourAge")*/
+		jLogger.i("The message: " + message);
+		Company company = companyBeanI.find();
+		String senderId = company.getEmail();
+		jLogger.i("Sender email: " + senderId);
+		String senderName = company.getName();
+		jLogger.i("Sender name: " + senderName);
+		boolean status = apiEJB.sendEmail(company.getMarketingEmail(), senderId, senderName, subject, message,
+				this.getSessKey(request, Constants.SCHEME_ID), false, null);
+		jLogger.i("Status is: " + status);
+
+		this.respond(response, true, "", apiEJB.calculateWhatIfAnalysis(this.get(request, "yearsToProject"),
+				this.get(request, "contributions"), this.get(request, "rateOfReturn"), this.get(request, "salaryEscalationRate"),
+				this.get(request, "inflationRate"),this.get(request, "emailAddress"),this.get(request, "phoneNumber"),
+				this.get(request, "yourAge")));
+
+
 	}
 }

@@ -38,6 +38,9 @@ public class Company extends GenericModel<Company> implements Serializable {
 	@Column (name = "email", nullable = false)
 	private
 	String email;
+	@Column (name = "marketingEmail", nullable = false)
+	private
+	String marketingEmail;
 	private String emailAddress;
 	@Column (name = "city", nullable = false)
 	private
@@ -58,7 +61,7 @@ public class Company extends GenericModel<Company> implements Serializable {
 		this.emailAddress = emailAddress;
 	}
 	public Company(Long id, String name, String streetAddress,
-			String telephone, String fax, String email, String emailAddress,
+			String telephone, String fax, String email, String emailAddress, String marketingEmail,
 			String city, Country country, String geolocation) {
 		super();
 		this.id = id;
@@ -68,6 +71,7 @@ public class Company extends GenericModel<Company> implements Serializable {
 		this.fax = fax;
 		this.email = email;
 		this.emailAddress = emailAddress;
+		this.marketingEmail = marketingEmail;
 		this.city = city;
 		this.country = country;
 		this.geolocation = geolocation;
@@ -117,6 +121,15 @@ public class Company extends GenericModel<Company> implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getMarketingEmail() {
+		return marketingEmail;
+	}
+
+	public void setMarketingEmail(String marketingEmail) {
+		this.marketingEmail = marketingEmail;
+	}
+
 	public String getCity() {
 		return city;
 	}
