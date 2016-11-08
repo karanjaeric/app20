@@ -6,6 +6,7 @@
           <p>Access the main setup &amp; configuration features</p>
           <table class="table table-responsive table-striped">
 			<tr><td>COMPANY DETAILS</td><td><input type="checkbox" id="setup_company" class="form-control input-sm"  ${permissions.setup_company == 'TRUE' ? 'checked' : ''}/></td></tr>
+			  <tr><td>MANAGE EMAIL ADDRESSES</td><td><input type="checkbox" id="setup_email" class="form-control input-sm"  ${permissions.setup_email == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>SETUP LOGO</td><td><input type="checkbox" id="setup_logo" class="form-control input-sm"  ${permissions.setup_logo == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>CONFIGURE MENU</td><td><input type="checkbox" id="setup_menu" class="form-control input-sm"  ${permissions.setup_menu == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>SOCIAL NETWORK LINKS</td><td><input type="checkbox" id="setup_social" class="form-control input-sm"  ${permissions.setup_social == 'TRUE' ? 'checked' : ''}/></td></tr>

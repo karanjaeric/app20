@@ -37,6 +37,8 @@ public class MenuController extends BaseServlet implements Serializable {
     @EJB
     CompanyBeanI companyBeanI;
     @EJB
+    EmailsBeanI emailsBeanI;
+    @EJB
     SocialBeanI socialBeanI;
     @EJB
     MenuBeanI menuBeanI;
@@ -136,6 +138,8 @@ public class MenuController extends BaseServlet implements Serializable {
         request.setAttribute("countries",  countries);
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
+        Emails email = emailsBeanI.find();
+        request.setAttribute("email", email);
         Social social = socialBeanI.find();
         request.setAttribute("social", social);
         Menu menu = menuBeanI.find();

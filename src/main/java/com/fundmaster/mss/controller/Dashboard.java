@@ -464,6 +464,8 @@ SocialBeanI socialBeanI;
     @EJB
     CompanyBeanI companyBeanI;
     @EJB
+    EmailsBeanI emailsBeanI;
+    @EJB
     MemberPermissionBeanI memberPermissionBeanI;
     private void showMemberPersonalInformation(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         //System.out.println("request.getParameter  "+this.get(request, "memberID") +" Alt: "+ this.getSessKey(request, Constants.PROFILE_ID));
@@ -1010,6 +1012,8 @@ SchemeManagerBeanI schemeManagerBeanI;
     private void showSetup(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
+        Emails email = emailsBeanI.find();
+        request.setAttribute("email", email);
         InterestRateColumns interest = interestRateColumnBeanI.find();
         request.setAttribute("interest", interest);
         Menu menu = menuBeanI.find();

@@ -58,6 +58,17 @@
 					</div>
 					<div class="modal-body">
 						<input type="hidden" name="ACTION" id="ACTION" value="EMAIL" />
+
+						<div class="form-group">
+							<label class="control-label" for="recipient">Send To:</label>
+							<select id="recipient" name="recipient" class="form-control">
+								<option value="" disabled>--Select Recipient--</option>
+								<option value="defaultEmail">Administrator</option>
+								<option value="marketingEmail">Marketing</option>
+								<option value="supportEmail">Support</option>
+							</select>
+						</div>
+
 						<div class="form-group">
 							 <label class="control-label" for="subject">Category:</label>
 							 <select class="form-control" name="category" id="category">

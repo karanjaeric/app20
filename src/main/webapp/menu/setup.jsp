@@ -8,6 +8,11 @@
 				class="glyphicon glyphicon-home"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> COMPANY DETAILS</a></li>
 		</c:if>
+		<c:if test="${ permissions.setup_email }">
+			<li id="email-li"><a href="javascript:void(0);"><i
+					class="glyphicon glyphicon-envelope"></i>&nbsp;<i
+					class="fa fa-chevron-right"></i> EMAIL ADDRESSES</a></li>
+		</c:if>
 		<c:if test="${ permissions.setup_logo }">
 		<li id="logo-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-picture"></i>&nbsp;<i
@@ -581,18 +586,6 @@
 							<input type="text" class="form-control" id="fax" name="fax" placeholder="Fax Number" value="${company.fax}">
 						</div>
 						<div class="form-group">
-							<label class="control-label" for="email">Email:</label>
-							<input type="text" class="form-control"  id="emailAddress" name="emailAddress" placeholder="Email Address" value="${company.email}">
-						</div>
-						<div class="form-group">
-							<label class="control-label" for="email">Mailing Address:</label>
-							<input type="text" class="form-control"  id="email" name="email" placeholder="Default mailing address" value="${company.emailAddress}">
-						</div>
-						<div class="form-group">
-							<label class="control-label" for="email">Marketing dept Email:</label>
-							<input type="text" class="form-control"  id="marketingEmail" name="marketingEmail" placeholder="Marketing team email address" value="${company.marketingEmail}">
-						</div>
-						<div class="form-group">
 							<label class="control-label" for="city">Town/City:</label>
 							<input type="text" class="form-control"  id="city" name="city" placeholder="Town/City" value="${company.city}">
 						</div>
@@ -622,6 +615,43 @@
 			</div>
 		</form>
 	</div>
+
+
+<!--  EMAIL DETAILS-->
+
+<div class="modal fade" id="modal-email" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEmail" aria-hidden="true">
+	<form role="form" id="form-email">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabelEmail">
+						<i class="glyphicon glyphicon-envelope"></i>&nbsp;&nbsp;EMAIL ADDRESSES
+					</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="company_id" id="email_id" value="${email.id}" />
+					<div class="form-group">
+						<label class="control-label" for="defaultEmail">Default Mailing Email: </label>
+						<input type="text" class="form-control" id="defaultEmail" name="defaultEmail" placeholder="Mailing Email" value="${email.defaultEmail}">
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="marketingEmail">Marketing Email:</label>
+						<input type="text" class="form-control" id="marketingEmail" name="marketingEmail" placeholder="Marketing Email" value="${email.marketingEmail}">
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="supportEmail">Support Email:</label>
+						<input type="text" class="form-control" id="supportEmail" name="supportEmail" placeholder="Support Email" value="${email.supportEmail}">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+					<input class="btn btn-primary" type="submit"
+						   value="Save Details" id="btn-email">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
 	
 	<script type="text/javascript">
 
@@ -675,6 +705,10 @@
 		    $('#company-li').click(function(){
 		        $('#modal-company').modal('show');
 		    });
+
+			$('#email-li').click(function(){
+				$('#modal-email').modal('show');
+			});
 		    
 		    $('#social-li').click(function(){
 		        $('#modal-social').modal('show');
@@ -990,27 +1024,6 @@
 		                    }
 		                }
 		            },
-		            emailAddress: {
-		                validators: {
-		                    notEmpty: {
-		                        message: 'Please enter the contact email address'
-		                    }
-		                }
-		            },
-		            email: {
-		                validators: {
-		                    notEmpty: {
-		                        message: 'Please enter the mailing addresses'
-		                    }
-		                }
-		            },
-					marketingEmail: {
-						validators: {
-							notEmpty: {
-								message: 'Please enter the mailing addresses'
-							}
-						}
-					},
 		            city: {
 		                validators: {
 		                    notEmpty: {
@@ -1040,10 +1053,10 @@
         		$.ajax({
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
-        	        data: {company_id: $('#company_id').val(), email: $('#email').val(), geolocation: $('#geolocation').val(),
+        	        data: {company_id: $('#company_id').val(), geolocation: $('#geolocation').val(),
 						companyName: $('#companyName').val(), streetAddress: $('#streetAddress').val(), telephone: $('#telephone').val(),
-						fax: $('#fax').val(), emailAddress: $('#emailAddress').val(), marketingEmail: $('#marketingEmail').val(),
-						city: $('#city').val(), country: $('#country').val(), ACTION: 'COMPANY'},
+						fax: $('#fax').val(), city: $('#city').val(),
+						country: $('#country').val(), ACTION: 'COMPANY'},
         	        dataType: 'json',
         	        success: function(json) {
         	            var html = null;
@@ -1060,6 +1073,72 @@
         	    });
 
 			});
+
+			$('#form-email').bootstrapValidator({
+				message: 'This value is not valid',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+
+					defaultEmail: {
+						validators: {
+							notEmpty: {
+								message: 'Please enter the contact email address'
+							}
+						}
+					},
+					marketingEmail: {
+						validators: {
+							notEmpty: {
+								message: 'Please enter the mailing addresses'
+							}
+						}
+					},
+					supportEmail: {
+						validators: {
+							notEmpty: {
+								message: 'Please enter the mailing addresses'
+							}
+						}
+					}
+				}
+			})
+					.on('success.form.bv', function(e) {
+
+						// Prevent form submission
+						e.preventDefault();
+
+						var btn = "btn-email";
+						var form = "form-email";
+						var modal = "modal-email";
+
+						$('#' + btn).val('Please wait...');
+						$.ajax({
+							url: $('#base_url').val() + 'admin',
+							type: 'post',
+							data: {email_id: $('#email_id').val(), defaultEmail: $('#defaultEmail').val(),
+								marketingEmail: $('#marketingEmail').val(), supportEmail: $('#supportEmail').val(),
+								ACTION: 'EMAILS'},
+							dataType: 'json',
+							success: function(json) {
+								var html = null;
+								if(json.success)
+								{
+									$('#' + form)[0].reset();
+									$('#' + modal).modal('hide');
+									html = 'Email Address saved';
+								}
+								else
+									html = 'Email Address could not be saved';
+								bootbox.alert(html);
+							}
+						});
+
+					});
+
 		    $('#form-theme').bootstrapValidator({
 		        message: 'This value is not valid',
 		        feedbackIcons: {

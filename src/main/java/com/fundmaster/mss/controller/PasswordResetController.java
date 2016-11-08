@@ -43,6 +43,8 @@ public class PasswordResetController extends BaseServlet implements Serializable
 	@EJB
 	CompanyBeanI companyBeanI;
 	@EJB
+	EmailsBeanI emailsBeanI;
+	@EJB
 	SocialBeanI socialBeanI;
 	@EJB
 	MenuBeanI menuBeanI;
@@ -135,7 +137,9 @@ public class PasswordResetController extends BaseServlet implements Serializable
 				String securityCode = UUID.randomUUID().toString();
 				usr.setSecurityCode(securityCode);
 				Company company = companyBeanI.find();
+				Emails emails = emailsBeanI.find();
 
+				String sender = emails.getDefaultEmail();
 				XiMember m = null;
 
 				if (usr.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
@@ -149,7 +153,7 @@ public class PasswordResetController extends BaseServlet implements Serializable
 				boolean status = false;
 
 				try {
-					status = apiEJB.sendEmail(m.getEmailAddress(),company.getEmail(), null, "Password Reset Instructions", "Dear " + usr.getUserProfile() + ", " +
+					status = apiEJB.sendEmail(m.getEmailAddress(),sender, null, "Password Reset Instructions", "Dear " + usr.getUserProfile() + ", " +
 
 							"You recently requested to change your password. " +
 							"Your security code is: " + securityCode +

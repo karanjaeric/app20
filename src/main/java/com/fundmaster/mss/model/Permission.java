@@ -124,6 +124,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.setup_company = setup_company;
 	}
 
+	public boolean isSetup_email() {
+		return setup_email;
+	}
+
+	public void setSetup_email(boolean setup_email) {
+		this.setup_email = setup_email;
+	}
+
 	public boolean isSetup_logo() {
 		return setup_logo;
 	}
@@ -420,7 +428,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	public Permission(long id, String profile, boolean setup, boolean content,
 			boolean schemes, boolean receipts, boolean payments,
 			boolean members, boolean operations, boolean media, boolean uac,
-			boolean analytics, boolean setup_company, boolean setup_logo,
+			boolean analytics, boolean setup_company, boolean setup_email, boolean setup_logo,
 			boolean setup_menu, boolean setup_social, boolean setup_theme,
 			boolean setup_banner, boolean setup_interest_rate,
 			boolean setup_other, boolean setup_contact_reason,
@@ -457,6 +465,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.uac = uac;
 		this.analytics = analytics;
 		this.setup_company = setup_company;
+		this.setup_email = setup_email;
 		this.setup_logo = setup_logo;
 		this.setup_menu = setup_menu;
 		this.setup_social = setup_social;
@@ -500,7 +509,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.audit_trail = audit_trail;
 	}
 
-	private boolean setup_company, setup_logo, setup_menu, setup_social, setup_theme, setup_banner, setup_interest_rate, setup_other, setup_contact_reason;
+	private boolean setup_company, setup_email, setup_logo, setup_menu, setup_social, setup_theme, setup_banner, setup_interest_rate, setup_other, setup_contact_reason;
 	
 	private boolean content_help, content_page;
 	

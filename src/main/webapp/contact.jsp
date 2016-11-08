@@ -15,7 +15,7 @@
 							<h3 class="text-center">${company.country.name}</h3>
 							<h3 class="text-center">Tel: ${company.telephone}</h3>
 							<h3 class="text-center">Fax: ${company.fax}</h3>			
-							<h3 class="text-center">Email: <a href="mailto:${company.email}">${company.email}</a></h3>
+							<h3 class="text-center">Email: <a href="mailto:${email.defaultEmail}">${email.defaultEmail}</a></h3>
 					</div>
 			</div>
 		</div>

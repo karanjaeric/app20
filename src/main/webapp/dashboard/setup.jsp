@@ -9,7 +9,7 @@
 			<tr><td>COMPANY NAME</td><td>${ company.name }</td></tr>
 			<tr><td>STREET ADDRESS</td><td>${ company.streetAddress }</td></tr>
 			<tr><td>TELEPHONE</td><td>${ company.telephone}</td></tr>
-			<tr><td>EMAIL ADDRESS</td><td>${ company.email }</td></tr>
+			<tr><td>EMAIL ADDRESS</td><td>${ email.defaultEmail }</td></tr>
 			<tr><td>FAX</td><td>${ company.fax }</td></tr>
 			
 		</table>

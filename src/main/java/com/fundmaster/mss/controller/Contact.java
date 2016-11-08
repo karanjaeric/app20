@@ -12,13 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.PageContent;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Theme;
+import com.fundmaster.mss.model.*;
+
 @WebServlet(name = "Contact", urlPatterns = {"/contact-us"})
 public class Contact extends BaseServlet implements Serializable {
 
@@ -40,6 +35,8 @@ public class Contact extends BaseServlet implements Serializable {
 	GenderBeanI genderBeanI;
 	@EJB
 	CompanyBeanI companyBeanI;
+	@EJB
+	EmailsBeanI emailsBeanI;
 	@EJB
 	SocialBeanI socialBeanI;
 	@EJB
@@ -66,6 +63,8 @@ public class Contact extends BaseServlet implements Serializable {
             throws ServletException, IOException {  
 		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
+		Emails email = emailsBeanI.find();
+		request.setAttribute("email", email);
 		Social social = socialBeanI.find();
 		request.setAttribute("social", social);
 		Menu menu = menuBeanI.find();

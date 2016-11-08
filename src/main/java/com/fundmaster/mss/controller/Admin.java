@@ -32,6 +32,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String REQUEST_ACTION = "ACTION";
     private static final String ADMIN_SWITCH_SCHEME = "SWITCH_SCHEME";
     private static final String ADMIN_COMPANY = "COMPANY";
+    private static final String ADMIN_EMAILS = "EMAILS";
     private static final String ADMIN_SCHEME_CONTRIBUTIONS = "SC";
     private static final String ADMIN_PROFILE_NAMES = "PROFILE_NAMES";
     private static final String ADMIN_PWD_RESET = "ADMIN_PWD_RESET";
@@ -98,6 +99,8 @@ public class Admin extends BaseServlet implements Serializable {
     MediaBeanI mediaBeanI;
     @EJB
     CompanyBeanI companyBeanI;
+    @EJB
+    EmailsBeanI emailsBeanI;
     @EJB
     SettingBeanI settingBeanI;
     @EJB
@@ -272,6 +275,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case ADMIN_COMPANY:
                 updateCompany(request, response, session);
+                break;
+            case ADMIN_EMAILS:
+                updateEmails(request, response, session);
                 break;
             case ADMIN_SCHEME_CONTRIBUTIONS:
                 getSchemeContributions(request, response);
@@ -511,15 +517,29 @@ public class Admin extends BaseServlet implements Serializable {
                 attachment = true;
             }
         }
+        String recipient = this.get(request, "recipient");
+        jLogger.i("Recipient: " + recipient);
         String subject = this.get(request, "subject") + " [" + this.get(request, "category") + "]";
         String message = this.get(request, "message");
-        Company company = companyBeanI.find();
+        Emails emails = emailsBeanI.find();
+        String sendTo = null;
+
+        if (recipient != null) {
+            if (recipient.equalsIgnoreCase("defaultEmail")) {
+                sendTo = emails.getDefaultEmail();
+            } else if (recipient.equalsIgnoreCase("marketingEmail")) {
+                sendTo = emails.getMarketingEmail();
+            } else if (recipient.equalsIgnoreCase("supportEmail")) {
+                sendTo = emails.getSupportEmail();
+            }
+        }
+        jLogger.i("Send to: " + sendTo);
         String senderId = this.getSessKey(request, Constants.PROFILE_ID);
         jLogger.i("SENDER ID ========================> " + senderId);
         XiMember mbr = apiEJB.getMemberDetails(senderId, null);
         String senderName = mbr.getName();
         jLogger.i("SENDER NAME ======================> " + senderName);
-        boolean status = apiEJB.sendEmail(company.getEmail(), this.getSessKey(request, Constants.USER), senderName, subject, message,
+        boolean status = apiEJB.sendEmail(sendTo, this.getSessKey(request, Constants.USER), senderName, subject, message,
                 this.getSessKey(request, Constants.SCHEME_ID), attachment, attachment_url);
         if (status) {
             this.respond(response, true, "The email was successfully sent", null);
@@ -986,8 +1006,8 @@ public class Admin extends BaseServlet implements Serializable {
         userBeanI.edit(u);
         XiMember m = apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID), null);
         try {
-            Company company = companyBeanI.find();
-            boolean status = apiEJB.sendEmail(m.getEmailAddress(), company.getEmail(), null, "Change Password Request",
+            Emails emails = emailsBeanI.find();
+            boolean status = apiEJB.sendEmail(m.getEmailAddress(), emails.getDefaultEmail(), null, "Change Password Request",
                     "Dear " + u.getUsername() + ", " + "You recently requested to change your password. "
                             + "Here is your security code:" + "" + securityCode
                             + "\nYou will require it to be able to change your password",
@@ -1321,6 +1341,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setProfile_names(this.get(request, "profile_names").equalsIgnoreCase("true"));
         perm.setSetup_banner(this.get(request, "setup_banner").equalsIgnoreCase("true"));
         perm.setSetup_company(this.get(request, "setup_company").equalsIgnoreCase("true"));
+        perm.setSetup_email(this.get(request, "setup_email").equalsIgnoreCase("true"));
         perm.setSetup_contact_reason(this.get(request, "setup_contact_reason").equalsIgnoreCase("true"));
         perm.setSetup_interest_rate(this.get(request, "setup_interest_rate").equalsIgnoreCase("true"));
         perm.setSetup_logo(this.get(request, "setup_logo").equalsIgnoreCase("true"));
@@ -1668,8 +1689,8 @@ public class Admin extends BaseServlet implements Serializable {
                 }
                 if (proceed) {
                     Setting settings = settingBeanI.find();
-                    Company company = companyBeanI.find();
-                    apiEJB.sendEmail(email_address, company.getEmail(), null, "MSS Portal Password Reset",
+                    Emails emails = emailsBeanI.find();
+                    apiEJB.sendEmail(email_address, emails.getDefaultEmail(), null, "MSS Portal Password Reset",
                             "Dear " + u.getUserProfile() + ",<br />"
                                     + "Your password has been reset on the FundMaster Xi Member Self Service Portal. Your new password is "
                                     + password + ".<br />Please click this <a href='" + settings.getPortalBaseURL()
@@ -1713,7 +1734,6 @@ public class Admin extends BaseServlet implements Serializable {
         Company company = new Company(helper.toLong(this.get(request, "company_id")),
                 this.get(request, "companyName"), this.get(request, "streetAddress"),
                 this.get(request, "telephone"), this.get(request, "fax"),
-                this.get(request, "emailAddress"), this.get(request, "email"),this.get(request, "marketingEmail"),
                 this.get(request, "city"), country, this.get(request, "geolocation"));
         if (companyBeanI.edit(company) != null) {
             audit(session, "Updated company details");
@@ -1721,6 +1741,20 @@ public class Admin extends BaseServlet implements Serializable {
         } else
             this.respond(response, false, "failed", null);
     }
+
+    private void updateEmails(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    /* Email Addresses Update Request */
+
+        Emails emails = new Emails(helper.toLong(this.get(request, "email_id")), this.get(request, "defaultEmail"),
+        this.get(request, "marketingEmail"), this.get(request, "supportEmail"));
+
+        if (emailsBeanI.edit(emails) != null) {
+            audit(session, "Updated Email Addresses");
+            this.respond(response, true, "success", null);
+        } else
+            this.respond(response, false, "failed", null);
+    }
+
     private void switchScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         session.setAttribute(Constants.SCHEME_ID, this.get(request, "schemeID"));
         this.respond(response, true, "success", null);

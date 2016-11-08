@@ -44,6 +44,8 @@ public class SignIn extends BaseServlet implements Serializable {
 	@EJB
 	CompanyBeanI companyBeanI;
 	@EJB
+	EmailsBeanI emailsBeanI;
+	@EJB
 	SocialBeanI socialBeanI;
 	@EJB
 	MenuBeanI menuBeanI;
@@ -97,6 +99,8 @@ public class SignIn extends BaseServlet implements Serializable {
 					
 					Company company = companyBeanI.find();
 					request.setAttribute("company", company);
+					Emails email = emailsBeanI.find();
+					request.setAttribute("email", email);
 					Social social = socialBeanI.find();
 					request.setAttribute("social", social);
 					Setting settings = settingBeanI.find();

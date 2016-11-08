@@ -43,6 +43,8 @@ public class MemberController extends BaseServlet implements Serializable {
 	@EJB
 	CompanyBeanI companyBeanI;
 	@EJB
+	EmailsBeanI emailsBeanI;
+	@EJB
 	SocialBeanI socialBeanI;
 	@EJB
 	MenuBeanI menuBeanI;
@@ -78,6 +80,8 @@ public class MemberController extends BaseServlet implements Serializable {
 					request.setAttribute("activityLogs", activityLogs);
 					Company company = companyBeanI.find();
 					request.setAttribute("company", company);
+					Emails email = emailsBeanI.find();
+					request.setAttribute("email", email);
 					request.setAttribute("username", this.getSessKey(request, Constants.USER));
 					request.setAttribute("path", "member");
 					
@@ -268,8 +272,8 @@ public class MemberController extends BaseServlet implements Serializable {
         if(m != null)
             session.setAttribute(Constants.PROFILE_ID,m.getId());
         try {
-            Company company = companyBeanI.find();
-            boolean status = apiEJB.sendEmail(m != null ? m.getEmailAddress() : null,company.getEmail(), null,"Change Password Request", "Dear " + u.getUsername() + ", " +
+			Emails emails = emailsBeanI.find();
+            boolean status = apiEJB.sendEmail(m != null ? m.getEmailAddress() : null,emails.getDefaultEmail(), null,"Change Password Request", "Dear " + u.getUsername() + ", " +
                     "You recently requested to change your password. " +
                     "Here is your security code:" +
                     "" + securityCode +

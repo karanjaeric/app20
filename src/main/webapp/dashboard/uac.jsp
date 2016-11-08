@@ -55,7 +55,7 @@ $(document).ready(function(){
     		$.ajax({
     	        url: $('#base_url').val() + 'admin',
     	        type: 'post',
-    	        data: {ACTION: 'SAVE_PERMISSION', profile: prof, setup_company: $('#setup_company').prop('checked'), setup_logo: $('#setup_logo').prop('checked'),
+    	        data: {ACTION: 'SAVE_PERMISSION', profile: prof, setup_company: $('#setup_company').prop('checked'), setup_email: $('#setup_email').prop('checked'), setup_logo: $('#setup_logo').prop('checked'),
 					setup_menu: $('#setup_menu').prop('checked'), setup_social: $('#setup_social').prop('checked'), setup_theme: $('#setup_theme').prop('checked'),
 					setup_banner: $('#setup_banner').prop('checked'), setup_interest_rate: $('#setup_interest_rate').prop('checked'), setup_other: $('#setup_other').prop('checked'),
 					setup_contact_reason: $('#setup_contact_reason').prop('checked'), member_edit: $('#member_edit').prop('checked'), member_view: $('#member_view').prop('checked'),

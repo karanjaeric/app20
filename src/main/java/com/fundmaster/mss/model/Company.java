@@ -35,13 +35,10 @@ public class Company extends GenericModel<Company> implements Serializable {
 	@Column (name = "fax", nullable = false)
 	private
 	String fax;
-	@Column (name = "email", nullable = false)
+	/*@Column (name = "email", nullable = false)
 	private
 	String email;
-	@Column (name = "marketingEmail", nullable = false)
-	private
-	String marketingEmail;
-	private String emailAddress;
+	private String emailAddress;*/
 	@Column (name = "city", nullable = false)
 	private
 	String city;
@@ -54,24 +51,22 @@ public class Company extends GenericModel<Company> implements Serializable {
 	public Company() {
 		// TODO Auto-generated constructor stub
 	}
-	public String getEmailAddress() {
+	/*public String getEmailAddress() {
 		return emailAddress;
 	}
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
-	}
+	}*/
 	public Company(Long id, String name, String streetAddress,
-			String telephone, String fax, String email, String emailAddress, String marketingEmail,
-			String city, Country country, String geolocation) {
+			String telephone, String fax, String city, Country country, String geolocation) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.streetAddress = streetAddress;
 		this.telephone = telephone;
 		this.fax = fax;
-		this.email = email;
-		this.emailAddress = emailAddress;
-		this.marketingEmail = marketingEmail;
+		/*this.email = email;
+		this.emailAddress = emailAddress;*/
 		this.city = city;
 		this.country = country;
 		this.geolocation = geolocation;
@@ -115,20 +110,12 @@ public class Company extends GenericModel<Company> implements Serializable {
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-	public String getEmail() {
+	/*public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getMarketingEmail() {
-		return marketingEmail;
-	}
-
-	public void setMarketingEmail(String marketingEmail) {
-		this.marketingEmail = marketingEmail;
-	}
+	}*/
 
 	public String getCity() {
 		return city;

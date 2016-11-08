@@ -26,6 +26,8 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 	@EJB
 	CompanyBeanI companyBeanI;
 	@EJB
+	EmailsBeanI emailsBeanI;
+	@EJB
 	SocialBeanI socialBeanI;
 	@EJB
 	MenuBeanI menuBeanI;
@@ -74,11 +76,14 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 				System.lineSeparator(); /*+ "Age: " + this.get(request, "yourAge")*/
 		jLogger.i("The message: " + message);
 		Company company = companyBeanI.find();
-		String senderId = company.getEmail();
+		Emails emails = emailsBeanI.find();
+		String recipient = emails.getMarketingEmail();
+		jLogger.i("Recipient: " + recipient);
+		String senderId = emails.getDefaultEmail();
 		jLogger.i("Sender email: " + senderId);
 		String senderName = company.getName();
 		jLogger.i("Sender name: " + senderName);
-		boolean status = apiEJB.sendEmail(company.getMarketingEmail(), senderId, senderName, subject, message,
+		boolean status = apiEJB.sendEmail(recipient, senderId, senderName, subject, message,
 				this.getSessKey(request, Constants.SCHEME_ID), false, null);
 		jLogger.i("Status is: " + status);
 
