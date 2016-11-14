@@ -17,6 +17,15 @@ public class AgentClient extends GenericModel<AgentClient> implements Serializab
     private String clientType;
     private String name;
     private String policyNo;
+    private String dateJoined;
+
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
 
     public String getPolicyNo() {
         return policyNo;
@@ -57,5 +66,6 @@ public class AgentClient extends GenericModel<AgentClient> implements Serializab
         this.clientType = clientType;
         this.name = name;
         this.policyNo = policyNo;
+        this.dateJoined = dateJoined;
     }
 }

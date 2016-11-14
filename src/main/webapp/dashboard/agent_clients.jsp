@@ -13,9 +13,9 @@
         </h3>
     </div>
     <table class="table table-responsive table-striped" id="search-results">
-        <tr><th>NAME</th><th>POLICY NUMBER</th><th>CLIENT TYPE</th></tr>
+        <tr><th>NAME</th><th>POLICY NUMBER</th><th>CLIENT TYPE</th><th>APPLICATION DATE</th></tr>
         <c:forEach var="client" items="${ clients }">
-            <tr><td>${client.name }</td><td>${client.policyNo }</td><td>${ client.clientType }</td></tr>
+            <tr><td>${client.name }</td><td>${client.policyNo }</td><td>${ client.clientType }</td><td>${ client.dateJoined }</td></tr>
         </c:forEach>
     </table>
     <ul class="pagination pull-right">

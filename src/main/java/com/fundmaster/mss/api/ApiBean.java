@@ -1375,6 +1375,7 @@ public class ApiBean implements ApiEJB {
                 agentClient.setClientType(receipt.get(Fields.CLIENT_TYPE).toString());
                 agentClient.setName(receipt.get(Fields.NAME).toString());
                 agentClient.setPolicyNo(receipt.get(Fields.POLICY_NO).toString());
+                agentClient.setDateJoined(receipt.get(Fields.DATE_JOINED).toString());
                 agentClients.add(agentClient);
             }
             return agentClients;
