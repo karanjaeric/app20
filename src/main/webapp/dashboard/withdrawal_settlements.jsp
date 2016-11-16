@@ -40,6 +40,7 @@
     <div class="col-md-12" id="ws-results">
 
     </div>
+    </div>
 
     <script type="text/javascript">
 

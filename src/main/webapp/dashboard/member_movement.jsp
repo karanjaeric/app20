@@ -49,20 +49,25 @@
                     if(json.success)
                     {
                         json = $.parseJSON(json.data);
-                        console.log(json);
+                        console.log("The json returned: " + json.toString());
 
                         var combo = "<select id=\"accperiod\" name=\"accperiod\" class=\"form-control\"><option>--Select Accounting Period--</option>";
                         $.each(json, function(key, value) {
+                            var row;
                             if(key == 'rows')
                             {
                                 for ( var i = 0; i < json.rows.length; i++) {
-                                    var row = json.rows[i];
+                                     row = json.rows[i];
                                     combo = combo + "<option>" + row['name'] + "</option>";
                                     array = json.rows;
+
+                                    console.log("Array is " + array.toString());
+
                                 }
                                 combo = combo + "</select>";
 
                             }
+
                         });
                         $('#divAccperiod').html(combo);
                     }
@@ -121,16 +126,21 @@
                 }
             });
 
-            var toDate = getArray($('#accperiod').val());
-            console.log("To Date: " + toDate);
-            var parts = toDate.split("-");
-            var year = parts[0];
-            console.log('the final year ' + year);
+                var toDate = $('#accperiod').val();
+                console.log("toDate is: " + toDate);
 
+                var ar = toDate.split("-");
+                console.log(ar);
+                var firstArr = ar[1];
+                console.log(firstArr+">>>>>>");
+                var ar2 = firstArr.split(",");
+                console.log(ar2);
+                var finalYear = ar2[ar2.length-1];
+                console.log("This is the Final Year "+ finalYear);
 
             var url =
                     $('#reportPath').val() +"members/Member Movement Report.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report.xdo&_xmode=3&_paramsdateTo=" +
-                    "&_paramsyear_txn=" + year+  "&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation + "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
+                    "&_paramsyear_txn=" + finalYear+  "&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation + "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
                     + $('#scheme_id').val() + "&_xt=Member%20Movement%20Report&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
             $("#mv-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
@@ -138,16 +148,5 @@
             stop_wait();
         });
     });
-
-
-    function getArray(val){
-        for ( var i = 0; i < array.length; i++) {
-            var val = array[i].accperiod;
-            if(val == val){
-                return array[i].toDate;
-            }
-        }
-        return array;
-    }
 
 </script>

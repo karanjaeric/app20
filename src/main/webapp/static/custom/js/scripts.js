@@ -292,6 +292,16 @@ $(document).ready(function(){
 
 	});
 
+	$('#receipt-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#receipt-main-li').addClass('active');
+
+		switch_page('RECEIPT_SUMMARY');
+
+	});
+
 	
 	$('#media-main-li').click(function(){
 		

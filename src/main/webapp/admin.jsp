@@ -105,6 +105,12 @@
 								class="fa fa-chevron-right"></i> FUND MOVEMENT</a></li>
 						</c:if>
 
+						<c:if test="${ permissions.receipt_summary == 'TRUE' }">
+						<li id="receipt-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-list-alt"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> RECEIPT SUMMARY</a></li>
+						</c:if>
+
 						<c:if test="${profile == 'AGENT' }">
 						<li id="commissions-main-li"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-briefcase"></i>&nbsp;<i
