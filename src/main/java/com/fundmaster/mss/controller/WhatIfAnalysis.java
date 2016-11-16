@@ -69,6 +69,7 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
 		String subject = "What-if-Analysis Calculator details";
 		jLogger.i("Subject: " + subject);
 		String message = "Hello," + System.lineSeparator() + "Here are the details from the calculator: " + System.lineSeparator() +
@@ -87,10 +88,13 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 				this.getSessKey(request, Constants.SCHEME_ID), false, null);
 		jLogger.i("Status is: " + status);
 
+		Setting settings = settingBeanI.find();
+		String formula = settings.getWhatIfAnalysisFormula();
+		jLogger.i("The formula is: " + formula);
 		this.respond(response, true, "", apiEJB.calculateWhatIfAnalysis(this.get(request, "yearsToProject"),
 				this.get(request, "contributions"), this.get(request, "rateOfReturn"), this.get(request, "salaryEscalationRate"),
 				this.get(request, "inflationRate"),this.get(request, "emailAddress"),this.get(request, "phoneNumber"),
-				this.get(request, "yourAge")));
+				this.get(request, "yourAge"), formula));
 
 
 	}

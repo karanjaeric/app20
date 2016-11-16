@@ -241,6 +241,13 @@
 							 			<option value="BOTH" ${ settings.sponsorOnboarding == 'BOTH' ? 'selected="selected"' : '' }>DETAILS POSTED TO BOTH PORTAL AND FUNDMASTER</option>
 							 </select>
 						</div>
+						<div class="form-group">
+							<label class="control-label" for="whatIfAnalysisFormula">What If Analysis Formula:</label>
+							<select name="whatIfAnalysisFormula" id="whatIfAnalysisFormula" class="form-control">
+								<option value="NORMAL_FORMULA" ${ settings.whatIfAnalysisFormula == 'NORMAL_FORMULA' ? 'selected="selected"' : '' }>NORMAL FORMULA</option>
+								<option value="CUSTOM_FORMULA" ${ settings.whatIfAnalysisFormula == 'CUSTOM_FORMULA' ? 'selected="selected"' : '' }>CUSTOM FORMULA</option>
+							</select>
+						</div>
 						<div class="form-group hide">
 							 <label class="control-label" for="loginField">Encrypt Settings:</label>
 							 <input type="checkbox" class="form-control" name="encrypt" id="encrypt" ${ settings.encrypt == 'TRUE' ? 'checked="checked"' : '' }/>
@@ -1303,7 +1310,12 @@
         		$.ajax({
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
-        	        data: {portalBaseURL: $('#portalBaseURL').val(), memberOnboarding: $('#memberOnboarding').val(), sponsorOnboarding: $('#sponsorOnboarding').val(), setting_id: $('#setting_id').val(), xiReportPath: $('#xiReportPath').val(), loginField: $('#loginField').val(), fundmasterXi: $('#fundmasterXi').val(), username: $('#xiUsername').val(), password: $('#xiPassword').val(), encrypt: $('#encrypt').prop('checked'), ACTION: 'SETTINGS', xiReportUsername: $('#xiReportUsername').val(), xiReportPassword: $('#xiReportPassword').val()},
+        	        data: {portalBaseURL: $('#portalBaseURL').val(), memberOnboarding: $('#memberOnboarding').val(),
+						sponsorOnboarding: $('#sponsorOnboarding').val(), setting_id: $('#setting_id').val(),
+						xiReportPath: $('#xiReportPath').val(), loginField: $('#loginField').val(),
+						whatIfAnalysisFormula: $('#whatIfAnalysisFormula').val(), fundmasterXi: $('#fundmasterXi').val(),
+						username: $('#xiUsername').val(), password: $('#xiPassword').val(), encrypt: $('#encrypt').prop('checked'),
+						ACTION: 'SETTINGS', xiReportUsername: $('#xiReportUsername').val(), xiReportPassword: $('#xiReportPassword').val()},
         	        dataType: 'json',
         	        success: function(json) {
         	            $('#' + btn).val('Done');

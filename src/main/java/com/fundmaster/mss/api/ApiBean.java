@@ -137,10 +137,21 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public JSONObject calculateWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate, String inflationRate, String email, String phone, String yourAge) {
+    public JSONObject calculateWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate,
+                                              String inflationRate, String email, String phone, String yourAge, String formula) {
+        if (rateOfReturn == null || rateOfReturn.isEmpty()) {
+            rateOfReturn = "1";
+        }
+        if (inflationRate == null || inflationRate.isEmpty()) {
+            inflationRate = "1";
+        }
+        if (inflationRate == null || inflationRate.isEmpty()) {
+            inflationRate = "1";
+        }
         JSONObject response;
         try {
-            response = URLPost(APICall.WHAT_IF_ANALYSIS + yearsToProject + "/" + contributions + "/" + rateOfReturn + "/" + salaryEscalationRate + "/" + inflationRate, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            response = URLPost(APICall.WHAT_IF_ANALYSIS + yearsToProject + "/" + contributions + "/" + rateOfReturn + "/"
+                    + salaryEscalationRate + "/" + inflationRate + "/" + formula, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
             if(response.getBoolean(Fields.SUCCESS))
             {
                 BenefitCalculation benefitCalculation=new BenefitCalculation();

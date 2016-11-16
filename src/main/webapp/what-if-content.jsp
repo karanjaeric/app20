@@ -19,6 +19,7 @@
 								placeholder="Phone Number">
 						</div>
 					</div>
+					<c:if test="${ settings.whatIfAnalysisFormula == 'NORMAL_FORMULA' }">
 					<div class="col-md-3">
 						<div class="form-group">
 									<label for="openingBalance" class="control-label">Opening Balance:</label> <input
@@ -26,6 +27,7 @@
 										placeholder="0.00">
 						</div>
 					</div>
+					</c:if>
 					<div class="col-md-3">
 						<div class="form-group">
 									<label for="monthlyContributions" class="control-label">Monthly Contributions:</label> <input
@@ -33,6 +35,7 @@
 										placeholder="0.00">
 						</div>
 					</div>
+					<c:if test="${ settings.whatIfAnalysisFormula == 'NORMAL_FORMULA' }">
 					<div class="col-md-3">
 						<div class="form-group">
 									<label for="rateOfReturn" class="control-label">Current Rate Of Return (Income):</label> <input
@@ -40,6 +43,7 @@
 										placeholder="0.00">
 						</div>
 					</div>
+					</c:if>
 					<div class="col-md-3">
 						<div class="form-group">
 									<label for="annualGrowthRate" class="control-label">Salary Annual Growth Rate:</label> <input
@@ -47,6 +51,7 @@
 										placeholder="0.00">
 						</div>
 					</div>
+					<c:if test="${ settings.whatIfAnalysisFormula == 'NORMAL_FORMULA' }">
 					<div class="col-md-3">
 						<div class="form-group">
 									<label for="inflationRate" class="control-label">Current Inflation Rate:</label> <input
@@ -54,6 +59,7 @@
 										placeholder="0.00">
 						</div>
 					</div>
+					</c:if>
 					<div class="col-md-3">
 						<div class="form-group">
 									<label for="yourAge" class="control-label">You Age:</label> <input
@@ -82,7 +88,7 @@
 		<h3>PROJECTED RESULTS</h3>
 		
 		<table class="table table-responsive table-striped results hide">
-			<tr><td class="right">PROJECTED ROR:</td><td class="left" id="projectedROR">0.00</td><td class="right">PROJECTED CONTRIBUTIONS:</td><td class="left" id="projectedContrs">0.00</td><td class="right">PROJECTED MONTHLY CONTRIBUTIONS:</td><td class="left" id="projectedMonthlyContrs">0.00</td></tr>
+			<tr><td class="right">PROJECTED ROR:</td><td class="left" id="projectedROR">0.00</td><td class="right">PROJECTED CONTRIBUTIONS:</td><td class="left" id="projectedContrs">0.00</td><td class="right">PROJECTED ANNUAL CONTRIBUTIONS:</td><td class="left" id="projectedMonthlyContrs">0.00</td></tr>
 		</table>
 </div>
 	<c:if test="${ showScript }">

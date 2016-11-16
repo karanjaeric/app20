@@ -867,6 +867,7 @@ public class Admin extends BaseServlet implements Serializable {
         }
         settings.setMemberOnboarding(this.get(request, "memberOnboarding"));
         settings.setSponsorOnboarding(this.get(request, "sponsorOnboarding"));
+        settings.setWhatIfAnalysisFormula(this.get(request, "whatIfAnalysisFormula"));
         settings.setEncrypt(this.get(request, "encrypt").equalsIgnoreCase("true"));
         if (settingBeanI.edit(settings) != null) {
             audit(session, "Updated other portal settings and configurations");

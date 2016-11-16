@@ -36,31 +36,11 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 	@Lob
 	@Column (name = "logo", columnDefinition = "LONGBLOB")
 	private Blob logo;
-	
-	//private String logo_path;
-	
-	/*@Column (columnDefinition = "longblob")
-	byte[] logo;*/
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    /*public byte[] getLogo() {
-        return logo;
-    }
-
-    public void setLogo(byte[] logo) {
-        this.logo = logo;
-    }*/
-
-    /*public String getLogo_path() {
-		return logo_path;
-	}
-
-	public void setLogo_path(String logo_path) {
-		this.logo_path = logo_path;
-	}*/
 
 	public Blob getLogo() {
 		return logo;
@@ -96,7 +76,15 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 	@Column (name = "xiReportPath", nullable = false)
 	private
 	String xiReportPath;
-	
+
+	public String getWhatIfAnalysisFormula() {
+		return whatIfAnalysisFormula;
+	}
+
+	public void setWhatIfAnalysisFormula(String whatIfAnalysisFormula) {
+		this.whatIfAnalysisFormula = whatIfAnalysisFormula;
+	}
+
 	public String getSponsorOnboarding() {
 		return sponsorOnboarding;
 	}
@@ -114,6 +102,7 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 	private String logoFile;
 	private String sponsorOnboarding;
 	private String memberOnboarding;
+	private String whatIfAnalysisFormula;
 	private String portalBaseURL;
 	public String getPortalBaseURL() {
 		return portalBaseURL;
