@@ -198,6 +198,7 @@ public class Helper {
         Ordinal ordinal11 = new Ordinal(Long.valueOf("11").longValue(), "PHONE", "Phone Number");
         Ordinal ordinal12 = new Ordinal(Long.valueOf("12").longValue(), "MEMBER_NO", "Member ID");
         Ordinal ordinal13 = new Ordinal(Long.valueOf("13").longValue(), "PIN", "PIN Number");
+        Ordinal ordinal14 = new Ordinal(Long.valueOf("14").longValue(), "PENSIONER_NO", "Pensioner Number");
         List<Ordinal> ordinals = new ArrayList<>();
         ordinals.add(ordinal);
         ordinals.add(ordinal2);
@@ -212,6 +213,7 @@ public class Helper {
         ordinals.add(ordinal11);
         ordinals.add(ordinal12);
         ordinals.add(ordinal13);
+        ordinals.add(ordinal14);
         return ordinals;
     }
 

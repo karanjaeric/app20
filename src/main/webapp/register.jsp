@@ -159,6 +159,64 @@
 							</div>
 	
 						</div>
+
+						  <div class="tab-pane" id="PENSIONER">
+							  <div class="row">
+
+								  <div class="modal-dialog large-modal">
+									  <div class="modal-content">
+										  <div class="modal-body">
+											  <h2 class="heading">
+												  <c:forEach var="pn" items="${profileNames }">
+													  <c:if test="${ pn.profile == 'PENSIONER'}">
+														  ${ pn.name }
+													  </c:if>
+												  </c:forEach> REGISTRATION</h2>
+											  <form class="form-horizontal" method="post" id="form-pensioner">
+												  <fieldset>
+													  <div class="form-group">
+														  <c:forEach var="field" items="${loginFields}">
+															  <c:choose>
+																  <c:when test="${field.profile == 'PENSIONER' }">
+																	  <label for="pensionerIdNumber" class="control-label">${ field.ordinal }:</label>
+																	  <input type="text" name="pensionerIdNumber" class="form-control input-sm"
+																			 id="pensionerIdNumber" placeholder="${ field.ordinal}">
+																  </c:when>
+															  </c:choose>
+														  </c:forEach>
+													  </div>
+													  <div class="form-group">
+														  <label for="pensionerEmail" class="control-label">Current Email Address:</label>
+														  <input type="text" name="pensionerEmail" class="form-control input-sm"
+																 id="pensionerEmail" placeholder="Enter Current Email">
+													  </div>
+													  <div class="form-group">
+														  <label for="pensionerPassword" class="control-label">Password:</label>
+														  <input type="password" name="pensionerPassword" class="form-control input-sm"
+																 id="pensionerPassword" placeholder="Enter Password">
+													  </div>
+													  <div class="form-group">
+														  <label for="pensionerConfirmPassword" class="control-label">Confirm Password:</label>
+														  <input type="password" name="pensionerConfirmPassword" class="form-control input-sm"
+																 id="pensionerConfirmPassword" placeholder="Confirm Password">
+													  </div>
+													  <div class="col-md-6 CaptchaImage" id="pensionerCaptchaImage">
+														  <img src="<%=request.getContextPath()%>/captcha" alt="captcha" />
+													  </div>
+													  <div class="col-md-6 form-group">
+														  <label class="control-label">Enter the text to your left here</label>
+														  <input type="text" class="form-control" name="pensionerCaptchaChars" id="pensionerCaptchaChars" />
+													  </div>
+													  <button class="btn btn-warning btn-block" >REGISTER NOW</button>
+												  </fieldset>
+
+											  </form>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+
 			            <div class="tab-pane" id="SPONSOR">
 				            <div class="row">
 							
@@ -505,57 +563,6 @@
 													<div class="col-md-6 form-group">
 														<label class="control-label">Enter the text to your left here</label>
 														<input type="text" class="form-control" name="fmCaptchaChars" id="fmCaptchaChars" />
-													</div>
-													<button class="btn btn-warning btn-block" >REGISTER NOW</button>
-												</fieldset>
-													
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="tab-pane" id="PENSIONER">						
-							<div class="row">
-						
-								<div class="modal-dialog large-modal">
-									<div class="modal-content">
-										<div class="modal-body">
-											<h2 class="heading">
-													<c:forEach var="pn" items="${profileNames }">
-							            				<c:if test="${ pn.profile == 'PENSIONER'}">
-							            					${ pn.name }
-							            				</c:if>
-							            			</c:forEach> REGISTRATION</h2>
-											<form class="form-horizontal" method="post" id="form-pensioner">
-												<fieldset>
-													<div class="form-group">
-														<c:forEach var="field" items="${loginFields}">
-															<c:choose>
-																<c:when test="${field.profile == 'PENSIONER' }">
-																	<label for="pensionerIdNumber" class="control-label">${ field.ordinal }:</label>
-																	<input type="text" name="pensionerIdNumber" class="form-control input-sm"
-																		id="pensionerIdNumber" placeholder="${ field.ordinal}">
-																</c:when>
-															</c:choose>
-														</c:forEach>
-													</div>
-													<div class="form-group">
-														<label for="pensionerPassword" class="control-label">Password:</label>
-														<input type="password" name="pensionerPassword" class="form-control input-sm"
-															id="pensionerPassword" placeholder="Enter Password">
-													</div>
-													<div class="form-group">
-														<label for="pensionerConfirmPassword" class="control-label">Confirm Password:</label>
-														<input type="password" name="pensionerConfirmPassword" class="form-control input-sm"
-															id="pensionerConfirmPassword" placeholder="Confirm Password">
-													</div>
-													<div class="col-md-6 CaptchaImage" id="pensionerCaptchaImage">
-														<img src="<%=request.getContextPath()%>/captcha" alt="captcha" />
-													</div>
-													<div class="col-md-6 form-group">
-														<label class="control-label">Enter the text to your left here</label>
-														<input type="text" class="form-control" name="pensionerCaptchaChars" id="pensionerCaptchaChars" />
 													</div>
 													<button class="btn btn-warning btn-block" >REGISTER NOW</button>
 												</fieldset>

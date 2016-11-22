@@ -951,6 +951,9 @@ public class ApiBean implements ApiEJB {
         if (ordinal.equals("TAX_NUMBER")) {
             ordinal = "PIN";
         }
+        if (ordinal.isEmpty()){
+            ordinal = "";
+        }
         jLogger.i("Now ordinal >>>>>>>>>>>> " + ordinal + " <<<<<<<<<<<<<");
         JSONObject response;
         try {
@@ -961,7 +964,11 @@ public class ApiBean implements ApiEJB {
             XiMember xiMember = new XiMember();
             xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
             xiMember.setProfile(response.getString(Fields.PROFILE));
-            xiMember.setEmailAddress(response.getString(Fields.EMAIL));
+            if (response.getString(Fields.EMAIL) == null || response.getString(Fields.EMAIL).isEmpty()) {
+                xiMember.setEmailAddress("");
+            } else {
+                xiMember.setEmailAddress(response.getString(Fields.EMAIL));
+            }
             Long Scheme_id = helper.toLong(response.get(Fields.SCHEME_ID));
             xiMember.setSchemeId(Long.toString(Scheme_id));
             return xiMember;

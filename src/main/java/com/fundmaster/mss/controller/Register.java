@@ -150,6 +150,7 @@ public class Register extends BaseServlet implements Serializable {
             else if (this.get(request, "type").equals("EXISTING")) {
 
                 PasswordPolicy policy = passwordPolicyBeanI.find();
+                jLogger.i(" >>>>>>>>>>>> The idnumber is: " + this.get(request, "idNumber") + " <<<<<<<<<<<<<<<");
                 XiMember member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
                     if (member != null && member.getId() > 0) {
@@ -157,7 +158,15 @@ public class Register extends BaseServlet implements Serializable {
                             User u = new User();
                             u.setProfileID(member.getId());
                             u.setUserProfile(member.getProfile());
-                            u.setUsername(this.get(request, "idNumber"));
+                            if (member.getProfile().equalsIgnoreCase("PENSIONER")){
+                                String usr = this.get(request, "idNumber");
+                                jLogger.i("The idnumber before replace: " + usr);
+                                usr = usr.replaceAll("-","/");
+                                jLogger.i("The idnumber after replace: " + usr);
+                                u.setUsername(usr);
+                            } else {
+                                u.setUsername(this.get(request, "idNumber"));
+                            }
                             u.setPassword(helper.hash(this.get(request, "password")));
                             Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
                             u.setPassword_expiry(password_expiry);
@@ -168,13 +177,21 @@ public class Register extends BaseServlet implements Serializable {
                             String schemeId = null;
                             boolean proceed;
 
-                            if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+                            if (u.getUserProfile().equals(Constants.PENSIONER)){
+                                email_address = this.get(request, "pensionerEmail");
+                                jLogger.i("Pensioner email: " + email_address);
+                                proceed = helper.isEmailAddress(email_address);
+                                jLogger.i("Proceed is " + proceed);
+                            }
+
+                            else if(u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 email_address = m.getEmailAddress();
                                 schemeId = member.getSchemeId();
                                 proceed = helper.isEmailAddress(email_address);
                             }
                             else {
+                                jLogger.i("I'm hoping haijaingia hapa");
                                     member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
                                     if (member != null) {
@@ -192,7 +209,7 @@ public class Register extends BaseServlet implements Serializable {
                                         proceed = false;
 
                             }
-                            System.out.println("Email " + email_address);
+                            jLogger.i("The email is: " + email_address);
                             if (proceed) {
                                 System.out.println("Trying to send mail");
                                 Company company = companyBeanI.find();
