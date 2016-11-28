@@ -443,6 +443,27 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public XiPensioner getPensionerDetails(String pensionerId, String schemeId) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_PENSIONER_DETAILS + pensionerId);
+            jLogger.i("Pensioner details respone >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                JSONArray jsonArray = (JSONArray) response.get(Constants.ROWS);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                return this.xiPensionerFromJson(jsonObject);
+            }
+            else {
+                return null;
+            }
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public JSONObject searchProfilesJSON(String search, String identifier, String profile, String schemeID, int start, int end) {
         try {
             return URLPost(APICall.SEARCH_FOR_MEMBER_DETAILS + identifier + "/" + search + "/" + profile + "/" + schemeID + "/" + start + "/" + end, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
@@ -1326,6 +1347,48 @@ public class ApiBean implements ApiEJB {
         }
         return xiMember;
     }
+
+    private XiPensioner xiPensionerFromJson(JSONObject jsonObject)
+    {
+
+        XiPensioner xiPensioner = new XiPensioner();
+        try {
+            xiPensioner.setSchemeId(jsonObject.getString(Fields.SCHEME_ID));
+            xiPensioner.setId(jsonObject.getLong(Fields.ID));
+            xiPensioner.setMemberNo(jsonObject.getString(Fields.MEMBER_NO));
+            xiPensioner.setPensionFrequency(jsonObject.getString(Fields.FREQUENCY));
+            xiPensioner.setName(jsonObject.getString(Fields.NAME));
+            xiPensioner.setIdNo(jsonObject.getString(Fields.ID_NO));
+            xiPensioner.setDob(jsonObject.getString(Fields.DOB));
+            xiPensioner.setGender(jsonObject.getString(Fields.GENDER));
+            xiPensioner.setPurchasePrice(jsonObject.getString(Fields.PURCHASE_PRICE));
+            xiPensioner.setPostalAddress(jsonObject.getString(Fields.POSTAL_ADDRESS));
+            xiPensioner.setTown(jsonObject.getString(Fields.TOWN));
+            xiPensioner.setPartnerNumber(jsonObject.getString(Fields.PARTNER_NUMBER));
+            xiPensioner.setGuaranteedPeriod(jsonObject.getString(Fields.GUARANTEED_PERIOD));
+            xiPensioner.setPensionStatus(jsonObject.getString(Fields.PENSION_STATUS));
+            xiPensioner.setPensionStartDate(jsonObject.getString(Fields.PENSION_START_DATE));
+            xiPensioner.setPensionStopDate(jsonObject.getString(Fields.PENSION_STOP_DATE));
+            xiPensioner.setPayType(jsonObject.getString(Fields.PAY_TYPE));
+            xiPensioner.setMonthlyPension(jsonObject.getString(Fields.MONTHLY_PENSION));
+            xiPensioner.setMonthlyPension2(jsonObject.getString(Fields.MONTHLY_PENSION2));
+            xiPensioner.setTotalPension(jsonObject.getString(Fields.TOTAL_PENSION));
+            xiPensioner.setAlive(jsonObject.getString(Fields.ALIVE));
+            xiPensioner.setCountry(jsonObject.getString(Fields.COUNTRY));
+            xiPensioner.setDateLastPaid(jsonObject.getString(Fields.DATE_LAST_PAID));
+            xiPensioner.setAccountName(jsonObject.getString(Fields.ACC_NAME));
+            xiPensioner.setAccountNumber(jsonObject.getString(Fields.ACC_NUMBER));
+            xiPensioner.setPensionerType(jsonObject.getString(Fields.PENSIONER_TYPE));
+            xiPensioner.setBranch(jsonObject.getString(Fields.BRANCH));
+            xiPensioner.setCellPhone(jsonObject.getString(Fields.CELL_PHONE));
+            xiPensioner.setMemberId(jsonObject.getString(Fields.MEMBER_ID));
+
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception extracting member" + je.getMessage());
+        }
+        return xiPensioner;
+    }
+
     private List<SchemeReceipt> schemeReceiptsFromJSON(JSONObject response)
     {
         List<SchemeReceipt> schemeReceipts = new ArrayList<>();

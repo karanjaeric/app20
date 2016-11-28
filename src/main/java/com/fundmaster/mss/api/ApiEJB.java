@@ -42,6 +42,7 @@ public interface ApiEJB {
     List<XiMember> searchProfiles(String search, String identifier, String profile, String schemeID, int start, int end);
     JSONObject searchProfilesJSON(String search, String identifier, String profile, String schemeID, int start, int end);
     XiMember getMemberDetails(String memberID, String schemeId);
+    XiPensioner getPensionerDetails(String pensionerId, String schemeId);
     List<XiMember> getMemberListing(String profileID, String profile, String schemeID, int start, int size);
     JSONObject listMembers(String schemeID, String profileID);
     List<SchemeReceipt> getSchemeReceipts(String schemeID, int start, int count);

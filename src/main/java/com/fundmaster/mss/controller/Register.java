@@ -191,7 +191,6 @@ public class Register extends BaseServlet implements Serializable {
                                 proceed = helper.isEmailAddress(email_address);
                             }
                             else {
-                                jLogger.i("I'm hoping haijaingia hapa");
                                     member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
                                     if (member != null) {

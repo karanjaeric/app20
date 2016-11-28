@@ -76,12 +76,19 @@ public class SignIn extends BaseServlet implements Serializable {
 			if(session != null)
 			{
 				try {
-					if((session.getAttribute(Constants.LOGIN).equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE) || helper.isManager(request))))
+					if((session.getAttribute(Constants.LOGIN).equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)
+
+							|| helper.isManager(request))))
 					{
 						response.sendRedirect("member");
 						proceed = false;
 					}
-					else
+					else if ((session.getAttribute(Constants.LOGIN).equals(true) && this.getSessKey(request, Constants.U_PROFILE).equals(Constants.PENSIONER)))
+					{
+						response.sendRedirect("pensioner");
+						proceed = false;
+
+					} else
 						proceed = true;
 				} catch (NullPointerException npe) {
 					
@@ -165,6 +172,41 @@ public class SignIn extends BaseServlet implements Serializable {
 
 								
 							}
+					}
+					else if(u.getUserProfile().equals(Constants.PENSIONER)) {
+						String usrname = u.getUsername();
+						jLogger.i("Usrname is " + usrname );
+						usrname = usrname.replaceAll("/","-");
+						jLogger.i("Usrname after replace is " + usrname );
+						XiMember member = apiEJB.memberExists(u.getUserProfile(), usrname);
+						if(member != null && member.getId() > 0)
+						{
+							session.setAttribute(Constants.USER, u.getUsername());
+							session.setAttribute(Constants.UID, u.getId());
+							session.setAttribute(Constants.PROFILE_ID, member.getId());
+							session.setAttribute(Constants.LOGIN, true);
+							session.setAttribute(Constants.U_PROFILE, member.getProfile());
+							session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
+
+							resetAttempt(this.get(request, "username"));
+							logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
+							SchemeMemberManager smm = schemeManagerBeanI.findByUserID(u.getId());
+							String link = "pensioner";
+							if(smm != null)
+							{
+								session.setAttribute(Constants.MANAGER_PROFILE, Constants.MANAGER);
+								link = "admin";
+							}
+							this.respond(response, true, "", new JSONObject().put("link", link));
+						}
+						else
+						{
+							logActivity(Constants.ML, "login attempt", "0", null, null);
+
+							this.respond(response, false, "Login Failed!<br />Sorry, but we could not establish your existence in Xi", null);
+
+
+						}
 					}
 					else
 					{

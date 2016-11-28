@@ -37,6 +37,7 @@ public class APICall {
     public static final String SCHEME_GET_REASONS_FOR_EXIT = "scheme/getreasonsforexit/";
     public static final String SEARCH_FOR_MEMBER_DETAILS = "searchForMemberDetails/";
     public static final String GET_MEMBER_DETAILS = "getmemberdetails/";
+    public static final String GET_PENSIONER_DETAILS = "getpensionerdetails/";
     public static final String GET_MEMBER_ID_FROM_MAIL = "getmemberIdfromMail/";
     public static final String GET_MEMBER_LISTING = "getmemberlisting/";
     public static final String MEMBER_STATISTICS_STATUS_DISTRIBUTION = "member/statistics/statusdistribution/";

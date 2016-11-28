@@ -22,6 +22,7 @@ public class Fields {
     public static final String MONTH = "month";
     public static final String TOTAL = "total";
     public static final String MEMBER_NO = "memberNo";
+    public static final String FREQUENCY = "freq";
     public static final String RELATIONSHIP = "relationship";
     public static final String CATEGORY = "category";
     public static final String SURNAME = "surname";
@@ -29,6 +30,7 @@ public class Fields {
     public static final String OTHERNAMES = "othernames";
     public static final String DOB = "dob";
     public static final String GENDER = "gender";
+    public static final String PURCHASE_PRICE = "purchasePrice";
     public static final String MONTHLY_ENTITLEMENT = "monthlyEntitlement";
     public static final String LUMPSUM_ENTITLEMENT = "lumpsumEntitlement";
     public static final String ID_NO = "idNo";
@@ -68,7 +70,21 @@ public class Fields {
     public static final String TERMINATE_COVER = "terminateCover";
     public static final String STAFF_NO = "staffNo";
     public static final String POLICY_NO = "policyNo";
+    public static final String PAY_TYPE = "payType";
+    public static final String BRANCH = "branch";
     public static final String PARTNER_NUMBER = "partnerNumber";
+    public static final String PENSION_STATUS = "pensionStatus";
+    public static final String PENSIONER_TYPE = "pensionerType";
+    public static final String PENSION_START_DATE = "pensionStartDate";
+    public static final String PENSION_STOP_DATE = "pensionStopDate";
+    public static final String MONTHLY_PENSION = "monthlyPension";
+    public static final String MONTHLY_PENSION2 = "monthlyPension2";
+    public static final String TOTAL_PENSION = "pension";
+    public static final String DATE_LAST_PAID = "dateLastPaid";
+    public static final String ALIVE = "alive";
+    public static final String ACC_NAME = "accountName";
+    public static final String ACC_NUMBER = "accountNo";
+    public static final String GUARANTEED_PERIOD = "guaranteedPeriod";
     public static final String PARTYREFNO = "partyrefno";
     public static final String MEMBERSHIP_NO = "membershipNo";
     public static final String MBIO_ID = "mbio_id";

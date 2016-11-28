@@ -153,34 +153,49 @@ public class Dashboard extends BaseServlet implements Serializable {
                     break;
             }
         }
-        if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE) || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
+         if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)
+                 || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
+             switch (action) {
+                 case Actions.MEMBER_PERSONAL_INFORMATION:
+                     showMemberPersonalInformation(request, response, session);
+                     break;
+                 case Actions.MEMBER_CONTRIBUTION_HISTORY:
+                     showMemberContributionHistory(request, response, session);
+                     break;
+                 case Actions.MEMBER_STATEMENT_OF_ACCOUNT:
+                     showMemberStatementOfAccount(request, response, session);
+
+                     break;
+                 case Actions.MEMBER_BENEFIT_PROJECTIONS:
+                     showMemberBenefitProjections(request, response, session);
+                     break;
+                 case Actions.MEMBER_MEDIA_FILES:
+                     showMemberMedia(request, response, session);
+                     break;
+                 case Actions.MEMBER_CLAIMS:
+                     showMemberClaims(request, response, session);
+                     break;
+                 case Actions.MEMBER_WHAT_IF_ANALYSIS:
+                     showWhatIfAnalysis(request, response, session);
+
+                     break;
+                 case Actions.MEMBER_BALANCE_HISTORY:
+                     showMemberBalanceHistory(request, response, session);
+
+                     break;
+             }
+         }
+        if(session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.PENSIONER)
+                || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
+
+            jLogger.i("Good, we here!!");
+
             switch (action) {
-                case Actions.MEMBER_PERSONAL_INFORMATION:
-                    showMemberPersonalInformation(request, response, session);
+                case Actions.PENSIONER_PERSONAL_INFORMATION:
+                    showPensionerInformation(request, response, session);
                     break;
-                case Actions.MEMBER_CONTRIBUTION_HISTORY:
-                    showMemberContributionHistory(request, response, session);
-                    break;
-                case Actions.MEMBER_STATEMENT_OF_ACCOUNT:
-                    showMemberStatementOfAccount(request, response, session);
-
-                    break;
-                case Actions.MEMBER_BENEFIT_PROJECTIONS:
-                    showMemberBenefitProjections(request, response, session);
-                    break;
-                case Actions.MEMBER_MEDIA_FILES:
-                    showMemberMedia(request, response, session);
-                    break;
-                case Actions.MEMBER_CLAIMS:
-                    showMemberClaims(request, response, session);
-                    break;
-                case Actions.MEMBER_WHAT_IF_ANALYSIS:
-                    showWhatIfAnalysis(request, response, session);
-
-                    break;
-                case Actions.MEMBER_BALANCE_HISTORY:
-                    showMemberBalanceHistory(request, response, session);
-
+                case Actions.PENSION_DETAILS:
+                    showPensionDetails(request, response, session);
                     break;
             }
         }
@@ -518,6 +533,82 @@ SocialBeanI socialBeanI;
         logActivity("MEMBER PERSONAL INFORMATION", "Viewed editable member personal information", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed  editable  member personal information");
         request.getRequestDispatcher("member/personal_information.jsp").forward(request, response);
+    }
+
+    private void showPensionerInformation(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        jLogger.i(">>>>>>>>>> Into the switch <<<<<<<<<<<<<");
+        List<Country> countries = countryBeanI.find();
+        request.setAttribute("countries", countries);
+        List<Gender> genders = genderBeanI.find();
+        request.setAttribute("genders", genders);
+        List<MaritalStatus> marital_statuses = maritalStatusBeanI.find();
+        request.setAttribute("maritalStatuses", marital_statuses);
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Social social = socialBeanI.find();
+        request.setAttribute("social", social);
+        List<Sector> sectors = sectorBeanI.find();
+        request.setAttribute("sectors", sectors);
+        List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
+        request.setAttribute("schemes", schemes);
+
+        XiPensioner p;
+        String pensioner_id;
+        pensioner_id = this.get(request, "pensionerID");
+        if (pensioner_id == null || pensioner_id.isEmpty())
+            pensioner_id = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("Pensioner ID is: " + pensioner_id);
+        p = apiEJB.getPensionerDetails(pensioner_id, null);
+        request.setAttribute("pensioner", p);
+        jLogger.i("Pensioner Id found is " + p.getId());
+
+        String memberId = p.getMemberId();
+        jLogger.i("Member id: " + memberId);
+        request.setAttribute("memberId", memberId);
+        jLogger.i(" Are we on the right track????? ");
+        List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(memberId);
+        jLogger.i(" Are we on the right track 2 ????? ");
+        request.setAttribute("beneficiaries", beneficiaries);
+
+
+        logActivity("PENSIONER PERSONAL INFORMATION", "Viewed editable pensioner personal information", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed  editable  pensioner personal information");
+        request.getRequestDispatcher("pensioner/personal_info.jsp").forward(request, response);
+    }
+
+    private void showPensionDetails(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Social social = socialBeanI.find();
+        request.setAttribute("social", social);
+        List<Sector> sectors = sectorBeanI.find();
+        request.setAttribute("sectors", sectors);
+        List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
+        request.setAttribute("schemes", schemes);
+
+        XiPensioner p;
+        String pensioner_id;
+        pensioner_id = this.get(request, "pensionerID");
+        if (pensioner_id == null || pensioner_id.isEmpty())
+            pensioner_id = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("Pensioner ID is: " + pensioner_id);
+
+        p = apiEJB.getPensionerDetails(pensioner_id, null);
+        request.setAttribute("pensioner", p);
+        jLogger.i("Pensioner Id found is " + p.getId());
+
+        String memberId = p.getMemberId();
+        jLogger.i("Member id: " + memberId);
+        request.setAttribute("memberId", memberId);
+        jLogger.i(" Are we on the right track????? ");
+        List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(memberId);
+        jLogger.i(" Are we on the right track 2 ????? ");
+        request.setAttribute("beneficiaries", beneficiaries);
+
+
+        logActivity("PENSIONER DETAILS", "Viewed pension details", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed  pension details");
+        request.getRequestDispatcher("pensioner/pension_details.jsp").forward(request, response);
     }
 
     private void showAnalytics(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {

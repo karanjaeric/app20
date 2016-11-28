@@ -10,20 +10,15 @@
 
 				<form class="register-form" action="<%=request.getContextPath()%>/sign-in" method="post" id="form-sign-in">
 					<fieldset>
-						<legend class="text-center">Please Login To Access Your
-							Account</legend>
+						<legend class="text-center">Please Login To Access Your Account</legend>
 						<img class="profile-img-card" src="static/images/avatar_2x.png">
+
 						<div class="form-group">
-						<c:forEach var="field" items="${loginFields }">
-							<c:choose>
-								<c:when test="${field.profile == 'MEMBER' }">
-									<label for="username" class="control-label">${ field.ordinal }:</label>
-									<input type="text" name="username" class="form-control input-sm"
-										id="username" placeholder="${ field.ordinal}">
-								</c:when>
-							</c:choose>
-						</c:forEach>
+							<label class="control-label">Username</label> <input
+								class="form-control" type="text"
+								placeholder="Username" name="username" id="username">
 						</div>
+
 						<div class="form-group">
 							<label class="control-label">Password</label> <input
 								class="form-control" type="password" placeholder="Password"

@@ -407,6 +407,14 @@ $(document).ready(function(){
 		window.location.href = $('#base_url').val() + "member";
 		
 	});
+
+	$('#pensioner-dashboard-li').click(function(){
+
+		start_wait();
+
+		window.location.href = $('#base_url').val() + "pensioner";
+
+	});
 	
 	$('#personal-information-li').click(function(){
 		
@@ -415,6 +423,24 @@ $(document).ready(function(){
 		$('#personal-information-li').addClass('active');
 		
 		m_switch("PI");
+	});
+
+	$('#pensioner-information-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#pensioner-information-li').addClass('active');
+
+		m_switch("PENSIONER_INFO");
+	});
+
+	$('#pension-details-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#pension-details-li').addClass('active');
+
+		m_switch("PENSION_DETAILS");
 	});
 	
 

@@ -13,10 +13,13 @@ public class Actions {
     public static final String AP = "AP";
     public static final String CB = "CB";
     public static final String CURR = "CURR";
+    public static final String BENEFICIARY = "BENEFICIARY";
     public static final String BD = "BD";
     public static final String CI = "CI";
     public static final String AI = "AI";
     public static final String MEMBER_PERSONAL_INFORMATION = "PI";
+    public static final String PENSIONER_PERSONAL_INFORMATION = "PENSIONER_INFO";
+    public static final String PENSION_DETAILS = "PENSION_DETAILS";
     public static final String MEMBER_CONTRIBUTION_HISTORY = "CH";
     public static final String MEMBER_STATEMENT_OF_ACCOUNT = "SA";
     public static final String MEMBER_BENEFIT_PROJECTIONS = "BP";

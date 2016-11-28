@@ -70,7 +70,8 @@ public class MemberController extends BaseServlet implements Serializable {
 		try {
 			if(session != null)
 			{
-				if(!(session.getAttribute(Constants.LOGIN).equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE) || helper.isManager(request))))
+				if(!(session.getAttribute(Constants.LOGIN).equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)
+						|| helper.isManager(request))))
 				{
 					response.sendRedirect(getServletContext().getContextPath() + "/sign-in");
 				}

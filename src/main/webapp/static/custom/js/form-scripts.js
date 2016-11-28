@@ -774,7 +774,7 @@ $(document)
 																		window.location.href = $(
 																				'#base_url')
 																				.val()
-																				+ 'admin';
+																				+ 'sign-in';
 																	}, 5000);
 														}
 														bootbox
