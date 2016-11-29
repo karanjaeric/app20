@@ -185,11 +185,7 @@
 															  </c:choose>
 														  </c:forEach>
 													  </div>
-													  <div class="form-group">
-														  <label for="pensionerEmail" class="control-label">Current Email Address:</label>
-														  <input type="text" name="pensionerEmail" class="form-control input-sm"
-																 id="pensionerEmail" placeholder="Enter Current Email">
-													  </div>
+
 													  <div class="form-group">
 														  <label for="pensionerPassword" class="control-label">Password:</label>
 														  <input type="password" name="pensionerPassword" class="form-control input-sm"

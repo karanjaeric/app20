@@ -1382,6 +1382,7 @@ public class ApiBean implements ApiEJB {
             xiPensioner.setBranch(jsonObject.getString(Fields.BRANCH));
             xiPensioner.setCellPhone(jsonObject.getString(Fields.CELL_PHONE));
             xiPensioner.setMemberId(jsonObject.getString(Fields.MEMBER_ID));
+            xiPensioner.setEmail(jsonObject.getString(Fields.EMAIL));
 
         } catch (JSONException je) {
             jLogger.e("We have a json exception extracting member" + je.getMessage());

@@ -158,15 +158,7 @@ public class Register extends BaseServlet implements Serializable {
                             User u = new User();
                             u.setProfileID(member.getId());
                             u.setUserProfile(member.getProfile());
-                            if (member.getProfile().equalsIgnoreCase("PENSIONER")){
-                                String usr = this.get(request, "idNumber");
-                                jLogger.i("The idnumber before replace: " + usr);
-                                usr = usr.replaceAll("-","/");
-                                jLogger.i("The idnumber after replace: " + usr);
-                                u.setUsername(usr);
-                            } else {
-                                u.setUsername(this.get(request, "idNumber"));
-                            }
+                            u.setUsername(this.get(request, "idNumber"));
                             u.setPassword(helper.hash(this.get(request, "password")));
                             Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
                             u.setPassword_expiry(password_expiry);
@@ -178,10 +170,14 @@ public class Register extends BaseServlet implements Serializable {
                             boolean proceed;
 
                             if (u.getUserProfile().equals(Constants.PENSIONER)){
-                                email_address = this.get(request, "pensionerEmail");
+                                /*email_address = this.get(request, "pensionerEmail");
                                 jLogger.i("Pensioner email: " + email_address);
                                 proceed = helper.isEmailAddress(email_address);
-                                jLogger.i("Proceed is " + proceed);
+                                jLogger.i("Proceed is " + proceed);*/
+                                XiPensioner p = apiEJB.getPensionerDetails(u.getProfileID().toString(), null);
+                                email_address = p.getEmail();
+                                jLogger.i("Pensioner email: " + email_address);
+                                proceed = helper.isEmailAddress(email_address);
                             }
 
                             else if(u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {

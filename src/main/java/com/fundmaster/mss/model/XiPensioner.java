@@ -17,6 +17,7 @@ public class XiPensioner extends GenericModel<XiPensioner> implements Serializab
     private String pensionerNo;
     private String pensionFrequency;
     private String name;
+    private String email;
     private String tax;
     private String memberNo;
     private String memberId;
@@ -392,6 +393,14 @@ public class XiPensioner extends GenericModel<XiPensioner> implements Serializab
         this.memberId = memberId;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public XiPensioner(Long id, String pensionerNo, String pensionFrequency, String name, String tax, String memberNo,
                        String pinNo, String idNo, String reason, String dob, String gender, String purchasePrice,
                        String guaranteedPeriod, String pensionStatus, String pensionStartDate, String pensionStopDate,
@@ -400,12 +409,13 @@ public class XiPensioner extends GenericModel<XiPensioner> implements Serializab
                        String dateOfCalculation, String certificateRecieved, String dateReceived, String dateLastPaid,
                        String dateLastEncashment, String unreturnedCheques, String beneficiariesPaymentMode, String freqEffectiveDate,
                        String arrearsPaymentMode, String schemeId, String town, String postalAddress, String branch,
-                       String monthlyPension2, String cellPhone, String memberId) {
+                       String monthlyPension2, String cellPhone, String memberId, String email) {
         super();
         this.id = id;
         this.pensionerNo = pensionerNo;
         this.pensionFrequency = pensionFrequency;
         this.name = name;
+        this.email = email;
         this.tax = tax;
         this.memberNo = memberNo;
         this.memberId = memberId;

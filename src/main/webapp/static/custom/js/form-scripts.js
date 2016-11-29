@@ -593,13 +593,6 @@ $(document)
 													}
 												}
 											},
-											pensionerEmail : {
-												validators : {
-													emailAddress: {
-														message: 'The value is not a valid email address'
-													}
-												}
-											},
 											pensionerPassword : {
 												validators : {
 													notEmpty : {
@@ -729,13 +722,7 @@ $(document)
 									'success.form.bv',
 									function(e) {
 										start_wait();
-										
-										var str = $('#pensionerIdNumber').val();
-										console.log("The id is: " + str);
-										str = str.replace("/", "-");
-										console.log("The id after replace is: " + str);
-										str = str.replace("/", "-");
-										console.log("The id after replace 2 is: " + str);
+
 										// Prevent form submission
 										e.preventDefault();
 										// Get the form instance
@@ -747,11 +734,9 @@ $(document)
 													data : {
 														type : 'EXISTING',
 														category : 'PENSIONER',
-														idNumber : str,
-														pensionerEmail : $(
-															'#pensionerEmail')
+														idNumber : $(
+															'#pensionerIdNumber')
 															.val(),
-
 														password : $(
 																'#pensionerPassword')
 																.val(),

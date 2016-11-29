@@ -175,9 +175,6 @@ public class SignIn extends BaseServlet implements Serializable {
 					}
 					else if(u.getUserProfile().equals(Constants.PENSIONER)) {
 						String usrname = u.getUsername();
-						jLogger.i("Usrname is " + usrname );
-						usrname = usrname.replaceAll("/","-");
-						jLogger.i("Usrname after replace is " + usrname );
 						XiMember member = apiEJB.memberExists(u.getUserProfile(), usrname);
 						if(member != null && member.getId() > 0)
 						{
