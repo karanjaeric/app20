@@ -1390,6 +1390,7 @@ public class ApiBean implements ApiEJB {
             xiPensioner.setCountry(jsonObject.getString(Fields.COUNTRY));
             xiPensioner.setDateLastPaid(jsonObject.getString(Fields.DATE_LAST_PAID));
             xiPensioner.setAccountName(jsonObject.getString(Fields.ACC_NAME));
+            xiPensioner.setBankName(jsonObject.getString(Fields.BANK_NAME));
             xiPensioner.setAccountNumber(jsonObject.getString(Fields.ACC_NUMBER));
             xiPensioner.setPensionerType(jsonObject.getString(Fields.PENSIONER_TYPE));
             xiPensioner.setBranch(jsonObject.getString(Fields.BRANCH));

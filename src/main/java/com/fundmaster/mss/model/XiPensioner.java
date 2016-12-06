@@ -40,6 +40,7 @@ public class XiPensioner extends GenericModel<XiPensioner> implements Serializab
     private String alive;
     private String postalAddress;
     private String town;
+    private String bankName;
     private String branch;
     private String country;
     private String commissionPaid;
@@ -401,6 +402,14 @@ public class XiPensioner extends GenericModel<XiPensioner> implements Serializab
         this.email = email;
     }
 
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
     public XiPensioner(Long id, String pensionerNo, String pensionFrequency, String name, String tax, String memberNo,
                        String pinNo, String idNo, String reason, String dob, String gender, String purchasePrice,
                        String guaranteedPeriod, String pensionStatus, String pensionStartDate, String pensionStopDate,
@@ -409,7 +418,7 @@ public class XiPensioner extends GenericModel<XiPensioner> implements Serializab
                        String dateOfCalculation, String certificateRecieved, String dateReceived, String dateLastPaid,
                        String dateLastEncashment, String unreturnedCheques, String beneficiariesPaymentMode, String freqEffectiveDate,
                        String arrearsPaymentMode, String schemeId, String town, String postalAddress, String branch,
-                       String monthlyPension2, String cellPhone, String memberId, String email) {
+                       String monthlyPension2, String cellPhone, String memberId, String email, String bankName) {
         super();
         this.id = id;
         this.pensionerNo = pensionerNo;
@@ -427,6 +436,7 @@ public class XiPensioner extends GenericModel<XiPensioner> implements Serializab
         this.cellPhone = cellPhone;
         this.gender = gender;
         this.branch = branch;
+        this.bankName = bankName;
         this.purchasePrice = purchasePrice;
         this.guaranteedPeriod = guaranteedPeriod;
         this.pensionStatus = pensionStatus;

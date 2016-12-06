@@ -83,6 +83,7 @@ public class Fields {
     public static final String DATE_LAST_PAID = "dateLastPaid";
     public static final String ALIVE = "alive";
     public static final String ACC_NAME = "accountName";
+    public static final String BANK_NAME = "bankName";
     public static final String ACC_NUMBER = "accountNo";
     public static final String GUARANTEED_PERIOD = "guaranteedPeriod";
     public static final String PARTYREFNO = "partyrefno";
