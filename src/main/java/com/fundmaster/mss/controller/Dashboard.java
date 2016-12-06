@@ -197,6 +197,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.PENSION_DETAILS:
                     showPensionDetails(request, response, session);
                     break;
+                case Actions.PENSION_ADVICE:
+                    showPensionAdvice(request, response, session);
+                    break;
             }
         }
     }
@@ -609,6 +612,43 @@ SocialBeanI socialBeanI;
         logActivity("PENSIONER DETAILS", "Viewed pension details", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed  pension details");
         request.getRequestDispatcher("pensioner/pension_details.jsp").forward(request, response);
+    }
+
+    private void showPensionAdvice(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        Social social = socialBeanI.find();
+        request.setAttribute("social", social);
+        List<Sector> sectors = sectorBeanI.find();
+        request.setAttribute("sectors", sectors);
+        List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
+        request.setAttribute("schemes", schemes);
+
+        XiPensioner p;
+        String pensioner_id;
+        pensioner_id = this.get(request, "pensionerID");
+        if (pensioner_id == null || pensioner_id.isEmpty())
+            pensioner_id = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("Pensioner ID is: " + pensioner_id);
+
+        p = apiEJB.getPensionerDetails(pensioner_id, null);
+        request.setAttribute("pensioner", p);
+        jLogger.i("Pensioner Id found is " + p.getId());
+
+        String memberId = p.getMemberId();
+        jLogger.i("Member id: " + memberId);
+        request.setAttribute("memberId", memberId);
+        jLogger.i(" Are we on the right track????? ");
+        List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(memberId);
+        jLogger.i(" Are we on the right track 2 ????? ");
+        request.setAttribute("beneficiaries", beneficiaries);
+
+
+        logActivity("PENSION ADVICE", "Viewed pension advice", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed  pension advice");
+        request.getRequestDispatcher("pensioner/pension_advice.jsp").forward(request, response);
     }
 
     private void showAnalytics(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {

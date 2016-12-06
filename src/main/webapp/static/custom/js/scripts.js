@@ -442,6 +442,15 @@ $(document).ready(function(){
 
 		m_switch("PENSION_DETAILS");
 	});
+
+	$('#pension-advice-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#pension-advice-li').addClass('active');
+
+		m_switch("PENSION_ADVICE");
+	});
 	
 
 	

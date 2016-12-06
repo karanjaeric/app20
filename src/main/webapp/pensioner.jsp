@@ -34,10 +34,12 @@
                     <li id="pension-details-li"><a href="javascript:void(0);"><i
                             class="glyphicon glyphicon-screenshot"></i>&nbsp;<i
                             class="fa fa-chevron-right"></i> PENSION DETAILS</a></li>
+                    <li id="pension-advice-li"><a href="javascript:void(0);"><i
+                            class="glyphicon glyphicon-file"></i>&nbsp;<i
+                            class="fa fa-chevron-right"></i> PENSION ADVICE</a></li>
                     <li id="media-files-li"><a href="javascript:void(0);"><i
                             class="glyphicon glyphicon-briefcase"></i>&nbsp;<i
                             class="fa fa-chevron-right"></i> MEDIA &amp; FILES</a></li>
-
                 </ul>
             </div>
         </div>

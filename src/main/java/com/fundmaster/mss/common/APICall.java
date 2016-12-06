@@ -8,6 +8,7 @@ public class APICall {
     public static final String SPONSOR_SAVE_OR_UPDATE_POTENTIAL_SPONSOR = "sponsor/saveorupdatepotentialsponsor";
     public static final String SAVE_OR_UPDATE_MEMBER = "saveorupdatemember";
     public static final String UPLOAD_MEMBER_DOCUMENT = "uploadmemberdocument";
+    public static final String GET_PAYROLL_YEARS = "getpayrollyears";
     public static final String CHECK_MEMBER_EXISTS = "checkMemberExists/";
     public static final String SAVE_OR_UPDATE_BENEFICIARY_DETAILS = "saveorupdatebeneficiarydetails";
     public static final String CHECK_MEMBER_EXISTS_IN_SCHEME = "checkMemberExistsInScheme/";

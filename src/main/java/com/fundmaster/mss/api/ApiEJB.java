@@ -24,6 +24,7 @@ public interface ApiEJB {
     JSONObject getFundValueAsAt(String date,String periodType, String schemeID,String profileID);
     JSONObject getAccountingPeriod(String date, String schemeID);
     JSONObject getAllAccountingPeriods(String schemeID);
+    JSONObject getPayrollYears();
     JSONObject getMemberCummulativeInterest(String memberID);
     List<UserProfile> getUserProfiles();
     JSONObject getMemberContributions(String memberID);

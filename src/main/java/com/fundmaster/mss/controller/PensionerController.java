@@ -209,6 +209,9 @@ public class PensionerController extends BaseServlet implements Serializable {
             case Actions.BENEFICIARY:
                 getBeneficiaries(request, response);
                 break;
+            case Actions.YEARS:
+                getPayrollYears(request, response);
+                break;
             case Actions.CURR:
                 schemeCurrency(response, apiEJB.getSchemeCurrency(this.getSessKey(request, Constants.SCHEME_ID)));
                 break;
@@ -229,6 +232,20 @@ public class PensionerController extends BaseServlet implements Serializable {
         jLogger.i("Beneficiaries: " + beneficiaries);
 
         this.respond(response, true, "", beneficiaries);
+    }
+
+    private void getPayrollYears(HttpServletRequest request, HttpServletResponse response) {
+
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        jLogger.i("Report server url: " + settings.getXiReportPath().toString());
+
+        request.setAttribute("pensioner_id", this.getSessKey(request, Constants.PROFILE_ID));
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+
+        this.respond(response, true, "", apiEJB.getPayrollYears());
     }
 
     private void changeScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
