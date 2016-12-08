@@ -104,6 +104,7 @@ public class Fields {
     public static final String OPENING_BALANCES = "openingBalances";
     public static final String AP = "ap";
     public static final String PENSION_DRAW_DOWN = "pensionDrawDown";
+    public static final String PENSIONER_NO = "pensionerNo";
     public static final String UN_REGISTERED = "unRegistered";
     public static final String REGISTERED = "registered";
     public static final String STATUS = "status";

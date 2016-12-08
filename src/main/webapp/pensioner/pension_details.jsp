@@ -87,7 +87,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="accountNumber" class="col-sm-6 control-label">Account Name:</label>
+                        <label for="accountNumber" class="col-sm-6 control-label">Account Number:</label>
                         <div class="col-sm-6">
                             <input
                                     type="text" disabled name="accountNumber" class="form-control" id="accountNumber"

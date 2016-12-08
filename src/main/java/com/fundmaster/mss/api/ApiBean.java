@@ -1368,11 +1368,13 @@ public class ApiBean implements ApiEJB {
         try {
             xiPensioner.setSchemeId(jsonObject.getString(Fields.SCHEME_ID));
             xiPensioner.setId(jsonObject.getLong(Fields.ID));
+            xiPensioner.setPensionerNo(jsonObject.getString(Fields.PENSIONER_NO));
             xiPensioner.setMemberNo(jsonObject.getString(Fields.MEMBER_NO));
             xiPensioner.setPensionFrequency(jsonObject.getString(Fields.FREQUENCY));
             xiPensioner.setName(jsonObject.getString(Fields.NAME));
             xiPensioner.setIdNo(jsonObject.getString(Fields.ID_NO));
             xiPensioner.setDob(jsonObject.getString(Fields.DOB));
+            xiPensioner.setPinNo(jsonObject.getString(Fields.PIN_NO));
             xiPensioner.setGender(jsonObject.getString(Fields.GENDER));
             xiPensioner.setPurchasePrice(jsonObject.getString(Fields.PURCHASE_PRICE));
             xiPensioner.setPostalAddress(jsonObject.getString(Fields.POSTAL_ADDRESS));

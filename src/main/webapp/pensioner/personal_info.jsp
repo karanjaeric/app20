@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid section">
     <h3 class="text-center main-title" id="title">
-        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;EDIT PERSONAL INFORMATION
+        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;PERSONAL INFORMATION
     </h3>
     <form class="form-horizontal" method="post" id="pi-form">
         <input type="hidden" id="pensioner_id" value="${ pensioner.id }" />
