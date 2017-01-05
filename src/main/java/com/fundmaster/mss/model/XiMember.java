@@ -48,6 +48,7 @@ public class XiMember extends GenericModel<XiMember> implements Serializable{
 	private String depot;
 	private String designation;
 	private String mbshipStatus;
+	private String planType;
 
 	public String getMbshipStatus() {
 		return mbshipStatus;

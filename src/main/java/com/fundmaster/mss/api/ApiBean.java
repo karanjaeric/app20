@@ -245,9 +245,10 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public JSONObject getMemberBalances(String memberID) {
+    public JSONObject getDcMemberBalances(String memberID) {
+
         try {
-            JSONObject response = URLGet(APICall.GET_MEMBER_BALANCES + memberID);
+            JSONObject response = URLGet(APICall.GET_DC_MEMBER_BALANCES + memberID);
             if(response.getBoolean(Fields.SUCCESS))
             {
                 JSONArray res = (JSONArray) response.get(Constants.ROWS);
@@ -272,6 +273,38 @@ public class ApiBean implements ApiEJB {
 
                 }
                 return new JSONObject().put(Fields.SUCCESS, true).put("total", finalTotal);
+            }
+            else
+                return null;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public JSONObject getDbMemberBalances(String memberID, String schemeId) {
+
+        try {
+            JSONObject response = URLGet(APICall.GET_DB_MEMBER_BALANCES + memberID + "/" + schemeId);
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                JSONArray res = (JSONArray) response.get(Constants.ROWS);
+
+                double benefit = 0;
+
+                for(int i = 0; i < res.length(); i ++)
+                {
+                    JSONObject obj = res.getJSONObject(i);
+
+                    String Strbenefit = obj.get("ben.accruedAnnualPension").toString();
+
+                    benefit = Double.parseDouble(Strbenefit);
+
+                    jLogger.i(">>>>>>>>>>>> Benefit is: " + benefit + " <<<<<<<<<<<<<<<<<");
+
+                }
+                return new JSONObject().put(Fields.SUCCESS, true).put("total", benefit);
             }
             else
                 return null;

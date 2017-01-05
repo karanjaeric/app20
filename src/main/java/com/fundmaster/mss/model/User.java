@@ -24,8 +24,7 @@ public class User extends GenericModel<User>  implements Serializable {
 	private String userProfile;
 	private Long profileID;
 	@Column (unique = true)
-	private
-	String username;
+	private String username;
 	private String password;
 	private Date password_expiry;
 	public int getAttempt() {

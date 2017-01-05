@@ -51,7 +51,8 @@ public interface ApiEJB {
     List<AgentClient> getAgentClients(String agentId, int start, int count);
     List<MemberClaims>getMemberClaims(String memberNumber, long schemeId);
     List<BenefitPayment> getBenefitPayments(String schemeID, int start, int count);
-    JSONObject getMemberBalances(String memberID);
+    JSONObject getDcMemberBalances(String memberID);
+    JSONObject getDbMemberBalances(String memberID, String schemeId);
     String getSchemeInterestRates(String schemeID);
     JSONObject calculateWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate,
                                        String inflationRate,String email,String phone,String yourAge, String formula);

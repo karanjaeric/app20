@@ -19,8 +19,7 @@ public class Member extends GenericModel<Member>  implements Serializable {
 	private
 	Long id;
 	@Column(name="name", nullable=false)
-	private
-	String firstname;
+	private String firstname;
 	private String lastname;
 	private String othernames;
 	@ManyToOne

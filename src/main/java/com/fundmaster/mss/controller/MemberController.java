@@ -224,8 +224,8 @@ public class MemberController extends BaseServlet implements Serializable {
                 getAccountingPeriod(request, response);
                 break;
             case Actions.CB:
-                getMemberBalances(response, apiEJB.getMemberBalances(this.getSessKey(request, Constants.PROFILE_ID)));
-
+                //getMemberBalances(response, apiEJB.getMemberBalances(this.getSessKey(request, Constants.PROFILE_ID)));
+				getMemberBalances(request, response);
                 break;
             case Actions.CURR:
                 schemeCurrency(response, apiEJB.getSchemeCurrency(this.getSessKey(request, Constants.SCHEME_ID)));
@@ -329,9 +329,27 @@ public class MemberController extends BaseServlet implements Serializable {
         this.respond(response, true, "", apiEJB.getAccountingPeriod(format.format(date), this.getSessKey(request, Constants.SCHEME_ID)));
     }
 
-    private void getMemberBalances(HttpServletResponse response, JSONObject memberBalances) {
+	private void getMemberBalances(HttpServletRequest request, HttpServletResponse response) {
+
+		String user = this.getSessKey(request, Constants.USER).trim();
+		List<Scheme> scheme = apiEJB.getProfileSchemes(user, this.getSessKey(request, Constants.U_PROFILE));
+		String planType = scheme.get(0).getPlanType();
+		jLogger.i(">>>>>>>>>>>>>>> Plan Type is: " + planType + " <<<<<<<<<<<<<<<<<<<<<");
+		String schemeId = Long.toString(scheme.get(0).getId());
+		jLogger.i(">>>>>>>>>>>>>>> Scheme Id is: " + schemeId + " <<<<<<<<<<<<<<<<<<<<<");
+
+			if(planType.equalsIgnoreCase(Constants.DEFINED_BENEFIT)) {
+				jLogger.i(">>>>>>>>>>>>> So we're here 1 <<<<<<<<<<<<<<<<<");
+				this.respond(response, true, "", apiEJB.getDbMemberBalances(this.getSessKey(request, Constants.PROFILE_ID), schemeId));
+			} else {
+				jLogger.i(">>>>>>>>>>>>> So we're here 1 <<<<<<<<<<<<<<<<<");
+				this.respond(response, true, "", apiEJB.getDcMemberBalances(this.getSessKey(request, Constants.PROFILE_ID)));
+			}
+
+	}
+    /*private void getMemberBalances(HttpServletResponse response, JSONObject memberBalances) {
         this.respond(response, true, "", memberBalances);
-    }
+    }*/
 
     private void schemeCurrency(HttpServletResponse response, JSONObject schemeCurrency) {
         this.respond(response, true, "", schemeCurrency);

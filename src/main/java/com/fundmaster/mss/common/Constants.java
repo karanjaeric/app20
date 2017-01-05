@@ -47,6 +47,7 @@ public class Constants implements Serializable {
 	public static final String FUND_MANAGER = "FUND_MANAGER";
 	public static final String PENSIONER = "PENSIONER";
 	public static final String CUSTODIAN = "CUSTODIAN";
+	public static final String DEFINED_BENEFIT= "Defined Benefit";
 	public static int RECORD_COUNT = 0;
 	public static String BASE_URL;
 
