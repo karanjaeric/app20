@@ -5,4 +5,15 @@
     <welcome-file>index</welcome-file>
   </welcome-file-list>
   <display-name>Mss</display-name>
+
+  <!--<security-constraint>
+    <web-resource-collection>
+      <web-resource-name>SECURE</web-resource-name>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>-->
+
 </web-app>
