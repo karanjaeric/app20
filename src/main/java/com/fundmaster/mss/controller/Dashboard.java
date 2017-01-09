@@ -125,7 +125,7 @@ public class Dashboard extends BaseServlet implements Serializable {
                     break;
                 case Actions.ANALYTICS:
                     showAnalytics(request, response, session, REPO_FOLDER);
-
+                    break;
                 case Actions.COMMISSIONS:
                     showAgentCommissions(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
                     break;
