@@ -70,7 +70,7 @@
 		                   	{
 		                		for ( var i = 0; i < json.rows.length; i++) {
 		                    		var row = json.rows[i];
-		               				combo = combo + "<option>" + row['reason'] + "</option>";
+		               				combo = combo + "<option value = " + row['id'] + ">" + row['reason'] + "</option>";
 		               				array = json.rows;
 		                		}
 		                		combo = combo + "</select>";
@@ -153,7 +153,10 @@
 							}
 						});
 
-		                var reasonId = getArray($('#reason').val());
+		                //var reasonId = getArray($('#reason').val());
+						var reasonId = $('#reason').val();
+						console.log("Reason Id is: " + reasonId);
+
 						if($('#planType').val() == 'Defined Benefit')
 						{
 							var url = $('#reportPath').val() + 'members/Member Projection (' + $('#option').val() + ').xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Projection%20(' + $('#option').val() + ').xdo&_xmode=3&_paramsprojdotinterestrate=PROVISIONAL&_paramsprojdotprojtype=Retirements%20Unreduced&_paramsBASE='
