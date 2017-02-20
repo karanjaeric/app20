@@ -8,6 +8,11 @@
 				class="glyphicon glyphicon-dashboard"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> MEMBER EDIT PERMISSIONS</a></li>
 		</c:if>
+		<c:if test="${ permissions.show_db_contribution_graph }">
+			<li id="contribution-graph-li"><a href="javascript:void(0);"><i
+					class="glyphicon glyphicon-stats"></i>&nbsp;<i
+					class="fa fa-chevron-right"></i> SHOW CONTRIBUTION GRAPH (DB)</a></li>
+		</c:if>
 		<c:if test="${ permissions.profile_login_username }">
 		<li id="profile-login-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
@@ -426,6 +431,44 @@
 			</div>
 		</form>
 	</div>
+
+<!-- Sow Contribution Graph -->
+
+<div class="modal fade" id="modal-contribution-graph" tabindex="-1" role="dialog" aria-labelledby="myModalLabelContributionGraph" aria-hidden="true">
+	<form role="form" id="form-contribution-graph">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabelContributionGraph">
+						<i class="glyphicon glyphicon-stats"></i>&nbsp;&nbsp;SHOW CONTRIBUTION GRAPH FOR DB SCHEME
+					</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="dbGraph_id" value="${ dbContrGraph.id }" id="dbGraph_id"/>
+					<table class="table">
+						<tr><th>ITEM</th><th>VISIBLE</th></tr>
+						<tr>
+							<td>
+								<label class="control-label">CONTRIBUTION GRAPH</label>
+							</td>
+							<td>
+							<td>
+								<input type="checkbox" name="contributionGraphActive" id="contributionGraphActive" ${dbContrGraph.contributionGraphActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+					<input class="btn btn-primary" type="submit"
+						   value="Save Permissions" id="btn-contribution-graph">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- End Contribution  Graph -->
 	<script type="text/javascript">
 		$(document).ready(function(){
 
@@ -582,6 +625,8 @@
 
 			});
 
+			/* Form Member Permissions */
+
 			$('#form-member-permissions').bootstrapValidator({
 		        message: 'This value is not valid',
 		        feedbackIcons: {
@@ -625,10 +670,67 @@
         	    });
 
 			});
+			/* End Form Member Permissions */
+
+			/* Form Contributions Graph */
+
+			$('#form-contribution-graph').bootstrapValidator({
+				message: 'This value is not valid',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+
+				}
+			})
+					.on('success.form.bv', function(e) {
+
+						// Prevent form submission
+						e.preventDefault();
+
+						var btn = "btn-contribution-graph";
+						var form = "form-contribution-graph";
+						var modal = "modal-contribution-graph";
+						var btn_text = $('#' + btn).val();
+
+						$('#' + btn).val('Please wait...');
+						$.ajax({
+							url: $('#base_url').val() + 'admin',
+							type: 'post',
+							data: {
+								ACTION: 'DISABLE_CONTRIBUTION_GRAPH',
+								dbGraph_id: $('#dbGraph_id').val(),
+								contributionGraphActive: $('#contributionGraphActive').prop('checked')
+							},
+							dataType: 'json',
+							success: function(json) {
+								$('#' + btn).val('Done');
+								if(json.success)
+								{
+									$('#' + form)[0].reset();
+									$('#' + modal).modal('hide');
+									html = 'Configuration details successfully saved';
+								}
+								else
+									html = 'Configuration details could not be saved';
+								bootbox.alert(html);
+								$('#' + btn).val(btn_text);
+							}
+						});
+
+					});
+			/* End Form Contributions Graph */
+
 		    
 		    $('#member-permissions-li').click(function(){
 		        $('#modal-member-permissions').modal('show');
 		    });
+
+			$('#contribution-graph-li').click(function(){
+				$('#modal-contribution-graph').modal('show');
+			});
 		    
 		    $('#profile-login-li').click(function(){
 		        $('#modal-profile-login').modal('show');

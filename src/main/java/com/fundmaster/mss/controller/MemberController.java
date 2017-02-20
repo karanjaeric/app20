@@ -41,6 +41,10 @@ public class MemberController extends BaseServlet implements Serializable {
 	@EJB
 	GenderBeanI genderBeanI;
 	@EJB
+	DBMenuBeanI dbMenuBeanI;
+	@EJB
+	DBGraphBeanI dbGraphBeanI;
+	@EJB
 	CompanyBeanI companyBeanI;
 	@EJB
 	EmailsBeanI emailsBeanI;
@@ -95,6 +99,17 @@ public class MemberController extends BaseServlet implements Serializable {
 					request.setAttribute("member_id", m.getId());
 					session.setAttribute(Constants.PROFILE_ID,m.getId());
 					request.setAttribute("MemberStatus", m.getMbshipStatus());
+
+					List<Scheme> schemePlan = apiEJB.getProfileSchemes(user, this.getSessKey(request, Constants.U_PROFILE));
+					String planType = schemePlan.get(0).getPlanType();
+					request.setAttribute("planType", planType);
+
+					DBContributionGraph dbContributionGraph = dbGraphBeanI.find();
+					request.setAttribute("contrGraph", dbContributionGraph);
+
+					DBMenu dbMenu = dbMenuBeanI.find();
+					request.setAttribute("dbMenu", dbMenu);
+
 					if(schemes != null && schemes.size() > 0) {
 						jLogger.i("Scheme is not null. email: "+ this.getSessKey(request, Constants.USER));
 						if(this.getSessKey(request, Constants.SCHEME_ID) == null)

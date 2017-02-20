@@ -43,6 +43,10 @@ public class MenuController extends BaseServlet implements Serializable {
     @EJB
     MenuBeanI menuBeanI;
     @EJB
+    DBMenuBeanI dbMenuBeanI;
+    @EJB
+    DBGraphBeanI dbGraphBeanI;
+    @EJB
     ThemeBeanI themeBeanI;
     @EJB
     HelpBeanI helpBeanI;
@@ -101,6 +105,10 @@ public class MenuController extends BaseServlet implements Serializable {
     private void showUserAccessControl(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         MemberPermission memberPermission = memberPermissionBeanI.find();
         request.setAttribute("memberPermission", memberPermission);
+        DBMenu dbMenu = dbMenuBeanI.find();
+        request.setAttribute("dbMenu", dbMenu);
+        DBContributionGraph dbContributionGraph = dbGraphBeanI.find();
+        request.setAttribute("dbContrGraph", dbContributionGraph);
         List<ProfileLoginField> pfs = profileLoginFieldBeanI.find();
         request.setAttribute("plfs", pfs);
         List<ProfileName> profileNames = profileNameBeanI.find();
@@ -144,6 +152,8 @@ public class MenuController extends BaseServlet implements Serializable {
         request.setAttribute("social", social);
         Menu menu = menuBeanI.find();
         request.setAttribute("menu", menu);
+        DBMenu dbMenu = dbMenuBeanI.find();
+        request.setAttribute("dbMenu", dbMenu);
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         Theme theme = themeBeanI.find();

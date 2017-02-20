@@ -83,11 +83,13 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String INTEREST_RATE_COLUMNS = "INTEREST_RATE_COLUMNS";
     private static final String SETTINGS = "SETTINGS";
     private static final String MENU = "MENU";
+    private static final String DB_MENU = "DB_MENU";
     private static final String LOGOUT = "LOGOUT";
     private static final String SOCIAL = "SOCIAL";
     private static final String REMOVE_CONTACT_REASON = "REMOVE_CONTACT_REASON";
     private static final String REMOVE_MEDIA = "REMOVE_MEDIA";
     private static final String MEMBER_PERMISSION = "MEMBER_PERMISSION";
+    private static final String DISABLE_CONTRIBUTION_GRAPH = "DISABLE_CONTRIBUTION_GRAPH";
     private static final String PLF = "PLF";
     private static final String ADD_CONTACT_REASON = "ADD_CONTACT_REASON";
     private static final String LOGO = "LOGO";
@@ -141,6 +143,10 @@ public class Admin extends BaseServlet implements Serializable {
     InterestRateColumnBeanI interestRateColumnBeanI;
     @EJB
     MenuBeanI menuBeanI;
+    @EJB
+    DBMenuBeanI dbMenuBeanI;
+    @EJB
+     DBGraphBeanI dbGraphBeanI;
     @EJB
     SocialBeanI socialBeanI;
     @EJB
@@ -429,6 +435,9 @@ public class Admin extends BaseServlet implements Serializable {
             case MENU:
                 editMenuSettings(request, response, session);
                 break;
+            case DB_MENU:
+                editDbMenu(request, response, session);
+                break;
             case LOGOUT:
                 logout(request, response, session);
                 break;
@@ -443,6 +452,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case MEMBER_PERMISSION:
                 editMemberPermissions(request, response, session);
+                break;
+            case DISABLE_CONTRIBUTION_GRAPH:
+                editContributionGraph(request, response, session);
                 break;
             case PLF:
                 updateProfileLoginFields(request, response, session);
@@ -780,6 +792,21 @@ public class Admin extends BaseServlet implements Serializable {
         } else
             this.respond(response, false, "Member edit permissions could not be saved", null);
     }
+
+    private void editContributionGraph(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        DBContributionGraph dbContributionGraph = dbGraphBeanI.find();
+        boolean contributionGraphActive = this.get(request, "contributionGraphActive").equalsIgnoreCase("true");
+        jLogger.i("Contribution status >>>>>>>>>>>>>>>>>>> " + contributionGraphActive);
+        dbContributionGraph.setContributionGraphActive(contributionGraphActive);
+
+        if (dbGraphBeanI.edit(dbContributionGraph) != null) {
+            audit(session, "Updated DB Scheme configuration settings");
+            this.respond(response, true, "DB Scheme configurations successfully saved", null);
+        } else
+            this.respond(response, true, "DB Scheme configurations could not be saved", null);
+    }
+
     private void deleteMediaFile(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Media m = mediaBeanI.findById(helper.toLong(this.get(request, "id")));
         if (mediaBeanI.delete(m)) {
@@ -845,6 +872,35 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, true, "Portal menu configurations successfully saved", null);
         } else
             this.respond(response, true, "Portal menu configurations could not be saved", null);
+    }
+    private void editDbMenu(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    /* DB_Menu Update Request */
+
+        boolean contributionHistoryActive = this.get(request, "contributionHistoryActive").equalsIgnoreCase("true");
+        boolean balancesHistoryActive = this.get(request, "balancesHistoryActive").equalsIgnoreCase("true");
+        boolean statementOfAccountActive = this.get(request, "statementOfAccountActive").equalsIgnoreCase("true");
+        boolean benefitsProjectionActive = this.get(request, "benefitsProjectionActive").equalsIgnoreCase("true");
+        boolean whatIfAnalysisActiveDb = this.get(request, "whatIfAnalysisActiveDb").equalsIgnoreCase("true");
+
+        DBMenu dbMenu = dbMenuBeanI.find();
+
+        dbMenu.setContributionHistoryActive(contributionHistoryActive);
+        dbMenu.setBalancesHistoryActive(balancesHistoryActive);
+        dbMenu.setStatementOfAccountActive(statementOfAccountActive);
+        dbMenu.setBenefitsProjectionActive(benefitsProjectionActive);
+        dbMenu.setWhatIfAnalysisActiveDb(whatIfAnalysisActiveDb);
+
+        dbMenu.setContributionHistoryName(this.get(request,"contributionHistoryName"));
+        dbMenu.setBalancesHistoryName(this.get(request,"balancesHistoryName"));
+        dbMenu.setStatementOfAccountName(this.get(request,"statementOfAccountName"));
+        dbMenu.setBenefitsProjectionName(this.get(request,"benefitsProjectionName"));
+        dbMenu.setWhatIfAnalysisNameDb(this.get(request,"whatIfAnalysisNameDb"));
+
+        if (dbMenuBeanI.edit(dbMenu) != null) {
+            audit(session, "Updated DB Scheme menu configuration settings");
+            this.respond(response, true, "DB Scheme menu configurations successfully saved", null);
+        } else
+            this.respond(response, true, "DB Scheme menu configurations could not be saved", null);
     }
     private void editPortalSettings(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Setting settings = settingBeanI.find();
@@ -1338,6 +1394,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setMember_edit(this.get(request, "member_edit").equalsIgnoreCase("true"));
         perm.setMember_view(this.get(request, "member_view").equalsIgnoreCase("true"));
         perm.setMember_edit_permissions(this.get(request, "member_edit_permissions").equalsIgnoreCase("true"));
+        perm.setShow_db_contribution_graph(this.get(request, "show_db_contribution_graph").equalsIgnoreCase("true"));
         perm.setProfile_login_username(this.get(request, "profile_login_username").equalsIgnoreCase("true"));
         perm.setProfile_privileges(this.get(request, "profile_privileges").equalsIgnoreCase("true"));
         perm.setProfile_names(this.get(request, "profile_names").equalsIgnoreCase("true"));
@@ -1348,6 +1405,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setSetup_interest_rate(this.get(request, "setup_interest_rate").equalsIgnoreCase("true"));
         perm.setSetup_logo(this.get(request, "setup_logo").equalsIgnoreCase("true"));
         perm.setSetup_menu(this.get(request, "setup_menu").equalsIgnoreCase("true"));
+        perm.setDb_menu(this.get(request,"db_menu").equalsIgnoreCase("true"));
         perm.setSetup_other(this.get(request, "setup_other").equalsIgnoreCase("true"));
         perm.setSetup_social(this.get(request, "setup_social").equalsIgnoreCase("true"));
         perm.setSetup_theme(this.get(request, "setup_theme").equalsIgnoreCase("true"));

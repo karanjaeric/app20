@@ -21,7 +21,12 @@
 		<c:if test="${ permissions.setup_menu }">
 		<li id="menu-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-pushpin"></i>&nbsp;<i
-				class="fa fa-chevron-right"></i> MENU OPTIONS</a></li>
+				class="fa fa-chevron-right"></i> HOMEPAGE MENU OPTIONS</a></li>
+		</c:if>
+		<c:if test="${ permissions.db_menu }">
+			<li id="db_menu-li"><a href="javascript:void(0);"><i
+					class="glyphicon glyphicon-menu-hamburger"></i>&nbsp;<i
+					class="fa fa-chevron-right"></i> DB SCHEME MENU</a></li>
 		</c:if>
 		<c:if test="${ permissions.setup_social }">
 		<li id="social-li"><a href="javascript:void(0);"><i
@@ -482,6 +487,110 @@
 			</div>
 		</form>
 	</div>
+
+
+		<!-- DB SCHEME MENU ITEMS -->
+<div class="modal fade" id="modal-dbMenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDbMenu" aria-hidden="true">
+
+	<form role="form" id="form-dbmenu">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabelDbMenu">
+						<i class="glyphicon glyphicon-menu-hamburger"></i>&nbsp;&nbsp;DB SCHEME MENU OPTIONS
+					</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="menu_id" value="${ dbMenu.id }" id="dbMenu_id"/>
+					<table class="table">
+
+						<tr><th>MENU ITEM</th><th>MENU NAME</th><th>VISIBLE</th></tr>
+
+						<tr>
+							<td>
+								<label class="control-label">CONTRIBUTION HISTORY</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="contributionHistoryName" id="contributionHistoryName" placeholder="CONTRIBUTION HISTORY" value="${ dbMenu.contributionHistoryName }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="contributionHistoryActive" id="contributionHistoryActive" ${dbMenu.contributionHistoryActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label">BALANCES HISTORY</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="balancesHistoryName" id="balancesHistoryName" placeholder="BALANCES HISTORY" value="${ dbMenu.balancesHistoryName }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="balancesHistoryActive" id="balancesHistoryActive" ${dbMenu.balancesHistoryActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label">STATEMENT OF ACCOUNT</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="statementOfAccountName" id="statementOfAccountName" placeholder="STATEMENT OF ACCOUNT" value="${ dbMenu.statementOfAccountName }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="statementOfAccountActive" id="statementOfAccountActive" ${dbMenu.statementOfAccountActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label">BENEFITS PROJECTION</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="benefitsProjectionName" id="benefitsProjectionName" placeholder="BENEFITS PROJECTION" value="${ dbMenu.benefitsProjectionName }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="benefitsProjectionActive" id="benefitsProjectionActive" ${dbMenu.benefitsProjectionActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label">WHAT IF ANALYSIS</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="whatIfAnalysisNameDb" id="whatIfAnalysisNameDb" placeholder="WHAT IF ANALYSIS" value="${ dbMenu.whatIfAnalysisNameDb }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="whatIfAnalysisActiveDb" id="whatIfAnalysisActiveDb" ${dbMenu.whatIfAnalysisActiveDb == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+					<input class="btn btn-primary" type="submit"
+						   value="Save Changes" id="btn-dbmenu">
+				</div>
+			</div>
+		</div>
+	</form>
+
+</div>
+
+
+
 		<!-- LOGO -->
 <div class="modal fade" id="modal-logo" tabindex="-1" role="dialog" aria-labelledby="myModalLabelLogo" aria-hidden="true">
 		<form role="form" id="form-logo">
@@ -763,6 +872,10 @@
 		        $('#modal-menu').modal('show');
 		    });
 
+			$('#db_menu-li').click(function(){
+				$('#modal-dbMenu').modal('show');
+			});
+
 		    $('#form-authenticate').bootstrapValidator({
 		        message: 'This value is not valid',
 		        feedbackIcons: {
@@ -819,6 +932,8 @@
 			        }
 			    });
 		    });
+
+			/* Homepage Menu Form */
 		    
 		    $('#form-menu').bootstrapValidator({
 		        message: 'This value is not valid',
@@ -916,6 +1031,106 @@
         	    });
 
 			});
+
+			/* End Homepage Menu Form */
+
+			/* DB Menu Form */
+
+			$('#form-dbmenu').bootstrapValidator({
+				message: 'This value is not valid',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+					contributionHistoryName: {
+						validators: {
+							notEmpty: {
+								message: 'A title for the Contribution History menu is required'
+							}
+						}
+					},
+
+					balancesHistoryName: {
+						validators: {
+							notEmpty: {
+								message: 'A title for the Balances History menu is required'
+							}
+						}
+					},
+
+					statementOfAccountName: {
+						validators: {
+							notEmpty: {
+								message: 'A title for the Statement of Accounts menu is required'
+							}
+						}
+					},
+
+					benefitsProjectionName: {
+						validators: {
+							notEmpty: {
+								message: 'A title for the Benefits Projection menu is required'
+							}
+						}
+					},
+					whatIfAnalysisNameDb: {
+						validators: {
+							notEmpty: {
+								message: 'A title for the What If Analysis menu is required'
+							}
+						}
+					}
+				}
+			})
+					.on('success.form.bv', function(e) {
+						// Prevent form submission
+						e.preventDefault();
+
+						var btn = "btn-dbmenu";
+						var form = "form-dbmenu";
+						var modal = "modal-dbMenu";
+						var btn_text = $('#' + btn).val();
+
+						$('#' + btn).val('Please wait...');
+						$.ajax({
+							url: $('#base_url').val() + 'admin',
+							type: 'post',
+							data: {
+								ACTION: 'DB_MENU',
+								dbMenu_id: $('#dbMenu_id').val(),
+								contributionHistoryName: $('#contributionHistoryName').val(),
+								balancesHistoryName: $('#balancesHistoryName').val(),
+								statementOfAccountName: $('#statementOfAccountName').val(),
+								benefitsProjectionName: $('#benefitsProjectionName').val(),
+								whatIfAnalysisNameDb: $('#whatIfAnalysisNameDb').val(),
+								contributionHistoryActive: $('#contributionHistoryActive').prop('checked'),
+								balancesHistoryActive: $('#balancesHistoryActive').prop('checked'),
+								statementOfAccountActive: $('#statementOfAccountActive').prop('checked'),
+								benefitsProjectionActive: $('#benefitsProjectionActive').prop('checked'),
+								whatIfAnalysisActiveDb: $('#whatIfAnalysisActiveDb').prop('checked')
+								},
+							dataType: 'json',
+							success: function(json) {
+								$('#' + btn).val('Done');
+								if(json.success)
+								{
+									$('#' + form)[0].reset();
+									$('#' + modal).modal('hide');
+									html = 'Db Scheme Menu settings successfully saved';
+								}
+								else
+									html = 'Db Scheme Menu settings could not be saved';
+								bootbox.alert(html);
+								$('#' + btn).val(btn_text);
+							}
+						});
+
+					});
+
+			/* End DB Menu Form */
+
 
 		    $('#form-interest-rate-columns').bootstrapValidator({
 		        message: 'This value is not valid',

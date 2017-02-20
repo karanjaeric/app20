@@ -38,6 +38,8 @@ public class Dashboard extends BaseServlet implements Serializable {
     UserBeanI userBeanI;
     @EJB
     ApiEJB apiEJB;
+    @EJB
+    DBMenuBeanI dbMenuBeanI;
 
     @EJB
     InterestRateColumnBeanI interestRateColumnBeanI;
@@ -660,6 +662,8 @@ SocialBeanI socialBeanI;
     private void showUserAccessControls(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
+        DBMenu dbMenu = dbMenuBeanI.find();
+        request.setAttribute("dbMenu", dbMenu);
         logActivity("USER ACCESS CONTROL", "Accessed User Access Control Panel", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed User Access Control Panel");
         request.getRequestDispatcher(REPO_FOLDER + "/uac.jsp").forward(request, response);

@@ -60,6 +60,7 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 	@Column (name = "password", nullable = false)
 	private String password;
 	private String loginField;
+
 	private boolean encrypt;
 	public boolean isEncrypt() {
 		return encrypt;

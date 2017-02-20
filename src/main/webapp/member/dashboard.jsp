@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="container-fluid section">
 	<h3 class="text-center main-title">
 		<i
@@ -29,12 +30,21 @@
 		<h3 class="text-center"><small>ACCUMMULATED BENEFITS TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp; <small>CUMMULATIVE INTEREST TO DATE:</small> <span id="cummulative-interests"></span> <!--&nbsp; <small>AVERAGE INTEREST RATE:</small> <span id="average-interests"></span>--></h3>
 		<p>&nbsp;</p>
 	</div>
-	<div class="col-md-12 border-top">
-	<h2 class="text-center">SUMMARY OF CONTRIBUTION/YEAR</h2>
-		<div id="column-chart">
+
+	<c:choose>
+		<c:when test="${planType == 'Defined Benefit' && contrGraph.contributionGraphActive == 'TRUE'}">
 			
-		</div>
-	</div>
+		</c:when>
+		<c:otherwise>
+			<div class="col-md-12 border-top">
+				<h2 class="text-center">SUMMARY OF CONTRIBUTION/YEAR</h2>
+				<div id="column-chart">
+
+				</div>
+			</div>
+		</c:otherwise>
+	</c:choose>
+
 	<!-- <div class="col-md-4 border-top">
 		<h2 class="text-center">BENEFIT SUMMARY</h2>
 					<h3 class="text-center"><small>ACCUMMULATED BENEFITS</small></h3>
