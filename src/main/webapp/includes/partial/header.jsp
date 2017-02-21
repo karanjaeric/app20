@@ -8,7 +8,7 @@
 <title>${ company.name }</title>
 <meta content="bryanitur" name="author" />
 <link
-	href='http://fonts.googleapis.com/css?family=${ theme.font }'
+	href='//fonts.googleapis.com/css?family=${ theme.font }'
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css"
 	href="static/bootstrap-3.3.5/css/bootstrap.min.css" />
