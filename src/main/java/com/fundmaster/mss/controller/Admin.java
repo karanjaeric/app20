@@ -797,8 +797,10 @@ public class Admin extends BaseServlet implements Serializable {
 
         DBContributionGraph dbContributionGraph = dbGraphBeanI.find();
         boolean contributionGraphActive = this.get(request, "contributionGraphActive").equalsIgnoreCase("true");
-        jLogger.i("Contribution status >>>>>>>>>>>>>>>>>>> " + contributionGraphActive);
+        boolean interestActive = this.get(request, "interestActive").equalsIgnoreCase("true");
+
         dbContributionGraph.setContributionGraphActive(contributionGraphActive);
+        dbContributionGraph.setInterestActive(interestActive);
 
         if (dbGraphBeanI.edit(dbContributionGraph) != null) {
             audit(session, "Updated DB Scheme configuration settings");

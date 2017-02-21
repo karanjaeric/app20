@@ -106,7 +106,7 @@
 				<tr><td>PROFILE PRIVILEGES</td><td><input type="checkbox" id="profile_privileges" class="form-control input-sm"  ${permissions.profile_privileges == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>CONFIGURE PROFILE NAMES</td><td><input type="checkbox" id="profile_names" class="form-control input-sm"  ${permissions.profile_names == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>MEMBER EDIT PERMISSIONS</td><td><input type="checkbox" id="member_edit_permissions" class="form-control input-sm"  ${permissions.member_edit_permissions == 'TRUE' ? 'checked' : ''}/></td></tr>
-			    <tr><td>SHOW CONTRIBUTION GRAPH (DB)</td><td><input type="checkbox" id="show_db_contribution_graph" class="form-control input-sm"  ${permissions.show_db_contribution_graph == 'TRUE' ? 'checked' : ''}/></td></tr>
+			    <tr><td>DB SCHEME RESTRICTIONS</td><td><input type="checkbox" id="show_db_contribution_graph" class="form-control input-sm"  ${permissions.show_db_contribution_graph == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>PROFILE LOGIN USERNAME</td><td><input type="checkbox" id="profile_login_username" class="form-control input-sm"  ${permissions.profile_login_username == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>SCHEME MANAGERS</td><td><input type="checkbox" id="scheme_managers" class="form-control input-sm"  ${permissions.scheme_managers == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>PORTAL USERS</td><td><input type="checkbox" id="users" class="form-control input-sm"  ${permissions.users == 'TRUE' ? 'checked' : ''}/></td></tr>

@@ -11,7 +11,7 @@
 		<c:if test="${ permissions.show_db_contribution_graph }">
 			<li id="contribution-graph-li"><a href="javascript:void(0);"><i
 					class="glyphicon glyphicon-stats"></i>&nbsp;<i
-					class="fa fa-chevron-right"></i> SHOW CONTRIBUTION GRAPH (DB)</a></li>
+					class="fa fa-chevron-right"></i> DB SCHEME RESTRICTIONS</a></li>
 		</c:if>
 		<c:if test="${ permissions.profile_login_username }">
 		<li id="profile-login-li"><a href="javascript:void(0);"><i
@@ -440,21 +440,27 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabelContributionGraph">
-						<i class="glyphicon glyphicon-stats"></i>&nbsp;&nbsp;SHOW CONTRIBUTION GRAPH FOR DB SCHEME
+						<i class="glyphicon glyphicon-stats"></i>&nbsp;&nbsp;HIDE/SHOW DB SCHEME ITEMS
 					</h4>
 				</div>
 				<div class="modal-body">
 					<input type="hidden" name="dbGraph_id" value="${ dbContrGraph.id }" id="dbGraph_id"/>
 					<table class="table">
-						<tr><th>ITEM</th><th>VISIBLE</th></tr>
+						<tr><th>ITEM</th><th>HIDE</th></tr>
 						<tr>
 							<td>
 								<label class="control-label">CONTRIBUTION GRAPH</label>
 							</td>
 							<td>
-							<td>
 								<input type="checkbox" name="contributionGraphActive" id="contributionGraphActive" ${dbContrGraph.contributionGraphActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="control-label"> CUMMULATIVE INTEREST</label>
+							</td>
+							<td>
+								<input type="checkbox" name="interestActive" id="interestActive" ${dbContrGraph.interestActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
 					</table>
@@ -702,7 +708,8 @@
 							data: {
 								ACTION: 'DISABLE_CONTRIBUTION_GRAPH',
 								dbGraph_id: $('#dbGraph_id').val(),
-								contributionGraphActive: $('#contributionGraphActive').prop('checked')
+								contributionGraphActive: $('#contributionGraphActive').prop('checked'),
+								interestActive: $('#interestActive').prop('checked')
 							},
 							dataType: 'json',
 							success: function(json) {

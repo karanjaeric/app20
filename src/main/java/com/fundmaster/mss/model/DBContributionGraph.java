@@ -19,6 +19,9 @@ public class DBContributionGraph extends GenericModel<Member>   implements Seria
     @Column(name="contributionGraphActive", nullable=false)
     private boolean contributionGraphActive;
 
+    @Column(name="interestActive", nullable=false)
+    private boolean interestActive;
+
     public Long getId() {
         return id;
     }
@@ -35,10 +38,19 @@ public class DBContributionGraph extends GenericModel<Member>   implements Seria
         this.contributionGraphActive = contributionGraphActive;
     }
 
-    public DBContributionGraph(Long id, boolean contributionGraphActive) {
+    public boolean isInterestActive() {
+        return interestActive;
+    }
+
+    public void setInterestActive(boolean interestActive) {
+        this.interestActive = interestActive;
+    }
+
+    public DBContributionGraph(Long id, boolean contributionGraphActive, boolean interestActive) {
         super();
         this.id = id;
         this.contributionGraphActive = contributionGraphActive;
+        this.interestActive = interestActive;
     }
 
     public DBContributionGraph() {

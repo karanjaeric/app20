@@ -27,8 +27,17 @@
 		</div>
 	</div>
 	<div class="col-md-12 border-top">
-		<h3 class="text-center"><small>ACCUMMULATED BENEFITS TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp; <small>CUMMULATIVE INTEREST TO DATE:</small> <span id="cummulative-interests"></span> <!--&nbsp; <small>AVERAGE INTEREST RATE:</small> <span id="average-interests"></span>--></h3>
-		<p>&nbsp;</p>
+		<h3 class="text-center"><small>ACCUMMULATED BENEFITS TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp;
+
+		<c:choose>
+			<c:when test="${planType == 'Defined Benefit' && contrGraph.interestActive == 'TRUE'}">
+				<p>&nbsp;</p>
+			</c:when>
+			<c:otherwise>
+				<small>CUMMULATIVE INTEREST TO DATE:</small> <span id="cummulative-interests"></span></h3>
+				<p>&nbsp;</p>
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 	<c:choose>
