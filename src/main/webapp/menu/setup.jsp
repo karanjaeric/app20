@@ -758,6 +758,10 @@
 						<label class="control-label" for="supportEmail">Support Email:</label>
 						<input type="text" class="form-control" id="supportEmail" name="supportEmail" placeholder="Support Email" value="${email.supportEmail}">
 					</div>
+					<div class="form-group">
+						<label class="control-label" for="sendWhatifEmail">Send What-if-Analysis Email:</label>
+						<input style="margin-left: 80px" type="checkbox" name="sendWhatifEmail" id="sendWhatifEmail" ${email.sendWhatifEmail == 'TRUE' ? 'checked' : ''}/>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
@@ -1341,8 +1345,11 @@
 						$.ajax({
 							url: $('#base_url').val() + 'admin',
 							type: 'post',
-							data: {email_id: $('#email_id').val(), defaultEmail: $('#defaultEmail').val(),
-								marketingEmail: $('#marketingEmail').val(), supportEmail: $('#supportEmail').val(),
+							data: {email_id: $('#email_id').val(),
+								defaultEmail: $('#defaultEmail').val(),
+								marketingEmail: $('#marketingEmail').val(),
+								supportEmail: $('#supportEmail').val(),
+								sendWhatifEmail: $('#sendWhatifEmail').prop('checked'),
 								ACTION: 'EMAILS'},
 							dataType: 'json',
 							success: function(json) {

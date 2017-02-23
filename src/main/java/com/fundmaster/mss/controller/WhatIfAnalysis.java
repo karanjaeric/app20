@@ -69,33 +69,43 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-		String subject = "What-if-Analysis Calculator details";
-		jLogger.i("Subject: " + subject);
-		String message = "Hello," + System.lineSeparator() + "Here are the details from the calculator: " + System.lineSeparator() +
-				"Email: " + this.get(request, "emailAddress") + System.lineSeparator() + "Phone Number: " + this.get(request, "phoneNumber") +
-				System.lineSeparator(); /*+ "Age: " + this.get(request, "yourAge")*/
-		jLogger.i("The message: " + message);
-		Company company = companyBeanI.find();
-		Emails emails = emailsBeanI.find();
-		String recipient = emails.getMarketingEmail();
-		jLogger.i("Recipient: " + recipient);
-		String senderId = emails.getDefaultEmail();
-		jLogger.i("Sender email: " + senderId);
-		String senderName = company.getName();
-		jLogger.i("Sender name: " + senderName);
-		boolean status = apiEJB.sendEmail(recipient, senderId, senderName, subject, message,
-				this.getSessKey(request, Constants.SCHEME_ID), false, null);
-		jLogger.i("Status is: " + status);
-
 		Setting settings = settingBeanI.find();
 		String formula = settings.getWhatIfAnalysisFormula();
 		jLogger.i("The formula is: " + formula);
-		this.respond(response, true, "", apiEJB.calculateWhatIfAnalysis(this.get(request, "yearsToProject"),
-				this.get(request, "contributions"), this.get(request, "rateOfReturn"), this.get(request, "salaryEscalationRate"),
-				this.get(request, "inflationRate"),this.get(request, "emailAddress"),this.get(request, "phoneNumber"),
-				this.get(request, "yourAge"), formula));
 
+		Emails email = emailsBeanI.find();
+		jLogger.i("Whats the status: " + email.isSendWhatifEmail());
 
+		if (email.isSendWhatifEmail() == true) {
+
+			try {
+
+				String subject = "What-if-Analysis Calculator details";
+				jLogger.i("Subject: " + subject);
+				String message = "Hello," + System.lineSeparator() + "Here are the details from the calculator: " + System.lineSeparator() +
+						"Email: " + this.get(request, "emailAddress") + System.lineSeparator() + "Phone Number: " + this.get(request, "phoneNumber") +
+						System.lineSeparator(); /*+ "Age: " + this.get(request, "yourAge")*/
+				jLogger.i("The message: " + message);
+				Company company = companyBeanI.find();
+				Emails emails = emailsBeanI.find();
+				String recipient = emails.getMarketingEmail();
+				jLogger.i("Recipient: " + recipient);
+				String senderId = emails.getDefaultEmail();
+				jLogger.i("Sender email: " + senderId);
+				String senderName = company.getName();
+				jLogger.i("Sender name: " + senderName);
+				boolean status = apiEJB.sendEmail(recipient, senderId, senderName, subject, message,
+						this.getSessKey(request, Constants.SCHEME_ID), false, null);
+				jLogger.i("Status is: " + status);
+
+			} catch (Exception ex){
+				ex.printStackTrace();
+			}
+		}
+
+			this.respond(response, true, "", apiEJB.calculateWhatIfAnalysis(this.get(request, "yearsToProject"),
+					this.get(request, "contributions"), this.get(request, "rateOfReturn"), this.get(request, "salaryEscalationRate"),
+					this.get(request, "inflationRate"),this.get(request, "emailAddress"),this.get(request, "phoneNumber"),
+					this.get(request, "yourAge"), formula));
 	}
 }

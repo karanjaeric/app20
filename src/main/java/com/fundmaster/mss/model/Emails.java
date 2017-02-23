@@ -27,16 +27,20 @@ public class Emails extends GenericModel<Emails> implements Serializable {
     @Column (name = "supportEmail", nullable = false)
     private String supportEmail;
 
+    @Column(name="sendWhatifEmail", nullable=false)
+    private boolean sendWhatifEmail;
+
     public Emails() {
 
     }
 
-    public Emails(Long id, String defaultEmail,String marketingEmail, String supportEmail) {
+    public Emails(Long id, String defaultEmail,String marketingEmail, String supportEmail, boolean sendWhatifEmail) {
         super();
         this.id = id;
         this.defaultEmail = defaultEmail;
         this.marketingEmail = marketingEmail;
         this.supportEmail = supportEmail;
+        this.sendWhatifEmail = sendWhatifEmail;
     }
 
     public Long getId() {
@@ -69,5 +73,13 @@ public class Emails extends GenericModel<Emails> implements Serializable {
 
     public void setSupportEmail(String supportEmail) {
         this.supportEmail = supportEmail;
+    }
+
+    public boolean isSendWhatifEmail() {
+        return sendWhatifEmail;
+    }
+
+    public void setSendWhatifEmail(boolean sendWhatifEmail) {
+        this.sendWhatifEmail = sendWhatifEmail;
     }
 }

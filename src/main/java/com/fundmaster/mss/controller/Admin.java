@@ -1808,7 +1808,7 @@ public class Admin extends BaseServlet implements Serializable {
     /* Email Addresses Update Request */
 
         Emails emails = new Emails(helper.toLong(this.get(request, "email_id")), this.get(request, "defaultEmail"),
-        this.get(request, "marketingEmail"), this.get(request, "supportEmail"));
+        this.get(request, "marketingEmail"), this.get(request, "supportEmail"), this.get(request, "sendWhatifEmail").equalsIgnoreCase("true"));
 
         if (emailsBeanI.edit(emails) != null) {
             audit(session, "Updated Email Addresses");
