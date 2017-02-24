@@ -1034,6 +1034,8 @@ public class Admin extends BaseServlet implements Serializable {
         String password = this.get(request, "currentPassword");
         String new_password = this.get(request, "newPassword");
         User u = userBeanI.findUser(username, password);
+        jLogger.i("User found: " + u.getUsername());
+
         if (u != null) {
             if (u.getSecurityCode().equalsIgnoreCase(securityCode)) {
                 if (!(usedPasswordBeanI.isUsed(new_password) && policy.isPassword_reuse())) {
@@ -1054,16 +1056,22 @@ public class Admin extends BaseServlet implements Serializable {
         }
     }
     private void preChangeUserPassword(HttpServletRequest request, HttpServletResponse response) {
-        User u = userBeanI.find(this.getSessKey(request, Constants.USER),
-                this.getSessKey(request, Constants.U_PROFILE));
-        String securityCode = helper.shorterUUID(UUID.randomUUID().toString(), 1);
-            /*
-			 * Shorter code is more user friendly... the UUID was way too long
-			 * :)
-			 */
+
+        User u = userBeanI.find(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
+        String userProfile = u.getUserProfile();
+        String userEmail = u.getUsername();
+        jLogger.i("User found: " + u.getUsername());
+
+        String securityCode = UUID.randomUUID().toString();
         u.setSecurityCode(securityCode);
+
         userBeanI.edit(u);
-        XiMember m = apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID), null);
+
+        //XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
+
+        XiMember m = apiEJB.memberExists(userProfile, userEmail);
+        jLogger.i("Our member still: " + m.getEmailAddress());
+
         try {
             Emails emails = emailsBeanI.find();
             boolean status = apiEJB.sendEmail(m.getEmailAddress(), emails.getDefaultEmail(), null, "Change Password Request",

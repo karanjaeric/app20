@@ -263,17 +263,20 @@ public class MemberController extends BaseServlet implements Serializable {
     }
 
     private void preChangePassword(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
         User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
-        String securityCode = helper.shorterUUID(UUID.randomUUID().toString(), 1);
-			/* Shorter code is more user friendly... the UUID was way too long :) */
-        u.setSecurityCode(securityCode);
+
+		String securityCode = UUID.randomUUID().toString();
+		u.setSecurityCode(securityCode);
         userBeanI.edit(u);
 
         XiMember m = null;
 
+		//m = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
+
         List<Scheme> schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
 
-        if(schemes != null && schemes.size() > 0) {
+        /*if(schemes != null && schemes.size() > 0) {
             if(this.getSessKey(request, Constants.SCHEME_ID) == null)
             {
                 m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),schemes.get(0).getId().toString());
@@ -283,13 +286,18 @@ public class MemberController extends BaseServlet implements Serializable {
                 m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.SCHEME_ID));
             }
 
-        }
+        }*/
+
+		m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
 
         if(m != null)
             session.setAttribute(Constants.PROFILE_ID,m.getId());
         try {
 			Emails emails = emailsBeanI.find();
-            boolean status = apiEJB.sendEmail(m != null ? m.getEmailAddress() : null,emails.getDefaultEmail(), null,"Change Password Request", "Dear " + u.getUsername() + ", " +
+
+			jLogger.i("Member email is: " + m.getEmailAddress());
+
+            boolean status = apiEJB.sendEmail(m.getEmailAddress() ,emails.getDefaultEmail(), null,"Change Password Request", "Dear " + u.getUsername() + ", " +
                     "You recently requested to change your password. " +
                     "Here is your security code:" +
                     "" + securityCode +
