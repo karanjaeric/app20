@@ -63,9 +63,16 @@
 							<label class="control-label" for="recipient">Send To:</label>
 							<select id="recipient" name="recipient" class="form-control">
 								<option value="" disabled>--Select Recipient--</option>
+
+								<c:if test="${email.defaultEmailActive == 'TRUE'}">
 								<option value="defaultEmail">Administrator</option>
+								</c:if>
+								<c:if test="${email.marketingEmailActive == 'TRUE'}">
 								<option value="marketingEmail">Marketing</option>
+								</c:if>
+								<c:if test="${email.supportEmailActive == 'TRUE'}">
 								<option value="supportEmail">Support</option>
+								</c:if>
 							</select>
 						</div>
 

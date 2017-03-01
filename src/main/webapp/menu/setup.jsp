@@ -59,7 +59,7 @@
 				class="fa fa-chevron-right"></i> CONTACT REASONS</a></li>
 		</c:if>
 	</ul>
-	
+
 <!-- BANNERS -->
 <div class="modal fade" id="modal-imageBanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabelBanner" aria-hidden="true">
 		<form role="form" id="form-imageBanner">
@@ -92,7 +92,7 @@
 			</div>
 		</form>
 	</div>
-	
+
 	<!-- SUPER ADMINISTRATOR LOGIN -->
 <div class="modal fade" id="modal-authenticate" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSULogin" aria-hidden="true">
 		<form role="form" id="form-authenticate">
@@ -138,7 +138,7 @@
 						<fieldset>
 							<legend>Font Family</legend>
 							<div class="form-group">
-							 <label class="control-label" for="minor">Font Family:</label>							
+							 <label class="control-label" for="minor">Font Family:</label>
 							 <select name="font" id="font" class="form-control">
 							 	<option>Open Sans</option>
 							 	<option>Roboto</option>
@@ -157,11 +157,11 @@
 							 <input type="text" class="form-control colorpicker" name="major" id="major" value="${ theme.major }"/>
 							</div>
 							<div class="form-group">
-								 <label class="control-label" for="minor">Minor Color:</label>							
+								 <label class="control-label" for="minor">Minor Color:</label>
 								 <input type="text" class="form-control colorpicker" name="minor" id="minor" value="${ theme.minor }"/>
 							</div>
 							<div class="form-group">
-								 <label class="control-label" for="minor">Other Color:</label>							
+								 <label class="control-label" for="minor">Other Color:</label>
 								 <input type="text" class="form-control colorpicker" name="other" id="other" value="${ theme.other }"/>
 							</div>
 						</fieldset>
@@ -172,11 +172,11 @@
 							 <input type="text" class="form-control colorpicker" name="header" id="header" value="${ theme.header }"/>
 							</div>
 							<div class="form-group">
-								 <label class="control-label" for="content">Content:</label>							
+								 <label class="control-label" for="content">Content:</label>
 								 <input type="text" class="form-control colorpicker" name="content" id="content" value="${ theme.content }"/>
 							</div>
 							<div class="form-group">
-								 <label class="control-label" for="footer">Footer:</label>							
+								 <label class="control-label" for="footer">Footer:</label>
 								 <input type="text" class="form-control colorpicker" name="footer" id="footer" value="${ theme.footer }"/>
 							</div>
 						</fieldset>
@@ -262,7 +262,7 @@
 							 <select name="loginField" id="loginField" class="form-control">
 							 		<c:forEach var="ordinal" items="${ ordinals }">
 							 			<option value="${ordinal.code }">${ ordinal.name }</option>
-							 		</c:forEach>		 	
+							 		</c:forEach>
 							 </select>
 						</div>
 					</div>
@@ -392,7 +392,7 @@
 						<input type="hidden" name="menu_id" value="${ menu.id }" id="menu_id"/>
 						<table class="table">
 							<tr><th>MENU ITEM</th><th>MENU TEXT</th><th>VISIBLE</th></tr>
-							
+
 							<tr>
 							<td>
 							<label class="control-label">ANNUITY QUOTATION</label>
@@ -400,13 +400,13 @@
 							<td>
 							<div class="form-group">
 							<input type="text" class="form-control" name="annuityQuotationName" id="annuityQuotationName" placeholder="ANNUITY QUOTATION" value="${ menu.annuityQuotationName }"/>
-							</div>	
+							</div>
 							</td>
 							<td>
 							 <input type="checkbox" name="annuityQuotationActive" id="annuityQuotationActive" ${menu.annuityQuotationActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
-							
+
 							<tr>
 							<td>
 							 <label class="control-label">POTENTIAL MEMBERS</label>
@@ -420,7 +420,7 @@
 							 <input type="checkbox" name="potentialMemberActive" id="potentialMemberActive" ${menu.potentialMemberActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
-							
+
 							<tr>
 							<td>
 							 <label class="control-label">POTENTIAL SPONSOR</label>
@@ -434,7 +434,7 @@
 							 <input type="checkbox" name="potentialSponsorActive" id="potentialSponsorActive" ${menu.potentialSponsorActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
-							
+
 							<tr>
 							<td>
 							 <label class="control-label">INTEREST RATES</label>
@@ -448,7 +448,7 @@
 							 <input type="checkbox" name="interestRatesActive" id="interestRatesActive"  ${menu.interestRatesActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
-							
+
 							<tr>
 							<td>
 							 <label class="control-label">WHAT IF ANALYSIS</label>
@@ -462,7 +462,7 @@
 							 <input type="checkbox" name="whatIfAnalysisActive" id="whatIfAnalysisActive"  ${menu.whatIfAnalysisActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
-							
+
 							<tr>
 							<td>
 							 <label class="control-label">CONTACT US</label>
@@ -604,11 +604,11 @@
 					<div class="modal-body">
 					<table class="table table-responsive">
 					<tr><th>LOGO</th><th>ACTION</th></tr>
-					
+
 					<c:forEach var="logo" items="${logos}">
 					<tr><td><img src="${pageContext.request.contextPath}/logos/${ logo.id }" alt="logo" width="100" /></td><td><a class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="remove_logo('${logo.id}');"><i class="glyphicon glyphicon-trash"></i>&nbsp;REMOVE</a></td></tr>
 					</c:forEach>
-					
+
 					</table>
 						<input type="hidden" name="ACTION" id="ACTION" value="LOGO" />
 						<div class="form-group">
@@ -625,7 +625,7 @@
 			</div>
 		</form>
 	</div>
-	
+
 <!-- SOCIAL MEDIA -->
 	<div class="modal fade" id="modal-social" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSocial" aria-hidden="true">
 		<form role="form" id="form-social">
@@ -732,47 +732,94 @@
 		</form>
 	</div>
 
-
-<!--  EMAIL DETAILS-->
-
+<!-- EMAILS CONFIG -->
 <div class="modal fade" id="modal-email" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEmail" aria-hidden="true">
+
 	<form role="form" id="form-email">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabelEmail">
-						<i class="glyphicon glyphicon-envelope"></i>&nbsp;&nbsp;EMAIL ADDRESSES
+						<i class="glyphicon glyphicon-envelope"></i>&nbsp;&nbsp;EMAIL ADDRESSES CONFIGURATION
 					</h4>
 				</div>
 				<div class="modal-body">
-					<input type="hidden" name="company_id" id="email_id" value="${email.id}" />
-					<div class="form-group">
-						<label class="control-label" for="defaultEmail">Default Mailing Email: </label>
-						<input type="text" class="form-control" id="defaultEmail" name="defaultEmail" placeholder="Mailing Email" value="${email.defaultEmail}">
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="marketingEmail">Marketing Email:</label>
-						<input type="text" class="form-control" id="marketingEmail" name="marketingEmail" placeholder="Marketing Email" value="${email.marketingEmail}">
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="supportEmail">Support Email:</label>
-						<input type="text" class="form-control" id="supportEmail" name="supportEmail" placeholder="Support Email" value="${email.supportEmail}">
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="sendWhatifEmail">Send What-if-Analysis Email:</label>
-						<input style="margin-left: 80px" type="checkbox" name="sendWhatifEmail" id="sendWhatifEmail" ${email.sendWhatifEmail == 'TRUE' ? 'checked' : ''}/>
-					</div>
+					<input type="hidden" name="company_id" value="${email.id}" id="email_id"/>
+
+					<table class="table">
+
+						<tr><th>ITEM</th><th>EMAIL</th><th>ACTIVE</th></tr>
+
+						<tr>
+							<td>
+								<label class="control-label">Default Mailing Email: </label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="defaultEmail" id="defaultEmail" placeholder="Mailing Email" value="${email.defaultEmail}"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="defaultEmailActive" id="defaultEmailActive" ${email.defaultEmailActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label" for="marketingEmail">Marketing Email:</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" id="marketingEmail" name="marketingEmail" placeholder="Marketing Email" value="${email.marketingEmail}"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="marketingEmailActive" id="marketingEmailActive" ${email.marketingEmailActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label" for="supportEmail">Support Email:</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" id="supportEmail" name="supportEmail" placeholder="Support Email" value="${email.supportEmail}"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="supportEmailActive" id="supportEmailActive" ${email.supportEmailActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label" for="sendWhatifEmail">Send What-if-Analysis Email:</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input style="margin-left: 80px" type="checkbox" name="sendWhatifEmail" id="sendWhatifEmail" ${email.sendWhatifEmail == 'TRUE' ? 'checked' : ''}/>
+								</div>
+							</td>
+							<td>
+
+							</td>
+						</tr>
+
+					</table>
 				</div>
 				<div class="modal-footer">
 					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
 					<input class="btn btn-primary" type="submit"
-						   value="Save Details" id="btn-email">
+						   value="Save Changes" id="btn-email">
 				</div>
 			</div>
 		</div>
 	</form>
+
 </div>
-	
+
+
 	<script type="text/javascript">
 
 
@@ -795,7 +842,7 @@
 				}
 			});
 		}
-		
+
 		function remove_logo(id)
 		{
 			bootbox.confirm("<p class=\"text-center\">You are about to remove a logo. Are you sure?</p>", function (result) {
@@ -815,13 +862,13 @@
 				}
 			});
 		}
-		
+
 		$(document).ready(function(){
-			
+
 		    $('#interest-settings-li').click(function(){
 		        $('#modal-interest-rate-columns').modal('show');
 		    });
-		    
+
 		    $('#company-li').click(function(){
 		        $('#modal-company').modal('show');
 		    });
@@ -829,11 +876,11 @@
 			$('#email-li').click(function(){
 				$('#modal-email').modal('show');
 			});
-		    
+
 		    $('#social-li').click(function(){
 		        $('#modal-social').modal('show');
 		    });
-		    
+
 		    $('#logo-li').click(function(){
 		        $('#modal-logo').modal('show');
 		    });
@@ -855,7 +902,7 @@
 		            }
 		        });
 			}
-			
+
 		    $('#theme-li').click(function(){
 		        $('#modal-theme').modal('show');
 		    });
@@ -867,7 +914,7 @@
 		    $('#imageBanner-li').click(function(){
 		        $('#modal-imageBanner').modal('show');
 		    });
-		    
+
 		    $('#other-settings-li').click(function(){
 		        $('#modal-authenticate').modal('show');
 		    });
@@ -938,7 +985,7 @@
 		    });
 
 			/* Homepage Menu Form */
-		    
+
 		    $('#form-menu').bootstrapValidator({
 		        message: 'This value is not valid',
 		        feedbackIcons: {
@@ -954,7 +1001,7 @@
 		                    }
 		                }
 		            },
-		            
+
 		            potentialMemberName: {
 		                validators: {
 		                    notEmpty: {
@@ -962,7 +1009,7 @@
 		                    }
 		                }
 		            },
-		            
+
 		            potentialSponsorName: {
 		                validators: {
 		                    notEmpty: {
@@ -970,7 +1017,7 @@
 		                    }
 		                }
 		            },
-		            
+
 		            interestRatesName: {
 		                validators: {
 		                    notEmpty: {
@@ -1007,16 +1054,16 @@
         		$.ajax({
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
-        	        data: {menu_id: $('#menu_id').val(), annuityQuotationName: $('#annuityQuotationName').val(), 
-        	        	potentialMemberName: $('#potentialMemberName').val(), 
-        	        	potentialSponsorName: $('#potentialSponsorName').val(), 
-        	        	interestRatesName: $('#interestRatesName').val(), 
-        	        	whatIfAnalysisName: $('#whatIfAnalysisName').val(), 
-        	        	contactUsName: $('#contactUsName').val(), 
-        	        	annuityQuotationActive: $('#annuityQuotationActive').prop('checked'), 
-        	        	potentialMemberActive: $('#potentialMemberActive').prop('checked'), 
+        	        data: {menu_id: $('#menu_id').val(), annuityQuotationName: $('#annuityQuotationName').val(),
+        	        	potentialMemberName: $('#potentialMemberName').val(),
+        	        	potentialSponsorName: $('#potentialSponsorName').val(),
+        	        	interestRatesName: $('#interestRatesName').val(),
+        	        	whatIfAnalysisName: $('#whatIfAnalysisName').val(),
+        	        	contactUsName: $('#contactUsName').val(),
+        	        	annuityQuotationActive: $('#annuityQuotationActive').prop('checked'),
+        	        	potentialMemberActive: $('#potentialMemberActive').prop('checked'),
         	        	potentialSponsorActive: $('#potentialSponsorActive').prop('checked'),
-        	        	interestRatesActive: $('#interestRatesActive').prop('checked'), 
+        	        	interestRatesActive: $('#interestRatesActive').prop('checked'),
         	        	whatIfAnalysisActive: $('#whatIfAnalysisActive').prop('checked'), contactUsActive: $('#contactUsActive').prop('checked'), ACTION: 'MENU'},
         	        dataType: 'json',
         	        success: function(json) {
@@ -1189,7 +1236,7 @@
 		        }
 			})
 			.on('success.form.bv', function(e) {
-                
+
                 // Prevent form submission
                 e.preventDefault();
 
@@ -1267,7 +1314,7 @@
 		        }
 			})
 			.on('success.form.bv', function(e) {
-                
+
                 // Prevent form submission
                 e.preventDefault();
 
@@ -1350,6 +1397,9 @@
 								marketingEmail: $('#marketingEmail').val(),
 								supportEmail: $('#supportEmail').val(),
 								sendWhatifEmail: $('#sendWhatifEmail').prop('checked'),
+								defaultEmailActive: $('#defaultEmailActive').prop('checked'),
+								marketingEmailActive: $('#marketingEmailActive').prop('checked'),
+								supportEmailActive: $('#supportEmailActive').prop('checked'),
 								ACTION: 'EMAILS'},
 							dataType: 'json',
 							success: function(json) {
@@ -1358,10 +1408,10 @@
 								{
 									$('#' + form)[0].reset();
 									$('#' + modal).modal('hide');
-									html = 'Email Address saved';
+									html = 'Email Configuration saved';
 								}
 								else
-									html = 'Email Address could not be saved';
+									html = 'Email Configuration could not be saved';
 								bootbox.alert(html);
 							}
 						});
@@ -1393,7 +1443,7 @@
 		        }
 			})
 			.on('success.form.bv', function(e) {
-                
+
                 // Prevent form submission
                 e.preventDefault();
 
@@ -1442,7 +1492,7 @@
 		        }
 			})
 			.on('success.form.bv', function(e) {
-                
+
                 // Prevent form submission
                 e.preventDefault();
 
@@ -1500,7 +1550,7 @@
 		                    notEmpty: {
 		                        message: 'Please enter the portal\'s base url'
 		                    }
-		                }		
+		                }
 			        },
 		            xiPassword: {
 		                validators: {
@@ -1519,7 +1569,7 @@
 		        }
 			})
 			.on('success.form.bv', function(e) {
-                
+
                 // Prevent form submission
                 e.preventDefault();
 
@@ -1575,7 +1625,7 @@
 		        }
 			})
 			.on('success.form.bv', function(e) {
-                
+
                 // Prevent form submission
                 e.preventDefault();
                 var btn = "btn-imageBanner";
@@ -1586,7 +1636,7 @@
                 $('#' + btn).val('Please wait...');
 
                 var formData = new FormData($(this)[0]);
-                
+
         		$.ajax({
         	        url: $('#base_url').val() + 'admin',
         	        type: 'POST',
@@ -1599,9 +1649,9 @@
         	            {
         	                $('#' + form)[0].reset();
         	                $('#' + modal).modal('hide');
-        	
+
         	            }
-        	            
+
         	            html = 'Company imageBanner successfully uploaded';
         	            bootbox.alert(html);
         	            /*else
@@ -1609,14 +1659,14 @@
         	            bootbox.alert(html);
         	            $('#' + btn).val(btn_text);*/
         	        },
-        	        
+
         	        cache: false,
         	        contentType: false,
         	        processData: false
         	    });
 
 			});
-			
+
 		    $('#form-logo').bootstrapValidator({
 		        message: 'This value is not valid',
 		        feedbackIcons: {
@@ -1636,7 +1686,7 @@
 		        }
 			})
 			.on('success.form.bv', function(e) {
-                
+
                 // Prevent form submission
                 e.preventDefault();
                 var btn = "btn-logo";
@@ -1647,7 +1697,7 @@
                 $('#' + btn).val('Please wait...');
 
                 var formData = new FormData($(this)[0]);
-                
+
         		$.ajax({
         	        url: $('#base_url').val() + 'admin',
         	        type: 'POST',
@@ -1673,9 +1723,9 @@
         	    });
 
 			});
-		    
+
 		    $('.colorpicker').colorpicker();
-			
+
 			});
-		
+
 	</script>

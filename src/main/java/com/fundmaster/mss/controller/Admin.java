@@ -243,6 +243,8 @@ public class Admin extends BaseServlet implements Serializable {
                     List<ContactCategory> contactReasons = contactCategoryBeanI.find();
                     request.setAttribute("contactReasons", contactReasons);
                     request.setAttribute("isManager", helper.isManager(request));
+                    Emails email = emailsBeanI.find();
+                    request.setAttribute("email", email);
 
                     if ((schemes != null ? schemes.size() : 0) > 1 && this.getSessKey(request, Constants.SCHEME_ID) == null)
                         request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
@@ -1511,10 +1513,10 @@ public class Admin extends BaseServlet implements Serializable {
                 emailAddress = mbr.getEmailAddress();
             }
 
-            String salary = this.get(request, "currentAnnualPensionableSalary");
+            /*String salary = this.get(request, "currentAnnualPensionableSalary");
             if (salary == "" || salary == null) {
                 salary = mbr.getAnnualPensionableSalary();
-            }
+            }*/
 
             String city = this.get(request, "city");
             if (city == "" || city == null) {
@@ -1559,7 +1561,6 @@ public class Admin extends BaseServlet implements Serializable {
                         .put("member.mbshipStatus", status)
                         .put("member.address.email", emailAddress)
                         .put("member.address.cellPhone", phoneNumber)
-                        .put("member.currentAnnualPensionableSalary", salary)
                         .put("member.address.postalAddress", postalAddress)
                         .put("member.country", country)
                         .put("member.address.town", city)
@@ -1815,8 +1816,24 @@ public class Admin extends BaseServlet implements Serializable {
     private void updateEmails(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
     /* Email Addresses Update Request */
 
-        Emails emails = new Emails(helper.toLong(this.get(request, "email_id")), this.get(request, "defaultEmail"),
-        this.get(request, "marketingEmail"), this.get(request, "supportEmail"), this.get(request, "sendWhatifEmail").equalsIgnoreCase("true"));
+        boolean defaultEmailActive = this.get(request, "defaultEmailActive").equalsIgnoreCase("true");
+        boolean marketingEmailActive = this.get(request, "marketingEmailActive").equalsIgnoreCase("true");
+        boolean supportEmailActive = this.get(request, "supportEmailActive").equalsIgnoreCase("true");
+        boolean sendWhatifEmail = this.get(request, "sendWhatifEmail").equalsIgnoreCase("true");
+
+        Emails emails = emailsBeanI.find();
+
+        emails.setDefaultEmailActive(defaultEmailActive);
+        emails.setMarketingEmailActive(marketingEmailActive);
+        emails.setSupportEmailActive(supportEmailActive);
+        emails.setSendWhatifEmail(sendWhatifEmail);
+
+        emails.setDefaultEmail(this.get(request, "defaultEmail"));
+        emails.setMarketingEmail(this.get(request, "marketingEmail"));
+        emails.setSupportEmail(this.get(request, "supportEmail"));
+
+        /*Emails emails = new Emails(helper.toLong(this.get(request, "email_id")), this.get(request, "defaultEmail"),
+        this.get(request, "marketingEmail"), this.get(request, "supportEmail"), this.get(request, "sendWhatifEmail").equalsIgnoreCase("true"));*/
 
         if (emailsBeanI.edit(emails) != null) {
             audit(session, "Updated Email Addresses");

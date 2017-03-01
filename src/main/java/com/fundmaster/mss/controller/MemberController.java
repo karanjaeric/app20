@@ -301,7 +301,7 @@ public class MemberController extends BaseServlet implements Serializable {
                     "You recently requested to change your password. " +
                     "Here is your security code:" +
                     "" + securityCode +
-                    "You will require it to be able to change your password", this.getSessKey(request, Constants.SCHEME_ID), false, "");
+                    " You will require it to be able to change your password", this.getSessKey(request, Constants.SCHEME_ID), false, "");
             if(status)
             {
                     this.respond(response, true, "The change password instructions have been sent to your email address", null);

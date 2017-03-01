@@ -30,14 +30,27 @@ public class Emails extends GenericModel<Emails> implements Serializable {
     @Column(name="sendWhatifEmail", nullable=false)
     private boolean sendWhatifEmail;
 
+    @Column(name="defaultEmailActive", nullable=false)
+    private boolean defaultEmailActive;
+
+    @Column(name="marketingEmailActive", nullable=false)
+    private boolean marketingEmailActive;
+
+    @Column(name="supportEmailActive", nullable=false)
+    private boolean supportEmailActive;
+
     public Emails() {
 
     }
 
-    public Emails(Long id, String defaultEmail,String marketingEmail, String supportEmail, boolean sendWhatifEmail) {
+    public Emails(Long id, String defaultEmail,String marketingEmail, String supportEmail, boolean sendWhatifEmail, boolean defaultEmailActive,
+    boolean marketingEmailActive, boolean supportEmailActive) {
         super();
         this.id = id;
         this.defaultEmail = defaultEmail;
+        this.defaultEmailActive =defaultEmailActive;
+        this.marketingEmailActive = marketingEmailActive;
+        this.supportEmailActive = supportEmailActive;
         this.marketingEmail = marketingEmail;
         this.supportEmail = supportEmail;
         this.sendWhatifEmail = sendWhatifEmail;
@@ -81,5 +94,29 @@ public class Emails extends GenericModel<Emails> implements Serializable {
 
     public void setSendWhatifEmail(boolean sendWhatifEmail) {
         this.sendWhatifEmail = sendWhatifEmail;
+    }
+
+    public boolean isDefaultEmailActive() {
+        return defaultEmailActive;
+    }
+
+    public void setDefaultEmailActive(boolean defaultEmailActive) {
+        this.defaultEmailActive = defaultEmailActive;
+    }
+
+    public boolean isMarketingEmailActive() {
+        return marketingEmailActive;
+    }
+
+    public void setMarketingEmailActive(boolean marketingEmailActive) {
+        this.marketingEmailActive = marketingEmailActive;
+    }
+
+    public boolean isSupportEmailActive() {
+        return supportEmailActive;
+    }
+
+    public void setSupportEmailActive(boolean supportEmailActive) {
+        this.supportEmailActive = supportEmailActive;
     }
 }
