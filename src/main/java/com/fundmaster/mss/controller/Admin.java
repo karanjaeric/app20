@@ -548,12 +548,23 @@ public class Admin extends BaseServlet implements Serializable {
             }
         }
         jLogger.i("Send to: " + sendTo);
-        String senderId = this.getSessKey(request, Constants.PROFILE_ID);
-        jLogger.i("SENDER ID ========================> " + senderId);
-        XiMember mbr = apiEJB.getMemberDetails(senderId, null);
-        String senderName = mbr.getName();
-        jLogger.i("SENDER NAME ======================> " + senderName);
-        boolean status = apiEJB.sendEmail(sendTo, this.getSessKey(request, Constants.USER), senderName, subject, message,
+
+        /*String senderId = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("SENDER ID ========================> " + senderId);*/
+
+        String userName = this.getSessKey(request, Constants.USER);
+        jLogger.i("Username is ===============> " + userName);
+
+        User usr = userBeanI.findByUsername(userName);
+        String userProfile = usr.getUserProfile();
+
+        //XiMember mbr = apiEJB.getMemberDetails(senderId, null);
+
+        XiMember mbr = apiEJB.memberExists(userProfile, userName);
+
+        String senderEmail = mbr.getEmailAddress();
+        jLogger.i("SENDER NAME ======================> " + senderEmail);
+        boolean status = apiEJB.sendEmail(sendTo, this.getSessKey(request, Constants.USER), senderEmail, subject, message,
                 this.getSessKey(request, Constants.SCHEME_ID), attachment, attachment_url);
         if (status) {
             this.respond(response, true, "The email was successfully sent", null);
