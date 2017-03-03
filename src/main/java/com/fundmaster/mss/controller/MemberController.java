@@ -223,6 +223,9 @@ public class MemberController extends BaseServlet implements Serializable {
             case Actions.CH:
                 getMemberContributions(response, apiEJB.getMemberContributions(this.getSessKey(request, Constants.PROFILE_ID)));
                 break;
+			case Actions.CH_GRID:
+				getContributionsGrid(request, response, session);
+				break;
             case Actions.PRE_CHANGE_PASSWORD:
                 preChangePassword(request, response, session);
                 break;
@@ -261,6 +264,19 @@ public class MemberController extends BaseServlet implements Serializable {
     private void getMemberContributions(HttpServletResponse response, JSONObject memberContributions) {
         this.respond(response, true, "", memberContributions);
     }
+
+	private void getContributionsGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+		User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
+		XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
+		String member_id = Long.toString(m.getId());
+		jLogger.i("Member found ================ > " + member_id);
+
+        JSONObject memberContributions = apiEJB.getMemberFullContributions(member_id);
+        jLogger.i("Member Contributions Returned ================ > " + memberContributions);
+
+		this.respond(response, true, "", memberContributions);
+	}
 
     private void preChangePassword(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 

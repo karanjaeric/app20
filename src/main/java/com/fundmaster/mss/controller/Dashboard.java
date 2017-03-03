@@ -7,6 +7,7 @@ import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
+import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -157,12 +158,17 @@ public class Dashboard extends BaseServlet implements Serializable {
         }
          if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)
                  || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
+             int BATCH = 20;
+             int PER_PAGE = 20;
              switch (action) {
                  case Actions.MEMBER_PERSONAL_INFORMATION:
                      showMemberPersonalInformation(request, response, session);
                      break;
                  case Actions.MEMBER_CONTRIBUTION_HISTORY:
                      showMemberContributionHistory(request, response, session);
+                     break;
+                 case Actions.MEMBER_CONTRIBUTION_HISTORY_GRID:
+                     showMemberContributionHistoryGrid(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
                      break;
                  case Actions.MEMBER_STATEMENT_OF_ACCOUNT:
                      showMemberStatementOfAccount(request, response, session);
@@ -259,52 +265,6 @@ public class Dashboard extends BaseServlet implements Serializable {
                 this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed agents commissions");
         request.getRequestDispatcher(REPO_FOLDER + "/agent_commissions.jsp").forward(request, response);
-    }
-
-    private void showAgentClients(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                      String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
-
-        int page;
-        int batch;
-
-        try {
-            batch = Integer.parseInt(this.get(request, "batch"));
-        } catch (NumberFormatException nfe) {
-            batch = 1;
-        }
-        try {
-            page = Integer.parseInt(this.get(request, "page"));
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-            page = 1;
-        }
-
-        int count = Constants.RECORD_COUNT;
-        int pages = (count / PER_PAGE);
-        int start = (PER_PAGE * (page - 1)) * (batch - 1);
-        int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
-            begin = 1;
-        request.setAttribute("begin", begin);
-        request.setAttribute("pages", pages);
-        request.setAttribute("per_page", PER_PAGE);
-        request.setAttribute("batch", batch);
-        request.setAttribute("page", page);
-
-        String agent_id;
-        agent_id = this.get(request, "memberID");
-
-        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
-            agent_id = this.getSessKey(request, Constants.PROFILE_ID);
-        request.setAttribute("agent_id", agent_id);
-
-        List<AgentClient> agentClients = apiEJB.getAgentClients(agent_id, start, PER_PAGE);
-        request.setAttribute("clients", agentClients);
-        request.setAttribute("pages", pages);
-        logActivity("AGENT CLIENTS", "Viewed agent clients", this.getSessKey(request, Constants.UID),
-                this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
-        this.audit(session, "Viewed agent clients");
-        request.getRequestDispatcher(REPO_FOLDER + "/agent_clients.jsp").forward(request, response);
     }
 
     private void showWithdrawalStatements(HttpServletRequest request, HttpServletResponse response, HttpSession session,
@@ -488,6 +448,79 @@ MediaBeanI mediaBeanI;
         this.audit(session, "Viewed member contribution history");
         request.getRequestDispatcher("member/contribution_history.jsp").forward(request, response);
     }
+
+    private void showAgentClients(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                  String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
+
+        int page;
+        int batch;
+
+        try {
+            batch = Integer.parseInt(this.get(request, "batch"));
+        } catch (NumberFormatException nfe) {
+            batch = 1;
+        }
+        try {
+            page = Integer.parseInt(this.get(request, "page"));
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            page = 1;
+        }
+
+        int count = Constants.RECORD_COUNT;
+        int pages = (count / PER_PAGE);
+        int start = (PER_PAGE * (page - 1)) * (batch - 1);
+        int begin = ((batch * BATCH) - BATCH) + 1;
+        if (begin < 1)
+            begin = 1;
+        request.setAttribute("begin", begin);
+        request.setAttribute("pages", pages);
+        request.setAttribute("per_page", PER_PAGE);
+        request.setAttribute("batch", batch);
+        request.setAttribute("page", page);
+
+        String agent_id;
+        agent_id = this.get(request, "memberID");
+
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
+            agent_id = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("agent_id", agent_id);
+
+        List<AgentClient> agentClients = apiEJB.getAgentClients(agent_id, start, PER_PAGE);
+        request.setAttribute("clients", agentClients);
+        request.setAttribute("pages", pages);
+        logActivity("AGENT CLIENTS", "Viewed agent clients", this.getSessKey(request, Constants.UID),
+                this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed agent clients");
+        request.getRequestDispatcher(REPO_FOLDER + "/agent_clients.jsp").forward(request, response);
+    }
+
+    private void showMemberContributionHistoryGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                                   String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
+
+
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String member_id;
+
+        member_id = this.get(request, "memberID");
+        if (member_id == null)
+            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("member_id", member_id);
+
+        /*JSONObject memberContributions = apiEJB.getMemberContributions(member_id);
+        jLogger.i("Member Contributions Returned ================ > " + memberContributions);*/
+
+        logActivity("MEMBER CONTRIBUTION HISTORY", "Viewed member contribution history", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member contribution history");
+        request.getRequestDispatcher("member/contribution_history_grid.jsp").forward(request, response);
+    }
+
 @EJB
 SocialBeanI socialBeanI;
     @EJB

@@ -20,7 +20,11 @@
 
         <li id="contribution-history-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-record"></i>&nbsp;<i
-                class="fa fa-chevron-right"></i> CONTRIBUTION HISTORY</a></li>
+                class="fa fa-chevron-right"></i> CONTRIBUTION HISTORY (REPORT)</a></li>
+
+        <li id="contribution-history-grid-li"><a href="javascript:void(0);"><i
+                class="glyphicon glyphicon-record"></i>&nbsp;<i
+                class="fa fa-chevron-right"></i> CONTRIBUTION HISTORY (GRID)</a></li>
 
         <li id="balances-history-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-list"></i>&nbsp;<i

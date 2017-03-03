@@ -463,6 +463,15 @@ $(document).ready(function(){
 		m_switch("CH");
 	});
 
+	$('#contribution-history-grid-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#contribution-history-grid-li').addClass('active');
+
+		m_switch("CH_GRID");
+	});
+
 	$('#statement-of-account-li').click(function(){
 		
 		$('#main-menu.nav li').removeClass('active');

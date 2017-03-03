@@ -6,6 +6,7 @@ package com.fundmaster.mss.common;
 public class Actions {
     public static final String SWITCH_SCHEME = "SWITCH_SCHEME";
     public static final String CH = "CH";
+    public static final String CH_GRID = "CH_GRID";
     public static final String PRE_CHANGE_PASSWORD = "PRE_CHANGE_PASSWORD";
     public static final String LOGOUT = "LOGOUT";
     public static final String REASON = "REASON";
@@ -23,6 +24,7 @@ public class Actions {
     public static final String PENSION_DETAILS = "PENSION_DETAILS";
     public static final String PENSION_ADVICE = "PENSION_ADVICE";
     public static final String MEMBER_CONTRIBUTION_HISTORY = "CH";
+    public static final String MEMBER_CONTRIBUTION_HISTORY_GRID = "CH_GRID";
     public static final String MEMBER_STATEMENT_OF_ACCOUNT = "SA";
     public static final String MEMBER_BENEFIT_PROJECTIONS = "BP";
     public static final String MEMBER_MEDIA_FILES = "MF";

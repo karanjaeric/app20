@@ -809,6 +809,19 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public JSONObject getMemberFullContributions(String memberID) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GETMEMBERCONTRIBUTIONS + memberID);
+            jLogger.i("Contributions json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public List<UserProfile> getUserProfiles() {
         JSONObject response;
         try {
