@@ -93,6 +93,10 @@
                             success: function(json) {
                                 console.log(json);
                                 html = "<tr><th>DATE</th><th>MONTH</th><th>YEAR</th><th>EE</th><th>ER</th><th>AVC</th><th>AVCER</th><th>SALARY</th><th>TYPE</th><th>TOTAL</th><th>REGISTERED/<br>UNREGISTERED</th></tr>";
+                                var eeSum = 0;
+                                var erSum = 0;
+                                var salSum = 0;
+                                var totalSum = 0;
                                 if(json.success)
                                 {
 
@@ -106,7 +110,18 @@
                                                 html = html + "<tr><td>" + row['datePaid'] + "</td><td>" + row['month'] + "</td><td>" + row['year'] + "</td><td>" + format_no(row['ee']) + "</td><td>" + format_no(row['er']) +
                                                         "</td><td>" + format_no(row['avc']) + "</td><td>" + format_no(row['avcer']) + "</td><td>" + format_no(row['salary']) + "</td><td>" + row['type'] +
                                                         "</td><td>" + format_no(row['total']) + "</td><td>" + row['status'] + "</td></tr>";
+
+                                                eeSum += row['ee'];
+                                                erSum += row['er'];
+                                                salSum += row['salary'];
+                                                totalSum += row['total'];
+
                                             }
+                                            empty = "<tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>";
+                                            totals = "<tr><td>TOTAL:</td><td></td><td></td><td>" + format_no(eeSum) + "</td><td>" + format_no(erSum) + "</td><td></td><td></td><td>" + format_no(salSum) +
+                                                    "</td><td></td><td>" + format_no(totalSum) + "</td><td></td></tr>";
+                                            console.log("EE SUM IS: " + format_no(eeSum));
+                                            html = html + empty + totals;
                                             stop_wait();
                                         }
                                     });
