@@ -70,6 +70,33 @@
     }
 
     $(document).ready(function(){
+
+        $('.datepicker').datetimepicker(
+        $('#dateFrom').datetimepicker({
+                    format: 'dd-mm-yyyy',
+                    startView: 'month',
+                    minView: 'month',
+                    autoclose: true
+                })
+        .on('changeDate', function(e) {
+                            $(this).datetimepicker('hide');
+                            // Revalidate the date field
+                            $('#ch-form').bootstrapValidator('revalidateField', 'dateTo');
+                        }),
+        $('#dateTo')
+         .datetimepicker({
+                            format: 'dd-mm-yyyy',
+                            startView: 'month',
+                            minView: 'month',
+                            autoclose: true
+                        })
+                        .on('changeDate', function(e) {
+                            $(this).datetimepicker('hide');
+                            // Revalidate the date field
+                            $('#ch-form').bootstrapValidator('revalidateField', 'dateTo');
+                        }));
+
+
         $('#contribution-form').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
@@ -78,7 +105,20 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-
+                dateFrom: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select the start date'
+                        }
+                    }
+                },
+                dateTo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select the ending date'
+                        }
+                    }
+                }
             }
         })
                 .on('success.form.bv', function(e) {
@@ -95,6 +135,8 @@
                                 html = "<tr><th>DATE</th><th>MONTH</th><th>YEAR</th><th>EE</th><th>ER</th><th>AVC</th><th>AVCER</th><th>SALARY</th><th>TYPE</th><th>TOTAL</th><th>REGISTERED/<br>UNREGISTERED</th></tr>";
                                 var eeSum = 0;
                                 var erSum = 0;
+                                var avcSum = 0;
+                                var avcErSum = 0;
                                 var salSum = 0;
                                 var totalSum = 0;
                                 if(json.success)
@@ -115,10 +157,12 @@
                                                 erSum += row['er'];
                                                 salSum += row['salary'];
                                                 totalSum += row['total'];
+                                                avcSum += row['avc'];
+                                                avcErSum += row['avcer'];
 
                                             }
-                                            empty = "<tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>";
-                                            totals = "<tr><td>TOTAL:</td><td></td><td></td><td>" + format_no(eeSum) + "</td><td>" + format_no(erSum) + "</td><td></td><td></td><td>" + format_no(salSum) +
+                                            empty = "<tr><th></th><th></th><th></th><th>TOTAL EE</th><th>TOTAL ER</th><th>TOTAL AVC</th><th>TOTAL AVCER</th><th>TOTAL SALARY</th><th></th><th>GRAND TOTAL</th><th></th></tr>";
+                                            totals = "<tr><td></td><td></td><td></td><td>" + format_no(eeSum) + "</td><td>" + format_no(erSum) + "</td><td>" + format_no(avcSum) + "</td><td>" + format_no(avcErSum) + "</td><td>" + format_no(salSum) +
                                                     "</td><td></td><td>" + format_no(totalSum) + "</td><td></td></tr>";
                                             console.log("EE SUM IS: " + format_no(eeSum));
                                             html = html + empty + totals;
