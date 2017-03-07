@@ -37,6 +37,25 @@
 								</c:forEach>
 							</ul>
 						</div>
+
+						<div class="form-group">
+							<div class="col-md-12">
+							<label class="control-label">Select Scheme (If applicable)</label>
+							</div>
+
+										<select class="form-control" name="scheme" id="scheme">
+											<option value="">Scheme....</option>
+											<c:forEach var="scheme" items="${schemes}">
+												<option value="${scheme.id}">
+														${scheme.name}
+												</option>
+											</c:forEach>
+										</select>
+
+							</div>
+						<div class="col-md-12">
+						</div>
+
 						<div class="form-group">
 							<label class="control-label">Select Specific Member (If applicable)</label>
 							 <table class="table">
@@ -67,6 +86,7 @@
 							 <td>
 						        <button class="btn btn-info" onclick="search_member();" type="button">Select Member</button>
 							 </td>
+								</tr>
 							 </table>
 							 <input type="hidden" id="member_id" name="member_id"/>
 						</div>

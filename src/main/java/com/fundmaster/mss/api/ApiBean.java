@@ -822,6 +822,24 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public JSONObject getContributionsBetweenDates(String fromDate, String toDate, String memberID) {
+        JSONObject response;
+        try {
+
+            jLogger.i("Dates to go to Xi, From: " + fromDate + " To " + toDate);
+
+            response = URLGet(APICall.GET_CONTRIBUTIONS_BTWN_DATES + memberID + "/" + fromDate + "/" + toDate);
+
+            jLogger.i("Contributions json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+
+    @Override
     public List<UserProfile> getUserProfiles() {
         JSONObject response;
         try {

@@ -272,9 +272,29 @@ public class MemberController extends BaseServlet implements Serializable {
 		String member_id = Long.toString(m.getId());
 		jLogger.i("Member found ================ > " + member_id);
 
-        JSONObject memberContributions = apiEJB.getMemberFullContributions(member_id);
-        jLogger.i("Member Contributions Returned ================ > " + memberContributions);
+		DateFormat format_from = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat("MMM-dd-yyyy", Locale.ENGLISH);
 
+		String fromDate_String = this.get(request, "dateFrom");
+		String toDate_String = this.get(request, "dateTo");
+
+		Date fromDate = null;
+		Date toDate = null;
+
+		try {
+			fromDate = format_from.parse(fromDate_String);
+			toDate = format_from.parse(toDate_String);
+		} catch (ParseException pe) {
+			// TODO Auto-generated catch block
+			jLogger.e("ParseException was detected: " + pe.getMessage());
+		}
+
+		jLogger.i("From Date ================ > " + fromDate);
+		jLogger.i("To Date ================ > " + toDate);
+
+		//JSONObject memberContributions = apiEJB.getMemberFullContributions(member_id);
+		JSONObject memberContributions = apiEJB.getContributionsBetweenDates(format.format(fromDate), format.format(toDate), member_id);
+		
 		this.respond(response, true, "", memberContributions);
 	}
 

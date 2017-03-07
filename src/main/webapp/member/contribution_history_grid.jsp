@@ -73,7 +73,7 @@
 
         $('.datepicker').datetimepicker(
         $('#dateFrom').datetimepicker({
-                    format: 'dd-mm-yyyy',
+                    format: 'mm-dd-yyyy',
                     startView: 'month',
                     minView: 'month',
                     autoclose: true
@@ -85,7 +85,7 @@
                         }),
         $('#dateTo')
          .datetimepicker({
-                            format: 'dd-mm-yyyy',
+                            format: 'mm-dd-yyyy',
                             startView: 'month',
                             minView: 'month',
                             autoclose: true
@@ -128,7 +128,9 @@
                         $.ajax({
                             url: $('#base_url').val() + 'member',
                             type: 'post',
-                            data: {ACTION:'CH_GRID'},
+                            data: {ACTION:'CH_GRID',
+                                dateFrom: $('#dateFrom').val(),
+                                dateTo: $('#dateTo').val()},
                             dataType: 'json',
                             success: function(json) {
                                 console.log(json);

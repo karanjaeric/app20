@@ -878,6 +878,8 @@ SocialBeanI socialBeanI;
     private void showMedia(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         List<Media> medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
         request.setAttribute("medias", medias);
+        List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
+        request.setAttribute("schemes", schemes);
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
         logActivity("MEDIA & FILES", "Accessed media & files (documents)", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));

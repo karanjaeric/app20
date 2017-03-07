@@ -29,6 +29,7 @@ public interface ApiEJB {
     List<UserProfile> getUserProfiles();
     JSONObject getMemberContributions(String memberID);
     JSONObject getMemberFullContributions(String memberID);
+    JSONObject getContributionsBetweenDates(String fromDate, String toDate, String memberId);
     JSONObject getSchemeContributions(String schemeID ,String profileID);
     JSONObject getBeneficiaries(String memberID);
     List<Beneficiary> getBeneficiariesList(String memberID);

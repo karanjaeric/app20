@@ -605,9 +605,18 @@ public class Admin extends BaseServlet implements Serializable {
 
                 Blob fileBlob;
                 try {
+                    jLogger.i("================ Tuko Hapa ==================");
                     fileBlob = new javax.sql.rowset.serial.SerialBlob(bFile);
                     Date date = new Date();
-                    Media media = new Media(fileName, this.getSessKey(request, Constants.SCHEME_ID), this.get(request, "description"), this.get(request, "access"), date);
+
+                    String schemeId = this.get(request, "scheme");
+                    jLogger.i("============ Scheme Id passed: " + schemeId + " ====================");
+
+                    if(schemeId == null || schemeId.isEmpty()) {
+                        schemeId = this.getSessKey(request, Constants.SCHEME_ID);
+                    }
+
+                    Media media = new Media(fileName, schemeId, this.get(request, "description"), this.get(request, "access"), date);
                     media.setFile(fileBlob);
                     media.setPath(savePath);
                     boolean administrator = this.get(request, Constants.ADMIN_PROFILE) != null && this.get(request, Constants.ADMIN_PROFILE).equals("on");
