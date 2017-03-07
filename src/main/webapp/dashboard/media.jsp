@@ -6,18 +6,36 @@
 	<table class="table table-responsive table-striped">
 		<tr><th>FILE NAME</th><th>DESCRIPTION</th><th>ACCESS</th><th>DATE CREATED</th><th>ACTIONS</th></tr>
 		<c:forEach var="file" items="${medias}">
-		
-		<tr><td>${ file.name }</td><td>${ file.description }</td><td>${ file.access }</td><td>${ file.created }</td>
-		
-		<td>
-		<a class="btn btn-sm btn-info" href="${pageContext.request.contextPath}/downloads/${ file.id }">
-		<i class="glyphicon glyphicon-download"></i>&nbsp; DOWNLOAD</a>&nbsp;&nbsp;
-		
-		<c:if test="${ permissions.media_remove }">
-		<button class="btn btn-sm btn-danger" onclick="remove_media('${ file.id }', '${ file.name }');">
-		<i class="glyphicon glyphicon-trash"></i>&nbsp; REMOVE</button></c:if>
-		
-		</td>
+
+			<c:choose>
+				<c:when test="${profile == 'SPONSOR' }">
+					<c:if test="${ file.schemeID eq scheme_id}">
+						<tr><td>${ file.name }</td><td>${ file.description }</td><td>${ file.access }</td><td>${ file.created }</td>
+						<td>
+							<a class="btn btn-sm btn-info" href="${pageContext.request.contextPath}/downloads/${ file.id }">
+								<i class="glyphicon glyphicon-download"></i>&nbsp; DOWNLOAD</a>&nbsp;&nbsp;
+
+							<c:if test="${ permissions.media_remove }">
+								<button class="btn btn-sm btn-danger" onclick="remove_media('${ file.id }', '${ file.name }');">
+									<i class="glyphicon glyphicon-trash"></i>&nbsp; REMOVE</button></c:if>
+
+						</td>
+					</c:if>
+				</c:when>
+				<c:otherwise>
+					<tr><td>${ file.name }</td><td>${ file.description }</td><td>${ file.access }</td><td>${ file.created }</td>
+					<td>
+						<a class="btn btn-sm btn-info" href="${pageContext.request.contextPath}/downloads/${ file.id }">
+							<i class="glyphicon glyphicon-download"></i>&nbsp; DOWNLOAD</a>&nbsp;&nbsp;
+
+						<c:if test="${ permissions.media_remove }">
+							<button class="btn btn-sm btn-danger" onclick="remove_media('${ file.id }', '${ file.name }');">
+								<i class="glyphicon glyphicon-trash"></i>&nbsp; REMOVE</button></c:if>
+
+					</td>
+				</c:otherwise>
+			</c:choose>
+
 		</tr>
 		</c:forEach>
 	</table>

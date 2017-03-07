@@ -882,6 +882,20 @@ SocialBeanI socialBeanI;
         request.setAttribute("schemes", schemes);
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
+
+        String profile = this.getSessKey(request, Constants.U_PROFILE);
+        request.setAttribute("profile", profile);
+
+        jLogger.i("The profile is: " + profile);
+
+        String schemeId = "";
+        if (profile.equalsIgnoreCase(Constants.SPONSOR)){
+            jLogger.i("============ Great, we're sure ni Sponsor ===================");
+            schemeId = this.getSessKey(request, Constants.SCHEME_ID);
+            jLogger.i("============ Scheme ID is: " + schemeId + " ===================");
+        }
+        request.setAttribute("scheme_id", schemeId);
+
         logActivity("MEDIA & FILES", "Accessed media & files (documents)", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed media & files (documents)");
         request.getRequestDispatcher(REPO_FOLDER + "/media.jsp").forward(request, response);
