@@ -230,6 +230,16 @@ $(document).ready(function(){
 		switch_page('MEMBER');
 		
     });
+
+	$('#member-listing-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#member-listing-main-li').addClass('active');
+
+		switch_page('MEMBER_LISTING');
+
+	});
 	
 
 	$('#member-operations-main-li').click(function(){

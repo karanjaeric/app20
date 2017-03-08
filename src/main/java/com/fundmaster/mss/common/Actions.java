@@ -41,6 +41,7 @@ public class Actions {
     public static final String DASHBOARD_USER_ACCESS_REPORTS = "USER_ACCESS_REPORTS";
     public static final String CONTACT_REASONS = "CONTACT_REASONS";
     public static final String MEMBER_OPERATIONS = "MEMBER_OPERATIONS";
+    public static final String MEMBER_LISTING = "MEMBER_LISTING";
     public static final String SCHEME_MANAGER = "SCHEME_MANAGER";
     public static final String MEMBER = "MEMBER";
     public static final String RECEIPT = "RECEIPT";

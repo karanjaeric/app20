@@ -88,6 +88,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.MEMBER_OPERATIONS:
                     showMemberOperations(request, response, session, REPO_FOLDER);
                     break;
+                case Actions.MEMBER_LISTING:
+                    showMemberListing(request, response, session, REPO_FOLDER);
+                    break;
                 case Actions.SCHEME_MANAGER:
                     showSchemeManagers(request, response, session, REPO_FOLDER);
                     break;
@@ -339,6 +342,18 @@ public class Dashboard extends BaseServlet implements Serializable {
         logActivity("ADMIN FEE LISTING", "Viewed admin fee listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed admin fee listing");
         request.getRequestDispatcher(REPO_FOLDER + "/admin_fee_listing.jsp").forward(request, response);
+    }
+
+    private void showMemberListing(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                     String REPO_FOLDER) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        logActivity("MEMBER LISTING", "Viewed member listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member listing");
+        request.getRequestDispatcher(REPO_FOLDER + "/member_listing.jsp").forward(request, response);
     }
 
     private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
