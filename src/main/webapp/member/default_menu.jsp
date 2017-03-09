@@ -29,9 +29,15 @@
         <li id="balances-history-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-list"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> BALANCES HISTORY</a></li>
+
         <li id="statement-of-account-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-user"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> STATEMENT OF ACCOUNT</a></li>
+
+        <li id="unitized-statement-li"><a href="javascript:void(0);"><i
+                class="glyphicon glyphicon-user"></i>&nbsp;<i
+                class="fa fa-chevron-right"></i> UNITIZED STATEMENT</a></li>
+
         <li id="benefits-projection-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> BENEFITS PROJECTION</a></li>

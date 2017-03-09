@@ -491,6 +491,15 @@ $(document).ready(function(){
 		m_switch("SA");
 	});
 
+	$('#unitized-statement-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#unitized-statement-li').addClass('active');
+
+		m_switch("US");
+	});
+
 	$('#what-if-analysis-li').click(function(){
 		
 		$('#main-menu.nav li').removeClass('active');

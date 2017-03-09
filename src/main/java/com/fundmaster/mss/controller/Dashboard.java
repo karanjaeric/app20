@@ -175,7 +175,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                      break;
                  case Actions.MEMBER_STATEMENT_OF_ACCOUNT:
                      showMemberStatementOfAccount(request, response, session);
-
+                     break;
+                 case Actions.MEMBER_UNITIZED_STATEMENT:
+                     showMemberUnitizedStatement(request, response, session);
                      break;
                  case Actions.MEMBER_BENEFIT_PROJECTIONS:
                      showMemberBenefitProjections(request, response, session);
@@ -446,6 +448,20 @@ MediaBeanI mediaBeanI;
         logActivity("MEMBER STATEMENT OF ACCOUNT", "Viewed member statement of account", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member statement of account");
         request.getRequestDispatcher("member/statement_of_account.jsp").forward(request, response);
+    }
+
+    private void showMemberUnitizedStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Setting setting = settingBeanI.find();
+        request.setAttribute("settings", setting);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String memberId;
+        memberId = this.get(request, "memberID");
+        if (memberId == null)
+            memberId = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("member_id", memberId);
+        logActivity("MEMBER UNITIZED STATEMENT", "Viewed member unitized statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member unitized statement");
+        request.getRequestDispatcher("member/unitized_statement.jsp").forward(request, response);
     }
 
     private void showMemberContributionHistory(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {

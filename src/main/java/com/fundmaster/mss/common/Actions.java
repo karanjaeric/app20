@@ -26,6 +26,7 @@ public class Actions {
     public static final String MEMBER_CONTRIBUTION_HISTORY = "CH";
     public static final String MEMBER_CONTRIBUTION_HISTORY_GRID = "CH_GRID";
     public static final String MEMBER_STATEMENT_OF_ACCOUNT = "SA";
+    public static final String MEMBER_UNITIZED_STATEMENT = "US";
     public static final String MEMBER_BENEFIT_PROJECTIONS = "BP";
     public static final String MEMBER_MEDIA_FILES = "MF";
     public static final String MEMBER_CLAIMS = "MC";
