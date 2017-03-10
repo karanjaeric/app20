@@ -91,6 +91,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.MEMBER_LISTING:
                     showMemberListing(request, response, session, REPO_FOLDER);
                     break;
+                case Actions.CORPORATE_STATEMENT:
+                    showCorporateStatement(request, response, session, REPO_FOLDER);
+                    break;
                 case Actions.SCHEME_MANAGER:
                     showSchemeManagers(request, response, session, REPO_FOLDER);
                     break;
@@ -356,6 +359,22 @@ public class Dashboard extends BaseServlet implements Serializable {
         logActivity("MEMBER LISTING", "Viewed member listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member listing");
         request.getRequestDispatcher(REPO_FOLDER + "/member_listing.jsp").forward(request, response);
+    }
+
+    private void showCorporateStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                   String REPO_FOLDER) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("Sponsor ID: " + sponsorId);
+        request.setAttribute("sponsorId", sponsorId);
+
+        logActivity("CORPORATE STATEMENT", "Viewed corporate statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed corporate statement");
+        request.getRequestDispatcher(REPO_FOLDER + "/corporate-statement.jsp").forward(request, response);
     }
 
     private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {

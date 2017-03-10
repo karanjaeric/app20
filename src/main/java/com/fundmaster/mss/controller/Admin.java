@@ -1416,6 +1416,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setReports(this.get(request, "reports").equalsIgnoreCase("true"));
         perm.setMember_movement(this.get(request, "member_movement").equalsIgnoreCase("true"));
         perm.setMember_listing(this.get(request, "member_listing").equalsIgnoreCase("true"));
+        perm.setCorporate_statement(this.get(request, "corporate_statement").equalsIgnoreCase("true"));
         perm.setFund_movement(this.get(request, "fund_movement").equalsIgnoreCase("true"));
         perm.setReceipt_summary(this.get(request, "receipt_summary").equalsIgnoreCase("true"));
         perm.setUac(this.get(request, "uac").equalsIgnoreCase("true"));

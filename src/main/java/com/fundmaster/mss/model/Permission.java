@@ -92,6 +92,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.member_listing = member_listing;
 	}
 
+	public boolean isCorporate_statement() {
+		return corporate_statement;
+	}
+
+	public void setCorporate_statement(boolean corporate_statement) {
+		this.corporate_statement = corporate_statement;
+	}
+
 	public boolean isOperations() {
 		return operations;
 	}
@@ -348,7 +356,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	private String profile;
 	
-	private boolean setup, content, schemes, receipts, payments, members, member_listing, operations, media, uac, analytics;
+	private boolean setup, content, schemes, receipts, payments, members, member_listing, corporate_statement, operations, media, uac, analytics;
 	
 	private boolean portal_members, portal_member_view, portal_member_process, portal_member_delete, portal_member_add;
 	
@@ -450,7 +458,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	public Permission(long id, String profile, boolean setup, boolean content,
 			boolean schemes, boolean receipts, boolean payments,
-			boolean members, boolean member_listing, boolean operations, boolean media, boolean uac,
+			boolean members, boolean member_listing, boolean corporate_statement, boolean operations, boolean media, boolean uac,
 			boolean analytics, boolean setup_company, boolean setup_email, boolean setup_logo,
 			boolean setup_menu, boolean db_menu, boolean setup_social, boolean setup_theme,
 			boolean setup_banner, boolean setup_interest_rate,
@@ -482,6 +490,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.payments = payments;
 		this.members = members;
 		this.member_listing = member_listing;
+		this.corporate_statement = corporate_statement;
 		this.operations = operations;
 		this.media = media;
 		this.reports = reports;

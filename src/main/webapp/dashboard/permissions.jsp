@@ -69,6 +69,7 @@
 			<tr><td>MEMBER LISTING</td><td><input type="checkbox" id="member_listing" class="form-control input-sm"  ${permissions.member_listing == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>ADMIN FEE LISTING</td><td><input type="checkbox" id="admin_fee_listing" class="form-control input-sm"  ${permissions.admin_fee_listing == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>FUND MOVEMENT</td><td><input type="checkbox" id="fund_movement" class="form-control input-sm"  ${permissions.fund_movement == 'TRUE' ? 'checked' : ''}/></td></tr>
+			<tr><td>CORPORATE STATEMENT</td><td><input type="checkbox" id="corporate_statement" class="form-control input-sm"  ${permissions.corporate_statement == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>RECEIPT SUMMARY</td><td><input type="checkbox" id="receipt_summary" class="form-control input-sm"  ${permissions.receipt_summary == 'TRUE' ? 'checked' : ''}/></td></tr>
 		</table>
 	</div>

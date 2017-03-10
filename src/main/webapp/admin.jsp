@@ -65,6 +65,12 @@
 								class="glyphicon glyphicon-list"></i>&nbsp;<i
 								class="fa fa-chevron-right"></i> MEMBER LISTING</a></li>
 					</c:if>
+
+					<c:if test="${ permissions.corporate_statement == 'TRUE' }">
+						<li id="corporate-statement-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-list"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> CORPORATE STATEMENT</a></li>
+					</c:if>
 						<c:if test="${ permissions.operations == 'TRUE' }">
 							<li id="member-operations-main-li"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-user"></i>&nbsp;<i

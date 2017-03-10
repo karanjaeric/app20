@@ -240,6 +240,16 @@ $(document).ready(function(){
 		switch_page('MEMBER_LISTING');
 
 	});
+
+	$('#corporate-statement-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#corporate-statement-main-li').addClass('active');
+
+		switch_page('CORPORATE_STATEMENT');
+
+	});
 	
 
 	$('#member-operations-main-li').click(function(){
