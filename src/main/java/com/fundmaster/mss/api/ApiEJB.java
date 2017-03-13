@@ -43,6 +43,7 @@ public interface ApiEJB {
     JSONObject getExitsInYear(String schemeID);
     JSONObject getReasonsForExit();
     List<XiMember> searchProfiles(String search, String identifier, String profile, String schemeID, int start, int end);
+    List<XiMember> searchProfilesBySponsor(String search, String identifier, String profile, String sponsorID, String schemeID);
     JSONObject searchProfilesJSON(String search, String identifier, String profile, String schemeID, int start, int end);
     XiMember getMemberDetails(String memberID, String schemeId);
     XiPensioner getPensionerDetails(String pensionerId, String schemeId);

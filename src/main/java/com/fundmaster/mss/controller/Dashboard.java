@@ -1042,6 +1042,8 @@ SocialBeanI socialBeanI;
         String profile;
         String identifier;
         String search;
+        String sponsorId = "";
+
         try {
             batch = Integer.parseInt(this.get(request, "batch"));
         } catch (NumberFormatException nfe) {
@@ -1060,10 +1062,28 @@ SocialBeanI socialBeanI;
         search = this.get(request, "search");
         request.setAttribute("search", search);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
-        if (identifier != null && profile != null && !Objects.equals(search, ""))
+
+
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.SPONSOR)) {
+
+            sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
+        }
+
+        if (identifier != null && profile != null && !Objects.equals(search, "") && sponsorId != null) {
+
+            members = apiEJB.searchProfilesBySponsor(search, identifier, profile, sponsorId, this.getSessKey(request, Constants.SCHEME_ID));
+        }
+
+        else if (identifier != null && profile != null && !Objects.equals(search, "")) {
+
             members = apiEJB.searchProfiles(search, identifier, profile, this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
-        else
+        }
+        else {
             members = apiEJB.getMemberListing(this.getSessKey(request, Constants.PROFILE_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
+        }
+
+
+
         int count = Constants.RECORD_COUNT;
         int begin = ((batch * BATCH) - BATCH) + 1;
         if (begin < 1)

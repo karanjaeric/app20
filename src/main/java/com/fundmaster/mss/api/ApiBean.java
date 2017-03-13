@@ -518,6 +518,17 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public List<XiMember> searchProfilesBySponsor(String search, String identifier, String profile, String sponsorId, String schemeID) {
+        try {
+            JSONObject response = URLPost(APICall.SEARCH_FOR_SPONSOR_MEMBER_DETAILS + identifier + "/" + search + "/" + profile + "/" + sponsorId + "/" + schemeID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            return this.xiMembersFromJSON(response);
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public JSONObject getReasonsForExit() {
         JSONObject response;
         try {
