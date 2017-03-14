@@ -90,6 +90,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String REMOVE_MEDIA = "REMOVE_MEDIA";
     private static final String MEMBER_PERMISSION = "MEMBER_PERMISSION";
     private static final String DISABLE_CONTRIBUTION_GRAPH = "DISABLE_CONTRIBUTION_GRAPH";
+    private static final String MEMBER_MENU_CONFIG = "MEMBER_MENU_CONFIG";
     private static final String PLF = "PLF";
     private static final String ADD_CONTACT_REASON = "ADD_CONTACT_REASON";
     private static final String LOGO = "LOGO";
@@ -148,6 +149,8 @@ public class Admin extends BaseServlet implements Serializable {
     @EJB
      DBGraphBeanI dbGraphBeanI;
     @EJB
+    MemberMenuBeanI memberMenuBeanI;
+    @EJB
     SocialBeanI socialBeanI;
     @EJB
     ApiEJB apiEJB;
@@ -188,7 +191,16 @@ public class Admin extends BaseServlet implements Serializable {
                     request.setAttribute("schemes", schemes);
                     PasswordPolicy policy = passwordPolicyBeanI.find();
                     request.setAttribute("policy", policy);
-                    request.setAttribute("username", this.getSessKey(request, Constants.USER));
+                    //request.setAttribute("username", this.getSessKey(request, Constants.USER));
+
+                    String userName = this.getSessKey(request, Constants.USER);
+                    jLogger.i("Username is ===============> " + userName);
+
+                    User usr = userBeanI.findByUsername(userName);
+                    String userProfile = usr.getUserProfile();
+                    XiMember mbr = apiEJB.memberExists(userProfile, userName);
+                    String memberName = mbr.getName();
+                    request.setAttribute("memberName", memberName);
 
                     if (schemes != null && schemes.size() > 0) {
                         jLogger.i("We have the schemes");
@@ -457,6 +469,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case DISABLE_CONTRIBUTION_GRAPH:
                 editContributionGraph(request, response, session);
+                break;
+            case MEMBER_MENU_CONFIG:
+                editMemberMenu(request, response, session);
                 break;
             case PLF:
                 updateProfileLoginFields(request, response, session);
@@ -829,6 +844,34 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, true, "DB Scheme configurations successfully saved", null);
         } else
             this.respond(response, true, "DB Scheme configurations could not be saved", null);
+    }
+
+    private void editMemberMenu(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        MemberMenu memberMenu = memberMenuBeanI.find();
+        boolean contributionHistoryReport = this.get(request, "contributionHistoryReport").equalsIgnoreCase("true");
+        boolean contributionHistoryGrid = this.get(request, "contributionHistoryGrid").equalsIgnoreCase("true");
+        boolean BalancesHistory = this.get(request, "BalancesHistory").equalsIgnoreCase("true");
+        boolean StatementOfAccount = this.get(request, "StatementOfAccount").equalsIgnoreCase("true");
+        boolean UnitizedStatement = this.get(request, "UnitizedStatement").equalsIgnoreCase("true");
+        boolean WhatIfAnalysis = this.get(request, "WhatIfAnalysis").equalsIgnoreCase("true");
+        boolean BenefitsProjection = this.get(request, "BenefitsProjection").equalsIgnoreCase("true");
+        boolean Media = this.get(request, "Media").equalsIgnoreCase("true");
+
+        memberMenu.setContributionHistoryReport(contributionHistoryReport);
+        memberMenu.setContributionHistoryGrid(contributionHistoryGrid);
+        memberMenu.setBalancesHistory(BalancesHistory);
+        memberMenu.setStatementOfAccount(StatementOfAccount);
+        memberMenu.setUnitizedStatement(UnitizedStatement);
+        memberMenu.setWhatIfAnalysis(WhatIfAnalysis);
+        memberMenu.setBenefitsProjection(BenefitsProjection);
+        memberMenu.setMedia(Media);
+
+        if (memberMenuBeanI.edit(memberMenu) != null) {
+            audit(session, "Updated Member Menu configuration settings");
+            this.respond(response, true, "Member Menu configurations successfully saved", null);
+        } else
+            this.respond(response, true, "Member Menu configurations could not be saved", null);
     }
 
     private void deleteMediaFile(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1429,6 +1472,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setMember_view(this.get(request, "member_view").equalsIgnoreCase("true"));
         perm.setMember_edit_permissions(this.get(request, "member_edit_permissions").equalsIgnoreCase("true"));
         perm.setShow_db_contribution_graph(this.get(request, "show_db_contribution_graph").equalsIgnoreCase("true"));
+        perm.setMember_menu_config(this.get(request, "member_menu_config").equalsIgnoreCase("true"));
         perm.setProfile_login_username(this.get(request, "profile_login_username").equalsIgnoreCase("true"));
         perm.setProfile_privileges(this.get(request, "profile_privileges").equalsIgnoreCase("true"));
         perm.setProfile_names(this.get(request, "profile_names").equalsIgnoreCase("true"));

@@ -13,6 +13,11 @@
 					class="glyphicon glyphicon-stats"></i>&nbsp;<i
 					class="fa fa-chevron-right"></i> DB SCHEME RESTRICTIONS</a></li>
 		</c:if>
+		<c:if test="${ permissions.member_menu_config }">
+			<li id="member-menu-li"><a href="javascript:void(0);"><i
+					class="glyphicon glyphicon-stats"></i>&nbsp;<i
+					class="fa fa-chevron-right"></i> MEMBER MENU CONFIGURATION</a></li>
+		</c:if>
 		<c:if test="${ permissions.profile_login_username }">
 		<li id="profile-login-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
@@ -475,6 +480,98 @@
 	</form>
 </div>
 <!-- End Contribution  Graph -->
+
+
+<!-- Member Menu Start -->
+
+<div class="modal fade" id="modal-member-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabelMemberMenu" aria-hidden="true">
+	<form role="form" id="form-member-menu">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabelMemberMenu">
+						<i class="glyphicon glyphicon-stats"></i>&nbsp;&nbsp;HIDE/SHOW MEMBER MENU OPTIONS
+					</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="memberMenu_id" value="${ memberMenu.id }" id="memberMenu_id"/>
+					<table class="table">
+						<tr><th>ITEM</th><th>HIDE</th></tr>
+						<tr>
+							<td>
+								<label class="control-label">CONTRIBUTION HISTORY (REPORT)</label>
+							</td>
+							<td>
+								<input type="checkbox" name="contributionHistoryReport" id="contributionHistoryReport" ${memberMenu.contributionHistoryReport == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="control-label"> CONTRIBUTION HISTORY (GRID)</label>
+							</td>
+							<td>
+								<input type="checkbox" name="contributionHistoryGrid" id="contributionHistoryGrid" ${memberMenu.contributionHistoryGrid == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> UNITIZED STATEMENT </label>
+							</td>
+							<td>
+								<input type="checkbox" name="UnitizedStatement" id="UnitizedStatement" ${memberMenu.unitizedStatement == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> BALANCES HISTORY </label>
+							</td>
+							<td>
+								<input type="checkbox" name="BalancesHistory" id="BalancesHistory" ${memberMenu.balancesHistory == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> STATEMENT OF ACCOUNT </label>
+							</td>
+							<td>
+								<input type="checkbox" name="StatementOfAccount" id="StatementOfAccount" ${memberMenu.statementOfAccount == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> WHAT IF ANALYSIS </label>
+							</td>
+							<td>
+								<input type="checkbox" name="WhatIfAnalysis" id="WhatIfAnalysis" ${memberMenu.whatIfAnalysis == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> MEDIA & FILES </label>
+							</td>
+							<td>
+								<input type="checkbox" name="Media" id="Media" ${memberMenu.media == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+					<input class="btn btn-primary" type="submit"
+						   value="Save Permissions" id="btn-member-menu">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- End Member Menu -->
+
 	<script type="text/javascript">
 		$(document).ready(function(){
 
@@ -678,6 +775,7 @@
 			});
 			/* End Form Member Permissions */
 
+
 			/* Form Contributions Graph */
 
 			$('#form-contribution-graph').bootstrapValidator({
@@ -730,6 +828,64 @@
 					});
 			/* End Form Contributions Graph */
 
+			/* Form Member Menu */
+
+			$('#form-member-menu').bootstrapValidator({
+				message: 'This value is not valid',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+
+				}
+			})
+					.on('success.form.bv', function(e) {
+
+						// Prevent form submission
+						e.preventDefault();
+
+						var btn = "btn-member-menu";
+						var form = "form-member-menu";
+						var modal = "modal-member-menu";
+						var btn_text = $('#' + btn).val();
+
+						$('#' + btn).val('Please wait...');
+						$.ajax({
+							url: $('#base_url').val() + 'admin',
+							type: 'post',
+							data: {
+								ACTION: 'MEMBER_MENU_CONFIG',
+								//dbGraph_id: $('#dbGraph_id').val(),
+								contributionHistoryReport: $('#contributionHistoryReport').prop('checked'),
+								contributionHistoryGrid: $('#contributionHistoryGrid').prop('checked'),
+								BalancesHistory: $('#BalancesHistory').prop('checked'),
+								StatementOfAccount: $('#StatementOfAccount').prop('checked'),
+								UnitizedStatement: $('#UnitizedStatement').prop('checked'),
+								WhatIfAnalysis: $('#WhatIfAnalysis').prop('checked'),
+								BenefitsProjection: $('#BenefitsProjection').prop('checked'),
+								Media: $('#Media').prop('checked')
+							},
+							dataType: 'json',
+							success: function(json) {
+								$('#' + btn).val('Done');
+								if(json.success)
+								{
+									$('#' + form)[0].reset();
+									$('#' + modal).modal('hide');
+									html = 'Configuration details successfully saved';
+								}
+								else
+									html = 'Configuration details could not be saved';
+								bootbox.alert(html);
+								$('#' + btn).val(btn_text);
+							}
+						});
+
+					});
+			/* End Form Member Menu */
+
 		    
 		    $('#member-permissions-li').click(function(){
 		        $('#modal-member-permissions').modal('show');
@@ -737,6 +893,10 @@
 
 			$('#contribution-graph-li').click(function(){
 				$('#modal-contribution-graph').modal('show');
+			});
+
+			$('#member-menu-li').click(function(){
+				$('#modal-member-menu').modal('show');
 			});
 		    
 		    $('#profile-login-li').click(function(){

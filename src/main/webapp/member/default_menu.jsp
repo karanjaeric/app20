@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: tony
@@ -18,35 +19,53 @@
                 class="glyphicon glyphicon-user"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> PERSONAL INFORMATION</a></li>
 
+        <c:if test="${memberMenu.contributionHistoryReport == 'TRUE'}">
         <li id="contribution-history-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-record"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> CONTRIBUTION HISTORY (REPORT)</a></li>
+        </c:if>
 
+        <c:if test="${memberMenu.contributionHistoryGrid == 'TRUE'}">
         <li id="contribution-history-grid-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-record"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> CONTRIBUTION HISTORY (GRID)</a></li>
+        </c:if>
 
+        <c:if test="${memberMenu.unitizedStatement == 'TRUE'}">
+            <li id="unitized-statement-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-user"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> UNITIZED STATEMENT</a></li>
+        </c:if>
+
+        <c:if test="${memberMenu.balancesHistory == 'TRUE'}">
         <li id="balances-history-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-list"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> BALANCES HISTORY</a></li>
+        </c:if>
 
+        <c:if test="${memberMenu.statementOfAccount == 'TRUE'}">
         <li id="statement-of-account-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-user"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> STATEMENT OF ACCOUNT</a></li>
+        </c:if>
 
-        <li id="unitized-statement-li"><a href="javascript:void(0);"><i
-                class="glyphicon glyphicon-user"></i>&nbsp;<i
-                class="fa fa-chevron-right"></i> UNITIZED STATEMENT</a></li>
-
+        <c:if test="${memberMenu.benefitsProjection == 'TRUE'}">
         <li id="benefits-projection-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> BENEFITS PROJECTION</a></li>
+        </c:if>
+
+        <c:if test="${memberMenu.whatIfAnalysis == 'TRUE'}">
         <li id="what-if-analysis-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> WHAT IF ANALYSIS</a></li>
+        </c:if>
+
+        <c:if test="${memberMenu.media == 'TRUE'}">
         <li id="media-files-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-briefcase"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> MEDIA &amp; FILES</a></li>
+        </c:if>
 
         <c:if test="${MemberStatus != 'Active' }">
             <li id="member-claims-li"><a href="javascript:void(0);"><i

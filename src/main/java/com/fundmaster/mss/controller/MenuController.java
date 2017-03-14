@@ -48,6 +48,8 @@ public class MenuController extends BaseServlet implements Serializable {
     @EJB
     DBGraphBeanI dbGraphBeanI;
     @EJB
+    MemberMenuBeanI memberMenuBeanI;
+    @EJB
     ThemeBeanI themeBeanI;
     @EJB
     HelpBeanI helpBeanI;
@@ -110,6 +112,9 @@ public class MenuController extends BaseServlet implements Serializable {
         request.setAttribute("dbMenu", dbMenu);
         DBContributionGraph dbContributionGraph = dbGraphBeanI.find();
         request.setAttribute("dbContrGraph", dbContributionGraph);
+        MemberMenu memberMenu = memberMenuBeanI.find();
+        jLogger.i("Response ============= >" + memberMenu.toString());
+        request.setAttribute("memberMenu", memberMenu);
         List<ProfileLoginField> pfs = profileLoginFieldBeanI.find();
         request.setAttribute("plfs", pfs);
         List<ProfileName> profileNames = profileNameBeanI.find();
@@ -132,6 +137,8 @@ public class MenuController extends BaseServlet implements Serializable {
         request.getRequestDispatcher(REPO_FOLDER + "/media.jsp").forward(request, response);
     }
     private void showMember(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
+        MemberMenu memberMenu = memberMenuBeanI.find();
+        request.setAttribute("memberMenu", memberMenu);
         request.getRequestDispatcher(REPO_FOLDER + "/member.jsp").forward(request, response);
     }
     private void showContent(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {

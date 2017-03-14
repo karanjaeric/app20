@@ -1078,6 +1078,13 @@ public class ApiBean implements ApiEJB {
             } else {
                 xiMember.setEmailAddress(response.getString(Fields.EMAIL));
             }
+
+            if (response.getString(Fields.NAME) == null || response.getString(Fields.NAME).isEmpty()) {
+                xiMember.setName("");
+            } else {
+                xiMember.setName(response.getString(Fields.NAME));
+            }
+
             Long Scheme_id = helper.toLong(response.get(Fields.SCHEME_ID));
             xiMember.setSchemeId(Long.toString(Scheme_id));
             return xiMember;

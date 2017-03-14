@@ -99,6 +99,8 @@ public class MemberController extends BaseServlet implements Serializable {
 					request.setAttribute("member_id", m.getId());
 					session.setAttribute(Constants.PROFILE_ID,m.getId());
 					request.setAttribute("MemberStatus", m.getMbshipStatus());
+					String memberName = m.getFirstname();
+					request.setAttribute("memberName", memberName);
 
 					List<Scheme> schemePlan = apiEJB.getProfileSchemes(user, this.getSessKey(request, Constants.U_PROFILE));
 					String planType = schemePlan.get(0).getPlanType();
@@ -109,6 +111,9 @@ public class MemberController extends BaseServlet implements Serializable {
 
 					DBMenu dbMenu = dbMenuBeanI.find();
 					request.setAttribute("dbMenu", dbMenu);
+
+					MemberMenu memberMenu = memberMenuBeanI.find();
+					request.setAttribute("memberMenu", memberMenu);
 
 					if(schemes != null && schemes.size() > 0) {
 						jLogger.i("Scheme is not null. email: "+ this.getSessKey(request, Constants.USER));
@@ -207,6 +212,8 @@ public class MemberController extends BaseServlet implements Serializable {
 	}
     @EJB
 	PasswordPolicyBeanI passwordPolicyBeanI;
+	@EJB
+	MemberMenuBeanI memberMenuBeanI;
     @EJB
 	ContactCategoryBeanI contactCategoryBeanI;
 	protected void doPost(HttpServletRequest request,

@@ -175,7 +175,7 @@
 					<li><a href="#">PROFILE: ${ profile }</a></li>
 					<li><a href="#">Hi </a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"	aria-expanded="false"><i class="fa fa-user"></i>&nbsp;&nbsp; ${ username }<span
+						data-toggle="dropdown" role="button" aria-haspopup="true"	aria-expanded="false"><i class="fa fa-user"></i>&nbsp;&nbsp; ${ memberName }<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu bolden">
 							<li><a href="javascript:void(0);" id="change-pwd-li"><i
