@@ -65,6 +65,18 @@ public class Helper {
         }
     }
 
+    public BigDecimal toBigDecimal(Object o)
+    {
+        try {
+            String obj = o.toString();
+            return new BigDecimal(obj.replaceAll(",", ""));
+        } catch (NullPointerException npe) {
+            return BigDecimal.ZERO;
+        } catch (NumberFormatException nfe) {
+            return BigDecimal.ZERO;
+        }
+    }
+
     public String toString(Object o)
     {
         try {
@@ -85,6 +97,23 @@ public class Helper {
             return null;
         }
     }
+
+    public Date toDate(Object date)
+    {
+
+        String strDate = date.toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        try {
+
+            return formatter.parse(strDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean isEmailAddress(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);

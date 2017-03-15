@@ -7,6 +7,7 @@ public class Actions {
     public static final String SWITCH_SCHEME = "SWITCH_SCHEME";
     public static final String CH = "CH";
     public static final String CH_GRID = "CH_GRID";
+    public static final String BH_GRID = "BH_GRID";
     public static final String PRE_CHANGE_PASSWORD = "PRE_CHANGE_PASSWORD";
     public static final String LOGOUT = "LOGOUT";
     public static final String REASON = "REASON";
@@ -32,6 +33,7 @@ public class Actions {
     public static final String MEMBER_CLAIMS = "MC";
     public static final String MEMBER_WHAT_IF_ANALYSIS = "WIA";
     public static final String MEMBER_BALANCE_HISTORY = "BH";
+    public static final String MEMBER_BALANCE_HISTORY_GRID = "BAL_HISTORY_GRID";
     public static final String DASHBOARD_SETUP = "SETUP";
     public static final String DASHBOARD_CALC_LOGS = "CALC-LOG";
     public static final String DASHBOARD_HELP = "HELP";

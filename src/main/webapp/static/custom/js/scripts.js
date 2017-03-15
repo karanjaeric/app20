@@ -557,6 +557,15 @@ $(document).ready(function(){
 		
 		m_switch("BH");
 	});
+
+	$('#balances-history-grid-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#balances-history-grid-li').addClass('active');
+
+		m_switch("BAL_HISTORY_GRID");
+	});
 	
 	/***** Other Menu Items *****/
 	

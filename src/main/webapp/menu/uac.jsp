@@ -525,10 +525,19 @@
 
 						<tr>
 							<td>
-								<label class="control-label"> BALANCES HISTORY </label>
+								<label class="control-label"> BALANCES HISTORY REPORT</label>
 							</td>
 							<td>
 								<input type="checkbox" name="BalancesHistory" id="BalancesHistory" ${memberMenu.balancesHistory == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> BALANCES HISTORY GRID</label>
+							</td>
+							<td>
+								<input type="checkbox" name="BalancesHistoryGrid" id="BalancesHistoryGrid" ${memberMenu.balancesHistoryGrid == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
 
@@ -861,6 +870,7 @@
 								contributionHistoryReport: $('#contributionHistoryReport').prop('checked'),
 								contributionHistoryGrid: $('#contributionHistoryGrid').prop('checked'),
 								BalancesHistory: $('#BalancesHistory').prop('checked'),
+								BalancesHistoryGrid: $('#BalancesHistoryGrid').prop('checked'),
 								StatementOfAccount: $('#StatementOfAccount').prop('checked'),
 								UnitizedStatement: $('#UnitizedStatement').prop('checked'),
 								WhatIfAnalysis: $('#WhatIfAnalysis').prop('checked'),

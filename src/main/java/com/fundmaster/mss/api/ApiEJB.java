@@ -12,6 +12,8 @@ import java.util.List;
 @Local
 public interface ApiEJB {
     XiMember memberExists(String profile, String value);
+    //BalancesHistory getBalancesHistory(String memberId);
+    JSONObject getBalancesHistory(String memberId);
     boolean saveOrUpdateSponsor(String params);
     boolean saveOrUpdateMember(String params);
     boolean uploadMemberDocument(String params);

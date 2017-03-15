@@ -233,6 +233,9 @@ public class MemberController extends BaseServlet implements Serializable {
 			case Actions.CH_GRID:
 				getContributionsGrid(request, response, session);
 				break;
+			case Actions.BH_GRID:
+				getBalancesGrid(request, response, session);
+				break;
             case Actions.PRE_CHANGE_PASSWORD:
                 preChangePassword(request, response, session);
                 break;
@@ -303,6 +306,20 @@ public class MemberController extends BaseServlet implements Serializable {
 		JSONObject memberContributions = apiEJB.getContributionsBetweenDates(format.format(fromDate), format.format(toDate), member_id);
 		
 		this.respond(response, true, "", memberContributions);
+	}
+
+	private void getBalancesGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+		String member_id = this.get(request, "member_id");
+		jLogger.i("Member found ================ > " + member_id);
+
+		/*User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
+		XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
+		String member_id = Long.toString(m.getId());*/
+
+		JSONObject balancesHistory = apiEJB.getBalancesHistory( member_id);
+
+		this.respond(response, true, "", balancesHistory);
 	}
 
     private void preChangePassword(HttpServletRequest request, HttpServletResponse response, HttpSession session) {

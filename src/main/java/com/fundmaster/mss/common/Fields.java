@@ -22,6 +22,7 @@ public class Fields {
     public static final String MONTH = "month";
     public static final String TOTAL = "total";
     public static final String MEMBER_NO = "memberNo";
+    public static final String MEMBER_NUMBER = "member_no";
     public static final String FREQUENCY = "freq";
     public static final String RELATIONSHIP = "relationship";
     public static final String CATEGORY = "category";

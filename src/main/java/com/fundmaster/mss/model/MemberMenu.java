@@ -31,6 +31,9 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     @Column(name="balancesHistory", nullable=false)
     private boolean balancesHistory;
 
+    @Column(name="balancesHistoryGrid", nullable=false)
+    private boolean balancesHistoryGrid;
+
     @Column(name="whatIfAnalysis", nullable=false)
     private boolean whatIfAnalysis;
 
@@ -73,6 +76,14 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.balancesHistory = balancesHistory;
     }
 
+    public boolean isBalancesHistoryGrid() {
+        return balancesHistoryGrid;
+    }
+
+    public void setBalancesHistoryGrid(boolean balancesHistoryGrid) {
+        this.balancesHistoryGrid = balancesHistoryGrid;
+    }
+
     public boolean isStatementOfAccount() {
         return statementOfAccount;
     }
@@ -113,13 +124,14 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.media = media;
     }
 
-    public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean statementOfAccount,
+    public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
                       boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection, boolean media) {
         super();
         this.id = id;
         this.contributionHistoryReport = contributionHistoryReport;
         this.contributionHistoryGrid = contributionHistoryGrid;
         this.balancesHistory = balancesHistory;
+        this.balancesHistoryGrid = balancesHistoryGrid;
         this.statementOfAccount = statementOfAccount;
         this.unitizedStatement = unitizedStatement;
         this.whatIfAnalysis = whatIfAnalysis;

@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -1079,11 +1080,11 @@ public class ApiBean implements ApiEJB {
                 xiMember.setEmailAddress(response.getString(Fields.EMAIL));
             }
 
-            if (response.getString(Fields.NAME) == null || response.getString(Fields.NAME).isEmpty()) {
+            /*if (response.getString(Fields.NAME) == null || response.getString(Fields.NAME).isEmpty()) {
                 xiMember.setName("");
             } else {
                 xiMember.setName(response.getString(Fields.NAME));
-            }
+            }*/
 
             Long Scheme_id = helper.toLong(response.get(Fields.SCHEME_ID));
             xiMember.setSchemeId(Long.toString(Scheme_id));
@@ -1093,6 +1094,50 @@ public class ApiBean implements ApiEJB {
             return null;
         }
     }
+
+    /*@Override
+    public BalancesHistory getBalancesHistory(String memberId) {
+
+        JSONObject response;
+        try {
+            response = URLPost(APICall.GET_BALANCES_HISTORY + memberId, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+
+            jLogger.i("Response of balances history is: " + response);
+
+            BalancesHistory balancesHistory = new BalancesHistory();
+            balancesHistory.setMember_no(helper.toBigDecimal(response.get(Fields.MEMBER_NUMBER)));
+            balancesHistory.setName(response.getString(Fields.NAME));
+            balancesHistory.setEe_bal(helper.toBigDecimal(response.get("ee_bal")));
+            balancesHistory.setEe_contr(helper.toBigDecimal(response.get("ee_contr")));
+            balancesHistory.setEe_intr(helper.toBigDecimal(response.get("ee_intr")));
+            balancesHistory.setEr_bal(helper.toBigDecimal(response.get("er_bal")));
+            balancesHistory.setEr_contr(helper.toBigDecimal(response.get("er_contr")));
+            balancesHistory.setEr_intr(helper.toBigDecimal(response.get("er_intr")));
+            balancesHistory.setAs_at(helper.toDate(response.get("as_at")));
+
+            return balancesHistory;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception checking if the member exists" + je.getMessage());
+            return null;
+        }
+    }*/
+
+    @Override
+    public JSONObject getBalancesHistory(String memberID) {
+        JSONObject response;
+        try {
+
+
+            response = URLGet(APICall.GET_BALANCES_HISTORY + memberID);
+
+            jLogger.i("Balances json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
     public boolean saveOrUpdateSponsor(String params)
     {
         JSONObject response;

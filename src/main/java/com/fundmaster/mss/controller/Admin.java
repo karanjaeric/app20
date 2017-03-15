@@ -852,6 +852,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean contributionHistoryReport = this.get(request, "contributionHistoryReport").equalsIgnoreCase("true");
         boolean contributionHistoryGrid = this.get(request, "contributionHistoryGrid").equalsIgnoreCase("true");
         boolean BalancesHistory = this.get(request, "BalancesHistory").equalsIgnoreCase("true");
+        boolean BalancesHistoryGrid = this.get(request, "BalancesHistoryGrid").equalsIgnoreCase("true");
         boolean StatementOfAccount = this.get(request, "StatementOfAccount").equalsIgnoreCase("true");
         boolean UnitizedStatement = this.get(request, "UnitizedStatement").equalsIgnoreCase("true");
         boolean WhatIfAnalysis = this.get(request, "WhatIfAnalysis").equalsIgnoreCase("true");
@@ -861,6 +862,7 @@ public class Admin extends BaseServlet implements Serializable {
         memberMenu.setContributionHistoryReport(contributionHistoryReport);
         memberMenu.setContributionHistoryGrid(contributionHistoryGrid);
         memberMenu.setBalancesHistory(BalancesHistory);
+        memberMenu.setBalancesHistoryGrid(BalancesHistoryGrid);
         memberMenu.setStatementOfAccount(StatementOfAccount);
         memberMenu.setUnitizedStatement(UnitizedStatement);
         memberMenu.setWhatIfAnalysis(WhatIfAnalysis);

@@ -197,7 +197,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                      break;
                  case Actions.MEMBER_BALANCE_HISTORY:
                      showMemberBalanceHistory(request, response, session);
-
+                     break;
+                 case Actions.MEMBER_BALANCE_HISTORY_GRID:
+                     showMemberBalanceHistoryGrid(request, response, session);
                      break;
              }
          }
@@ -398,6 +400,29 @@ public class Dashboard extends BaseServlet implements Serializable {
         logActivity("MEMBER BALANCES HISTORY", "Viewed member balances history", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member balances history");
         request.getRequestDispatcher("member/balance_history.jsp").forward(request, response);
+    }
+
+    private void showMemberBalanceHistoryGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String member_id;
+
+        member_id = this.get(request, "memberID");
+        if (member_id == null)
+            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("member_id", member_id);
+
+        /*BalancesHistory balancesHistory = apiEJB.getBalancesHistory(member_id);
+        jLogger.i("Member Balances Returned ================ > " + balancesHistory);
+        request.setAttribute("balances", balancesHistory);*/
+
+
+        logActivity("MEMBER BALANCES HISTORY GRID", "Viewed member balances history grid", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member balances history grid");
+        request.getRequestDispatcher("member/balance_history_grid.jsp").forward(request, response);
     }
 
 @EJB
