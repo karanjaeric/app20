@@ -180,8 +180,8 @@
                                     if(key == 'rows')
                                     {
 
-                                        html_head = "<tr><th ></th><th colspan='2' class='text-center'>EMPLOYEE</th><th colspan='2' class='text-center'>EMPLOYER</th></tr>";
-                                        html_subhead = "<tr><th></th><th class='text-center'>REGISTERED</th><th class='text-center'>UNREGISTERED</th><th class='text-center'>REGISTERED</th><th class='text-center'>UNREGISTERED</th></tr>";
+                                        html_head = "<tr><th rowspan='2'></th><th colspan='2' class='text-center'>EMPLOYEE</th><th colspan='2' class='text-center'>EMPLOYER</th></tr>";
+                                        html_subhead = "<tr><th class='text-center'>REGISTERED</th><th class='text-center'>UNREGISTERED</th><th class='text-center'>REGISTERED</th><th class='text-center'>UNREGISTERED</th></tr>";
 
                                         for ( var i = 0; i < json.rows.length; i++) {
 
