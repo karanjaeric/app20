@@ -185,6 +185,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                  case Actions.MEMBER_BENEFIT_PROJECTIONS:
                      showMemberBenefitProjections(request, response, session);
                      break;
+                 case Actions.MEMBER_BENEFIT_PROJECTIONS_GRID:
+                     showMemberBenefitProjectionsGrid(request, response, session);
+                     break;
                  case Actions.MEMBER_MEDIA_FILES:
                      showMemberMedia(request, response, session);
                      break;
@@ -478,6 +481,21 @@ MediaBeanI mediaBeanI;
         logActivity("MEMBER BENEFITS PROJECTION", "Viewed member benefits projection", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member benefits projection");
         request.getRequestDispatcher("member/benefits_projection.jsp").forward(request, response);
+    }
+
+    private void showMemberBenefitProjectionsGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Setting setting = settingBeanI.find();
+        request.setAttribute("settings", setting);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("planType", this.getSessKey(request, Constants.SCHEME_TYPE));
+        String member_id;
+        member_id = this.get(request, "memberID");
+        if (member_id == null)
+            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("member_id", member_id);
+        logActivity("MEMBER BENEFITS PROJECTION GRID", "Viewed member benefits projection grid", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member benefits projection grid");
+        request.getRequestDispatcher("member/benefits_projection_grid.jsp").forward(request, response);
     }
 
     private void showMemberStatementOfAccount(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {

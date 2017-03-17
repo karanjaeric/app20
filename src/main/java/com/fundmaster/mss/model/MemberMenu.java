@@ -40,6 +40,9 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     @Column(name="benefitsProjection", nullable=false)
     private boolean benefitsProjection;
 
+    @Column(name="benefitProjectionGrid", nullable=false)
+    private boolean benefitProjectionGrid;
+
     @Column(name="media", nullable=false)
     private boolean media;
 
@@ -116,6 +119,14 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.benefitsProjection = benefitsProjection;
     }
 
+    public boolean isBenefitProjectionGrid() {
+        return benefitProjectionGrid;
+    }
+
+    public void setBenefitProjectionGrid(boolean benefitProjectionGrid) {
+        this.benefitProjectionGrid = benefitProjectionGrid;
+    }
+
     public boolean isMedia() {
         return media;
     }
@@ -125,7 +136,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     }
 
     public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
-                      boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection, boolean media) {
+                      boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection, boolean benefitProjectionGrid, boolean media) {
         super();
         this.id = id;
         this.contributionHistoryReport = contributionHistoryReport;
@@ -136,6 +147,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.unitizedStatement = unitizedStatement;
         this.whatIfAnalysis = whatIfAnalysis;
         this.benefitsProjection = benefitsProjection;
+        this.benefitProjectionGrid = benefitProjectionGrid;
         this.media = media;
     }
 

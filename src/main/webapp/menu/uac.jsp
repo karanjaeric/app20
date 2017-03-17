@@ -552,6 +552,24 @@
 
 						<tr>
 							<td>
+								<label class="control-label"> BENEFITS PROJECTION (REPORT) </label>
+							</td>
+							<td>
+								<input type="checkbox" name="benefitsProjection" id="benefitsProjection" ${memberMenu.benefitsProjection == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> BENEFITS PROJECTION (GRID) </label>
+							</td>
+							<td>
+								<input type="checkbox" name="benefitProjectionGrid" id="benefitProjectionGrid" ${memberMenu.benefitProjectionGrid == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
 								<label class="control-label"> WHAT IF ANALYSIS </label>
 							</td>
 							<td>
@@ -874,7 +892,8 @@
 								StatementOfAccount: $('#StatementOfAccount').prop('checked'),
 								UnitizedStatement: $('#UnitizedStatement').prop('checked'),
 								WhatIfAnalysis: $('#WhatIfAnalysis').prop('checked'),
-								BenefitsProjection: $('#BenefitsProjection').prop('checked'),
+								benefitsProjection: $('#benefitsProjection').prop('checked'),
+								benefitProjectionGrid: $('#benefitProjectionGrid').prop('checked'),
 								Media: $('#Media').prop('checked')
 							},
 							dataType: 'json',

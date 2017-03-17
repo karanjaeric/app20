@@ -58,7 +58,13 @@
         <c:if test="${memberMenu.benefitsProjection == 'TRUE'}">
         <li id="benefits-projection-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
-                class="fa fa-chevron-right"></i> BENEFITS PROJECTION</a></li>
+                class="fa fa-chevron-right"></i> BENEFITS PROJECTION (REPORT)</a></li>
+        </c:if>
+
+        <c:if test="${memberMenu.benefitProjectionGrid == 'TRUE'}">
+            <li id="benefits-projection-grid-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> BENEFITS PROJECTION (GRID)</a></li>
         </c:if>
 
         <c:if test="${memberMenu.whatIfAnalysis == 'TRUE'}">

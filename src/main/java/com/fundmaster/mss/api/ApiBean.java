@@ -850,6 +850,23 @@ public class ApiBean implements ApiEJB {
         }
     }
 
+    @Override
+    public JSONObject getMemberProjections(String memberId, String reasonId, String exitDate, String calcDate, String schemeId) {
+        JSONObject response;
+        try {
+
+            jLogger.i("Dates to go to Xi, From: " + exitDate + " To " + calcDate);
+
+            response = URLGet(APICall.GET_MEMBER_PROJECTIONS + memberId + "/" + reasonId + "/" + exitDate + "/" + calcDate + "/" + schemeId);
+
+            jLogger.i("Contributions json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
 
     @Override
     public List<UserProfile> getUserProfiles() {

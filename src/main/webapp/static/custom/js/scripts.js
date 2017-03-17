@@ -530,6 +530,15 @@ $(document).ready(function(){
 		m_switch("BP");
 	});
 
+	$('#benefits-projection-grid-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#benefits-projection-grid-li').addClass('active');
+
+		m_switch("BP_GRID");
+	});
+
 	$('#media-files-li').click(function(){
 		
 		$('#main-menu.nav li').removeClass('active');

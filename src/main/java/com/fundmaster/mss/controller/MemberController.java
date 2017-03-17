@@ -233,6 +233,9 @@ public class MemberController extends BaseServlet implements Serializable {
 			case Actions.CH_GRID:
 				getContributionsGrid(request, response, session);
 				break;
+			case Actions.BP_GRID:
+				getProjectionsGrid(request, response, session);
+				break;
 			case Actions.BH_GRID:
 				getBalancesGrid(request, response, session);
 				break;
@@ -306,6 +309,44 @@ public class MemberController extends BaseServlet implements Serializable {
 		JSONObject memberContributions = apiEJB.getContributionsBetweenDates(format.format(fromDate), format.format(toDate), member_id);
 		
 		this.respond(response, true, "", memberContributions);
+	}
+
+	private void getProjectionsGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+		User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
+		XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
+		String member_id = Long.toString(m.getId());
+		jLogger.i("Member found ================ > " + member_id);
+
+		String reasonId = this.get(request, "reason_id");
+		jLogger.i("Reason Id ================ > " + reasonId);
+		String schemeId = this.get(request, "scheme_id");
+		jLogger.i("Scheme Id ================ > " + schemeId);
+
+		DateFormat format_from = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat("MMM-dd-yyyy", Locale.ENGLISH);
+
+		String exitDate_String = this.get(request, "dateTo");
+		String calcDate_String = this.get(request, "dateTo");
+
+		Date exitDate = null;
+		Date calcDate = null;
+
+		try {
+			exitDate = format_from.parse(exitDate_String);
+			calcDate = format_from.parse(calcDate_String);
+		} catch (ParseException pe) {
+			// TODO Auto-generated catch block
+			jLogger.e("ParseException was detected: " + pe.getMessage());
+		}
+
+		jLogger.i("Exit Date ================ > " + exitDate);
+		jLogger.i("Calculation Date ================ > " + calcDate);
+
+		//JSONObject memberContributions = apiEJB.getMemberFullContributions(member_id);
+		JSONObject memberProjections = apiEJB.getMemberProjections(member_id, reasonId, format.format(exitDate), format.format(calcDate), schemeId);
+
+		this.respond(response, true, "", memberProjections);
 	}
 
 	private void getBalancesGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) {

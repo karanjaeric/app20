@@ -27,6 +27,7 @@ public class APICall {
     public static final String PROFILE_GET_PROFILES = "profile/getprofiles";
     public static final String GETMEMBERCONTRIBUTIONS = "getmembercontributions/";
     public static final String GET_CONTRIBUTIONS_BTWN_DATES = "getcontributionsbetweendates/";
+    public static final String GET_MEMBER_PROJECTIONS = "getmemberprojections/";
     public static final String SCHEME_GETTOTALSCHEMECONTRIBUTIONS = "scheme/gettotalschemecontributions/";
     public static final String GET_MEMBER_BENEFICIARIES = "getmemberbeneficiaries/";
     public static final String NEW_MEMBER_LISTING_WITHIN_YEAR = "newMemberListingWithinYear/";
