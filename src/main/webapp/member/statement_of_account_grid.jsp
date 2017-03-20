@@ -49,6 +49,9 @@
                     <h4>INTERESTS:</h4>
                     <table class="table table-responsive table-striped table-bordered" id="select-intr">
                     </table>
+                    <h4>GRAND TOTAL:</h4>
+                    <table class="table table-responsive table-striped table-bordered" id="select-total">
+                    </table>
                 </div>
             </div>
         </div>
@@ -167,6 +170,9 @@
                                             intr_head = "<tr><th class='text-center'>NORMAL <br>EMPLOYEE</th><th class='text-center'>NORMAL <br>EMPLOYER</th><th class='text-center'>COMBINED <br>AVC</th><th class='text-center'>OPENING BALANCE </br>EMPLOYEE</th><th class='text-center'>OPENING BALANCE </br>EMPLOYER</th><th class='text-center'>OPENING BALANCE </br>AVC</th><th class='text-center'>TOTAL</th></tr>";
                                             html = "<tr><th class='text-center'>DATE PAID</th><th class='text-center'>EE</th><th class='text-center'>ER</th><th class='text-center'>AVC</th><th class='text-center'>AVCER</th><th class='text-center'>STATUS</th><th class='text-center'>TOTAL</th></tr>";
 
+                                            var grandTotal = 0;
+                                            var contr_total = 0;
+
                                             for ( var i = 0; i < json.rows.length; i++) {
 
                                                 var row = json.rows[i];
@@ -200,6 +206,13 @@
                                                 op_row = "<tr><td>" + format_no(row['open_ee_reg']) + "</td><td>" + format_no(row['open_ee_unreg']) + "</td><td>" + format_no(row['open_er_reg']) +"</td><td>" + format_no(row['open_er_unreg']) + "</td><td>" + format_no(row['avc_reg']) + "</td><td>" + format_no(row['avc_unreg']) + "</td><td>" + format_no(row['open_total']) + "</td></tr>";
                                                 intr_row = "<tr><td>" + ee_contr_final + "</td><td>" + er_contr_final + "</td><td>" + format_no(row['avc_contr_intr']) +"</td><td>" + openingee_intr_final + "</td><td>" + openinger_intr_final + "</td><td>" + format_no(row['openingavc_intr']) + "</td><td>" + total_intr_final + "</td></tr>";
 
+                                                var interest_total = row['total_intr'];
+                                                var interest_total_final = parseFloat(interest_total);
+                                                console.log("Interest total: " + interest_total_final);
+
+                                                var open_total = row['open_total'];
+                                                var open_total_final = parseFloat(open_total);
+
                                                 if(typeof	format_date(row['date_paid']) != 'undefined') {
 
                                                     var total_contr = row['contr_ee'];
@@ -216,16 +229,28 @@
 
                                                     var sumItAll = total_contr_final + total_contr_er_final + total_avc_final + total_avcer_final;
 
+                                                    contr_total = contr_total + sumItAll;
+                                                    console.log("Contr total: " + contr_total);
+
+
+                                                    var intr_total = row['total_intr'];
+                                                    var intr_total_final = parseFloat(intr_total).toFixed(2);
+
+
+
                                                     var total_intr = format_no(row['contr_ee']) + format_no(row['contr_er']);
-                                                    html = html + "<tr><td>" + format_date(row['date_paid']) + "</td><td>" + format_no(row['contr_ee']) + "</td><td>" + format_no(row['contr_er']) + "</td><td>" + format_no(row['avc']) + "</td><td>" + format_no(row['avcer']) + "</td><td>" + format_no(row['status']) + "</td><td>" + sumItAll + "</td></tr>";
+                                                    html = html + "<tr><td>" + format_date(row['date_paid']) + "</td><td>" + format_no(row['contr_ee']) + "</td><td>" + format_no(row['contr_er']) + "</td><td>" + format_no(row['avc']) + "</td><td>" + format_no(row['avcer']) + "</td><td>" + format_no(row['status']) + "</td><td>" + format_no(sumItAll) + "</td></tr>";
+
                                                 }
 
                                             }
 
-                                            //html = html_Opening_Legend + html_head + html_subhead + op_row + contr_subhead + contr_row;
-                                            //html = html_Opening_Legend + html_head + op_row +html_Contr_Legend + html;
+                                            grandTotal = contr_total + open_total_final + interest_total_final;
+
+                                            html = html + "<tr><th scope='row' colspan='6' class='text-center'>CONTRIBUTIONS TOTAL: </td><td>" + format_no(contr_total) + "</td></tr>";
                                             html1 = html_head + html_subhead + op_row;
                                             html2 = intr_head + intr_row;
+                                            html3 = "<tr><th scope='row' colspan='6' class='text-center'>GRAND TOTAL: </td><td>" + format_no(grandTotal) + "</td></tr>";
                                             //html = html;
 
                                             stop_wait();
@@ -236,6 +261,7 @@
                                 $('#select-opbal').html(html1);
                                 $('#select-intr').html(html2);
                                 $('#select-contr').html(html);
+                                $('#select-total').html(html3);
                                 stop_wait();
                                 $('#modal-view-statement').modal('show');
                             }
