@@ -1155,6 +1155,22 @@ public class ApiBean implements ApiEJB {
         }
     }
 
+    @Override
+    public JSONObject getMemberStatement(String memberId, String apId, String schemeId) {
+        JSONObject response;
+        try {
+
+
+            response = URLGet(APICall.GET_MEMBER_STATEMENT + memberId + "/" + apId + "/" + schemeId);
+
+            jLogger.i("Balances json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
     public boolean saveOrUpdateSponsor(String params)
     {
         JSONObject response;

@@ -501,6 +501,15 @@ $(document).ready(function(){
 		m_switch("SA");
 	});
 
+	$('#statement-of-account-grid-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#statement-of-account-grid-li').addClass('active');
+
+		m_switch("SA_GRID");
+	});
+
 	$('#unitized-statement-li').click(function(){
 
 		$('#main-menu.nav li').removeClass('active');

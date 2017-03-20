@@ -25,6 +25,9 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     @Column(name="statementOfAccount", nullable=false)
     private boolean statementOfAccount;
 
+    @Column(name="statementOfAccountGrid", nullable=false)
+    private boolean statementOfAccountGrid;
+
     @Column(name="unitizedStatement", nullable=false)
     private boolean unitizedStatement;
 
@@ -95,6 +98,14 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.statementOfAccount = statementOfAccount;
     }
 
+    public boolean isStatementOfAccountGrid() {
+        return statementOfAccountGrid;
+    }
+
+    public void setStatementOfAccountGrid(boolean statementOfAccountGrid) {
+        this.statementOfAccountGrid = statementOfAccountGrid;
+    }
+
     public boolean isUnitizedStatement() {
         return unitizedStatement;
     }
@@ -136,7 +147,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     }
 
     public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
-                      boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection, boolean benefitProjectionGrid, boolean media) {
+                      boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection, boolean benefitProjectionGrid, boolean media) {
         super();
         this.id = id;
         this.contributionHistoryReport = contributionHistoryReport;
@@ -144,6 +155,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.balancesHistory = balancesHistory;
         this.balancesHistoryGrid = balancesHistoryGrid;
         this.statementOfAccount = statementOfAccount;
+        this.statementOfAccountGrid = statementOfAccountGrid;
         this.unitizedStatement = unitizedStatement;
         this.whatIfAnalysis = whatIfAnalysis;
         this.benefitsProjection = benefitsProjection;

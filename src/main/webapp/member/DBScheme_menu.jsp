@@ -24,20 +24,40 @@
                         class="glyphicon glyphicon-record"></i>&nbsp;<i
                         class="fa fa-chevron-right"></i> ${ dbMenu.contributionHistoryName }</a></li>
             </c:if>
+            <c:if test="${dbMenu.contributionHistoryGridActive == 'TRUE'}">
+                <li id="contribution-history-grid-li"><a href="javascript:void(0);"><i
+                        class="glyphicon glyphicon-record"></i>&nbsp;<i
+                        class="fa fa-chevron-right"></i> ${ dbMenu.contributionHistoryGridName }</a></li>
+            </c:if>
             <c:if test="${dbMenu.balancesHistoryActive == 'TRUE'}">
                 <li id="balances-history-li"><a href="javascript:void(0);"><i
                         class="glyphicon glyphicon-list"></i>&nbsp;<i
                         class="fa fa-chevron-right"></i> ${ dbMenu.balancesHistoryName }</a></li>
+            </c:if>
+            <c:if test="${dbMenu.balancesHistoryGridActive == 'TRUE'}">
+                <li id="balances-history-grid-li"><a href="javascript:void(0);"><i
+                        class="glyphicon glyphicon-list"></i>&nbsp;<i
+                        class="fa fa-chevron-right"></i> ${ dbMenu.balancesHistoryGridName }</a></li>
             </c:if>
             <c:if test="${dbMenu.statementOfAccountActive == 'TRUE'}">
                 <li id="statement-of-account-li"><a href="javascript:void(0);"><i
                         class="glyphicon glyphicon-user"></i>&nbsp;<i
                         class="fa fa-chevron-right"></i> ${ dbMenu.statementOfAccountName }</a></li>
             </c:if>
+            <c:if test="${dbMenu.statementOfAccountGridActive == 'TRUE'}">
+                <li id="statement-of-account-grid-li"><a href="javascript:void(0);"><i
+                        class="glyphicon glyphicon-user"></i>&nbsp;<i
+                        class="fa fa-chevron-right"></i> ${ dbMenu.statementOfAccountGridName }</a></li>
+            </c:if>
             <c:if test="${dbMenu.benefitsProjectionActive == 'TRUE'}">
                 <li id="benefits-projection-li"><a href="javascript:void(0);"><i
                         class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
                         class="fa fa-chevron-right"></i> ${ dbMenu.benefitsProjectionName }</a></li>
+            </c:if>
+            <c:if test="${dbMenu.benefitsProjectionGridActive == 'TRUE'}">
+                <li id="benefits-projection-grid-li"><a href="javascript:void(0);"><i
+                        class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
+                        class="fa fa-chevron-right"></i> ${ dbMenu.benefitsProjectionGridName }</a></li>
             </c:if>
             <c:if test="${dbMenu.whatIfAnalysisActiveDb == 'TRUE'}">
                 <li id="what-if-analysis-li"><a href="javascript:void(0);"><i

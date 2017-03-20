@@ -854,6 +854,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean BalancesHistory = this.get(request, "BalancesHistory").equalsIgnoreCase("true");
         boolean BalancesHistoryGrid = this.get(request, "BalancesHistoryGrid").equalsIgnoreCase("true");
         boolean StatementOfAccount = this.get(request, "StatementOfAccount").equalsIgnoreCase("true");
+        boolean StatementOfAccountGrid = this.get(request, "StatementOfAccountGrid").equalsIgnoreCase("true");
         boolean UnitizedStatement = this.get(request, "UnitizedStatement").equalsIgnoreCase("true");
         boolean WhatIfAnalysis = this.get(request, "WhatIfAnalysis").equalsIgnoreCase("true");
         boolean BenefitsProjection = this.get(request, "benefitsProjection").equalsIgnoreCase("true");
@@ -865,6 +866,7 @@ public class Admin extends BaseServlet implements Serializable {
         memberMenu.setBalancesHistory(BalancesHistory);
         memberMenu.setBalancesHistoryGrid(BalancesHistoryGrid);
         memberMenu.setStatementOfAccount(StatementOfAccount);
+        memberMenu.setStatementOfAccountGrid(StatementOfAccountGrid);
         memberMenu.setUnitizedStatement(UnitizedStatement);
         memberMenu.setWhatIfAnalysis(WhatIfAnalysis);
         memberMenu.setBenefitsProjection(BenefitsProjection);
@@ -948,23 +950,35 @@ public class Admin extends BaseServlet implements Serializable {
     /* DB_Menu Update Request */
 
         boolean contributionHistoryActive = this.get(request, "contributionHistoryActive").equalsIgnoreCase("true");
+        boolean contributionHistoryGridActive = this.get(request, "contributionHistoryGridActive").equalsIgnoreCase("true");
         boolean balancesHistoryActive = this.get(request, "balancesHistoryActive").equalsIgnoreCase("true");
+        boolean balancesHistoryGridActive = this.get(request, "balancesHistoryGridActive").equalsIgnoreCase("true");
         boolean statementOfAccountActive = this.get(request, "statementOfAccountActive").equalsIgnoreCase("true");
+        boolean statementOfAccountGridActive = this.get(request, "statementOfAccountGridActive").equalsIgnoreCase("true");
         boolean benefitsProjectionActive = this.get(request, "benefitsProjectionActive").equalsIgnoreCase("true");
+        boolean benefitsProjectionGridActive = this.get(request, "benefitsProjectionGridActive").equalsIgnoreCase("true");
         boolean whatIfAnalysisActiveDb = this.get(request, "whatIfAnalysisActiveDb").equalsIgnoreCase("true");
 
         DBMenu dbMenu = dbMenuBeanI.find();
 
         dbMenu.setContributionHistoryActive(contributionHistoryActive);
+        dbMenu.setContributionHistoryGridActive(contributionHistoryGridActive);
         dbMenu.setBalancesHistoryActive(balancesHistoryActive);
+        dbMenu.setBalancesHistoryGridActive(balancesHistoryGridActive);
         dbMenu.setStatementOfAccountActive(statementOfAccountActive);
+        dbMenu.setStatementOfAccountGridActive(statementOfAccountGridActive);
         dbMenu.setBenefitsProjectionActive(benefitsProjectionActive);
+        dbMenu.setBenefitsProjectionGridActive(benefitsProjectionGridActive);
         dbMenu.setWhatIfAnalysisActiveDb(whatIfAnalysisActiveDb);
 
         dbMenu.setContributionHistoryName(this.get(request,"contributionHistoryName"));
+        dbMenu.setContributionHistoryGridName(this.get(request,"contributionHistoryGridName"));
         dbMenu.setBalancesHistoryName(this.get(request,"balancesHistoryName"));
+        dbMenu.setBalancesHistoryGridName(this.get(request,"balancesHistoryGridName"));
         dbMenu.setStatementOfAccountName(this.get(request,"statementOfAccountName"));
+        dbMenu.setStatementOfAccountGridName(this.get(request,"statementOfAccountGridName"));
         dbMenu.setBenefitsProjectionName(this.get(request,"benefitsProjectionName"));
+        dbMenu.setBenefitsProjectionGridName(this.get(request,"benefitsProjectionGridName"));
         dbMenu.setWhatIfAnalysisNameDb(this.get(request,"whatIfAnalysisNameDb"));
 
         if (dbMenuBeanI.edit(dbMenu) != null) {

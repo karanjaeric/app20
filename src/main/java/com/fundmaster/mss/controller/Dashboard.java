@@ -179,6 +179,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                  case Actions.MEMBER_STATEMENT_OF_ACCOUNT:
                      showMemberStatementOfAccount(request, response, session);
                      break;
+                 case Actions.MEMBER_STATEMENT_OF_ACCOUNT_GRID:
+                     showMemberStatementOfAccountGrid(request, response, session);
+                     break;
                  case Actions.MEMBER_UNITIZED_STATEMENT:
                      showMemberUnitizedStatement(request, response, session);
                      break;
@@ -511,7 +514,19 @@ MediaBeanI mediaBeanI;
         this.audit(session, "Viewed member statement of account");
         request.getRequestDispatcher("member/statement_of_account.jsp").forward(request, response);
     }
-
+    private void showMemberStatementOfAccountGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Setting setting = settingBeanI.find();
+        request.setAttribute("settings", setting);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String member_id;
+        member_id = this.get(request, "memberID");
+        if (member_id == null)
+            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("member_id", member_id);
+        logActivity("MEMBER STATEMENT OF ACCOUNT GRID", "Viewed member statement of account grid", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member statement of account grid");
+        request.getRequestDispatcher("member/statement_of_account_grid.jsp").forward(request, response);
+    }
     private void showMemberUnitizedStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);

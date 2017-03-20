@@ -543,10 +543,19 @@
 
 						<tr>
 							<td>
-								<label class="control-label"> STATEMENT OF ACCOUNT </label>
+								<label class="control-label"> STATEMENT OF ACCOUNT (REPORT)</label>
 							</td>
 							<td>
 								<input type="checkbox" name="StatementOfAccount" id="StatementOfAccount" ${memberMenu.statementOfAccount == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> STATEMENT OF ACCOUNT (GRID)</label>
+							</td>
+							<td>
+								<input type="checkbox" name="StatementOfAccountGrid" id="StatementOfAccountGrid" ${memberMenu.statementOfAccountGrid == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
 
@@ -890,6 +899,7 @@
 								BalancesHistory: $('#BalancesHistory').prop('checked'),
 								BalancesHistoryGrid: $('#BalancesHistoryGrid').prop('checked'),
 								StatementOfAccount: $('#StatementOfAccount').prop('checked'),
+								StatementOfAccountGrid: $('#StatementOfAccountGrid').prop('checked'),
 								UnitizedStatement: $('#UnitizedStatement').prop('checked'),
 								WhatIfAnalysis: $('#WhatIfAnalysis').prop('checked'),
 								benefitsProjection: $('#benefitsProjection').prop('checked'),

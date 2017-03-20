@@ -7,6 +7,7 @@ public class Actions {
     public static final String SWITCH_SCHEME = "SWITCH_SCHEME";
     public static final String CH = "CH";
     public static final String CH_GRID = "CH_GRID";
+    public static final String SA_GRID = "SA_GRID";
     public static final String BP_GRID = "BP_GRID";
     public static final String BH_GRID = "BH_GRID";
     public static final String PRE_CHANGE_PASSWORD = "PRE_CHANGE_PASSWORD";
@@ -28,6 +29,7 @@ public class Actions {
     public static final String MEMBER_CONTRIBUTION_HISTORY = "CH";
     public static final String MEMBER_CONTRIBUTION_HISTORY_GRID = "CH_GRID";
     public static final String MEMBER_STATEMENT_OF_ACCOUNT = "SA";
+    public static final String MEMBER_STATEMENT_OF_ACCOUNT_GRID = "SA_GRID";
     public static final String MEMBER_UNITIZED_STATEMENT = "US";
     public static final String MEMBER_BENEFIT_PROJECTIONS = "BP";
     public static final String MEMBER_BENEFIT_PROJECTIONS_GRID = "BP_GRID";

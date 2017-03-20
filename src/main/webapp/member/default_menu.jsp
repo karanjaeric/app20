@@ -46,13 +46,19 @@
         <c:if test="${memberMenu.balancesHistoryGrid == 'TRUE'}">
             <li id="balances-history-grid-li"><a href="javascript:void(0);"><i
                     class="glyphicon glyphicon-record"></i>&nbsp;<i
-                    class="fa fa-chevron-right"></i> BALANCES HISTORY</a></li>
+                    class="fa fa-chevron-right"></i> BALANCES HISTORY (GRID)</a></li>
         </c:if>
 
         <c:if test="${memberMenu.statementOfAccount == 'TRUE'}">
         <li id="statement-of-account-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-user"></i>&nbsp;<i
-                class="fa fa-chevron-right"></i> STATEMENT OF ACCOUNT</a></li>
+                class="fa fa-chevron-right"></i> STATEMENT OF ACCOUNT (REPORT)</a></li>
+        </c:if>
+
+        <c:if test="${memberMenu.statementOfAccountGrid == 'TRUE'}">
+            <li id="statement-of-account-grid-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-user"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> STATEMENT OF ACCOUNT (GRID)</a></li>
         </c:if>
 
         <c:if test="${memberMenu.benefitsProjection == 'TRUE'}">

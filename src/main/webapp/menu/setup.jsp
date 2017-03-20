@@ -508,7 +508,7 @@
 
 						<tr>
 							<td>
-								<label class="control-label">CONTRIBUTION HISTORY</label>
+								<label class="control-label">CONTRIBUTION HISTORY (REPORT)</label>
 							</td>
 							<td>
 								<div class="form-group">
@@ -522,7 +522,21 @@
 
 						<tr>
 							<td>
-								<label class="control-label">BALANCES HISTORY</label>
+								<label class="control-label">CONTRIBUTION HISTORY (GRID)</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="contributionHistoryGridName" id="contributionHistoryGridName" placeholder="CONTRIBUTION HISTORY GRID" value="${ dbMenu.contributionHistoryGridName }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="contributionHistoryGridActive" id="contributionHistoryGridActive" ${dbMenu.contributionHistoryGridActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label">BALANCES HISTORY (REPORT)</label>
 							</td>
 							<td>
 								<div class="form-group">
@@ -536,7 +550,21 @@
 
 						<tr>
 							<td>
-								<label class="control-label">STATEMENT OF ACCOUNT</label>
+								<label class="control-label">BALANCES HISTORY (GRID)</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="balancesHistoryGridName" id="balancesHistoryGridName" placeholder="BALANCES HISTORY GRID" value="${ dbMenu.balancesHistoryGridName }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="balancesHistoryGridActive" id="balancesHistoryGridActive" ${dbMenu.balancesHistoryGridActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label">STATEMENT OF ACCOUNT (REPORT)</label>
 							</td>
 							<td>
 								<div class="form-group">
@@ -550,7 +578,21 @@
 
 						<tr>
 							<td>
-								<label class="control-label">BENEFITS PROJECTION</label>
+								<label class="control-label">STATEMENT OF ACCOUNT (GRID)</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="statementOfAccountGridName" id="statementOfAccountGridName" placeholder="STATEMENT OF ACCOUNT GRID" value="${ dbMenu.statementOfAccountGridName }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="statementOfAccountGridActive" id="statementOfAccountGridActive" ${dbMenu.statementOfAccountGridActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label">BENEFITS PROJECTION (REPORT)</label>
 							</td>
 							<td>
 								<div class="form-group">
@@ -559,6 +601,20 @@
 							</td>
 							<td>
 								<input type="checkbox" name="benefitsProjectionActive" id="benefitsProjectionActive" ${dbMenu.benefitsProjectionActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label">BENEFITS PROJECTION (GRID)</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="benefitsProjectionGridName" id="benefitsProjectionGridName" placeholder="BENEFITS PROJECTION GRID" value="${ dbMenu.benefitsProjectionGridName }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="benefitsProjectionGridActive" id="benefitsProjectionGridActive" ${dbMenu.benefitsProjectionGridActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
 
@@ -1152,14 +1208,22 @@
 								ACTION: 'DB_MENU',
 								dbMenu_id: $('#dbMenu_id').val(),
 								contributionHistoryName: $('#contributionHistoryName').val(),
+								contributionHistoryGridName: $('#contributionHistoryGridName').val(),
 								balancesHistoryName: $('#balancesHistoryName').val(),
+								balancesHistoryGridName: $('#balancesHistoryGridName').val(),
 								statementOfAccountName: $('#statementOfAccountName').val(),
+								statementOfAccountGridName: $('#statementOfAccountGridName').val(),
 								benefitsProjectionName: $('#benefitsProjectionName').val(),
+								benefitsProjectionGridName: $('#benefitsProjectionGridName').val(),
 								whatIfAnalysisNameDb: $('#whatIfAnalysisNameDb').val(),
 								contributionHistoryActive: $('#contributionHistoryActive').prop('checked'),
+								contributionHistoryGridActive: $('#contributionHistoryGridActive').prop('checked'),
 								balancesHistoryActive: $('#balancesHistoryActive').prop('checked'),
+								balancesHistoryGridActive: $('#balancesHistoryGridActive').prop('checked'),
 								statementOfAccountActive: $('#statementOfAccountActive').prop('checked'),
+								statementOfAccountGridActive: $('#statementOfAccountGridActive').prop('checked'),
 								benefitsProjectionActive: $('#benefitsProjectionActive').prop('checked'),
+								benefitsProjectionGridActive: $('#benefitsProjectionGridActive').prop('checked'),
 								whatIfAnalysisActiveDb: $('#whatIfAnalysisActiveDb').prop('checked')
 								},
 							dataType: 'json',

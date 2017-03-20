@@ -236,6 +236,9 @@ public class MemberController extends BaseServlet implements Serializable {
 			case Actions.BP_GRID:
 				getProjectionsGrid(request, response, session);
 				break;
+			case Actions.SA_GRID:
+				getMemberStatementGrid(request, response, session);
+				break;
 			case Actions.BH_GRID:
 				getBalancesGrid(request, response, session);
 				break;
@@ -347,6 +350,25 @@ public class MemberController extends BaseServlet implements Serializable {
 		JSONObject memberProjections = apiEJB.getMemberProjections(member_id, reasonId, format.format(exitDate), format.format(calcDate), schemeId);
 
 		this.respond(response, true, "", memberProjections);
+	}
+
+	private void getMemberStatementGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+		User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
+		XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
+		String member_id = Long.toString(m.getId());
+		jLogger.i("Member found ================ > " + member_id);
+
+		String apId = this.get(request, "ap_id");
+		jLogger.i("Reason Id ================ > " + apId);
+
+		String schemeId = this.get(request, "scheme_id");
+		jLogger.i("Scheme Id ================ > " + schemeId);
+
+		//JSONObject memberContributions = apiEJB.getMemberFullContributions(member_id);
+		JSONObject memberStatement = apiEJB.getMemberStatement(member_id, apId, schemeId);
+
+		this.respond(response, true, "", memberStatement);
 	}
 
 	private void getBalancesGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
