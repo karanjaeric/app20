@@ -67,6 +67,31 @@
         return n;
     }
 
+    function stringToDate1(date) {
+        if(typeof	date != 'undefined')
+        {
+            var n =date.toString().split('-');
+            var date = new Date(n[1],n[0]-1,n[2]);
+            console.log("Date from string: " + date)
+        }
+        return date;
+    }
+
+    function stringToDate(_date,_format,_delimiter)
+    {
+        var formatLowerCase=_format.toLowerCase();
+        var formatItems=formatLowerCase.split(_delimiter);
+        var dateItems=_date.split(_delimiter);
+        var monthIndex=formatItems.indexOf("mm");
+        var dayIndex=formatItems.indexOf("dd");
+        var yearIndex=formatItems.indexOf("yyyy");
+        var month=parseInt(dateItems[monthIndex]);
+        month-=1;
+        var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]).toISOString().slice(0,10);;
+        console.log("Date from string: " + formatedDate);
+        return formatedDate;
+    }
+
     $(document).ready(function(){
 
         $('#balances-form').bootstrapValidator({
@@ -117,7 +142,7 @@
                                             var erClose = (+row['er_bal']) + (+row['er_contr']) + (+row['er_intr']);
                                             var grandTotal = (+eeClose) + (+erClose);
 
-                                            html = html + "<tr><td>" + format_date(row['as_at']) + "</td><td>" + format_no(row['ee_bal']) + "</td><td>" + format_no(row['ee_contr']) + "</td><td>" + format_no(row['ee_intr']) +
+                                            html = html + "<tr><td>" + stringToDate(format_date(row['as_at']),"yyyy-mm-dd","-") + "</td><td>" + format_no(row['ee_bal']) + "</td><td>" + format_no(row['ee_contr']) + "</td><td>" + format_no(row['ee_intr']) +
                                                     "</td><td>" + format_no(eeClose) + "</td><td>" + format_no(row['er_bal']) + "</td><td>" + format_no(row['er_contr']) + "</td><td>" + format_no(row['er_intr']) +
                                                     "</td><td>" + format_no(erClose) + "</td><td>" + format_no(grandTotal) + "</td></tr>";
 

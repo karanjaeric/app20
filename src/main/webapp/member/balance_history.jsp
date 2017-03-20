@@ -33,6 +33,7 @@
    	            {
 					var alternativeUrl = null;
 					var orientation = null;
+					
 
 					$.ajax({
 						url:  res + '/reports/general?_eventName=base-url&schemeId=' + $('#scheme_id').val(),
