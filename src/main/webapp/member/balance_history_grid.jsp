@@ -150,7 +150,7 @@
                                             //var grandTotal_format = roundFormattedNumber(grandTotal);
                                             var grandTotal_format_final = parseFloat(grandTotal).toFixed(2);
 
-                                            html = html + "<tr><td>" + stringToDate(format_date(row['as_at']),"yyyy-mm-dd","-") + "</td><td>" + format_no(row['ee_bal']) + "</td><td>" + format_no(row['ee_contr']) + "</td><td>" + format_no(row['ee_intr']) +
+                                            html = html + "<tr><td>" + format_date(row['as_at']) + "</td><td>" + format_no(row['ee_bal']) + "</td><td>" + format_no(row['ee_contr']) + "</td><td>" + format_no(row['ee_intr']) +
                                                     "</td><td>" + format_no(eeClose) + "</td><td>" + format_no(row['er_bal']) + "</td><td>" + format_no(row['er_contr']) + "</td><td>" + format_no(row['er_intr']) +
                                                     "</td><td>" + er_close_final + "</td><td>" + grandTotal_format_final + "</td></tr>";
 
