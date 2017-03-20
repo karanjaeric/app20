@@ -67,15 +67,14 @@
         return n;
     }
 
-    function stringToDate1(date) {
-        if(typeof	date != 'undefined')
-        {
-            var n =date.toString().split('-');
-            var date = new Date(n[1],n[0]-1,n[2]);
-            console.log("Date from string: " + date)
+    var roundFormattedNumber = function(n){
+
+        if(typeof	n != 'undefined') {
+            console.log("n is: " + n);
+            var result = parseFloat(n.replace(/[^0-9.]/g, ''));
+            return isNaN(result) ? NaN : result.toFixed(0);
         }
-        return date;
-    }
+    };
 
     function stringToDate(_date,_format,_delimiter)
     {
@@ -118,7 +117,7 @@
                             console.log(json);
 
                             html_head = "<tr><th colspan='2' ></th><th colspan='4' class='text-center'>EMPLOYEE</th><th colspan='5' class='text-center'>EMPLOYER</th></tr>";
-                            html = html_head + "<tr><th>PERIOD</th><th>OPENING</th><th>CONTR</th><th>INTEREST</th><th>CLOSING</th><th>OPENING</th><th>CONTR</th><th>INTEREST</th><th>CLOSING</th><th>TOTALS</th></tr>";
+                            html = html_head + "<tr><th>PERIOD ENDING</th><th>OPENING</th><th>CONTR</th><th>INTEREST</th><th>CLOSING</th><th>OPENING</th><th>CONTR</th><th>INTEREST</th><th>CLOSING</th><th>TOTALS</th></tr>";
                             var member_no = 0;
                             var ee_bal = 0;
                             var ee_contr = 0;
@@ -138,13 +137,22 @@
                                         for ( var i = 0; i < json.rows.length; i++) {
                                             var row = json.rows[i];
 
+
+
                                             var eeClose = (+row['ee_bal']) + (+row['ee_contr']) + (+row['ee_intr']);
                                             var erClose = (+row['er_bal']) + (+row['er_contr']) + (+row['er_intr']);
-                                            var grandTotal = (+eeClose) + (+erClose);
+
+                                            //var er_close_format = roundFormattedNumber(erClose);
+                                            var er_close_final = parseFloat(erClose).toFixed(2);
+
+                                            var grandTotal = (+eeClose) + (+er_close_final);
+
+                                            //var grandTotal_format = roundFormattedNumber(grandTotal);
+                                            var grandTotal_format_final = parseFloat(grandTotal).toFixed(2);
 
                                             html = html + "<tr><td>" + stringToDate(format_date(row['as_at']),"yyyy-mm-dd","-") + "</td><td>" + format_no(row['ee_bal']) + "</td><td>" + format_no(row['ee_contr']) + "</td><td>" + format_no(row['ee_intr']) +
                                                     "</td><td>" + format_no(eeClose) + "</td><td>" + format_no(row['er_bal']) + "</td><td>" + format_no(row['er_contr']) + "</td><td>" + format_no(row['er_intr']) +
-                                                    "</td><td>" + format_no(erClose) + "</td><td>" + format_no(grandTotal) + "</td></tr>";
+                                                    "</td><td>" + er_close_final + "</td><td>" + grandTotal_format_final + "</td></tr>";
 
                                             /*eeSum += row['ee'];
                                             erSum += row['er'];
