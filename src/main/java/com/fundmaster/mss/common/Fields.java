@@ -123,7 +123,7 @@ public class Fields {
     public static final String SUBREGION = "subregion";
     public static final String DEPOT = "depot";
     public static final String MBSHIP_STATUS = "mbshipStatus";
-    public static final String BENEFIT_PAYMENT_ID = "benefitPaymentId";
+    public static final String BENEFIT_PAYMENT_ID = "id";
     public static final String NET_PAYMENT = "netPayment";
     public static final String CURRENT_STATUS = "currentStatus";
     public static final String REASON_FOR_EXIT = "reasonForExit";

@@ -401,7 +401,8 @@ public class ApiBean implements ApiEJB {
         Constants.RECORD_COUNT = 0;
         JSONObject response;
         try {
-            response = URLGet(APICall.GET_EXITS_BENEFITS +"/" + memberNumber+"/"+schemeId);
+
+            response = URLGet(APICall.GET_EXITS_BENEFITS +  memberNumber +"/"+schemeId);
             jLogger.i("Response is: " + response);
 
             jLogger.i("Hapa ndio inakwama... ");
@@ -1350,6 +1351,7 @@ public class ApiBean implements ApiEJB {
                 return null;
             }
         } catch (IOException ioe) {
+            ioe.printStackTrace();
             jLogger.e("We have an IO Exception " + ioe.getMessage());
             return this.technicalError(ioe.getMessage());
         }
@@ -1646,7 +1648,6 @@ public class ApiBean implements ApiEJB {
     private List<MemberClaims> memberClaimsFromJSON(JSONObject response) {
         List<MemberClaims> memberClaims = new ArrayList<>();
         try {
-            //Constants.RECORD_COUNT = response.getInt(Fields.TOTALCOUNT);
             JSONArray res = (JSONArray) response.get(Constants.ROWS);
             for (int i = 0; i < res.length(); i++) {
                 JSONObject receipt = res.getJSONObject(i);
@@ -1656,14 +1657,11 @@ public class ApiBean implements ApiEJB {
                 jLogger.i("Confirming memberNo: " + memberClaims1.getMemberNo());
                 memberClaims1.setBenefitPaymentId(receipt.getLong(Fields.BENEFIT_PAYMENT_ID));
                 memberClaims1.setMemberId(receipt.getLong(Fields.MEMBER_ID));
-                memberClaims1.setNetPayment(receipt.get(Fields.NET_PAYMENT).toString());
-                jLogger.i("Confirming Net Payment: " + memberClaims1.getNetPayment());
                 memberClaims1.setCurrentStatus(receipt.get(Fields.CURRENT_STATUS).toString());
                 jLogger.i("Confirming Status: " + memberClaims1.getCurrentStatus());
                 memberClaims1.setReasonForExit(receipt.get(Fields.REASON_FOR_EXIT).toString());
                 memberClaims1.setDateOfExit(receipt.get(Fields.DATE_OF_EXIT).toString());
                 memberClaims1.setProcessed(receipt.get(Fields.PROCESSED).toString());
-                memberClaims1.setServicePeriod(receipt.get(Fields.SERVICE_PERIOD).toString());
                 memberClaims.add(memberClaims1);
             }
             return memberClaims;
