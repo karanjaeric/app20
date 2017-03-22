@@ -1098,11 +1098,17 @@ public class ApiBean implements ApiEJB {
                 xiMember.setEmailAddress(response.getString(Fields.EMAIL));
             }
 
-            /*if (response.getString(Fields.NAME) == null || response.getString(Fields.NAME).isEmpty()) {
-                xiMember.setName("");
-            } else {
-                xiMember.setName(response.getString(Fields.NAME));
-            }*/
+            try {
+                
+                if (response.getString(Fields.NAME) == null || response.getString(Fields.NAME).isEmpty()) {
+                    xiMember.setName("");
+                } else {
+                    xiMember.setName(response.getString(Fields.NAME));
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
 
             Long Scheme_id = helper.toLong(response.get(Fields.SCHEME_ID));
             xiMember.setSchemeId(Long.toString(Scheme_id));
