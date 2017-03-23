@@ -1497,6 +1497,7 @@ public class ApiBean implements ApiEJB {
             xiMember.setPartyRefNo(jsonObject.getString(Fields.PARTYREFNO));
             xiMember.setPartnerNo(jsonObject.getString(Fields.PARTNER_NUMBER));
             xiMember.setPolicyNo(jsonObject.getString(Fields.POLICY_NO));
+            xiMember.setNationalPenNo(jsonObject.getString(Fields.NATIONAL_PEN_NO));
             xiMember.setStaffNo(jsonObject.getString(Fields.STAFF_NO));
             xiMember.setName(jsonObject.getString(Fields.NAME));
             xiMember.setIdNumber(jsonObject.getString(Fields.ID_NO));

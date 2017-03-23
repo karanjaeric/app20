@@ -338,6 +338,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.member_menu_config = member_menu_config;
 	}
 
+	public boolean isMember_dashboard_items() {
+		return member_dashboard_items;
+	}
+
+	public void setMember_dashboard_items(boolean member_dashboard_items) {
+		this.member_dashboard_items = member_dashboard_items;
+	}
+
 	public boolean isProfile_login_username() {
 		return profile_login_username;
 	}
@@ -473,7 +481,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean setup_other, boolean setup_contact_reason,
 			boolean content_help, boolean content_page,
 			boolean profile_privileges, boolean member_edit_permissions, boolean show_db_contribution_graph,
-			boolean profile_login_username, boolean scheme_managers, boolean member_menu_config,
+			boolean profile_login_username, boolean scheme_managers, boolean member_menu_config, boolean member_dashboard_items,
 			boolean users, boolean user_enable_disable, boolean audit_trail,
 			boolean operation_personal_info,
 			boolean operation_contribution_history,
@@ -524,6 +532,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.member_edit_permissions = member_edit_permissions;
 		this.show_db_contribution_graph = show_db_contribution_graph;
 		this.member_menu_config = member_menu_config;
+		this.member_dashboard_items = member_dashboard_items;
 		this.profile_login_username = profile_login_username;
 		this.scheme_managers = scheme_managers;
 		this.users = users;
@@ -559,7 +568,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	
 	private boolean content_help, content_page;
 	
-	private boolean profile_privileges, member_edit_permissions, show_db_contribution_graph, member_menu_config, profile_login_username, scheme_managers, users, user_enable_disable, audit_trail;
+	private boolean profile_privileges, member_edit_permissions, show_db_contribution_graph, member_menu_config, member_dashboard_items, profile_login_username, scheme_managers, users, user_enable_disable, audit_trail;
 	
 	private boolean operation_personal_info, operation_contribution_history, operation_balance_history, operation_statement_of_account, operation_benefit_projection;
 

@@ -57,6 +57,8 @@ public class MemberController extends BaseServlet implements Serializable {
 	@EJB
 	HelpBeanI helpBeanI;
 	@EJB
+	MemberDashboardBeanI memberDashboardBeanI;
+	@EJB
 	PageContentBeanI pageContentBeanI;
 	@EJB
 	MaritalStatusBeanI maritalStatusBeanI;
@@ -190,6 +192,8 @@ public class MemberController extends BaseServlet implements Serializable {
 
 					jLogger.i("Member found is: " + m.getId() );
 					request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
+					MemberDashboardItems memberDashboardItems = memberDashboardBeanI.find();
+					request.setAttribute("memberDashboard", memberDashboardItems);
 					List<ContactCategory> contactReasons = contactCategoryBeanI.find();
 					request.setAttribute("contactReasons", contactReasons);
 					request.setAttribute("isManager", helper.isManager(request));

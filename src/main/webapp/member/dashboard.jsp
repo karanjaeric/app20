@@ -7,17 +7,44 @@
 	<div class="col-md-6">
 	<h3 class="text-center"><small>MEMBER DETAILS</small></h3>
 				<table class="table table-responsive table-striped">
+
+				<c:if test="${memberDashboard.name == 'TRUE'}">
 					<tr><td>NAME</td><td>${member.name }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.dateOfBirth == 'TRUE'}">
 					<tr><td>DATE OF BIRTH</td><td>${member.dateOfBirth }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.dateOfJoiningScheme == 'TRUE'}">
 					<tr><td>DATE OF JOINING SCHEME</td><td>${member.dateJoinedScheme }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.gender == 'TRUE'}">
 					<tr><td>GENDER</td><td>${member.gender }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.idNumber == 'TRUE'}">
 					<tr><td>ID/PPT NUMBER</td><td>${member.idNumber }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.phoneNumber == 'TRUE'}">
 					<tr><td>PHONE NUMBER</td><td>${member.phoneNumber }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.emailAddress == 'TRUE'}">
 					<tr><td>EMAIL ADDRESS</td><td>${member.emailAddress }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.memberNo == 'TRUE'}">
 					<tr><td>MEMBER NUMBER</td><td>${member.memberNo }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.pinNumber == 'TRUE'}">
 					<tr><td>TAX NUMBER</td><td>${member.pinNo }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.memberId == 'TRUE'}">
+					<tr><td>MEMBER ID</td><td>${member.memberNo }</td></tr>
+				</c:if>
+				<c:if test="${memberDashboard.ssnitNumber == 'TRUE'}">
+					<tr><td>SSNIT NUMBER</td><td>${member.nationalPenNo }</td></tr>
+				</c:if>
 					<!--<tr><td>ANNUAL PEN. SALARY</td><td>${member.annualPensionableSalary }</td></tr>-->
+				<c:if test="${memberDashboard.town == 'TRUE'}">
 					<tr><td>CITY/TOWN</td><td>${member.town }</td></tr>
+				</c:if>
 				</table>
 	</div>
 	<div class="col-md-6 border-left">

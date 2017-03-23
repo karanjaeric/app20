@@ -91,6 +91,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String MEMBER_PERMISSION = "MEMBER_PERMISSION";
     private static final String DISABLE_CONTRIBUTION_GRAPH = "DISABLE_CONTRIBUTION_GRAPH";
     private static final String MEMBER_MENU_CONFIG = "MEMBER_MENU_CONFIG";
+    private static final String MEMBER_DASHBOARD_ITEMS = "MEMBER_DASHBOARD_ITEMS";
     private static final String PLF = "PLF";
     private static final String ADD_CONTACT_REASON = "ADD_CONTACT_REASON";
     private static final String LOGO = "LOGO";
@@ -150,6 +151,8 @@ public class Admin extends BaseServlet implements Serializable {
      DBGraphBeanI dbGraphBeanI;
     @EJB
     MemberMenuBeanI memberMenuBeanI;
+    @EJB
+    MemberDashboardBeanI memberDashboardBeanI;
     @EJB
     SocialBeanI socialBeanI;
     @EJB
@@ -472,6 +475,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case MEMBER_MENU_CONFIG:
                 editMemberMenu(request, response, session);
+                break;
+            case MEMBER_DASHBOARD_ITEMS:
+                configureMemberDashboard(request, response, session);
                 break;
             case PLF:
                 updateProfileLoginFields(request, response, session);
@@ -878,6 +884,42 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, true, "Member Menu configurations successfully saved", null);
         } else
             this.respond(response, true, "Member Menu configurations could not be saved", null);
+    }
+
+    private void configureMemberDashboard(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        MemberDashboardItems memberDashboardItems = memberDashboardBeanI.find();
+        boolean name = this.get(request, "memberName").equalsIgnoreCase("true");
+        boolean dateOfBirth = this.get(request, "dateOfBirth2").equalsIgnoreCase("true");
+        boolean dateOfJoiningScheme = this.get(request, "dateOfJoiningScheme").equalsIgnoreCase("true");
+        boolean gender = this.get(request, "gender2").equalsIgnoreCase("true");
+        boolean idNumber = this.get(request, "idNumber2").equalsIgnoreCase("true");
+        boolean phoneNumber = this.get(request, "phoneNumber2").equalsIgnoreCase("true");
+        boolean emailAddress = this.get(request, "emailAddress2").equalsIgnoreCase("true");
+        boolean memberNo = this.get(request, "memberNo2").equalsIgnoreCase("true");
+        boolean memberId = this.get(request, "memberId2").equalsIgnoreCase("true");
+        boolean pinNumber = this.get(request, "pinNumber").equalsIgnoreCase("true");
+        boolean ssnitNumber = this.get(request, "ssnitNumber").equalsIgnoreCase("true");
+        boolean town = this.get(request, "town").equalsIgnoreCase("true");
+
+        memberDashboardItems.setName(name);
+        memberDashboardItems.setDateOfBirth(dateOfBirth);
+        memberDashboardItems.setDateOfJoiningScheme(dateOfJoiningScheme);
+        memberDashboardItems.setGender(gender);
+        memberDashboardItems.setIdNumber(idNumber);
+        memberDashboardItems.setPhoneNumber(phoneNumber);
+        memberDashboardItems.setEmailAddress(emailAddress);
+        memberDashboardItems.setMemberNo(memberNo);
+        memberDashboardItems.setMemberId(memberId);
+        memberDashboardItems.setPinNumber(pinNumber);
+        memberDashboardItems.setSsnitNumber(ssnitNumber);
+        memberDashboardItems.setTown(town);
+
+        if (memberDashboardBeanI.edit(memberDashboardItems) != null) {
+            audit(session, "Updated Member Dashboard configuration settings");
+            this.respond(response, true, "Member Dashboard configurations successfully saved", null);
+        } else
+            this.respond(response, true, "Member Dashboard configurations could not be saved", null);
     }
 
     private void deleteMediaFile(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1491,6 +1533,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setMember_edit_permissions(this.get(request, "member_edit_permissions").equalsIgnoreCase("true"));
         perm.setShow_db_contribution_graph(this.get(request, "show_db_contribution_graph").equalsIgnoreCase("true"));
         perm.setMember_menu_config(this.get(request, "member_menu_config").equalsIgnoreCase("true"));
+        perm.setMember_dashboard_items(this.get(request, "member_dashboard_items").equalsIgnoreCase("true"));
         perm.setProfile_login_username(this.get(request, "profile_login_username").equalsIgnoreCase("true"));
         perm.setProfile_privileges(this.get(request, "profile_privileges").equalsIgnoreCase("true"));
         perm.setProfile_names(this.get(request, "profile_names").equalsIgnoreCase("true"));

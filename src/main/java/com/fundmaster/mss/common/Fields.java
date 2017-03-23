@@ -71,6 +71,7 @@ public class Fields {
     public static final String TERMINATE_COVER = "terminateCover";
     public static final String STAFF_NO = "staffNo";
     public static final String POLICY_NO = "policyNo";
+    public static final String NATIONAL_PEN_NO = "nationalPenNo";
     public static final String PAY_TYPE = "payType";
     public static final String BRANCH = "branch";
     public static final String PARTNER_NUMBER = "partnerNumber";

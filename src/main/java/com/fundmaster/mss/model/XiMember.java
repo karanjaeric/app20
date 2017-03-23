@@ -33,6 +33,7 @@ public class XiMember extends GenericModel<XiMember> implements Serializable{
 	private String postalAddress;
 	private String phoneNumber;
 	private String emailAddress;
+	private String nationalPenNo;
 	private String gender;
 	private String department;
 	private String dateOfBirth;
@@ -251,6 +252,15 @@ public class XiMember extends GenericModel<XiMember> implements Serializable{
 	public void setSchemeId(String schemeId) {
 		this.schemeId = schemeId;
 	}
+
+	public String getNationalPenNo() {
+		return nationalPenNo;
+	}
+
+	public void setNationalPenNo(String nationalPenNo) {
+		this.nationalPenNo = nationalPenNo;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -262,7 +272,7 @@ public class XiMember extends GenericModel<XiMember> implements Serializable{
 			String department, String dateOfBirth, String maritalStatus,
 			String dateJoinedScheme, String schemeId, String town, String country, String annualPensionableSalary,
 			String firstname, String surname, String othernames, String region, String designation, String county,
-					String depot, String mbshipStatus) {
+					String depot, String mbshipStatus, String nationalPenNo) {
 		super();
 		this.id = id;
 		this.mbio_id = mbio_id;
@@ -273,6 +283,7 @@ public class XiMember extends GenericModel<XiMember> implements Serializable{
 		this.policyNo = policyNo;
 		this.staffNo = staffNo;
 		this.name = name;
+		this.nationalPenNo = nationalPenNo;
 		this.idNumber = idNumber;
 		this.terminateCover = terminateCover;
 		this.pinNo = pinNo;

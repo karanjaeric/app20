@@ -50,6 +50,8 @@ public class MenuController extends BaseServlet implements Serializable {
     @EJB
     MemberMenuBeanI memberMenuBeanI;
     @EJB
+    MemberDashboardBeanI memberDashboardBeanI;
+    @EJB
     ThemeBeanI themeBeanI;
     @EJB
     HelpBeanI helpBeanI;
@@ -113,8 +115,9 @@ public class MenuController extends BaseServlet implements Serializable {
         DBContributionGraph dbContributionGraph = dbGraphBeanI.find();
         request.setAttribute("dbContrGraph", dbContributionGraph);
         MemberMenu memberMenu = memberMenuBeanI.find();
-        jLogger.i("Response ============= >" + memberMenu.toString());
         request.setAttribute("memberMenu", memberMenu);
+        MemberDashboardItems memberDashboardItems = memberDashboardBeanI.find();
+        request.setAttribute("memberDashboard", memberDashboardItems);
         List<ProfileLoginField> pfs = profileLoginFieldBeanI.find();
         request.setAttribute("plfs", pfs);
         List<ProfileName> profileNames = profileNameBeanI.find();

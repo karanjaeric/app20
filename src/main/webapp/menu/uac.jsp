@@ -18,6 +18,11 @@
 					class="glyphicon glyphicon-stats"></i>&nbsp;<i
 					class="fa fa-chevron-right"></i> MEMBER MENU CONFIGURATION</a></li>
 		</c:if>
+		<c:if test="${ permissions.member_dashboard_items }">
+			<li id="member-dashboard-li"><a href="javascript:void(0);"><i
+					class="glyphicon glyphicon-stats"></i>&nbsp;<i
+					class="fa fa-chevron-right"></i> MEMBER DASHBOARD ITEMS</a></li>
+		</c:if>
 		<c:if test="${ permissions.profile_login_username }">
 		<li id="profile-login-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
@@ -496,7 +501,7 @@
 				<div class="modal-body">
 					<input type="hidden" name="memberMenu_id" value="${ memberMenu.id }" id="memberMenu_id"/>
 					<table class="table">
-						<tr><th>ITEM</th><th>HIDE</th></tr>
+						<tr><th>ITEM</th><th>SHOW/HIDE</th></tr>
 						<tr>
 							<td>
 								<label class="control-label">CONTRIBUTION HISTORY (REPORT)</label>
@@ -607,6 +612,141 @@
 	</form>
 </div>
 <!-- End Member Menu -->
+
+<!-- Member Dashboard Items Start -->
+
+<div class="modal fade" id="modal-dashboard-items" tabindex="-1" role="dialog" aria-labelledby="myModalLabelMemberDashboard" aria-hidden="true">
+	<form role="form" id="form-member-dashboard">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabelMemberDashboard">
+						<i class="glyphicon glyphicon-stats"></i>&nbsp;&nbsp;HIDE/SHOW MEMBER DETAILS ON DASHBOARD
+					</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="memberDashboard_id" value="${ memberDashboard.id }" id="memberDashboard_id"/>
+					<table class="table">
+						<tr><th>ITEM</th><th>SHOW/HIDE</th></tr>
+						<tr>
+							<td>
+								<label class="control-label">NAME</label>
+							</td>
+							<td>
+								<input type="checkbox" name="memberName" id="memberName" ${memberDashboard.name == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="control-label"> DATE OF BIRTH</label>
+							</td>
+							<td>
+								<input type="checkbox" name="dateOfBirth2" id="dateOfBirth2" ${memberDashboard.dateOfBirth == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> DATE OF JOINING SCHEME </label>
+							</td>
+							<td>
+								<input type="checkbox" name="dateOfJoiningScheme" id="dateOfJoiningScheme" ${memberDashboard.dateOfJoiningScheme == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> GENDER</label>
+							</td>
+							<td>
+								<input type="checkbox" name="gender2" id="gender2" ${memberDashboard.gender == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> ID NUMBER </label>
+							</td>
+							<td>
+								<input type="checkbox" name="idNumber2" id="idNumber2" ${memberDashboard.idNumber == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> PHONE NUMBER </label>
+							</td>
+							<td>
+								<input type="checkbox" name="phoneNumber2" id="phoneNumber2" ${memberDashboard.phoneNumber == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> EMAIL ADDRESS </label>
+							</td>
+							<td>
+								<input type="checkbox" name="emailAddress2" id="emailAddress2" ${memberDashboard.emailAddress == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> MEMBER NUMBER </label>
+							</td>
+							<td>
+								<input type="checkbox" name="memberNo2" id="memberNo2" ${memberDashboard.memberNo == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> MEMBER ID </label>
+							</td>
+							<td>
+								<input type="checkbox" name="memberId2" id="memberId2" ${memberDashboard.memberId == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> PIN/TAX NUMBER </label>
+							</td>
+							<td>
+								<input type="checkbox" name="pinNumber" id="pinNumber" ${memberDashboard.pinNumber == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> SSNIT NUMBER </label>
+							</td>
+							<td>
+								<input type="checkbox" name="ssnitNumber" id="ssnitNumber" ${memberDashboard.ssnitNumber == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> CITY/TOWN </label>
+							</td>
+							<td>
+								<input type="checkbox" name="town" id="town" ${memberDashboard.town == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+					<input class="btn btn-primary" type="submit"
+						   value="Save Permissions" id="btn-dashboard-items">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- End Member Dashboard Items-->
 
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -925,6 +1065,67 @@
 					});
 			/* End Form Member Menu */
 
+			/* Form Dashboard Items */
+
+			$('#form-member-dashboard').bootstrapValidator({
+				message: 'This value is not valid',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+
+				}
+			})
+					.on('success.form.bv', function(e) {
+
+						// Prevent form submission
+						e.preventDefault();
+
+						var btn = "btn-dashboard-items";
+						var form = "form-member-dashboard";
+						var modal = "modal-dashboard-items";
+						var btn_text = $('#' + btn).val();
+
+						$('#' + btn).val('Please wait...');
+						$.ajax({
+							url: $('#base_url').val() + 'admin',
+							type: 'post',
+							data: {
+								ACTION: 'MEMBER_DASHBOARD_ITEMS',
+								memberName: $('#memberName').prop('checked'),
+								dateOfBirth2: $('#dateOfBirth2').prop('checked'),
+								dateOfJoiningScheme: $('#dateOfJoiningScheme').prop('checked'),
+								gender2: $('#gender2').prop('checked'),
+								idNumber2: $('#idNumber2').prop('checked'),
+								phoneNumber2: $('#phoneNumber2').prop('checked'),
+								emailAddress2: $('#emailAddress2').prop('checked'),
+								memberNo2: $('#memberNo2').prop('checked'),
+								memberId2: $('#memberId2').prop('checked'),
+								pinNumber: $('#pinNumber').prop('checked'),
+								ssnitNumber: $('#ssnitNumber').prop('checked'),
+								town: $('#town').prop('checked')
+							},
+							dataType: 'json',
+							success: function(json) {
+								$('#' + btn).val('Done');
+								if(json.success)
+								{
+									$('#' + form)[0].reset();
+									$('#' + modal).modal('hide');
+									html = 'Configuration details successfully saved';
+								}
+								else
+									html = 'Configuration details could not be saved';
+								bootbox.alert(html);
+								$('#' + btn).val(btn_text);
+							}
+						});
+
+					});
+			/* End Form Dashboard Items */
+
 		    
 		    $('#member-permissions-li').click(function(){
 		        $('#modal-member-permissions').modal('show');
@@ -936,6 +1137,10 @@
 
 			$('#member-menu-li').click(function(){
 				$('#modal-member-menu').modal('show');
+			});
+
+			$('#member-dashboard-li').click(function(){
+				$('#modal-dashboard-items').modal('show');
 			});
 		    
 		    $('#profile-login-li').click(function(){
