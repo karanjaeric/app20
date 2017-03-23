@@ -436,6 +436,17 @@ MediaBeanI mediaBeanI;
     private void showMemberMedia(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         List<Media> medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
         request.setAttribute("medias", medias);
+
+        String schemeId = "";
+        schemeId = this.getSessKey(request, Constants.SCHEME_ID);
+        jLogger.i("============ Member Scheme ID is: " + schemeId + " ===================");
+        request.setAttribute("scheme_id", schemeId);
+
+        for (Media media : medias) {
+            String mediaScheme = media.getSchemeID();
+            jLogger.i("============ Doc Scheme ID is: " + mediaScheme + " ===================");
+        }
+
         logActivity("MEDIA FILES", "Accessed media & files (documents)", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed media & files (documents)");
         request.getRequestDispatcher("member/media_files.jsp").forward(request, response);
