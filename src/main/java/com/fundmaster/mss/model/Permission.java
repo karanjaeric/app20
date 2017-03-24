@@ -132,6 +132,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.analytics = analytics;
 	}
 
+	public boolean isCalculator_log() {
+		return calculator_log;
+	}
+
+	public void setCalculator_log(boolean calculator_log) {
+		this.calculator_log = calculator_log;
+	}
+
 	public boolean isSetup_company() {
 		return setup_company;
 	}
@@ -380,7 +388,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	private String profile;
 	
-	private boolean setup, content, schemes, receipts, payments, members, member_listing, corporate_statement, operations, media, uac, analytics;
+	private boolean setup, content, schemes, receipts, payments, members, member_listing, corporate_statement, operations, media, uac, analytics,calculator_log ;
 	
 	private boolean portal_members, portal_member_view, portal_member_process, portal_member_delete, portal_member_add;
 	
@@ -483,7 +491,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	public Permission(long id, String profile, boolean setup, boolean content,
 			boolean schemes, boolean receipts, boolean payments,
 			boolean members, boolean member_listing, boolean corporate_statement, boolean operations, boolean media, boolean uac,
-			boolean analytics, boolean setup_company, boolean setup_email, boolean setup_logo,
+			boolean analytics, boolean calculator_log, boolean setup_company, boolean setup_email, boolean setup_logo,
 			boolean setup_menu, boolean db_menu, boolean setup_social, boolean setup_theme,
 			boolean setup_banner, boolean setup_interest_rate,
 			boolean setup_other, boolean setup_contact_reason,
@@ -523,6 +531,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.receipt_summary = receipt_summary;
 		this.uac = uac;
 		this.analytics = analytics;
+		this.calculator_log = calculator_log;
 		this.setup_company = setup_company;
 		this.setup_email = setup_email;
 		this.setup_logo = setup_logo;

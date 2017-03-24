@@ -139,9 +139,11 @@
 								class="fa fa-chevron-right"></i> ANALYTICS &amp; REPORTING</a></li>
 						</c:if>
 
+						<c:if test="${permissions.calculator_log == 'TRUE' }">
 						<li id="calc-log"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-flash"></i>&nbsp;<i
 								class="fa fa-chevron-right"></i>CALCULATOR LOG</a></li>
+						</c:if>
 
 
 				</ul>
