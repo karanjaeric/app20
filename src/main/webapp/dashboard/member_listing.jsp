@@ -16,6 +16,8 @@
     <input type="hidden" id="username" value="${ settings.xiReportUsername }" />
     <input type="hidden" id="password" value="${ settings.xiReportPassword }" />
     <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
+    <input type="hidden" id="sponsor_name" value="${ memberName }"/>
+    <input type="hidden" id="sponsor_id" value="${ sponsorId }"/>
     <p>&nbsp;</p>
     <div class="col-md-12" id="ml-results">
 
@@ -30,16 +32,8 @@
 
     $(document).ready(function(){
 
-        $.ajax({
-            url: $('#base_url').val() + 'admin',
-            type: 'post',
-            data: {ACTION:'AP'},
-            dataType: 'json',
-            success: function(json) {
-                if(json.success)
-                {
-                    var alternativeUrl = null;
-                    var orientation = null;
+        var alternativeUrl = null;
+        var orientation = null;
 
                     $.ajax({
                         url:  res + '/reports/general?_eventName=base-url&schemeId=' + $('#scheme_id').val(),
@@ -61,14 +55,11 @@
                     });
 
                     var url =
-                            $('#reportPath').val() +"members/Member Listing.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Listing.xdo&_xmode=3&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
-                            + $('#scheme_id').val() + "&_xt=Member%20Listing&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+                            $('#reportPath').val() +"members/Members per Sponsor.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMembers%20per%20Sponsor.xdo&_xmode=3&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramssponsor_name="
+                            + $('#sponsor_name').val() + '&_paramssponsorId=' +  $('#sponsor_id').val() + "&_xt=Members%20per%20Sponsor&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
 
                     $("#ml-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
-                }
-            }
-        });
     });
 
 </script>

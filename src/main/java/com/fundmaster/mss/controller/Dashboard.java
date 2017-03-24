@@ -364,6 +364,19 @@ public class Dashboard extends BaseServlet implements Serializable {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+
+        String userName = this.getSessKey(request, Constants.USER);
+        jLogger.i("Username is ===============> " + userName);
+
+        User usr = userBeanI.findByUsername(userName);
+        String userProfile = usr.getUserProfile();
+        XiMember mbr = apiEJB.memberExists(userProfile, userName);
+        String memberName = mbr.getName();
+        request.setAttribute("memberName", memberName);
+        String sponsorId = mbr.getId().toString();
+        jLogger.i("Sponsor Id =============== > " + sponsorId);
+        request.setAttribute("sponsorId", sponsorId);
+
         logActivity("MEMBER LISTING", "Viewed member listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member listing");
         request.getRequestDispatcher(REPO_FOLDER + "/member_listing.jsp").forward(request, response);
