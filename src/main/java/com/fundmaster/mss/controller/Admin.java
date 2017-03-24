@@ -92,6 +92,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String DISABLE_CONTRIBUTION_GRAPH = "DISABLE_CONTRIBUTION_GRAPH";
     private static final String MEMBER_MENU_CONFIG = "MEMBER_MENU_CONFIG";
     private static final String MEMBER_DASHBOARD_ITEMS = "MEMBER_DASHBOARD_ITEMS";
+    private static final String ADMIN_DASHBOARD_ITEMS = "ADMIN_DASHBOARD_ITEMS";
     private static final String PLF = "PLF";
     private static final String ADD_CONTACT_REASON = "ADD_CONTACT_REASON";
     private static final String LOGO = "LOGO";
@@ -153,6 +154,8 @@ public class Admin extends BaseServlet implements Serializable {
     MemberMenuBeanI memberMenuBeanI;
     @EJB
     MemberDashboardBeanI memberDashboardBeanI;
+    @EJB
+    AdminDashboardI adminDashboardI;
     @EJB
     SocialBeanI socialBeanI;
     @EJB
@@ -260,6 +263,8 @@ public class Admin extends BaseServlet implements Serializable {
                     request.setAttribute("isManager", helper.isManager(request));
                     Emails email = emailsBeanI.find();
                     request.setAttribute("email", email);
+                    AdminDashboardItems adminDashboardItems = adminDashboardI.find();
+                    request.setAttribute("adminDashboard", adminDashboardItems);
 
                     if ((schemes != null ? schemes.size() : 0) > 1 && this.getSessKey(request, Constants.SCHEME_ID) == null)
                         request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
@@ -478,6 +483,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case MEMBER_DASHBOARD_ITEMS:
                 configureMemberDashboard(request, response, session);
+                break;
+            case ADMIN_DASHBOARD_ITEMS:
+                configureAdminDashboard(request, response, session);
                 break;
             case PLF:
                 updateProfileLoginFields(request, response, session);
@@ -920,6 +928,31 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, true, "Member Dashboard configurations successfully saved", null);
         } else
             this.respond(response, true, "Member Dashboard configurations could not be saved", null);
+    }
+
+    private void configureAdminDashboard(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        AdminDashboardItems adminDashboardItems = adminDashboardI.find();
+        boolean activeMembers = this.get(request, "activeMembers").equalsIgnoreCase("true");
+        boolean defferedMembers = this.get(request, "defferedMembers").equalsIgnoreCase("true");
+        boolean pensioners = this.get(request, "pensioners").equalsIgnoreCase("true");
+        boolean exits = this.get(request, "exits").equalsIgnoreCase("true");
+        boolean newMembers = this.get(request, "newMembers").equalsIgnoreCase("true");
+        boolean membersDueRetirement = this.get(request, "membersDueRetirement").equalsIgnoreCase("true");
+
+
+        adminDashboardItems.setActiveMembers(activeMembers);
+        adminDashboardItems.setDefferedMembers(defferedMembers);
+        adminDashboardItems.setPensioners(pensioners);
+        adminDashboardItems.setExits(exits);
+        adminDashboardItems.setNewMembers(newMembers);
+        adminDashboardItems.setMembersDueRetirement(membersDueRetirement);
+
+        if (adminDashboardI.edit(adminDashboardItems) != null) {
+            audit(session, "Updated Admin Dashboard configuration settings");
+            this.respond(response, true, "Admin Dashboard configurations successfully saved", null);
+        } else
+            this.respond(response, true, "Admin Dashboard configurations could not be saved", null);
     }
 
     private void deleteMediaFile(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1534,6 +1567,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setShow_db_contribution_graph(this.get(request, "show_db_contribution_graph").equalsIgnoreCase("true"));
         perm.setMember_menu_config(this.get(request, "member_menu_config").equalsIgnoreCase("true"));
         perm.setMember_dashboard_items(this.get(request, "member_dashboard_items").equalsIgnoreCase("true"));
+        perm.setAdmin_dashboard_items(this.get(request, "admin_dashboard_items").equalsIgnoreCase("true"));
         perm.setProfile_login_username(this.get(request, "profile_login_username").equalsIgnoreCase("true"));
         perm.setProfile_privileges(this.get(request, "profile_privileges").equalsIgnoreCase("true"));
         perm.setProfile_names(this.get(request, "profile_names").equalsIgnoreCase("true"));

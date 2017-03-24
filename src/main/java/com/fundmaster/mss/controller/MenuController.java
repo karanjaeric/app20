@@ -52,6 +52,8 @@ public class MenuController extends BaseServlet implements Serializable {
     @EJB
     MemberDashboardBeanI memberDashboardBeanI;
     @EJB
+    AdminDashboardI adminDashboardI;
+    @EJB
     ThemeBeanI themeBeanI;
     @EJB
     HelpBeanI helpBeanI;
@@ -118,6 +120,8 @@ public class MenuController extends BaseServlet implements Serializable {
         request.setAttribute("memberMenu", memberMenu);
         MemberDashboardItems memberDashboardItems = memberDashboardBeanI.find();
         request.setAttribute("memberDashboard", memberDashboardItems);
+        AdminDashboardItems adminDashboardItems = adminDashboardI.find();
+        request.setAttribute("adminDashboard", adminDashboardItems);
         List<ProfileLoginField> pfs = profileLoginFieldBeanI.find();
         request.setAttribute("plfs", pfs);
         List<ProfileName> profileNames = profileNameBeanI.find();

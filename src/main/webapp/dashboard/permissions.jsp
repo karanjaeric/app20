@@ -111,6 +111,7 @@
 			    <tr><td>DB SCHEME RESTRICTIONS</td><td><input type="checkbox" id="show_db_contribution_graph" class="form-control input-sm"  ${permissions.show_db_contribution_graph == 'TRUE' ? 'checked' : ''}/></td></tr>
 			    <tr><td>MEMBER MENU CONFIGURATION</td><td><input type="checkbox" id="member_menu_config" class="form-control input-sm"  ${permissions.member_menu_config == 'TRUE' ? 'checked' : ''}/></td></tr>
 			   	<tr><td>MEMBER DASHBOARD ITEMS</td><td><input type="checkbox" id="member_dashboard_items" class="form-control input-sm"  ${permissions.member_dashboard_items == 'TRUE' ? 'checked' : ''}/></td></tr>
+			   	<tr><td>ADMIN DASHBOARD ITEMS</td><td><input type="checkbox" id="admin_dashboard_items" class="form-control input-sm"  ${permissions.admin_dashboard_items == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>PROFILE LOGIN USERNAME</td><td><input type="checkbox" id="profile_login_username" class="form-control input-sm"  ${permissions.profile_login_username == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>SCHEME MANAGERS</td><td><input type="checkbox" id="scheme_managers" class="form-control input-sm"  ${permissions.scheme_managers == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>PORTAL USERS</td><td><input type="checkbox" id="users" class="form-control input-sm"  ${permissions.users == 'TRUE' ? 'checked' : ''}/></td></tr>

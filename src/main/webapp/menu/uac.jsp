@@ -23,6 +23,11 @@
 					class="glyphicon glyphicon-stats"></i>&nbsp;<i
 					class="fa fa-chevron-right"></i> MEMBER DASHBOARD ITEMS</a></li>
 		</c:if>
+		<c:if test="${ permissions.admin_dashboard_items }">
+			<li id="admin-dashboard-items-li"><a href="javascript:void(0);"><i
+					class="glyphicon glyphicon-stats"></i>&nbsp;<i
+					class="fa fa-chevron-right"></i> ADMIN DASHBOARD ITEMS</a></li>
+		</c:if>
 		<c:if test="${ permissions.profile_login_username }">
 		<li id="profile-login-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
@@ -748,6 +753,87 @@
 </div>
 <!-- End Member Dashboard Items-->
 
+<!-- Admin Dashboard Items Start -->
+
+<div class="modal fade" id="modal-admin-dashboard" tabindex="-1" role="dialog" aria-labelledby="myModalLabelAdminDashboard" aria-hidden="true">
+	<form role="form" id="form-admin-dashboard">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabelAdminDashboard">
+						<i class="glyphicon glyphicon-stats"></i>&nbsp;&nbsp;HIDE/SHOW DETAILS ON DASHBOARD
+					</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="adminDashboard_id" value="${ adminDashboard.id }" id="adminDashboard_id"/>
+					<table class="table">
+						<tr><th>ITEM</th><th>SHOW/HIDE</th></tr>
+						<tr>
+							<td>
+								<label class="control-label">ACTIVE MEMBERS </label>
+							</td>
+							<td>
+								<input type="checkbox" name="activeMembers" id="activeMembers" ${adminDashboard.activeMembers == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="control-label"> DEFERRED MEMBERS </label>
+							</td>
+							<td>
+								<input type="checkbox" name="defferedMembers" id="defferedMembers" ${adminDashboard.defferedMembers == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> PENSIONERS </label>
+							</td>
+							<td>
+								<input type="checkbox" name="pensioners" id="pensioners" ${adminDashboard.pensioners == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> EXITS IN CURRENT YEAR </label>
+							</td>
+							<td>
+								<input type="checkbox" name="exits" id="exits" ${adminDashboard.exits == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> NEW MEMBERS </label>
+							</td>
+							<td>
+								<input type="checkbox" name="newMembers" id="newMembers" ${adminDashboard.newMembers == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> MEMBERS DUE FOR RETIREMENT </label>
+							</td>
+							<td>
+								<input type="checkbox" name="membersDueRetirement" id="membersDueRetirement" ${adminDashboard.membersDueRetirement == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+					<input class="btn btn-primary" type="submit"
+						   value="Save Permissions" id="btn-admin-dashboard">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- End Admin Dashboard Items-->
+
 	<script type="text/javascript">
 		$(document).ready(function(){
 
@@ -1126,6 +1212,62 @@
 					});
 			/* End Form Dashboard Items */
 
+			/* Form Admin Dashboard Items */
+
+			$('#form-admin-dashboard').bootstrapValidator({
+				message: 'This value is not valid',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+
+				}
+			})
+					.on('success.form.bv', function(e) {
+
+						// Prevent form submission
+						e.preventDefault();
+
+						var btn = "btn-admin-dashboard";
+						var form = "form-admin-dashboard";
+						var modal = "modal-admin-dashboard";
+						var btn_text = $('#' + btn).val();
+
+						$('#' + btn).val('Please wait...');
+						$.ajax({
+							url: $('#base_url').val() + 'admin',
+							type: 'post',
+							data: {
+								ACTION: 'ADMIN_DASHBOARD_ITEMS',
+								activeMembers: $('#activeMembers').prop('checked'),
+								defferedMembers: $('#defferedMembers').prop('checked'),
+								dateOfJoiningScheme: $('#dateOfJoiningScheme').prop('checked'),
+								pensioners: $('#pensioners').prop('checked'),
+								exits: $('#exits').prop('checked'),
+								newMembers: $('#newMembers').prop('checked'),
+								membersDueRetirement: $('#membersDueRetirement').prop('checked')
+							},
+							dataType: 'json',
+							success: function(json) {
+								$('#' + btn).val('Done');
+								if(json.success)
+								{
+									$('#' + form)[0].reset();
+									$('#' + modal).modal('hide');
+									html = 'Configuration details successfully saved';
+								}
+								else
+									html = 'Configuration details could not be saved';
+								bootbox.alert(html);
+								$('#' + btn).val(btn_text);
+							}
+						});
+
+					});
+			/* End Form Admin Dashboard Items */
+
 		    
 		    $('#member-permissions-li').click(function(){
 		        $('#modal-member-permissions').modal('show');
@@ -1141,6 +1283,10 @@
 
 			$('#member-dashboard-li').click(function(){
 				$('#modal-dashboard-items').modal('show');
+			});
+
+			$('#admin-dashboard-items-li').click(function(){
+				$('#modal-admin-dashboard').modal('show');
 			});
 		    
 		    $('#profile-login-li').click(function(){

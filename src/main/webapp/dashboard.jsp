@@ -9,12 +9,24 @@
 		<div class="col-md-6 border-right">
 		<h3 class="text-center"><small>SCHEME MEMBERSHIP</small></h3>
 		<table class="table table-responsive table-striped">
-			<tr><td>ACTIVE MEMBERS</td><td id="active_members">--</td></tr>
-			<tr><td>DEFERRED MEMBERS</td><td id="deferred_members">--</td></tr>
-			<tr><td>PENSIONERS</td><td id="pensioner_members">--</td></tr>
-			<tr><td>EXITS IN CURRENT YEAR</td><td id="exits_in_year">--</td></tr>
-			<tr><td>NEW MEMBERS</td><td id="new_members">--</td></tr>
-			<tr><td>MEMBERS DUE FOR RETIREMENT</td><td id="due_for_retirement">${ retirement }</td></tr>
+			<c:if test="${adminDashboard.activeMembers == 'TRUE'}">
+				<tr><td>ACTIVE MEMBERS</td><td id="active_members">--</td></tr>
+			</c:if>
+			<c:if test="${adminDashboard.defferedMembers == 'TRUE'}">
+				<tr><td>DEFERRED MEMBERS</td><td id="deferred_members">--</td></tr>
+			</c:if>
+			<c:if test="${adminDashboard.pensioners == 'TRUE'}">
+				<tr><td>PENSIONERS</td><td id="pensioner_members">--</td></tr>
+			</c:if>
+			<c:if test="${adminDashboard.exits == 'TRUE'}">
+				<tr><td>EXITS IN CURRENT YEAR</td><td id="exits_in_year">--</td></tr>
+			</c:if>
+			<c:if test="${adminDashboard.newMembers == 'TRUE'}">
+				<tr><td>NEW MEMBERS</td><td id="new_members">--</td></tr>
+			</c:if>
+			<c:if test="${adminDashboard.membersDueRetirement == 'TRUE'}">
+				<tr><td>MEMBERS DUE FOR RETIREMENT</td><td id="due_for_retirement">${ retirement }</td></tr>
+			</c:if>
 		</table>
 		</div>
 		<div class="col-md-6">
