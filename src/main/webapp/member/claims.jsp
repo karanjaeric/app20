@@ -12,9 +12,9 @@
     </h3>
 
     <table class="table table-responsive table-striped" id="claim-results">
-        <tr><th>MEMBER NUMBER</th><th>DATE OF EXIT</th><th>REASON FOR EXIT</th><th>CLAIM STATUS</th><th>PROCESSED</th></tr>
+        <tr><th>MEMBER ID</th><th>DATE OF EXIT</th><th>REASON FOR EXIT</th><th>CLAIM STATUS</th><th>PROCESSED</th></tr>
         <c:forEach var="claims" items="${ claims }">
-            <tr><td>${claims.memberNo }</td><td>${claims.dateOfExit }</td><td>${ claims.reasonForExit }</td><td>${ claims.currentStatus }</td><td>${ claims.processed }</td></tr>
+            <tr><td>${claims.membershipNo }</td><td>${claims.dateOfExit }</td><td>${ claims.reasonForExit }</td><td>${ claims.currentStatus }</td><td>${ claims.processed }</td></tr>
         </c:forEach>
     </table>
 
