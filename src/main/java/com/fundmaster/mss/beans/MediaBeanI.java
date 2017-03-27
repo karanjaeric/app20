@@ -14,6 +14,7 @@ public interface MediaBeanI {
     Media add(Media media);
     Media edit(Media media);
     List<Media> findAll(String schemeID, String profile, String memberId);
+    List<Media> findByStatusAndProfile(String schemeId, boolean status, String Profile);
     boolean delete(Media media);
     Media findById(long id);
 }

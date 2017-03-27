@@ -7,6 +7,7 @@ import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
+import org.hibernate.type.YesNoType;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
@@ -447,17 +448,23 @@ public class Dashboard extends BaseServlet implements Serializable {
 @EJB
 MediaBeanI mediaBeanI;
     private void showMemberMedia(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-        List<Media> medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
-        request.setAttribute("medias", medias);
 
         String schemeId = "";
         schemeId = this.getSessKey(request, Constants.SCHEME_ID);
         jLogger.i("============ Member Scheme ID is: " + schemeId + " ===================");
         request.setAttribute("scheme_id", schemeId);
 
+        //List<Media> medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
+        boolean status = true;
+        String profile = this.getSessKey(request, Constants.U_PROFILE);
+        List<Media> medias = mediaBeanI.findByStatusAndProfile(schemeId,status,profile);
+        jLogger.i("Medias found: " + medias.size());
+        request.setAttribute("medias", medias);
+
         for (Media media : medias) {
             String mediaScheme = media.getSchemeID();
             jLogger.i("============ Doc Scheme ID is: " + mediaScheme + " ===================");
+            jLogger.i("Medias found: " + media);
         }
 
         logActivity("MEDIA FILES", "Accessed media & files (documents)", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
@@ -1008,25 +1015,30 @@ SocialBeanI socialBeanI;
     }
 
     private void showMedia(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
-        List<Media> medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
-        request.setAttribute("medias", medias);
-        List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
-        request.setAttribute("schemes", schemes);
-        Permission permissions = getPermissions(request);
-        request.setAttribute("permissions", permissions);
+
+        List<Media> medias = new ArrayList<>();
 
         String profile = this.getSessKey(request, Constants.U_PROFILE);
         request.setAttribute("profile", profile);
 
         jLogger.i("The profile is: " + profile);
-
+        boolean status = true;
         String schemeId = "";
-        if (profile.equalsIgnoreCase(Constants.SPONSOR)){
-            jLogger.i("============ Great, we're sure ni Sponsor ===================");
+        if (!profile.equalsIgnoreCase(Constants.ADMIN_PROFILE)){
+            //jLogger.i("============ Great, we're sure ni Sponsor ===================");
             schemeId = this.getSessKey(request, Constants.SCHEME_ID);
             jLogger.i("============ Scheme ID is: " + schemeId + " ===================");
+            medias = mediaBeanI.findByStatusAndProfile(schemeId, status, profile);
+        }
+        else {
+            medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
         }
         request.setAttribute("scheme_id", schemeId);
+        request.setAttribute("medias", medias);
+        List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
+        request.setAttribute("schemes", schemes);
+        Permission permissions = getPermissions(request);
+        request.setAttribute("permissions", permissions);
 
         logActivity("MEDIA & FILES", "Accessed media & files (documents)", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed media & files (documents)");
