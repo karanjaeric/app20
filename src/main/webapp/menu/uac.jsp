@@ -18,6 +18,13 @@
 					class="glyphicon glyphicon-stats"></i>&nbsp;<i
 					class="fa fa-chevron-right"></i> MEMBER MENU CONFIGURATION</a></li>
 		</c:if>
+
+		<c:if test="${ permissions.pensioner_menu_config }">
+			<li id="pensioner-menu-li"><a href="javascript:void(0);"><i
+					class="glyphicon glyphicon-user"></i>&nbsp;<i
+					class="fa fa-chevron-right"></i> PENSIONER MENU CONFIGURATION</a></li>
+		</c:if>
+
 		<c:if test="${ permissions.member_dashboard_items }">
 			<li id="member-dashboard-li"><a href="javascript:void(0);"><i
 					class="glyphicon glyphicon-stats"></i>&nbsp;<i
@@ -618,6 +625,77 @@
 </div>
 <!-- End Member Menu -->
 
+<!-- Pensioner Menu Start -->
+
+<div class="modal fade" id="modal-pensioner-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabelPensionerMenu" aria-hidden="true">
+	<form role="form" id="form-pensioner-menu">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabelPensionerMenu">
+						<i class="glyphicon glyphicon-stats"></i>&nbsp;&nbsp;HIDE/SHOW PENSIONER MENU OPTIONS
+					</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<tr><th>ITEM</th><th>SHOW/HIDE</th></tr>
+						<tr>
+							<td>
+								<label class="control-label">PERSONAL INFORMATION</label>
+							</td>
+							<td>
+								<input type="checkbox" name="personalInfo" id="personalInfo" ${pensionerMenu.personalInfo == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="control-label"> PENSION DETAILS</label>
+							</td>
+							<td>
+								<input type="checkbox" name="pensionDetails" id="pensionDetails" ${pensionerMenu.pensionDetails == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> PENSION ADVICE (REPORT) </label>
+							</td>
+							<td>
+								<input type="checkbox" name="pensionAdviceReport" id="pensionAdviceReport" ${pensionerMenu.pensionAdviceReport == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> PENSION ADVICE (GRID) </label>
+							</td>
+							<td>
+								<input type="checkbox" name="pensionAdviceGrid" id="pensionAdviceGrid" ${pensionerMenu.pensionAdviceGrid == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="control-label"> MEDIA & FILES</label>
+							</td>
+							<td>
+								<input type="checkbox" name="media2" id="media2" ${pensionerMenu.media == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+					<input class="btn btn-primary" type="submit"
+						   value="Save Permissions" id="btn-pensioner-menu">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- End Pensioner Menu -->
+
 <!-- Member Dashboard Items Start -->
 
 <div class="modal fade" id="modal-dashboard-items" tabindex="-1" role="dialog" aria-labelledby="myModalLabelMemberDashboard" aria-hidden="true">
@@ -1151,6 +1229,60 @@
 					});
 			/* End Form Member Menu */
 
+			/* Form Pensioner Menu */
+
+			$('#form-pensioner-menu').bootstrapValidator({
+				message: 'This value is not valid',
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields: {
+
+				}
+			})
+					.on('success.form.bv', function(e) {
+
+						// Prevent form submission
+						e.preventDefault();
+
+						var btn = "btn-pensioner-menu";
+						var form = "form-pensioner-menu";
+						var modal = "modal-pensioner-menu";
+						var btn_text = $('#' + btn).val();
+
+						$('#' + btn).val('Please wait...');
+						$.ajax({
+							url: $('#base_url').val() + 'admin',
+							type: 'post',
+							data: {
+								ACTION: 'PENSIONER_MENU_CONFIG',
+								personalInfo: $('#personalInfo').prop('checked'),
+								pensionDetails: $('#pensionDetails').prop('checked'),
+								pensionAdviceReport: $('#pensionAdviceReport').prop('checked'),
+								pensionAdviceGrid: $('#pensionAdviceGrid').prop('checked'),
+								media: $('#media2').prop('checked')
+							},
+							dataType: 'json',
+							success: function(json) {
+								$('#' + btn).val('Done');
+								if(json.success)
+								{
+									$('#' + form)[0].reset();
+									$('#' + modal).modal('hide');
+									html = 'Configuration details successfully saved';
+								}
+								else
+									html = 'Configuration details could not be saved';
+								bootbox.alert(html);
+								$('#' + btn).val(btn_text);
+							}
+						});
+
+					});
+			/* End Form Pensioner Menu */
+
 			/* Form Dashboard Items */
 
 			$('#form-member-dashboard').bootstrapValidator({
@@ -1279,6 +1411,10 @@
 
 			$('#member-menu-li').click(function(){
 				$('#modal-member-menu').modal('show');
+			});
+
+			$('#pensioner-menu-li').click(function(){
+				$('#modal-pensioner-menu').modal('show');
 			});
 
 			$('#member-dashboard-li').click(function(){

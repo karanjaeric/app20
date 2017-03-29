@@ -50,6 +50,8 @@ public class MenuController extends BaseServlet implements Serializable {
     @EJB
     MemberMenuBeanI memberMenuBeanI;
     @EJB
+    PensionerMenuBeanI pensionerMenuBeanI;
+    @EJB
     MemberDashboardBeanI memberDashboardBeanI;
     @EJB
     AdminDashboardI adminDashboardI;
@@ -118,6 +120,8 @@ public class MenuController extends BaseServlet implements Serializable {
         request.setAttribute("dbContrGraph", dbContributionGraph);
         MemberMenu memberMenu = memberMenuBeanI.find();
         request.setAttribute("memberMenu", memberMenu);
+        PensionerMenu pensionerMenu = pensionerMenuBeanI.find();
+        request.setAttribute("pensionerMenu", pensionerMenu);
         MemberDashboardItems memberDashboardItems = memberDashboardBeanI.find();
         request.setAttribute("memberDashboard", memberDashboardItems);
         AdminDashboardItems adminDashboardItems = adminDashboardI.find();

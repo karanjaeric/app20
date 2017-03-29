@@ -110,6 +110,7 @@
 				<tr><td>MEMBER EDIT PERMISSIONS</td><td><input type="checkbox" id="member_edit_permissions" class="form-control input-sm"  ${permissions.member_edit_permissions == 'TRUE' ? 'checked' : ''}/></td></tr>
 			    <tr><td>DB SCHEME RESTRICTIONS</td><td><input type="checkbox" id="show_db_contribution_graph" class="form-control input-sm"  ${permissions.show_db_contribution_graph == 'TRUE' ? 'checked' : ''}/></td></tr>
 			    <tr><td>MEMBER MENU CONFIGURATION</td><td><input type="checkbox" id="member_menu_config" class="form-control input-sm"  ${permissions.member_menu_config == 'TRUE' ? 'checked' : ''}/></td></tr>
+			    <tr><td>PENSIONER MENU CONFIGURATION</td><td><input type="checkbox" id="pensioner_menu_config" class="form-control input-sm"  ${permissions.pensioner_menu_config == 'TRUE' ? 'checked' : ''}/></td></tr>
 			   	<tr><td>MEMBER DASHBOARD ITEMS</td><td><input type="checkbox" id="member_dashboard_items" class="form-control input-sm"  ${permissions.member_dashboard_items == 'TRUE' ? 'checked' : ''}/></td></tr>
 			   	<tr><td>ADMIN DASHBOARD ITEMS</td><td><input type="checkbox" id="admin_dashboard_items" class="form-control input-sm"  ${permissions.admin_dashboard_items == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>PROFILE LOGIN USERNAME</td><td><input type="checkbox" id="profile_login_username" class="form-control input-sm"  ${permissions.profile_login_username == 'TRUE' ? 'checked' : ''}/></td></tr>

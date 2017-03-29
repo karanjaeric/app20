@@ -91,6 +91,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String MEMBER_PERMISSION = "MEMBER_PERMISSION";
     private static final String DISABLE_CONTRIBUTION_GRAPH = "DISABLE_CONTRIBUTION_GRAPH";
     private static final String MEMBER_MENU_CONFIG = "MEMBER_MENU_CONFIG";
+    private static final String PENSIONER_MENU_CONFIG = "PENSIONER_MENU_CONFIG";
     private static final String MEMBER_DASHBOARD_ITEMS = "MEMBER_DASHBOARD_ITEMS";
     private static final String ADMIN_DASHBOARD_ITEMS = "ADMIN_DASHBOARD_ITEMS";
     private static final String PLF = "PLF";
@@ -152,6 +153,8 @@ public class Admin extends BaseServlet implements Serializable {
      DBGraphBeanI dbGraphBeanI;
     @EJB
     MemberMenuBeanI memberMenuBeanI;
+    @EJB
+    PensionerMenuBeanI pensionerMenuBeanI;
     @EJB
     MemberDashboardBeanI memberDashboardBeanI;
     @EJB
@@ -480,6 +483,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case MEMBER_MENU_CONFIG:
                 editMemberMenu(request, response, session);
+                break;
+            case PENSIONER_MENU_CONFIG:
+                editPensionerMenu(request, response, session);
                 break;
             case MEMBER_DASHBOARD_ITEMS:
                 configureMemberDashboard(request, response, session);
@@ -892,6 +898,29 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, true, "Member Menu configurations successfully saved", null);
         } else
             this.respond(response, true, "Member Menu configurations could not be saved", null);
+    }
+
+    private void editPensionerMenu(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        PensionerMenu pensionerMenu = pensionerMenuBeanI.find();
+
+        boolean personalInfo = this.get(request, "personalInfo").equalsIgnoreCase("true");
+        boolean pensionDetails = this.get(request, "pensionDetails").equalsIgnoreCase("true");
+        boolean pensionAdviceReport = this.get(request, "pensionAdviceReport").equalsIgnoreCase("true");
+        boolean pensionAdviceGrid = this.get(request, "pensionAdviceGrid").equalsIgnoreCase("true");
+        boolean media = this.get(request, "media").equalsIgnoreCase("true");
+
+        pensionerMenu.setPersonalInfo(personalInfo);
+        pensionerMenu.setPensionDetails(pensionDetails);
+        pensionerMenu.setPensionAdviceReport(pensionAdviceReport);
+        pensionerMenu.setPensionAdviceGrid(pensionAdviceGrid);
+        pensionerMenu.setMedia(media);
+
+        if (pensionerMenuBeanI.edit(pensionerMenu) != null) {
+            audit(session, "Updated Pensioner Menu configuration settings");
+            this.respond(response, true, "Pensioner Menu configurations successfully saved", null);
+        } else
+            this.respond(response, true, "Pensioner Menu configurations could not be saved", null);
     }
 
     private void configureMemberDashboard(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1567,6 +1596,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setMember_edit_permissions(this.get(request, "member_edit_permissions").equalsIgnoreCase("true"));
         perm.setShow_db_contribution_graph(this.get(request, "show_db_contribution_graph").equalsIgnoreCase("true"));
         perm.setMember_menu_config(this.get(request, "member_menu_config").equalsIgnoreCase("true"));
+        perm.setPensioner_menu_config(this.get(request, "pensioner_menu_config").equalsIgnoreCase("true"));
         perm.setMember_dashboard_items(this.get(request, "member_dashboard_items").equalsIgnoreCase("true"));
         perm.setAdmin_dashboard_items(this.get(request, "admin_dashboard_items").equalsIgnoreCase("true"));
         perm.setProfile_login_username(this.get(request, "profile_login_username").equalsIgnoreCase("true"));

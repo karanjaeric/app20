@@ -61,6 +61,8 @@ public class PensionerController extends BaseServlet implements Serializable {
     ApiEJB apiEJB;
     @EJB
     ContactCategoryBeanI contactCategoryBeanI;
+    @EJB
+    PensionerMenuBeanI pensionerMenuBeanI;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -177,6 +179,9 @@ public class PensionerController extends BaseServlet implements Serializable {
                     request.setAttribute("isManager", helper.isManager(request));
                     PasswordPolicy policy = passwordPolicyBeanI.find();
                     request.setAttribute("policy", policy);
+                    PensionerMenu pensionerMenu = pensionerMenuBeanI.find();
+                    request.setAttribute("pensionerMenu", pensionerMenu);
+
                     if((schemes != null ? schemes.size() : 0) > 1 && this.getSessKey(request, Constants.SCHEME_ID) == null)
                         request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
                     else

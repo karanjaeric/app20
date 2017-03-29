@@ -28,21 +28,36 @@
                     <li id="pensioner-dashboard-li" class="active"><a href="javascript:void(0);"><i
                             class="glyphicon glyphicon-dashboard"></i>&nbsp;<i
                             class="fa fa-chevron-right"></i> DASHBOARD</a></li>
+
+                    <c:if test="${pensionerMenu.personalInfo == 'TRUE'}">
                     <li id="pensioner-information-li"><a href="javascript:void(0);" ><i
                             class="glyphicon glyphicon-user"></i>&nbsp;<i
                             class="fa fa-chevron-right"></i> PERSONAL INFORMATION</a></li>
+                    </c:if>
+
+                    <c:if test="${pensionerMenu.pensionDetails == 'TRUE'}">
                     <li id="pension-details-li"><a href="javascript:void(0);"><i
                             class="glyphicon glyphicon-screenshot"></i>&nbsp;<i
                             class="fa fa-chevron-right"></i> PENSION DETAILS</a></li>
+                    </c:if>
+
+                    <c:if test="${pensionerMenu.pensionAdviceReport == 'TRUE'}">
                     <li id="pension-advice-li"><a href="javascript:void(0);"><i
                             class="glyphicon glyphicon-file"></i>&nbsp;<i
                             class="fa fa-chevron-right"></i> PENSION ADVICE (REPORT)</a></li>
+                    </c:if>
+
+                    <c:if test="${pensionerMenu.pensionAdviceGrid == 'TRUE'}">
                     <li id="pension-advice-grid"><a href="javascript:void(0);"><i
                             class="glyphicon glyphicon-file"></i>&nbsp;<i
                             class="fa fa-chevron-right"></i> PENSION ADVICE (GRID)</a></li>
+                    </c:if>
+
+                    <c:if test="${pensionerMenu.media == 'TRUE'}">
                     <li id="media-files-li"><a href="javascript:void(0);"><i
                             class="glyphicon glyphicon-briefcase"></i>&nbsp;<i
                             class="fa fa-chevron-right"></i> MEDIA &amp; FILES</a></li>
+                    </c:if>
                 </ul>
             </div>
         </div>
