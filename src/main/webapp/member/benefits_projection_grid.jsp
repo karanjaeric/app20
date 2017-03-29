@@ -132,7 +132,11 @@
                             {
                                 for ( var i = 0; i < json.rows.length; i++) {
                                     var row = json.rows[i];
-                                    combo = combo + "<option value = " + row['id'] + ">" + row['reason'] + "</option>";
+
+                                    if (row['category'] === 'Retirement') {
+
+                                        combo = combo + "<option value = " + row['id'] + ">" + row['reason'] + "</option>";
+                                    }
                                     array = json.rows;
                                 }
                                 combo = combo + "</select>";
