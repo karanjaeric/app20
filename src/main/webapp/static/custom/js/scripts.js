@@ -471,9 +471,17 @@ $(document).ready(function(){
 
 		m_switch("PENSION_ADVICE");
 	});
-	
 
-	
+	$('#pension-advice-grid').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#pension-advice-grid').addClass('active');
+
+		m_switch("PENSION_ADVICE_GRID");
+	});
+
+
 	$('#contribution-history-li').click(function(){
 		
 		$('#main-menu.nav li').removeClass('active');

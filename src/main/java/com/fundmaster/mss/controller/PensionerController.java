@@ -212,6 +212,9 @@ public class PensionerController extends BaseServlet implements Serializable {
             case Actions.YEARS:
                 getPayrollYears(request, response);
                 break;
+            case Actions.PA_GRID:
+                getPensionAdvice(request, response, session);
+                break;
             case Actions.CURR:
                 schemeCurrency(response, apiEJB.getSchemeCurrency(this.getSessKey(request, Constants.SCHEME_ID)));
                 break;
@@ -256,6 +259,20 @@ public class PensionerController extends BaseServlet implements Serializable {
         session.setAttribute(Constants.SCHEME_ID, this.get(request, "schemeID"));
         this.respond(response, true, "Scheme changed successfully", null);
     }
+
+    private void getPensionAdvice(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        String pensioner_id = this.get(request, "pensioner_id");
+        jLogger.i("Pensioner found ================ > " + pensioner_id);
+
+        String year = this.get(request, "payrollYears");
+        jLogger.i("Year found ================ > " + year);
+
+        JSONObject pensionAdvice = apiEJB.getPensionAdvice(pensioner_id, year);
+
+        this.respond(response, true, "", pensionAdvice);
+    }
+
     private void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         logActivity("", "logged out", this.getSessKey(request, Constants.UID), null, this.getSessKey(request, Constants.U_PROFILE));
         session.invalidate();

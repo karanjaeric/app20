@@ -253,6 +253,9 @@ public class ApiBean implements ApiEJB {
             if(response.getBoolean(Fields.SUCCESS))
             {
                 JSONArray res = (JSONArray) response.get(Constants.ROWS);
+                jLogger.i("====================================== The Returned Json  =================================");
+                jLogger.i(res.toString());
+                jLogger.i("====================================== END The Returned Json  =================================");
                 double totalReg = 0;
                 double totalUnreg = 0;
                 double finalTotal = 0;
@@ -265,12 +268,15 @@ public class ApiBean implements ApiEJB {
 
                     if (status.equals("Registered")) {
                         totalReg = obj.getDouble(Fields.TOTAL);
+                        jLogger.i("The total Reg >>>>>>>>>>>>>>>> " + totalReg + " <<<<<<<<<<<<<");
                     }
                     if (status.equals("Unregistered")) {
                         totalUnreg = obj.getDouble(Fields.TOTAL);
+                        jLogger.i("The total UNReg >>>>>>>>>>>>>>>> " + totalUnreg + " <<<<<<<<<<<<<");
                     }
 
                     finalTotal = totalReg + totalUnreg;
+                    jLogger.i("The final Total >>>>>>>>>>>>>>>> " + finalTotal + " <<<<<<<<<<<<<");
 
                 }
                 return new JSONObject().put(Fields.SUCCESS, true).put("total", finalTotal);
@@ -1163,6 +1169,22 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public JSONObject getPensionAdvice(String memberId, String year) {
+        JSONObject response;
+        try {
+
+
+            response = URLGet(APICall.GET_PENSION_ADVICE + memberId + "/" + year);
+
+            jLogger.i("Pension Advice json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public JSONObject getMemberStatement(String memberId, String apId, String schemeId) {
         JSONObject response;
         try {
@@ -1585,13 +1607,21 @@ public class ApiBean implements ApiEJB {
             {
                 JSONObject receipt = res.getJSONObject(i);
                 SchemeReceipt schemeReceipt = new SchemeReceipt();
+
                 try {
-                    schemeReceipt.setDate(helper.humanReadableDate(receipt.get(Fields.DATERECEIVED).toString()));
+
+                    if (receipt.getString(Fields.DATERECEIVED) == null || receipt.getString(Fields.DATERECEIVED).isEmpty() ||
+                            receipt.getString(Fields.DATERECEIVED).equalsIgnoreCase("")) {
+                        schemeReceipt.setDate(null);
+                    } else {
+                        schemeReceipt.setDate(helper.humanReadableDate(receipt.get(Fields.DATERECEIVED).toString()));
+                    }
                 }
                 catch (IllegalArgumentException ex)
                 {
                     schemeReceipt.setDate(receipt.get(Fields.DATERECEIVED).toString());
                 }
+
                 schemeReceipt.setPayee(receipt.get(Fields.PAYEE).toString());
                 schemeReceipt.setAmount(helper.format_no(round(Double.parseDouble(receipt.get(Fields.AMOUNT).toString()))));
                 schemeReceipt.setCategory(receipt.get(Fields.TXNCAT).toString());

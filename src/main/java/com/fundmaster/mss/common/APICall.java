@@ -11,6 +11,7 @@ public class APICall {
     public static final String GET_PAYROLL_YEARS = "getpayrollyears";
     public static final String CHECK_MEMBER_EXISTS = "checkMemberExists/";
     public static final String GET_BALANCES_HISTORY = "getbalanceshistory/";
+    public static final String GET_PENSION_ADVICE = "getpensioneradvice/";
     public static final String GET_MEMBER_STATEMENT = "getmemberstatement/";
     public static final String SAVE_OR_UPDATE_BENEFICIARY_DETAILS = "saveorupdatebeneficiarydetails";
     public static final String CHECK_MEMBER_EXISTS_IN_SCHEME = "checkMemberExistsInScheme/";

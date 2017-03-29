@@ -14,6 +14,7 @@ public interface ApiEJB {
     XiMember memberExists(String profile, String value);
     //BalancesHistory getBalancesHistory(String memberId);
     JSONObject getBalancesHistory(String memberId);
+    JSONObject getPensionAdvice(String memberId, String year);
     JSONObject getMemberStatement(String memberId, String apId, String schemeId);
     boolean saveOrUpdateSponsor(String params);
     boolean saveOrUpdateMember(String params);

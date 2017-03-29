@@ -17,6 +17,7 @@ public class Actions {
     public static final String AP = "AP";
     public static final String CB = "CB";
     public static final String CURR = "CURR";
+    public static final String PA_GRID = "PA_GRID";
     public static final String YEARS = "YEARS";
     public static final String BENEFICIARY = "BENEFICIARY";
     public static final String BD = "BD";
@@ -26,6 +27,7 @@ public class Actions {
     public static final String PENSIONER_PERSONAL_INFORMATION = "PENSIONER_INFO";
     public static final String PENSION_DETAILS = "PENSION_DETAILS";
     public static final String PENSION_ADVICE = "PENSION_ADVICE";
+    public static final String PENSION_ADVICE_GRID = "PENSION_ADVICE_GRID";
     public static final String MEMBER_CONTRIBUTION_HISTORY = "CH";
     public static final String MEMBER_CONTRIBUTION_HISTORY_GRID = "CH_GRID";
     public static final String MEMBER_STATEMENT_OF_ACCOUNT = "SA";
