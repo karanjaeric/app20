@@ -19,6 +19,15 @@
                             class="form-control datepicker" id="dateTo"
                             placeholder="Date To">
         </div>
+        <c:if test="${ planType == 'Defined Benefit' }">
+        <div class="col-md-4">
+            <label for="salary" class="control-label">
+                Salary (Monthly):
+            </label> <input type="text" name="salary"
+                            class="form-control  input-sm" id="salary"
+                            placeholder="Salary (Monthly)">
+        </div>
+        </c:if>
         <div class="col-md-3" id="divReason">
             <select id="reason" name="reason" class="form-control">
                 <option value="">--Select A Reason for Exit--</option>
@@ -39,6 +48,7 @@
         </div>
     </form>
     <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
+    <input type="hidden" id="plan_type" value="${ planType }"/>
     <input type="hidden" id="member_id" value="${ member_id }" />
 
     </div>
@@ -182,6 +192,13 @@
                             message: 'Please select the date'
                         }
                     }
+                },
+                salary: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please enter salary'
+                        }
+                    }
                 }
             }
         })
@@ -196,6 +213,8 @@
                         data: {ACTION:'BP_GRID',
                             dateTo: $('#dateTo').val(),
                             scheme_id: $('#scheme_id').val(),
+                            salary: $('#salary').val(),
+                            plan_type: $('#plan_type').val(),
                             member_id: $('#member_id').val(),
                             reason_id: $('#reason').val()
                         },

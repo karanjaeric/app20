@@ -484,6 +484,27 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public XiMember getMemberDetailsByScheme(String schemeId, String email) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_MEMBER_DETAILS_BY_SCHEME_AND_EMAIL + schemeId + "/" + email);
+            jLogger.i("Member details respone >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                JSONArray jsonArray = (JSONArray) response.get(Constants.ROWS);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                return this.xiMemberFromJson(jsonObject);
+            }
+            else {
+                return null;
+            }
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public XiPensioner getPensionerDetails(String pensionerId, String schemeId) {
         JSONObject response;
         try {
@@ -865,6 +886,23 @@ public class ApiBean implements ApiEJB {
             jLogger.i("Dates to go to Xi, From: " + exitDate + " To " + calcDate);
 
             response = URLGet(APICall.GET_MEMBER_PROJECTIONS + memberId + "/" + reasonId + "/" + exitDate + "/" + calcDate + "/" + schemeId);
+
+            jLogger.i("Contributions json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public JSONObject getDBProjections(String memberId, String reasonId, String exitDate, String calcDate, String schemeId, String salary) {
+        JSONObject response;
+        try {
+
+            jLogger.i("Dates to go to Xi, From: " + exitDate + " To " + calcDate + " Salary " + salary);
+
+            response = URLGet(APICall.GET_DB_PROJECTIONS + memberId + "/" + reasonId + "/" + exitDate + "/" + calcDate + "/" + schemeId + "/" + salary);
 
             jLogger.i("Contributions json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
             return response;

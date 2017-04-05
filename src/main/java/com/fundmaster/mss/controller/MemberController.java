@@ -83,6 +83,7 @@ public class MemberController extends BaseServlet implements Serializable {
 				}
 				else
 				{
+					String schemeId = "";
 					List<ActivityLog> activityLogs = activityLogBeanI.findAllByUserID(this.getSessKey(request, Constants.UID));
 					request.setAttribute("activityLogs", activityLogs);
 					Company company = companyBeanI.find();
@@ -93,11 +94,32 @@ public class MemberController extends BaseServlet implements Serializable {
 					request.setAttribute("path", "member");
 					
 					String user = this.getSessKey(request, Constants.USER).trim();
+					jLogger.i("Email hopefully ============ " + user);
 					
 					List<Scheme> schemes = apiEJB.getProfileSchemes(user, this.getSessKey(request, Constants.U_PROFILE));
 					request.setAttribute("schemes", schemes);
-					
-					XiMember m = apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
+
+					try {
+						schemeId = request.getParameter("scheme_id");
+						 jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+
+					XiMember m = new XiMember();
+
+					try {
+						if (schemeId != null) {
+							m = apiEJB.getMemberDetailsByScheme(schemeId,user);
+						} else {
+
+							m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+
+
 					request.setAttribute("member_id", m.getId());
 					session.setAttribute(Constants.PROFILE_ID,m.getId());
 					request.setAttribute("MemberStatus", m.getMbshipStatus());
@@ -119,13 +141,30 @@ public class MemberController extends BaseServlet implements Serializable {
 
 					if(schemes != null && schemes.size() > 0) {
 						jLogger.i("Scheme is not null. email: "+ this.getSessKey(request, Constants.USER));
+
 						if(this.getSessKey(request, Constants.SCHEME_ID) == null)
 						{
-							m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),schemes.get(0).getId().toString());
+							try {
+								if (schemeId != null) {
+									m = apiEJB.getMemberDetailsByScheme(schemeId,user);
+								} else {
+									m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),schemes.get(0).getId().toString());
+								}
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
 						}
 						else
 						{
-							m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.SCHEME_ID));
+							try {
+								if (schemeId != null) {
+									m = apiEJB.getMemberDetailsByScheme(schemeId,user);
+								} else {
+									m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.SCHEME_ID));
+								}
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
 						}
 					}
                     if(m==null)
@@ -323,12 +362,26 @@ public class MemberController extends BaseServlet implements Serializable {
 		User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
 		XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
 		String member_id = Long.toString(m.getId());
+		String salary = "";
+		JSONObject memberProjections = new JSONObject();
+
 		jLogger.i("Member found ================ > " + member_id);
+
+		String plan_type = this.get(request, "plan_type");
+		jLogger.i("PlanType is ================ > " + plan_type);
 
 		String reasonId = this.get(request, "reason_id");
 		jLogger.i("Reason Id ================ > " + reasonId);
 		String schemeId = this.get(request, "scheme_id");
 		jLogger.i("Scheme Id ================ > " + schemeId);
+
+		if (plan_type.equalsIgnoreCase("Defined Benefit")) {
+
+			salary = this.get(request, "salary");
+			jLogger.i("Salary is ================ > " + salary);
+
+		}
+
 
 		DateFormat format_from = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
 		DateFormat format = new SimpleDateFormat("MMM-dd-yyyy", Locale.ENGLISH);
@@ -351,7 +404,15 @@ public class MemberController extends BaseServlet implements Serializable {
 		jLogger.i("Calculation Date ================ > " + calcDate);
 
 		//JSONObject memberContributions = apiEJB.getMemberFullContributions(member_id);
-		JSONObject memberProjections = apiEJB.getMemberProjections(member_id, reasonId, format.format(exitDate), format.format(calcDate), schemeId);
+
+		if (plan_type.equalsIgnoreCase("Defined Benefit")) {
+
+			jLogger.i("========= YEZIIIR ================  ");
+
+			memberProjections = apiEJB.getDBProjections(member_id, reasonId, format.format(exitDate), format.format(calcDate), schemeId, salary);
+		}
+
+		memberProjections = apiEJB.getMemberProjections(member_id, reasonId, format.format(exitDate), format.format(calcDate), schemeId);
 
 		this.respond(response, true, "", memberProjections);
 	}
@@ -457,12 +518,14 @@ public class MemberController extends BaseServlet implements Serializable {
     }
 
     private void changeScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
         audit(session, "Switched between schemes from scheme #" + this.getSessKey(request, Constants.SCHEME_ID)
                 + " to scheme #" + this.get(request, "schemeID"));
         jLogger.i("Switched between schemes from scheme #" + this.getSessKey(request, Constants.SCHEME_ID)
                 + " to scheme #" + this.get(request, "schemeID"));
         session.setAttribute(Constants.SCHEME_ID, this.get(request, "schemeID"));
-        this.respond(response, true, "Scheme changed successfully", null);
+
+		this.respond(response, true, "Scheme changed successfully", null);
     }
 
     private void getAccountingPeriod(HttpServletRequest request, HttpServletResponse response) {

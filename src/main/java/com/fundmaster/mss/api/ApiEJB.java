@@ -35,6 +35,7 @@ public interface ApiEJB {
     JSONObject getMemberFullContributions(String memberID);
     JSONObject getContributionsBetweenDates(String fromDate, String toDate, String memberId);
     JSONObject getMemberProjections(String memberId, String reasonId,String exitDate, String calcDate, String schemeId);
+    JSONObject getDBProjections(String memberId, String reasonId,String exitDate, String calcDate, String schemeId, String salary);
     JSONObject getSchemeContributions(String schemeID ,String profileID);
     JSONObject getBeneficiaries(String memberID);
     List<Beneficiary> getBeneficiariesList(String memberID);
@@ -51,6 +52,7 @@ public interface ApiEJB {
     List<XiMember> searchProfilesBySponsor(String search, String identifier, String profile, String sponsorID, String schemeID);
     JSONObject searchProfilesJSON(String search, String identifier, String profile, String schemeID, int start, int end);
     XiMember getMemberDetails(String memberID, String schemeId);
+    XiMember getMemberDetailsByScheme(String schemeId, String email);
     XiPensioner getPensionerDetails(String pensionerId, String schemeId);
     List<XiMember> getMemberListing(String profileID, String profile, String schemeID, int start, int size);
     JSONObject listMembers(String schemeID, String profileID);

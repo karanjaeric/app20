@@ -30,6 +30,7 @@ public class APICall {
     public static final String GETMEMBERCONTRIBUTIONS = "getmembercontributions/";
     public static final String GET_CONTRIBUTIONS_BTWN_DATES = "getcontributionsbetweendates/";
     public static final String GET_MEMBER_PROJECTIONS = "getmemberprojections/";
+    public static final String GET_DB_PROJECTIONS = "benefits/getdbbenefits/";
     public static final String SCHEME_GETTOTALSCHEMECONTRIBUTIONS = "scheme/gettotalschemecontributions/";
     public static final String GET_MEMBER_BENEFICIARIES = "getmemberbeneficiaries/";
     public static final String NEW_MEMBER_LISTING_WITHIN_YEAR = "newMemberListingWithinYear/";
@@ -44,6 +45,7 @@ public class APICall {
     public static final String SEARCH_FOR_MEMBER_DETAILS = "searchForMemberDetails/";
     public static final String SEARCH_FOR_SPONSOR_MEMBER_DETAILS = "searchForSponsorMemberDetails/";
     public static final String GET_MEMBER_DETAILS = "getmemberdetails/";
+    public static final String GET_MEMBER_DETAILS_BY_SCHEME_AND_EMAIL = "getmemberdetailsbyschemeandemail/";
     public static final String GET_PENSIONER_DETAILS = "getpensionerdetails/";
     public static final String GET_MEMBER_ID_FROM_MAIL = "getmemberIdfromMail/";
     public static final String GET_MEMBER_LISTING = "getmemberlisting/";

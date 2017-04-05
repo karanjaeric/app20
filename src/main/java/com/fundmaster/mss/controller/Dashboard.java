@@ -405,6 +405,8 @@ public class Dashboard extends BaseServlet implements Serializable {
     private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_WHAT_IF_ANALYSIS);
         request.setAttribute("content", content);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
         request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
         logActivity("WHAT IF ANALYSIS", "Accessed what if analysis page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed what if analysis page");

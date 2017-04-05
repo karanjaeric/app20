@@ -43,23 +43,25 @@
 		}
 	}
 	function reloadmember()
-	{if($('#scheme_id').val() != '')
-	{
+	{if($('#scheme_id').val() != '') {
 		start_wait();
 		$.ajax({
 			url: $('#base_url').val() + 'member',
 			type: 'post',
-			data: {ACTION:'CHANGE_SCHEME', schemeID: $('#scheme_id').val()},
+			data: {ACTION: 'CHANGE_SCHEME', schemeID: $('#scheme_id').val()},
 			dataType: 'json',
 			success: function(json) {
-				console.log(json);
-				if(json.success)
-					setTimeout(function() {
-						window.location.href = $('#base_url').val() + "member";
-					}, 0);
-			}
+			 console.log(json);
+			 if(json.success)
+			 setTimeout(function() {
+			 var schemeID = $('#scheme_id').val();
+			 console.log("Scheme Id: " + schemeID);
+			 window.location.href = $('#base_url').val() + "member?scheme_id="+schemeID;
+			 }, 0);
+			 }
 		});
 	}
+
 	}
 	function set_spouse_date_of_birth()
 	{
