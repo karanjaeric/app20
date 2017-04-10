@@ -387,14 +387,14 @@ public class MemberController extends BaseServlet implements Serializable {
 		DateFormat format = new SimpleDateFormat("MMM-dd-yyyy", Locale.ENGLISH);
 
 		String exitDate_String = this.get(request, "dateTo");
-		String calcDate_String = this.get(request, "dateTo");
+		//String calcDate_String = this.get(request, "dateTo");
 
 		Date exitDate = null;
-		Date calcDate = null;
+		Date calcDate = new Date();
 
 		try {
 			exitDate = format_from.parse(exitDate_String);
-			calcDate = format_from.parse(calcDate_String);
+			//calcDate = format_from.parse(calcDate_String);
 		} catch (ParseException pe) {
 			// TODO Auto-generated catch block
 			jLogger.e("ParseException was detected: " + pe.getMessage());
