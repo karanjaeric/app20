@@ -15,17 +15,17 @@
         <div class="col-md-4">
             <label for="dateTo" class="control-label">
                 Date To:
-            </label> <input type="text" readonly="readonly" name="dateTo"
+             <input type="text" readonly="readonly" name="dateTo"
                             class="form-control datepicker" id="dateTo"
-                            placeholder="Date To">
+                            placeholder="Date To"></label>
         </div>
         <c:if test="${ planType == 'Defined Benefit' }">
-        <div class="col-md-4">
+        <div class="col-md-4" id="salaryField" style="display:none;">
             <label for="salary" class="control-label">
                 Salary (Monthly):
-            </label> <input type="text" name="salary"
+             <input type="text" name="salary"
                             class="form-control  input-sm" id="salary"
-                            placeholder="Salary (Monthly)">
+                            placeholder="Salary (Monthly)"></label>
         </div>
         </c:if>
         <div class="col-md-3" id="divReason">
@@ -91,6 +91,7 @@
 
 <script type="text/javascript">
 
+
     function format_no(yourNumber) {
         if(typeof	yourNumber != 'undefined')
         {
@@ -121,6 +122,7 @@
             return isNaN(result) ? NaN : result.toFixed(0);
         }
     };
+
 
     $(document).ready(function(){
 
@@ -164,6 +166,26 @@
             });
         }
         initialize();
+
+        $('#dateTo').on('change',function(){
+
+            var str = "Visit Microsoft!";
+            var res = str.replace("Microsoft", "W3Schools");
+
+            var inputDateString = $('#dateTo').val();
+            var finalDateString = inputDateString.replace(/-/g,"/");
+
+            var finalDate = new Date(finalDateString);
+
+            var todaysDate = new Date();
+
+            if(finalDate.setHours(0,0,0,0) > todaysDate.setHours(0,0,0,0)){
+                $("#salaryField").show()
+            }
+            else{
+                $("#salaryField").hide()
+            }
+        });
 
         $('.datepicker').datetimepicker(
                 $('#dateTo').datetimepicker({

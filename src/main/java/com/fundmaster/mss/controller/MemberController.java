@@ -362,7 +362,7 @@ public class MemberController extends BaseServlet implements Serializable {
 		User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
 		XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
 		String member_id = Long.toString(m.getId());
-		String salary = "";
+		String salary;
 		JSONObject memberProjections = new JSONObject();
 
 		jLogger.i("Member found ================ > " + member_id);
@@ -375,12 +375,8 @@ public class MemberController extends BaseServlet implements Serializable {
 		String schemeId = this.get(request, "scheme_id");
 		jLogger.i("Scheme Id ================ > " + schemeId);
 
-		if (plan_type.equalsIgnoreCase("Defined Benefit")) {
-
-			salary = this.get(request, "salary");
-			jLogger.i("Salary is ================ > " + salary);
-
-		}
+		salary = this.get(request, "salary");
+		jLogger.i("Salary is ================ > " + salary);
 
 
 		DateFormat format_from = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
@@ -405,14 +401,15 @@ public class MemberController extends BaseServlet implements Serializable {
 
 		//JSONObject memberContributions = apiEJB.getMemberFullContributions(member_id);
 
-		if (plan_type.equalsIgnoreCase("Defined Benefit")) {
+		if (plan_type.equalsIgnoreCase("Defined Benefit") && (salary != null && !salary.isEmpty())) {
 
 			jLogger.i("========= YEZIIIR ================  ");
 
 			memberProjections = apiEJB.getDBProjections(member_id, reasonId, format.format(exitDate), format.format(calcDate), schemeId, salary);
-		}
+		} else {
 
-		memberProjections = apiEJB.getMemberProjections(member_id, reasonId, format.format(exitDate), format.format(calcDate), schemeId);
+			memberProjections = apiEJB.getMemberProjections(member_id, reasonId, format.format(exitDate), format.format(calcDate), schemeId);
+		}
 
 		this.respond(response, true, "", memberProjections);
 	}
