@@ -126,7 +126,7 @@
 
     $(document).ready(function(){
 
-        function initialize()
+        function initializeFuture()
         {
             $.ajax({
                 url: $('#base_url').val() + 'member',
@@ -147,6 +147,8 @@
 
                                     if (row['category'] === 'Retirement') {
 
+                                        console.log("Reasons za retirement: " + row['reason']);
+
                                         combo = combo + "<option value = " + row['id'] + ">" + row['reason'] + "</option>";
                                     }
                                     array = json.rows;
@@ -165,12 +167,48 @@
                 }
             });
         }
-        initialize();
+
+        function initializeCurrent()
+        {
+            $.ajax({
+                url: $('#base_url').val() + 'member',
+                type: 'post',
+                data: {ACTION:'REASON'},
+                dataType: 'json',
+                success: function(json) {
+                    if(json.success)
+                    {
+                        json = $.parseJSON(json.data);
+                        console.log(json);
+                        var combo = "<select id=\"reason\" name=\"reason\" class=\"form-control\"><option>--Select Reason--</option>";
+                        $.each(json, function(key, value) {
+                            if(key == 'rows')
+                            {
+                                for ( var i = 0; i < json.rows.length; i++) {
+                                    var row = json.rows[i];
+
+                                    if (row['category'] === 'Retirement' || row['category'] === 'Death In Service') {
+
+                                        combo = combo + "<option value = " + row['id'] + ">" + row['reason'] + "</option>";
+                                    }
+                                    array = json.rows;
+                                }
+                                combo = combo + "</select>";
+
+                            }
+                        });
+                        $('#divReason').html(combo);
+                    }
+                    else
+                    {
+                        stop_wait();
+                        bootbox.alert('<p class="text-center">' + json.message + '</p>');
+                    }
+                }
+            });
+        }
 
         $('#dateTo').on('change',function(){
-
-            var str = "Visit Microsoft!";
-            var res = str.replace("Microsoft", "W3Schools");
 
             var inputDateString = $('#dateTo').val();
             var finalDateString = inputDateString.replace(/-/g,"/");
@@ -181,9 +219,11 @@
 
             if(finalDate.setHours(0,0,0,0) > todaysDate.setHours(0,0,0,0)){
                 $("#salaryField").show()
+                initializeFuture()
             }
             else{
                 $("#salaryField").hide()
+                initializeCurrent()
             }
         });
 
