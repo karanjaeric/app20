@@ -50,7 +50,11 @@ public class MediaBean implements MediaBeanI {
         List<Media> medias = new ArrayList<Media>();
         Session session = (Session) entityManager.getDelegate();
         Criteria crit = session.createCriteria(Media.class);
-        crit.add(Restrictions.eq("schemeID", schemeId));
+
+        if (schemeId != null && !schemeId.isEmpty()) {
+
+            crit.add(Restrictions.eq("schemeID", schemeId));
+        }
 
         if (Profile.equalsIgnoreCase("administrator")) {
             crit.add(Restrictions.eq("administrator", status));

@@ -1069,13 +1069,15 @@ SocialBeanI socialBeanI;
         jLogger.i("The profile is: " + profile);
         boolean status = true;
         String schemeId = "";
+
         if (!profile.equalsIgnoreCase(Constants.ADMIN_PROFILE)){
-            //jLogger.i("============ Great, we're sure ni Sponsor ===================");
+
             schemeId = this.getSessKey(request, Constants.SCHEME_ID);
             jLogger.i("============ Scheme ID is: " + schemeId + " ===================");
             medias = mediaBeanI.findByStatusAndProfile(schemeId, status, profile);
         }
         else {
+
             medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
         }
         request.setAttribute("scheme_id", schemeId);
