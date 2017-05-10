@@ -60,7 +60,7 @@
         $(document).ready(function(){
             $('.datepicker').datetimepicker(
                     $('#dateFrom').datetimepicker({
-                        format: 'dd-M-yyyy',
+                        format: 'mm-dd-yyyy',
                         startView: 'month',
                         minView: 'month',
                         autoclose: true
@@ -72,7 +72,7 @@
                             }),
                     $('#dateTo')
                             .datetimepicker({
-                                format: 'dd-M-yyyy',
+                                format: 'mm-dd-yyyy',
                                 startView: 'month',
                                 minView: 'month',
                                 autoclose: true
@@ -123,6 +123,10 @@
                     success: function(json) {
                         if(json.success)
                         {
+                            var str = $('#xiRootPath').val();
+                            var res = str.replace("/api/", "");
+                            console.log(res);
+
                             var alternativeUrl = null;
                             var orientation = null;
 

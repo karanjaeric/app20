@@ -62,6 +62,8 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String AGENT_COMMISSION = "AGENT_COMMISSION";
     private static final String EXITS = "EXITS";
     private static final String SEARCH_SCHEMES = "SEARCH_SCHEMES";
+    private static final String SCHEME_MODE = "SCHEME_MODE";
+    private static final String GET_SCHEME_SPONSORS = "GET_SCHEME_SPONSORS";
     private static final String CHANGE_SCHEME = "CHANGE_SCHEME";
     private static final String GET_MEMBER = "GET_MEMBER";
     private static final String DELINK_SCHEME_MANAGER = "DELINK_SCHEME_MANAGER";
@@ -396,6 +398,12 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case SEARCH_SCHEMES:
                 searchSchemes(request, response, session);
+                break;
+            case SCHEME_MODE:
+                getSchemeMode(request, response, session);
+                break;
+            case GET_SCHEME_SPONSORS:
+                getSchemeSponsors(request, response);
                 break;
             case CHANGE_SCHEME:
                 changeScheme(request, response, session);
@@ -1377,6 +1385,18 @@ public class Admin extends BaseServlet implements Serializable {
         audit(session, "Searched schemes with parameter " + this.get(request, "search"));
         this.respond(response, true, "", apiEJB.searchSchemes(this.get(request, "search")));
     }
+    private void getSchemeMode(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String scheme = this.get(request, "scheme");
+        jLogger.i("Scheme from frontend ============> " + scheme);
+        this.respond(response, true, "", apiEJB.getSchemeMode(scheme));
+    }
+
+    private void getSchemeSponsors(HttpServletRequest request, HttpServletResponse response) {
+        String schemeId = this.get(request, "schemeId");
+        jLogger.i("Scheme from frontend ============> " + schemeId);
+        this.respond(response, true, "", apiEJB.getAllSchemeSponsors(schemeId));
+    }
+
     private void getExitsInYear(HttpServletRequest request, HttpServletResponse response) {
         this.respond(response, true, "", apiEJB.getExitsInYear(this.getSessKey(request, Constants.SCHEME_ID)));
     }

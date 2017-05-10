@@ -529,6 +529,7 @@ public class MemberController extends BaseServlet implements Serializable {
         DateFormat format_from = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
         DateFormat format = new SimpleDateFormat("MMM-dd-yyyy", Locale.ENGLISH);
         String date_string = this.get(request, "date");
+		jLogger.i("Date from frontend ============> " + date_string);
         Date date = null;
         try {
             date = format_from.parse(date_string);

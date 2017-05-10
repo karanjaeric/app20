@@ -14,6 +14,7 @@ public class Fields {
     public static final String NAME = "name";
     public static final String ID = "id";
     public static final String PLAN_TYPE = "planType";
+    public static final String SCHEME_MODE = "schemeMode";
     public static final String MEMBER_ID = "memberId";
     public static final String FUND_VALUE = "fundValue";
     public static final String ACCOUNTING_PERIOD_ID = "accountingPeriodId";

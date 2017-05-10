@@ -30,6 +30,7 @@
     <input type="hidden" id="username" value="${ settings.xiReportUsername }" />
     <input type="hidden" id="password" value="${ settings.xiReportPassword }" />
     <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
+    <input type="hidden" id="sponsor_id" value="${ sponsor_id }"/>
     <p>&nbsp;</p>
     <div class="col-md-12" id="fm-results">
 
@@ -127,7 +128,7 @@
             var accPeriodId = $('#accperiod').val();
             console.log("Accounting period Id: " + accPeriodId);
 
-            var url = $('#reportPath').val() + 'members/Fund Movement Summary (Detailed).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FFund%20Movement%20Summary%20(Detailed).xdo&_xmode=3&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsscheme_id=' + $('#scheme_id').val() +
+            var url = $('#reportPath').val() + 'members/Fund Movement Summary (Sponsor Specific).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FFund%20Movement%20Summary%20(Sponsor%20Specific).xdo&_xmode=3&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramssponsor_id=' + $('#sponsor_id').val() +
                     '&_paramsap_id=' + accPeriodId + '&_xt=Fund%20Movement%20Summary%20(Detailed)&_xf=analyze&_xana=view&_xautorun=false&_paramsadmin=3347&id='
                     + $("#username").val() + '&passwd=' + $("#password").val() + '&_paramsblankImage=' + alternativeUrl +'&_paramsalternativeUrl=' + alternativeUrl + '&_paramsorientation=' + orientation;
             $("#fm-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');

@@ -246,6 +246,78 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public String getSponsorInterestRates(String sponsorId) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_SPONSOR_INTEREST_RATES + sponsorId);
+            jLogger.i("Sponsor interest response >>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<");
+
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                JSONArray res = (JSONArray) response.get(Constants.ROWS);
+                jLogger.i("Res is  >>>>>>>>>>>> " + res + " <<<<<<<<<<<<");
+                JSONArray jsonarray = new JSONArray();
+                InterestRateColumns irc = interestRateColumnBeanI.find();
+                Map<String, Boolean> temp = new HashMap<>();
+                temp.put(Fields.SUCCESS, true);
+                jsonarray.put(temp);
+                for(int i = 0; i < res.length(); i ++){
+                    JSONObject jsonObject = res.getJSONObject(i);
+                    JSONObject obj = new JSONObject();
+                    if(irc.isDateDeclared())
+                    {
+                        obj.put(Fields.DATE_DECLARED, jsonObject.get(Fields.DATEDECLARED));
+                    }
+                    if(irc.isAccountingPeriod())
+                    {
+                        obj.put(Fields.ACCOUNTING_PERIOD, jsonObject.get(Fields.AP));
+                    }
+                    if(irc.isContributions())
+                    {
+                        obj.put(Fields.CONTRIBUTIONS, jsonObject.get(Fields.CONTRIBUTIONS));
+                    }
+                    if(irc.isOpeningBalances())
+                    {
+                        obj.put(Fields.OPENING_BALANCES, jsonObject.get(Fields.OPENING_BALANCES));
+                    }
+                    if(irc.isPensionDrawDown())
+                    {
+                        obj.put(Fields.PENSION_DRAW_DOWN, jsonObject.get(Fields.PENSION_DRAW_DOWN));
+                    }
+                    if(irc.isYear())
+                    {
+                        obj.put(Fields.AP, jsonObject.get(Fields.AP));
+                    }
+                    if(jsonObject.getString(Fields.STATUS).equals(Fields.REGISTERED))
+                    {
+                        obj.put(Fields.STATUS, Fields.REGISTERED);
+                        obj.put(Fields.REGISTERED, jsonObject.get(Fields.CONTRIBUTIONS));
+                        obj.put(Fields.UN_REGISTERED, 0);
+                    }
+                    else
+                    {
+                        obj.put(Fields.STATUS, Fields.UN_REGISTERED);
+                        obj.put(Fields.UN_REGISTERED, jsonObject.get(Fields.CONTRIBUTIONS));
+                        obj.put(Fields.REGISTERED, 0);
+                    }
+                    jsonarray.put(obj);
+                }
+                jLogger.i("The final array >>>>>>>>>>>>>>>> " + jsonarray + " <<<<<<<<<<<<<");
+
+                return "{\"success\": true,\"rows\":" + jsonarray.toString() + "}";
+                //return new JSONObject(jsonarray);
+            }
+            else
+            {
+                return null;
+            }
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public JSONObject getDcMemberBalances(String memberID) {
 
         try {
@@ -978,6 +1050,19 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public JSONObject getAllSchemeSponsors(String schemeID) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_SCHEME_SPONSORS + schemeID);
+            jLogger.i("The response >>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public JSONObject getPayrollYears() {
         JSONObject response;
         try {
@@ -1012,6 +1097,20 @@ public class ApiBean implements ApiEJB {
             response = URLGet(APICall.SCHEME_GET_SCHEME_BASE_CURRENCY + schemeID);
             response = response.getJSONArray(Fields.CURRENCY).getJSONObject(0);
             jLogger.i("This is the response for currency >>>>>>>>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public JSONObject getSchemeMode(String schemeID) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.SCHEME_MODE + schemeID);
+            response = response.getJSONArray(Fields.SCHEME_MODE).getJSONObject(0);
+            jLogger.i("This is the response for scheme mode >>>>>>>>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<");
             return response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());

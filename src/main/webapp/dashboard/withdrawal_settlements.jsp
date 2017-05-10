@@ -36,6 +36,7 @@
     <input type="hidden" id="username" value="${ settings.xiReportUsername }" />
     <input type="hidden" id="password" value="${ settings.xiReportPassword }" />
     <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
+    <input type="hidden" id="sponsor_id" value="${ sponsor_id }"/>
     <p>&nbsp;</p>
     <div class="col-md-12" id="ws-results">
 
@@ -119,11 +120,14 @@
                 var toDate = (document.getElementById('dateTo').value);
                 console.log("To date: " + toDate);
                 console.log("Scheme id is: " + $('#scheme_id').val());
+
+                //http://192.168.1.60:7001/xmlpserver/~weblogic/fundmaster/reports/members/Withdrawal Settlements (Sponsor Specific).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FWithdrawal%20Settlements%20(Sponsor%20Specific).xdo&_xmode=3&_paramssponsor_id=47086&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsto_date=31-dec-17&_paramsfrom_date=01-jan-13&_paramsscheme_id=14971&_xt=Withdrawal%20Settlements&_xf=analyze&_xana=view
+
                 var url =
-                        $('#reportPath').val() +"members/Withdrawal Settlements.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FWithdrawal Settlements.xdo&_xmode=3&_paramsto_date=" + toDate
+                        $('#reportPath').val() +"members/Withdrawal Settlements (Sponsor Specific).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FWithdrawal%20Settlements%20(Sponsor%20Specific).xdo&_xmode=3&_paramsto_date=" + toDate
                         + "&_paramsfrom_date=" + fromDate
                         +  "&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation +
-                        "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id=" + $('#scheme_id').val() + "&_xt=Withdrawal%20Settlements&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+                        "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id=" + $('#scheme_id').val() + "&_paramssponsor_id="+ $('#sponsor_id').val() + "&_xt=Withdrawal%20Settlements&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
                 $("#ws-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 

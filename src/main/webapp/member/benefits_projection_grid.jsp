@@ -7,7 +7,7 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid section content-area">
-    <input type="hidden" id="planType" value="${ planType }" />
+    <input type="hidden" id="planType" value="${ planType }"/>
     <h3 class="text-center main-title">
         <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;BENEFITS PROJECTION
     </h3>

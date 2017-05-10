@@ -37,6 +37,7 @@
     <input type="hidden" id="username" value="${ settings.xiReportUsername }" />
     <input type="hidden" id="password" value="${ settings.xiReportPassword }" />
     <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
+    <input type="hidden" id="sponsor_id" value="${ sponsor_id }"/>
     <p>&nbsp;</p>
     <div class="col-md-12" id="rs-results">
 
@@ -120,10 +121,11 @@
             var toDate = (document.getElementById('dateTo').value);
             console.log("To date: " + toDate);
             console.log("Scheme id is: " + $('#scheme_id').val());
+            
             var url =
-                    $('#reportPath').val() +"members/Receipts Listing.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FReceipts Listing.xdo&_xmode=3&_paramsenddate=" + toDate
+                    $('#reportPath').val() +"members/Receipts Listing (Per Sponsor).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FReceipts%20Listing%20(Per%20Sponsor).xdo&_xmode=3&_paramsenddate=" + toDate
                     + "&_paramsstartdate=" + fromDate +  "&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation +
-                    "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id=" + $('#scheme_id').val() + "&_xt=Receipts%20Listing&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+                    "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id=" + $('#scheme_id').val() + "&_paramssponsor_id=" + $('#sponsor_id').val() + "&_xt=Receipts%20Listing&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
             $("#rs-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 

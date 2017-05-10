@@ -28,6 +28,7 @@
     <input type="hidden" id="username" value="${ settings.xiReportUsername }" />
     <input type="hidden" id="password" value="${ settings.xiReportPassword }" />
     <input type="hidden" id="scheme_id" value="${ scheme_id } "/>
+    <input type="hidden" id="sponsor_id" value="${ sponsor_id } "/>
     <p>&nbsp;</p>
     <div class="col-md-12" id="mv-results">
 
@@ -140,10 +141,14 @@
                 var reportPath = $('#reportPath').val();
                 console.log("Report url is: " + reportPath);
 
+            //http://192.168.1.60:7001/xmlpserver/~weblogic/fundmaster/reports/members/Member Movement Report (Sponsor Specific).xdo
+            // ?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report%20(Sponsor%20Specific).xdo
+            // &_xmode=3&_paramsorientation=RIGHT&_paramsblankImage=http%3A%2F%2Flocalhost%3A8080%2FXi%2Freports%2Fblank.
+            // png&_paramsalternativeUrl=http%3A%2F%2Flocalhost%3A8080%2F%2FXi%2Freports%2Flogos%2F9047_RIGHT%20.jpg&_paramsscheme_id=281&_paramssponsor_id=47086&_paramsyear_txn=2014&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_xt=Member%20Movement%20Report&_xf=analyze&_xana=view
 
-            var url = reportPath +"members/Member Movement Report.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report.xdo&_xmode=3&_paramsdateTo=" +
+            var url = reportPath +"members/Member Movement Report (Sponsor Specific).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report%20(Sponsor%20Specific).xdo&_xmode=3&_paramsdateTo=" +
                     "&_paramsyear_txn=" + finalYear+  "&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation + "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
-                    + $('#scheme_id').val() + "&_xt=Member%20Movement%20Report&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+                    + $('#scheme_id').val() + "&_paramssponsor_id=" + $('#sponsor_id').val() + "&_xt=Member%20Movement%20Report&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
             $("#mv-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 

@@ -19,12 +19,14 @@ public class APICall {
     public static final String GET_MEMBER_SCHEMES = "getmemberschemes/";
     public static final String GET_MEMBER_AVERAGE_INTEREST = "getmemberaverageinterest/";
     public static final String SCHEME_GET_SCHEME_BASE_CURRENCY = "scheme/getschemebasecurrency/";
+    public static final String SCHEME_MODE = "scheme/getschememode/";
     public static final String SCHEME_GET_FUND_VALUE_AS_AT = "scheme/getfundvalueasat/";
     public static final String SCHEME_GET_FUND_VALUE = "scheme/getfundvalue/";
     public static final String GET_AGENT_COMMISSIONS = "agent/getagentcommissions/";
     public static final String GET_AGENT_CLIENTS = "agent/getagentclients/";
     public static final String GET_ACCOUNTING_PERIOD_FROM_DATE_FOR_SCHEME = "getaccountingperiodfromdateforscheme/";
     public static final String GET_SCHEME_ACCOUNTING_PERIODS = "getaccountingperiods/";
+    public static final String GET_SCHEME_SPONSORS = "sponsor/getsponsorbyscheme/";
     public static final String GET_MEMBER_CUMMULATIVE_INTEREST = "getmembercummulativeinterest/";
     public static final String PROFILE_GET_PROFILES = "profile/getprofiles";
     public static final String GETMEMBERCONTRIBUTIONS = "getmembercontributions/";
@@ -55,6 +57,7 @@ public class APICall {
     public static final String GET_DC_MEMBER_BALANCES = "getmemberbalances/";
     public static final String  GET_DB_MEMBER_BALANCES = "getmemberaccruedpension/";
     public static final String SCHEME_GET_SCHEME_INTEREST_RATES = "scheme/getschemeinterestrates/";
+    public static final String GET_SPONSOR_INTEREST_RATES = "sponsor/getsponsorinterestrates/";
     public static final String WHAT_IF_ANALYSIS = "whatifanalysis/";
     public static final String SCHEME_GET_SCHEME_BY_SCHEME_MODE_AND_PLAN_TYPE = "scheme/getschemebyschememodeandplantype/";
     public static final String SCHEME_GET_SCHEME_BY_SCHEME_MODE = "scheme/getschemebyschememode/";

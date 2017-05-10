@@ -25,9 +25,11 @@ public interface ApiEJB {
     List<Scheme> getProfileSchemes(String user, String profile);
     JSONObject getMemberAverageInterest(String memberID);
     JSONObject getSchemeCurrency(String schemeID);
+    JSONObject getSchemeMode(String schemeID);
     JSONObject getFundValueAsAt(String date,String periodType, String schemeID,String profileID);
     JSONObject getAccountingPeriod(String date, String schemeID);
     JSONObject getAllAccountingPeriods(String schemeID);
+    JSONObject getAllSchemeSponsors(String schemeID);
     JSONObject getPayrollYears();
     JSONObject getMemberCummulativeInterest(String memberID);
     List<UserProfile> getUserProfiles();
@@ -64,6 +66,7 @@ public interface ApiEJB {
     JSONObject getDcMemberBalances(String memberID);
     JSONObject getDbMemberBalances(String memberID, String schemeId);
     String getSchemeInterestRates(String schemeID);
+    String getSponsorInterestRates(String sponsorId);
     JSONObject calculateWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate,
                                        String inflationRate,String email,String phone,String yourAge, String formula);
     List<Scheme> getSchemeBySchemeModeAndPlanType(String schemeMode, String planType);

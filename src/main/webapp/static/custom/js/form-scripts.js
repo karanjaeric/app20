@@ -31,120 +31,9 @@ var minimum = parseInt($('#minimum').val());
 var lowercase = $('#lowercase').val();
 var uppercase = $('#uppercase').val();
 var numbers = $('#numbers').val();
-$(document)
-		.ready(
-				function() {
 
-					$('#form-interest-rate')
-							.bootstrapValidator(
-									{
-										message : 'This value is not valid',
-										feedbackIcons : {
-											valid : 'glyphicon glyphicon-ok',
-											invalid : 'glyphicon glyphicon-remove',
-											validating : 'glyphicon glyphicon-refresh'
-										},
-								        excluded: ':disabled',
-										fields : {
-											scheme : {
-												validators : {
-													notEmpty : {
-														message : 'Please select the scheme'
-													}
-												}
-											}
-										}
-									})
-							.on(
-									'success.form.bv',
-									function(e) {
-										start_wait();
-										// Prevent form submission
-										e.preventDefault();
-										// Get the form instance
-										$
-												.ajax({
-													url : $('#base_url').val() + 'interest-rates',
-													type : 'post',
-													data : {
-														scheme : $('#scheme').val()
-													},
-													dataType : 'json',
-													success : function(json) {
-														console.log(json);
-														stop_wait();
-														var message = 'Oops! We are sorry, but something unexpected just happend and we were unable to process your request. Please try again';
-														if (json.success == true) {
-															var fields = [
-																	"ap",
-																	"openingBalances",
-																	"pensionDrawDown",
-																	"contributions",
-																	"status" ];
-															var html = '';
-															for ( var i = 0; i < json.rows.length; i++) {
-																var row = json.rows[i];
-																html = html
-																		+ "<tr>";
-																for ( var k = 0; k < fields.length; k++) {
-																	for ( var key in row) {
-																		if (key == fields[k]) {
-																			html = html
-																					+ "<td>"
-																					+ row[key]
-																					+ "</td>";
-																			break;
-																		}
-																	}
-																}
-																html = html
-																		+ "</tr>";
-																if (i == 10)
-																	break;
-															}
+$(document).ready(function() {
 
-															$(
-																	'#interest-result')
-																	.html(html);
-
-															var fields2 = [
-																	"dateDeclared",
-																	"registered",
-																	"unRegistered" ];
-															var html = '<thead><tr><th></th><th>REGISTERED</th><th>UNREGISTERED</th></tr></thead><tbody>';
-															for ( var i = 0; i < json.rows.length; i++) {
-																var row = json.rows[i];
-																html = html
-																		+ "<tr>";
-																for ( var k = 0; k < fields2.length; k++) {
-																	for ( var key in row) {
-																		if (key == fields2[k]) {
-																			html = html
-																					+ "<td>"
-																					+ row[key]
-																					+ "</td>";
-																			break;
-																		}
-																	}
-																}
-																html = html
-																		+ "</tr>";
-															}
-															html = html
-																	+ "</tbody>";
-															$('#datatable')
-																	.html(html);
-															drawInterestRatesGraph();
-														}
-
-														if (!json.success)
-															bootbox
-																	.alert('<p class="text-center">'
-																			+ message
-																			+ '</p>');
-													}
-												});
-									});
 					$('#form-analysis')
 					.bootstrapValidator(
 							{
@@ -289,37 +178,6 @@ $(document)
 										});
 
 							});
-					function drawInterestRatesGraph() {
-						$('#bar-chart').highcharts(
-								{
-									data : {
-										table : 'datatable'
-									},
-									chart : {
-										type : 'column'
-									},
-									title : {
-										text : 'Interest Rates History'
-									},
-									yAxis : {
-										allowDecimals : false,
-										title : {
-											text : '% Interest'
-										}
-									},
-									tooltip : {
-										formatter : function() {
-											return '<b>'
-													+ this.series.name
-													+ '</b><br/>'
-													+ this.point.y
-													+ ' '
-													+ this.point.name
-															.toLowerCase();
-										}
-									}
-								});
-					}
 
 					$('#form-login')
 							.bootstrapValidator(
