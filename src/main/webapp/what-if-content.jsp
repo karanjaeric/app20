@@ -217,11 +217,8 @@
 										yourAge: $(
 												'#yourAge')
 												.val(),
-										yearsToProject : parseFloat($(
-												'#ageTo').val())
-												- parseFloat($(
-														'#yourAge')
-														.val())
+										yearsToProject : parseFloat($('#ageTo').val()) - parseFloat($('#yourAge')
+												.val())
 									},
 									dataType : 'json',
 									success : function(json) {

@@ -103,6 +103,8 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 			}
 		}
 
+		jLogger.i("=============== Years to project: " + this.get(request, "yearsToProject") + " ====================");
+
 			this.respond(response, true, "", apiEJB.calculateWhatIfAnalysis(this.get(request, "yearsToProject"),
 					this.get(request, "contributions"), this.get(request, "rateOfReturn"), this.get(request, "salaryEscalationRate"),
 					this.get(request, "inflationRate"),this.get(request, "emailAddress"),this.get(request, "phoneNumber"),
