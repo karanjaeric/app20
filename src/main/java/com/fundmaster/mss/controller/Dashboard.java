@@ -7,6 +7,8 @@ import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.hibernate.type.YesNoType;
 import org.json.JSONObject;
 
@@ -1184,6 +1186,7 @@ SocialBeanI socialBeanI;
         String identifier;
         String search;
         String sponsorId = "";
+        String json = "";
 
         try {
             batch = Integer.parseInt(this.get(request, "batch"));
@@ -1220,7 +1223,7 @@ SocialBeanI socialBeanI;
             members = apiEJB.searchProfiles(search, identifier, profile, this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
         }
         else {
-            members = apiEJB.getMemberListing(this.getSessKey(request, Constants.PROFILE_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
+            members = apiEJB.getMemberListing(this.getSessKey(request, Constants.PROFILE_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.SCHEME_ID), 0, 9000);
         }
 
 

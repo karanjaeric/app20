@@ -14,6 +14,13 @@
 	rel="stylesheet" media="screen">
 <link href="static/bootstrap-3.3.5/css/bootstrap-responsive.min.css"
 	rel="stylesheet" media="screen">
+
+	<!-- DataTables CSS-->
+<link href="static/datatables/css/datatables.min.css"
+		  rel="stylesheet" media="screen">
+<link href="static/datatables/css/dataTables.bootstrap.min.css"
+		  rel="stylesheet" media="screen">
+
 <link
 	href="static/custom/vendors/easypiechart/jquery.easy-pie-chart.css"
 	rel="stylesheet" media="screen">
@@ -27,11 +34,8 @@
 	href="static/bootstrap-3.3.5/css/bootstrap-datetimepicker.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="static/bootstrap-3.3.5/css/bootstrap-colorpicker.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="static/font-awesome-4.3.0/css/font-awesome.min.css" />
-<link
-	href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900'
-	rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="static/font-awesome-4.3.0/css/font-awesome.min.css" />
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -40,8 +44,12 @@
 <script src="static/custom/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 <script type="text/javascript" src="static/jquery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="static/jquery/datePicker.js"></script>
-<script type="text/javascript"
-	src="static/bootstrap-3.3.5/js/colorpicker-color.js"></script>
+<script type="text/javascript" src="static/bootstrap-3.3.5/js/colorpicker-color.js"></script>
+
+	<!-- DataTables JS-->
+<script type="text/javascript" src="static/datatables/js/datatables.min.js"></script>
+<script type="text/javascript" src="static/datatables/js/dataTables.bootstrap.min.js"></script>
+
 </head>
 
 <body oncontextmenu="return false">

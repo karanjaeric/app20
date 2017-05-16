@@ -82,5 +82,6 @@
     <orderEntry type="library" name="Maven: org.jboss.as:jboss-as-build-config:7.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss:jboss-dmr:1.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: com.liferay:nl.captcha.simplecaptcha:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.5" level="project" />
   </component>
 </module>
