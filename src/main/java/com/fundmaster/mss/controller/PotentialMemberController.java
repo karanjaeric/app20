@@ -2,6 +2,7 @@ package com.fundmaster.mss.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -25,6 +26,7 @@ import com.fundmaster.mss.beans.SocialBeanI;
 import com.fundmaster.mss.beans.ThemeBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.Company;
 import com.fundmaster.mss.model.Country;
 import com.fundmaster.mss.model.Gender;
@@ -41,6 +43,8 @@ import com.fundmaster.mss.model.Theme;
 public class PotentialMemberController extends BaseServlet implements Serializable {
 	
 	private static final String REQUEST_ACTION = "ACTION";
+
+	JLogger jLogger = new JLogger(this.getClass());
 
 
 	Helper helper = new Helper();
@@ -106,8 +110,26 @@ public class PotentialMemberController extends BaseServlet implements Serializab
 		List<MaritalStatus> marital_statuses = maritalStatusBeanI.find();
 		request.setAttribute("maritalStatuses",  marital_statuses);
 		
-		List<Scheme> memberSchemes = apiEJB.getSchemeByPlanType("INDIVIDUAL_PENSION_FUND");
-		request.setAttribute("memberSchemes", memberSchemes);
+		/*List<Scheme> memberSchemes = apiEJB.getSchemeByPlanType("INDIVIDUAL_PENSION_FUND");
+		request.setAttribute("memberSchemes", memberSchemes);*/
+
+		List<Scheme> memberSchemes1 = new ArrayList<>();
+		List<Scheme> memberSchemes2 = new ArrayList<>();
+		try {
+			memberSchemes1 = apiEJB.getSchemeByPlanType("SAVINGS_AND_RETIREMENT");
+			memberSchemes2 = apiEJB.getSchemeByPlanType("INDIVIDUAL_PENSION_FUND");
+		} catch (NullPointerException ex) {
+			ex.printStackTrace();
+		}
+
+		List<Scheme> allSchemes = new ArrayList<Scheme>();
+		if (memberSchemes1 != null) {
+			allSchemes.addAll(memberSchemes1);
+		}
+		if (memberSchemes2 != null) {
+			allSchemes.addAll(memberSchemes2);
+		}
+		request.setAttribute("memberSchemes", allSchemes);
 		
 		PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_POTENTIAL_MEMBER);
 		request.setAttribute("content", content);

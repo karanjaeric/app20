@@ -82,8 +82,10 @@ public class Register extends BaseServlet implements Serializable {
         request.setAttribute("profileNames", profileNames);
         List<Scheme> sponsorSchemes = apiEJB.getSchemeBySchemeModeAndPlanType(UMBRELLA, INDIVIDUAL_PENSION_FUND);
         request.setAttribute("sponsorSchemes", sponsorSchemes);
+
         List<Scheme> memberSchemes = apiEJB.getSchemeByPlanType(INDIVIDUAL_PENSION_FUND);
         request.setAttribute("memberSchemes", memberSchemes);
+
         Menu menu = menuBeanI.find();
         request.setAttribute("menu", menu);
         Setting settings = settingBeanI.find();
