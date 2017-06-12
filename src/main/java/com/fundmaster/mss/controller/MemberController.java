@@ -403,8 +403,6 @@ public class MemberController extends BaseServlet implements Serializable {
 
 		if (plan_type.equalsIgnoreCase("Defined Benefit") && (salary != null && !salary.isEmpty())) {
 
-			jLogger.i("========= YEZIIIR ================  ");
-
 			memberProjections = apiEJB.getDBProjections(member_id, reasonId, format.format(exitDate), format.format(calcDate), schemeId, salary);
 		} else {
 

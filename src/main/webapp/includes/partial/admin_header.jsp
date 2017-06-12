@@ -35,7 +35,9 @@
 <link rel="stylesheet" type="text/css"
 	href="static/bootstrap-3.3.5/css/bootstrap-colorpicker.min.css" />
 <link rel="stylesheet" type="text/css" href="static/font-awesome-4.3.0/css/font-awesome.min.css" />
-<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+<!--<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>-->
+<link href='static/custom/css/fonts.css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

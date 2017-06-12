@@ -7,9 +7,9 @@
 	name="viewport" />
 <title>${ company.name }</title>
 <meta content="bryanitur" name="author" />
-<link
-	href='//fonts.googleapis.com/css?family=${ theme.font }'
-	rel='stylesheet' type='text/css'>
+<!--<linkhref='//fonts.googleapis.com/css?family=${ theme.font }'rel='stylesheet' type='text/css'>-->
+<!--<link href='static/custom/css/lato.css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>-->
+<link href='static/custom/css/fonts.css?family=${ theme.font }'rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css"
 	href="static/bootstrap-3.3.5/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css"

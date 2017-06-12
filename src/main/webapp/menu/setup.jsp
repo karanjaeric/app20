@@ -139,14 +139,11 @@
 							<legend>Font Family</legend>
 							<div class="form-group">
 							 <label class="control-label" for="minor">Font Family:</label>
-							 <select name="font" id="font" class="form-control">
+							 <select name="font" id="font" class="form-control" >
+								<option value="" selected disabled>${theme.font}</option>
 							 	<option>Open Sans</option>
 							 	<option>Roboto</option>
 							 	<option>Lato</option>
-							 	<option>PT Sans</option>
-							 	<option>Ubuntu</option>
-							 	<option>Lato</option>
-							 	<option>Franklin Gothic</option>
 							 </select>
 							</div>
 						</fieldset>
