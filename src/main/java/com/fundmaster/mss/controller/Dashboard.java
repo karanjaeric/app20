@@ -88,6 +88,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.PAGE_CONTENT:
                     showPageContent(request, response, session, REPO_FOLDER);
                     break;
+                case Actions.FAQ_CONTENT:
+                    showFaqContent(request, response, session, REPO_FOLDER);
+                    break;
                 case Actions.MEMBER_OPERATIONS:
                     showMemberOperations(request, response, session, REPO_FOLDER);
                     break;
@@ -1311,6 +1314,17 @@ SchemeManagerBeanI schemeManagerBeanI;
         this.audit(session, "Accessed page content");
         request.getRequestDispatcher(REPO_FOLDER + "/page_content.jsp").forward(request, response);
     }
+
+    @EJB
+    FaqContentBeanI faqContentBeanI;
+    private void showFaqContent(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
+        List<FaqContent> contents = faqContentBeanI.find();
+        request.setAttribute("contents", contents);
+        logActivity("FAQ CONTENT", "Accessed faq content", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Accessed faq content");
+        request.getRequestDispatcher(REPO_FOLDER + "/faq_content.jsp").forward(request, response);
+    }
+
     @EJB
     ContactCategoryBeanI contactCategoryBeanI;
     private void showContactReasons(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {

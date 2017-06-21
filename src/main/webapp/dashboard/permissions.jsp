@@ -24,6 +24,7 @@
            <table class="table table-responsive table-striped">
 			<tr><td>HELP CONTENT</td><td><input type="checkbox" id="content_help" class="form-control input-sm"  ${permissions.content_help == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>PAGE CONTENT</td><td><input type="checkbox" id="content_page" class="form-control input-sm"  ${permissions.content_page == 'TRUE' ? 'checked' : ''}/></td></tr>
+			<tr><td>FAQ CONTENT</td><td><input type="checkbox" id="faq_page" class="form-control input-sm"  ${permissions.faq_page == 'TRUE' ? 'checked' : ''}/></td></tr>
 			</table>
      </div>
       <h2 class="accordion-header">POTENTIAL MEMBERS<span class="pull-right"><input type="checkbox" id="portal_members" class="form-control input-sm"  ${permissions.portal_members == 'TRUE' ? 'checked' : ''}/></span></h2>

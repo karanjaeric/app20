@@ -76,6 +76,8 @@
 <script type="text/javascript" src="static/custom/js/scripts.js"></script>
 <script type="text/javascript" src="static/custom/js/form-scripts.js"></script>
 <script type="text/javascript" src="static/custom/js/highcharts-custom.js"></script>
+<script type="text/javascript" src="static/custom/js/core.js"></script>
+<script type="text/javascript" src="static/custom/js/plugins/jquery.appear/jquery.appear.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		function init()

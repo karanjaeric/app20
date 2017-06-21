@@ -67,6 +67,7 @@ public class Actions {
     public static final String CLIENTS = "CLIENTS";
     public static final String ANALYTICS = "ANALYTICS";
     public static final String PAGE_CONTENT = "PAGE_CONTENT";
+    public static final String FAQ_CONTENT = "FAQ_CONTENT";
     public static final String SCHEME = "SCHEME";
     public static final String WITHDRAWAL_STATEMENT = "WITHDRAWAL_STATEMENT";
     public static final String WITHDRAWAL_SETTLEMENTS = "WITHDRAWAL_SETTLEMENTS";

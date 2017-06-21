@@ -81,6 +81,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String REMOVE_BANNER = "REMOVE_BANNER";
     private static final String REMOVE_LOGO = "REMOVE_LOGO";
     private static final String PAGE_CONTENT = "PAGE_CONTENT";
+    private static final String FAQ_CONTENT = "FAQ_CONTENT";
     private static final String THEME = "THEME";
     private static final String INTEREST_RATE_COLUMNS = "INTEREST_RATE_COLUMNS";
     private static final String SETTINGS = "SETTINGS";
@@ -137,6 +138,8 @@ public class Admin extends BaseServlet implements Serializable {
     HelpBeanI helpBeanI;
     @EJB
     PageContentBeanI pageContentBeanI;
+    @EJB
+    FaqContentBeanI faqContentBeanI;
     @EJB
     ContactCategoryBeanI contactCategoryBeanI;
     @EJB
@@ -455,6 +458,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case PAGE_CONTENT:
                 editPageContent(request, response, session);
+                break;
+            case FAQ_CONTENT:
+                editFaqContent(request, response, session);
                 break;
             case THEME:
                 editTheme(request, response, session);
@@ -1181,6 +1187,34 @@ public class Admin extends BaseServlet implements Serializable {
         } else
             this.respond(response, true, "Content could not be updated", null);
     }
+
+    private void editFaqContent(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        FaqContent fc = null;
+        String id = this.get(request, "ID");
+
+        if (id == null || id.isEmpty()) {
+
+            fc = new FaqContent();
+            fc.setText(this.get(request, "answer"));
+            fc.setTitle(this.get(request, "title"));
+            fc.setPublish(this.get(request, "publish").equalsIgnoreCase("true"));
+
+        } else {
+            fc = faqContentBeanI.findById(helper.toLong(id));
+            fc.setText(this.get(request, "answer"));
+            fc.setTitle(this.get(request, "title"));
+            fc.setPublish(this.get(request, "publish").equalsIgnoreCase("true"));
+        }
+
+
+        if (faqContentBeanI.edit(fc) != null) {
+            audit(session, "Updated portal faq content");
+            this.respond(response, true, "Content was successfully updated", null);
+        } else
+            this.respond(response, true, "Content could not be updated", null);
+    }
+
     private void deleteLogo(HttpServletRequest request, HttpServletResponse response) {
         Logo lg = logoBeanI.findById(helper.toLong(this.get(request, "id")));
         if (logoBeanI.delete(lg))
@@ -1609,6 +1643,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setCalculator_log(this.get(request, "calculator_log").equalsIgnoreCase("true"));
         perm.setContent_help(this.get(request, "content_help").equalsIgnoreCase("true"));
         perm.setContent_page(this.get(request, "content_page").equalsIgnoreCase("true"));
+        perm.setFaq_page(this.get(request, "faq_page").equalsIgnoreCase("true"));
         perm.setMedia_remove(this.get(request, "media_remove").equalsIgnoreCase("true"));
         perm.setMedia_upload(this.get(request, "media_upload").equalsIgnoreCase("true"));
         perm.setMember_edit(this.get(request, "member_edit").equalsIgnoreCase("true"));

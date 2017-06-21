@@ -225,3 +225,65 @@ a:hover {
 	margin-bottom: 10px;
 	width: 150px;
 }
+
+/* FAQ Page*/
+.stick-to-content {
+	position:relative !important;
+	top:0 !important
+}
+.pt-4 {
+	padding-top: 1.5rem!important;
+}
+.nav-vertical {
+	-webkit-flex-direction:column;
+	flex-direction:column;
+	margin-bottom:1.5rem
+}
+.nav-vertical li a {
+	font-size: 14px;
+	color: #000000;
+	font-weight:500;
+	padding:0.75rem 0;
+	display:block
+}
+.nav-vertical li a:hover,.nav-vertical li a:focus {
+	background:transparent
+}
+.nav-vertical>li:not(:last-child){
+	border-bottom:1px solid #e0e0e0
+}
+.nav-vertical>li>a:hover,.nav-vertical>li>a:focus {
+	color:#ddae71
+}
+.nav-vertical>li>a.active {
+	color:#ddae71
+}
+.nav-vertical>li>a.active+ul {
+	display:block
+}
+.nav-vertical>li>ul {
+	padding:0 0.75rem;
+	margin:0 0 0.75rem;
+	list-style:none;
+	display:none
+}
+.nav-vertical>li>ul li a {
+	padding:0.2rem 0;
+	font-size:0.9rem;
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+	opacity:.5
+}
+.nav-vertical>li>ul li a.active,.nav-vertical>li>ul li a:hover,.nav-vertical>li>ul li a:focus {
+	color:inherit;
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+}
+.pb-5 {
+	padding-bottom: 3rem!important;
+}
+.lead {
+	font-size: 1.25rem;
+	font-weight: 300;
+}
+p.lead {
+	font-size:1.2rem
+}

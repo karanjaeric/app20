@@ -13,6 +13,11 @@
 				class="glyphicon glyphicon-user"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> PAGE CONTENT</a></li>
 		</c:if>
+		<c:if test="${ permissions.faq_page }">
+			<li id="faq-page-content-li"><a href="javascript:void(0);"><i
+					class="glyphicon glyphicon-user"></i>&nbsp;<i
+					class="fa fa-chevron-right"></i> FAQ CONTENT</a></li>
+		</c:if>
 		
 	</ul>
 	<script type="text/javascript">
@@ -20,6 +25,10 @@
 
 			$('#home-page-content-li').click(function(){
 				load_dashboard('PAGE_CONTENT');
+			});
+
+			$('#faq-page-content-li').click(function(){
+				load_dashboard('FAQ_CONTENT');
 			});
 			
 		    $('#help-settings-li').click(function(){

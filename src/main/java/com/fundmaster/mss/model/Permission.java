@@ -244,6 +244,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.content_page = content_page;
 	}
 
+	public boolean isFaq_page() {
+		return faq_page;
+	}
+
+	public void setFaq_page(boolean faq_page) {
+		this.faq_page = faq_page;
+	}
+
 	public boolean isOperation_personal_info() {
 		return operation_personal_info;
 	}
@@ -503,7 +511,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean setup_menu, boolean db_menu, boolean setup_social, boolean setup_theme,
 			boolean setup_banner, boolean setup_interest_rate,
 			boolean setup_other, boolean setup_contact_reason,
-			boolean content_help, boolean content_page,
+			boolean content_help, boolean content_page, boolean faq_page,
 			boolean profile_privileges, boolean member_edit_permissions, boolean show_db_contribution_graph,
 			boolean profile_login_username, boolean scheme_managers, boolean member_menu_config, boolean pensioner_menu_config, boolean member_dashboard_items, boolean admin_dashboard_items,
 			boolean users, boolean user_enable_disable, boolean audit_trail,
@@ -553,6 +561,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.setup_contact_reason = setup_contact_reason;
 		this.content_help = content_help;
 		this.content_page = content_page;
+		this.faq_page = faq_page;
 		this.profile_privileges = profile_privileges;
 		this.member_edit_permissions = member_edit_permissions;
 		this.show_db_contribution_graph = show_db_contribution_graph;
@@ -593,7 +602,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	private boolean setup_company, setup_email, setup_logo, setup_menu, db_menu, setup_social, setup_theme, setup_banner, setup_interest_rate, setup_other, setup_contact_reason;
 	
-	private boolean content_help, content_page;
+	private boolean content_help, content_page, faq_page;
 	
 	private boolean profile_privileges, member_edit_permissions, show_db_contribution_graph, member_menu_config, pensioner_menu_config, member_dashboard_items, admin_dashboard_items,  profile_login_username, scheme_managers, users, user_enable_disable, audit_trail;
 	

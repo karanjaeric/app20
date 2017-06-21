@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
+import com.fundmaster.mss.model.FaqContent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,6 +51,8 @@ public class DataController extends BaseServlet implements Serializable {
 	HelpBeanI helpBeanI;
 	@EJB
 	PageContentBeanI pageContentBeanI;
+	@EJB
+	FaqContentBeanI faqContentBeanI;
 	@EJB
 	MaritalStatusBeanI maritalStatusBeanI;
 	@EJB
@@ -95,5 +98,20 @@ public class DataController extends BaseServlet implements Serializable {
 				}
         		out.write(obj.toString());
         	}
+		if(this.get(request, "DATA").equals("FAQ_CONTENT"))
+		{
+			FaqContent fc = faqContentBeanI.findById(helper.toLong(this.get(request, "ID")));
+			JSONObject obj = new JSONObject();
+			try {
+				obj.put("id", fc.getId())
+						.put("title", fc.getTitle())
+						.put("answer", fc.getText())
+						.put("publish", fc.isPublish());
+			} catch (JSONException je) {
+				// TODO Auto-generated catch block
+				JLogger.i("JSON Exception was detected: " + je.getMessage());
+			}
+			out.write(obj.toString());
+		}
 	}
 }

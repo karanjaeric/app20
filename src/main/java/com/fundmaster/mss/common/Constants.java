@@ -24,6 +24,7 @@ public class Constants implements Serializable {
 	public static final String SCHEME_NAME = "SCHEME_NAME";
 	public static final String SCHEME_TYPE = "SCHEME_TYPE";
 	public static final String PAGE_HOME = "HOME";
+	public static final String PAGE_FAQ = "FAQ";
 	public static final String PAGE_INTEREST_RATES = "INTEREST_RATES";
 	public static final String PAGE_WHAT_IF_ANALYSIS = "WHAT_IF_ANALYSIS";
 	public static final String PAGE_ANNUITY_QUOTATION = "ANNUITY_QUOTATION";

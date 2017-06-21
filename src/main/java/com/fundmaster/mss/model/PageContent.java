@@ -27,8 +27,7 @@ public class PageContent extends GenericModel<PageContent> implements Serializab
 	Long id;
 	private String page;
 	@Column (columnDefinition = "TEXT")
-	private
-	String text;
+	private String text;
 	private String position;
 	private boolean publish;
 

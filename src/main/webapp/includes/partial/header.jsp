@@ -9,6 +9,8 @@
 <meta content="bryanitur" name="author" />
 <!--<linkhref='//fonts.googleapis.com/css?family=${ theme.font }'rel='stylesheet' type='text/css'>-->
 <!--<link href='static/custom/css/lato.css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>-->
+<!--<link rel="stylesheet" type="text/css"
+		  href="static/custom/css/theme-beige.min.css" />-->
 <link href='static/custom/css/fonts.css?family=${ theme.font }'rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css"
 	href="static/bootstrap-3.3.5/css/bootstrap.min.css" />
@@ -23,7 +25,6 @@
 <link rel="stylesheet" type="text/css"
 	href="static/custom/css/bootstrap.vertical-tabs.css" />
 <link rel="icon" href="static/images/favicon.ico">
-
 <style type="text/css">
 body {
 	font-family: '${theme.font}';
