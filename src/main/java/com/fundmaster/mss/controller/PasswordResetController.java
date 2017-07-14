@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @WebServlet(name = "PasswordResetController", urlPatterns = {"/password-reset"})
@@ -151,9 +153,11 @@ public class PasswordResetController extends BaseServlet implements Serializable
 				}
 
 				boolean status = false;
+				List<String> recipients = new ArrayList<>();
 
 				try {
-					status = apiEJB.sendEmail(m.getEmailAddress(),sender, null, "Password Reset Instructions", "Dear " + usr.getUserProfile() + ", " +
+					recipients.add(m.getEmailAddress());
+					status = apiEJB.sendEmail(recipients,sender, null, "Password Reset Instructions", "Dear " + usr.getUserProfile() + ", " +
 
 							"You recently requested to change your password. " +
 							"Your security code is: " + securityCode +

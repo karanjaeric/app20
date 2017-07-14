@@ -48,6 +48,12 @@
 							<c:if test="${ permissions.operation_benefit_projection }">
 								<option>BENEFITS PROJECTION</option>
 							</c:if>
+							<c:if test="${ permissions.operation_annual_contribution }">
+								<option>ANNUAL CONTRIBUTION STATEMENT</option>
+							</c:if>
+							<c:if test="${ permissions.operation_claim_status }">
+								<option>CLAIM STATUS</option>
+							</c:if>
 						</select>
 					</div>
 				</form>
@@ -148,6 +154,36 @@ function do_function()
 		        $('#page-info').html(html);
 		        stop_wait();
 	        }
+		});
+	}
+
+	else if($('#operation').val() == 'ANNUAL CONTRIBUTION STATEMENT')
+	{
+		start_wait();
+		$.ajax({
+			url: $('#base_url').val() + 'dashboard',
+			type: 'get',
+			data: {dashboard: 'AC', memberID: member_id},
+			dataType: 'html',
+			success: function(html) {
+				$('#page-info').html(html);
+				stop_wait();
+			}
+		});
+	}
+
+	else if($('#operation').val() == 'CLAIM STATUS')
+	{
+		start_wait();
+		$.ajax({
+			url: $('#base_url').val() + 'dashboard',
+			type: 'get',
+			data: {dashboard: 'MC', memberID: member_id},
+			dataType: 'html',
+			success: function(html) {
+				$('#page-info').html(html);
+				stop_wait();
+			}
 		});
 	}
 }

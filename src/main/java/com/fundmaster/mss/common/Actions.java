@@ -34,6 +34,7 @@ public class Actions {
     public static final String MEMBER_STATEMENT_OF_ACCOUNT_GRID = "SA_GRID";
     public static final String MEMBER_UNITIZED_STATEMENT = "US";
     public static final String MEMBER_BENEFIT_PROJECTIONS = "BP";
+    public static final String ANNUAL_CONTRIBUTION_STATEMENT = "AC";
     public static final String MEMBER_BENEFIT_PROJECTIONS_GRID = "BP_GRID";
     public static final String MEMBER_MEDIA_FILES = "MF";
     public static final String MEMBER_CLAIMS = "MC";
@@ -74,6 +75,8 @@ public class Actions {
     public static final String MEMBER_MOVEMENT = "MEMBER_MOVEMENT";
     public static final String FUND_MOVEMENT = "FUND_MOVEMENT";
     public static final String RECEIPT_SUMMARY = "RECEIPT_SUMMARY";
+    public static final String PENDING_CONTRIBUTION = "PENDING_CONTRIBUTION";
+
     public static final String ADMIN_FEE_LISTING = "ADMIN_FEE_LISTING";
 
 }

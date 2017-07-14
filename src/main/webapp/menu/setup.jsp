@@ -250,6 +250,12 @@
 								<option value="CUSTOM_FORMULA" ${ settings.whatIfAnalysisFormula == 'CUSTOM_FORMULA' ? 'selected="selected"' : '' }>CUSTOM FORMULA</option>
 							</select>
 						</div>
+
+						<div class="form-group">
+							<label class="control-label" for="projectedROR">Projected Rate Of Return:</label>
+							<input type="text" class="form-control" name="projectedROR" id="projectedROR" value="${ settings.projectedROR}"/>
+						</div>
+
 						<div class="form-group hide">
 							 <label class="control-label" for="loginField">Encrypt Settings:</label>
 							 <input type="checkbox" class="form-control" name="encrypt" id="encrypt" ${ settings.encrypt == 'TRUE' ? 'checked="checked"' : '' }/>
@@ -844,6 +850,19 @@
 								<input type="checkbox" name="supportEmailActive" id="supportEmailActive" ${email.supportEmailActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<label class="control-label" for="crmEmail">Customer Relationship Manager Email:</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" id="crmEmail" name="crmEmail" placeholder="CRM Email" value="${email.crmEmail}"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="crmEmailActive" id="crmEmailActive" ${email.crmEmailActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
 
 						<tr>
 							<td>
@@ -927,6 +946,7 @@
 		    });
 
 			$('#email-li').click(function(){
+				console.log("=== Email clicked ==============");
 				$('#modal-email').modal('show');
 			});
 
@@ -1431,6 +1451,13 @@
 							}
 						}
 					},
+					crmEmail: {
+						validators: {
+							notEmpty: {
+								message: 'Please enter the mailing addresses'
+							}
+						}
+					},
 					supportEmail: {
 						validators: {
 							notEmpty: {
@@ -1457,10 +1484,12 @@
 								defaultEmail: $('#defaultEmail').val(),
 								marketingEmail: $('#marketingEmail').val(),
 								supportEmail: $('#supportEmail').val(),
+								crmEmail: $('#crmEmail').val(),
 								sendWhatifEmail: $('#sendWhatifEmail').prop('checked'),
 								defaultEmailActive: $('#defaultEmailActive').prop('checked'),
 								marketingEmailActive: $('#marketingEmailActive').prop('checked'),
 								supportEmailActive: $('#supportEmailActive').prop('checked'),
+								crmEmailActive: $('#crmEmailActive').prop('checked'),
 								ACTION: 'EMAILS'},
 							dataType: 'json',
 							success: function(json) {
@@ -1646,7 +1675,7 @@
         	        data: {portalBaseURL: $('#portalBaseURL').val(), memberOnboarding: $('#memberOnboarding').val(),
 						sponsorOnboarding: $('#sponsorOnboarding').val(), setting_id: $('#setting_id').val(),
 						xiReportPath: $('#xiReportPath').val(), loginField: $('#loginField').val(),
-						whatIfAnalysisFormula: $('#whatIfAnalysisFormula').val(), fundmasterXi: $('#fundmasterXi').val(),
+						whatIfAnalysisFormula: $('#whatIfAnalysisFormula').val(), projectedROR: $('#projectedROR').val(), fundmasterXi: $('#fundmasterXi').val(),
 						username: $('#xiUsername').val(), password: $('#xiPassword').val(), encrypt: $('#encrypt').prop('checked'),
 						ACTION: 'SETTINGS', xiReportUsername: $('#xiReportUsername').val(), xiReportPassword: $('#xiReportPassword').val()},
         	        dataType: 'json',

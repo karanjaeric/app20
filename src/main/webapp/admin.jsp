@@ -5,6 +5,7 @@
 <jsp:include page="includes/partial/admin_header.jsp" />
 <input type="hidden" id="switch_to" value="member"/>
 <input type="hidden" name="schemeID" id="schemeID" value="${ scheme_id }" />
+<input type="hidden" name="profile" id="profile" value="${ profile }" />
 <input type="hidden" id="minimum" value="${ policy.length }" />
 <input type="hidden" id="lowercase" value="${ policy.lowercase }" />
 <input type="hidden" id="uppercase" value="${ policy.uppercase }" />
@@ -121,6 +122,11 @@
 								class="glyphicon glyphicon-list-alt"></i>&nbsp;<i
 								class="fa fa-chevron-right"></i> RECEIPT SUMMARY</a></li>
 						</c:if>
+					   <c:if test="${ permissions.pending_contribution == 'TRUE' }">
+						<li id="pending-contribution-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-list-alt"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> PENDING CONTRIBUTIONS</a></li>
+					   </c:if>
 
 						<c:if test="${profile == 'AGENT' }">
 						<li id="commissions-main-li"><a href="javascript:void(0);"><i

@@ -596,6 +596,15 @@
 
 						<tr>
 							<td>
+								<label class="control-label"> ANNUAL CONTRIBUTION STATEMENT </label>
+							</td>
+							<td>
+								<input type="checkbox" name="annualContributionStatement" id="annualContributionStatement" ${memberMenu.annualContributionStatement == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
 								<label class="control-label"> WHAT IF ANALYSIS </label>
 							</td>
 							<td>
@@ -1208,6 +1217,7 @@
 								WhatIfAnalysis: $('#WhatIfAnalysis').prop('checked'),
 								benefitsProjection: $('#benefitsProjection').prop('checked'),
 								benefitProjectionGrid: $('#benefitProjectionGrid').prop('checked'),
+								annualContributionStatement: $('#annualContributionStatement').prop('checked'),
 								Media: $('#Media').prop('checked')
 							},
 							dataType: 'json',

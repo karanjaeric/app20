@@ -27,6 +27,9 @@ public class Emails extends GenericModel<Emails> implements Serializable {
     @Column (name = "supportEmail", nullable = false)
     private String supportEmail;
 
+    @Column (name = "crmEmail", nullable = false)
+    private String crmEmail;
+
     @Column(name="sendWhatifEmail", nullable=false)
     private boolean sendWhatifEmail;
 
@@ -39,20 +42,25 @@ public class Emails extends GenericModel<Emails> implements Serializable {
     @Column(name="supportEmailActive", nullable=false)
     private boolean supportEmailActive;
 
+    @Column(name="crmEmailActive", nullable=false)
+    private boolean crmEmailActive;
+
     public Emails() {
 
     }
 
-    public Emails(Long id, String defaultEmail,String marketingEmail, String supportEmail, boolean sendWhatifEmail, boolean defaultEmailActive,
-    boolean marketingEmailActive, boolean supportEmailActive) {
+    public Emails(Long id, String defaultEmail,String marketingEmail, String supportEmail, String crmEmail, boolean sendWhatifEmail, boolean defaultEmailActive,
+    boolean marketingEmailActive, boolean supportEmailActive,boolean crmEmailActive) {
         super();
         this.id = id;
         this.defaultEmail = defaultEmail;
         this.defaultEmailActive =defaultEmailActive;
         this.marketingEmailActive = marketingEmailActive;
         this.supportEmailActive = supportEmailActive;
+        this.crmEmailActive = crmEmailActive;
         this.marketingEmail = marketingEmail;
         this.supportEmail = supportEmail;
+        this.crmEmail = crmEmail;
         this.sendWhatifEmail = sendWhatifEmail;
     }
 
@@ -118,5 +126,21 @@ public class Emails extends GenericModel<Emails> implements Serializable {
 
     public void setSupportEmailActive(boolean supportEmailActive) {
         this.supportEmailActive = supportEmailActive;
+    }
+
+    public boolean isCrmEmailActive() {
+        return crmEmailActive;
+    }
+
+    public void setCrmEmailActive(boolean crmEmailActive) {
+        this.crmEmailActive = crmEmailActive;
+    }
+
+    public String getCrmEmail() {
+        return crmEmail;
+    }
+
+    public void setCrmEmail(String crmEmail) {
+        this.crmEmail = crmEmail;
     }
 }

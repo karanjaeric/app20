@@ -6,6 +6,7 @@
 							class="glyphicon glyphicon-dashboard"></i>&nbsp;DASHBOARD PANEL
 	</h3>
 	<div class="col-md-12">
+		<input type="hidden" name="profileID" id="profileID" value="${ profileID }" />
 		<div class="col-md-6 border-right">
 		<h3 class="text-center"><small>SCHEME MEMBERSHIP</small></h3>
 		<table class="table table-responsive table-striped">
@@ -160,7 +161,7 @@
 										$.ajax({
 											url: $('#base_url').val() + 'admin',
 											type: 'post',
-											data: {ACTION:'FV', schemeID: $('#schemeID').val(), accountingPeriodId: json.accountingPeriodId},
+											data: {ACTION:'FV', profile: $('#profile').val(), profileID: $('#profileID').val(), schemeID: $('#schemeID').val(), accountingPeriodId: json.accountingPeriodId},
 											dataType: 'json',
 											success: function(json) {
                                                 console.log("FV");

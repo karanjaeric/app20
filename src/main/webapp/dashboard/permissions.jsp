@@ -72,6 +72,8 @@
 			<tr><td>FUND MOVEMENT</td><td><input type="checkbox" id="fund_movement" class="form-control input-sm"  ${permissions.fund_movement == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>CORPORATE STATEMENT</td><td><input type="checkbox" id="corporate_statement" class="form-control input-sm"  ${permissions.corporate_statement == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>RECEIPT SUMMARY</td><td><input type="checkbox" id="receipt_summary" class="form-control input-sm"  ${permissions.receipt_summary == 'TRUE' ? 'checked' : ''}/></td></tr>
+			<tr><td>PENDING CONTRIBUTIONS</td><td><input type="checkbox" id="pending_contribution" class="form-control input-sm"  ${permissions.pending_contribution == 'TRUE' ? 'checked' : ''}/></td></tr>
+
 		</table>
 	</div>
 
@@ -92,6 +94,8 @@
 				<tr><td>VIEW BALANCES HISTORY</td><td><input type="checkbox" id="operation_balance_history" class="form-control input-sm"  ${permissions.operation_balance_history == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>VIEW STATEMENT OF ACCOUNT</td><td><input type="checkbox" id="operation_statement_of_account" class="form-control input-sm"  ${permissions.operation_statement_of_account == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>VIEW BENEFITS PROJECTIONS</td><td><input type="checkbox" id="operation_benefit_projection" class="form-control input-sm"  ${permissions.operation_benefit_projection == 'TRUE' ? 'checked' : ''}/></td></tr>
+			    <tr><td>VIEW ANNUAL CONTRIBUTION STATEMENT</td><td><input type="checkbox" id="operation_annual_contribution" class="form-control input-sm"  ${permissions.operation_annual_contribution == 'TRUE' ? 'checked' : ''}/></td></tr>
+			    <tr><td>VIEW CLAIM STATUS</td><td><input type="checkbox" id="operation_claim_status" class="form-control input-sm"  ${permissions.operation_claim_status == 'TRUE' ? 'checked' : ''}/></td></tr>
 			</table>
      </div>
      <h2 class="accordion-header">MEDIA<span class="pull-right"><input type="checkbox" id="media" class="form-control input-sm"  ${permissions.media == 'TRUE' ? 'checked' : ''}/></span></h2>

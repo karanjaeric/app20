@@ -120,6 +120,7 @@
                 var toDate = (document.getElementById('dateTo').value);
                 console.log("To date: " + toDate);
                 console.log("Scheme id is: " + $('#scheme_id').val());
+                console.log("Sponsor Id: " + $('#sponsor_id').val());
 
                 //http://192.168.1.60:7001/xmlpserver/~weblogic/fundmaster/reports/members/Withdrawal Settlements (Sponsor Specific).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FWithdrawal%20Settlements%20(Sponsor%20Specific).xdo&_xmode=3&_paramssponsor_id=47086&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsto_date=31-dec-17&_paramsfrom_date=01-jan-13&_paramsscheme_id=14971&_xt=Withdrawal%20Settlements&_xf=analyze&_xana=view
 

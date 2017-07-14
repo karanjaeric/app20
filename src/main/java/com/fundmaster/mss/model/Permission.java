@@ -294,6 +294,22 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.operation_benefit_projection = operation_benefit_projection;
 	}
 
+	public boolean isOperation_claim_status() {
+		return operation_claim_status;
+	}
+
+	public void setOperation_claim_status(boolean operation_claim_status) {
+		this.operation_claim_status = operation_claim_status;
+	}
+
+	public boolean isOperation_annual_contribution() {
+		return operation_annual_contribution;
+	}
+
+	public void setOperation_annual_contribution(boolean operation_annual_contribution) {
+		this.operation_annual_contribution = operation_annual_contribution;
+	}
+
 	public boolean isMedia_upload() {
 		return media_upload;
 	}
@@ -526,7 +542,11 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean member_movement,
 			boolean fund_movement,
 			boolean receipt_summary,
-			boolean operation_benefit_projection, boolean media_upload,
+			boolean operation_benefit_projection,
+			boolean pending_contribution,
+			boolean operation_annual_contribution,
+			boolean operation_claim_status,
+			boolean media_upload,
 			boolean media_remove, boolean member_edit, boolean member_view) {
 		super();
 		this.id = id;
@@ -545,6 +565,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.member_movement = member_movement;
 		this.fund_movement = fund_movement;
 		this.receipt_summary = receipt_summary;
+		this.pending_contribution = pending_contribution;
 		this.uac = uac;
 		this.analytics = analytics;
 		this.calculator_log = calculator_log;
@@ -579,6 +600,8 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.operation_balance_history = operation_balance_history;
 		this.operation_statement_of_account = operation_statement_of_account;
 		this.operation_benefit_projection = operation_benefit_projection;
+		this.operation_annual_contribution = operation_annual_contribution;
+		this.operation_claim_status = operation_claim_status;
 		this.withdrawal_statement = withdrawal_statement;
 		this.withdrawal_settlements = withdrawal_settlements;
 		this.admin_fee_listing = admin_fee_listing;
@@ -606,7 +629,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	
 	private boolean profile_privileges, member_edit_permissions, show_db_contribution_graph, member_menu_config, pensioner_menu_config, member_dashboard_items, admin_dashboard_items,  profile_login_username, scheme_managers, users, user_enable_disable, audit_trail;
 	
-	private boolean operation_personal_info, operation_contribution_history, operation_balance_history, operation_statement_of_account, operation_benefit_projection;
+	private boolean operation_personal_info, operation_contribution_history, operation_balance_history, operation_statement_of_account, operation_benefit_projection, operation_claim_status, operation_annual_contribution;
 
 	private boolean withdrawal_statement;
 
@@ -621,6 +644,9 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	private boolean fund_movement;
 
 	private boolean receipt_summary;
+
+	private boolean pending_contribution;
+
 	
 	private boolean media_upload, media_remove, profile_names;
 
@@ -678,6 +704,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	public void setReceipt_summary(boolean receipt_summary) {
 		this.receipt_summary = receipt_summary;
+	}
+
+	public boolean isPending_contribution() {
+		return pending_contribution;
+	}
+
+	public void setPending_contribution(boolean pending_contribution) {
+		this.pending_contribution = pending_contribution;
 	}
 
 	public boolean isProfile_names() {

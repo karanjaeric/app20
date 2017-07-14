@@ -160,6 +160,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.FUND_MOVEMENT:
                     showFundMovement(request, response, session, REPO_FOLDER);
                     break;
+                case Actions.PENDING_CONTRIBUTION:
+                    showPendingContributions(request, response, session, REPO_FOLDER);
+                    break;
                 case Actions.RECEIPT_SUMMARY:
                     showReceiptSummary(request, response, session, REPO_FOLDER);
                     break;
@@ -193,6 +196,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                      break;
                  case Actions.MEMBER_BENEFIT_PROJECTIONS:
                      showMemberBenefitProjections(request, response, session);
+                     break;
+                 case Actions.ANNUAL_CONTRIBUTION_STATEMENT:
+                     showAnnualContributionStatement(request, response, session);
                      break;
                  case Actions.MEMBER_BENEFIT_PROJECTIONS_GRID:
                      showMemberBenefitProjectionsGrid(request, response, session);
@@ -344,6 +350,19 @@ public class Dashboard extends BaseServlet implements Serializable {
         logActivity("FUND MOVEMENT", "Viewed fund movement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed fund movement");
         request.getRequestDispatcher(REPO_FOLDER + "/fund_movement.jsp").forward(request, response);
+    }
+
+    private void showPendingContributions(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                  String REPO_FOLDER) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
+        logActivity("PENDING_CONTRIBUTION", "Viewed pending  contributions", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed pending contributions");
+        request.getRequestDispatcher(REPO_FOLDER + "/pending_contribution.jsp").forward(request, response);
     }
 
     private void showReceiptSummary(HttpServletRequest request, HttpServletResponse response, HttpSession session,
@@ -530,6 +549,22 @@ MediaBeanI mediaBeanI;
         logActivity("MEMBER BENEFITS PROJECTION", "Viewed member benefits projection", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member benefits projection");
         request.getRequestDispatcher("member/benefits_projection.jsp").forward(request, response);
+    }
+
+    private void showAnnualContributionStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Setting setting = settingBeanI.find();
+        request.setAttribute("settings", setting);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+
+        String member_id;
+        member_id = this.get(request, "memberID");
+        if (member_id == null)
+            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("member_id", member_id);
+
+        logActivity("ANNUAL CONTRIBUTION STATEMENT", "Viewed annual contribution statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed annual contribution statement");
+        request.getRequestDispatcher("member/annual_contributions.jsp").forward(request, response);
     }
 
     private void showMemberBenefitProjectionsGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
@@ -1153,6 +1188,7 @@ SocialBeanI socialBeanI;
 
     private void showReceipts(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
         List<SchemeReceipt> receipts;
+
         int page;
         int batch;
         Date date_from = getDateFromString(request, "dateFrom", "from");
@@ -1171,10 +1207,24 @@ SocialBeanI socialBeanI;
         request.setAttribute("batch", batch);
         request.setAttribute("page", page);
         DateFormat format_ = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-        if (date_from != null && date_to != null)
+
+        //if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
+
+        if (date_from != null && date_to != null) {
+
             receipts = apiEJB.searchReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), start, PER_PAGE);
-        else
-            receipts = apiEJB.getSchemeReceipts(this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
+        }
+        else {
+            if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.SPONSOR)) {
+
+                receipts = apiEJB.getSponsorReceipts(this.getSessKey(request, Constants.PROFILE_ID), start, PER_PAGE);
+
+            } else {
+
+                receipts = apiEJB.getSchemeReceipts(this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
+            }
+        }
+
         request.setAttribute("receipts", receipts);
         logActivity("SCHEME RECEIPTS", "Viewed scheme receipts for scheme #" + this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed scheme receipts for scheme #" + this.getSessKey(request, Constants.SCHEME_ID));

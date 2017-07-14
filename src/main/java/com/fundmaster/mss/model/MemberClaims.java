@@ -14,6 +14,7 @@ public class MemberClaims extends GenericModel<MemberClaims> implements Serializ
     }
 
     private Long memberNo;
+    private Long membershipNo;
     private Long benefitPaymentId;
     private Long memberId;
     private String netPayment;
@@ -29,6 +30,14 @@ public class MemberClaims extends GenericModel<MemberClaims> implements Serializ
 
     public void setMemberNo(Long memberNo) {
         this.memberNo = memberNo;
+    }
+
+    public Long getMembershipNo() {
+        return membershipNo;
+    }
+
+    public void setMembershipNo(Long membershipNo) {
+        this.membershipNo = membershipNo;
     }
 
     public Long getBenefitPaymentId() {
@@ -95,11 +104,12 @@ public class MemberClaims extends GenericModel<MemberClaims> implements Serializ
         this.servicePeriod = servicePeriod;
     }
 
-    public MemberClaims(Long memberNo, Long benefitPaymentId, Long memberId, String netPayment, String currentStatus,
+    public MemberClaims(Long memberNo, Long membershipNo, Long benefitPaymentId, Long memberId, String netPayment, String currentStatus,
                         String reasonForExit, String dateOfExit, String processed, String servicePeriod) {
 
         super();
         this.memberNo = memberNo;
+        this.membershipNo = membershipNo;
         this.benefitPaymentId = benefitPaymentId;
         this.memberId = memberId;
         this.netPayment = netPayment;

@@ -264,6 +264,9 @@ public class Admin extends BaseServlet implements Serializable {
                     jLogger.i("Scheme Set for " + this.getSessKey(request, Constants.SCHEME_ID));
                     request.setAttribute("path", "admin");
                     request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
+                    jLogger.i("Profile: " + this.getSessKey(request, Constants.U_PROFILE));
+                    request.setAttribute("profileID", this.getSessKey(request, Constants.PROFILE_ID));
+                    jLogger.i("Profile_id: " + this.getSessKey(request, Constants.PROFILE_ID));
                     Permission permissions = getPermissions(request);
                     request.setAttribute("permissions", permissions);
                     List<ContactCategory> contactReasons = contactCategoryBeanI.find();
@@ -585,18 +588,25 @@ public class Admin extends BaseServlet implements Serializable {
         String subject = this.get(request, "subject") + " [" + this.get(request, "category") + "]";
         String message = this.get(request, "message");
         Emails emails = emailsBeanI.find();
-        String sendTo = null;
+        //String sendTo = null;
+        //List<String> recipients = new L;
+        List recipients = new ArrayList();
 
         if (recipient != null) {
             if (recipient.equalsIgnoreCase("defaultEmail")) {
-                sendTo = emails.getDefaultEmail();
+
+                recipients.add(emails.getDefaultEmail());
+                recipients.add(emails.getCrmEmail());
             } else if (recipient.equalsIgnoreCase("marketingEmail")) {
-                sendTo = emails.getMarketingEmail();
+                recipients.add(emails.getMarketingEmail());
+                //sendTo = emails.getMarketingEmail();
             } else if (recipient.equalsIgnoreCase("supportEmail")) {
-                sendTo = emails.getSupportEmail();
+                recipients.add(emails.getSupportEmail());
+                //sendTo = emails.getSupportEmail();
             }
+
         }
-        jLogger.i("Send to: " + sendTo);
+        jLogger.i("Send to: " + recipients);
 
         /*String senderId = this.getSessKey(request, Constants.PROFILE_ID);
         jLogger.i("SENDER ID ========================> " + senderId);*/
@@ -613,8 +623,10 @@ public class Admin extends BaseServlet implements Serializable {
 
         String senderEmail = mbr.getEmailAddress();
         jLogger.i("SENDER NAME ======================> " + senderEmail);
-        boolean status = apiEJB.sendEmail(sendTo, this.getSessKey(request, Constants.USER), senderEmail, subject, message,
+
+        boolean status = apiEJB.sendEmail(recipients, this.getSessKey(request, Constants.USER), senderEmail, subject, message,
                 this.getSessKey(request, Constants.SCHEME_ID), attachment, attachment_url);
+
         if (status) {
             this.respond(response, true, "The email was successfully sent", null);
         } else {
@@ -893,6 +905,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean WhatIfAnalysis = this.get(request, "WhatIfAnalysis").equalsIgnoreCase("true");
         boolean BenefitsProjection = this.get(request, "benefitsProjection").equalsIgnoreCase("true");
         boolean BenefitsProjectionGrid = this.get(request, "benefitProjectionGrid").equalsIgnoreCase("true");
+        boolean AnnualContributionStatement = this.get(request, "annualContributionStatement").equalsIgnoreCase("true");
         boolean Media = this.get(request, "Media").equalsIgnoreCase("true");
 
         memberMenu.setContributionHistoryReport(contributionHistoryReport);
@@ -905,6 +918,7 @@ public class Admin extends BaseServlet implements Serializable {
         memberMenu.setWhatIfAnalysis(WhatIfAnalysis);
         memberMenu.setBenefitsProjection(BenefitsProjection);
         memberMenu.setBenefitProjectionGrid(BenefitsProjectionGrid);
+        memberMenu.setAnnualContributionStatement(AnnualContributionStatement);
         memberMenu.setMedia(Media);
 
         if (memberMenuBeanI.edit(memberMenu) != null) {
@@ -1127,6 +1141,7 @@ public class Admin extends BaseServlet implements Serializable {
         settings.setMemberOnboarding(this.get(request, "memberOnboarding"));
         settings.setSponsorOnboarding(this.get(request, "sponsorOnboarding"));
         settings.setWhatIfAnalysisFormula(this.get(request, "whatIfAnalysisFormula"));
+        settings.setProjectedROR(this.get(request, "projectedROR"));
         settings.setEncrypt(this.get(request, "encrypt").equalsIgnoreCase("true"));
         if (settingBeanI.edit(settings) != null) {
             audit(session, "Updated other portal settings and configurations");
@@ -1240,10 +1255,26 @@ public class Admin extends BaseServlet implements Serializable {
     private void getFundValueAsAt(HttpServletRequest request, HttpServletResponse response) {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = new Date();
+
+        String profile = this.get(request, "profile");
+        jLogger.i("Profile is: " + profile);
+        String profileID = this.get(request, "profileID");
+        jLogger.i("profileID is: " + profileID);
+
         jLogger.i("The accounting period is >>>>>>>>>>>>>>>>>>>>>> " + this.get(request, "accountingPeriodId") + " <<<<<<<<<<<<<<<");
-        this.respond(response, true, "", apiEJB.getFundValueAsAt(format.format(date), this.get(request, "accountingPeriodId"),
-                this.getSessKey(request, Constants.SCHEME_ID),
-                this.getSessKey(request, Constants.PROFILE_ID)));
+
+        if (profile.equalsIgnoreCase("SPONSOR")) {
+
+            this.respond(response, true, "", apiEJB.getSponsorFundValue(format.format(date), this.get(request, "accountingPeriodId"),
+                    this.getSessKey(request, Constants.SCHEME_ID), profileID,
+                    this.getSessKey(request, Constants.PROFILE_ID)));
+
+        } else {
+            this.respond(response, true, "", apiEJB.getFundValueAsAt(format.format(date), this.get(request, "accountingPeriodId"),
+                    this.getSessKey(request, Constants.SCHEME_ID),"0",
+                    this.getSessKey(request, Constants.PROFILE_ID)));
+        }
+
     }
     private void getAccountingPeriod(HttpServletRequest request, HttpServletResponse response) {
         DateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
@@ -1299,11 +1330,13 @@ public class Admin extends BaseServlet implements Serializable {
         //XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
 
         XiMember m = apiEJB.memberExists(userProfile, userEmail);
+        List<String> recipients = new ArrayList<>();
+        recipients.add(m.getEmailAddress());
         jLogger.i("Our member still: " + m.getEmailAddress());
 
         try {
             Emails emails = emailsBeanI.find();
-            boolean status = apiEJB.sendEmail(m.getEmailAddress(), emails.getDefaultEmail(), null, "Change Password Request",
+            boolean status = apiEJB.sendEmail(recipients, emails.getDefaultEmail(), null, "Change Password Request",
                     "Dear " + u.getUsername() + ", " + "You recently requested to change your password. "
                             + "Here is your security code:" + "" + securityCode
                             + "\nYou will require it to be able to change your password",
@@ -1638,6 +1671,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setCorporate_statement(this.get(request, "corporate_statement").equalsIgnoreCase("true"));
         perm.setFund_movement(this.get(request, "fund_movement").equalsIgnoreCase("true"));
         perm.setReceipt_summary(this.get(request, "receipt_summary").equalsIgnoreCase("true"));
+        perm.setPending_contribution(this.get(request, "pending_contribution").equalsIgnoreCase("true"));
         perm.setUac(this.get(request, "uac").equalsIgnoreCase("true"));
         perm.setAnalytics(this.get(request, "analytics").equalsIgnoreCase("true"));
         perm.setCalculator_log(this.get(request, "calculator_log").equalsIgnoreCase("true"));
@@ -1672,6 +1706,10 @@ public class Admin extends BaseServlet implements Serializable {
                 this.get(request, "operation_balance_history").equalsIgnoreCase("true"));
         perm.setOperation_benefit_projection(
                 this.get(request, "operation_benefit_projection").equalsIgnoreCase("true"));
+        perm.setOperation_annual_contribution(
+                this.get(request, "operation_annual_contribution").equalsIgnoreCase("true"));
+        perm.setOperation_claim_status(
+                this.get(request, "operation_claim_status").equalsIgnoreCase("true"));
         perm.setOperation_contribution_history(
                 this.get(request, "operation_contribution_history").equalsIgnoreCase("true"));
         perm.setOperation_personal_info(this.get(request, "operation_personal_info").equalsIgnoreCase("true"));
@@ -1982,6 +2020,7 @@ public class Admin extends BaseServlet implements Serializable {
             String password = helper.shorterUUID(UUID.randomUUID().toString(), 0);
             u.setPassword(helper.hash(password));
             String email_address = null;
+            List<String> recipients = new ArrayList<>();
             String schemeId = null;
             boolean proceed = false;
             JSONObject res;
@@ -1993,6 +2032,7 @@ public class Admin extends BaseServlet implements Serializable {
                     member = apiEJB.getMemberDetails(helper.toString(member.getId()), null);
                     session.setAttribute("member_id", member.getId());
                     email_address = member.getEmailAddress();
+                    //recipients.add(member.getEmailAddress());
                     schemeId = member.getSchemeId();
                     proceed = helper.isEmailAddress(email_address);
                 } else {
@@ -2008,7 +2048,8 @@ public class Admin extends BaseServlet implements Serializable {
                 if (proceed) {
                     Setting settings = settingBeanI.find();
                     Emails emails = emailsBeanI.find();
-                    apiEJB.sendEmail(email_address, emails.getDefaultEmail(), null, "MSS Portal Password Reset",
+                    recipients.add(email_address);
+                    apiEJB.sendEmail(recipients, emails.getDefaultEmail(), null, "MSS Portal Password Reset",
                             "Dear " + u.getUserProfile() + ",<br />"
                                     + "Your password has been reset on the FundMaster Xi Member Self Service Portal. Your new password is "
                                     + password + ".<br />Please click this <a href='" + settings.getPortalBaseURL()
@@ -2066,6 +2107,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean defaultEmailActive = this.get(request, "defaultEmailActive").equalsIgnoreCase("true");
         boolean marketingEmailActive = this.get(request, "marketingEmailActive").equalsIgnoreCase("true");
         boolean supportEmailActive = this.get(request, "supportEmailActive").equalsIgnoreCase("true");
+        boolean crmEmailActive = this.get(request, "crmEmailActive").equalsIgnoreCase("true");
         boolean sendWhatifEmail = this.get(request, "sendWhatifEmail").equalsIgnoreCase("true");
 
         Emails emails = emailsBeanI.find();
@@ -2073,11 +2115,14 @@ public class Admin extends BaseServlet implements Serializable {
         emails.setDefaultEmailActive(defaultEmailActive);
         emails.setMarketingEmailActive(marketingEmailActive);
         emails.setSupportEmailActive(supportEmailActive);
+        emails.setCrmEmailActive(crmEmailActive);
+
         emails.setSendWhatifEmail(sendWhatifEmail);
 
         emails.setDefaultEmail(this.get(request, "defaultEmail"));
         emails.setMarketingEmail(this.get(request, "marketingEmail"));
         emails.setSupportEmail(this.get(request, "supportEmail"));
+        emails.setCrmEmail(this.get(request, "crmEmail"));
 
         /*Emails emails = new Emails(helper.toLong(this.get(request, "email_id")), this.get(request, "defaultEmail"),
         this.get(request, "marketingEmail"), this.get(request, "supportEmail"), this.get(request, "sendWhatifEmail").equalsIgnoreCase("true"));*/

@@ -86,6 +86,14 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 		this.whatIfAnalysisFormula = whatIfAnalysisFormula;
 	}
 
+	public String getProjectedROR() {
+		return projectedROR;
+	}
+
+	public void setProjectedROR(String projectedROR) {
+		this.projectedROR = projectedROR;
+	}
+
 	public String getSponsorOnboarding() {
 		return sponsorOnboarding;
 	}
@@ -104,6 +112,7 @@ public class Setting  extends GenericModel<Setting> implements Serializable{
 	private String sponsorOnboarding;
 	private String memberOnboarding;
 	private String whatIfAnalysisFormula;
+	private String projectedROR;
 	private String portalBaseURL;
 	public String getPortalBaseURL() {
 		return portalBaseURL;

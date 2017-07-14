@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 @WebServlet(name = "WhatIfAnalysis", urlPatterns = {"/what-if-analysis"})
 public class WhatIfAnalysis extends BaseServlet implements Serializable {
 
@@ -81,6 +84,7 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 			try {
 
 				String subject = "What-if-Analysis Calculator details";
+				List<String> recipients = new ArrayList<>();
 				jLogger.i("Subject: " + subject);
 				String message = "Hello," + System.lineSeparator() + "Here are the details from the calculator: " + System.lineSeparator() +
 						"Email: " + this.get(request, "emailAddress") + System.lineSeparator() + "Phone Number: " + this.get(request, "phoneNumber") +
@@ -94,7 +98,8 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 				jLogger.i("Sender email: " + senderId);
 				String senderName = company.getName();
 				jLogger.i("Sender name: " + senderName);
-				boolean status = apiEJB.sendEmail(recipient, senderId, senderName, subject, message,
+				recipients.add(recipient);
+				boolean status = apiEJB.sendEmail(recipients, senderId, senderName, subject, message,
 						this.getSessKey(request, Constants.SCHEME_ID), false, null);
 				jLogger.i("Status is: " + status);
 

@@ -83,6 +83,9 @@
 								<c:if test="${email.supportEmailActive == 'TRUE'}">
 								<option value="supportEmail">Support</option>
 								</c:if>
+								<c:if test="${email.crmEmailActive == 'TRUE'}">
+									<option value="crmEmail">Customer Relationship Manager</option>
+								</c:if>
 							</select>
 						</div>
 

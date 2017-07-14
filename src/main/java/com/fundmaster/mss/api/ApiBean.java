@@ -433,6 +433,26 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public List<SchemeReceipt> getSponsorReceipts(String sponsorId, int start, int count) {
+        Constants.RECORD_COUNT = 0;
+        JSONObject response;
+        try {
+            response = URLGet(APICall.SCHEME_GET_SPONSOR_RECEIPTS + sponsorId);
+            if(response.get(Fields.SUCCESS).equals(true))
+            {
+                return this.schemeReceiptsFromJSON(response);
+            }
+            else
+            {
+                return null;
+            }
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public List<AgentCommission> getAgentCommissions(String agentId, int start, int count) {
         Constants.RECORD_COUNT = 0;
         JSONObject response;
@@ -483,16 +503,12 @@ public class ApiBean implements ApiEJB {
             response = URLGet(APICall.GET_EXITS_BENEFITS +  memberNumber +"/"+schemeId);
             jLogger.i("Response is: " + response);
 
-            jLogger.i("Hapa ndio inakwama... ");
-
             if(response.get(Fields.SUCCESS).equals(true))
             {
-                jLogger.i(">>>>>>>>>> We are here <<<<<<<<<<");
                 return this.memberClaimsFromJSON(response);
             }
             else
             {
-                jLogger.i(">>>>>>>>>> Else We are here <<<<<<<<<<");
                 return null;
             }
         } catch (JSONException je) {
@@ -663,9 +679,10 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public boolean sendEmail(String recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url) {
+    public boolean sendEmail(List<String> recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url) {
         JSONObject response;
         JSONObject params = new JSONObject();
+        jLogger.i("Recipients: " + recipients.toArray().toString());
         try {
             params.put(Fields.NOTIFICATION_PLATFORM, Constants.EMAIL)
                     .put(Fields.RECIPIENTS, recipients)
@@ -1076,13 +1093,29 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public JSONObject getFundValueAsAt(String date, String periodType, String schemeID, String profileID) {
+    public JSONObject getFundValueAsAt(String date, String periodType, String schemeID, String sponsorID, String profileID) {
+
+        profileID = "0";
+        sponsorID = "0";
+
+        JSONObject response;
+        try {
+            response =  URLGet(APICall.SCHEME_GET_FUND_VALUE_AS_AT + date + "/" + periodType + "/" + schemeID+"/"+ sponsorID+"/"+profileID);
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public JSONObject getSponsorFundValue(String date, String periodType, String schemeID, String sponsorID, String profileID) {
 
         profileID = "0";
 
         JSONObject response;
         try {
-            response =  URLGet(APICall.SCHEME_GET_FUND_VALUE_AS_AT + date + "/" + periodType + "/" + schemeID+"/"+profileID);
+            response =  URLGet(APICall.SCHEME_GET_FUND_VALUE_AS_AT + date + "/" + periodType + "/" + schemeID+"/"+ sponsorID+"/"+profileID);
             return response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());

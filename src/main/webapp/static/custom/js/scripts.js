@@ -324,6 +324,16 @@ $(document).ready(function(){
 
 	});
 
+	$('#pending-contribution-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#pending-contribution-li').addClass('active');
+
+		switch_page('PENDING_CONTRIBUTION');
+
+	});
+
 	
 	$('#media-main-li').click(function(){
 		
@@ -556,6 +566,15 @@ $(document).ready(function(){
 		$('#benefits-projection-grid-li').addClass('active');
 
 		m_switch("BP_GRID");
+	});
+
+	$('#annual-contributions-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#annual-contributions-li').addClass('active');
+
+		m_switch("AC");
 	});
 
 	$('#media-files-li').click(function(){

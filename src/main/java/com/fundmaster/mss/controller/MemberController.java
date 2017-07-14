@@ -20,10 +20,8 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
+
 @WebServlet(name = "MemberController", urlPatterns = {"/member"})
 public class MemberController extends BaseServlet implements Serializable {
     /**
@@ -478,9 +476,12 @@ public class MemberController extends BaseServlet implements Serializable {
         try {
 			Emails emails = emailsBeanI.find();
 
+			List<String> recipients = new ArrayList<>();
+			recipients.add(m.getEmailAddress());
+
 			jLogger.i("Member email is: " + m.getEmailAddress());
 
-            boolean status = apiEJB.sendEmail(m.getEmailAddress() ,emails.getDefaultEmail(), null,"Change Password Request", "Dear " + u.getUsername() + ", " +
+            boolean status = apiEJB.sendEmail(recipients ,emails.getDefaultEmail(), null,"Change Password Request", "Dear " + u.getUsername() + ", " +
                     "You recently requested to change your password. " +
                     "Here is your security code:" +
                     "" + securityCode +

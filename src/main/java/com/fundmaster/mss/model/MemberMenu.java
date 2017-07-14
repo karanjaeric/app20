@@ -46,6 +46,9 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     @Column(name="benefitProjectionGrid", nullable=false)
     private boolean benefitProjectionGrid;
 
+    @Column(name="annualContributionStatement", nullable=false)
+    private boolean annualContributionStatement;
+
     @Column(name="media", nullable=false)
     private boolean media;
 
@@ -138,6 +141,14 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.benefitProjectionGrid = benefitProjectionGrid;
     }
 
+    public boolean isAnnualContributionStatement() {
+        return annualContributionStatement;
+    }
+
+    public void setAnnualContributionStatement(boolean annualContributionStatement) {
+        this.annualContributionStatement = annualContributionStatement;
+    }
+
     public boolean isMedia() {
         return media;
     }
@@ -147,7 +158,8 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     }
 
     public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
-                      boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection, boolean benefitProjectionGrid, boolean media) {
+                      boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection, boolean benefitProjectionGrid, boolean media,
+                      boolean annualContributionStatement) {
         super();
         this.id = id;
         this.contributionHistoryReport = contributionHistoryReport;
@@ -160,6 +172,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.whatIfAnalysis = whatIfAnalysis;
         this.benefitsProjection = benefitsProjection;
         this.benefitProjectionGrid = benefitProjectionGrid;
+        this.annualContributionStatement = annualContributionStatement;
         this.media = media;
     }
 

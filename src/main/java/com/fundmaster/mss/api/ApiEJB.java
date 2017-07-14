@@ -26,7 +26,8 @@ public interface ApiEJB {
     JSONObject getMemberAverageInterest(String memberID);
     JSONObject getSchemeCurrency(String schemeID);
     JSONObject getSchemeMode(String schemeID);
-    JSONObject getFundValueAsAt(String date,String periodType, String schemeID,String profileID);
+    JSONObject getFundValueAsAt(String date,String periodType, String schemeID, String sponsorID, String profileID);
+    JSONObject getSponsorFundValue(String date,String periodType, String schemeID, String sponsorID, String profileID);
     JSONObject getAccountingPeriod(String date, String schemeID);
     JSONObject getAllAccountingPeriods(String schemeID);
     JSONObject getAllSchemeSponsors(String schemeID);
@@ -46,7 +47,7 @@ public interface ApiEJB {
     List<BenefitPayment> searchPayments(String schemeID, String from, String to, int start, int count);
     List<XiMember> due4Retirement(String schemeID);
     JSONObject searchSchemes(String search);
-    boolean sendEmail(String recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url);
+    boolean sendEmail(List<String> recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url);
     JSONObject getAgentCommission(String agentID);
     JSONObject getExitsInYear(String schemeID);
     JSONObject getReasonsForExit();
@@ -59,6 +60,7 @@ public interface ApiEJB {
     List<XiMember> getMemberListing(String profileID, String profile, String schemeID, int start, int size);
     JSONObject listMembers(String schemeID, String profileID);
     List<SchemeReceipt> getSchemeReceipts(String schemeID, int start, int count);
+    List<SchemeReceipt> getSponsorReceipts(String sponsorId, int start, int count);
     List<AgentCommission> getAgentCommissions(String agentId, int start, int count);
     List<AgentClient> getAgentClients(String agentId, int start, int count);
     List<MemberClaims>getMemberClaims(String memberNumber, long schemeId);

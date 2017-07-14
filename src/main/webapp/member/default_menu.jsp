@@ -73,6 +73,12 @@
                     class="fa fa-chevron-right"></i> BENEFITS PROJECTION (GRID)</a></li>
         </c:if>
 
+        <c:if test="${memberMenu.annualContributionStatement == 'TRUE'}">
+            <li id="annual-contributions-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-list-alt"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> ANNUAL CONTRIBUTION STATEMENT</a></li>
+        </c:if>
+
         <c:if test="${memberMenu.whatIfAnalysis == 'TRUE'}">
         <li id="what-if-analysis-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-equalizer"></i>&nbsp;<i

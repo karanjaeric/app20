@@ -5,6 +5,7 @@
 			<h1 class="heading">${ menu.whatIfAnalysisName }</h1>
 				<fieldset>
 					<legend>Calculation Parameters</legend>
+					<input type="hidden" name="projectedROR" id="projectedROR" value="${ settings.projectedROR }" />
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="openingBalance" class="control-label">Email</label> <input
@@ -88,7 +89,7 @@
 		<h3>PROJECTED RESULTS</h3>
 		
 		<table class="table table-responsive table-striped results hide">
-			<tr><td class="right">PROJECTED ROR:</td><td class="left" id="projectedROR">0.00</td><td class="right">PROJECTED CONTRIBUTIONS:</td><td class="left" id="projectedContrs">0.00</td><td class="right">PROJECTED ANNUAL CONTRIBUTIONS:</td><td class="left" id="projectedMonthlyContrs">0.00</td></tr>
+			<tr><td class="right">PROJECTED ROR:</td><td class="left" id="ror">${ settings.projectedROR }</td><td class="right">PROJECTED CONTRIBUTIONS:</td><td class="left" id="projectedContrs">0.00</td><td class="right">PROJECTED ANNUAL CONTRIBUTIONS:</td><td class="left" id="projectedMonthlyContrs">0.00</td></tr>
 		</table>
 </div>
 	<c:if test="${ showScript }">
@@ -225,12 +226,13 @@
 										stop_wait();
 										if (json.success) {
 
+											console.log("ROR from settings: " + $('#projectedROR').val());
 											console.log(json)
 
 											json = $.parseJSON(json.data);
 
+
 											$('.results').removeClass('hide');
-											$('#projectedROR').html(format_no(json.projectedROR));
 											$('#projectedContrs').html(format_no(json.projectedContrs));
 											$('#projectedMonthlyContrs').html(format_no(json.projectedMonthlyContrs));
 										} else {
