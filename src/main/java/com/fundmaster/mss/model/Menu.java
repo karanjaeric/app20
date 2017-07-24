@@ -1,13 +1,7 @@
 package com.fundmaster.mss.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_menus")
@@ -39,6 +33,10 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	
 	@Column(name="contactUsActive", nullable=false)
 	private boolean contactUsActive;
+
+	@Column(name="faqActive", nullable=false)
+	private boolean faqActive;
+
 	
 	@Column(name="annuityQuotationName", nullable=false)
 	private String annuityQuotationName;
@@ -57,7 +55,27 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	
 	@Column(name="contactUsName", nullable=false)
 	private String contactUsName;
-	
+
+	@Column(name="faqName", nullable=false)
+	private String faqName ;
+
+
+	public boolean isFaqActive() {
+		return faqActive;
+	}
+
+	public void setFaqActive(boolean faqActive) {
+		this.faqActive = faqActive;
+	}
+
+	public String getFaqName() {
+		return faqName;
+	}
+
+	public void setFaqName(String faqName) {
+		this.faqName = faqName;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -144,9 +162,9 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	}
 	public Menu(Long id, boolean annuityQuotationActive, boolean potentialMemberActive,
 			boolean potentialSponsorActive, boolean interestRatesActive, boolean whatIfAnalysisActive,
-			boolean contactUsActive, String annuityQuotationName, String potentialMemberName,
+			boolean contactUsActive, boolean faqActive, String annuityQuotationName, String potentialMemberName,
 			String potentialSponsorName, String interestRatesName, String whatIfAnalysisName,
-			String contactUsName) {
+			String contactUsName, String faqName) {
 		super();
 		this.id = id;
 		this.annuityQuotationActive = annuityQuotationActive;
@@ -161,6 +179,8 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 		this.interestRatesName = interestRatesName;
 		this.whatIfAnalysisName = whatIfAnalysisName;
 		this.contactUsName = contactUsName;
+		this.faqActive = faqActive;
+		this.faqName = faqName;
 	}
 	public Menu() {
 		super();

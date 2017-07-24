@@ -211,6 +211,11 @@ body {
 								<li><a
 									href="<%=request.getContextPath()%>/contact-us">${ menu.contactUsName }</a></li>
 								</c:if>
+
+								<c:if test="${menu.faqActive == 'TRUE'}">
+									<li><a
+											href="<%=request.getContextPath()%>/faq">${ menu.faqName }</a></li>
+								</c:if>
 							</ul>
 						</div>
 						<div class="col-md-3 calls-to-action hidden-sm hidden-xs">

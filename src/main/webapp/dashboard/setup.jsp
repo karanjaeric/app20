@@ -24,6 +24,7 @@
 			<tr><td>INTEREST RATES</td><td>${ menu.interestRatesName }</td><td>${ menu.interestRatesActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>WHAT IF ANALYSIS</td><td>${ menu.whatIfAnalysisName }</td><td>${ menu.whatIfAnalysisActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>CONTACT US</td><td>${ menu.contactUsName }</td><td>${ menu.contactUsActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
+			<tr><td>FAQ</td><td>${ menu.faqName }</td><td>${ menu.faqActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 		</table>
 	</div>
 </div>

@@ -1,4 +1,5 @@
 package com.fundmaster.mss.controller;
+
 import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
@@ -21,11 +22,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 @WebServlet(name = "Admin", urlPatterns = {"/admin"})
 @MultipartConfig
 public class Admin extends BaseServlet implements Serializable {
@@ -1059,6 +1056,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean interestRatesActive = this.get(request, "interestRatesActive").equalsIgnoreCase("true");
         boolean whatIfAnalysisActive = this.get(request, "whatIfAnalysisActive").equalsIgnoreCase("true");
         boolean contactUsActive = this.get(request, "contactUsActive").equalsIgnoreCase("true");
+        boolean faqActive = this.get(request, "faqActive").equalsIgnoreCase("true");
         Menu menu = menuBeanI.find();
         menu.setAnnuityQuotationActive(annuityQuotationActive);
         menu.setPotentialMemberActive(potentialMemberActive);
@@ -1066,12 +1064,14 @@ public class Admin extends BaseServlet implements Serializable {
         menu.setInterestRatesActive(interestRatesActive);
         menu.setWhatIfAnalysisActive(whatIfAnalysisActive);
         menu.setContactUsActive(contactUsActive);
+        menu.setFaqActive(faqActive);
         menu.setAnnuityQuotationName(this.get(request, "annuityQuotationName"));
         menu.setPotentialMemberName(this.get(request, "potentialMemberName"));
         menu.setPotentialSponsorName(this.get(request, "potentialSponsorName"));
         menu.setInterestRatesName(this.get(request, "interestRatesName"));
         menu.setWhatIfAnalysisName(this.get(request, "whatIfAnalysisName"));
         menu.setContactUsName(this.get(request, "contactUsName"));
+        menu.setFaqName(this.get(request, "faqName"));
         if (menuBeanI.edit(menu) != null) {
             audit(session, "Updated portal menu configuration settings");
             this.respond(response, true, "Portal menu configurations successfully saved", null);
