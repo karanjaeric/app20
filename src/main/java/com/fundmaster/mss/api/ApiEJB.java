@@ -44,6 +44,7 @@ public interface ApiEJB {
     List<Beneficiary> getBeneficiariesList(String memberID);
     JSONObject getNewMembersInYear(String schemeID,String profileID);
     List<SchemeReceipt> searchReceipts(String schemeID, String from, String to, int start, int count);
+    JSONObject getReceipts(String schemeID, String from, String to, int start, int count);
     List<BenefitPayment> searchPayments(String schemeID, String from, String to, int start, int count);
     List<XiMember> due4Retirement(String schemeID);
     JSONObject searchSchemes(String search);

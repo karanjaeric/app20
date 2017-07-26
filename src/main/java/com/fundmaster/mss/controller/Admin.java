@@ -55,6 +55,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String MOST_BY_MANAGER = "MOST_BY_MANAGER";
     private static final String MOST_BY_MEMBER = "MOST_BY_MEMBER";
     private static final String USER_TOGGLE = "USER_TOGGLE";
+    public static final String RECEIPT = "RECEIPT";
     private static final String NEW = "NEW";
     private static final String AGENT_COMMISSION = "AGENT_COMMISSION";
     private static final String EXITS = "EXITS";
@@ -389,6 +390,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case USER_TOGGLE:
                 toggleUserStatus(request, response, session);
+                break;
+            case RECEIPT:
+                showReceipts(request, response, session);
                 break;
             case NEW:
                 getNewMembersInYear(request, response);
@@ -1484,6 +1488,44 @@ public class Admin extends BaseServlet implements Serializable {
         } else
             this.respond(response, false, "We are sorry, the user status could not be changed", null);
     }
+
+
+    private void showReceipts(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+     // List<SchemeReceipt> receipts =new ArrayList<>();
+
+        String date_from_string = this.get(request, "dateFrom");
+        jLogger.i("Date from string: " + date_from_string);
+
+        String date_to_string = this.get(request, "dateTo");
+        jLogger.i("Date to string: " + date_to_string);
+
+        Date date_from =null;
+        Date date_to = null ;
+
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+
+        try {
+            date_from = format.parse(date_from_string);
+            date_to= format.parse(date_to_string);
+        } catch (ParseException pe) {
+
+            pe.printStackTrace();
+        }
+
+        DateFormat format_ = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+
+        if (date_from != null && date_to != null) {
+         //receipts = apiEJB.searchReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), 0, 0);
+
+          this.respond(response, true, "", apiEJB.getReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), 0, 0));
+         }
+
+
+//        request.setAttribute("receipts", receipts);
+//       logActivity("SCHEME RECEIPTS", "Viewed scheme receipts for scheme #" + this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+//       this.audit(session, "Viewed scheme receipts for scheme #" + this.getSessKey(request, Constants.SCHEME_ID));
+    }
+
     private void getMostAccessedByManagers(HttpServletResponse response) {
 
         List<PieObject> poList = activityLogBeanI.mostAccessedByManagers();
