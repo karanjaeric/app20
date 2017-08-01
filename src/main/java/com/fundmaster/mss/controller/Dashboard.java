@@ -422,6 +422,8 @@ public class Dashboard extends BaseServlet implements Serializable {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String schemeId = this.getSessKey(request, Constants.SCHEME_ID);
+        jLogger.i("Scheme ID: " + schemeId);
         String sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
         jLogger.i("Sponsor ID: " + sponsorId);
         request.setAttribute("sponsorId", sponsorId);

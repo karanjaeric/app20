@@ -189,15 +189,19 @@ public class Admin extends BaseServlet implements Serializable {
 
                         try {
                             schemes = apiEJB.getSchemes(0, 10000);
+
+
                         } catch (Exception e) {
-                            schemes = null;
+                             schemes = null;
                             e.printStackTrace();
                         }
+
 
                     }
                     else {
                         schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER),
                                 this.getSessKey(request, Constants.U_PROFILE));
+
                     }
 
                     request.setAttribute("schemes", schemes);
@@ -222,7 +226,7 @@ public class Admin extends BaseServlet implements Serializable {
                             session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
                             session.setAttribute(Constants.SCHEME_ID, schemes.get(0).getId().toString());
                             session.setAttribute(Constants.SCHEME_NAME, schemes.get(0).getName());
-                            request.setAttribute("scheme_id", schemes.get(0).getId().toString());
+                            request.setAttribute("scheme_id", schemes.get(0).getId().toString());  //schemeID
                         } else {
                             jLogger.i("Session Scheme Id is not null, it is: " + this.getSessKey(request, Constants.SCHEME_ID));
                             for (Scheme scheme : schemes) {

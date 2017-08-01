@@ -61,9 +61,12 @@
                         }
                     });
 
+                    var schemeId = $('#scheme_id').val();
+                    console.log(schemeId);
+
                     var url =
-                            $('#reportPath').val() +"members/Corporate Statement.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FCorporate%20Statement.xdo&_xmode=3&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
-                            + $('#scheme_id').val() + '&_paramssponsorId=' + $('#sponsorId').val() +"&_xt=Corporate%20Statement&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+                            $('#reportPath').val() +"members/Corporate Statement.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FCorporate%20Statement.xdo&_xmode=3&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsschemeId="
+                            + schemeId + "&_paramssponsorId=" + $('#sponsorId').val() +"&_xt=Corporate%20Statement&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
 
                     $("#ml-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
