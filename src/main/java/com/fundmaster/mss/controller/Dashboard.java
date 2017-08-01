@@ -424,6 +424,8 @@ public class Dashboard extends BaseServlet implements Serializable {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String schemeId = this.getSessKey(request, Constants.SCHEME_ID);
+        jLogger.i("Scheme ID: " + schemeId);
         String sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
         jLogger.i("Sponsor ID: " + sponsorId);
         request.setAttribute("sponsorId", sponsorId);
@@ -1194,7 +1196,9 @@ SocialBeanI socialBeanI;
         int page;
         int batch;
         Date date_from = getDateFromString(request, "dateFrom", "from");
+        jLogger.i("Date from: " + date_from);
         Date date_to = getDateFromString(request, "dateTo", "to");
+        jLogger.i("Date to: " + date_to);
         batch = getIntegerFromString(this.get(request, "batch"));
         page = getIntegerFromString(this.get(request, "page"));
         int count = Constants.RECORD_COUNT;
@@ -1213,7 +1217,6 @@ SocialBeanI socialBeanI;
         //if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
 
         if (date_from != null && date_to != null) {
-
             receipts = apiEJB.searchReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), start, PER_PAGE);
         }
         else {

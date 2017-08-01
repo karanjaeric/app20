@@ -779,6 +779,23 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public JSONObject getReceipts(String schemeID, String from, String to, int start, int count) {
+        JSONObject response;
+        try {
+
+            response = URLGet(APICall.SCHEME_GET_SCHEME_RECEIPTS_BETWEEN_DATES + schemeID + "/" + from + "/" + to);
+
+
+            jLogger.i("Receipts json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            jLogger.i("===================================== found receipts ===================================");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public JSONObject getNewMembersInYear(String schemeID, String profileID) {
         JSONObject response;
         try {

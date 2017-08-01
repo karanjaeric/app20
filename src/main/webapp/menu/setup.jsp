@@ -479,6 +479,19 @@
 							 <input type="checkbox" name="contactUsActive" id="contactUsActive" ${menu.contactUsActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
+							<tr>
+								<td>
+									<label class="control-label">FAQ </label>
+								</td>
+								<td>
+									<div class="form-group">
+										<input type="text" class="form-control" name="faqName" id="faqName" placeholder="FAQ" value="${ menu.faqName }" />
+									</div>
+								</td>
+								<td>
+									<input type="checkbox" name="faqActive" id="faqActive" ${menu.faqActive == 'TRUE' ? 'checked' : ''}/>
+								</td>
+							</tr>
 						</table>
 					</div>
 					<div class="modal-footer">
@@ -1105,7 +1118,7 @@
 		                    }
 		                }
 		            },
-		            contactUsName: {
+                       contactUsName: {
 		                validators: {
 		                    notEmpty: {
 		                        message: 'A title for the Contact Us menu is required'
@@ -1133,11 +1146,15 @@
         	        	interestRatesName: $('#interestRatesName').val(),
         	        	whatIfAnalysisName: $('#whatIfAnalysisName').val(),
         	        	contactUsName: $('#contactUsName').val(),
+                        faqName: $('#faqName').val(),
         	        	annuityQuotationActive: $('#annuityQuotationActive').prop('checked'),
         	        	potentialMemberActive: $('#potentialMemberActive').prop('checked'),
         	        	potentialSponsorActive: $('#potentialSponsorActive').prop('checked'),
         	        	interestRatesActive: $('#interestRatesActive').prop('checked'),
-        	        	whatIfAnalysisActive: $('#whatIfAnalysisActive').prop('checked'), contactUsActive: $('#contactUsActive').prop('checked'), ACTION: 'MENU'},
+        	        	whatIfAnalysisActive: $('#whatIfAnalysisActive').prop('checked'),
+						contactUsActive: $('#contactUsActive').prop('checked'),
+                        faqActive: $('#faqActive').prop('checked'),
+                        ACTION: 'MENU'},
         	        dataType: 'json',
         	        success: function(json) {
         	            $('#' + btn).val('Done');

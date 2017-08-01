@@ -1,4 +1,5 @@
 package com.fundmaster.mss.controller;
+
 import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.Constants;
@@ -21,11 +22,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 @WebServlet(name = "Admin", urlPatterns = {"/admin"})
 @MultipartConfig
 public class Admin extends BaseServlet implements Serializable {
@@ -58,6 +55,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String MOST_BY_MANAGER = "MOST_BY_MANAGER";
     private static final String MOST_BY_MEMBER = "MOST_BY_MEMBER";
     private static final String USER_TOGGLE = "USER_TOGGLE";
+    public static final String RECEIPT = "RECEIPT";
     private static final String NEW = "NEW";
     private static final String AGENT_COMMISSION = "AGENT_COMMISSION";
     private static final String EXITS = "EXITS";
@@ -191,15 +189,19 @@ public class Admin extends BaseServlet implements Serializable {
 
                         try {
                             schemes = apiEJB.getSchemes(0, 10000);
+
+
                         } catch (Exception e) {
-                            schemes = null;
+                             schemes = null;
                             e.printStackTrace();
                         }
+
 
                     }
                     else {
                         schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER),
                                 this.getSessKey(request, Constants.U_PROFILE));
+
                     }
 
                     request.setAttribute("schemes", schemes);
@@ -224,7 +226,7 @@ public class Admin extends BaseServlet implements Serializable {
                             session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
                             session.setAttribute(Constants.SCHEME_ID, schemes.get(0).getId().toString());
                             session.setAttribute(Constants.SCHEME_NAME, schemes.get(0).getName());
-                            request.setAttribute("scheme_id", schemes.get(0).getId().toString());
+                            request.setAttribute("scheme_id", schemes.get(0).getId().toString());  //schemeID
                         } else {
                             jLogger.i("Session Scheme Id is not null, it is: " + this.getSessKey(request, Constants.SCHEME_ID));
                             for (Scheme scheme : schemes) {
@@ -392,6 +394,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case USER_TOGGLE:
                 toggleUserStatus(request, response, session);
+                break;
+            case RECEIPT:
+                showReceipts(request, response, session);
                 break;
             case NEW:
                 getNewMembersInYear(request, response);
@@ -1059,6 +1064,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean interestRatesActive = this.get(request, "interestRatesActive").equalsIgnoreCase("true");
         boolean whatIfAnalysisActive = this.get(request, "whatIfAnalysisActive").equalsIgnoreCase("true");
         boolean contactUsActive = this.get(request, "contactUsActive").equalsIgnoreCase("true");
+        boolean faqActive = this.get(request, "faqActive").equalsIgnoreCase("true");
         Menu menu = menuBeanI.find();
         menu.setAnnuityQuotationActive(annuityQuotationActive);
         menu.setPotentialMemberActive(potentialMemberActive);
@@ -1066,12 +1072,14 @@ public class Admin extends BaseServlet implements Serializable {
         menu.setInterestRatesActive(interestRatesActive);
         menu.setWhatIfAnalysisActive(whatIfAnalysisActive);
         menu.setContactUsActive(contactUsActive);
+        menu.setFaqActive(faqActive);
         menu.setAnnuityQuotationName(this.get(request, "annuityQuotationName"));
         menu.setPotentialMemberName(this.get(request, "potentialMemberName"));
         menu.setPotentialSponsorName(this.get(request, "potentialSponsorName"));
         menu.setInterestRatesName(this.get(request, "interestRatesName"));
         menu.setWhatIfAnalysisName(this.get(request, "whatIfAnalysisName"));
         menu.setContactUsName(this.get(request, "contactUsName"));
+        menu.setFaqName(this.get(request, "faqName"));
         if (menuBeanI.edit(menu) != null) {
             audit(session, "Updated portal menu configuration settings");
             this.respond(response, true, "Portal menu configurations successfully saved", null);
@@ -1484,6 +1492,44 @@ public class Admin extends BaseServlet implements Serializable {
         } else
             this.respond(response, false, "We are sorry, the user status could not be changed", null);
     }
+
+
+    private void showReceipts(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+     // List<SchemeReceipt> receipts =new ArrayList<>();
+
+        String date_from_string = this.get(request, "dateFrom");
+        jLogger.i("Date from string: " + date_from_string);
+
+        String date_to_string = this.get(request, "dateTo");
+        jLogger.i("Date to string: " + date_to_string);
+
+        Date date_from =null;
+        Date date_to = null ;
+
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+
+        try {
+            date_from = format.parse(date_from_string);
+            date_to= format.parse(date_to_string);
+        } catch (ParseException pe) {
+
+            pe.printStackTrace();
+        }
+
+        DateFormat format_ = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+
+        if (date_from != null && date_to != null) {
+         //receipts = apiEJB.searchReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), 0, 0);
+
+          this.respond(response, true, "", apiEJB.getReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), 0, 0));
+         }
+
+
+//        request.setAttribute("receipts", receipts);
+//       logActivity("SCHEME RECEIPTS", "Viewed scheme receipts for scheme #" + this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+//       this.audit(session, "Viewed scheme receipts for scheme #" + this.getSessKey(request, Constants.SCHEME_ID));
+    }
+
     private void getMostAccessedByManagers(HttpServletResponse response) {
 
         List<PieObject> poList = activityLogBeanI.mostAccessedByManagers();
