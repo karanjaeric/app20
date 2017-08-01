@@ -35,12 +35,12 @@
 					var orientation = null;
 					
 
-					$.ajax({
+					/*$.ajax({
 						url:  res + '/reports/general?_eventName=base-url&schemeId=' + $('#scheme_id').val(),
 						data: '',
 						type:'get',
 						async: false,
-						/*dataType: 'json',*/
+						/*dataType: 'json',
 						success:function(json){
 							console.log(json);
 							var json_string =  json;
@@ -52,11 +52,15 @@
 							orientation = result.orientation;
 							console.log(orientation);
 						}
-					});
+					});*/
 
+					console.log("============= Fetching report ===================");
+					console.log("BI Path: " + $('#reportPath').val());
 	    			var url = $('#reportPath').val() + 'members/member balances (Combined - per member).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2Fmember%20balances%20(Combined%20-%20per%20member).xdo&_xmode=3&_paramsmember_id=' + $('#member_id').val() +
 							'&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsap_id=' + json.accountingPeriodId + '&_xt=Member%20Balances%20(Combined)&_xf=analyze&_xana=view&_xautorun=false&_paramsadmin=3347&id='
 							+ $("#username").val() + '&passwd=' + $("#password").val() + '&_paramsblankImage=' + alternativeUrl +'&_paramsalternativeUrl=' + alternativeUrl + '&_paramsorientation=' + orientation;
+					console.log("BI After: " + url);
+					console.log("============= Done Fetching report ===================");
 	   			 	$("#bh-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');	   	            
    	            }
 	        }

@@ -38,6 +38,7 @@
     <input type="hidden" id="username" value="${ settings.xiReportUsername }" />
     <input type="hidden" id="password" value="${ settings.xiReportPassword }" />
     <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
+    <input type="hidden" id="sponsor_id" value="${ sponsor_id }"/>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -99,9 +100,13 @@
             var year = ($('#year').val());
             console.log('The year is >>>>>>>>>> ' + year);
 
+            console.log("Sponsor Id: " + $('#sponsor_id').val());
+
+            //http://192.168.1.184:7001/xmlpserver/~weblogic/fundmaster/reports/members/withdrawals(sponsor specific).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2Fwithdrawals(sponsor%20specific).xdo&_xmode=3&_paramsalternativeUrl=&_paramsorientation=RIGHT&_paramsBASE=&_paramsblankImage=&_paramsuserid=1&_paramssponsor_id=47086&_paramsscheme_id=170&_paramsyear=2016&_paramsquarter=3&_xt=withdrawals&_xf=analyze&_xana=view
+
             var url =
-                    $('#reportPath').val() +"members/withdrawals.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2Fwithdrawals.xdo&_xmode=3&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation + "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
-                    + $('#scheme_id').val() + "&_paramsquarter=" + quarter + "&_paramsyear=" + year + "&_xt=withdrawals&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+                    $('#reportPath').val() +"members/withdrawals(sponsor specific).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2Fwithdrawals(sponsor%20specific).xdo&_xmode=3&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation + "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
+                    + $('#scheme_id').val() + "&_paramssponsor_id=" + $('#sponsor_id').val() + "&_paramsquarter=" + quarter + "&_paramsyear=" + year + "&_xt=withdrawals&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
             $("#ws-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 

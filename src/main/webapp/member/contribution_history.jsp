@@ -34,6 +34,8 @@
 				<div class="col-md-12" id="ch-results">
 					
 				</div>
+
+	</div>
 		
 <script type="text/javascript">
 
@@ -95,12 +97,12 @@
 						var alternativeUrl = null;
 						var orientation = null;
 
-						$.ajax({
+						/*$.ajax({
 							url:  res + '/reports/general?_eventName=base-url&schemeId=' + $('#scheme_id').val(),
 							data: '',
 							type:'get',
 							async: false,
-							/*dataType: 'json',*/
+							/*dataType: 'json',
 							success:function(json){
 								console.log(json);
 								var json_string =  json;
@@ -112,7 +114,7 @@
 								orientation = result.orientation;
 								console.log(orientation);
 							}
-						});
+						});*/
 
 		                var fromDate = (document.getElementById('dateFrom').value).split("-").join("/");
 		                var toDate = (document.getElementById('dateTo').value).split("-").join("/");

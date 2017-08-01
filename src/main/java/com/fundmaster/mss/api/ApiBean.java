@@ -495,12 +495,12 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public List<MemberClaims> getMemberClaims(String memberNumber, long schemeId) {
+    public List<MemberClaims> getMemberClaims(String memberId, long schemeId) {
         Constants.RECORD_COUNT = 0;
         JSONObject response;
         try {
 
-            response = URLGet(APICall.GET_EXITS_BENEFITS +  memberNumber +"/"+schemeId);
+            response = URLGet(APICall.GET_EXITS_BENEFITS +  memberId +"/"+schemeId);
             jLogger.i("Response is: " + response);
 
             if(response.get(Fields.SUCCESS).equals(true))

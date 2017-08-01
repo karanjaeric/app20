@@ -305,6 +305,7 @@ public class Dashboard extends BaseServlet implements Serializable {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
         logActivity("WITHDRAWAL STATEMENT", "Viewed withdrawal statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed withdrawal statement");
         request.getRequestDispatcher(REPO_FOLDER + "/withdrawal_statements.jsp").forward(request, response);
@@ -317,6 +318,7 @@ public class Dashboard extends BaseServlet implements Serializable {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
         jLogger.i("The schemeId passed: >>>>>>>> " + this.getSessKey(request, Constants.SCHEME_ID));
         logActivity("WITHDRAWAL SETTLEMENTS", "Viewed withdrawal settlements", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed withdrawal settlements");
@@ -528,7 +530,7 @@ MediaBeanI mediaBeanI;
         long schemeId = Long.parseLong(this.getSessKey(request, Constants.SCHEME_ID)) ;
         jLogger.i("Scheme Id found is " + schemeId);
 
-        List<MemberClaims> memberClaims = apiEJB.getMemberClaims(memberNumber, schemeId);
+        List<MemberClaims> memberClaims = apiEJB.getMemberClaims(member_id, schemeId);
         request.setAttribute("claims", memberClaims);
 
         logActivity("MEMBER CLAIMS", "Viewed member claims", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
