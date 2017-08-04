@@ -101,6 +101,8 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String BANNER = "BANNER";
     private static final String MEDIA = "MEDIA";
     private static final String EMAIL = "EMAIL";
+    private static final String REPORTS = "REPORTS";
+
     private final JLogger jLogger = new JLogger(this.getClass());
     @EJB
     MediaBeanI mediaBeanI;

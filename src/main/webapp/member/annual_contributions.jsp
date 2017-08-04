@@ -31,6 +31,10 @@
     <input type="hidden" id="password" value="${ settings.xiReportPassword }" />
     <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
     <input type="hidden" id="member_id" value="${ member_id }"/>
+
+    <input type="hidden" id="alternativeUrl" value="${ report_details.alternativeUrl }" />
+    <input type="hidden" id="orientation" value="${ report_details.orientation }" />
+
     <p>&nbsp;</p>
     <div class="col-md-12" id="ac-results">
 
@@ -103,27 +107,10 @@
             var res = str.replace("/api/", "");
             console.log(res);
 
-            var alternativeUrl = null;
-            var orientation = null;
-
-            $.ajax({
-                url:  res + '/reports/general?_eventName=base-url&schemeId=' + $('#scheme_id').val(),
-                data: '',
-                type:'get',
-                async: false,
-                /*dataType: 'json',*/
-                success:function(json){
-                    console.log(json);
-                    var json_string =  json;
-                    var result =  $.parseJSON(json_string);
-                    var base_url = result.base_url;
-                    console.log(base_url);
-                    alternativeUrl = result.alternativeUrl;
-                    console.log(alternativeUrl);
-                    orientation = result.orientation;
-                    console.log(orientation);
-                }
-            });
+            var alternativeUrl = $('#alternativeUrl').val();
+            console.log("Alternative: " + alternativeUrl);
+            var orientation = $('#orientation').val();
+            console.log("Orientation: " + orientation);
 
             var accPeriodId = $('#accperiod').val();
             console.log("Accounting period Id: " + accPeriodId);

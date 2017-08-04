@@ -306,6 +306,11 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         logActivity("WITHDRAWAL STATEMENT", "Viewed withdrawal statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed withdrawal statement");
         request.getRequestDispatcher(REPO_FOLDER + "/withdrawal_statements.jsp").forward(request, response);
@@ -319,6 +324,11 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         jLogger.i("The schemeId passed: >>>>>>>> " + this.getSessKey(request, Constants.SCHEME_ID));
         logActivity("WITHDRAWAL SETTLEMENTS", "Viewed withdrawal settlements", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed withdrawal settlements");
@@ -334,6 +344,11 @@ public class Dashboard extends BaseServlet implements Serializable {
 
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         jLogger.i("The sponsor_id passed: " + this.getSessKey(request, Constants.PROFILE_ID));
 
         logActivity("MEMBER MOVEMENT", "Viewed member movement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
@@ -349,6 +364,11 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         logActivity("FUND MOVEMENT", "Viewed fund movement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed fund movement");
         request.getRequestDispatcher(REPO_FOLDER + "/fund_movement.jsp").forward(request, response);
@@ -362,6 +382,11 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         logActivity("PENDING_CONTRIBUTION", "Viewed pending  contributions", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed pending contributions");
         request.getRequestDispatcher(REPO_FOLDER + "/pending_contribution.jsp").forward(request, response);
@@ -375,6 +400,11 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         logActivity("RECEIPT SUMMARY", "Viewed receipt summary", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed receipt summary");
         request.getRequestDispatcher(REPO_FOLDER + "/receipt_summary.jsp").forward(request, response);
@@ -387,6 +417,11 @@ public class Dashboard extends BaseServlet implements Serializable {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         logActivity("ADMIN FEE LISTING", "Viewed admin fee listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed admin fee listing");
         request.getRequestDispatcher(REPO_FOLDER + "/admin_fee_listing.jsp").forward(request, response);
@@ -412,6 +447,10 @@ public class Dashboard extends BaseServlet implements Serializable {
         jLogger.i("Sponsor Id =============== > " + sponsorId);
         request.setAttribute("sponsorId", sponsorId);
 
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         logActivity("MEMBER LISTING", "Viewed member listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member listing");
         request.getRequestDispatcher(REPO_FOLDER + "/member_listing.jsp").forward(request, response);
@@ -429,6 +468,10 @@ public class Dashboard extends BaseServlet implements Serializable {
         String sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
         jLogger.i("Sponsor ID: " + sponsorId);
         request.setAttribute("sponsorId", sponsorId);
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
 
         logActivity("CORPORATE STATEMENT", "Viewed corporate statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed corporate statement");
@@ -451,6 +494,11 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String member_id;
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         member_id = this.get(request, "memberID");
         if (member_id == null)
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
@@ -550,6 +598,11 @@ MediaBeanI mediaBeanI;
         if (member_id == null)
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("member_id", member_id);
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         logActivity("MEMBER BENEFITS PROJECTION", "Viewed member benefits projection", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member benefits projection");
         request.getRequestDispatcher("member/benefits_projection.jsp").forward(request, response);
@@ -565,6 +618,10 @@ MediaBeanI mediaBeanI;
         if (member_id == null)
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("member_id", member_id);
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
 
         logActivity("ANNUAL CONTRIBUTION STATEMENT", "Viewed annual contribution statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed annual contribution statement");
@@ -595,6 +652,11 @@ MediaBeanI mediaBeanI;
         if (member_id == null)
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("member_id", member_id);
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         logActivity("MEMBER STATEMENT OF ACCOUNT", "Viewed member statement of account", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member statement of account");
         request.getRequestDispatcher("member/statement_of_account.jsp").forward(request, response);
@@ -621,6 +683,11 @@ MediaBeanI mediaBeanI;
         if (memberId == null)
             memberId = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("member_id", memberId);
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
         logActivity("MEMBER UNITIZED STATEMENT", "Viewed member unitized statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member unitized statement");
         request.getRequestDispatcher("member/unitized_statement.jsp").forward(request, response);
@@ -632,6 +699,9 @@ MediaBeanI mediaBeanI;
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
         String member_id;
         member_id = this.get(request, "memberID");
         if (member_id == null)
@@ -873,6 +943,9 @@ SocialBeanI socialBeanI;
         jLogger.i(" Are we on the right track 2 ????? ");
         request.setAttribute("beneficiaries", beneficiaries);
 
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
 
         logActivity("PENSION ADVICE", "Viewed pension advice", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed  pension advice");

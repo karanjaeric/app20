@@ -29,6 +29,10 @@
     <input type="hidden" id="password" value="${ settings.xiReportPassword }" />
     <input type="hidden" id="scheme_id" value="${ scheme_id } "/>
     <input type="hidden" id="sponsor_id" value="${ sponsor_id } "/>
+
+    <input type="hidden" id="alternativeUrl" value="${ report_details.alternativeUrl }" />
+    <input type="hidden" id="orientation" value="${ report_details.orientation }" />
+
     <p>&nbsp;</p>
     <div class="col-md-12" id="mv-results">
 
@@ -105,27 +109,10 @@
             var res = str.replace("/api/", "");
             console.log(res);
 
-            var alternativeUrl = null;
-            var orientation = null;
-
-            $.ajax({
-                url:  res + '/reports/general?_eventName=base-url&schemeId=' + $('#scheme_id').val(),
-                data: '',
-                type:'get',
-                async: false,
-                /*dataType: 'json',*/
-                success:function(json){
-                    console.log(json);
-                    var json_string =  json;
-                    var result =  $.parseJSON(json_string);
-                    var base_url = result.base_url;
-                    console.log(base_url);
-                    alternativeUrl = result.alternativeUrl;
-                    console.log(alternativeUrl);
-                    orientation = result.orientation;
-                    console.log(orientation);
-                }
-            });
+            var alternativeUrl = $('#alternativeUrl').val();
+            console.log("Alternative: " + alternativeUrl);
+            var orientation = $('#orientation').val();
+            console.log("Orientation: " + orientation);
 
                 var toDate = $('#accperiod').val();
                 console.log("toDate is: " + toDate);
@@ -140,11 +127,6 @@
                 console.log("This is the Final Year "+ finalYear);
                 var reportPath = $('#reportPath').val();
                 console.log("Report url is: " + reportPath);
-
-            //http://192.168.1.60:7001/xmlpserver/~weblogic/fundmaster/reports/members/Member Movement Report (Sponsor Specific).xdo
-            // ?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report%20(Sponsor%20Specific).xdo
-            // &_xmode=3&_paramsorientation=RIGHT&_paramsblankImage=http%3A%2F%2Flocalhost%3A8080%2FXi%2Freports%2Fblank.
-            // png&_paramsalternativeUrl=http%3A%2F%2Flocalhost%3A8080%2F%2FXi%2Freports%2Flogos%2F9047_RIGHT%20.jpg&_paramsscheme_id=281&_paramssponsor_id=47086&_paramsyear_txn=2014&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_xt=Member%20Movement%20Report&_xf=analyze&_xana=view
 
             var url = reportPath +"members/Member Movement Report (Sponsor Specific).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report%20(Sponsor%20Specific).xdo&_xmode=3&_paramsdateTo=" +
                     "&_paramsyear_txn=" + finalYear+  "&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation + "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="

@@ -453,6 +453,60 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public ReportDetails getReportDetails(String schemeId) {
+        Constants.RECORD_COUNT = 0;
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_REPORT_DETAILS + schemeId);
+
+            if(response.get(Fields.SUCCESS).equals(true))
+            {
+                return this.reportDetailsFromJson(response);
+            }
+            else
+            {
+                return null;
+            }
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+    private ReportDetails reportDetailsFromJson(JSONObject response)
+    {
+        ReportDetails reportDetail = new ReportDetails();
+
+        try {
+
+            JSONArray res = (JSONArray) response.get(Constants.ROWS);
+
+            for(int i = 0; i < res.length(); i ++)
+            {
+                JSONObject detailsResult = res.getJSONObject(i);
+
+                //ReportDetails reportDetail = new ReportDetails();
+
+                reportDetail.setDatabase_url(detailsResult.get(Fields.DB_URL).toString());
+                reportDetail.setDatabase_user(detailsResult.get(Fields.DB_USER).toString());
+                reportDetail.setDatabase_password(detailsResult.get(Fields.DB_PASS).toString());
+                reportDetail.setReportsUser(detailsResult.get(Fields.REPORTS_USER).toString());
+                reportDetail.setReportsPassword(detailsResult.get(Fields.REPORTS_PASSWORD).toString());
+                reportDetail.setOrientation(detailsResult.get(Fields.ORIENTATION).toString());
+
+                reportDetail.setAlternativeUrl((detailsResult.get(Fields.ALTERNATIVE_URL).toString()) == null ? "" : detailsResult.get(Fields.ALTERNATIVE_URL).toString());
+
+                reportDetail.setClientAlias((detailsResult.get(Fields.CLIENT_ALIAS).toString()) == null ? "" : detailsResult.get(Fields.CLIENT_ALIAS).toString());
+
+            }
+            return reportDetail;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception extracting receipts " + je.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public List<AgentCommission> getAgentCommissions(String agentId, int start, int count) {
         Constants.RECORD_COUNT = 0;
         JSONObject response;

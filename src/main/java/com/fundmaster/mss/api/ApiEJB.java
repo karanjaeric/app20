@@ -62,6 +62,7 @@ public interface ApiEJB {
     JSONObject listMembers(String schemeID, String profileID);
     List<SchemeReceipt> getSchemeReceipts(String schemeID, int start, int count);
     List<SchemeReceipt> getSponsorReceipts(String sponsorId, int start, int count);
+    ReportDetails getReportDetails(String schemeId);
     List<AgentCommission> getAgentCommissions(String agentId, int start, int count);
     List<AgentClient> getAgentClients(String agentId, int start, int count);
     List<MemberClaims>getMemberClaims(String memberId, long schemeId);

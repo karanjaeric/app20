@@ -18,6 +18,10 @@
     <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
     <input type="hidden" id="sponsor_name" value="${ memberName }"/>
     <input type="hidden" id="sponsor_id" value="${ sponsorId }"/>
+
+    <input type="hidden" id="alternativeUrl" value="${ report_details.alternativeUrl }" />
+    <input type="hidden" id="orientation" value="${ report_details.orientation }" />
+
     <p>&nbsp;</p>
     <div class="col-md-12" id="ml-results">
 
@@ -32,27 +36,10 @@
 
     $(document).ready(function(){
 
-        var alternativeUrl = null;
-        var orientation = null;
-
-                    $.ajax({
-                        url:  res + '/reports/general?_eventName=base-url&schemeId=' + $('#scheme_id').val(),
-                        data: '',
-                        type:'get',
-                        async: false,
-                        /*dataType: 'json',*/
-                        success:function(json){
-                            console.log(json);
-                            var json_string =  json;
-                            var result =  $.parseJSON(json_string);
-                            var base_url = result.base_url;
-                            console.log(base_url);
-                            alternativeUrl = result.alternativeUrl;
-                            console.log(alternativeUrl);
-                            orientation = result.orientation;
-                            console.log(orientation);
-                        }
-                    });
+        var alternativeUrl = $('#alternativeUrl').val();
+        console.log("Alternative: " + alternativeUrl);
+        var orientation = $('#orientation').val();
+        console.log("Orientation: " + orientation);
 
                     var url =
                             $('#reportPath').val() +"members/Members per Sponsor.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMembers%20per%20Sponsor.xdo&_xmode=3&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramssponsor_name="
