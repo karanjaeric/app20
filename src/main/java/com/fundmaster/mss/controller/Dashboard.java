@@ -1244,6 +1244,7 @@ SocialBeanI socialBeanI;
         String identifier;
         String search;
         String sponsorId = "";
+        String schemeId = "";
         String json = "";
 
         try {
@@ -1272,15 +1273,17 @@ SocialBeanI socialBeanI;
         }
 
         if (identifier != null && profile != null && !Objects.equals(search, "") && sponsorId != null) {
-
+            log("We are Here @ 0 !!!!!!!!");
             members = apiEJB.searchProfilesBySponsor(search, identifier, profile, sponsorId, this.getSessKey(request, Constants.SCHEME_ID));
         }
 
         else if (identifier != null && profile != null && !Objects.equals(search, "")) {
 
             members = apiEJB.searchProfiles(search, identifier, profile, this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
+
         }
         else {
+            log("We are Here!!!!!!!!");
             members = apiEJB.getMemberListing(this.getSessKey(request, Constants.PROFILE_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.SCHEME_ID), 0, 9000);
         }
 
