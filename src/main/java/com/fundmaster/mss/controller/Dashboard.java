@@ -345,6 +345,10 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("sponsor_id", this.getSessKey(request, Constants.PROFILE_ID));
 
+        //request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
+        String profile = this.getSessKey(request, Constants.U_PROFILE);
+        jLogger.i("The User profile: " + profile);
+
         ReportDetails reportDetails;
         reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("report_details", reportDetails);
@@ -353,7 +357,16 @@ public class Dashboard extends BaseServlet implements Serializable {
 
         logActivity("MEMBER MOVEMENT", "Viewed member movement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member movement");
-        request.getRequestDispatcher(REPO_FOLDER + "/member_movement.jsp").forward(request, response);
+
+        if (profile.equalsIgnoreCase("SPONSOR")) {
+            jLogger.i("============ Great, profile is indeed sponsor ====================");
+            request.getRequestDispatcher(REPO_FOLDER + "/sponsor_member_movement.jsp").forward(request, response);
+
+        } else {
+            jLogger.i("============ Great, profile isn't sponsor ====================");
+            request.getRequestDispatcher(REPO_FOLDER + "/member_movement.jsp").forward(request, response);
+        }
+
     }
 
     private void showFundMovement(HttpServletRequest request, HttpServletResponse response, HttpSession session,

@@ -28,6 +28,7 @@
     <input type="hidden" id="username" value="${ settings.xiReportUsername }" />
     <input type="hidden" id="password" value="${ settings.xiReportPassword }" />
     <input type="hidden" id="scheme_id" value="${ scheme_id } "/>
+    <input type="hidden" id="sponsor_id" value="${ sponsor_id } "/>
 
     <input type="hidden" id="alternativeUrl" value="${ report_details.alternativeUrl }" />
     <input type="hidden" id="orientation" value="${ report_details.orientation }" />
@@ -61,7 +62,7 @@
                             if(key == 'rows')
                             {
                                 for ( var i = 0; i < json.rows.length; i++) {
-                                     row = json.rows[i];
+                                    row = json.rows[i];
                                     combo = combo + "<option>" + row['name'] + "</option>";
                                     array = json.rows;
 
@@ -104,33 +105,32 @@
         }).on('success.form.bv', function(e) {
             start_wait();
 
+            var str = $('#xiRootPath').val();
+            var res = str.replace("/api/", "");
+            console.log(res);
 
             var alternativeUrl = $('#alternativeUrl').val();
             console.log("Alternative: " + alternativeUrl);
             var orientation = $('#orientation').val();
             console.log("Orientation: " + orientation);
 
-                var toDate = $('#accperiod').val();
-                console.log("toDate is: " + toDate);
+            var toDate = $('#accperiod').val();
+            console.log("toDate is: " + toDate);
 
-                var ar = toDate.split("-");
-                console.log(ar);
-                var firstArr = ar[1];
-                console.log(firstArr+">>>>>>");
-                var ar2 = firstArr.split(",");
-                console.log(ar2);
-                var finalYear = ar2[ar2.length-1];
-                console.log("This is the Final Year "+ finalYear);
-                var reportPath = $('#reportPath').val();
-                console.log("Report url is: " + reportPath);
+            var ar = toDate.split("-");
+            console.log(ar);
+            var firstArr = ar[1];
+            console.log(firstArr+">>>>>>");
+            var ar2 = firstArr.split(",");
+            console.log(ar2);
+            var finalYear = ar2[ar2.length-1];
+            console.log("This is the Final Year "+ finalYear);
+            var reportPath = $('#reportPath').val();
+            console.log("Report url is: " + reportPath);
 
-            /*
-             http://172.16.1.236:7001/xmlpserver/~weblogic/fundmaster/reports/members/Member Movement Report.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report.xdo&_xmode=3&_paramsalternativeUrl=http%3A%2F%2F172.16.1.112%3A8088%2FXiUg%2Freports%2Flogos%2F170_RIGHT.jpg&_paramsorientation=LEFT&_paramsblankImage=http%3A%2F172.16.1.112%3A8088%2FXiUg%2Freports%2Fblank.png&_paramsscheme_id=170&_paramsyear_txn=2016&_paramsBASE=http%3A%2F%2F172.16.1.112%3A8088%2FXiUg&_xt=Member%20Movement%20Report&_xf=analyze&_xana=view
-             */
-
-            var url = reportPath +"members/Member Movement Report.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report.xdo&_xmode=3&_paramsdateTo=" +
+            var url = reportPath +"members/Member Movement Report (Sponsor Specific).xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMember%20Movement%20Report%20(Sponsor%20Specific).xdo&_xmode=3&_paramsdateTo=" +
                     "&_paramsyear_txn=" + finalYear+  "&_paramsblankImage="  + alternativeUrl + "&_paramsalternativeUrl="  + alternativeUrl + "&_paramsorientation=" + orientation + "&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
-                    + $('#scheme_id').val() + "&_xt=Member%20Movement%20Report&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+                    + $('#scheme_id').val() + "&_paramssponsor_id=" + $('#sponsor_id').val() + "&_xt=Member%20Movement%20Report&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
             $("#mv-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 
