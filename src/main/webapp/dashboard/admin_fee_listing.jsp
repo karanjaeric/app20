@@ -127,9 +127,6 @@
                     success: function(json) {
                         if(json.success)
                         {
-                            var str = $('#xiRootPath').val();
-                            var res = str.replace("/api/", "");
-                            console.log(res);
 
                             var alternativeUrl = $('#alternativeUrl').val();
                             console.log("Alternative: " + alternativeUrl);

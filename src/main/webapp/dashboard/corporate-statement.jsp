@@ -29,9 +29,6 @@
 
 <script type="text/javascript">
 
-    var str = $('#xiRootPath').val();
-    var res = str.replace("/api/", "");
-    console.log(res);
 
     $(document).ready(function(){
 

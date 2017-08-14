@@ -94,9 +94,6 @@
         }).on('success.form.bv', function(e) {
             start_wait();
 
-            var str = $('#xiRootPath').val();
-            var res = str.replace("/api/", "");
-            console.log('Res ya url >>>>>>>>>>>' + res);
 
             var alternativeUrl = $('#alternativeUrl').val();
             console.log("Alternative: " + alternativeUrl);
