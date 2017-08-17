@@ -105,10 +105,6 @@
         }).on('success.form.bv', function(e) {
             start_wait();
 
-            var str = $('#xiRootPath').val();
-            var res = str.replace("/api/", "");
-            console.log(res);
-
             var alternativeUrl = $('#alternativeUrl').val();
             console.log("Alternative: " + alternativeUrl);
             var orientation = $('#orientation').val();

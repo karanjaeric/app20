@@ -1928,7 +1928,7 @@ public class Admin extends BaseServlet implements Serializable {
                         helper.createFolderIfNotExists(scheme_doc_folder);
                     }
                     try {
-                        String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
+                       // String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
                         String fullpath = scheme_doc_folder + FILE_SEPERATOR + fileName;
                         jLogger.i("full path is:" + fullpath);
                         part.write(fullpath);
