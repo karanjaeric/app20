@@ -1337,6 +1337,7 @@ public class ApiBean implements ApiEJB {
             jLogger.i("Response of member exists is: " + response);
 
             XiMember xiMember = new XiMember();
+
             xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
             xiMember.setProfile(response.getString(Fields.PROFILE));
             if (response.getString(Fields.EMAIL) == null || response.getString(Fields.EMAIL).isEmpty()) {

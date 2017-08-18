@@ -342,97 +342,94 @@ $(document).ready(function() {
 													}
 												});
 									});
-					
-					$('#form-sign-in-mobile')
-					.bootstrapValidator(
-							{
-								message : 'This value is not valid',
-								feedbackIcons : {
-									valid : 'glyphicon glyphicon-ok',
-									invalid : 'glyphicon glyphicon-remove',
-									validating : 'glyphicon glyphicon-refresh'
-								},
-						        excluded: ':disabled',
-								fields : {
-									usernameMobile : {
-										validators : {
-											notEmpty : {
-												message : 'Please enter your ID/Passport Number'
-											}
-										}
-									},
-									passwordMobile : {
-										validators : {
-											notEmpty : {
-												message : 'Please enter your password'
-											}
-										}
-									}
-								}
-							})
-					.on(
-							'success.form.bv',
-							function(e) {
-								start_wait();
-								// Prevent form submission
-								e.preventDefault();
-								// Get the form instance
-								var form = "form-sign-in";
-								$
-										.ajax({
-											url : $('#base_url').val()
-													+ 'sign-in',
-											type : 'post',
-											data : {
-												username : $(
-														'#usernameMobile')
-														.val(),
-												password : $(
-														'#passwordMobile')
-														.val()
+								$('#form-sign-in-mobile')
+									.bootstrapValidator(
+										{
+											message : 'This value is not valid',
+											feedbackIcons : {
+												valid : 'glyphicon glyphicon-ok',
+												invalid : 'glyphicon glyphicon-remove',
+												validating : 'glyphicon glyphicon-refresh'
 											},
-											dataType : 'json',
-											success : function(json) {
-												stop_wait();
-												var message = null;
-												var success = false;
-												$
-														.each(
-																json,
-																function(
-																		key,
-																		value) {
-																	if (key == 'success'
-																			&& value == true) {
-																		success = true;
-																		$("form#"
-																				+ form)[0]
-																				.reset();
-																		window.location.href = $(
-																				'#base_url')
-																				.val()
-																				+ json.message;
-																	}
-																	if (key == 'message') {
-																		message = value;
-																	}
-																});
-												if (message == null) {
-													message = 'Oops! We are sorry, but something unexpected just went wrong. Please try again';
+											excluded: ':disabled',
+											fields : {
+												username : {
+													validators : {
+														notEmpty : {
+															message : 'Please enter your ID/Passport Number'
+														}
+													}
+												},
+												password : {
+													validators : {
+														notEmpty : {
+															message : 'Please enter your password'
+														}
+													}
 												}
-												$('#' + modal).modal(
-														'hide');
-												$('#' + btn).val(
-														btn_text);
-												if (!success)
-													bootbox
-															.alert('<p class="text-center">'
+											}
+										})
+									.on(
+										'success.form.bv',
+										function(e) {
+											start_wait();
+											// Prevent form submission
+											e.preventDefault();
+											// Get the form instance
+											var btn = "btn-sign-in";
+											var form = "form-sign-in";
+											var modal = "modal-sign-in";
+											var btn_text = $('#' + btn).val();
+											$
+												.ajax({
+													url : $('#base_url').val()
+													+ 'sign-in',
+													type : 'post',
+													data : {
+														username : $(
+															'#usernameMobile')
+															.val(),
+														password : $(
+															'#passwordMobile')
+															.val()
+													},
+													dataType : 'json',
+													success : function(json) {
+														stop_wait();
+														var message = null;
+														var success = false;
+														$ .each(
+															json,
+															function(key, value) {
+																if (key == 'success' && value == true) {
+																	success = true;
+																	$("form#" + form)[0]
+																		.reset();
+																	window.location.href = $(
+																		'#base_url')
+																		.val() + 'member';
+
+																}
+																if (key == 'message') {
+																	message = value;
+																}
+															});
+														if (message == null) {
+															message = 'Oops! We are sorry, but something unexpected just went wrong. Please try again';
+														}
+														$('#' + modal).modal(
+															'hide');
+														$('#' + btn).val(
+															btn_text);
+														if (!success)
+															bootbox
+																.alert('<p class="text-center">'
 																	+ message
 																	+ '</p>');
-											}
+													}
+												});
 										});
-							});
-					
+
 					$('#form-pensioner')
 							.bootstrapValidator(
 									{

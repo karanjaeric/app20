@@ -55,7 +55,7 @@
 	</div>
 	<div class="col-sm-7  hidden-sm hidden-xs">
 	</div>
-	<div class="col-sm-5 register-box-container hidden-sm hidden-xs">
+ 	<div class="col-sm-5 register-box-container hidden-sm hidden-xs">
 		<div class="register-box-normal">
 			<h3>You can now access your personalized pension information</h3>
 			<h4>Enter your details below to get started</h4>

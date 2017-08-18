@@ -143,9 +143,9 @@ public class SignIn extends BaseServlet implements Serializable {
 					if(u.getUserProfile().equals(Constants.MEMBER_PROFILE))
 					{
 						XiMember member = apiEJB.memberExists(u.getUserProfile(), u.getUsername());
-						if(member != null && member.getId() > 0)
+ 						if(member != null && member.getId() > 0)
 						{
-							
+
 							session.setAttribute(Constants.USER, u.getUsername());
 
 							session.setAttribute(Constants.UID, u.getId());
@@ -153,8 +153,12 @@ public class SignIn extends BaseServlet implements Serializable {
 							session.setAttribute(Constants.LOGIN, true);
 							session.setAttribute(Constants.U_PROFILE, member.getProfile());
 							session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
+
 							resetAttempt(this.get(request, "username"));
+
 							logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
+
+
 							SchemeMemberManager smm = schemeManagerBeanI.findByUserID(u.getId());
 							String link = "member";
 							if(smm != null)
@@ -163,6 +167,9 @@ public class SignIn extends BaseServlet implements Serializable {
 								link = "admin";
 							}
 							this.respond(response, true, "", new JSONObject().put("link", link));
+
+							jLogger.i(" Am here Now : ");
+
 						}
 						else
 							{
