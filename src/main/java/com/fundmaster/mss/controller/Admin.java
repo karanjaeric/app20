@@ -1576,7 +1576,7 @@ public class Admin extends BaseServlet implements Serializable {
             JSONArray array = result.getJSONArray("rows");
             JSONObject unitObj = array.getJSONObject(0);
             session.setAttribute("unitization", unitObj.get("unitization"));
-            jLogger.i("found unitization:::" + unitObj.get("unitization"));
+            //jLogger.i("found unitization:::" + unitObj.get("unitization"));
             request.setAttribute("unitization", unitObj.get("unitization"));
             audit(session, "Searched members with search parameter " + this.get(request, "search"));
             this.respond(response, true, "Success", result);

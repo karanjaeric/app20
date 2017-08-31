@@ -101,22 +101,22 @@
 		</form>
 	</div>
 <div class="modal fade" id="modal-view-member" tabindex="-1" role="dialog" aria-labelledby="myModalLabelViewMember" aria-hidden="true">
-<form role="form" id="form-view-member">
-			<div class="modal-dialog large-modal">
-				<div class="modal-content">
-					<div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title" id="myModalLabelViewMember">
-							<i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;SELECT MEMBER
-						</h4>
-					</div>
-					<div class="modal-body">
-						<table class="table table-responsive table-striped" id="select-results">
-						</table>
-					</div>
-					</div>
+	<form role="form" id="form-view-member">
+		<div class="modal-dialog large-modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="myModalLabelViewMember">
+						<i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;SELECT MEMBER
+					</h4>
 				</div>
-			</form>
+				<div class="modal-body">
+					<table class="table table-responsive table-striped" id="select-results">
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 	<script type="text/javascript">
 	
@@ -129,35 +129,38 @@
 	function search_member()
 	{
 		if($('#search').val() != '')
+
 		{
 			start_wait();
 			$.ajax({
-    	        url: $('#base_url').val() + 'admin',
-    	        type: 'post',
-    	        data: {ACTION: 'SEARCH_MEMBER', profile: 'MEMBER', search: $('#member_name').val(), identifier: $('#identifier').val()},
-    	        dataType: 'json',
-    	        success: function(json) {
-        	        console.log(json);
-    	            	html = "<tr><th>NAME</th><th>EMAIL ADDRESS</th><th>ACTION</th></tr>";
-        	            if(json.success)
-    					{
-    						$.each(json, function(key, value) {
-    				        	if(key == 'rows')
-    				           	{
-    				        		for ( var i = 0; i < json.rows.length; i++) {
-    				            		var row = json.rows[i];
-    				            		html = html + "<tr><td>" + row['name'] + "</td><td>" + row['email'] + "</td><td><a onclick=\"select_member('" + row['id'] + "', '" + row['name'] + "', '" + row['memberNo'] + "');\" class=\"btn btn-sm btn-primary\"><i class=\"glyphicon glyphicon-ok\"></i>&nbsp;&nbsp;SELECT MEMBER</a></td></tr>";
-    				        		}
-    								stop_wait();
-    				           	}
-    						});
-    					}
+				url: $('#base_url').val() + 'admin',
+				type: 'post',
+				data: {ACTION: 'SEARCH_MEMBER', profile: 'MEMBER', search: $('#member_name').val(), identifier: $('#identifier').val()},
+				dataType: 'json',
+				success: function(json) {
+					console.log(json);
+					html = "<tr><th>NAME</th><th>EMAIL ADDRESS</th><th>ACTION</th></tr>";
+					if(json.success)
+					{
+						json = $.parseJSON(json.data);
+						console.log(json);
+						$.each(json, function(key, value) {
+							if(key == 'rows')
+							{
+								for ( var i = 0; i < json.rows.length; i++) {
+									var row = json.rows[i];
+									html = html + "<tr><td>" + row['name'] + "</td><td>" + row['email'] + "</td><td><a onclick=\"select_member('" + row['id'] + "', '" + row['name'] + "', '" + row['memberNo'] + "');\" class=\"btn btn-sm btn-primary\"><i class=\"glyphicon glyphicon-ok\"></i>&nbsp;&nbsp;SELECT MEMBER</a></td></tr>";
+								}
+								stop_wait();
+							}
+						});
+					}
 					$('#select-results').html(html);
 					stop_wait();
 					$('#modal-view-member').modal('show');
-    	        }
-    	    	});
-    	   }
+				}
+			});
+		}
 	}
 		$(document).ready(function(){
 			
