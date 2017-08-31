@@ -1443,6 +1443,9 @@ SchemeManagerBeanI schemeManagerBeanI;
 
     private void showMemberOperations(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         Permission permissions = getPermissions(request);
+        String profile = this.getSessKey(request, Constants.U_PROFILE);
+        request.setAttribute("profile", profile);
+        jLogger.i("The profile is: " + profile);
         request.setAttribute("permissions", permissions);
         logActivity("MEMBER OPERATIONS", "Accessed administrative member operations", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed administrative member operations");

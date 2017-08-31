@@ -51,6 +51,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String FORWARD_PORTAL_SPONSOR = "FORWARD_PORTAL_SPONSOR";
     private static final String DELETE_PORTAL_MEMBER = "DELETE_PORTAL_MEMBER";
     private static final String SEARCH_MEMBER = "SEARCH_MEMBER";
+    private static final String SEARCH_MEMBER_BY_SPONSOR = "SEARCH_MEMBER_BY_SPONSOR";
     private static final String PROFILE_ACCESS = "PROFILE_ACCESS";
     private static final String MOST_BY_MANAGER = "MOST_BY_MANAGER";
     private static final String MOST_BY_MEMBER = "MOST_BY_MEMBER";
@@ -384,6 +385,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case SEARCH_MEMBER:
                 searchMember(request, response, session);
+                break;
+            case SEARCH_MEMBER_BY_SPONSOR:
+                searchMemberBySponsor(request, response, session);
                 break;
             case PROFILE_ACCESS:
                 getProfileAccess(response);
@@ -1274,13 +1278,16 @@ public class Admin extends BaseServlet implements Serializable {
         jLogger.i("The accounting period is >>>>>>>>>>>>>>>>>>>>>> " + this.get(request, "accountingPeriodId") + " <<<<<<<<<<<<<<<");
 
         if (profile.equalsIgnoreCase("SPONSOR")) {
+            jLogger.i(" Am here (Using SPONSOR profile) ");
 
             this.respond(response, true, "", apiEJB.getSponsorFundValue(format.format(date), this.get(request, "accountingPeriodId"),
                     this.getSessKey(request, Constants.SCHEME_ID), profileID,
                     this.getSessKey(request, Constants.PROFILE_ID)));
 
         } else {
+            jLogger.i(" Am here (Profile Not Sponsor) ");
             this.respond(response, true, "", apiEJB.getFundValueAsAt(format.format(date), this.get(request, "accountingPeriodId"),
+
                     this.getSessKey(request, Constants.SCHEME_ID),"0",
                     this.getSessKey(request, Constants.PROFILE_ID)));
         }
@@ -1565,6 +1572,32 @@ public class Admin extends BaseServlet implements Serializable {
                 this.get(request, "identifier"), this.get(request, "profile"),
                 this.getSessKey(request, Constants.SCHEME_ID), 0, 20);
         jLogger.i(result.toString());
+        try {
+            JSONArray array = result.getJSONArray("rows");
+            JSONObject unitObj = array.getJSONObject(0);
+            session.setAttribute("unitization", unitObj.get("unitization"));
+            jLogger.i("found unitization:::" + unitObj.get("unitization"));
+            request.setAttribute("unitization", unitObj.get("unitization"));
+            audit(session, "Searched members with search parameter " + this.get(request, "search"));
+            this.respond(response, true, "Success", result);
+        } catch (JSONException je) {
+            this.respond(response, false, "", null);
+        }
+    }
+   // List<XiMember> searchProfilesBySponsor(String search, String identifier, String profile, String sponsorID, String schemeID);
+
+    private void searchMemberBySponsor(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String sponsorId= "";
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.SPONSOR)) {
+
+            sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
+            jLogger.i("Searching Using SponsorId " + sponsorId);
+        }
+        JSONObject result = apiEJB.searchProfilesBySponsorJSON(this.get(request, "search"),
+                this.get(request, "identifier"), this.get(request, "profile"),sponsorId,
+                this.getSessKey(request, Constants.SCHEME_ID));
+        jLogger.i(result.toString());
+
         try {
             JSONArray array = result.getJSONArray("rows");
             JSONObject unitObj = array.getJSONObject(0);

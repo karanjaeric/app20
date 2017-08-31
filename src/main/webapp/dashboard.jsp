@@ -169,7 +169,9 @@
 												if(json.success)
 												{
                                                     json = $.parseJSON(json.data);
+                                                    console.log("The Currency is: "+currency);
 													$('#fund-value').html(currency + ' ' + format_no(json.fundValue));
+													console.log(format_no(json.fundValue));
 
 												}
 												else

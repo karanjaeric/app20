@@ -54,6 +54,9 @@ public interface ApiEJB {
     JSONObject getReasonsForExit();
     List<XiMember> searchProfiles(String search, String identifier, String profile, String schemeID, int start, int end);
     List<XiMember> searchProfilesBySponsor(String search, String identifier, String profile, String sponsorID, String schemeID);
+
+    JSONObject searchProfilesBySponsorJSON(String search, String identifier, String profile, String sponsorID, String schemeID);
+
     JSONObject searchProfilesJSON(String search, String identifier, String profile, String schemeID, int start, int end);
     XiMember getMemberDetails(String memberID, String schemeId);
     XiMember getMemberDetailsByScheme(String schemeId, String email);

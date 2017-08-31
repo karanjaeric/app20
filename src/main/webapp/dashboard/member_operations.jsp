@@ -5,6 +5,15 @@
 	</h3>
 	
 				<form class="form-inline" role="form" id="member-search" onsubmit="return false;">
+					<c:choose>
+						<c:when test="${profile == 'SPONSOR' }">
+							<input type="hidden" name="action" id="action" value="SEARCH_MEMBER_BY_SPONSOR">
+						</c:when>
+						<c:otherwise>
+							<input type="hidden" name="action" id="action" value="SEARCH_MEMBER">
+						</c:otherwise>
+					</c:choose>
+
 					<div class="col-md-8">
 						<fieldset>
 							<legend>SEARCH MEMBER</legend>
@@ -219,10 +228,11 @@ $('#member-search').bootstrapValidator({
 		if($('#search').val() != '')
 		{
 			start_wait();
+			console.log("Action passed: " + $('#action').val());
 			$.ajax({
     	        url: $('#base_url').val() + 'admin',
     	        type: 'post',
-    	        data: {ACTION: 'SEARCH_MEMBER', profile: 'MEMBER', search: $('#search').val(), identifier: $('#identifier').val()},
+    	        data: {ACTION: $('#action').val(), profile: 'MEMBER', search: $('#search').val(), identifier: $('#identifier').val()},
     	        dataType: 'json',
     	        success: function(json) {
         	        console.log(json);

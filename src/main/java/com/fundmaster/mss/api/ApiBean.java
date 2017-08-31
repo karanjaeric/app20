@@ -698,6 +698,16 @@ public class ApiBean implements ApiEJB {
             return null;
         }
     }
+    @Override
+    public JSONObject searchProfilesBySponsorJSON(String search, String identifier, String profile, String sponsorId, String schemeID) {
+        try {
+            return URLPost(APICall.SEARCH_FOR_SPONSOR_MEMBER_DETAILS + identifier + "/" + search + "/" + profile + "/" + sponsorId + "/" + schemeID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
 
     @Override
     public JSONObject getReasonsForExit() {
@@ -1166,13 +1176,14 @@ public class ApiBean implements ApiEJB {
     @Override
     public JSONObject getFundValueAsAt(String date, String periodType, String schemeID, String sponsorID, String profileID) {
 
-        profileID = "0";
-        sponsorID = "0";
+       profileID = "0";
+       sponsorID = "0";
 
         JSONObject response;
         try {
             response =  URLGet(APICall.SCHEME_GET_FUND_VALUE_AS_AT + date + "/" + periodType + "/" + schemeID+"/"+ sponsorID+"/"+profileID);
-            return response;
+            jLogger.i("Response Found");
+             return response;
         } catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
