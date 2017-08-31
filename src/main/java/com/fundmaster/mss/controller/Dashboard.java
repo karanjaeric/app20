@@ -556,8 +556,15 @@ MediaBeanI mediaBeanI;
         //List<Media> medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
         boolean status = true;
         String profile = this.getSessKey(request, Constants.U_PROFILE);
+        String memberId = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("Member ID: " + memberId);
         List<Media> medias = mediaBeanI.findByStatusAndProfile(schemeId,status,profile);
         jLogger.i("Medias found: " + medias.size());
+
+        if (medias == null || medias.size() < 1) {
+            medias = mediaBeanI.findByMemberId(schemeId,memberId);
+        }
+        jLogger.i("Medias found 2: " + medias.size());
         request.setAttribute("medias", medias);
 
         for (Media media : medias) {

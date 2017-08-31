@@ -92,6 +92,31 @@ public class MediaBean implements MediaBeanI {
     }
 
     @Override
+    public List<Media> findByMemberId(String schemeId, String memberId) {
+
+        jLogger.i("The schemeId: " + schemeId);
+        jLogger.i("The ID: " + memberId);
+
+        Long memberID = Long.parseLong(memberId);
+
+        List<Media> medias = new ArrayList<Media>();
+        Session session = (Session) entityManager.getDelegate();
+        Criteria crit = session.createCriteria(Media.class);
+
+        if (schemeId != null && !schemeId.isEmpty()) {
+
+            crit.add(Restrictions.eq("schemeID", schemeId));
+        }
+
+        if (memberID != null) {
+            crit.add(Restrictions.eq("memberId", memberID));
+        }
+        medias = crit.list();
+        return medias;
+
+    }
+
+    @Override
     public Media edit(Media media) {
         MediaDAO dao = new MediaDAO(entityManager);
         return dao.merge(media);
