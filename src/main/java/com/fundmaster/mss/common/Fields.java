@@ -59,6 +59,8 @@ public class Fields {
     public static final String ORIENTATION = "orientation";
     public static final String CLIENT_ALIAS = "clientAlias";
     public static final String DATERECEIVED = "datereceived";
+    public static final String VALUEDATE = "valuedate";
+
     public static final String AMOUNT = "amount";
     public static final String MEMBER = "member";
     public static final String PAYMENT_TYPE = "paymentType";

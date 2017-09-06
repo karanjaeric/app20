@@ -10,6 +10,7 @@ public class SchemeReceipt extends GenericModel<SchemeReceipt> implements Serial
 	private static final long serialVersionUID = 1L;
 	
 	private String date;
+	private String valueDate;
 	private String payee;
 	private String amount;
 	private String category;
@@ -29,6 +30,14 @@ public class SchemeReceipt extends GenericModel<SchemeReceipt> implements Serial
 	public SchemeReceipt() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getValueDate() {
+		return valueDate;
+	}
+
+	public void setValueDate(String valueDate) {
+		this.valueDate = valueDate;
 	}
 
 	public String getPayee() {
@@ -91,11 +100,12 @@ public class SchemeReceipt extends GenericModel<SchemeReceipt> implements Serial
 		return serialVersionUID;
 	}
 
-	public SchemeReceipt(String date, String payee, String amount,
+	public SchemeReceipt(String date, String valueDate, String payee, String amount,
 			String category, String type, String mode, String ref,
 			String receipt_no) {
 		super();
 		this.date = date;
+		this.valueDate=valueDate;
 		this.payee = payee;
 		this.amount = amount;
 		this.category = category;
