@@ -1874,7 +1874,7 @@ public class ApiBean implements ApiEJB {
                 {
                     schemeReceipt.setDate(receipt.get(Fields.DATERECEIVED).toString());
                 }
-
+                schemeReceipt.setValueDate(receipt.get(Fields.VALUEDATE).toString());
                 schemeReceipt.setPayee(receipt.get(Fields.PAYEE).toString());
                 schemeReceipt.setAmount(helper.format_no(round(Double.parseDouble(receipt.get(Fields.AMOUNT).toString()))));
                 schemeReceipt.setCategory(receipt.get(Fields.TXNCAT).toString());

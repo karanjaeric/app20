@@ -14,9 +14,9 @@
 		</form>
 	</div>
 	<table class="table table-responsive table-striped"  id="search-results">
-		<tr><th>DATE</th><th>RECEIPT</th><th>PAYEE</th><th>TRANSACTION CATEGORY</th><th>TRANSACTION TYPE</th><th>MODE</th><th>REFERENCE NO</th><th class="right">AMOUNT</th></tr>
+		<tr><th> DATE RECEIVED</th><th>RECEIPT</th><th>PAYEE</th><th>TRANSACTION CATEGORY</th><th>VALUE DATE </th><th>MODE</th><th>REFERENCE NO</th><th class="right">AMOUNT</th></tr>
 		<c:forEach var="receipt" items="${receipts}">
-			<tr><td>${ receipt.date }</td><td>${ receipt.receipt_no }</td><td>${ receipt.payee }</td><td>${ receipt.category }</td><td>${ receipt.type }</td><td>${ receipt.mode }</td><td>${receipt.ref }</td><td class="right">${ receipt.amount }</td></tr>
+			<tr><td>${ receipt.date }</td><td>${ receipt.receipt_no }</td><td>${ receipt.payee }</td><td>${ receipt.category }</td><td>${ receipt.valueDate }</td><td>${ receipt.mode }</td><td>${receipt.ref }</td><td class="right">${ receipt.amount }</td></tr>
 		</c:forEach>
 	</table>
 	<ul class="pagination pull-right">
@@ -100,7 +100,7 @@
                         dataType: 'json',
                         success: function(json) {
                             console.log(json);
-							html = "<tr><th>DATE</th><th>RCPT #</th><th>PAYEE</th><th>TXN CATEGORY</th><th>TXN TYPE</th><th>MODE</th><th>REF.</th><th class=\"right\">AMOUNT</th></tr>";
+							html = "<tr><th> DATE RECEIVED</th><th>RCPT #</th><th>PAYEE</th><th>TXN CATEGORY</th><th>VALUE DATE</th><th>MODE</th><th>REF.</th><th class=\"right\">AMOUNT</th></tr>";
                             if(json.success) {
                                 json = $.parseJSON(json.data);
                                 console.log(json);
@@ -111,7 +111,7 @@
                                         console.log("Am here")
 										for (var i = 0; i < rows.length; i++) {
                                             var row = rows[i];
-                                            html = html + "<tr><td>" + row['datereceived'] + "</td><td>" + row['receiptno'] + "</td><td>" + row['payee'] + "</td><td>" + row['txncat'] + "</td><td>" + row['txntype'] + "</td><td>" + row['paymentmethod'] + "</td><td>" + row['id'] + "</td><td>" + format_no(row['amount']) + "</td></tr>";
+                                            html = html + "<tr><td>" + row['datereceived'] + "</td><td>" + row['receiptno'] + "</td><td>" + row['payee'] + "</td><td>" + row['txncat'] + "</td><td>" + row['valuedate'] + "</td><td>" + row['paymentmethod'] + "</td><td>" + row['id'] + "</td><td>" + format_no(row['amount']) + "</td></tr>";
                                         }
                                         stop_wait();
 
