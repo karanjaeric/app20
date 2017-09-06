@@ -90,7 +90,6 @@ $(document).ready(function() {
 
 function edit_member(id)
 {
-	alert(id);
 	start_wait();
 	$.ajax({
         url: $('#base_url').val() + 'admin',

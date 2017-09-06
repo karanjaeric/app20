@@ -145,6 +145,10 @@ public class MenuController extends BaseServlet implements Serializable {
         List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
         request.setAttribute("schemes", schemes);
 
+        String profile = this.getSessKey(request, Constants.U_PROFILE);
+        request.setAttribute("profile", profile);
+        jLogger.i("The profile is: " + profile);
+
         request.getRequestDispatcher(REPO_FOLDER + "/media.jsp").forward(request, response);
     }
     private void showMember(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {

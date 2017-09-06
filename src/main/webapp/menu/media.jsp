@@ -19,6 +19,14 @@
 					</div>
 					<div class="modal-body">
 						<input type="hidden" name="ACTION" id="ACTION" value="MEDIA" />
+						<c:choose>
+							<c:when test="${profile == 'SPONSOR' }">
+								<input type="hidden" name="memberAction" id="memberAction" value="SEARCH_MEMBER_BY_SPONSOR">
+							</c:when>
+							<c:otherwise>
+								<input type="hidden" name="memberAction" id="memberAction" value="SEARCH_MEMBER">
+							</c:otherwise>
+						</c:choose>
 						<div class="form-group">
 							<label class="control-label">Select File to Upload</label>
 							 <input type="file" class="filestyle" data-buttonName="btn-primary" id="media_file" name="media_file" data-buttonBefore="true" />
@@ -132,10 +140,11 @@
 
 		{
 			start_wait();
+			console.log("Action passed: " + $('#action').val());
 			$.ajax({
 				url: $('#base_url').val() + 'admin',
 				type: 'post',
-				data: {ACTION: 'SEARCH_MEMBER', profile: 'MEMBER', search: $('#member_name').val(), identifier: $('#identifier').val()},
+				data: {ACTION: $('#memberAction').val(), profile: 'MEMBER', search: $('#member_name').val(), identifier: $('#identifier').val()},
 				dataType: 'json',
 				success: function(json) {
 					console.log(json);
@@ -189,41 +198,40 @@
 		        }
 			})
 			.on('success.form.bv', function(e) {
-				
-                start_wait();
-                
+
+				start_wait();
+
                 // Prevent form submission
                 e.preventDefault();
-                
-                var btn = "btn-media";
-                var form = "form-media";
-                var modal = "modal-media";
 
-                $('#' + btn).val('Please wait...');
+					var btn = "btn-file";
+					var form = "form-media";
+					var modal = "modal-media";
 
-                var formData = new FormData($(this)[0]);
-                
-        		$.ajax({
-        	        url: $('#base_url').val() + 'admin',
-        	        type: 'POST',
-        	        data: formData,
-					dataType: 'json',
-        	        async: false,
-        	        success: function(json) {
-        	            stop_wait();
-        	            if(json.success)
-        	            {
-        	                $('#' + form)[0].reset();
-        	                $('#' + modal).modal('hide');
-        	            }
-        	            bootbox.alert(json.message);
-						load_dashboard("MF");
-        	        },
-        	        cache: false,
-        	        contentType: false,
-        	        processData: false
-        	    });
+					$('#' + btn).val('Please wait...');
+				
+					var formData = new FormData($(this)[0]);
 
+					$.ajax({
+						url: $('#base_url').val() + 'admin',
+						type: 'POST',
+						data: formData,
+						dataType: 'json',
+						async: false,
+						success: function(json) {
+							stop_wait();
+							if(json.success)
+							{
+								$('#' + form)[0].reset();
+								$('#' + modal).modal('hide');
+							}
+							bootbox.alert(json.message);
+							load_dashboard("MF");
+						},
+						cache: false,
+						contentType: false,
+						processData: false
+					});
 			});
 		});
 	</script>
