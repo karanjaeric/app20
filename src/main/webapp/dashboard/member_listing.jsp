@@ -37,11 +37,10 @@
         console.log("Alternative: " + alternativeUrl);
         var orientation = $('#orientation').val();
         console.log("Orientation: " + orientation);
-        //$('#sponsor_name').val() + '&_paramssponsorId=' +
 
                     var url =
-                            $('#reportPath').val() +"members/Members per Sponsor.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMembers%20per%20Sponsor.xdo&_xmode=3&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramssponsor_id="
-                            + $('#sponsor_id').val() + '&_paramsschemeId=' + $('#scheme_id').val() + "&_xt=Members%20per%20Sponsor&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+                            $('#reportPath').val() +"members/Members per Sponsor.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FMembers%20per%20Sponsor.xdo&_xmode=3&_paramsblankImage=&_paramsalternativeUrl=&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramssponsor_name="
+                            + $('#sponsor_name').val() + '&_paramssponsorId=' +  $('#sponsor_id').val() + '&_paramsschemeId=' + $('#scheme_id').val() + "&_xt=Members%20per%20Sponsor&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
 
                     $("#ml-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
