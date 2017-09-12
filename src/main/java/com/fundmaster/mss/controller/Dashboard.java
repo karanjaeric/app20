@@ -653,6 +653,7 @@ MediaBeanI mediaBeanI;
         request.setAttribute("settings", setting);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("planType", this.getSessKey(request, Constants.SCHEME_TYPE));
+        jLogger.i("Plan type is: " + this.getSessKey(request, Constants.SCHEME_TYPE));
         String member_id;
         member_id = this.get(request, "memberID");
         if (member_id == null)
