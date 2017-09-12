@@ -128,6 +128,7 @@
 
         function initializeFuture()
         {
+            console.log("============== Let's fetch reasons ================");
             $.ajax({
                 url: $('#base_url').val() + 'member',
                 type: 'post',
@@ -170,6 +171,7 @@
 
         function initializeCurrent()
         {
+            console.log("================ Reasons ==============");
             $.ajax({
                 url: $('#base_url').val() + 'member',
                 type: 'post',
@@ -187,7 +189,7 @@
                                 for ( var i = 0; i < json.rows.length; i++) {
                                     var row = json.rows[i];
 
-                                    if (row['category'] === 'Retirement' || row['category'] === 'Death In Service') {
+                                    if (row['category'] === 'Retirement' || row['category'] === 'Death In Service' || row['category'] === 'Withdrawal') {
 
                                         combo = combo + "<option value = " + row['id'] + ">" + row['reason'] + "</option>";
                                     }

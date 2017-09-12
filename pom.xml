@@ -2,7 +2,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fundmaster</groupId>
-	<artifactId>Mss</artifactId>
+	<artifactId>MssUg</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Mss Maven Webapp</name>
@@ -167,7 +167,7 @@
 
 	</dependencies>
 	<build>
-		<finalName>Mss</finalName>
+		<finalName>MssUg</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
