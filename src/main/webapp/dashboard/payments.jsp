@@ -14,9 +14,9 @@
 			</form>
 		</div>
 		<table class="table table-responsive table-striped" id="search-results">
-			<tr><th>DATE APPROVED</th><th>DATE OF PROCESSING</th><th>TYPE</th><th>PAYEE</th><th class="right">GROSS</th><th class="right">TAX FREE</th><th class="right">TAXABLE AMOUNT</th><th class="right">WITHHOLDING TAX</th><th class="right">NET</th></tr>
+			<tr><th>DATE OF PROCESSING</th><th>TYPE</th><th>PAYEE</th><th class="right">GROSS</th><th class="right">TAX FREE</th><th class="right">TAXABLE AMOUNT</th><th class="right">WITHHOLDING TAX</th><th class="right">NET</th></tr>
 			<c:forEach var="payment" items="${payments}">
-			<tr><td>${ payment.dateApproved }</td><td>${ payment.dateOfCalc }</td><td>${ payment.type }</td><td>${ payment.payee }</td><td class="right">${ payment.gross }</td><td class="right">${ payment.taxFree }</td><td class="right">${ payment.taxable }</td><td class="right">${payment.withHolding }</td><td class="right">${ payment.net }</td></tr>
+			<tr><td>${ payment.processingDate }</td><td>${ payment.type }</td><td>${ payment.payee }</td><td class="right">${ payment.gross }</td><td class="right">${ payment.taxFree }</td><td class="right">${ payment.taxable }</td><td class="right">${payment.withHolding }</td><td class="right">${ payment.net }</td></tr>
 			</c:forEach>
 		</table>
 	  <ul class="pagination pull-right">

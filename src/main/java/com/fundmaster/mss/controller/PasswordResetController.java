@@ -162,6 +162,7 @@ public class PasswordResetController extends BaseServlet implements Serializable
 							"You recently requested to change your password. " +
 							"Your security code is: " + securityCode +
 							" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);
+					jLogger.i("Your Status is ====== " + status);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

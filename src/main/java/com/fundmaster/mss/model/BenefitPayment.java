@@ -18,6 +18,15 @@ public class BenefitPayment extends GenericModel<BenefitPayment> implements Seri
 	private String dateOfCalc;
 	private String type;
 	private String payee;
+	private String processingDate;
+
+	public String getProcessingDate() {
+		return processingDate;
+	}
+
+	public void setProcessingDate(String processingDate) {
+		this.processingDate = processingDate;
+	}
 
 	public String getGross() {
 		return gross;
@@ -102,7 +111,7 @@ public class BenefitPayment extends GenericModel<BenefitPayment> implements Seri
 
 	public BenefitPayment(String gross, String taxFree, String taxable,
 			String withHolding, String net, String dateApproved,
-			String dateOfCalc, String type, String payee) {
+			String dateOfCalc, String type, String payee,String processingDate) {
 		super();
 		this.gross = gross;
 		this.taxFree = taxFree;
@@ -113,6 +122,7 @@ public class BenefitPayment extends GenericModel<BenefitPayment> implements Seri
 		this.dateOfCalc = dateOfCalc;
 		this.type = type;
 		this.payee = payee;
+		this.processingDate = processingDate;
 	}
 	
 	

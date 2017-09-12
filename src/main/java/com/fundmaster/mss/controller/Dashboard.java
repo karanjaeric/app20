@@ -1242,15 +1242,31 @@ SocialBeanI socialBeanI;
         int batch;
         Date date_from = getDateFromString(request, "dateFrom", "from");
         Date date_to = getDateFromString(request, "dateTo", "to");
+        String sponsorId ="";
         batch = getIntegerFromString(this.get(request, "batch"));
         page = getIntegerFromString(this.get(request, "page"));
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         DateFormat format_ = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 
-        if (date_from != null && date_to != null)
-            payments = apiEJB.searchPayments(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), start, PER_PAGE);
-        else
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.SPONSOR)) {
+
+            sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
+            jLogger.i("Sponsor ID " + sponsorId);
+        }
+
+        if (sponsorId!= null) {
+            jLogger.i("::::::::: Fetching Sponsor Benefits :::::::::");
+            payments = apiEJB.getBenefitPaymentsPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), sponsorId, start, PER_PAGE);
+        } else if (date_from != null && date_to != null ) {
+
+                payments = apiEJB.searchPayments(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), start, PER_PAGE);
+            } else {
+
             payments = apiEJB.getBenefitPayments(this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
+        }
+
+
+
 
         int count = Constants.RECORD_COUNT;
         int begin = ((batch * BATCH) - BATCH) + 1;

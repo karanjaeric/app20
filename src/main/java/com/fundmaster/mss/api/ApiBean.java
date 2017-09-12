@@ -411,6 +411,25 @@ public class ApiBean implements ApiEJB {
             return null;
         }
     }
+    @Override
+    public List<BenefitPayment> getBenefitPaymentsPerSponsor(String schemeID, String sponsorId, int start, int count){
+        JSONObject response;
+        try {
+            response = URLGet(APICall.SCHEME_GET_SCHEME_BENEFIT_PAYMENTS_PER_SPONSOR + schemeID + "/" + sponsorId + "/?start=" + start + "&size=" + count);
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                return this.benefitPaymentsFromJSON(response);
+            }
+            else
+            {
+                return null;
+            }
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
 
     @Override
     public List<SchemeReceipt> getSchemeReceipts(String schemeID, int start, int count) {
@@ -746,7 +765,11 @@ public class ApiBean implements ApiEJB {
     public boolean sendEmail(List<String> recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url) {
         JSONObject response;
         JSONObject params = new JSONObject();
-        jLogger.i("Recipients: " + recipients.toArray().toString());
+        if (recipients.size()>1){
+
+            jLogger.i("Recipients: " + recipients.toArray().toString());
+
+        }
         try {
             params.put(Fields.NOTIFICATION_PLATFORM, Constants.EMAIL)
                     .put(Fields.RECIPIENTS, recipients)
@@ -1980,11 +2003,12 @@ public class ApiBean implements ApiEJB {
                 }
                 try {
                     bp.setTaxFree(helper.format_no(round(Double.parseDouble(String.valueOf(payment.get(Fields.LUMPSUM_TAX_FREE).toString())))));
-                }
+                 }
                 catch (NumberFormatException ex)
                 {
                     bp.setTaxFree(Constants.NUMBER_ZER0);
                 }
+
                 try {
                     bp.setTaxable(helper.format_no(round(Double.parseDouble(String.valueOf(payment.get(Fields.TAXABLE_AMOUNT).toString())))));
                 }
@@ -2007,24 +2031,32 @@ public class ApiBean implements ApiEJB {
                 {
                     bp.setNet(Constants.NUMBER_ZER0);
                 }
+//                try {
+//
+//                    bp.setDateApproved(helper.humanReadableDate(payment.get(Fields.DATE_APPROVED).toString()));
+//                }
+//                catch (IllegalArgumentException ex)
+//                {
+//                    bp.setDateApproved(payment.get(Fields.DATE_APPROVED).toString());
+//                }
                 try {
 
-                    bp.setDateApproved(helper.humanReadableDate(payment.get(Fields.DATE_APPROVED).toString()));
-                }
+                    bp.setProcessingDate(helper.humanReadableDate(payment.get(Fields.PROCESSING_DATE).toString()));
+                 }
                 catch (IllegalArgumentException ex)
                 {
-                    bp.setDateApproved(payment.get(Fields.DATE_APPROVED).toString());
+                    bp.setProcessingDate(payment.get(Fields.PROCESSING_DATE).toString());
                 }
-                try {
-                    bp.setDateOfCalc(helper.humanReadableDate(payment.get(Fields.DATE_OF_CALC).toString()));
-                }
-                catch (IllegalArgumentException ex)
-                {
-                    ex.printStackTrace();
-                    bp.setDateOfCalc(payment.get(Fields.DATE_OF_CALC).toString());
-                }
-                bp.setType(payment.get(Fields.PAYMENT_TYPE).toString());
-                bp.setPayee(payment.get(Fields.MEMBER).toString());
+//                try {
+//                    bp.setDateOfCalc(helper.humanReadableDate(payment.get(Fields.DATE_OF_CALC).toString()));
+//                }
+//                catch (IllegalArgumentException ex)
+//                {
+//                    ex.printStackTrace();
+//                    bp.setDateOfCalc(payment.get(Fields.DATE_OF_CALC).toString());
+//                }
+                bp.setType(payment.get(Fields.TYPE).toString());
+                bp.setPayee(payment.get(Fields.PAYEE).toString());
                 benefitPayments.add(bp);
             }
             return benefitPayments;

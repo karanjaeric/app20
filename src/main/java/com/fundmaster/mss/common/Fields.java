@@ -64,8 +64,13 @@ public class Fields {
     public static final String AMOUNT = "amount";
     public static final String MEMBER = "member";
     public static final String PAYMENT_TYPE = "paymentType";
+    public static final String TYPE = "type";
+
     public static final String DATE_OF_CALC = "dateOfCalc";
     public static final String DATE_APPROVED = "dateApproved";
+    public static final String PROCESSING_DATE = "processingDate";
+
+
     public static final String GROSS = "gross";
     public static final String LUMPSUM_TAX_FREE = "lumpsumTaxFree";
     public static final String TAXABLE_AMOUNT = "taxableAmount";
