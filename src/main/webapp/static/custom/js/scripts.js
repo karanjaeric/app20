@@ -576,6 +576,14 @@ $(document).ready(function(){
 
 		m_switch("AC");
 	});
+    $('#provisional-member-li').click(function(){
+
+        $('#main-menu.nav li').removeClass('active');
+
+        $('#provisional-member-li').addClass('active');
+
+        m_switch("PMS");
+    });
 
 	$('#media-files-li').click(function(){
 		

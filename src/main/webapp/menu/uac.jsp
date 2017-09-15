@@ -602,6 +602,14 @@
 								<input type="checkbox" name="annualContributionStatement" id="annualContributionStatement" ${memberMenu.annualContributionStatement == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<label class="control-label"> PROVISIONAL MEMBER STATEMENT </label>
+							</td>
+							<td>
+								<input type="checkbox" name="provisionalMemberStatement" id="provisionalMemberStatement" ${memberMenu.provisionalMemberStatement == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
 
 						<tr>
 							<td>
@@ -1218,6 +1226,7 @@
 								benefitsProjection: $('#benefitsProjection').prop('checked'),
 								benefitProjectionGrid: $('#benefitProjectionGrid').prop('checked'),
 								annualContributionStatement: $('#annualContributionStatement').prop('checked'),
+                                provisionalMemberStatement: $('#provisionalMemberStatement').prop('checked'),
 								Media: $('#Media').prop('checked')
 							},
 							dataType: 'json',

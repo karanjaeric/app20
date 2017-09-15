@@ -79,6 +79,12 @@
                     class="fa fa-chevron-right"></i> ANNUAL CONTRIBUTION STATEMENT</a></li>
         </c:if>
 
+        <c:if test="${memberMenu.provisionalMemberStatement == 'TRUE'}">
+            <li id="provisional-member-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-list-alt"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> PROVISIONAL MEMBER STATEMENT</a></li>
+        </c:if>
+
         <c:if test="${memberMenu.whatIfAnalysis == 'TRUE'}">
         <li id="what-if-analysis-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
