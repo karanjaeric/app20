@@ -40,6 +40,10 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     @Column(name="whatIfAnalysis", nullable=false)
     private boolean whatIfAnalysis;
 
+    @Column(name="provisionalMemberStatement", nullable=false)
+
+    private boolean provisionalMemberStatement;
+
     @Column(name="benefitsProjection", nullable=false)
     private boolean benefitsProjection;
 
@@ -149,6 +153,14 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.annualContributionStatement = annualContributionStatement;
     }
 
+    public boolean isProvisionalMemberStatement() {
+        return provisionalMemberStatement;
+    }
+
+    public void setProvisionalMemberStatement(boolean provisionalMemberStatement) {
+        this.provisionalMemberStatement = provisionalMemberStatement;
+    }
+
     public boolean isMedia() {
         return media;
     }
@@ -159,7 +171,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
 
     public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
                       boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection, boolean benefitProjectionGrid, boolean media,
-                      boolean annualContributionStatement) {
+                      boolean annualContributionStatement, boolean provisionalMemberStatement) {
         super();
         this.id = id;
         this.contributionHistoryReport = contributionHistoryReport;
@@ -173,6 +185,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.benefitsProjection = benefitsProjection;
         this.benefitProjectionGrid = benefitProjectionGrid;
         this.annualContributionStatement = annualContributionStatement;
+        this.provisionalMemberStatement = provisionalMemberStatement;
         this.media = media;
     }
 

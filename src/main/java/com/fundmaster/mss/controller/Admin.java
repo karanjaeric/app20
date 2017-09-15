@@ -917,6 +917,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean BenefitsProjection = this.get(request, "benefitsProjection").equalsIgnoreCase("true");
         boolean BenefitsProjectionGrid = this.get(request, "benefitProjectionGrid").equalsIgnoreCase("true");
         boolean AnnualContributionStatement = this.get(request, "annualContributionStatement").equalsIgnoreCase("true");
+        boolean ProvisionalMemberStatement = this.get(request, "provisionalMemberStatement").equalsIgnoreCase("true");
         boolean Media = this.get(request, "Media").equalsIgnoreCase("true");
 
         memberMenu.setContributionHistoryReport(contributionHistoryReport);
@@ -930,6 +931,7 @@ public class Admin extends BaseServlet implements Serializable {
         memberMenu.setBenefitsProjection(BenefitsProjection);
         memberMenu.setBenefitProjectionGrid(BenefitsProjectionGrid);
         memberMenu.setAnnualContributionStatement(AnnualContributionStatement);
+        memberMenu.setProvisionalMemberStatement(ProvisionalMemberStatement);
         memberMenu.setMedia(Media);
 
         if (memberMenuBeanI.edit(memberMenu) != null) {
