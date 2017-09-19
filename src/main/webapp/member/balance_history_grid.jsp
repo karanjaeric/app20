@@ -43,6 +43,7 @@
     </form>
 </div>
 
+
 <script type="text/javascript">
     function format_no(yourNumber) {
         if(typeof	yourNumber != 'undefined')
@@ -174,9 +175,13 @@
                             $('#select-results').html(html);
                             stop_wait();
                             $('#modal-view-balances').modal('show');
+
+
                         }
                     });
                 });
     });
+
+
 
 </script>
