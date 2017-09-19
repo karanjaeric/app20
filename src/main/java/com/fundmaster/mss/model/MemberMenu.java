@@ -41,7 +41,6 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     private boolean whatIfAnalysis;
 
     @Column(name="provisionalMemberStatement", nullable=false)
-
     private boolean provisionalMemberStatement;
 
     @Column(name="benefitsProjection", nullable=false)
@@ -52,6 +51,9 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
 
     @Column(name="annualContributionStatement", nullable=false)
     private boolean annualContributionStatement;
+
+    @Column(name="annualContributionStatementGrid", nullable=false)
+    private boolean annualContributionStatementGrid;
 
     @Column(name="media", nullable=false)
     private boolean media;
@@ -117,6 +119,14 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         return unitizedStatement;
     }
 
+    public boolean isAnnualContributionStatementGrid() {
+        return annualContributionStatementGrid;
+    }
+
+    public void setAnnualContributionStatementGrid(boolean annualContributionStatementGrid) {
+        this.annualContributionStatementGrid = annualContributionStatementGrid;
+    }
+
     public void setUnitizedStatement(boolean unitizedStatement) {
         this.unitizedStatement = unitizedStatement;
     }
@@ -145,6 +155,8 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.benefitProjectionGrid = benefitProjectionGrid;
     }
 
+
+
     public boolean isAnnualContributionStatement() {
         return annualContributionStatement;
     }
@@ -171,7 +183,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
 
     public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
                       boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection, boolean benefitProjectionGrid, boolean media,
-                      boolean annualContributionStatement, boolean provisionalMemberStatement) {
+                      boolean annualContributionStatement, boolean provisionalMemberStatement, boolean annualContributionStatementGrid) {
         super();
         this.id = id;
         this.contributionHistoryReport = contributionHistoryReport;
@@ -184,6 +196,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.whatIfAnalysis = whatIfAnalysis;
         this.benefitsProjection = benefitsProjection;
         this.benefitProjectionGrid = benefitProjectionGrid;
+        this.annualContributionStatementGrid = annualContributionStatementGrid;
         this.annualContributionStatement = annualContributionStatement;
         this.provisionalMemberStatement = provisionalMemberStatement;
         this.media = media;

@@ -9,6 +9,7 @@ public class Actions {
     public static final String CH_GRID = "CH_GRID";
     public static final String SA_GRID = "SA_GRID";
     public static final String BP_GRID = "BP_GRID";
+    public static final String AC_GRID = "AC_GRID";
     public static final String BH_GRID = "BH_GRID";
     public static final String PRE_CHANGE_PASSWORD = "PRE_CHANGE_PASSWORD";
     public static final String LOGOUT = "LOGOUT";
@@ -38,6 +39,7 @@ public class Actions {
     public static final String PROVISIONAL_MEMBER_STATEMENT = "PMS";
 
     public static final String MEMBER_BENEFIT_PROJECTIONS_GRID = "BP_GRID";
+    public static final String ANNUAL_CONTRIBUTIONS_GRID = "AC_GRID";
     public static final String MEMBER_MEDIA_FILES = "MF";
     public static final String MEMBER_CLAIMS = "MC";
     public static final String MEMBER_WHAT_IF_ANALYSIS = "WIA";

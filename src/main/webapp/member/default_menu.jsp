@@ -76,7 +76,19 @@
         <c:if test="${memberMenu.annualContributionStatement == 'TRUE'}">
             <li id="annual-contributions-li"><a href="javascript:void(0);"><i
                     class="glyphicon glyphicon-list-alt"></i>&nbsp;<i
-                    class="fa fa-chevron-right"></i> ANNUAL CONTRIBUTION STATEMENT</a></li>
+                    class="fa fa-chevron-right"></i> ANNUAL CONTRIBUTION STATEMENT (REPORT)</a></li>
+        </c:if>
+
+        <c:if test="${memberMenu.annualContributionStatementGrid == 'TRUE'}">
+            <li id="annual-contributions-grid-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-list-alt"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> ANNUAL CONTRIBUTION STATEMENT (GRID)</a></li>
+        </c:if>
+
+        <c:if test="${memberMenu.annualContributionStatementGrid == 'TRUE'}">
+            <li id="annual-contributions-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-list-alt"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> ANNUAL CONTRIBUTION STATEMENT (GRID)</a></li>
         </c:if>
 
         <c:if test="${memberMenu.provisionalMemberStatement == 'TRUE'}">
