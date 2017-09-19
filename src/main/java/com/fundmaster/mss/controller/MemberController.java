@@ -277,6 +277,9 @@ public class MemberController extends BaseServlet implements Serializable {
 			case Actions.BP_GRID:
 				getProjectionsGrid(request, response, session);
 				break;
+//			case Actions.AC_GRID:
+//				getAnnualContributionsGrid(request, response, session);
+//				break;
 			case Actions.SA_GRID:
 				getMemberStatementGrid(request, response, session);
 				break;

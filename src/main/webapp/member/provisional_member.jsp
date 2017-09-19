@@ -101,22 +101,31 @@
                 }
             }
         }) .on('success.form.bv', function(e) {
+
             start_wait();
 
             var alternativeUrl = $('#alternativeUrl').val();
             console.log("Alternative: " + alternativeUrl);
-            var orientation = $('#orientation').val();
+            var orientatiativeUrl = $('#alternativeUrl').val();
+            console.loon = $('#orientation').val();
             console.log("Orientation: " + orientation);
 
             var accPeriodId = $('#accperiod').val();
             console.log("Accounting period Id: " + accPeriodId);
+
+            var memberId = $('#member_id').val();
             console.log("Member id : " + $('#member_id').val());
+
             console.log("Scheme id : " + $('#scheme_id').val());
 
 
-            var url = $('#reportPath').val() + 'members/Provisional Member Statement.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FProvisional%20Member%20Statement.xdo&_xmode=3' + '&_params_eventName2=getMemberCurrentApContributions'+'&_paramsBASE=' + $('#xiRootPath').val() + '&_params_eventName=getMemberInterestOnBalances' + '&_paramsxml=YES' + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsmemberId=' + $('#member_id').val() +
-            '&_paramsapId=' + accPeriodId + '&_xt=Provisional%20Member%20Statement&_xf=analyze&_xana=view&_paramsadmin=1&id='
-            + $("#username").val() + '&passwd=' + $("#password").val() + '&_paramsblankImage=' + alternativeUrl +'&_paramsalternativeUrl=' + alternativeUrl + '&_paramsorientation=' + orientation;
+            /*
+             http://192.168.1.194:7001/xmlpserver/~weblogic/fundmaster/reports/members/Provisional Member Statement.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FProvisional%20Member%20Statement.xdo&_xmode=3&_params_eventName2=getMemberCurrentApContributions&_paramsalternativeUrl=&_paramsblankImage=&_paramsorientation=RIGHT&_params_eventName=getMemberInterestOnBalances&_paramsBASE=http%3A%2F%2F172.16.1.112%3A8088%2FXi&_paramsadmin=1&_paramsscheme_id=&_paramsap_id=&_paramsmember_id=&_xt=Provisional%20Member%20Statement&_xf=analyze&_xana=view
+             */
+
+            var url = $("#reportPath").val() + "members/Provisional Member Statement.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FProvisional%20Member%20Statement.xdo&_xmode=3&_params_eventName2=getMemberCurrentApContributions&_paramsBASE=" + $("#xiRootPath").val() + "&_params_eventName=getMemberInterestOnBalances" + "&_paramsadmin=1" +"&_paramsscheme_id=" + $("#scheme_id").val() + "&_paramsap_id="+  accPeriodId +"&_paramsmember_id=" + memberId +
+                    "&_xt=Provisional%20Member%20Statement&_xf=analyze&_xana=view&id=" + $("#username").val() + "&passwd=" + $("#password").val() + "&_paramsblankImage=" + alternativeUrl +"&_paramsalternativeUrl=" + alternativeUrl + "&_paramsorientation=" + orientation;
+
              $("#ps-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
 
             stop_wait();

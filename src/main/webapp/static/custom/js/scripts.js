@@ -568,6 +568,15 @@ $(document).ready(function(){
 		m_switch("BP_GRID");
 	});
 
+	$('#annual-contributions-grid-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#annual-contributions-grid-li').addClass('active');
+
+		m_switch("AC_GRID");
+	});
+
 	$('#annual-contributions-li').click(function(){
 
 		$('#main-menu.nav li').removeClass('active');

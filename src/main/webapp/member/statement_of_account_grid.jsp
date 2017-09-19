@@ -250,7 +250,7 @@
                                             html = html + "<tr><th scope='row' colspan='6' class='text-center'>CONTRIBUTIONS TOTAL: </td><td>" + format_no(contr_total) + "</td></tr>";
                                             html1 = html_head + html_subhead + op_row;
                                             html2 = intr_head + intr_row;
-                                            html3 = "<tr><th scope='row' colspan='6' class='text-center'>GRAND TOTAL: </td><td>" + format_no(grandTotal) + "</td></tr>";
+                                            html3 = "<tr><th scope='row' colspan='6' class='text-center'>GRAND TOTAL: </td><td>" + format_no(parseFloat(Math.round(grandTotal * 100) / 100).toFixed(2)) + "</td></tr>";
                                             //html = html;
 
                                             stop_wait();
