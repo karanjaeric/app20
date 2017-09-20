@@ -277,9 +277,9 @@ public class MemberController extends BaseServlet implements Serializable {
 			case Actions.BP_GRID:
 				getProjectionsGrid(request, response, session);
 				break;
-//			case Actions.AC_GRID:
-//				getAnnualContributionsGrid(request, response, session);
-//				break;
+			case Actions.AC_GRID:
+				getAnnualContributionsGrid(request, response, session);
+				break;
 			case Actions.SA_GRID:
 				getMemberStatementGrid(request, response, session);
 				break;
@@ -417,6 +417,8 @@ public class MemberController extends BaseServlet implements Serializable {
 
 		User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
 		XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
+		jLogger.i("Member found ================ > " + m.getId());
+
 		String member_id = Long.toString(m.getId());
 		jLogger.i("Member found ================ > " + member_id);
 
@@ -430,6 +432,20 @@ public class MemberController extends BaseServlet implements Serializable {
 		JSONObject memberStatement = apiEJB.getMemberStatement(member_id, apId, schemeId);
 
 		this.respond(response, true, "", memberStatement);
+	}
+	private void getAnnualContributionsGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+		User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
+		XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
+		String member_id = Long.toString(m.getId());
+		jLogger.i("Member found ================ > " + member_id);
+
+		String apId = this.get(request, "ap_id");
+		jLogger.i("Reason Id ================ > " + apId);
+
+		JSONObject memberAnnualContrubution = apiEJB.getAnnualContribution(member_id, apId);
+
+		this.respond(response, true, "", memberAnnualContrubution );
+
 	}
 
 	private void getBalancesGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) {

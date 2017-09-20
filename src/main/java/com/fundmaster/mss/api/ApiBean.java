@@ -1476,6 +1476,24 @@ public class ApiBean implements ApiEJB {
         }
     }
 
+    //getAnnualContribution
+
+    @Override
+    public JSONObject getAnnualContribution(String memberId, String apId) {
+        JSONObject response;
+        try {
+
+
+            response = URLGet(APICall.GET_MEMBER_ANNUAL_CONTRIBUTION + memberId + "/" + apId );
+
+            jLogger.i("Contributions json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
     public boolean saveOrUpdateSponsor(String params)
     {
         JSONObject response;

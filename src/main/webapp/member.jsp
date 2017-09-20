@@ -35,7 +35,7 @@
 				<h2><small>Active Scheme</small></h2>
 				<select class="form-control" name="scheme_id" id="scheme_id" onchange="reloadmember();">
 					<c:forEach var="scheme" items="${ schemes }">
-						<c:choose>me
+						<c:choose>
 							<c:when test="${scheme_id == scheme.id }">
 								<option value="${scheme.id }" selected="selected">${ scheme.name }</option>
 							</c:when>

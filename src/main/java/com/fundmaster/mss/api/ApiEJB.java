@@ -16,6 +16,7 @@ public interface ApiEJB {
     JSONObject getBalancesHistory(String memberId);
     JSONObject getPensionAdvice(String memberId, String year);
     JSONObject getMemberStatement(String memberId, String apId, String schemeId);
+    JSONObject getAnnualContribution(String memberId, String apId);
     boolean saveOrUpdateSponsor(String params);
     boolean saveOrUpdateMember(String params);
     boolean uploadMemberDocument(String params);
