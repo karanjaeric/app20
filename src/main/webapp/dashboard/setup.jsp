@@ -22,6 +22,7 @@
 			<tr><td>POTENTIAL MEMBER</td><td>${ menu.potentialMemberName }</td><td>${ menu.potentialMemberActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>POTENTIAL SPONSOR</td><td>${ menu.potentialSponsorName }</td><td>${ menu.potentialSponsorActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>INTEREST RATES</td><td>${ menu.interestRatesName }</td><td>${ menu.interestRatesActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
+			<tr><td>UNIT PRICES </td><td>${ menu.unitPriceName }</td><td>${ menu.unitPriceActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>WHAT IF ANALYSIS</td><td>${ menu.whatIfAnalysisName }</td><td>${ menu.whatIfAnalysisActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>CONTACT US</td><td>${ menu.contactUsName }</td><td>${ menu.contactUsActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>
 			<tr><td>FAQ</td><td>${ menu.faqName }</td><td>${ menu.faqActive == 'TRUE' ? 'YES' : 'NO' }</td></tr>

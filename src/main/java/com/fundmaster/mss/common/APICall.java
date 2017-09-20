@@ -61,6 +61,7 @@ public class APICall {
     public static final String GET_DC_MEMBER_BALANCES = "getmemberbalances/";
     public static final String  GET_DB_MEMBER_BALANCES = "getmemberaccruedpension/";
     public static final String SCHEME_GET_SCHEME_INTEREST_RATES = "scheme/getschemeinterestrates/";
+    public static final String SCHEME_GET_SCHEME_UNIT_PRICES ="scheme/getschemeunitprices/";
     public static final String GET_SPONSOR_INTEREST_RATES = "sponsor/getsponsorinterestrates/";
     public static final String WHAT_IF_ANALYSIS = "whatifanalysis/";
     public static final String SCHEME_GET_SCHEME_BY_SCHEME_MODE_AND_PLAN_TYPE = "scheme/getschemebyschememodeandplantype/";

@@ -191,6 +191,10 @@ body {
             					<c:if test="${menu.interestRatesActive == 'TRUE'}">
 								<li><a href="<%=request.getContextPath()%>/interest-rates">${ menu.interestRatesName }</a></li>
 								</c:if>
+
+									<c:if test="${menu.unitPriceActive == 'TRUE'}">
+										<li><a href="<%=request.getContextPath()%>/unit-prices">${ menu.unitPriceName }</a></li>
+									</c:if>
 								
             					<c:if test="${menu.potentialMemberActive == 'TRUE'}">
 								<li><a
