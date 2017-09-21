@@ -27,7 +27,10 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	
 	@Column(name="interestRatesActive", nullable=false)
 	private boolean interestRatesActive;
-	
+
+	@Column(name="unitPriceActive", nullable=false)
+	private boolean unitPriceActive;
+
 	@Column(name="whatIfAnalysisActive", nullable=false)
 	private boolean whatIfAnalysisActive;
 	
@@ -49,6 +52,10 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	
 	@Column(name="interestRatesName", nullable=false)
 	private String interestRatesName;
+
+
+	@Column(name = "unitPriceName", nullable = false)
+	private String unitPriceName;
 	
 	@Column(name="whatIfAnalysisName", nullable=false)
 	private String whatIfAnalysisName;
@@ -58,6 +65,8 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 
 	@Column(name="faqName", nullable=false)
 	private String faqName ;
+
+
 
 
 	public boolean isFaqActive() {
@@ -107,6 +116,15 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	public void setInterestRatesActive(boolean interestRatesActive) {
 		this.interestRatesActive = interestRatesActive;
 	}
+
+	public boolean isUnitPriceActive() {
+		return unitPriceActive;
+	}
+
+	public void setUnitPriceActive(boolean unitPriceActive) {
+		this.unitPriceActive = unitPriceActive;
+	}
+
 	public boolean isWhatIfAnalysisActive() {
 		return whatIfAnalysisActive;
 	}
@@ -145,6 +163,15 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 	public void setInterestRatesName(String interestRatesName) {
 		this.interestRatesName = interestRatesName;
 	}
+
+	public String getUnitPriceName() {
+		return unitPriceName;
+	}
+
+	public void setUnitPriceName(String unitPriceName) {
+		this.unitPriceName = unitPriceName;
+	}
+
 	public String getWhatIfAnalysisName() {
 		return whatIfAnalysisName;
 	}
@@ -161,9 +188,9 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 		return serialVersionUID;
 	}
 	public Menu(Long id, boolean annuityQuotationActive, boolean potentialMemberActive,
-			boolean potentialSponsorActive, boolean interestRatesActive, boolean whatIfAnalysisActive,
+			boolean potentialSponsorActive, boolean interestRatesActive, boolean unitPriceActive, boolean whatIfAnalysisActive,
 			boolean contactUsActive, boolean faqActive, String annuityQuotationName, String potentialMemberName,
-			String potentialSponsorName, String interestRatesName, String whatIfAnalysisName,
+			String potentialSponsorName, String interestRatesName, String unitPriceName, String whatIfAnalysisName,
 			String contactUsName, String faqName) {
 		super();
 		this.id = id;
@@ -171,12 +198,14 @@ public class Menu  extends GenericModel<Member>   implements Serializable {
 		this.potentialMemberActive = potentialMemberActive;
 		this.potentialSponsorActive = potentialSponsorActive;
 		this.interestRatesActive = interestRatesActive;
+		this.unitPriceActive=unitPriceActive;
 		this.whatIfAnalysisActive = whatIfAnalysisActive;
 		this.contactUsActive = contactUsActive;
 		this.annuityQuotationName = annuityQuotationName;
 		this.potentialMemberName = potentialMemberName;
 		this.potentialSponsorName = potentialSponsorName;
 		this.interestRatesName = interestRatesName;
+		this.unitPriceName = unitPriceName;
 		this.whatIfAnalysisName = whatIfAnalysisName;
 		this.contactUsName = contactUsName;
 		this.faqActive = faqActive;

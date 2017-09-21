@@ -1072,6 +1072,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean potentialMemberActive = this.get(request, "potentialMemberActive").equalsIgnoreCase("true");
         boolean potentialSponsorActive = this.get(request, "potentialSponsorActive").equalsIgnoreCase("true");
         boolean interestRatesActive = this.get(request, "interestRatesActive").equalsIgnoreCase("true");
+        boolean unitPriceActive = this.get(request, "unitPriceActive").equalsIgnoreCase("true");
         boolean whatIfAnalysisActive = this.get(request, "whatIfAnalysisActive").equalsIgnoreCase("true");
         boolean contactUsActive = this.get(request, "contactUsActive").equalsIgnoreCase("true");
         boolean faqActive = this.get(request, "faqActive").equalsIgnoreCase("true");
@@ -1080,6 +1081,7 @@ public class Admin extends BaseServlet implements Serializable {
         menu.setPotentialMemberActive(potentialMemberActive);
         menu.setPotentialSponsorActive(potentialSponsorActive);
         menu.setInterestRatesActive(interestRatesActive);
+        menu.setUnitPriceActive(unitPriceActive);
         menu.setWhatIfAnalysisActive(whatIfAnalysisActive);
         menu.setContactUsActive(contactUsActive);
         menu.setFaqActive(faqActive);
@@ -1087,6 +1089,7 @@ public class Admin extends BaseServlet implements Serializable {
         menu.setPotentialMemberName(this.get(request, "potentialMemberName"));
         menu.setPotentialSponsorName(this.get(request, "potentialSponsorName"));
         menu.setInterestRatesName(this.get(request, "interestRatesName"));
+        menu.setUnitPriceName(this.get(request,"unitPriceName"));
         menu.setWhatIfAnalysisName(this.get(request, "whatIfAnalysisName"));
         menu.setContactUsName(this.get(request, "contactUsName"));
         menu.setFaqName(this.get(request, "faqName"));

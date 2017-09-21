@@ -244,6 +244,23 @@ public class ApiBean implements ApiEJB {
             return null;
         }
     }
+    @Override
+    public JSONObject getSchemeUnitPrices(String schemeID) {
+        JSONObject response;
+
+                try {
+                    response = URLGet(APICall.SCHEME_GET_SCHEME_UNIT_PRICES + schemeID);
+                    if(response.getBoolean(Fields.SUCCESS))
+                    {
+                        return response;
+                    }
+                    else
+                        return null;
+                } catch (JSONException je) {
+                    jLogger.e("We have a json exception " + je.getMessage());
+                    return null;
+                }
+    }
 
     @Override
     public String getSponsorInterestRates(String sponsorId) {

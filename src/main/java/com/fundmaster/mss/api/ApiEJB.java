@@ -76,6 +76,8 @@ public interface ApiEJB {
     JSONObject getDcMemberBalances(String memberID);
     JSONObject getDbMemberBalances(String memberID, String schemeId);
     String getSchemeInterestRates(String schemeID);
+    JSONObject getSchemeUnitPrices(String schemeID);
+
     String getSponsorInterestRates(String sponsorId);
     JSONObject calculateWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate,
                                        String inflationRate,String email,String phone,String yourAge, String formula);

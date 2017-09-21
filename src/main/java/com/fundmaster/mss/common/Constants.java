@@ -26,6 +26,9 @@ public class Constants implements Serializable {
 	public static final String PAGE_HOME = "HOME";
 	public static final String PAGE_FAQ = "FAQ";
 	public static final String PAGE_INTEREST_RATES = "INTEREST_RATES";
+	public static final String PAGE_UNIT_PRICES = "UNIT_PRICES";
+
+
 	public static final String PAGE_WHAT_IF_ANALYSIS = "WHAT_IF_ANALYSIS";
 	public static final String PAGE_ANNUITY_QUOTATION = "ANNUITY_QUOTATION";
 	public static final String PAGE_POTENTIAL_MEMBER = "POTENTIAL_MEMBER";

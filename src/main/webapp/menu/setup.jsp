@@ -451,6 +451,19 @@
 							 <input type="checkbox" name="interestRatesActive" id="interestRatesActive"  ${menu.interestRatesActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
+							<tr>
+								<td>
+									<label class="control-label">UNIT PRICES</label>
+								</td>
+								<td>
+									<div class="form-group">
+										<input type="text" class="form-control" name="unitPriceName" id="unitPriceName" placeholder="UNIT PRICES" value="${ menu.unitPriceName }"/>
+									</div>
+								</td>
+								<td>
+									<input type="checkbox" name="unitPriceActive" id="unitPriceActive"  ${menu.unitPriceActive == 'TRUE' ? 'checked' : ''}/>
+								</td>
+							</tr>
 
 							<tr>
 							<td>
@@ -1111,6 +1124,15 @@
 		                    }
 		                }
 		            },
+                    unitPriceName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'A title for the Unit Prices menu is required'
+                            }
+                        }
+                    },
+
+
 		            whatIfAnalysisName: {
 		                validators: {
 		                    notEmpty: {
@@ -1144,6 +1166,7 @@
         	        	potentialMemberName: $('#potentialMemberName').val(),
         	        	potentialSponsorName: $('#potentialSponsorName').val(),
         	        	interestRatesName: $('#interestRatesName').val(),
+						unitPriceName: $('#unitPriceName').val(),
         	        	whatIfAnalysisName: $('#whatIfAnalysisName').val(),
         	        	contactUsName: $('#contactUsName').val(),
                         faqName: $('#faqName').val(),
@@ -1151,6 +1174,7 @@
         	        	potentialMemberActive: $('#potentialMemberActive').prop('checked'),
         	        	potentialSponsorActive: $('#potentialSponsorActive').prop('checked'),
         	        	interestRatesActive: $('#interestRatesActive').prop('checked'),
+						unitPriceActive: $('#unitPriceActive').prop('checked'),
         	        	whatIfAnalysisActive: $('#whatIfAnalysisActive').prop('checked'),
 						contactUsActive: $('#contactUsActive').prop('checked'),
                         faqActive: $('#faqActive').prop('checked'),
