@@ -141,15 +141,11 @@
 
                                         for ( var i = 0; i < json.rows.length; i++) {
                                              var row = json.rows[i];
-                                            var accPeriod = row['accountingPeriod'] ;
-                                            console.log(json[accPeriod]);
-                                            var percentageChange = row['percentageChange'];
-                                            console.log (json[percentageChange])
-
 
                                             html = html + "<tr><td>" + row['priceDate'] + "</td><td>" +row['change'] + "</td><td>" + row['annualChange'] +
-                                        "</td><td>" + row['price'] + "</td><td>" +  accPeriod + "</td> <td>" + percentageChange +
+                                        "</td><td>" + row['price'] + "</td><td>" + row['ap'] + "</td> <td>" + row['percentChange'] +
                                         "</td></tr>";
+
                                              stop_wait();
 
 

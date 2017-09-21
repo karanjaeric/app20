@@ -5,7 +5,7 @@
 	<persistence-unit name="MYSQL.MSS" transaction-type="JTA">
 		<description>MySQL Persistence Unit</description>
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:jboss/datasources/MssUg</jta-data-source>
+		<jta-data-source>java:jboss/datasources/Mss</jta-data-source>
 		<properties>
 			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform" />
 			<property name="hibernate.archive.autodetection" value="class" />
