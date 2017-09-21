@@ -107,6 +107,7 @@
 	}
 	function loadDashboard(MODULE)
 	{
+		console.log(MODULE);
 		$.ajax({
             url: $('#base_url').val() + 'dashboard',
             type: 'get',

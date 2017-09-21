@@ -213,7 +213,7 @@
                                                 var open_total = row['open_total'];
                                                 var open_total_final = parseFloat(open_total);
 
-                                                if(typeof	format_date(row['date_paid']) != 'undefined') {
+                                                if(typeof format_date(row['date_paid']) != 'undefined') {
 
                                                     var total_contr = row['contr_ee'];
                                                     var total_contr_final = parseFloat(total_contr);

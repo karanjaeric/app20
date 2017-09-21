@@ -1,16 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: tony
-  Date: 9/15/17
-  Time: 1:29 PM
+  Date: 3/18/17
+  Time: 11:32 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid section">
     <h3 class="text-center main-title">
-        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;ANNUAL CONTRIBUTION STATEMENT
+        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;MY STATEMENT OF ACCOUNT
     </h3>
-    <form class="form-inline" role="form" id="ac-form">
+    <form class="form-inline" role="form" id="sa-form">
         <div class="form-group col-md-6">
             <label for="asAt" class="control-label">As At:</label> <input type="text" readonly="readonly" name="asAt"
                                                                           class="form-control datepicker" id="asAt"
@@ -21,12 +21,14 @@
         </div>
     </form>
 
-     <input type="hidden" id="member_id" value="${ member_id }" />
+    <input type="hidden" id="scheme_id" value="${ scheme_id } "/>
+    <input type="hidden" id="member_id" value="${ member_id }" />
     <p>&nbsp;</p>
-    <div class="col-md-12" id="ac-results">
+    <div class="col-md-12" id="sa-results">
 
     </div>
 </div>
+
 <div class="modal fade" id="modal-view-statement" tabindex="-1" role="dialog" aria-labelledby="myModalLabelViewStatement" aria-hidden="true">
     <form role="form" id="form-view-statement">
         <div class="modal-dialog large-modal">
@@ -39,20 +41,29 @@
                 </div>
                 <div class="modal-body">
                     <h4>NARRATION:</h4>
-                    <table class="table table-responsive table-striped table-bordered" id="select-bal">
+                    <table class="table table-responsive table-striped table-bordered" id="select-opbal">
                     </table>
                     <h4>CONTRIBUTIONS:</h4>
                     <table class="table table-responsive table-striped table-bordered" id="select-contr">
                     </table>
-                    <h4>TOTAL INTEREST EARNED:</h4>
-                    <table class="table table-responsive table-striped table-bordered" id="select-totalintr">
+                    <h4>TOTAL CONTRIBUTIONS:</h4>
+                    <table class="table table-responsive table-striped table-bordered" id="select-intr">
                     </table>
-
+                    <h4>OP BAL + CONTR:</h4>
+                    <table class="table table-responsive table-striped table-bordered" id="select-total">
+                    </table>
+                    <h4>Total Interest:</h4>
+                    <table class="table table-responsive table-striped table-bordered" id="total-intr">
+                    </table>
+                    <h4>Accumulated Balance:</h4>
+                    <table class="table table-responsive table-striped table-bordered" id="acc-bal">
+                    </table>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
 <script type="text/javascript">
 
     function format_no(yourNumber) {
@@ -95,18 +106,18 @@
             autoclose: true
         });
         $('#asAt')
-            .datetimepicker({
-                format: 'mm-dd-yyyy',
-                startView: 'month',
-                minView: 'month',
-                autoclose: true
-            })
-            .on('changeDate', function(e) {
-                $(this).datetimepicker('hide');
-                // Revalidate the date field
-                $('#ac-form').bootstrapValidator('revalidateField', 'asAt');
-            });
-        $('#ac-form').bootstrapValidator({
+                .datetimepicker({
+                    format: 'mm-dd-yyyy',
+                    startView: 'month',
+                    minView: 'month',
+                    autoclose: true
+                })
+                .on('changeDate', function(e) {
+                    $(this).datetimepicker('hide');
+                    // Revalidate the date field
+                    $('#sa-form').bootstrapValidator('revalidateField', 'asAt');
+                });
+        $('#sa-form').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
@@ -144,7 +155,8 @@
                             data: {ACTION:'AC_GRID',
 
                                 member_id: $('#member_id').val(),
-                                 ap_id: apId
+                                scheme_id: $('#scheme_id').val(),
+                                ap_id: apId
                             },
                             dataType: 'json',
                             success: function(json) {
@@ -159,19 +171,60 @@
 
                                         if(key == 'rows')
                                         {
-                                            html_head = "<tr><th colspan='2' class='text-center'>NARRATION</th><th colspan='2' class='text-center'>EMPLOYEE</th><th colspan='2' class='text-center'>EMPLOYER</th>" +
-                                                "<th colspan='2' class='text-center'>AVC EMPLOYEE</th> <th colspan='2' class='text-center'>AVC EMPLOYER</th><th colspan='2' class='text-center'>TOTAL</th></tr>";
-                                             intr_head = "<tr><th class='text-center'>Total Interest Earned </th><th class='text-center'>0.00</th></tr>";
-                                            html = "<tr><th class='text-center'>CONTRIBUTIONS</th><th class='text-center'>EE</th><th class='text-center'>ER</th><th class='text-center'>AVC</th><th class='text-center'>AVCER</th><th class='text-center'>TOTAL</th></tr>";
+                                            narration_head = "<tr><th class='text-center'>NARRATION</th><th class='text-center'>EMPLOYEE</th><th class='text-center'>EMPLOYER</th><th class='text-center'>AVC EMPLOYEE</th><th class='text-center'>AVC EMPLOYER</th><th class='text-center'>TOTAL</th></tr>";
+                                            html = "<tr><th class='text-center'>DATE PAID</th><th class='text-center'>EE</th><th class='text-center'>ER</th><th class='text-center'>AVC</th><th class='text-center'>AVCER</th><th class='text-center'>TOTAL</th></tr>";
 
+                                            html2 = "";
+                                            html3 = "";
+                                            html4 = "";
+                                            html5 = "";
+
+//                                            var fromDate = json.rows['from_date'];
+//                                            console.log("From date b4 loop: " + fromDate);
+//
+//                                            var toDate = json.rows['to_date'];
+//                                            console.log("To date b4 loop: " + toDate);
+
+                                            for ( var i = 0; i < json.rows.length; i++) {
+
+                                                var row = json.rows[i];
+
+                                                console.log("From date: "  + row['from_date']);
+
+                                                if(typeof row['contr_for'] != 'undefined') {
+
+                                                    html = html + "<tr><td>" + row['contr_for'] + "</td><td>" + format_no(row['ee']) + "</td><td>" + format_no(row['er']) + "</td><td>" + format_no(row['avc']) + "</td><td>" + format_no(row['avcer']) + "</td><td>" + format_no(row['total_contr']) + "</td></tr>";
+
+                                                }
+
+
+                                                op_row = "<tr><td>" + "Balances as at: <br> " + row['from_date'] + "</td><td>" + format_no(row['openingEE']) + "</td><td>" + format_no(row['openingER']) +"</td><td>" + format_no(row['openingAVC']) + "</td><td>" + format_no(row['openingAVCER']) + "</td><td>" + format_no(row['totalOpeningBalance']) + "</td></tr>";
+
+                                                html2 = "<tr><td>" + "Total Contributions as at: <br> " + row['to_date'] + "</td><td>" + format_no(row['eeContribution']) + "</td><td>" + format_no(row['erContribution']) +"</td><td>" + format_no(row['avcContribution']) + "</td><td>" + format_no(row['avcerContribution']) + "</td><td>" + format_no(row['totalContribution']) + "</td></tr>";
+
+                                                html3 = "<tr><td>" + "As at: <br> " + row['to_date'] + "</td><td>" + format_no(row['closingEE']) + "</td><td>" + format_no(row['closingER']) +"</td><td>" + format_no(row['closingAVC']) + "</td><td>" + format_no(row['closingAVCER']) + "</td><td>" + format_no(row['closingTotalMinusInterest']) + "</td></tr>";
+
+                                                html4 = "<tr><td colspan='5' class='text-center'>" + " Total Interest earned:  " + "</td><td>" + format_no(row['totalInterest']) + "</td></tr>";
+
+                                                html5 = "<tr><td colspan='5' class='text-center'>" + " Accumulated balance as at: " + row['to_date']  + "</td><td>" + format_no(row['totalclosingBalance']) + "</td></tr>";
+
+
+
+                                            }
+
+                                            html1 = narration_head + op_row;
+
+                                            stop_wait();
                                         }
 
                                     });
                                 }
-                                $('#select-bal').html(html1);
+                                $('#select-opbal').html(html1);
                                 $('#select-intr').html(html2);
                                 $('#select-contr').html(html);
                                 $('#select-total').html(html3);
+                                $('#total-intr').html(html4);
+                                $('#acc-bal').html(html5);
                                 stop_wait();
                                 $('#modal-view-statement').modal('show');
                             }
