@@ -87,6 +87,7 @@
 
 						json = $.parseJSON(json.data);
 						console.log(json.accountingPeriodId);
+
 						var url;
 		            	if($('#unitization').val() == 'YES')
 		            	{

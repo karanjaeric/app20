@@ -1803,6 +1803,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setOperation_personal_info(this.get(request, "operation_personal_info").equalsIgnoreCase("true"));
         perm.setOperation_statement_of_account(
                 this.get(request, "operation_statement_of_account").equalsIgnoreCase("true"));
+        perm.setOperation_unitized_statement(this.get(request,"operation_unitized_statement").equalsIgnoreCase("true"));
         perm.setUsers(this.get(request, "users").equalsIgnoreCase("true"));
         perm.setUser_enable_disable(this.get(request, "user_enable_disable").equalsIgnoreCase("true"));
         perm.setAudit_trail(this.get(request, "audit_trail").equalsIgnoreCase("true"));
