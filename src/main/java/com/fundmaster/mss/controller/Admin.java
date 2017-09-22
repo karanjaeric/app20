@@ -607,13 +607,15 @@ public class Admin extends BaseServlet implements Serializable {
             if (recipient.equalsIgnoreCase("defaultEmail")) {
 
                 recipients.add(emails.getDefaultEmail());
-                recipients.add(emails.getCrmEmail());
             } else if (recipient.equalsIgnoreCase("marketingEmail")) {
                 recipients.add(emails.getMarketingEmail());
                 //sendTo = emails.getMarketingEmail();
             } else if (recipient.equalsIgnoreCase("supportEmail")) {
                 recipients.add(emails.getSupportEmail());
                 //sendTo = emails.getSupportEmail();
+            } else if (recipient.equalsIgnoreCase("crmEmail")){
+                recipients.add(emails.getCrmEmail());
+
             }
 
         }
