@@ -54,6 +54,9 @@
 							<c:if test="${ permissions.operation_statement_of_account }">
 								<option>STATEMENT OF ACCOUNT</option>
 							</c:if>
+							<c:if test="${ permissions.operation_unitized_statement }">
+								<option>UNITIZED STATEMENT</option>
+							</c:if>
 							<c:if test="${ permissions.operation_benefit_projection }">
 								<option>BENEFITS PROJECTION</option>
 							</c:if>
@@ -151,6 +154,20 @@ function do_function()
 	        }
 		});
 	}
+    else if($('#operation').val() == 'UNITIZED STATEMENT')
+    {
+        start_wait();
+        $.ajax({
+            url: $('#base_url').val() + 'dashboard',
+            type: 'get',
+            data: {dashboard: 'US', memberID: member_id},
+            dataType: 'html',
+            success: function(html) {
+                $('#page-info').html(html);
+                stop_wait();
+            }
+        });
+    }
 	else if($('#operation').val() == 'BENEFITS PROJECTION')
 	{
 		start_wait();

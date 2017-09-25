@@ -281,6 +281,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		return operation_statement_of_account;
 	}
 
+	public boolean isOperation_unitized_statement() {
+		return operation_unitized_statement;
+	}
+
+	public void setOperation_unitized_statement(boolean operation_unitized_statement) {
+		this.operation_unitized_statement = operation_unitized_statement;
+	}
+
 	public void setOperation_statement_of_account(
 			boolean operation_statement_of_account) {
 		this.operation_statement_of_account = operation_statement_of_account;
@@ -535,6 +543,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean operation_contribution_history,
 			boolean operation_balance_history,
 			boolean operation_statement_of_account,
+			boolean operation_unitized_statement,
 			boolean withdrawal_statement,
 			boolean withdrawal_settlements,
 			boolean admin_fee_listing,
@@ -599,6 +608,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.operation_contribution_history = operation_contribution_history;
 		this.operation_balance_history = operation_balance_history;
 		this.operation_statement_of_account = operation_statement_of_account;
+		this.operation_unitized_statement=operation_unitized_statement;
 		this.operation_benefit_projection = operation_benefit_projection;
 		this.operation_annual_contribution = operation_annual_contribution;
 		this.operation_claim_status = operation_claim_status;
@@ -629,7 +639,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	
 	private boolean profile_privileges, member_edit_permissions, show_db_contribution_graph, member_menu_config, pensioner_menu_config, member_dashboard_items, admin_dashboard_items,  profile_login_username, scheme_managers, users, user_enable_disable, audit_trail;
 	
-	private boolean operation_personal_info, operation_contribution_history, operation_balance_history, operation_statement_of_account, operation_benefit_projection, operation_claim_status, operation_annual_contribution;
+	private boolean operation_personal_info, operation_contribution_history, operation_balance_history, operation_statement_of_account,operation_unitized_statement, operation_benefit_projection, operation_claim_status, operation_annual_contribution;
 
 	private boolean withdrawal_statement;
 
