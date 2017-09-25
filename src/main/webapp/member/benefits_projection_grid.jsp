@@ -318,7 +318,7 @@
                                                 rowTwo = "<tr><th scope='row'>CONTRIBUTION</th><td>" + format_no(row['ben.ee']) + "</td><td></td><td>" + format_no(row['ben.er']) + "</td><td></td></tr>";
                                                 rowThree = "<tr><th scope='row'>AVC BALANCES</th><td>" + format_no(row['ben.avcBal']) + "</td><td></td><td>" + format_no(row['ben.avcerBal']) + "</td><td></td></tr>";
                                                 rowFour = "<tr><th scope='row'>AVC</th><td>" + format_no(row['ben.avc']) + "</td><td></td><td>" + format_no(row['ben.avcer']) + "</td><td></td></tr>";
-                                                rowFive = "<tr><th scope='row'>INTEREST</th><td>" + ee_intr_final + "</td><td></td><td>" + er_intr_final + "</td><td></td></tr>";
+                                                rowFive = "<tr><th scope='row'>INTEREST</th><td>" + format_no(ee_intr_final) + "</td><td></td><td>" + format_no(er_intr_final) + "</td><td></td></tr>";
                                                 rowTotal = "<tr><th scope='row'>TOTALS</th><td>" + format_no(row['ben.eeTot']) + "</td><td></td><td>" + format_no(row['ben.erTot']) + "</td><td></td></tr>";
 
                                             pen_details_rowOne = "<tr><th scope='row'>Full Names: </th><td colspan='6' class='text-center'>" + row['ben.member'] + "</td></tr>";

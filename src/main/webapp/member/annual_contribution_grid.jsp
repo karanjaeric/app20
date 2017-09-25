@@ -8,16 +8,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid section">
     <h3 class="text-center main-title">
-        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;MY STATEMENT OF ACCOUNT
+        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;ANNUAL CONTRIBUTION STATEMENT
     </h3>
-    <form class="form-inline" role="form" id="sa-form">
-        <div class="form-group col-md-6">
-            <label for="asAt" class="control-label">As At:</label> <input type="text" readonly="readonly" name="asAt"
-                                                                          class="form-control datepicker" id="asAt"
-                                                                          placeholder="As At">
+    <form class="form-inline" role="form" id="ac-form">
+
+        <div class="col-md-6" id="divAccperiod">
+            <select id="accperiod" name="accperiod" class="form-control">
+                <option value="">--Select Accounting Period--</option>
+            </select>
         </div>
+
         <div class="col-md-6">
-            <button class="btn btn-primary btn-sm">SHOW STATEMENT</button>
+            <button class="btn btn-primary btn-sm">SHOW REPORT</button>
         </div>
     </form>
 
@@ -97,27 +99,50 @@
         }
     };
 
+    var array = {};
+
     $(document).ready(function(){
 
-        $('.datepicker').datetimepicker({
-            format: 'mm-dd-yyyy',
-            startView: 'month',
-            minView: 'month',
-            autoclose: true
-        });
-        $('#asAt')
-                .datetimepicker({
-                    format: 'mm-dd-yyyy',
-                    startView: 'month',
-                    minView: 'month',
-                    autoclose: true
-                })
-                .on('changeDate', function(e) {
-                    $(this).datetimepicker('hide');
-                    // Revalidate the date field
-                    $('#sa-form').bootstrapValidator('revalidateField', 'asAt');
-                });
-        $('#sa-form').bootstrapValidator({
+        function initialize()
+        {
+            $.ajax({
+                url: $('#base_url').val() + 'admin',
+                type: 'post',
+                data: {ACTION:'PERIODS'},
+                dataType: 'json',
+                success: function(json) {
+                    if(json.success)
+                    {
+                        json = $.parseJSON(json.data);
+                        console.log(json);
+
+                        var combo = "<select id=\"accperiod\" name=\"accperiod\" class=\"form-control\"><option>--Select Accounting Period--</option>";
+                        $.each(json, function(key, value) {
+                            if(key == 'rows')
+                            {
+                                for ( var i = 0; i < json.rows.length; i++) {
+                                    var row = json.rows[i];
+                                    combo = combo + "<option value = " + row['id'] + ">" + row['name'] + "</option>";
+                                    array = json.rows;
+                                }
+                                combo = combo + "</select>";
+
+                            }
+                        });
+                        $('#divAccperiod').html(combo);
+                    }
+                    else
+                    {
+                        stop_wait();
+                        bootbox.alert('<p class="text-center">' + json.message + '</p>');
+                    }
+                }
+            });
+        }
+
+        initialize();
+
+        $('#ac-form').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
@@ -136,18 +161,7 @@
         }) .on('success.form.bv', function(e) {
 
             start_wait();
-            console.log($('#asAt').val());
-            $.ajax({
-                url: $('#base_url').val() + 'member',
-                type: 'post',
-                data: {ACTION:'AP', date: $('#asAt').val()},
-                dataType: 'json',
-                success: function(json) {
-                    if(json.success)
-                    {
-                        json = $.parseJSON(json.data);
-                        console.log("Acc Period: " + json.accountingPeriodId);
-                        var apId = json.accountingPeriodId;
+
                         $.ajax({
 
                             url: $('#base_url').val() + 'member',
@@ -156,7 +170,7 @@
 
                                 member_id: $('#member_id').val(),
                                 scheme_id: $('#scheme_id').val(),
-                                ap_id: apId
+                                ap_id: $('#accperiod').val()
                             },
                             dataType: 'json',
                             success: function(json) {
@@ -230,13 +244,6 @@
                             }
 
                         });
-                    }
-                    else
-                    {
-                        stop_wait();
-                    }
-                }
-            });
 
         });
 
