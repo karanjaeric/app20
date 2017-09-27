@@ -917,6 +917,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean UnitizedStatement = this.get(request, "UnitizedStatement").equalsIgnoreCase("true");
         boolean WhatIfAnalysis = this.get(request, "WhatIfAnalysis").equalsIgnoreCase("true");
         boolean BenefitsProjection = this.get(request, "benefitsProjection").equalsIgnoreCase("true");
+        boolean BenefitsProjectionPage = this.get(request, "benefitsProjectionPage").equalsIgnoreCase("true");
         boolean BenefitsProjectionGrid = this.get(request, "benefitProjectionGrid").equalsIgnoreCase("true");
         boolean AnnualContributionStatementGrid = this.get(request, "annualContributionStatementGrid").equalsIgnoreCase("true");
         boolean AnnualContributionStatement = this.get(request, "annualContributionStatement").equalsIgnoreCase("true");
@@ -932,6 +933,7 @@ public class Admin extends BaseServlet implements Serializable {
         memberMenu.setUnitizedStatement(UnitizedStatement);
         memberMenu.setWhatIfAnalysis(WhatIfAnalysis);
         memberMenu.setBenefitsProjection(BenefitsProjection);
+        memberMenu.setBenefitsProjectionPage(BenefitsProjectionPage);
         memberMenu.setBenefitProjectionGrid(BenefitsProjectionGrid);
         memberMenu.setAnnualContributionStatementGrid(AnnualContributionStatementGrid);
         memberMenu.setAnnualContributionStatement(AnnualContributionStatement);
@@ -1767,6 +1769,8 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setPending_contribution(this.get(request, "pending_contribution").equalsIgnoreCase("true"));
         perm.setUac(this.get(request, "uac").equalsIgnoreCase("true"));
         perm.setAnalytics(this.get(request, "analytics").equalsIgnoreCase("true"));
+        perm.setBenefitProjectionPage(this.get(request, "benefitProjectionPage").equalsIgnoreCase("true"));
+
         perm.setCalculator_log(this.get(request, "calculator_log").equalsIgnoreCase("true"));
         perm.setContent_help(this.get(request, "content_help").equalsIgnoreCase("true"));
         perm.setContent_page(this.get(request, "content_page").equalsIgnoreCase("true"));

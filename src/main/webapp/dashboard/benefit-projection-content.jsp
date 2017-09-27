@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
- <div class="row">
+<div class="row">
 
 
-         <form role="form" id="form-projection" method="POST" >
+    <form role="form" id="form-projection" method="POST" >
         <h1 class="heading">${ menu.benefitProjectionName }</h1>
         <fieldset>
             <legend>Benefit Projection Calculation Parameters</legend>
@@ -55,18 +55,17 @@
         </fieldset>
         <p>&nbsp;</p>
     </form>
-     <h3>Projected Benefits</h3>
+    <h3>Projected Benefits</h3>
 
-     </table> <table class="table table-responsive table-striped table-bordered" id="projection-results">
-    </table>
+    </table> <table class="table table-responsive table-striped table-bordered" id="projection-results">
+</table>
 
 </div>
 
+     <script type="text/javascript">
+        $(document).ready(function(){
 
-<script type="text/javascript">
-    $(document).ready(function(){
-
-        $('#form-projection')
+            $('#form-projection')
                 .bootstrapValidator(
                     {
                         message : 'This value is not valid',
@@ -133,47 +132,47 @@
                         e.preventDefault();
                         // Get the form instance
                         $.ajax({
-                                url : $('#base_url').val() + 'benefit-projection',
-                                 type : 'post',
-                                data : {
-                                    interestRate : $(
-                                        '#interestRate')
-                                        .val(),
-                                    years : $(
-                                        '#years')
-                                        .val(),
-                                    paymentFrequency : $(
-                                        '#paymentFrequency')
-                                        .val(),
-                                    paymentAmount : $(
-                                        '#paymentAmount')
-                                        .val(),
-                                    presentValue: $(
-                                        '#presentValue')
-                                        .val()
-                                },
+                            url : $('#base_url').val() + 'benefit-projection',
+                            type : 'post',
+                            data : {
+                                interestRate : $(
+                                    '#interestRate')
+                                    .val(),
+                                years : $(
+                                    '#years')
+                                    .val(),
+                                paymentFrequency : $(
+                                    '#paymentFrequency')
+                                    .val(),
+                                paymentAmount : $(
+                                    '#paymentAmount')
+                                    .val(),
+                                presentValue: $(
+                                    '#presentValue')
+                                    .val()
+                            },
 
-                                dataType : 'json',
-                                success : function(json) {
-                                    html = "<tr><th>PROJECTED RESULTS</th></tr>";
+                            dataType : 'json',
+                            success : function(json) {
+                                html = "<tr><th>PROJECTED RESULTS</th></tr>";
+                                stop_wait();
+                                if (json.success) {
+                                    console.log("The JSON is  " + json);
+
+                                    var obj = $.parseJSON(json.data);
+                                    console.log(json);
+                                    var FV = obj.futureValue;
+                                    console.log("FV " + FV);
+
+                                    html = html + "<tr><td><h3>" + FV + "</h3></td> </tr>";
                                     stop_wait();
-                                    if (json.success) {
-                                         console.log("The JSON is  " + json);
-
-                                         var obj = $.parseJSON(json.data);
-                                        console.log(json);
-                                        var FV = obj.futureValue;
-                                        console.log("FV " + FV);
-
-                                                html = html + "<tr><td><h3>" + FV + "</h3></td> </tr>";
-                                                stop_wait();
 
 
-                                         $('#projection-results').html(html);
-                                      }
+                                    $('#projection-results').html(html);
                                 }
-                            });
+                            }
+                        });
 
+                    });
         });
-    });
     </script>

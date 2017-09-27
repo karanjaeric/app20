@@ -132,6 +132,11 @@
           <p>Access to portal analytics and reporting page</p>
      </div>
 
+	<h2 class="accordion-header">BENEFIT PROJECTION (CALCULATOR)  <span class="pull-right"><input type="checkbox" id="benefitProjectionPage" class="form-control input-sm"  ${permissions.benefitProjectionPage == 'TRUE' ? 'checked' : ''}/></span></h2>
+	<div class="accordion-content">
+		<p>Access to portal benefit calculator page</p>
+	</div>
+
 	<h2 class="accordion-header">CALCULATOR &amp; LOG<span class="pull-right"><input type="checkbox" id="calculator_log" class="form-control input-sm"  ${permissions.calculator_log == 'TRUE' ? 'checked' : ''}/></span></h2>
 	<div class="accordion-content">
 		<p>Access to portal calculator logs page</p>

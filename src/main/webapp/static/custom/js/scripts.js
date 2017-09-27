@@ -406,6 +406,15 @@ $(document).ready(function(){
 		switch_page('ANALYTICS');
 		
     });
+    $('#benefitProjectionPage-main-li').click(function(){
+
+        $('#benefitProjectionPage-main-li').removeClass('active');
+
+        $('#benefitProjectionPage-main-li').addClass('active');
+
+        switch_page('CBPA');
+
+    });
 
 	/***	AGENTS ONLY MENU ****/
 

@@ -7,12 +7,12 @@
 					${ content.text }
 				</div>
 				<div class="col-md-8 col-sm-6">
-					<jsp:include page="/member/benefit-projection-content.jsp" />
+					<jsp:include page="/dashboard/benefit-projection-content.jsp" />
 				</div>
 			</c:if>
 			<c:if test="${content.position == 'RIGHT' }">
 				<div class="col-md-8 col-sm-6">
-					<jsp:include page="/member/benefit-projection-content.jsp" />
+					<jsp:include page="/dashboard/benefit-projection-content.jsp" />
 				</div>
 				<div class="col-md-4 col-sm-6">
 					${ content.text }
@@ -23,12 +23,12 @@
 					${ content.text }
 				</div>
 				<div class="row">
-					<jsp:include page="/member/benefit-projection-content.jsp" />
+					<jsp:include page="/dashboard/benefit-projection-content.jsp" />
 				</div>
 			</c:if>
 			<c:if test="${content.position == 'BOTTOM' }">
 				<div class="row">
-					<jsp:include page="/member/benefit-projection-content.jsp" />
+					<jsp:include page="/dashboard/benefit-projection-content.jsp" />
 				</div>
 				<div class="row">
 					${ content.text }
@@ -36,10 +36,10 @@
 			</c:if>
 		</c:if>
 		<c:if test="${ content.publish == 'FALSE' }">
-			<jsp:include page="/member/benefit-projection-content.jsp" />
+			<jsp:include page="/dashboard/benefit-projection-content.jsp" />
 		</c:if>-->
 
-        <jsp:include page="/member/benefit-projection-content.jsp" />
+        <jsp:include page="/dashboard/benefit-projection-content.jsp" />
 
     </div>
 </div>

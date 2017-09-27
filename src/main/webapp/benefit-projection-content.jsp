@@ -63,7 +63,6 @@
 </div>
 <script src="static/custom/vendors/jquery-1.9.1.min.js"></script>
 
-<%--<c:if test="${ showScript }">--%>
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -179,4 +178,3 @@
         });
     });
     </script>
- <%--</c:if>--%>
