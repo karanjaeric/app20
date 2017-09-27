@@ -152,8 +152,8 @@
                                             var grandTotal_format_final = parseFloat(grandTotal).toFixed(2);
 
                                             html = html + "<tr><td>" + format_date(row['as_at']) + "</td><td>" + format_no(row['ee_bal']) + "</td><td>" + format_no(row['ee_contr']) + "</td><td>" + format_no(row['ee_intr']) +
-                                                    "</td><td>" + format_no(eeClose) + "</td><td>" + format_no(row['er_bal']) + "</td><td>" + format_no(row['er_contr']) + "</td><td>" + format_no(row['er_intr']) +
-                                                    "</td><td>" + er_close_final + "</td><td>" + grandTotal_format_final + "</td></tr>";
+                                                    "</td><td>" + format_no(eeClose.toFixed(2)) + "</td><td>" + format_no(row['er_bal']) + "</td><td>" + format_no(row['er_contr']) + "</td><td>" + format_no(row['er_intr']) +
+                                                    "</td><td>" + format_no(er_close_final) + "</td><td>" + format_no(grandTotal_format_final) + "</td></tr>";
 
                                             /*eeSum += row['ee'];
                                             erSum += row['er'];

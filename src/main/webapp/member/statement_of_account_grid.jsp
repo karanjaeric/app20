@@ -204,7 +204,7 @@
                                                 var total_intr_final = parseFloat(intr_float).toFixed(2);
 
                                                 op_row = "<tr><td>" + format_no(row['open_ee_reg']) + "</td><td>" + format_no(row['open_ee_unreg']) + "</td><td>" + format_no(row['open_er_reg']) +"</td><td>" + format_no(row['open_er_unreg']) + "</td><td>" + format_no(row['avc_reg']) + "</td><td>" + format_no(row['avc_unreg']) + "</td><td>" + format_no(row['open_total']) + "</td></tr>";
-                                                intr_row = "<tr><td>" + ee_contr_final + "</td><td>" + er_contr_final + "</td><td>" + format_no(row['avc_contr_intr']) +"</td><td>" + openingee_intr_final + "</td><td>" + openinger_intr_final + "</td><td>" + format_no(row['openingavc_intr']) + "</td><td>" + total_intr_final + "</td></tr>";
+                                                intr_row = "<tr><td>" + format_no(ee_contr_final) + "</td><td>" + format_no(er_contr_final) + "</td><td>" + format_no(row['avc_contr_intr']) +"</td><td>" + format_no(openingee_intr_final) + "</td><td>" + format_no(openinger_intr_final) + "</td><td>" + format_no(row['openingavc_intr']) + "</td><td>" + format_no(total_intr_final) + "</td></tr>";
 
                                                 var interest_total = row['total_intr'];
                                                 var interest_total_final = parseFloat(interest_total);
