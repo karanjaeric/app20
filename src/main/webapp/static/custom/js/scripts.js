@@ -412,7 +412,7 @@ $(document).ready(function(){
 
         $('#benefitProjectionPage-main-li').addClass('active');
 
-        switch_page('CBPA');
+        switch_page('CBP');
 
     });
 
