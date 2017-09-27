@@ -167,7 +167,7 @@ body {
 						</c:if>
 					</p>
 					<div class="row">
-						<div class="col-md-9">
+						<div class="col-sm-9">
 							<ul class="nav navbar-nav">
 							
 								<li><a href="<%=request.getContextPath()%>">Home</a></li>
@@ -175,6 +175,11 @@ body {
 								<c:if test="${menu.annuityQuotationActive == 'TRUE'}">
 								<li><a
 									href="<%=request.getContextPath()%>/annuity-quotation">${ menu.annuityQuotationName }</a></li>
+								</c:if>
+
+								<c:if test="${menu.benefitProjectionActive == 'TRUE'}">
+									<li><a
+											href="<%=request.getContextPath()%>/benefit-projection">${ menu.benefitProjectionName }</a></li>
 								</c:if>
 								
 								<c:if test="${menu.whatIfAnalysisActive == 'TRUE'}">
@@ -222,7 +227,7 @@ body {
 								</c:if>
 							</ul>
 						</div>
-						<div class="col-md-3 calls-to-action hidden-sm hidden-xs">
+						<div class="col-sm-3 calls-to-action hidden-sm hidden-xs">
 							<a class="btn btn-sm btn-warning"
 								href="<%=request.getContextPath()%>/sign-in"><strong>Sign
 									In</strong></a> <a class="btn btn-sm btn-success"

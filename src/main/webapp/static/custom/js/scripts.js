@@ -548,7 +548,15 @@ $(document).ready(function(){
 		
 		m_switch("WIA");
 	});
-	
+    $('#calculate-benefit-projection-li').click(function(){
+
+        $('#main-menu.nav li').removeClass('active');
+
+        $('#calculate-benefit-projection-li').addClass('active');
+
+        m_switch("CBP");
+    });
+
 
 	
 	$('#benefits-projection-li').click(function(){

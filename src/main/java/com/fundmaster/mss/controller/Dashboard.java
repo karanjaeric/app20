@@ -219,6 +219,10 @@ public class Dashboard extends BaseServlet implements Serializable {
                      showWhatIfAnalysis(request, response, session);
 
                      break;
+                 case Actions.CALCULATE_BENEFIT_PROJECTION:
+                     showBenefitProjectionPage(request, response, session);
+
+                     break;
                  case Actions.MEMBER_BALANCE_HISTORY:
                      showMemberBalanceHistory(request, response, session);
                      break;
@@ -507,7 +511,16 @@ public class Dashboard extends BaseServlet implements Serializable {
         this.audit(session, "Accessed what if analysis page");
         request.getRequestDispatcher("what-if-content.jsp").forward(request, response);
     }
-
+ private void showBenefitProjectionPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+    PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_BENEFIT_PROJECTION);
+    request.setAttribute("content", content);
+    Setting settings = settingBeanI.find();
+    request.setAttribute("settings", settings);
+    request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
+    logActivity("BENEFIT PROJECTION", "Accessed benefit projection calculator page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+    this.audit(session, "Accessed benefit projection calculator page");
+    request.getRequestDispatcher("member/benefit-projection-content.jsp").forward(request, response);
+}
     private void showMemberBalanceHistory(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);

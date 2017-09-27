@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid section">
     <h3 class="text-center main-title">
-        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;MY STATEMENT OF ACCOUNT
+        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;MY ANNUAL CONTRIBUTION STATEMENT
     </h3>
     <form class="form-inline" role="form" id="sa-form">
         <div class="form-group col-md-6">
@@ -36,7 +36,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title" id="myModalLabelViewContributions">
-                        <i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;STATEMENT OF ACCOUNT
+                        <i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;ANNUAL CONTRIBUTION STATEMENT
                     </h4>
                 </div>
                 <div class="modal-body">

@@ -1071,6 +1071,7 @@ public class Admin extends BaseServlet implements Serializable {
     private void editMenuSettings(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
     /* Menu Update Request */
         boolean annuityQuotationActive = this.get(request, "annuityQuotationActive").equalsIgnoreCase("true");
+        boolean benefitProjectionActive = this.get(request, "benefitProjectionActive").equalsIgnoreCase("true");
         boolean potentialMemberActive = this.get(request, "potentialMemberActive").equalsIgnoreCase("true");
         boolean potentialSponsorActive = this.get(request, "potentialSponsorActive").equalsIgnoreCase("true");
         boolean interestRatesActive = this.get(request, "interestRatesActive").equalsIgnoreCase("true");
@@ -1080,6 +1081,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean faqActive = this.get(request, "faqActive").equalsIgnoreCase("true");
         Menu menu = menuBeanI.find();
         menu.setAnnuityQuotationActive(annuityQuotationActive);
+        menu.setBenefitProjectionActive(benefitProjectionActive);
         menu.setPotentialMemberActive(potentialMemberActive);
         menu.setPotentialSponsorActive(potentialSponsorActive);
         menu.setInterestRatesActive(interestRatesActive);
@@ -1088,6 +1090,7 @@ public class Admin extends BaseServlet implements Serializable {
         menu.setContactUsActive(contactUsActive);
         menu.setFaqActive(faqActive);
         menu.setAnnuityQuotationName(this.get(request, "annuityQuotationName"));
+        menu.setBenefitProjectionName(this.get(request,"benefitProjectionName"));
         menu.setPotentialMemberName(this.get(request, "potentialMemberName"));
         menu.setPotentialSponsorName(this.get(request, "potentialSponsorName"));
         menu.setInterestRatesName(this.get(request, "interestRatesName"));

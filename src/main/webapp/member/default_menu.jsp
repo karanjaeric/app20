@@ -97,6 +97,11 @@
                 class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> WHAT IF ANALYSIS</a></li>
         </c:if>
+        <c:if test="${memberMenu.benefitsProjection == 'TRUE'}">
+            <li id="calculate-benefit-projection-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> BENEFIT PROJECTION (CALCULATOR)</a></li>
+        </c:if>
 
         <c:if test="${memberMenu.media == 'TRUE'}">
         <li id="media-files-li"><a href="javascript:void(0);"><i
@@ -109,6 +114,7 @@
                     class="glyphicon glyphicon-folder-close"></i>&nbsp;<i
                     class="fa fa-chevron-right"></i> CLAIMS </a></li>
         </c:if>
+
 
     </ul>
 </div>
