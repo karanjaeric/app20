@@ -411,7 +411,7 @@
 							</tr>
 							<tr>
 								<td>
-									<label class="control-label">BENEFIT PROJECTION </label>
+									<label class="control-label">BENEFIT PROJECTION (CAL) </label>
 								</td>
 								<td>
 									<div class="form-group">
@@ -1184,7 +1184,7 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {menu_id: $('#menu_id').val(), annuityQuotationName: $('#annuityQuotationName').val(),
-						benefitProjectionName: $('#potentialMemberName').val(),
+						benefitProjectionName: $('#benefitProjectionName').val(),
         	        	potentialMemberName: $('#potentialMemberName').val(),
         	        	potentialSponsorName: $('#potentialSponsorName').val(),
         	        	interestRatesName: $('#interestRatesName').val(),
