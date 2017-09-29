@@ -71,6 +71,7 @@
 				<p>&nbsp;</p>
 			</c:when>
 			<c:otherwise>
+					<br>
 				<small>CUMMULATIVE INTEREST TO DATE:</small> <span id="cummulative-interests"></span></h3>
 				<p>&nbsp;</p>
 			</c:otherwise>
@@ -141,14 +142,15 @@ $(document).ready(function () {
 					$.ajax({
 				        url: $('#base_url').val() + 'member',
 				        type: 'post',
-				        data: {ACTION:'CB'},
+				        data: {ACTION:'AB'},
 				        dataType: 'json',
 				        success: function(json) {
 				            if(json.success)
 			   	            {
 								console.log(json);
 								json = $.parseJSON(json.data);
-				            	$('#accummulated-benefits').html(currency + " " + format_no(json.total));
+								console.log("AB" +json.cummulativebenefit);
+				            	$('#accummulated-benefits').html(currency + " " + format_no(json.cummulativebenefit));
 			   	            }
 				            else
 			    	        {
@@ -205,7 +207,9 @@ $(document).ready(function () {
 				    	    	       	            {
 
 														json = $.parseJSON(json.data);
-				    	    	    	            	$('#cummulative-interests').html(currency + ' ' + format_no(json.cummulativeInterest));
+                                                        console.log("CI "+ json.cummulativeInterest);
+
+                                                        $('#cummulative-interests').html(currency + ' ' + format_no(json.cummulativeInterest));
 				    	    	       	            }
 				    	    	    	            else
 				    	    	        	        {

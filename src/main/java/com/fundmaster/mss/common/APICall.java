@@ -29,6 +29,9 @@ public class APICall {
     public static final String GET_SCHEME_ACCOUNTING_PERIODS = "getaccountingperiods/";
     public static final String GET_SCHEME_SPONSORS = "sponsor/getsponsorbyscheme/";
     public static final String GET_MEMBER_CUMMULATIVE_INTEREST = "getmembercummulativeinterest/";
+    //GET_MEMBER_CUMMULATIVE_BENEFIT
+    public static final String GET_MEMBER_CUMMULATIVE_BENEFIT = "getmembercummulativebenefit/";
+
     public static final String PROFILE_GET_PROFILES = "profile/getprofiles";
     public static final String GETMEMBERCONTRIBUTIONS = "getmembercontributions/";
     public static final String GET_CONTRIBUTIONS_BTWN_DATES = "getcontributionsbetweendates/";
