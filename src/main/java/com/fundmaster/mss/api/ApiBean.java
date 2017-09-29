@@ -175,6 +175,68 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
+    public JSONObject calculateBenefitProjection(String interestRate,String years,String paymentFrequency,String paymentAmount, String presentValue) {
+        jLogger.i("The interestRate is: " + interestRate);
+        jLogger.i("The No of Years is: " + years);
+        jLogger.i("The paymentFrequency is: " + paymentFrequency);
+        jLogger.i("The paymentAmount is: " + paymentAmount);
+        jLogger.i(" The presentValue is " + presentValue);
+
+        Double r = Double.parseDouble(interestRate);
+        Double annualRate = r / 100;
+        jLogger.i("The Converted interestRate is: " + annualRate);
+        int n = Integer.parseInt(years);
+        int k = Integer.parseInt(paymentFrequency);
+        Double PMT = Double.parseDouble(paymentAmount);
+        Double PV = Double.parseDouble(presentValue);
+        int nk = n * k;
+        JSONObject jsonObject = new JSONObject();
+        Double futureValue;
+
+
+             if (PV <=0) {
+                 jLogger.i("The present Value " + PV);
+
+                 Double futureValuePart1 = (PV) * (Math.pow((1 + (annualRate / k)), (nk)));
+                 Double PMTnum = Math.pow((1 + (annualRate / k)), (nk)) - (1);
+                 Double PMTdenom = r / k;
+                 Double futureValuePart2 = PMT * ((PMTnum) / (PMTdenom));
+                   futureValue = 100 * (futureValuePart1 + futureValuePart2);
+                 jLogger.i("The future Value " + futureValue);
+
+                 try {
+
+                     return jsonObject.put("futureValue", futureValue);
+
+                 } catch (JSONException e1) {
+                     e1.printStackTrace();
+                 }
+             }else if (PV>0){
+                 jLogger.i("The present Value " + PV);
+
+                 Double futureValue1= Math.pow((1 + (annualRate / k)), (nk)) ;
+                 futureValue1=(PV)*futureValue1;
+                 Double futureValue2= Math.pow((1 + (annualRate / k)), (nk)) - (1) ;
+                 double rk = r/k;
+                 futureValue2 =PMT *((futureValue2) / (rk));
+                 futureValue=futureValue1+futureValue2;
+                 jLogger.i("The future Value " + futureValue);
+
+                 try {
+
+                     return jsonObject.put("futureValue", futureValue);
+
+                 } catch (JSONException e1) {
+                     e1.printStackTrace();
+                 }
+             }
+
+        return null;
+
+    }
+
+
+    @Override
     public String getSchemeInterestRates(String schemeID) {
         JSONObject response;
         try {

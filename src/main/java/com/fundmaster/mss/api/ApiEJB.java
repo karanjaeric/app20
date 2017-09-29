@@ -84,6 +84,8 @@ public interface ApiEJB {
     String getSponsorInterestRates(String sponsorId);
     JSONObject calculateWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate,
                                        String inflationRate,String email,String phone,String yourAge, String formula);
+
+    JSONObject calculateBenefitProjection(String interestRate,String years,String paymentFrequency,String paymentAmount, String presentValue);
     List<Scheme> getSchemeBySchemeModeAndPlanType(String schemeMode, String planType);
     List<AnnuityProduct> getAnnuityProducts();
     List<Scheme> getSchemeByPlanType(String planType);

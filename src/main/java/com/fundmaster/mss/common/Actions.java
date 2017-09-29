@@ -44,6 +44,9 @@ public class Actions {
     public static final String MEMBER_MEDIA_FILES = "MF";
     public static final String MEMBER_CLAIMS = "MC";
     public static final String MEMBER_WHAT_IF_ANALYSIS = "WIA";
+    public static final String CALCULATE_BENEFIT_PROJECTION = "CBP";
+
+
     public static final String MEMBER_BALANCE_HISTORY = "BH";
     public static final String MEMBER_BALANCE_HISTORY_GRID = "BAL_HISTORY_GRID";
     public static final String DASHBOARD_SETUP = "SETUP";

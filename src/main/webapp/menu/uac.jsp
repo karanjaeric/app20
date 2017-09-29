@@ -629,6 +629,14 @@
 								<input type="checkbox" name="WhatIfAnalysis" id="WhatIfAnalysis" ${memberMenu.whatIfAnalysis == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<label class="control-label"> BENEFIT PROJECTION (CALCULATOR) </label>
+							</td>
+							<td>
+								<input type="checkbox" name="benefitsProjectionPage" id="benefitsProjectionPage" ${memberMenu.benefitsProjectionPage == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
 
 						<tr>
 							<td>
@@ -1233,7 +1241,8 @@
 								StatementOfAccountGrid: $('#StatementOfAccountGrid').prop('checked'),
 								UnitizedStatement: $('#UnitizedStatement').prop('checked'),
 								WhatIfAnalysis: $('#WhatIfAnalysis').prop('checked'),
-								benefitsProjection: $('#benefitsProjection').prop('checked'),
+                                benefitsProjectionPage: $('#benefitsProjectionPage').prop('checked'),
+                                benefitsProjection: $('#benefitsProjection').prop('checked'),
 								benefitProjectionGrid: $('#benefitProjectionGrid').prop('checked'),
 								annualContributionStatement: $('#annualContributionStatement').prop('checked'),
 								annualContributionStatementGrid: $('#annualContributionStatementGrid').prop('checked'),

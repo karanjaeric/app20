@@ -142,6 +142,11 @@
 								class="glyphicon glyphicon-flash"></i>&nbsp;<i
 								class="fa fa-chevron-right"></i> ANALYTICS &amp; REPORTING</a></li>
 						</c:if>
+					<c:if test="${permissions.benefitProjectionPage == 'TRUE' }">
+						<li id="benefitProjectionPage-main-li"><a href="javascript:void(0);"><i
+								class="glyphicon glyphicon-flash"></i>&nbsp;<i
+								class="fa fa-chevron-right"></i> BENEFIT PROJECTION (CALCULATOR)</a></li>
+					</c:if>
 
 						<c:if test="${permissions.calculator_log == 'TRUE' }">
 						<li id="calc-log"><a href="javascript:void(0);"><i

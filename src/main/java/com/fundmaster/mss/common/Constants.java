@@ -31,6 +31,9 @@ public class Constants implements Serializable {
 
 	public static final String PAGE_WHAT_IF_ANALYSIS = "WHAT_IF_ANALYSIS";
 	public static final String PAGE_ANNUITY_QUOTATION = "ANNUITY_QUOTATION";
+	public static final String PAGE_BENEFIT_PROJECTION = "PAGE_BENEFIT_PROJECTION";
+
+
 	public static final String PAGE_POTENTIAL_MEMBER = "POTENTIAL_MEMBER";
 	public static final String PAGE_POTENTIAL_SPONSOR = "POTENTIAL_SPONSOR";
 	public static final String PAGE_CONTACT_US = "CONTACT_US";

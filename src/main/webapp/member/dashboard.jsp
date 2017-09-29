@@ -53,6 +53,7 @@
 			
 		</div>
 	</div>
+
 	<div class="col-md-12 border-top">
 
 		<c:forEach var="planType" items="${ planType }">
@@ -149,8 +150,10 @@ $(document).ready(function () {
 			   	            {
 								console.log(json);
 								json = $.parseJSON(json.data);
+
 								console.log("AB" +json.cummulativebenefit);
 				            	$('#accummulated-benefits').html(currency + " " + format_no(json.cummulativebenefit));
+
 			   	            }
 				            else
 			    	        {
@@ -207,10 +210,12 @@ $(document).ready(function () {
 				    	    	       	            {
 
 														json = $.parseJSON(json.data);
-                                                        console.log("CI "+ json.cummulativeInterest);
+                                                         console.log("CI "+ json.cummulativeInterest);
 
                                                         $('#cummulative-interests').html(currency + ' ' + format_no(json.cummulativeInterest));
-				    	    	       	            }
+
+				    	    	    	            	//$('#cummulative-interests').html(currency + ' ' + format_no(json.cummulativeInterest));
+ 				    	    	       	            }
 				    	    	    	            else
 				    	    	        	        {
 				    	    	        	            stop_wait();

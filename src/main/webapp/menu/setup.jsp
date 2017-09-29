@@ -409,6 +409,19 @@
 							 <input type="checkbox" name="annuityQuotationActive" id="annuityQuotationActive" ${menu.annuityQuotationActive == 'TRUE' ? 'checked' : ''}/>
 							</td>
 							</tr>
+							<tr>
+								<td>
+									<label class="control-label">BENEFIT PROJECTION (CAL) </label>
+								</td>
+								<td>
+									<div class="form-group">
+										<input type="text" class="form-control" name="benefitProjectionName" id="benefitProjectionName" placeholder="BENEFIT PROJECTION" value="${ menu.benefitProjectionName }"/>
+									</div>
+								</td>
+								<td>
+									<input type="checkbox" name="benefitProjectionActive" id="benefitProjectionActive" ${menu.benefitProjectionActive == 'TRUE' ? 'checked' : ''}/>
+								</td>
+							</tr>
 
 							<tr>
 							<td>
@@ -1101,6 +1114,14 @@
 		                }
 		            },
 
+                    benefitProjectionName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'A title for the Benefit Projection menu is required'
+                            }
+                        }
+                    },
+
 		            potentialMemberName: {
 		                validators: {
 		                    notEmpty: {
@@ -1163,6 +1184,7 @@
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
         	        data: {menu_id: $('#menu_id').val(), annuityQuotationName: $('#annuityQuotationName').val(),
+						benefitProjectionName: $('#benefitProjectionName').val(),
         	        	potentialMemberName: $('#potentialMemberName').val(),
         	        	potentialSponsorName: $('#potentialSponsorName').val(),
         	        	interestRatesName: $('#interestRatesName').val(),
@@ -1171,6 +1193,7 @@
         	        	contactUsName: $('#contactUsName').val(),
                         faqName: $('#faqName').val(),
         	        	annuityQuotationActive: $('#annuityQuotationActive').prop('checked'),
+						benefitProjectionActive: $('#benefitProjectionActive').prop('checked'),
         	        	potentialMemberActive: $('#potentialMemberActive').prop('checked'),
         	        	potentialSponsorActive: $('#potentialSponsorActive').prop('checked'),
         	        	interestRatesActive: $('#interestRatesActive').prop('checked'),

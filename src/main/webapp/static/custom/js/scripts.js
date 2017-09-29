@@ -406,6 +406,15 @@ $(document).ready(function(){
 		switch_page('ANALYTICS');
 		
     });
+    $('#benefitProjectionPage-main-li').click(function(){
+
+        $('#benefitProjectionPage-main-li').removeClass('active');
+
+        $('#benefitProjectionPage-main-li').addClass('active');
+
+        switch_page('CBP');
+
+    });
 
 	/***	AGENTS ONLY MENU ****/
 
@@ -548,7 +557,15 @@ $(document).ready(function(){
 		
 		m_switch("WIA");
 	});
-	
+    $('#calculate-benefit-projection-li').click(function(){
+
+        $('#main-menu.nav li').removeClass('active');
+
+        $('#calculate-benefit-projection-li').addClass('active');
+
+        m_switch("CBP");
+    });
+
 
 	
 	$('#benefits-projection-li').click(function(){
