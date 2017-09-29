@@ -34,6 +34,9 @@ public interface ApiEJB {
     JSONObject getAllSchemeSponsors(String schemeID);
     JSONObject getPayrollYears();
     JSONObject getMemberCummulativeInterest(String memberID);
+    //getMemberCummulativeBenefit
+    JSONObject getMemberCummulativeBenefit(String memberID);
+
     List<UserProfile> getUserProfiles();
     JSONObject getMemberContributions(String memberID);
     JSONObject getMemberFullContributions(String memberID);

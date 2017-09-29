@@ -22,6 +22,7 @@ public class Actions {
     public static final String YEARS = "YEARS";
     public static final String BENEFICIARY = "BENEFICIARY";
     public static final String BD = "BD";
+    public static final String AB = "AB";
     public static final String CI = "CI";
     public static final String AI = "AI";
     public static final String MEMBER_PERSONAL_INFORMATION = "PI";

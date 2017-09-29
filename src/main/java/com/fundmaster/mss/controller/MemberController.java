@@ -312,6 +312,10 @@ public class MemberController extends BaseServlet implements Serializable {
             case Actions.BD:
                 getBeneficiaries(response, apiEJB.getBeneficiaries(this.getSessKey(request, Constants.PROFILE_ID)));
                 break;
+			case Actions.AB:
+
+				cumulativeBenefit(response, apiEJB.getMemberCummulativeBenefit(this.getSessKey(request, Constants.PROFILE_ID)));
+ 				break;
             case Actions.CI:
                 cummulativeInterest(response, apiEJB.getMemberCummulativeInterest(this.getSessKey(request, Constants.PROFILE_ID)));
                 break;
@@ -589,8 +593,13 @@ public class MemberController extends BaseServlet implements Serializable {
     }
 
     private void cummulativeInterest(HttpServletResponse response, JSONObject memberCummulativeInterest) {
+
+
         this.respond(response, true, "", memberCummulativeInterest);
     }
+	private void cumulativeBenefit(HttpServletResponse response, JSONObject cumulativeBenefit) {
+		this.respond(response, true, "", cumulativeBenefit);
+	}
 
     private void averageInterest(HttpServletResponse response, JSONObject memberAverageInterest) {
         this.respond(response, true, "", memberAverageInterest);

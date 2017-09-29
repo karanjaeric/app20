@@ -53,29 +53,31 @@
 			
 		</div>
 	</div>
-	<%--<div class="col-md-12 border-top">--%>
 
-		<%--<c:forEach var="planType" items="${ planType }">--%>
-			<%--<c:choose>--%>
-				<%--<c:when test="${planType == 'Defined Benefit' }">--%>
-				<%--<h3 class="text-center"><small>ACCUMMULATED ANNUAL PENSION TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp;--%>
-				<%--</c:when>--%>
-				<%--<c:otherwise>--%>
-				<%--<h3 class="text-center"><small>ACCUMMULATED BENEFITS TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp;--%>
-				<%--</c:otherwise>--%>
-			<%--</c:choose>--%>
-		<%--</c:forEach>--%>
+	<div class="col-md-12 border-top">
 
-		<%--<c:choose>--%>
-			<%--<c:when test="${planType == 'Defined Benefit' && contrGraph.interestActive == 'TRUE'}">--%>
-				<%--<p>&nbsp;</p>--%>
-			<%--</c:when>--%>
-			<%--<c:otherwise>--%>
-				<%--<small>CUMMULATIVE INTEREST TO DATE:</small> <span id="cummulative-interests"></span></h3>--%>
-				<%--<p>&nbsp;</p>--%>
-			<%--</c:otherwise>--%>
-		<%--</c:choose>--%>
-	<%--</div>--%>
+		<c:forEach var="planType" items="${ planType }">
+			<c:choose>
+				<c:when test="${planType == 'Defined Benefit' }">
+				<h3 class="text-center"><small>ACCUMMULATED ANNUAL PENSION TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp;
+				</c:when>
+				<c:otherwise>
+				<h3 class="text-center"><small>ACCUMMULATED BENEFITS TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp;
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+
+		<c:choose>
+			<c:when test="${planType == 'Defined Benefit' && contrGraph.interestActive == 'TRUE'}">
+				<p>&nbsp;</p>
+			</c:when>
+			<c:otherwise>
+					<br>
+				<small>CUMMULATIVE INTEREST TO DATE:</small> <span id="cummulative-interests"></span></h3>
+				<p>&nbsp;</p>
+			</c:otherwise>
+		</c:choose>
+	</div>
 
 	<c:choose>
 		<c:when test="${planType == 'Defined Benefit' && contrGraph.contributionGraphActive == 'TRUE'}">
@@ -141,14 +143,17 @@ $(document).ready(function () {
 					$.ajax({
 				        url: $('#base_url').val() + 'member',
 				        type: 'post',
-				        data: {ACTION:'CB'},
+				        data: {ACTION:'AB'},
 				        dataType: 'json',
 				        success: function(json) {
 				            if(json.success)
 			   	            {
 								console.log(json);
 								json = $.parseJSON(json.data);
-				            	//$('#accummulated-benefits').html(currency + " " + format_no(json.total));
+
+								console.log("AB" +json.cummulativebenefit);
+				            	$('#accummulated-benefits').html(currency + " " + format_no(json.cummulativebenefit));
+
 			   	            }
 				            else
 			    	        {
@@ -205,8 +210,12 @@ $(document).ready(function () {
 				    	    	       	            {
 
 														json = $.parseJSON(json.data);
+                                                         console.log("CI "+ json.cummulativeInterest);
+
+                                                        $('#cummulative-interests').html(currency + ' ' + format_no(json.cummulativeInterest));
+
 				    	    	    	            	//$('#cummulative-interests').html(currency + ' ' + format_no(json.cummulativeInterest));
-				    	    	       	            }
+ 				    	    	       	            }
 				    	    	    	            else
 				    	    	        	        {
 				    	    	        	            stop_wait();

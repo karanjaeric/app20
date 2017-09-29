@@ -1223,6 +1223,17 @@ public class ApiBean implements ApiEJB {
         }
     }
 
+    //getMemberCummulativeBenefit
+    @Override
+    public JSONObject getMemberCummulativeBenefit(String memberID) {
+        try {
+            return URLPost(APICall.GET_MEMBER_CUMMULATIVE_BENEFIT + memberID, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
     @Override
     public JSONObject getAccountingPeriod(String date, String schemeID) {
         JSONObject response;
