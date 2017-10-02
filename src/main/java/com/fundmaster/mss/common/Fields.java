@@ -65,6 +65,8 @@ public class Fields {
     public static final String MEMBER = "member";
     public static final String PAYMENT_TYPE = "paymentType";
     public static final String TYPE = "type";
+    public static final String MEMBERSHIPNO = "memberId";
+
 
     public static final String DATE_OF_CALC = "dateOfCalc";
     public static final String DATE_APPROVED = "dateApproved";

@@ -2164,6 +2164,7 @@ public class ApiBean implements ApiEJB {
 //                    bp.setDateOfCalc(payment.get(Fields.DATE_OF_CALC).toString());
 //                }
                 bp.setType(payment.get(Fields.TYPE).toString());
+                bp.setMemberId(payment.get(Fields.MEMBERSHIPNO).toString());
                 bp.setPayee(payment.get(Fields.PAYEE).toString());
                 benefitPayments.add(bp);
             }

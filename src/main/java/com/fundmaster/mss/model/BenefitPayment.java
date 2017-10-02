@@ -18,6 +18,7 @@ public class BenefitPayment extends GenericModel<BenefitPayment> implements Seri
 	private String dateOfCalc;
 	private String type;
 	private String payee;
+	private String memberId;
 	private String processingDate;
 
 	public String getProcessingDate() {
@@ -105,13 +106,21 @@ public class BenefitPayment extends GenericModel<BenefitPayment> implements Seri
 		this.payee = payee;
 	}
 
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	public BenefitPayment(String gross, String taxFree, String taxable,
 			String withHolding, String net, String dateApproved,
-			String dateOfCalc, String type, String payee,String processingDate) {
+			String dateOfCalc, String type, String payee, String memberId,String processingDate) {
 		super();
 		this.gross = gross;
 		this.taxFree = taxFree;
@@ -122,6 +131,7 @@ public class BenefitPayment extends GenericModel<BenefitPayment> implements Seri
 		this.dateOfCalc = dateOfCalc;
 		this.type = type;
 		this.payee = payee;
+		this.memberId=memberId;
 		this.processingDate = processingDate;
 	}
 	
