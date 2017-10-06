@@ -74,7 +74,7 @@
 
     var memberId, currentUnitPrice,memberContribution,PVL;
 
-    function loadFields() {
+
         $(document).ready(function(){
 
             memberId = $('#member_id').val();
@@ -110,7 +110,7 @@
 
         });
 
-    }
+
 
 
 
