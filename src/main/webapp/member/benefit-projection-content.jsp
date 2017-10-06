@@ -1,16 +1,26 @@
+<%@ page import="com.fundmaster.mss.common.Constants" %>
+<%@ page import="com.fundmaster.mss.api.ApiBean" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  <div class="row">
 
 
-         <form role="form" id="form-projection" method="POST" >
+     <form role="form" id="form-projection" method="POST" >
         <h1 class="heading">${ menu.benefitProjectionName }</h1>
         <fieldset>
             <legend>Benefit Projection Calculation Parameters</legend>
+            <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
+            <input type="hidden" id="member_id" value="${ member_id }"/>
+            <input type="hidden" id="currentUnitPrice" value="${ currentUnitPrice }"/>
+            <input type="hidden" id="memberContribution" value="${ memberContribution }"/>
+            <input type="hidden" id="PVL" value="${ PVL }"/>
+
+
             <div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">Interest Rate (r):</label> <input
-                        type="text" name="interestRate" class="form-control" id="interestRate"
-                        placeholder="Enter the Current Interest Rate" required>
+
+                 <div class="form-group">
+                    <label class="control-label">Interest Rate (r):</label>
+                     <input type="text" name="interestRate" class="form-control" id="interestRate" value="${requestScope.currentUnitPrice}">
+
                 </div>
             </div>
             <div class="col-md-3">
@@ -35,18 +45,15 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label">Payment Amount:</label> <input
-                        type="text" name="paymentAmount" class="form-control" id="paymentAmount"
-                        placeholder="Enter the Amount "  >
+                        type="text" name="paymentAmount" class="form-control" id="paymentAmount" value="${requestScope.memberContribution}">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label class="control-label">Present Value  :</label> <input
-                        type="text" name="presentValue" class="form-control" id="presentValue"
-                        placeholder="0.00" value="0"  >
+                    <label class="control-label">Present Value  :</label>
+                    <input type="text" name="presentValue" class="form-control" id="presentValue" value="${requestScope.PVL}"  >
                 </div>
             </div>
-
 
             <div class="col-md-3">
                 <p>&nbsp;</p>
@@ -64,7 +71,57 @@
 
 
 <script type="text/javascript">
+
+    var memberId, currentUnitPrice,memberContribution,PVL;
+
+    function loadFields() {
+        $(document).ready(function(){
+
+            memberId = $('#member_id').val();
+            currentUnitPrice= $('#currentUnitPrice').val();
+            memberContribution=$('#memberContribution').val();
+            PVL=$('#PVL').val();
+
+
+            var unitprice =  document.getElementById('currentUnitPrice').value;
+            var contr = document.getElementById('memberContribution').value;
+            var pvl = document.getElementById('PVL').value;
+
+            console.log(" ===============current unit price============ " + unitprice +" -- "+ contr +" === " + pvl);
+            addValue(currentUnitPrice,memberContribution,PVL);
+
+            if ('null' != memberId) {
+                $.ajax({
+
+                    url: $('#base_url').val() + 'benefit-projection',
+                    type : 'get',
+                    dataType : 'html',
+                    success : function(html) {
+                        html="";
+                        console.log("Am here");
+                        $('#unitPrice').html(html);
+                    }
+
+                });
+
+            }
+
+
+
+        });
+
+    }
+
+
+
+    function addValue(currentUnitPrice,memberContribution,PVL) {
+        document.getElementById('interestRate').value=currentUnitPrice;
+        document.getElementById('paymentAmount').value=memberContribution;
+        document.getElementById('presentValue').value=PVL;
+    }
+
     $(document).ready(function(){
+
 
         $('#form-projection')
                 .bootstrapValidator(
@@ -125,10 +182,10 @@
                             }
                         }
                     })
-                .on(
+                      .on(
                     'success.form.bv',
                     function(e) {
-                        start_wait();
+                         start_wait();
                         // Prevent form submission
                         e.preventDefault();
                         // Get the form instance
@@ -158,7 +215,8 @@
                                     html = "<tr><th>PROJECTED RESULTS</th></tr>";
                                     stop_wait();
                                     if (json.success) {
-                                         console.log("The JSON is  " + json);
+
+                                          console.log("The JSON is  " + json);
 
                                          var obj = $.parseJSON(json.data);
                                         console.log(json);
@@ -172,8 +230,33 @@
                                          $('#projection-results').html(html);
                                       }
                                 }
+
                             });
+
+
 
         });
     });
-    </script>
+
+    (function load(){
+        var url = $('#base_url').val()+ 'benefit-projection';
+            var xmlhttp;
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function(){
+                if (xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                    var a = xmlhttp.responseText;
+                     var Data = JSON.parse(a);
+                    console.log("=================== " + Data + "================ ") ;
+//                    document.getElementById("paymentAmount").innerHTML=b.first;
+//                    document.getElementById("textbox2").innerHTML=b.second;
+
+                }
+            }
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+
+    })();
+
+
+
+     </script>

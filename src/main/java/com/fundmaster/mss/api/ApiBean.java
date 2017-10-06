@@ -324,6 +324,69 @@ public class ApiBean implements ApiEJB {
                 }
     }
 
+    //getCurrentUnitPrice
+    @Override
+    public Double getCurrentUnitPrice(String schemeID) {
+        JSONObject response;
+        Double currentUnitPriceString;
+
+        try {
+            response = URLGet(APICall.GET_CURRENT_UNIT_PRICE + schemeID );
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+
+                currentUnitPriceString   = response.getDouble("change");
+                jLogger.i("The current Unit price in String form is " + currentUnitPriceString);
+                 return  currentUnitPriceString;
+              }
+            else
+                return null;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+    @Override
+    public Double getMemberLatestContribution(String memberId) {
+        JSONObject response;
+        Double latestMemberContribution;
+
+        try {
+            response = URLGet(APICall.GET_MEMBER_LATEST_CONTRIBUTION + memberId );
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+
+                latestMemberContribution   =response.getDouble("contribution");
+                 return  latestMemberContribution;
+            }
+            else
+                return null;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+//getMemberTotalUnits
+@Override
+public Double getMemberTotalUnits(String memberId) {
+    JSONObject response;
+    Double memberTotalUnits;
+
+    try {
+        response = URLGet(APICall.GET_MEMBER_TOTAL_UNITS + memberId );
+        if(response.getBoolean(Fields.SUCCESS))
+        {
+
+            memberTotalUnits   = response.getDouble("totalUnits");
+            return  memberTotalUnits;
+        }
+        else
+            return null;
+    } catch (JSONException je) {
+        jLogger.e("We have a json exception " + je.getMessage());
+        return null;
+    }
+}
     @Override
     public String getSponsorInterestRates(String sponsorId) {
         JSONObject response;
@@ -495,6 +558,7 @@ public class ApiBean implements ApiEJB {
         JSONObject response;
         try {
             response = URLGet(APICall.SCHEME_GET_SCHEME_BENEFIT_PAYMENTS_PER_SPONSOR + schemeID + "/" + sponsorId + "/?start=" + start + "&size=" + count);
+
             if(response.getBoolean(Fields.SUCCESS))
             {
                 return this.benefitPaymentsFromJSON(response);
@@ -2174,6 +2238,8 @@ public class ApiBean implements ApiEJB {
             return null;
         }
     }
+
+
     private List<XiMember> xiMembersFromJSON(JSONObject response) {
         try {
             Constants.RECORD_COUNT = response.getInt(Fields.TOTALCOUNT);

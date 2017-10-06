@@ -62,9 +62,16 @@ public class APICall {
     public static final String SCHEME_GET_SCHEME_BENEFIT_PAYMENTS = "scheme/getschemebenefitpayments/";
     public static final String SCHEME_GET_SCHEME_BENEFIT_PAYMENTS_PER_SPONSOR ="scheme/getschemebenefitpaymentspersponsor/";
     public static final String GET_DC_MEMBER_BALANCES = "getmemberbalances/";
-    public static final String  GET_DB_MEMBER_BALANCES = "getmemberaccruedpension/";
+    public static final String  GET_DB_MEMBER_BALANCES = "22206.00 msgetmemberaccruedpension/";
     public static final String SCHEME_GET_SCHEME_INTEREST_RATES = "scheme/getschemeinterestrates/";
     public static final String SCHEME_GET_SCHEME_UNIT_PRICES ="scheme/getschemeunitprices/";
+    public static final String GET_CURRENT_UNIT_PRICE ="scheme/getcurrentunitprice/";
+    public static final String GET_MEMBER_LATEST_CONTRIBUTION="getmemberlatestcontribution/";
+    //GET_MEMBER_TOTAL_UNITS
+    public static final String GET_MEMBER_TOTAL_UNITS="getmembertotalunits/";
+
+
+    //GET_CURRENT_UNIT_PRICE
     public static final String GET_SPONSOR_INTEREST_RATES = "sponsor/getsponsorinterestrates/";
     public static final String WHAT_IF_ANALYSIS = "whatifanalysis/";
     public static final String SCHEME_GET_SCHEME_BY_SCHEME_MODE_AND_PLAN_TYPE = "scheme/getschemebyschememodeandplantype/";

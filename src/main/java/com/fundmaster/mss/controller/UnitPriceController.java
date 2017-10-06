@@ -2,6 +2,7 @@ package com.fundmaster.mss.controller;
 
 import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.*;
+import com.fundmaster.mss.common.Actions;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
@@ -17,6 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "UnitPriceController", urlPatterns = {"/unit-prices"})
@@ -63,10 +68,7 @@ public class UnitPriceController  extends BaseServlet implements Serializable {
     private static final String UNIT_PRICES_BY_SCHEME = "UNIT_PRICES_BY_SCHEME";
     private static final String UNIT_PRICES_BY_SPONSOR = "UNIT_PRICES_BY_SPONSOR";
 
-
-
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
         request.setAttribute("schemes", schemes);
@@ -100,8 +102,10 @@ public class UnitPriceController  extends BaseServlet implements Serializable {
             case UNIT_PRICES_BY_SCHEME:
                 getUnitPriceByScheme(request, response);
                 break;
+
         }
     }
+
 
     private void getUnitPriceByScheme(HttpServletRequest request, HttpServletResponse response) {
 

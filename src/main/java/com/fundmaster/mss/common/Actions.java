@@ -39,6 +39,8 @@ public class Actions {
     public static final String ANNUAL_CONTRIBUTION_STATEMENT = "AC";
     public static final String PROVISIONAL_MEMBER_STATEMENT = "PMS";
 
+    public static final String GET_PAYMENT_AMOUNT="PAYMENT_AMT";
+
     public static final String MEMBER_BENEFIT_PROJECTIONS_GRID = "BP_GRID";
     public static final String ANNUAL_CONTRIBUTIONS_GRID = "AC_GRID";
     public static final String MEMBER_MEDIA_FILES = "MF";

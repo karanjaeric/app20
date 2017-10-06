@@ -438,6 +438,7 @@ public class MemberController extends BaseServlet implements Serializable {
 		this.respond(response, true, "", memberStatement);
 	}
 	private void getAnnualContributionsGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+
 		User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
 		XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
 		String member_id = Long.toString(m.getId());

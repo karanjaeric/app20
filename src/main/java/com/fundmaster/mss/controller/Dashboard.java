@@ -118,7 +118,6 @@ public class Dashboard extends BaseServlet implements Serializable {
                     break;
                 case Actions.PAYMENT:
                     showPayments(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
-
                     break;
                 case Actions.MEDIA:
                     showMedia(request, response, session, REPO_FOLDER);
@@ -169,6 +168,7 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.ADMIN_FEE_LISTING:
                     showAdminFeeListing(request, response, session, REPO_FOLDER);
                     break;
+
             }
         }
          if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)
@@ -230,6 +230,7 @@ public class Dashboard extends BaseServlet implements Serializable {
                  case Actions.MEMBER_BALANCE_HISTORY_GRID:
                      showMemberBalanceHistoryGrid(request, response, session);
                      break;
+
              }
          }
         if(session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.PENSIONER)
@@ -253,6 +254,8 @@ public class Dashboard extends BaseServlet implements Serializable {
             }
         }
     }
+
+
 
     private void showAgentCommissions(HttpServletRequest request, HttpServletResponse response, HttpSession session,
                                       String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
@@ -1317,6 +1320,7 @@ SocialBeanI socialBeanI;
         if (sponsorId!= null) {
             jLogger.i("::::::::: Fetching Sponsor Benefits :::::::::");
             payments = apiEJB.getBenefitPaymentsPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), sponsorId, start, PER_PAGE);
+
         } else if (date_from != null && date_to != null ) {
 
                 payments = apiEJB.searchPayments(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), start, PER_PAGE);
@@ -1343,6 +1347,7 @@ SocialBeanI socialBeanI;
         this.audit(session, "Viewed scheme payments for scheme #" + this.getSessKey(request, Constants.SCHEME_ID));
         request.getRequestDispatcher(REPO_FOLDER + "/payments.jsp").forward(request, response);
     }
+    //
 
     private Date getDateFromString(HttpServletRequest request, String attribute, String param) {
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);

@@ -1,9 +1,12 @@
 package com.fundmaster.mss.api;
 
 import com.fundmaster.mss.model.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ejb.Local;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,7 +89,12 @@ public interface ApiEJB {
                                        String inflationRate,String email,String phone,String yourAge, String formula);
 
     JSONObject calculateBenefitProjection(String interestRate,String years,String paymentFrequency,String paymentAmount, String presentValue);
+    Double getCurrentUnitPrice(String schemeId);
+    Double getMemberLatestContribution(String memberId);
+    Double getMemberTotalUnits(String memberId);
+
 //    JSONObject sponsorCalculateBenefitProjection(String interestRate,String years,String paymentFrequency,String paymentAmount, String presentValue);
+
 
     List<Scheme> getSchemeBySchemeModeAndPlanType(String schemeMode, String planType);
     List<AnnuityProduct> getAnnuityProducts();

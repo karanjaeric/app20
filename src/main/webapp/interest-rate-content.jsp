@@ -258,10 +258,14 @@
 						e.preventDefault();
 						// Get the form instance
 						$.ajax({
-							url : $('#base_url').val() + 'interest-rates',
-							type : 'post',
-							data: {ACTION:'INTEREST_BY_SCHEME', scheme : $('#scheme').val()},
-							dataType : 'json',
+							//url : $('#base_url').val() + 'interest-rates',
+                            url: $('#base_url').val() + 'unit-prices',
+
+                            type : 'post',
+							//data: {ACTION:'INTEREST_BY_SCHEME', scheme : $('#scheme').val()},
+                            data: {ACTION: 'CURRENT_UNIT_PRICE'},
+
+                            dataType : 'json',
 							success : function(json) {
 								console.log(json);
 								stop_wait();
