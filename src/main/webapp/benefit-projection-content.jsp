@@ -134,7 +134,7 @@
                         e.preventDefault();
                         // Get the form instance
                         $.ajax({
-                                url : $('#base_url').val() + 'benefit-projection',
+                                url : $('#base_url').val() + 'benefit-projection-home',
                                  type : 'post',
                                 data : {
                                     interestRate : $(

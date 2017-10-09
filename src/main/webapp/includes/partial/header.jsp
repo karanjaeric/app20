@@ -179,7 +179,7 @@ body {
 
 								<c:if test="${menu.benefitProjectionActive == 'TRUE'}">
 									<li><a
-											href="<%=request.getContextPath()%>/benefit-projection">${ menu.benefitProjectionName }</a></li>
+											href="<%=request.getContextPath()%>/benefit-projection-home">${ menu.benefitProjectionName }</a></li>
 								</c:if>
 								
 								<c:if test="${menu.whatIfAnalysisActive == 'TRUE'}">
