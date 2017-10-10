@@ -47,6 +47,8 @@ public class Actions {
     public static final String MEMBER_CLAIMS = "MC";
     public static final String MEMBER_WHAT_IF_ANALYSIS = "WIA";
     public static final String CALCULATE_BENEFIT_PROJECTION = "CBP";
+    public static final String SPONSOR_BENEFIT_PROJECTION = "SCBP";
+
 
 
     public static final String MEMBER_BALANCE_HISTORY = "BH";

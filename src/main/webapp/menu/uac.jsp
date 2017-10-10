@@ -637,6 +637,14 @@
 								<input type="checkbox" name="benefitsProjectionPage" id="benefitsProjectionPage" ${memberMenu.benefitsProjectionPage == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<label class="control-label">SPONSOR BENEFIT PROJECTION (CALCULATOR) </label>
+							</td>
+							<td>
+								<input type="checkbox" name="sponsorBenefitsProjectionPage" id="sponsorBenefitsProjectionPage" ${memberMenu.sponsorBenefitsProjectionPage == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
 
 						<tr>
 							<td>

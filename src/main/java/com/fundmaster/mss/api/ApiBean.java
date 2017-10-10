@@ -214,12 +214,11 @@ public class ApiBean implements ApiEJB {
              }else if (PV>0){
                  jLogger.i("The present Value " + PV);
 
-                 Double futureValue1= Math.pow((1 + (annualRate / k)), (nk)) ;
-                 futureValue1=(PV)*futureValue1;
+                 Double futureValue1= (PV) * (Math.pow((1 + (annualRate / k)), (nk))) ;
                  Double futureValue2= Math.pow((1 + (annualRate / k)), (nk)) - (1) ;
                  double rk = r/k;
                  futureValue2 =PMT *((futureValue2) / (rk));
-                 futureValue=futureValue1+futureValue2;
+                 futureValue=100*(futureValue1+futureValue2);
                  jLogger.i("The future Value " + futureValue);
 
                  try {

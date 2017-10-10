@@ -415,6 +415,15 @@ $(document).ready(function(){
         switch_page('CBP');
 
     });
+    $('#sponsor-benefitProjectionPage-main-li').click(function(){
+
+        $('#sponsor-benefitProjectionPage-main-li').removeClass('active');
+
+        $('#sponsor-benefitProjectionPage-main-li').addClass('active');
+
+        switch_page('SCBP');
+
+    });
 
 	/***	AGENTS ONLY MENU ****/
 
@@ -564,6 +573,15 @@ $(document).ready(function(){
         $('#calculate-benefit-projection-li').addClass('active');
 
         m_switch("CBP");
+    });
+
+    $('#sponsor-calculate-benefit-projection-li').click(function(){
+
+        $('#main-menu.nav li').removeClass('active');
+
+        $('#sponsor-calculate-benefit-projection-li').addClass('active');
+
+        m_switch("SCBP");
     });
 
 

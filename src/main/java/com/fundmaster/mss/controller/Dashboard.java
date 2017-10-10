@@ -223,6 +223,11 @@ public class Dashboard extends BaseServlet implements Serializable {
                      showBenefitProjectionPage(request, response, session);
 
                      break;
+                 case Actions.SPONSOR_BENEFIT_PROJECTION:
+                     showSponsorBenefitProjectionPage(request, response, session);
+
+                     break;
+
 
                  case Actions.MEMBER_BALANCE_HISTORY:
                      showMemberBalanceHistory(request, response, session);
@@ -524,6 +529,17 @@ public class Dashboard extends BaseServlet implements Serializable {
     logActivity("BENEFIT PROJECTION", "Accessed benefit projection calculator page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
     this.audit(session, "Accessed benefit projection calculator page");
     request.getRequestDispatcher("member/benefit-projection-content.jsp").forward(request, response);
+}
+//showSponsorBenefitProjectionPage
+private void showSponsorBenefitProjectionPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+    PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_BENEFIT_PROJECTION);
+    request.setAttribute("content", content);
+    Setting settings = settingBeanI.find();
+    request.setAttribute("settings", settings);
+//    request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
+    logActivity("SPONSOR BENEFIT PROJECTION", "Accessed benefit projection calculator page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+    this.audit(session, "Accessed benefit projection calculator page as Sponsor");
+    request.getRequestDispatcher("sponsor/benefit-projection-content.jsp").forward(request, response);
 }
 
     private void showMemberBalanceHistory(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {

@@ -49,6 +49,9 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     @Column(name="benefitsProjectionPage", nullable=false)
     private boolean benefitsProjectionPage;
 
+    @Column(name="sponsorBenefitsProjectionPage", nullable=false)
+    private boolean sponsorBenefitsProjectionPage;
+
     @Column(name="benefitProjectionGrid", nullable=false)
     private boolean benefitProjectionGrid;
 
@@ -167,6 +170,13 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.benefitsProjectionPage = benefitsProjectionPage;
     }
 
+    public boolean isSponsorBenefitsProjectionPage() {
+        return sponsorBenefitsProjectionPage;
+    }
+
+    public void setSponsorBenefitsProjectionPage(boolean sponsorBenefitsProjectionPage) {
+        this.sponsorBenefitsProjectionPage = sponsorBenefitsProjectionPage;
+    }
 
     public boolean isAnnualContributionStatement() {
         return annualContributionStatement;
@@ -193,7 +203,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     }
 
     public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
-                      boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection,boolean benefitsProjectionPage, boolean benefitProjectionGrid, boolean media,
+                      boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection,boolean benefitsProjectionPage, boolean sponsorBenefitsProjectionPage,boolean benefitProjectionGrid, boolean media,
                       boolean annualContributionStatement, boolean provisionalMemberStatement, boolean annualContributionStatementGrid) {
         super();
         this.id = id;
@@ -207,6 +217,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.whatIfAnalysis = whatIfAnalysis;
         this.benefitsProjection = benefitsProjection;
         this.benefitsProjectionPage=benefitsProjectionPage;
+        this.sponsorBenefitsProjectionPage=sponsorBenefitsProjectionPage;
         this.benefitProjectionGrid = benefitProjectionGrid;
         this.annualContributionStatementGrid = annualContributionStatementGrid;
         this.annualContributionStatement = annualContributionStatement;

@@ -136,6 +136,10 @@
 	<div class="accordion-content">
 		<p>Access to portal benefit calculator page</p>
 	</div>
+	<h2 class="accordion-header"> SPONSOR BENEFIT PROJECTION (CALCULATOR)  <span class="pull-right"><input type="checkbox" id="sponsorBenefitProjectionPage" class="form-control input-sm"  ${permissions.sponsorBenefitProjectionPage == 'TRUE' ? 'checked' : ''}/></span></h2>
+	<div class="accordion-content">
+		<p>Access to portal benefit calculator page</p>
+	</div>
 
 	<h2 class="accordion-header">CALCULATOR &amp; LOG<span class="pull-right"><input type="checkbox" id="calculator_log" class="form-control input-sm"  ${permissions.calculator_log == 'TRUE' ? 'checked' : ''}/></span></h2>
 	<div class="accordion-content">

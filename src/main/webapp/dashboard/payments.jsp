@@ -64,10 +64,13 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
+        start_wait();
 
     $('#results').dataTable({
 
+
     });
+        stop_wait();
     });
 
     function load_dashboard(page, batch)

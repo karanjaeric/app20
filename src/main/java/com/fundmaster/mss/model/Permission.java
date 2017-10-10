@@ -140,6 +140,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.benefitProjectionPage = benefitProjectionPage;
 	}
 
+	public boolean isSponsorBenefitProjectionPage() {
+		return sponsorBenefitProjectionPage;
+	}
+
+	public void setSponsorBenefitProjectionPage(boolean sponsorBenefitProjectionPage) {
+		this.sponsorBenefitProjectionPage = sponsorBenefitProjectionPage;
+	}
+
 	public boolean isCalculator_log() {
 		return calculator_log;
 	}
@@ -436,7 +444,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	private String profile;
 	
-	private boolean setup, content, schemes, receipts, payments, members, member_listing, corporate_statement, operations, media, uac, analytics,benefitProjectionPage,calculator_log ;
+	private boolean setup, content, schemes, receipts, payments, members, member_listing, corporate_statement, operations, media, uac, analytics,benefitProjectionPage, sponsorBenefitProjectionPage,calculator_log ;
 	
 	private boolean portal_members, portal_member_view, portal_member_process, portal_member_delete, portal_member_add;
 	
@@ -539,7 +547,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	public Permission(long id, String profile, boolean setup, boolean content,
 			boolean schemes, boolean receipts, boolean payments,
 			boolean members, boolean member_listing, boolean corporate_statement, boolean operations, boolean media, boolean uac,
-			boolean analytics, boolean benefitProjectionPage,boolean calculator_log, boolean setup_company, boolean setup_email, boolean setup_logo,
+			boolean analytics, boolean benefitProjectionPage, boolean sponsorBenefitProjectionPage,boolean calculator_log, boolean setup_company, boolean setup_email, boolean setup_logo,
 			boolean setup_menu, boolean db_menu, boolean setup_social, boolean setup_theme,
 			boolean setup_banner, boolean setup_interest_rate,
 			boolean setup_other, boolean setup_contact_reason,
@@ -586,6 +594,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.uac = uac;
 		this.analytics = analytics;
 		this.benefitProjectionPage =benefitProjectionPage;
+		this.sponsorBenefitProjectionPage =sponsorBenefitProjectionPage;
 		this.calculator_log = calculator_log;
 		this.setup_company = setup_company;
 		this.setup_email = setup_email;

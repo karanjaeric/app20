@@ -9,10 +9,7 @@
         <fieldset>
             <legend>Benefit Projection Calculation Parameters</legend>
             <input type="hidden" id="scheme_id" value="${ scheme_id }"/>
-            <input type="hidden" id="member_id" value="${ member_id }"/>
-            <input type="hidden" id="currentUnitPrice" value="${ currentUnitPrice }"/>
-            <input type="hidden" id="memberContribution" value="${ memberContribution }"/>
-            <input type="hidden" id="PVL" value="${ PVL }"/>
+             <input type="hidden" id="currentUnitPrice" value="${ currentUnitPrice }"/>
 
 
             <div class="col-md-3">
@@ -45,13 +42,13 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label">Payment Amount:</label> <input
-                        type="text" name="paymentAmount" class="form-control" id="paymentAmount" value="${requestScope.memberContribution}">
+                        type="text" name="paymentAmount" class="form-control" id="paymentAmount" placeholder="Payment Amount">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label">Present Value  :</label>
-                    <input type="text" name="presentValue" class="form-control" id="presentValue" value="${requestScope.PVL}"  >
+                    <input type="text" name="presentValue" class="form-control" id="presentValue" placeholder="Present Value"  >
                 </div>
             </div>
 
@@ -72,14 +69,13 @@
 
 <script type="text/javascript">
 
-    var memberId, currentUnitPrice,memberContribution,PVL;
-
+    var  currentUnitPrice;
 
         $(document).ready(function(){
             $.ajax({
 
 
-                url: $('#base_url').val() + 'benefit-projection',
+                url: $('#base_url').val() + 'sponsor-benefit-projection',
                 type : 'get',
                 dataType : 'html',
                 success : function(html) {
@@ -92,16 +88,13 @@
             start_wait();
 
 
-            memberId = $('#member_id').val();
-            currentUnitPrice= $('#currentUnitPrice').val();
-            memberContribution=$('#memberContribution').val();
-            PVL=$('#PVL').val();
+             currentUnitPrice= $('#currentUnitPrice').val();
+
+
 
             var unitprice =  document.getElementById('currentUnitPrice').value;
-            var contr = document.getElementById('memberContribution').value;
-            var pvl = document.getElementById('PVL').value;
 
-             addValue(currentUnitPrice,memberContribution,PVL);
+             addValue(currentUnitPrice);
 
             stop_wait();
 
@@ -112,11 +105,9 @@
 
 
 
-    function addValue(currentUnitPrice,memberContribution,PVL) {
+    function addValue(currentUnitPrice) {
         document.getElementById('interestRate').value=currentUnitPrice;
-        document.getElementById('paymentAmount').value=memberContribution;
-        document.getElementById('presentValue').value=PVL;
-    }
+     }
 
     $(document).ready(function(){
 
@@ -188,7 +179,7 @@
                         e.preventDefault();
                         // Get the form instance
                         $.ajax({
-                                url : $('#base_url').val() + 'benefit-projection',
+                                url : $('#base_url').val() + 'sponsor-benefit-projection',
                                  type : 'post',
                                 data : {
                                     interestRate : $(
@@ -237,7 +228,7 @@
     });
 
     (function load(){
-        var url = $('#base_url').val()+ 'benefit-projection';
+        var url = $('#base_url').val()+ 'sponsor-benefit-projection';
             var xmlhttp;
             xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function(){
