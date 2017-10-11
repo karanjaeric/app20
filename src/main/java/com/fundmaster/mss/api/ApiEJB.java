@@ -27,6 +27,7 @@ public interface ApiEJB {
     XiMember memberExistsInScheme(String profile, String value, String schemeID);
     boolean uploadMemberDocument(String memberId, String docName, String docNotes, String docNum, String docTypeId);
     List<Scheme> getProfileSchemes(String user, String profile);
+    List<Sponsor>  getMemberSchemeProducts(String email,String schemeId);
     JSONObject getMemberAverageInterest(String memberID);
     JSONObject getSchemeCurrency(String schemeID);
     JSONObject getSchemeMode(String schemeID);

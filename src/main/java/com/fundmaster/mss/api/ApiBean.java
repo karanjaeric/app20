@@ -1442,6 +1442,24 @@ public Double getMemberTotalUnits(String memberId) {
             return null;
         }
     }
+    @Override
+    public List<Sponsor>  getMemberSchemeProducts(String email,String schemeId) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall. GET_MEMBER_PRODUCTS + email +"/"+schemeId);
+            jLogger.i("Member products response >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
+            if(response.get(Fields.SUCCESS).equals(true))
+            {
+                jLogger.i("Member products response >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
+                return this.productsFromJSON(response);
+            }
+            else
+                return null;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
 
     @Override
     public boolean uploadMemberDocument(String memberId, String docName, String docNotes, String docNum, String docTypeId) {
@@ -2280,6 +2298,31 @@ public Double getMemberTotalUnits(String memberId) {
             return schemes;
         } catch (JSONException je) {
             jLogger.e("We have a json exception extracting schemes" + je.getMessage());
+            return null;
+        }
+    }
+
+    private List<Sponsor> productsFromJSON(JSONObject response)
+    {
+        List<Sponsor> sponsors = new ArrayList<>();
+        jLogger.i("The response size is >>>>>>>>>>>>>>>>> " + response.length());
+        try {
+            JSONArray res = (JSONArray) response.get(Constants.ROWS);
+            jLogger.i("The res size is >>>>>>>>>>>>>>>>> " + res.length());
+            for (int i = 0; i < res.length(); i++) {
+                JSONObject jsonObject = res.getJSONObject(i);
+                jLogger.i("The sponsor json object >>>>>>>>>>>>>>>>> " + jsonObject);
+                Sponsor sponsor = new Sponsor();
+                sponsor.setId(jsonObject.getLong("id"));
+                jLogger.i("The sponsor id >>>>>>>>>>>>> " + jsonObject.getLong("id"));
+                sponsor.setCompanyName(jsonObject.getString("name"));
+                jLogger.i("The sponsor name >>>>>>>>>>>>> " + jsonObject.getString("name"));
+                sponsors.add(sponsor);
+            }
+            jLogger.i("Sponsprs found are " + sponsors.size());
+            return sponsors;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception extracting sponsors" + je.getMessage());
             return null;
         }
     }

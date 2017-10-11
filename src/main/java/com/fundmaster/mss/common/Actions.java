@@ -15,6 +15,7 @@ public class Actions {
     public static final String LOGOUT = "LOGOUT";
     public static final String REASON = "REASON";
     public static final String CHANGE_SCHEME = "CHANGE_SCHEME";
+    public static final String CHANGE_PRODUCT = "CHANGE_PRODUCT";
     public static final String AP = "AP";
     public static final String CB = "CB";
     public static final String CURR = "CURR";

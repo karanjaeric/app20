@@ -18,6 +18,7 @@ public class APICall {
     public static final String CHECK_MEMBER_EXISTS_IN_SCHEME = "checkMemberExistsInScheme/";
     public static final String UPLOAD = "upload/";
     public static final String GET_MEMBER_SCHEMES = "getmemberschemes/";
+    public static final String GET_MEMBER_PRODUCTS = "getmemberproducts/";
     public static final String GET_MEMBER_AVERAGE_INTEREST = "getmemberaverageinterest/";
     public static final String SCHEME_GET_SCHEME_BASE_CURRENCY = "scheme/getschemebasecurrency/";
     public static final String SCHEME_MODE = "scheme/getschememode/";

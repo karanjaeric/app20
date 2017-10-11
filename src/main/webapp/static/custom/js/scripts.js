@@ -63,6 +63,27 @@
 	}
 
 	}
+    function reloadproductmember()
+    {if($('#sponsor_id').val() != '') {
+        start_wait();
+        $.ajax({
+            url: $('#base_url').val() + 'member',
+            type: 'post',
+            data: {ACTION: 'CHANGE_PRODUCT', sponsorID: $('#sponsor_id').val()},
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+                if(json.success)
+                    setTimeout(function() {
+                        var sponsorID = $('#sponsor_id').val();
+                        console.log("Sponsor Id: " + sponsorID);
+                        window.location.href = $('#base_url').val() + "member?sponsor_id="+sponsorID;
+                    }, 0);
+            }
+        });
+    }
+
+    }
 	function set_spouse_date_of_birth()
 	{
 		$('#spouseDateOfBirth').val($('#dateOfBirth').val());

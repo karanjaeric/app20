@@ -39,6 +39,8 @@ public class Constants implements Serializable {
 	public static final String PAGE_CONTACT_US = "CONTACT_US";
 	public static final String PAGE_REGISTER = "REGISTRATION";
 	public static final String SCHEME_ID = "SCHEME_ID";
+	public static final String SPONSOR_ID = "SPONSOR_ID";
+
 	public static final String MANAGER_PROFILE = "MANAGER_PROFILE";
 	public static final String MANAGER = "MANAGER";
 	public static final String AGENT_PROFILE = "AGENT";

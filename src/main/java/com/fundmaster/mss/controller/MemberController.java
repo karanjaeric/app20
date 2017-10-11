@@ -97,6 +97,7 @@ public class MemberController extends BaseServlet implements Serializable {
 					List<Scheme> schemes = apiEJB.getProfileSchemes(user, this.getSessKey(request, Constants.U_PROFILE));
 					request.setAttribute("schemes", schemes);
 
+
 					try {
 						schemeId = request.getParameter("scheme_id");
 						 jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
@@ -105,6 +106,7 @@ public class MemberController extends BaseServlet implements Serializable {
 					}
 
 					XiMember m = new XiMember();
+
 
 					try {
 						if (schemeId != null) {
@@ -136,6 +138,10 @@ public class MemberController extends BaseServlet implements Serializable {
 
 					MemberMenu memberMenu = memberMenuBeanI.find();
 					request.setAttribute("memberMenu", memberMenu);
+
+					String memberEmail=m.getEmailAddress();
+					List<Sponsor> sponsors = apiEJB.getMemberSchemeProducts(memberEmail,this.getSessKey(request, Constants.SCHEME_ID));
+					request.getSession().setAttribute("sponsors", sponsors);
 
 					if(schemes != null && schemes.size() > 0) {
 						jLogger.i("Scheme is not null. email: "+ this.getSessKey(request, Constants.USER));
@@ -298,6 +304,9 @@ public class MemberController extends BaseServlet implements Serializable {
             case Actions.CHANGE_SCHEME:
                 changeScheme(request, response, session);
                 break;
+			case Actions.CHANGE_PRODUCT:
+				changeProduct(request, response, session);
+				break;
             case Actions.AP:
                 getAccountingPeriod(request, response);
                 break;
@@ -547,6 +556,16 @@ public class MemberController extends BaseServlet implements Serializable {
 
 		this.respond(response, true, "Scheme changed successfully", null);
     }
+	private void changeProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+		audit(session, "Switched between sponsor from sponsor #" + this.getSessKey(request, Constants.SPONSOR_ID)
+				+ " to sponsor #" + this.get(request, "sponsorID"));
+		jLogger.i("Switched between sponsor from sponsor #" + this.getSessKey(request, Constants.SPONSOR_ID)
+				+ " to sponsor #" + this.get(request, "sponsorID"));
+		session.setAttribute("sponsor_id", this.get(request, "sponsorID"));
+
+		this.respond(response, true, "Sponsor changed successfully", null);
+	}
 
     private void getAccountingPeriod(HttpServletRequest request, HttpServletResponse response) {
         DateFormat format_from = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
