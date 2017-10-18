@@ -87,7 +87,7 @@ public class BenefitProjectionController  extends BaseServlet implements Seriali
         Double currentUnitPrice = apiEJB.getCurrentUnitPrice(schemeId);
         Double memberContribution =apiEJB.getMemberLatestContribution(memberId);
         Double totalMemberUnits = apiEJB.getMemberTotalUnits(memberId);
-        Double PVL =totalMemberUnits*currentUnitPrice;
+        BigDecimal PVL = BigDecimal.valueOf(totalMemberUnits*currentUnitPrice).setScale(2,BigDecimal.ROUND_HALF_EVEN);
         jLogger.i("memberContribution in servlet " + memberContribution);
         jLogger.i("PVL in servlet " + PVL);
         jLogger.i("currentUnitPrice in servlet " + currentUnitPrice);
