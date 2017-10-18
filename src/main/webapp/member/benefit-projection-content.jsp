@@ -85,12 +85,10 @@
                 success : function(html) {
                     html="";
                     console.log("Am here");
-                    $('#unitPrice').html(html);
-                }
+                 }
 
             });
             start_wait();
-
 
             memberId = $('#member_id').val();
             currentUnitPrice= $('#currentUnitPrice').val();

@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -175,64 +177,53 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public JSONObject calculateBenefitProjection(String interestRate,String years,String paymentFrequency,String paymentAmount, String presentValue) {
-        jLogger.i("The interestRate is: " + interestRate);
-        jLogger.i("The No of Years is: " + years);
+    public JSONObject calculateBenefitProjection(String IR,String yrs,String paymentFrequency,String paymentAmount, String PV) {
+        jLogger.i("The interestRate is: " + IR);
+        jLogger.i("The No of Years is: " + yrs);
         jLogger.i("The paymentFrequency is: " + paymentFrequency);
         jLogger.i("The paymentAmount is: " + paymentAmount);
-        jLogger.i(" The presentValue is " + presentValue);
+        jLogger.i(" The presentValue is " + PV);
 
-        Double r = Double.parseDouble(interestRate);
-        Double annualRate = r / 100;
-        jLogger.i("The Converted interestRate is: " + annualRate);
-        int n = Integer.parseInt(years);
-        int k = Integer.parseInt(paymentFrequency);
-        Double PMT = Double.parseDouble(paymentAmount);
-        Double PV = Double.parseDouble(presentValue);
-        int nk = n * k;
+
+        BigDecimal rate = BigDecimal.valueOf(Double.parseDouble(IR));
+        BigDecimal years = BigDecimal.valueOf(Double.parseDouble(yrs));
+        BigDecimal freq = BigDecimal.valueOf(Double.parseDouble(paymentFrequency));
+        BigDecimal PMT = BigDecimal.valueOf(Double.parseDouble(paymentAmount));
+        BigDecimal presentValue = BigDecimal.valueOf(Double.parseDouble(PV));
+
+        BigDecimal divider = new BigDecimal("100");
+        BigDecimal interestRate = rate.divide(divider);
+
+        BigDecimal factor1=BigDecimal.ONE.add(interestRate.divide(freq));
+        BigDecimal powerFactor=freq.multiply(years);
+
+        BigDecimal factor2=factor1.pow(powerFactor.intValue(), MathContext.UNLIMITED);
+        BigDecimal base=presentValue.multiply(factor2);
+
+        BigDecimal den=interestRate.divide(freq);
+        BigDecimal factor4=interestRate.divide(freq);
+        BigDecimal factor3=BigDecimal.ONE.add(factor4);
+        BigDecimal powerFactor2=years.multiply(freq);
+        BigDecimal num=factor3.pow(powerFactor2.intValue(), MathContext.UNLIMITED);
+        BigDecimal base1=num.subtract(BigDecimal.ONE);
+        BigDecimal base2=base1.divide(den);
+        BigDecimal base3=PMT.multiply(base2);
+
+        BigDecimal futureValue=base.add(base3).setScale(2,BigDecimal.ROUND_HALF_EVEN);
         JSONObject jsonObject = new JSONObject();
-        Double futureValue;
 
 
-             if (PV <=0) {
-                 jLogger.i("The present Value " + PV);
-
-                 Double futureValuePart1 = (PV) * (Math.pow((1 + (annualRate / k)), (nk)));
-                 Double PMTnum = Math.pow((1 + (annualRate / k)), (nk)) - (1);
-                 Double PMTdenom = r / k;
-                 Double futureValuePart2 = PMT * ((PMTnum) / (PMTdenom));
-                   futureValue = 100 * (futureValuePart1 + futureValuePart2);
-                 jLogger.i("The future Value " + futureValue);
-
-                 try {
+                  try {
 
                      return jsonObject.put("futureValue", futureValue);
 
                  } catch (JSONException e1) {
                      e1.printStackTrace();
+                     return null;
+
                  }
-             }else if (PV>0){
-                 jLogger.i("The present Value " + PV);
 
-                 Double futureValue1= (PV) * (Math.pow((1 + (annualRate / k)), (nk))) ;
-                 Double futureValue2= Math.pow((1 + (annualRate / k)), (nk)) - (1) ;
-                 double rk = r/k;
-                 futureValue2 =PMT *((futureValue2) / (rk));
-                 futureValue=100*(futureValue1+futureValue2);
-                 jLogger.i("The future Value " + futureValue);
-
-                 try {
-
-                     return jsonObject.put("futureValue", futureValue);
-
-                 } catch (JSONException e1) {
-                     e1.printStackTrace();
-                 }
-             }
-
-        return null;
-
-    }
+      }
 
 
     @Override
