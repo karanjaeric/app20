@@ -39,6 +39,7 @@ public class APICall {
     public static final String GET_MEMBER_PROJECTIONS = "getmemberprojections/";
     public static final String GET_DB_PROJECTIONS = "benefits/getdbbenefits/";
     public static final String SCHEME_GETTOTALSCHEMECONTRIBUTIONS = "scheme/gettotalschemecontributions/";
+    public static final String SPONSOR_GETTOTALSPONSORCONTRIBUTIONS = "sponsor/gettotalsponsorcontributions/";
     public static final String GET_MEMBER_BENEFICIARIES = "getmemberbeneficiaries/";
     public static final String NEW_MEMBER_LISTING_WITHIN_YEAR = "newMemberListingWithinYear/";
     public static final String SCHEME_GET_SCHEME_RECEIPTS_BETWEEN_DATES = "scheme/getschemereceiptsbetweendates/";

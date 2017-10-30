@@ -48,6 +48,7 @@ public interface ApiEJB {
     JSONObject getMemberProjections(String memberId, String reasonId,String exitDate, String calcDate, String schemeId);
     JSONObject getDBProjections(String memberId, String reasonId,String exitDate, String calcDate, String schemeId, String salary);
     JSONObject getSchemeContributions(String schemeID ,String profileID);
+    JSONObject getSponsorContributions(String sponsorID, String profileID);
     JSONObject getBeneficiaries(String memberID);
     List<Beneficiary> getBeneficiariesList(String memberID);
     JSONObject getNewMembersInYear(String schemeID,String profileID);

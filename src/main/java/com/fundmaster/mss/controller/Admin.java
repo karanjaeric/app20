@@ -31,6 +31,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String ADMIN_COMPANY = "COMPANY";
     private static final String ADMIN_EMAILS = "EMAILS";
     private static final String ADMIN_SCHEME_CONTRIBUTIONS = "SC";
+    private static final String ADMIN_SPONSOR_CONTRIBUTIONS = "SP";
     private static final String ADMIN_PROFILE_NAMES = "PROFILE_NAMES";
     private static final String ADMIN_PWD_RESET = "ADMIN_PWD_RESET";
     private static final String EDIT_BENEFICIARY = "EDIT_BENEFICIARY";
@@ -325,6 +326,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case ADMIN_SCHEME_CONTRIBUTIONS:
                 getSchemeContributions(request, response);
+                break;
+            case ADMIN_SPONSOR_CONTRIBUTIONS:
+                getSponsorContributions(request, response);
                 break;
             case ADMIN_PROFILE_NAMES:
                 updateProfileNames(request, response, session);
@@ -2184,6 +2188,10 @@ public class Admin extends BaseServlet implements Serializable {
     }
     private void getSchemeContributions(HttpServletRequest request, HttpServletResponse response) {
         JSONObject result = apiEJB.getSchemeContributions(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));
+        this.respond(response, true, "success", result);
+    }
+    private void getSponsorContributions(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject result = apiEJB.getSponsorContributions(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID));
         this.respond(response, true, "success", result);
     }
     private void updateCompany(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
