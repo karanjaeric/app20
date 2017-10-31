@@ -49,6 +49,7 @@ public class Constants implements Serializable {
 	public static final String APPLICATION_JSON = "application/json";
 	public static final String NUMBER_ZER0 = "0.00";
 	public static final String EMAIL = "EMAIL";
+	public static final String SMS = "SMS";
 	public static final String ALL = "ALL";
 	public static final String CUSTOMER_RELATIONSHIP_EXECUTIVE = "CUSTOMER_RELATIONSHIP_EXECUTIVE";
 	public static final String CUSTOMER_RELATIONSHIP_MANAGER = "CUSTOMER_RELATIONSHIP_MANAGER";

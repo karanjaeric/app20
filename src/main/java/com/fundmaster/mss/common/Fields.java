@@ -158,6 +158,7 @@ public class Fields {
     public static final String PROCESSED = "processed";
     public static final String SERVICE_PERIOD = "servicePeriod";
     public static final String DATE_JOINED = "dateJoined";
+    public static final String SENDER = "sender";
 }
 
 

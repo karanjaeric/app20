@@ -153,6 +153,7 @@ public class Register extends BaseServlet implements Serializable {
 
                 PasswordPolicy policy = passwordPolicyBeanI.find();
                 jLogger.i(" >>>>>>>>>>>> The idnumber is: " + this.get(request, "idNumber") + " <<<<<<<<<<<<<<<");
+
                 XiMember member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
                     if (member != null && member.getId() > 0) {
@@ -168,6 +169,7 @@ public class Register extends BaseServlet implements Serializable {
                             u.setSecurityCode(securityCode);
                             userBeanI.edit(u);
                             String email_address = null;
+                            String phone = null;
                             String schemeId = null;
                             boolean proceed;
 
@@ -178,6 +180,7 @@ public class Register extends BaseServlet implements Serializable {
                                 jLogger.i("Proceed is " + proceed);*/
                                 XiPensioner p = apiEJB.getPensionerDetails(u.getProfileID().toString(), null);
                                 email_address = p.getEmail();
+                                phone =p.getCellPhone();
                                 jLogger.i("Pensioner email: " + email_address);
                                 proceed = helper.isEmailAddress(email_address);
                             }
@@ -185,6 +188,7 @@ public class Register extends BaseServlet implements Serializable {
                             else if(u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 email_address = m.getEmailAddress();
+                                phone=m.getPhoneNumber();
                                 schemeId = member.getSchemeId();
                                 proceed = helper.isEmailAddress(email_address);
                             }
@@ -214,9 +218,14 @@ public class Register extends BaseServlet implements Serializable {
                                 String sender = emails.getDefaultEmail();
                                 List<String> recipients = new ArrayList<>();
                                 recipients.add(email_address);
+
                                 apiEJB.sendEmail(recipients, sender, null, "MSS Portal Account Activation Instructions", "Dear " + u.getUserProfile() + ", " +
                                         "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
                                         "Please click this link " + settings.getPortalBaseURL() + "activate?" + securityCode + " to complete the activation process", schemeId, false, null);
+
+                                apiEJB.sendSMS(recipients, sender, null, "Dear " + u.getUserProfile() + ", " +
+                                        "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
+                                        "Your Verification Code is " + securityCode + ". Alternatively, click this link " + settings.getPortalBaseURL() + "activate?" + securityCode + "  to complete the activation process", schemeId);
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! Your account has been created on the portal. An email has been sent to your email address with account activation instructions.", null);
 

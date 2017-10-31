@@ -21,6 +21,7 @@ public class ProfileLoginFieldDAO extends GenericDAOImpl<ProfileLoginField, Long
         @SuppressWarnings("unchecked")
         List<ProfileLoginField> logs = em.createQuery("SELECT p FROM ProfileLoginField p WHERE p.profile=:profile").setParameter("profile", profile).setMaxResults(5).getResultList();
 
+
         return logs.size() > 0 ? logs.get(0) : null;
     }
 
