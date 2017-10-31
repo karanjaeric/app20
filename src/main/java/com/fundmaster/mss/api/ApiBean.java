@@ -27,6 +27,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by bryanitur on 8/1/16.
@@ -925,6 +927,32 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
+    public boolean sendSMS(List<String> recipients, String sender, String senderName, String message, String schemeID) {
+        JSONObject response;
+        JSONObject params = new JSONObject();
+        if (recipients.size()>1){
+
+            jLogger.i("Recipients: " + recipients.toArray().toString());
+
+        }
+        try {
+            params.put(Fields.NOTIFICATION_PLATFORM, Constants.SMS)
+                    .put(Fields.RECIPIENTS, recipients)
+                    .put(Fields.SENDER, sender)
+                    .put(Fields.SENDER_NAME, senderName)
+                    .put(Fields.MSG, message)
+                    .put(Fields.SCHEME_ID, schemeID);
+
+            response = URLPost(APICall.NOTIFICATION_PUSH, params.toString(), Constants.APPLICATION_JSON);
+            return response.getBoolean(Fields.SUCCESS);
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return false;
+        }
+
+    }
+
+    @Override
     public JSONObject searchSchemes(String search) {
         JSONObject response;
         try {
@@ -1529,7 +1557,16 @@ public Double getMemberTotalUnits(String memberId) {
 
     @Override
     public XiMember memberExists(String profile, String value) {
-        String ordinal = profileLoginFieldBeanI.findByProfile(profile);
+
+        String ordinal = "";
+        if(isValidEmail(value)){
+            ordinal = "EMAIL";
+        }else if(isValidPhone(value)){
+            ordinal = "PHONE";
+        }else {
+            ordinal = profileLoginFieldBeanI.findByProfile(profile);
+        }
+
         jLogger.i("Ordinal is >>>>>>>>> " + ordinal + " <<<<<<<<<<<<<");
         if (ordinal.equals("TAX_NUMBER")) {
             ordinal = "PIN";
@@ -2328,5 +2365,16 @@ public Double getMemberTotalUnits(String memberId) {
             jLogger.e("We have a json exception extracting sponsors" + je.getMessage());
             return null;
         }
+    }
+
+
+    public  boolean isValidEmail(String emailStr) {
+        Matcher matcher = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE) .matcher(emailStr);
+        return matcher.find();
+    }
+
+    public  boolean isValidPhone(String emailStr) {
+        Matcher matcher = Pattern.compile("\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", Pattern.CASE_INSENSITIVE) .matcher(emailStr);
+        return matcher.find();
     }
 }
