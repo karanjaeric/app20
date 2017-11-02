@@ -17,6 +17,7 @@ public interface UserBeanI {
     List<User> findByStatus();
     List<User> findAll(String search, int offset, int limit);
     User findBySecurityCode(String securityCode);
+    User findByActivationCode(String activationCode);
     int countAll(String search);
     User find(String username, String profile);
     User findById(long id);

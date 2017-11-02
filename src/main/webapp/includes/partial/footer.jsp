@@ -26,7 +26,7 @@
 		</div>
 </div>
 <!--  RESET PASSWORD -->
-<div class="modal fade" id="modal-pwd-reset" tabindex="-1"
+<div class="modal fade "  id="modal-pwd-reset" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabelReset" aria-hidden="true">
 		<form role="form" id="form-password-reset">
 			<div class="modal-dialog">
@@ -52,6 +52,35 @@
 			</div>
 		</form>
 	</div>
+
+<%--ACTIVATE ACCOUNT USING SMS CODE--%>
+<div class="modal fade" id="modal-sms-code" tabindex="-1"
+	 role="dialog" aria-labelledby="myModalLabelSms" aria-hidden="true">
+	<form role="form" id="form-sms-code">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title text-center" id="myModalLabelSms">
+						<i class="fa fa-bookmark"></i>&nbsp;&nbsp;<small>Please Enter the received code</small>
+					</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class="form-group">
+						<label for="code" class="control-label">Activation Code:</label>
+						<input type="text" name="code" class="form-control"
+							   id="code" placeholder="Your Activation code">
+					</div>
+					<p>We will Activate your Account</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-success">ACTIVATE</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
 <div class="container-fluid footer">
 	<p>&copy; Copyright <c:out value="${currentYear}" />. All Rights Reserved. Systech Ltd.</p>
 </div>

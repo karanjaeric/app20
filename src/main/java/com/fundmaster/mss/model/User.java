@@ -41,6 +41,16 @@ public class User extends GenericModel<User>  implements Serializable {
 	}
 	private int attempt;
 	private String securityCode;
+	private String smsActivationCode;
+
+	public String getSmsActivationCode() {
+		return smsActivationCode;
+	}
+
+	public void setSmsActivationCode(String smsActivationCode) {
+		this.smsActivationCode = smsActivationCode;
+	}
+
 	public String getSecurityCode() {
 		return securityCode;
 	}

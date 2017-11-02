@@ -57,7 +57,8 @@ public interface ApiEJB {
     List<XiMember> due4Retirement(String schemeID);
     JSONObject searchSchemes(String search);
     boolean sendEmail(List<String> recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url);
-    boolean sendSMS(List<String> recipients, String sender, String senderName, String message, String schemeID);
+    void sendSMS(String recipient, String message );
+
     JSONObject getAgentCommission(String agentID);
     JSONObject getExitsInYear(String schemeID);
     JSONObject getReasonsForExit();

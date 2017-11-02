@@ -18,6 +18,8 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Helper {
 
@@ -119,6 +121,11 @@ public class Helper {
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();
+    }
+
+    public  boolean isValidPhone(String phone) {
+        Matcher matcher = Pattern.compile("\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", Pattern.CASE_INSENSITIVE) .matcher(phone);
+        return matcher.find();
     }
     public Date addDays(Date date, int days)
     {
@@ -340,4 +347,17 @@ public class Helper {
     }
 
 
+    public String randomNumber() {
+        String randomNumber="";
+        //generating a rendom number
+        Random random=new Random();
+        for(int i=0;i<4;i++){
+            int max=4;
+            int min=0;
+            int randNo= random.nextInt((max - min )+ 1);
+            randomNumber=randomNumber+randNo;
+
+        }
+        return randomNumber;
+    }
 }

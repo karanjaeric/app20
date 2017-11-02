@@ -267,7 +267,16 @@
 											</td></tr>
 									</c:forEach>
 								</table>
-								<a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="add_beneficiary();">ADD BENEFICIARY</a>
+								<c:choose>
+								<c:when test="${totalPercentageLumpsum ==100}">
+									<a class="btn btn-success btn-sm disabled" href="javascript:void(0);" data-toggle="tooltip" title="You CANNOT Add a New Beneficiary!" onclick="add_beneficiary();">ADD BENEFICIARY</a>.
+ 								</c:when>
+								<c:otherwise>
+									<a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="add_beneficiary();">ADD BENEFICIARY</a>
+ 								</c:otherwise>
+							</c:choose>
+
+
 							</fieldset>
 						</div>
 				</div>
@@ -304,6 +313,9 @@
 			</div>
 			</div>
 			<script type="text/javascript">
+                $(document).ready(function(){
+                    $('[data-toggle="tooltip"]').tooltip();
+                });
 				function add_beneficiary()
 				{
 					start_wait();

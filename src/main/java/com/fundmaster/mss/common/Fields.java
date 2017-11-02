@@ -119,6 +119,7 @@ public class Fields {
     public static final String ATTACHMENTS = "attachments";
     public static final String NOTIFICATION_PLATFORM = "notificationPlatform";
     public static final String RECIPIENTS = "recipients";
+    public static final String RECEIVER = "recipient";
     public static final String CC = "cc";
     public static final String MAIL_SENDER = "mailSender";
     public static final String SENDER_NAME = "senderName";

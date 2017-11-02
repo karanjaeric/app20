@@ -82,6 +82,16 @@ public class UserBean implements UserBeanI {
     }
 
     @Override
+    public User findByActivationCode(String activationCode){
+        UserDAO dao = new UserDAO(entityManager);
+        return dao.findByActivationCode(activationCode);
+
+
+
+    }
+
+
+    @Override
     public int countAll(String search) {
         UserDAO dao = new UserDAO(entityManager);
         return dao.countAll(search);

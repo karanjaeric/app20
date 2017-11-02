@@ -126,6 +126,20 @@ public class UserDAO extends GenericDAOImpl<User, Long> {
 
         }
     }
+
+    public User findByActivationCode(String activationCode){
+        List<User> results = em.createQuery("SELECT u FROM User u WHERE u.smsActivationCode=:activationCode").setParameter("activationCode", activationCode).getResultList();
+
+        if (results.isEmpty()) {
+
+            return null;
+
+        } else {
+
+            return results.get(0);
+
+        }
+    }
     @SuppressWarnings("unchecked")
     public int countAll(String search)
     {

@@ -27,8 +27,9 @@
 						<button class="btn btn-warning btn-block" type="submit">
 							<strong>SIGN IN</strong>
 						</button><br />
-						<a href="javascript:void(0);" id="pwd-reset-btn" class="btn btn-info">Forgot Your Password?</a>
-						<img src="<%=request.getContextPath() %>/static/images/logo-brand.png" class="img-brand"/>
+						<a href="javascript:void(0);" id="pwd-reset-btn" class="btn btn-info pull-left" style="font-size: 13px">Forgot Your Password?</a>
+						<a href="javascript:void(0);" id="sms-btn" class="btn btn-info pull-right" style="font-size: 13px">Activate Your Account (SMS ONLY)</a>
+						<%--<sss--%>
 					</fieldset>
 				</form>
 

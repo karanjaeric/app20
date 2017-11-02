@@ -1465,6 +1465,16 @@ public class Admin extends BaseServlet implements Serializable {
         List<Scheme> schemes;
         schemes = apiEJB.getSchemes(0, 10000);
         List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(this.get(request, "memberID"));
+
+        int totalPercentageLumpsum=0;
+        for (Beneficiary ben:beneficiaries
+                ) {
+            totalPercentageLumpsum= Integer.parseInt(ben.getLumpsumEntitlement());
+
+        }
+        jLogger.i("totalPercentageLumpsum" + totalPercentageLumpsum);
+        request.setAttribute("totalPercentageLumpsum",totalPercentageLumpsum);
+
         request.setAttribute("beneficiaries", beneficiaries);
         request.setAttribute("schemes", schemes);
         MemberPermission memberPermission = memberPermissionBeanI.find();

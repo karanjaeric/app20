@@ -5,8 +5,10 @@ import com.fundmaster.mss.beans.InterestRateColumnBeanI;
 import com.fundmaster.mss.beans.ProfileLoginFieldBeanI;
 import com.fundmaster.mss.beans.SettingBeanI;
 import com.fundmaster.mss.common.*;
+import com.fundmaster.mss.common.Message;
+import com.fundmaster.mss.hubtel.*;
 import com.fundmaster.mss.model.*;
-import org.json.JSONArray;
+ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +22,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -927,28 +928,42 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
-    public boolean sendSMS(List<String> recipients, String sender, String senderName, String message, String schemeID) {
-        JSONObject response;
-        JSONObject params = new JSONObject();
-        if (recipients.size()>1){
+    public void sendSMS(String recipient,   String message ) {
 
-            jLogger.i("Recipients: " + recipients.toArray().toString());
 
+        final String code = "233";
+        final String zero = "0";
+        final String plus = "+";
+        String clientNumber=recipient;
+
+        if(clientNumber.startsWith(zero)){
+            recipient = code + clientNumber.substring(1);
+        }else if(clientNumber.startsWith(plus)){
+            recipient =clientNumber.substring(1);
         }
+
+
+        BasicAuth auth = new BasicAuth("rlmjklyk", "egzjdxiw");
+        ApiHost host = new ApiHost(auth);
+        MessagingApi messagingApi = new MessagingApi(host);
+
         try {
-            params.put(Fields.NOTIFICATION_PLATFORM, Constants.SMS)
-                    .put(Fields.RECIPIENTS, recipients)
-                    .put(Fields.SENDER, sender)
-                    .put(Fields.SENDER_NAME, senderName)
-                    .put(Fields.MSG, message)
-                    .put(Fields.SCHEME_ID, schemeID);
+            MessageResponse response = messagingApi.sendQuickMessage("XI", recipient, message, "123");
+           jLogger.i("Server Response status " + response.getStatus());
+            jLogger.i("Server Response network id " + response.getNetworkId());
+            jLogger.i("Server Response detail" + response.getDetail());
+            jLogger.i("Server Response rate " + response.getRate());
+            jLogger.i("Server Response message id" + response.getMessageId());
 
-            response = URLPost(APICall.NOTIFICATION_PUSH, params.toString(), Constants.APPLICATION_JSON);
-            return response.getBoolean(Fields.SUCCESS);
-        } catch (JSONException je) {
-            jLogger.e("We have a json exception " + je.getMessage());
-            return false;
+         } catch (HttpRequestException ex) {
+
+            jLogger.i("Exception Server Response Status " + ex.getHttpResponse().getStatus());
+            jLogger.i("Exception Server Response Body " + ex.getHttpResponse().getBodyAsString());
+
         }
+
+
+
 
     }
 
@@ -1546,14 +1561,7 @@ public Double getMemberTotalUnits(String memberId) {
     @Override
     public XiMember memberExists(String profile, String value) {
 
-        String ordinal = "";
-        if(isValidEmail(value)){
-            ordinal = "EMAIL";
-        }else if(isValidPhone(value)){
-            ordinal = "PHONE";
-        }else {
-            ordinal = profileLoginFieldBeanI.findByProfile(profile);
-        }
+        String  ordinal = profileLoginFieldBeanI.findByProfile(profile);
 
         jLogger.i("Ordinal is >>>>>>>>> " + ordinal + " <<<<<<<<<<<<<");
         if (ordinal.equals("TAX_NUMBER")) {
@@ -1573,11 +1581,17 @@ public Double getMemberTotalUnits(String memberId) {
 
             xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
             xiMember.setProfile(response.getString(Fields.PROFILE));
+
             if (response.getString(Fields.EMAIL) == null || response.getString(Fields.EMAIL).isEmpty()) {
                 xiMember.setEmailAddress("");
             } else {
                 xiMember.setEmailAddress(response.getString(Fields.EMAIL));
             }
+//            if (response.getString(Fields.CELL_PHONE) == null || response.getString(Fields.CELL_PHONE).isEmpty()) {
+//                xiMember.setPhoneNumber("");
+//            } else {
+//                xiMember.setPhoneNumber(response.getString(Fields.CELL_PHONE));
+//            }
 
             try {
                 
@@ -2356,13 +2370,5 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
 
-    public  boolean isValidEmail(String emailStr) {
-        Matcher matcher = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE) .matcher(emailStr);
-        return matcher.find();
-    }
 
-    public  boolean isValidPhone(String emailStr) {
-        Matcher matcher = Pattern.compile("\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", Pattern.CASE_INSENSITIVE) .matcher(emailStr);
-        return matcher.find();
-    }
 }

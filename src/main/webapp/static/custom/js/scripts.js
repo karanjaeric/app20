@@ -215,7 +215,11 @@ $(document).ready(function(){
 	$('#pwd-reset-btn').click(function(){
 		$('#modal-pwd-reset').modal('show');
 	});
-	
+
+    $('#sms-btn').click(function(){
+        $('#modal-sms-code').modal('show');
+
+    });
 	$('#content-main-li').click(function(){
 		
 		$('#main-menu.nav li').removeClass('active');
@@ -924,6 +928,7 @@ $('#form-password-reset').bootstrapValidator({
         }
     }
 })
+
 .on('success.form.bv', function(e) {
    
     // Prevent form submission
@@ -944,7 +949,50 @@ $('#form-password-reset').bootstrapValidator({
 
 });
 
-$('#form-reset-password').bootstrapValidator({
+    //form-sms-code
+
+    $('#form-sms-code').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        excluded: ':disabled',
+        fields: {
+            code: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter your Activation Code'
+                    }
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function(e) {
+
+            // Prevent form submission
+            e.preventDefault();
+            start_wait();
+            $.ajax({
+                url: $('#base_url').val() + 'activate-account',
+                type: 'POST',
+                data: {ACTION: 'ACTIVATE_ACCOUNT', code: $('#code').val() },
+                dataType: 'json',
+                success: function(json) {
+                    stop_wait();
+                    bootbox.alert(json.message);
+                    if(json.success)
+                        $('#modal-sms-code').modal('hide');
+                }
+            });
+
+        });
+
+
+
+    $('#form-reset-password').bootstrapValidator({
     message: 'This value is not valid',
     feedbackIcons: {
         valid: 'glyphicon glyphicon-ok',

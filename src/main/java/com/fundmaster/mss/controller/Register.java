@@ -9,6 +9,7 @@ import com.fundmaster.mss.model.*;
 import nl.captcha.Captcha;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "Register", urlPatterns = {"/register"})
 public class Register extends BaseServlet implements Serializable {
@@ -156,6 +159,10 @@ public class Register extends BaseServlet implements Serializable {
 
                 XiMember member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
+                String loginField =this.get(request, "idNumber");
+
+                if (helper.isEmailAddress(loginField)) {
+
                     if (member != null && member.getId() > 0) {
                         if (userBeanI.findUserByUsernameAndProfile(this.get(request, "idNumber"), member.getProfile()) == null) {
                             User u = new User();
@@ -169,45 +176,40 @@ public class Register extends BaseServlet implements Serializable {
                             u.setSecurityCode(securityCode);
                             userBeanI.edit(u);
                             String email_address = null;
-                            String phone = null;
-                            String schemeId = null;
+                             String schemeId = null;
                             boolean proceed;
 
-                            if (u.getUserProfile().equals(Constants.PENSIONER)){
+
+                            if (u.getUserProfile().equals(Constants.PENSIONER)) {
                                 /*email_address = this.get(request, "pensionerEmail");
                                 jLogger.i("Pensioner email: " + email_address);
                                 proceed = helper.isEmailAddress(email_address);
                                 jLogger.i("Proceed is " + proceed);*/
                                 XiPensioner p = apiEJB.getPensionerDetails(u.getProfileID().toString(), null);
                                 email_address = p.getEmail();
-                                phone =p.getCellPhone();
-                                jLogger.i("Pensioner email: " + email_address);
+                                 jLogger.i("Pensioner email: " + email_address);
                                 proceed = helper.isEmailAddress(email_address);
-                            }
-
-                            else if(u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+                             } else if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 email_address = m.getEmailAddress();
-                                phone=m.getPhoneNumber();
-                                schemeId = member.getSchemeId();
+                                 schemeId = member.getSchemeId();
                                 proceed = helper.isEmailAddress(email_address);
-                            }
-                            else {
-                                    member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
+                             } else {
+                                member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
-                                    if (member != null) {
+                                if (member != null) {
 
-                                        email_address =  member.getEmailAddress(); /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
+                                    email_address = member.getEmailAddress();
+                                        /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
 
                                         /*JSONArray json = (JSONArray) resp.get("rows");
                                         JSONObject provider = json.getJSONObject(0);
                                         email_address = provider.getString("user.email");
                                         schemeId = provider.get("user.schemeId").toString();*/
 
-                                        proceed = helper.isEmailAddress(email_address);
-                                    }
-                                    else
-                                        proceed = false;
+                                    proceed = helper.isEmailAddress(email_address);
+                                 } else
+                                    proceed = false;
 
                             }
                             jLogger.i("The email is: " + email_address);
@@ -219,18 +221,21 @@ public class Register extends BaseServlet implements Serializable {
                                 List<String> recipients = new ArrayList<>();
                                 recipients.add(email_address);
 
-                                apiEJB.sendEmail(recipients, sender, null, "MSS Portal Account Activation Instructions", "Dear " + u.getUserProfile() + ", " +
-                                        "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
-                                        "Please click this link " + settings.getPortalBaseURL() + "activate?" + securityCode + " to complete the activation process", schemeId, false, null);
+                                apiEJB.sendEmail(recipients, sender, null, "MSS Portal Account Activation Instructions",
+                                        "Dear " + u.getUserProfile() + ", " +
+                                                "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
+                                                "Please click this link " + settings.getPortalBaseURL() + "activate?" + securityCode +
+                                                " to complete the activation process", schemeId, false, null);
 
-                                apiEJB.sendSMS(recipients, sender, null, "Dear " + u.getUserProfile() + ", " +
-                                        "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
-                                        "Your Verification Code is " + securityCode + ". Alternatively, click this link " + settings.getPortalBaseURL() + "activate?" + securityCode + "  to complete the activation process", schemeId);
 
-                                this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! Your account has been created on the portal. An email has been sent to your email address with account activation instructions.", null);
+                                this.respond(response, true, "<strong>Registration Successful</strong><br /> " +
+                                        "Congratulations! Your account has been created on the portal. " +
+                                        "An email has been sent to your email address with account activation instructions.", null);
 
-                            } else {
-                                this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! Your account has been created on the portal. We were however unable to send the activation instructions to your email. Please contact the administrator", null);
+                            }  else {
+                                this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! " +
+                                        "Your account has been created on the portal. We were however unable to send the activation instructions to your email or Phone. " +
+                                        "Please contact the administrator", null);
 
                             }
 
@@ -238,10 +243,98 @@ public class Register extends BaseServlet implements Serializable {
                             this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are already registered to use the portal", null);
 
                         }
+
                     } else {
                         this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are not an existing " + this.get(request, "category").toLowerCase() + ". Please contact the administrator.", null);
 
                     }
+                }else if (helper.isValidPhone(loginField)){
+
+                    if (member != null && member.getId() > 0) {
+                        if (userBeanI.findUserByUsernameAndProfile(this.get(request, "idNumber"), member.getProfile()) == null) {
+                            User u = new User();
+                            u.setProfileID(member.getId());
+                            u.setUserProfile(member.getProfile());
+                            u.setUsername(this.get(request, "idNumber"));
+                            u.setPassword(helper.hash(this.get(request, "password")));
+                            Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
+                            u.setPassword_expiry(password_expiry);
+                            String activationCode = helper.randomNumber().toString();
+                            u.setSmsActivationCode(activationCode);
+                            userBeanI.edit(u);
+                            String phone = null;
+                            String schemeId = null;
+                             boolean proceedSms;
+
+
+                            if (u.getUserProfile().equals(Constants.PENSIONER)) {
+                                /*email_address = this.get(request, "pensionerEmail");
+                                jLogger.i("Pensioner email: " + email_address);
+                                proceed = helper.isEmailAddress(email_address);
+                                jLogger.i("Proceed is " + proceed);*/
+                                XiPensioner p = apiEJB.getPensionerDetails(u.getProfileID().toString(), null);
+                                 phone = p.getCellPhone();
+                                 proceedSms = helper.isValidPhone(phone);
+                            } else if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+                                XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
+                                 phone = m.getPhoneNumber();
+                                schemeId = member.getSchemeId();
+                                 proceedSms = helper.isValidPhone(phone);
+                            } else {
+                                member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
+
+                                if (member != null) {
+
+                                         /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
+                                    phone = member.getPhoneNumber();
+
+                                        /*JSONArray json = (JSONArray) resp.get("rows");
+                                        JSONObject provider = json.getJSONObject(0);
+                                        email_address = provider.getString("user.email");
+                                        schemeId = provider.get("user.schemeId").toString();*/
+
+                                     proceedSms = helper.isValidPhone(phone);
+                                } else
+                                 proceedSms = false;
+
+                            }
+                             if (proceedSms) {
+
+
+                                String smsrecipient = phone;
+
+                                apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", " +
+                                        "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
+                                        "Your Verification Code is " + activationCode + " to complete the activation process enter the provided code");
+
+                                this.respond(response, true, "<strong>Registration Successful</strong><br /> " +
+
+                                        "Congratulations! Your account has been created on the portal. A SMS notification has been sent", null);
+
+
+
+                            } else {
+                                this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! " +
+                                        "Your account has been created on the portal. We were however unable to send the activation instructions to your email or Phone. " +
+                                        "Please contact the administrator", null);
+
+
+
+                            }
+
+                        } else {
+                            this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are already registered to use the portal", null);
+
+                        }
+
+                    } else {
+                        this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are not an existing " + this.get(request, "category").toLowerCase() + ". Please contact the administrator.", null);
+
+                    }
+
+
+
+                }
 
             }
         } else {
@@ -250,5 +343,6 @@ public class Register extends BaseServlet implements Serializable {
         }
 
     }
+
 
 }
