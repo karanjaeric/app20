@@ -111,14 +111,35 @@
 
 				/* Load Scheme Contributions */
 				
+//				$.ajax({
+//				        url: $('#base_url').val() + 'admin',
+//				        type: 'post',
+//				        data: {ACTION:'SC'},
+//				        dataType: 'json',
+//				        success: function(json) {
+//                            console.log(json);
+//							console.log("Scheme Contributions: ");
+//                            console.log(json);
+//							if(json.success)
+//							{
+//                                json = $.parseJSON(json.data);
+//								bar_graph(json);
+//							}
+//				            else
+//			    	        {
+//			    	            bootbox.alert('<p class="text-center">' + json.message + '</p>');
+//			        	    }
+//
+//				        }
+//	            	});
 				$.ajax({
 				        url: $('#base_url').val() + 'admin',
 				        type: 'post',
-				        data: {ACTION:'SC'},
+				        data: {ACTION:'SP'},
 				        dataType: 'json',
 				        success: function(json) {
                             console.log(json);
-							console.log("Scheme Contributions: ");
+							console.log("Sponsor Contributions: ");
                             console.log(json);
 							if(json.success)
 							{
@@ -129,7 +150,7 @@
 			    	        {
 			    	            bootbox.alert('<p class="text-center">' + json.message + '</p>');
 			        	    }
-							
+
 				        }
 	            	});
 				
@@ -322,7 +343,7 @@
 			            },
 			            yAxis: {
 			                title: {
-			                    text: 'Scheme Contribution'
+			                    text: 'Sponsor Contribution'
 			                }
 
 			            },

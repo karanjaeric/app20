@@ -1157,6 +1157,18 @@ public Double getMemberTotalUnits(String memberId) {
             return null;
         }
     }
+    @Override
+    public JSONObject getSponsorContributions(String sponsorID, String profileID) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.SPONSOR_GETTOTALSPONSORCONTRIBUTIONS + sponsorID + "/" + profileID);
+            jLogger.i("Sponsor contributions json resp >>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<");
+            return  response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
 
     @Override
     public JSONObject getMemberContributions(String memberID) {
