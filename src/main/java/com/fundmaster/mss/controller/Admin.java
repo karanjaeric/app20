@@ -17,6 +17,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -1468,16 +1469,10 @@ public class Admin extends BaseServlet implements Serializable {
         request.setAttribute("sectors", sectors);
         List<Scheme> schemes;
         schemes = apiEJB.getSchemes(0, 10000);
+        jLogger.i("Calling Next API");
+
         List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(this.get(request, "memberID"));
 
-        int totalPercentageLumpsum=0;
-        for (Beneficiary ben:beneficiaries
-                ) {
-            totalPercentageLumpsum= Integer.parseInt(ben.getLumpsumEntitlement());
-
-        }
-        jLogger.i("totalPercentageLumpsum" + totalPercentageLumpsum);
-        request.setAttribute("totalPercentageLumpsum",totalPercentageLumpsum);
 
         request.setAttribute("beneficiaries", beneficiaries);
         request.setAttribute("schemes", schemes);

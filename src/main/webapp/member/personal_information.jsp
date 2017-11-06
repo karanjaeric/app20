@@ -312,10 +312,9 @@
 
 			</div>
 			</div>
+
 			<script type="text/javascript">
-                $(document).ready(function(){
-                    $('[data-toggle="tooltip"]').tooltip();
-                });
+
 				function add_beneficiary()
 				{
 					start_wait();

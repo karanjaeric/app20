@@ -928,6 +928,10 @@ SocialBeanI socialBeanI;
 
         List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(member_id);
         request.setAttribute("beneficiaries", beneficiaries);
+        Double totalPercentageLumpsum = apiEJB.getMemberBensTotalEntitlement(member_id);
+
+        jLogger.i("totalPercentageLumpsum" + totalPercentageLumpsum);
+        request.setAttribute("totalPercentageLumpsum",totalPercentageLumpsum);
 
 
         logActivity("MEMBER PERSONAL INFORMATION", "Viewed editable member personal information", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
