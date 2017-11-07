@@ -42,31 +42,30 @@ public class SmsAccountActivationController extends BaseServlet implements Seria
         {
 
             String code  = this.get(request, "code");
+            jLogger.i("The Code is " + code);
+
             User usr = userBeanI.findByActivationCode(code);
 
-            if(usr != null && !usr.isStatus())
-            {
-                usr.setStatus(true);
-                userBeanI.edit(usr);
-                request.setAttribute("success", true);
 
-            }
-            else
-            {
-                request.setAttribute("success", false);
-            }
+                if(usr != null && !usr.isStatus())
+                {
+                    usr.setStatus(true);
+                    userBeanI.edit(usr);
+                    request.setAttribute("success", true);
 
-            this.respond(response, true, "<strong>Activation Successful</strong><br /> " +
+                    this.respond(response, true, "<strong>Activation Successful</strong><br /> " +
 
-                    "Congratulations! Your account has been Activated on the portal. You can now Login", null);
+                            "Congratulations! Your account has been Activated on the portal. You can now Login", null);
+
+                }
+                else
+                {
+                    request.setAttribute("success", false);
+                    this.respond(response, false, "Sorry, the Code you entered is invalid. Please try again", null);
+                }
 
 
-        }
-             else
-             {
-                 this.respond(response, false, "Sorry, the Phone Number you entered is invalid. Please try again", null);
 
-             }
-    }
+    }}
 
 }
