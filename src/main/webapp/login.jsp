@@ -27,8 +27,8 @@
 						<button class="btn btn-warning btn-block" type="submit">
 							<strong>SIGN IN</strong>
 						</button><br />
-						<a href="javascript:void(0);" id="pwd-reset-btn" class="btn btn-info pull-left" style="font-size: 13px">Forgot Your Password?</a>
-						<a href="javascript:void(0);" id="sms-btn" class="btn btn-info pull-right" style="font-size: 13px">Activate Your Account (SMS ONLY)</a>
+						<a href="javascript:void(0);" id="pwd-reset-btn" class="btn btn-info pull-left" style="font-size: 12px">Forgot Your Password?</a>
+						<a href="javascript:void(0);" id="sms-btn" class="btn btn-info pull-right" style="font-size: 12px">Activate Your Account (SMS ONLY)</a>
 						<%--<sss--%>
 					</fieldset>
 				</form>
