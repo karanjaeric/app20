@@ -31,7 +31,7 @@ public class SmsAccountActivationController extends BaseServlet implements Seria
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
      }
 
     protected void doPost(HttpServletRequest request,

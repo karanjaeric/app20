@@ -302,7 +302,7 @@ public class Register extends BaseServlet implements Serializable {
 
                                 apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", " +
                                         "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
-                                        "Your Verification Code is " + activationCode + " to complete the activation process enter the provided code");
+                                        "Your Verification Code is " + activationCode + " .To complete the activation process enter the provided code and log in using your username as "+ phone+" and the Password that you Provided during Registration Process");
 
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> " +

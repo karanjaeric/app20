@@ -976,7 +976,7 @@ $('#form-password-reset').bootstrapValidator({
             e.preventDefault();
             start_wait();
             $.ajax({
-                url: $('#base_url').val() + 'activate-account',
+                url: $('#base_url').val() + 'sign-in',
                 type: 'POST',
                 data: {ACTION: 'ACTIVATE_ACCOUNT', code: $('#code').val() },
                 dataType: 'json',
