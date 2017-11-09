@@ -130,121 +130,129 @@ public class SignIn extends BaseServlet implements Serializable {
 	SchemeManagerBeanI schemeManagerBeanI;
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		if(this.get(request, "ACTION").equals("ACTIVATE_ACCOUNT")) {
 
-		HttpSession session = request.getSession();
-    	
-		User u = userBeanI.findUser(this.get(request, "username"), this.get(request, "password"));
-		if(u != null)
-		{
+			String code  = this.get(request, "code");
+			jLogger.i("The Code is " + code);
 
-			if(u.isStatus())
+			User usr = userBeanI.findByActivationCode(code);
+
+
+			if(usr != null && !usr.isStatus())
 			{
-				try {
-					if(u.getUserProfile().equals(Constants.MEMBER_PROFILE))
-					{
-						XiMember member = apiEJB.memberExists(u.getUserProfile(), u.getUsername());
- 						if(member != null && member.getId() > 0)
-						{
+				usr.setStatus(true);
+				userBeanI.edit(usr);
+				request.setAttribute("success", true);
 
-							session.setAttribute(Constants.USER, u.getUsername());
+				this.respond(response, true, "<strong>Activation Successful</strong><br /> " +
 
-							session.setAttribute(Constants.UID, u.getId());
-							session.setAttribute(Constants.PROFILE_ID, member.getId());
-							session.setAttribute(Constants.LOGIN, true);
-							session.setAttribute(Constants.U_PROFILE, member.getProfile());
-							session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
+						"Congratulations! Your account has been Activated on the portal. You can now Login", null);
 
-							resetAttempt(this.get(request, "username"));
+			}
+			else
+			{
+				request.setAttribute("success", false);
+				this.respond(response, false, "Sorry, the Code you entered is invalid. Please try again", null);
+			}
+		}else {
 
-							logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
+			HttpSession session = request.getSession();
+
+			User u = userBeanI.findUser(this.get(request, "username"), this.get(request, "password"));
+			if (u != null) {
+
+				if (u.isStatus()) {
+					try {
+						if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+							XiMember member = apiEJB.memberExists(u.getUserProfile(), u.getUsername());
+							if (member != null && member.getId() > 0) {
+
+								session.setAttribute(Constants.USER, u.getUsername());
+
+								session.setAttribute(Constants.UID, u.getId());
+								session.setAttribute(Constants.PROFILE_ID, member.getId());
+								session.setAttribute(Constants.LOGIN, true);
+								session.setAttribute(Constants.U_PROFILE, member.getProfile());
+								session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
+
+								resetAttempt(this.get(request, "username"));
+
+								logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
 
 
-							SchemeMemberManager smm = schemeManagerBeanI.findByUserID(u.getId());
-							String link = "member";
-							if(smm != null)
-							{
-								session.setAttribute(Constants.MANAGER_PROFILE, Constants.MANAGER);
-								link = "admin";
-							}
-							this.respond(response, true, "", new JSONObject().put("link", link));
+								SchemeMemberManager smm = schemeManagerBeanI.findByUserID(u.getId());
+								String link = "member";
+								if (smm != null) {
+									session.setAttribute(Constants.MANAGER_PROFILE, Constants.MANAGER);
+									link = "admin";
+								}
+								this.respond(response, true, "", new JSONObject().put("link", link));
 
-							jLogger.i(" Am here Now : ");
+								jLogger.i(" Am here Now : ");
 
-						}
-						else
-							{
+							} else {
 								logActivity(Constants.ML, "login attempt", "0", null, null);
 
 								this.respond(response, false, "Login Failed!<br />Sorry, but we could not establish your existence in Xi", null);
 
-								
-							}
-					}
-					else if(u.getUserProfile().equals(Constants.PENSIONER)) {
-						String usrname = u.getUsername();
-						XiMember member = apiEJB.memberExists(u.getUserProfile(), usrname);
-						if(member != null && member.getId() > 0)
-						{
-							session.setAttribute(Constants.USER, u.getUsername());
-							session.setAttribute(Constants.UID, u.getId());
-							session.setAttribute(Constants.PROFILE_ID, member.getId());
-							session.setAttribute(Constants.LOGIN, true);
-							session.setAttribute(Constants.U_PROFILE, member.getProfile());
-							session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
 
-							resetAttempt(this.get(request, "username"));
-							logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
-							SchemeMemberManager smm = schemeManagerBeanI.findByUserID(u.getId());
-							String link = "pensioner";
-							if(smm != null)
-							{
-								session.setAttribute(Constants.MANAGER_PROFILE, Constants.MANAGER);
-								link = "admin";
 							}
-							this.respond(response, true, "", new JSONObject().put("link", link));
-						}
-						else
-						{
+						} else if (u.getUserProfile().equals(Constants.PENSIONER)) {
+							String usrname = u.getUsername();
+							XiMember member = apiEJB.memberExists(u.getUserProfile(), usrname);
+							if (member != null && member.getId() > 0) {
+								session.setAttribute(Constants.USER, u.getUsername());
+								session.setAttribute(Constants.UID, u.getId());
+								session.setAttribute(Constants.PROFILE_ID, member.getId());
+								session.setAttribute(Constants.LOGIN, true);
+								session.setAttribute(Constants.U_PROFILE, member.getProfile());
+								session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
+
+								resetAttempt(this.get(request, "username"));
+								logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
+								SchemeMemberManager smm = schemeManagerBeanI.findByUserID(u.getId());
+								String link = "pensioner";
+								if (smm != null) {
+									session.setAttribute(Constants.MANAGER_PROFILE, Constants.MANAGER);
+									link = "admin";
+								}
+								this.respond(response, true, "", new JSONObject().put("link", link));
+							} else {
+								logActivity(Constants.ML, "login attempt", "0", null, null);
+
+								this.respond(response, false, "Login Failed!<br />Sorry, but we could not establish your existence in Xi", null);
+
+
+							}
+						} else {
 							logActivity(Constants.ML, "login attempt", "0", null, null);
-
-							this.respond(response, false, "Login Failed!<br />Sorry, but we could not establish your existence in Xi", null);
-
-
-						}
-					}
-					else
-					{
-						logActivity(Constants.ML, "login attempt", "0", null, null);
 
 							this.respond(response, false, "Login Failed!<br />Invalid username and/or password<br />Please try again", null);
 
-					}
-				} catch (NullPointerException | JSONException npje) {
-					npje.printStackTrace();
-					// TODO Auto-generated catch block
-					logActivity(Constants.ML, "login attempt", "0", null, null);
+						}
+					} catch (NullPointerException | JSONException npje) {
+						npje.printStackTrace();
+						// TODO Auto-generated catch block
+						logActivity(Constants.ML, "login attempt", "0", null, null);
 
 						this.respond(response, false, "Login Failed!<br />Invalid username and/or password<br />Please try again", null);
 
-				}
-			}
-			else
-			{
-				logAttempt(this.get(request, "username"));
+					}
+				} else {
+					logAttempt(this.get(request, "username"));
 
 					this.respond(response, false, "Login Failed!<br />You account has been locked or de-activated. Contact the administrator", null);
 
+				}
+
+			} else {
+				logActivity(Constants.ML, "login attempt", "0", null, null);
+				logAttempt(this.get(request, "username"));
+
+				this.respond(response, false, "Login Failed!<br />Invalid username and/or password<br />Please try again", null);
+
+
 			}
-			
-		}
-		else
-		{
-			logActivity(Constants.ML, "login attempt", "0", null, null);
-			logAttempt(this.get(request, "username"));
-
-			this.respond(response, false, "Login Failed!<br />Invalid username and/or password<br />Please try again", null);
-
-			
 		}
 	}
 
