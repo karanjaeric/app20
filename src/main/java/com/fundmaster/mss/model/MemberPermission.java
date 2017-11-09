@@ -1,14 +1,7 @@
 package com.fundmaster.mss.model;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
+import javax.persistence.*;
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
 @Table ( name = "tbl_member_rights")

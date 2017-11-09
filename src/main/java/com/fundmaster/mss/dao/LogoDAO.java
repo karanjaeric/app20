@@ -1,8 +1,8 @@
 package com.fundmaster.mss.dao;
 
-import javax.persistence.EntityManager;
-
 import com.fundmaster.mss.model.Logo;
+
+import javax.persistence.EntityManager;
 
 public class LogoDAO extends GenericDAOImpl<Logo, Long> {
 	

@@ -2,7 +2,6 @@ package com.fundmaster.mss.controller;
 
 import com.fundmaster.mss.api.ApiEJB;
 import com.fundmaster.mss.beans.*;
-import com.fundmaster.mss.common.Actions;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
@@ -11,16 +10,11 @@ import com.fundmaster.mss.model.*;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @WebServlet(name = "BenefitProjectionController", urlPatterns = {"/benefit-projection"})
 public class BenefitProjectionController  extends BaseServlet implements Serializable {

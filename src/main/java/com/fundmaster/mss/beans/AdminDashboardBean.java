@@ -1,11 +1,8 @@
 package com.fundmaster.mss.beans;
 
 import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.controller.Admin;
 import com.fundmaster.mss.dao.AdminDashboardDAO;
-import com.fundmaster.mss.dao.MemberDashboardDAO;
 import com.fundmaster.mss.model.AdminDashboardItems;
-import com.fundmaster.mss.model.MemberDashboardItems;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;

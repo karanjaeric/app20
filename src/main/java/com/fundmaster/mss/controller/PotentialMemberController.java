@@ -1,43 +1,21 @@
 package com.fundmaster.mss.controller;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import com.fundmaster.mss.api.ApiEJB;
+import com.fundmaster.mss.beans.*;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
+import com.fundmaster.mss.model.*;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fundmaster.mss.api.ApiEJB;
-
-import com.fundmaster.mss.beans.CompanyBeanI;
-import com.fundmaster.mss.beans.CountryBeanI;
-import com.fundmaster.mss.beans.GenderBeanI;
-import com.fundmaster.mss.beans.HelpBeanI;
-import com.fundmaster.mss.beans.MaritalStatusBeanI;
-import com.fundmaster.mss.beans.MenuBeanI;
-import com.fundmaster.mss.beans.PageContentBeanI;
-import com.fundmaster.mss.beans.SchemeManagerBeanI;
-import com.fundmaster.mss.beans.SettingBeanI;
-import com.fundmaster.mss.beans.SocialBeanI;
-import com.fundmaster.mss.beans.ThemeBeanI;
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.JLogger;
-import com.fundmaster.mss.model.Company;
-import com.fundmaster.mss.model.Country;
-import com.fundmaster.mss.model.Gender;
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.MaritalStatus;
-import com.fundmaster.mss.model.Menu;
-import com.fundmaster.mss.model.PageContent;
-import com.fundmaster.mss.model.Scheme;
-import com.fundmaster.mss.model.Setting;
-import com.fundmaster.mss.model.Social;
-import com.fundmaster.mss.model.Theme;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "PotentialMemberController", urlPatterns = {"/potential-member"})
 public class PotentialMemberController extends BaseServlet implements Serializable {

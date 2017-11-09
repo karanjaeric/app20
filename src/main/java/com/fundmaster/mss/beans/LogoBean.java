@@ -1,16 +1,14 @@
 package com.fundmaster.mss.beans;
 
-import java.util.List;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.dao.LogoDAO;
+import com.fundmaster.mss.model.Logo;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import com.fundmaster.mss.beans.LogoBeanI;
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.dao.LogoDAO;
-import com.fundmaster.mss.model.Logo;
+import java.util.List;
 
 @Local
 @Stateless

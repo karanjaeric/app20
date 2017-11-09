@@ -5,12 +5,11 @@
 
 package com.fundmaster.mss.dao;
 
-import java.util.List;
+import com.fundmaster.mss.common.JLogger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
-
-import com.fundmaster.mss.common.JLogger;
+import java.util.List;
 
 /**
  * Created by bryanitur on 9/16/15.

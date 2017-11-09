@@ -1,12 +1,9 @@
 package com.fundmaster.mss.api;
 
 import com.fundmaster.mss.model.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ejb.Local;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,6 +56,8 @@ public interface ApiEJB {
     List<XiMember> due4Retirement(String schemeID);
     JSONObject searchSchemes(String search);
     boolean sendEmail(List<String> recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url);
+    boolean saveSMS(String recepient, String msg, boolean status);
+
     void sendSMS(String recipient, String message );
 
     JSONObject getAgentCommission(String agentID);

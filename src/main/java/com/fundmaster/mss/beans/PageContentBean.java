@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.PageContentBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.PageContentDAO;
 import com.fundmaster.mss.model.PageContent;

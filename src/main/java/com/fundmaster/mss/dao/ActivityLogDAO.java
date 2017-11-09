@@ -1,6 +1,5 @@
 package com.fundmaster.mss.dao;
 
-import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.ActivityLog;

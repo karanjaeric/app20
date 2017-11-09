@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.ImageBannerBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.BannerDAO;
 import com.fundmaster.mss.model.ImageBanner;

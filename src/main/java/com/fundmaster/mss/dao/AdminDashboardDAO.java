@@ -1,7 +1,6 @@
 package com.fundmaster.mss.dao;
 
 import com.fundmaster.mss.model.AdminDashboardItems;
-import com.fundmaster.mss.model.MemberDashboardItems;
 
 import javax.persistence.EntityManager;
 import java.util.List;

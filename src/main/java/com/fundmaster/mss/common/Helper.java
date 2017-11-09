@@ -1,15 +1,13 @@
 package com.fundmaster.mss.common;
 
-import com.fundmaster.mss.dao.ActivityLogDAO;
-import com.fundmaster.mss.model.*;
+import com.fundmaster.mss.model.Ordinal;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.*;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

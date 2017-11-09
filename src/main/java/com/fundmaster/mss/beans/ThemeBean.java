@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.ThemeBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.ThemeDAO;
 import com.fundmaster.mss.model.Theme;

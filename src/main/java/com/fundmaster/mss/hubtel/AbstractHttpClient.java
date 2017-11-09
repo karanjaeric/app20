@@ -1,15 +1,10 @@
 package com.fundmaster.mss.hubtel;
 
-import static com.fundmaster.mss.hubtel.RequestHandler.UTF8;
-
+import javax.net.ssl.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -17,12 +12,7 @@ import java.security.cert.X509Certificate;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import static com.fundmaster.mss.hubtel.RequestHandler.UTF8;
 
 
 /**

@@ -2,10 +2,9 @@ package com.fundmaster.mss.model;
 
 import com.fundmaster.mss.common.Constants;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_members")

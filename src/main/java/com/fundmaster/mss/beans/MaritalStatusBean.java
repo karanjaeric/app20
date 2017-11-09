@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.MaritalStatusBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.MaritalStatusDAO;
 import com.fundmaster.mss.model.MaritalStatus;

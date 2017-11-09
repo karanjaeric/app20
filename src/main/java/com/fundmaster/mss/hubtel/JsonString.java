@@ -10,11 +10,10 @@
  */
 package com.fundmaster.mss.hubtel;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-
-import java.text.SimpleDateFormat;
-import java.io.IOException;
 
 @SuppressWarnings("serial") // use default serial UID
 class JsonString extends JsonValue {

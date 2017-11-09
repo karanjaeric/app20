@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.UsedPasswordBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.UsedPasswordDAO;
 import com.fundmaster.mss.model.UsedPassword;

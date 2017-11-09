@@ -1,7 +1,6 @@
 package com.fundmaster.mss.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * Created by tony on 9/18/16.

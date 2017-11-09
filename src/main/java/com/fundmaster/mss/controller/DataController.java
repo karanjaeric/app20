@@ -1,24 +1,22 @@
 package com.fundmaster.mss.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Serializable;
+import com.fundmaster.mss.beans.*;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
+import com.fundmaster.mss.model.FaqContent;
+import com.fundmaster.mss.model.Help;
+import com.fundmaster.mss.model.PageContent;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fundmaster.mss.beans.*;
-import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.JLogger;
-import com.fundmaster.mss.model.FaqContent;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.fundmaster.mss.model.Help;
-import com.fundmaster.mss.model.PageContent;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Serializable;
 
 @WebServlet(name = "DataController", urlPatterns = {"/data"})
 public class DataController extends BaseServlet implements Serializable {

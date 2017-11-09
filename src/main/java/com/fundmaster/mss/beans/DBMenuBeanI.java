@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.model.DBMenu;
 
 import javax.ejb.Local;

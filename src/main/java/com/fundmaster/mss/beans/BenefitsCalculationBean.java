@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.BenefitsCalculationBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.BenefitCalculationsDao;
 import com.fundmaster.mss.model.BenefitCalculation;

@@ -86,4 +86,5 @@ public class APICall {
     public static final String ANNUITY_QUOTE_GETQUOTE = "annuity_quote/getquote";
     public static final String SCHEME_GETSCHEMES = "scheme/getschemes";
     public static final String GET_EXITS_BENEFITS = "getexitbenefits/";
+    public static final String SAVESMS = "savesms/";
 }

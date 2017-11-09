@@ -1,12 +1,7 @@
 package com.fundmaster.mss.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 @Entity
 @Table (name = "tbl_interest_rate_columns")
 public class InterestRateColumns extends GenericModel<InterestRateColumns> implements Serializable {

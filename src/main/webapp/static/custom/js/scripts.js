@@ -990,6 +990,47 @@ $('#form-password-reset').bootstrapValidator({
 
         });
 
+    //modal-resend-code
+
+    $('#form-resend-code').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        excluded: ':disabled',
+        fields: {
+            code: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter your Phone Number'
+                    }
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function(e) {
+
+            // Prevent form submission
+            e.preventDefault();
+            start_wait();
+            $.ajax({
+                url: $('#base_url').val() + 'resend-code',
+                type: 'POST',
+                data: {ACTION: 'RESEND_CODE', phoneNumber: $('#phoneNumber').val() },
+                dataType: 'json',
+                success: function(json) {
+                    stop_wait();
+                    bootbox.alert(json.message);
+                    if(json.success)
+                        $('#modal-resend-code').modal('hide');
+                }
+            });
+
+        });
+
 
 
     $('#form-reset-password').bootstrapValidator({

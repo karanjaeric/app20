@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.ProfileNameBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.ProfileNameDAO;
 import com.fundmaster.mss.model.ProfileName;

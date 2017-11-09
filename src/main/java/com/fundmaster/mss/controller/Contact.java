@@ -1,18 +1,17 @@
 package com.fundmaster.mss.controller;
 
-import java.io.IOException;
-import java.io.Serializable;
+import com.fundmaster.mss.beans.*;
+import com.fundmaster.mss.common.Constants;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.model.*;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fundmaster.mss.beans.*;
-import com.fundmaster.mss.common.Constants;
-import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.model.*;
+import java.io.IOException;
+import java.io.Serializable;
 
 @WebServlet(name = "Contact", urlPatterns = {"/contact-us"})
 public class Contact extends BaseServlet implements Serializable {

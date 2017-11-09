@@ -1,6 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@page import="java.util.Date"%>
-<%@page import="java.util.Calendar"%>
 <% pageContext.setAttribute("currentYear", java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)); %>
 <c:if test="${ help.description != '' }">
 <button class="btn btn-warning btn-sm help-btn"  data-toggle="modal" href="#modal-help">NEED HELP?</button>
@@ -75,8 +73,38 @@
 					<p>We will Activate your Account</p>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-success">ACTIVATE</button>
+					<button class="btn btn-success pull-right" >ACTIVATE</button>
+					<button class="btn btn-danger pull-left" id="resendCodeBtn">RESEND CODE</button>
 				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<%--//modal-resend-code--%>
+
+<div class="modal fade" id="modal-resend-code" tabindex="-1"
+	 role="dialog" aria-labelledby="myModalLabelSms" aria-hidden="true">
+	<form role="form" id="form-resend-code">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title text-center" id="myModalLabelSmsResend">
+						<i class="fa fa-bookmark"></i>&nbsp;&nbsp;<small>Please Enter Your Phone Number </small>
+					</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class="form-group">
+						<label for="code" class="control-label">Phone Number:</label>
+						<input type="text" name="phoneNumber" class="form-control"
+							   id="phoneNumber" placeholder="Your Phone Number code">
+					</div>
+					<p>We will Resend your Code</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-success pull-right" >RESEND</button>
+ 				</div>
 			</div>
 		</div>
 	</form>
@@ -109,6 +137,11 @@
 <script type="text/javascript" src="static/custom/js/plugins/jquery.appear/jquery.appear.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+
+        $("#resendCodeBtn").click(function() {
+
+            $('#modal-resend-code').modal('show');
+        });
 		function init()
 		{
 			if($('#message').val() !='')

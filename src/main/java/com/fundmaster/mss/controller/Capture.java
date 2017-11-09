@@ -1,6 +1,7 @@
 package com.fundmaster.mss.controller;
 
-import java.io.IOException;
+import nl.captcha.Captcha;
+import nl.captcha.servlet.CaptchaServletUtil;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -8,9 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import nl.captcha.Captcha;
-import nl.captcha.servlet.CaptchaServletUtil;
+import java.io.IOException;
 @WebServlet(name = "Capture", urlPatterns = {"/captcha", "/captcha/", "/captcha/?*"})
 public class Capture extends BaseServlet{
 

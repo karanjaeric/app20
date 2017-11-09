@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.ActivityLogBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.ActivityLogDAO;
 import com.fundmaster.mss.model.ActivityLog;

@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.SponsorBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.SponsorDAO;
 import com.fundmaster.mss.model.Sponsor;

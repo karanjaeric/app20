@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.GenderBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.GenderDAO;
 import com.fundmaster.mss.model.Gender;

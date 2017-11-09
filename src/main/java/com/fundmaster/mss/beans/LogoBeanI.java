@@ -1,10 +1,9 @@
 package com.fundmaster.mss.beans;
 
-import java.util.List;
+import com.fundmaster.mss.model.Logo;
 
 import javax.ejb.Local;
-
-import com.fundmaster.mss.model.Logo;
+import java.util.List;
 
 @Local
 public interface LogoBeanI {

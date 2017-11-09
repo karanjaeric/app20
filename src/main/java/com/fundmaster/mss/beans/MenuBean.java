@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.MenuBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.MenuDAO;
 import com.fundmaster.mss.model.Menu;

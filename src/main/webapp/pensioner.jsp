@@ -6,8 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@page import="java.util.Date"%>
-<%@page import="java.util.Calendar"%>
 <% pageContext.setAttribute("currentYear", java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)); %>
 <jsp:include page="includes/partial/admin_header.jsp" />
 <input type="hidden" id="switch_to" value="admin"/>

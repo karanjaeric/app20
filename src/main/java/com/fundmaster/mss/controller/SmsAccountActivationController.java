@@ -1,10 +1,9 @@
 package com.fundmaster.mss.controller;
 
-import com.fundmaster.mss.api.ApiEJB;
-import com.fundmaster.mss.beans.*;
+import com.fundmaster.mss.beans.UserBeanI;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
-import com.fundmaster.mss.model.*;
+import com.fundmaster.mss.model.User;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 
-@WebServlet(name = "PasswordResetController", urlPatterns = {"/activate-account"})
+@WebServlet(name = "SmsAccountActivationController", urlPatterns = {"/activate-account"})
 public class SmsAccountActivationController extends BaseServlet implements Serializable {
 
     /**

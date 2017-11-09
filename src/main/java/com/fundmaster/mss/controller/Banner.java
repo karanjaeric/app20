@@ -1,12 +1,9 @@
 package com.fundmaster.mss.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.sql.Blob;
-import java.sql.SQLException;
+import com.fundmaster.mss.beans.ImageBannerBeanI;
+import com.fundmaster.mss.common.Helper;
+import com.fundmaster.mss.common.JLogger;
+import com.fundmaster.mss.model.ImageBanner;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -15,11 +12,9 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fundmaster.mss.beans.ImageBannerBeanI;
-import com.fundmaster.mss.common.Helper;
-import com.fundmaster.mss.common.JLogger;
-import com.fundmaster.mss.model.ImageBanner;
+import java.io.*;
+import java.sql.Blob;
+import java.sql.SQLException;
 
 @WebServlet(name = "Banner", urlPatterns = { "/banners/*" })
 @MultipartConfig

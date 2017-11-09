@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.SchemeManagerBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.SchemeMemberManagerDAO;
 import com.fundmaster.mss.model.SchemeMemberManager;

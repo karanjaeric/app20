@@ -1,6 +1,7 @@
 package com.fundmaster.mss.dao;
 
 import com.fundmaster.mss.model.DBContributionGraph;
+
 import javax.persistence.EntityManager;
 import java.util.List;
 

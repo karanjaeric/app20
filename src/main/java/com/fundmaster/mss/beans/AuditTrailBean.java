@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.AuditTrailBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.AuditTrailDAO;
 import com.fundmaster.mss.model.AuditTrail;

@@ -5,10 +5,8 @@ import com.fundmaster.mss.beans.InterestRateColumnBeanI;
 import com.fundmaster.mss.beans.ProfileLoginFieldBeanI;
 import com.fundmaster.mss.beans.SettingBeanI;
 import com.fundmaster.mss.common.*;
-import com.fundmaster.mss.common.Message;
-import com.fundmaster.mss.hubtel.*;
 import com.fundmaster.mss.model.*;
- import org.json.JSONArray;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,8 +27,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.*;
 
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
 
 /**
  * Created by bryanitur on 8/1/16.
@@ -928,6 +924,25 @@ public Double getMemberTotalUnits(String memberId) {
 
     }
 
+    //saveSMS
+    @Override
+    public boolean saveSMS(String recepient, String msg, boolean status ){
+        JSONObject response;
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put(Fields.RECEIVER, recepient)
+                    .put(Fields.MSG, msg)
+                    .put(Fields.STATUS, status);
+
+            response = URLPost(APICall.SAVESMS, params.toString(), Constants.APPLICATION_JSON);
+            return response.getBoolean(Fields.SUCCESS);
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return false;
+        }
+    }
+
     @Override
     public void sendSMS(String recipient,   String message ) {
 
@@ -949,6 +964,11 @@ public Double getMemberTotalUnits(String memberId) {
         try {
             ClientResponse<String> response = request.get(String.class);
             System.out.println("Status is"+response.getStatus());
+            boolean status = response.getStatus();
+
+            saveSMS(recipient,message,status);
+
+
         } catch (Exception ex) {
             // Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
         }

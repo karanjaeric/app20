@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.ContactCategoryBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.ContactCategoryDAO;
 import com.fundmaster.mss.model.ContactCategory;

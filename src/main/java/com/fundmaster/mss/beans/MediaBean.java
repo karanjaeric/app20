@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.MediaBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.dao.MediaDAO;

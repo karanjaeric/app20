@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.SocialBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.SocialDAO;
 import com.fundmaster.mss.model.Social;

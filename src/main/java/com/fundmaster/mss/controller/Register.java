@@ -9,7 +9,6 @@ import com.fundmaster.mss.model.*;
 import nl.captcha.Captcha;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @WebServlet(name = "Register", urlPatterns = {"/register"})
 public class Register extends BaseServlet implements Serializable {
@@ -306,6 +303,7 @@ public class Register extends BaseServlet implements Serializable {
                                 apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", " +
                                         "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
                                         "Your Verification Code is " + activationCode + " to complete the activation process enter the provided code");
+
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> " +
 

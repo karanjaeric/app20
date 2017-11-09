@@ -1,6 +1,5 @@
 package com.fundmaster.mss.beans;
 
-import com.fundmaster.mss.beans.PasswordPolicyBeanI;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.PasswordPolicyDAO;
 import com.fundmaster.mss.model.PasswordPolicy;
