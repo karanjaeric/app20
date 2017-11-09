@@ -26,6 +26,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.*;
+import org.jboss.resteasy.client.ClientRequest;
+import org.jboss.resteasy.client.ClientResponse;
 
 
 /**
@@ -964,9 +966,14 @@ public Double getMemberTotalUnits(String memberId) {
         try {
             ClientResponse<String> response = request.get(String.class);
             System.out.println("Status is"+response.getStatus());
-            boolean status = response.getStatus();
+            int status = response.getStatus();
+            boolean status1;
 
-            saveSMS(recipient,message,status);
+            if (status==201){
+                  status1 = true;
+            }else  status1=false;
+
+            saveSMS(recipient,message,status1);
 
 
         } catch (Exception ex) {
