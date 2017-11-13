@@ -65,6 +65,7 @@ public class Actions {
     public static final String CONTACT_REASONS = "CONTACT_REASONS";
     public static final String MEMBER_OPERATIONS = "MEMBER_OPERATIONS";
     public static final String MEMBER_LISTING = "MEMBER_LISTING";
+    public static final String SPONSOR_BENEFIT_PAYMENT = "SPONSOR_BENEFIT_PAYMENT";
     public static final String CORPORATE_STATEMENT = "CORPORATE_STATEMENT";
     public static final String SCHEME_MANAGER = "SCHEME_MANAGER";
     public static final String MEMBER = "MEMBER";

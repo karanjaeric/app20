@@ -387,7 +387,7 @@ $(document).ready(function(){
 		
 		$('#payments-main-li').addClass('active');
 		
-		m_switch('PAYMENT');
+		m_switch('SPONSOR_BENEFIT_PAYMENT');
 		
     });
 	

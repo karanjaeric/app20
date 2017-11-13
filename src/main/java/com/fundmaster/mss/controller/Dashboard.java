@@ -93,6 +93,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.MEMBER_LISTING:
                     showMemberListing(request, response, session, REPO_FOLDER);
                     break;
+                case Actions.SPONSOR_BENEFIT_PAYMENT:
+                    showSponsorBenefitPayments(request,response,session,REPO_FOLDER);
+                    break;
                 case Actions.CORPORATE_STATEMENT:
                     showCorporateStatement(request, response, session, REPO_FOLDER);
                     break;
@@ -483,6 +486,31 @@ public class Dashboard extends BaseServlet implements Serializable {
         this.audit(session, "Viewed member listing");
         request.getRequestDispatcher(REPO_FOLDER + "/member_listing.jsp").forward(request, response);
     }
+
+
+    private void showSponsorBenefitPayments(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                     String REPO_FOLDER) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String schemeId = this.getSessKey(request, Constants.SCHEME_ID);
+        jLogger.i("Scheme ID: " + schemeId);
+        String sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("Sponsor ID: " + sponsorId);
+        request.setAttribute("sponsorId", sponsorId);
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
+        logActivity("SPONSOR_BENEFIT_PAYMENT LISTING", "Viewed sponsor BenefitPayments listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member listing");
+        request.getRequestDispatcher(REPO_FOLDER + "/sponsorBenefitPayments.jsp").forward(request, response);
+    }
+
 
     private void showCorporateStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session,
                                    String REPO_FOLDER) throws ServletException, IOException {
