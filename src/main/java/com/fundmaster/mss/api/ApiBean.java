@@ -800,6 +800,29 @@ public Double getMemberTotalUnits(String memberId) {
         }
     }
 
+
+    @Override
+    public XiMember getMemberDetailsBySchemeAndPhone(String schemeId, String phone) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_MEMBER_DETAILS_BY_SCHEME_AND_PHONE + schemeId + "/" + phone);
+            jLogger.i("Member details respone >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                JSONArray jsonArray = (JSONArray) response.get(Constants.ROWS);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                return this.xiMemberFromJson(jsonObject);
+            }
+            else {
+                return null;
+            }
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+
+
     @Override
     public XiPensioner getPensionerDetails(String pensionerId, String schemeId) {
         JSONObject response;

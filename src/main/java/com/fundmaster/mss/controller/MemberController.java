@@ -93,14 +93,18 @@ public class MemberController extends BaseServlet implements Serializable {
 					
 					String user = this.getSessKey(request, Constants.USER).trim();
 
-					jLogger.i("Email hopefully ============ " + user);
+					jLogger.i("Email/Phone hopefully ============ " + user);
+
+
 					
 					List<Scheme> schemes = apiEJB.getProfileSchemes(user, this.getSessKey(request, Constants.U_PROFILE));
 					request.setAttribute("schemes", schemes);
 
 
 					try {
-						schemeId = request.getParameter("scheme_id");
+//						schemeId = request.getParameter("scheme_id");
+						schemeId =this.getSessKey(request, Constants.SCHEME_ID);
+
  						 jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -109,9 +113,16 @@ public class MemberController extends BaseServlet implements Serializable {
 					XiMember m = new XiMember();
 
 
+
+
 					try {
 						if (schemeId != null) {
-							m = apiEJB.getMemberDetailsByScheme(schemeId,user);
+							if (helper.isEmailAddress(user)) {
+								m = apiEJB.getMemberDetailsByScheme(schemeId, user);
+							}else if (helper.isValidPhone(user)){
+
+								m=apiEJB.getMemberDetailsBySchemeAndPhone(schemeId,user);
+							}
 						} else {
 
 							m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
@@ -145,13 +156,26 @@ public class MemberController extends BaseServlet implements Serializable {
 					request.getSession().setAttribute("sponsors", sponsors);
 
 					if(schemes != null && schemes.size() > 0) {
-						jLogger.i("Scheme is not null. email: "+ this.getSessKey(request, Constants.USER));
+						jLogger.i("Scheme is not null. email/phone: "+ this.getSessKey(request, Constants.USER));
+						jLogger.i("SchemeId " + schemeId);
 
 						if(this.getSessKey(request, Constants.SCHEME_ID) == null)
 						{
 							try {
 								if (schemeId != null) {
-									m = apiEJB.getMemberDetailsByScheme(schemeId,user);
+
+									if (helper.isEmailAddress(user)) {
+										jLogger.i("I FOUND AN EMAIL");
+
+										m = apiEJB.getMemberDetailsByScheme(schemeId, user);
+
+
+
+									}else if (helper.isValidPhone(user)){
+										jLogger.i("I FOUND A PHONE");
+
+										m=apiEJB.getMemberDetailsBySchemeAndPhone(schemeId,user);
+									}
 								} else {
 									m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),schemes.get(0).getId().toString());
 								}
@@ -163,8 +187,15 @@ public class MemberController extends BaseServlet implements Serializable {
 						{
 							try {
 								if (schemeId != null) {
-									m = apiEJB.getMemberDetailsByScheme(schemeId,user);
-								} else {
+									if (helper.isEmailAddress(user)) {
+										m = apiEJB.getMemberDetailsByScheme(schemeId, user);
+										jLogger.i("I FOUND AN EMAIL 2");
+									}else if (helper.isValidPhone(user)){
+
+										jLogger.i("I FOUND PHONE 2");
+
+										m=apiEJB.getMemberDetailsBySchemeAndPhone(schemeId,user);
+									}								} else {
 									m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.SCHEME_ID));
 								}
 							} catch (Exception ex) {
