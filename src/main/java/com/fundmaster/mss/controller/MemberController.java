@@ -92,6 +92,7 @@ public class MemberController extends BaseServlet implements Serializable {
 					request.setAttribute("path", "member");
 					
 					String user = this.getSessKey(request, Constants.USER).trim();
+
 					jLogger.i("Email hopefully ============ " + user);
 					
 					List<Scheme> schemes = apiEJB.getProfileSchemes(user, this.getSessKey(request, Constants.U_PROFILE));
@@ -99,9 +100,8 @@ public class MemberController extends BaseServlet implements Serializable {
 
 
 					try {
-						//schemeId = request.getParameter("scheme_id");
-						schemeId = this.getSessKey(request ,Constants.SCHEME_ID);
-						 jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
+						schemeId = request.getParameter("scheme_id");
+ 						 jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
