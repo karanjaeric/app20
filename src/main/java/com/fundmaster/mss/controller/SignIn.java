@@ -156,22 +156,44 @@ public class SignIn extends BaseServlet implements Serializable {
 			HttpSession session = request.getSession();
 
 			User u = userBeanI.findUser(this.get(request, "username"), this.get(request, "password"));
+
+
 			if (u != null) {
+
+				String userName =  u.getUsername();
+				jLogger.i("USERNAME" + userName);
+
+				String code = "+233";
+				String zero = "0";
+				String plus = "+";
+				String memberPhone=userName;
+				if(memberPhone.startsWith(zero)){
+					userName = code + memberPhone.substring(1);
+					jLogger.i("Appending");
+				}else if(userName.startsWith(plus)){
+					userName =memberPhone;
+				}else{
+
+
+					userName= null;
+				}
 
 				if (u.isStatus()) {
 					try {
+
 						if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
-							XiMember member = apiEJB.memberExists(u.getUserProfile(), u.getUsername());
+
+
+
+							XiMember member = apiEJB.memberExists(u.getUserProfile(),userName);
 							if (member != null && member.getId() > 0) {
 
-								session.setAttribute(Constants.USER, u.getUsername());
-
+								session.setAttribute(Constants.USER, userName);
 								session.setAttribute(Constants.UID, u.getId());
 								session.setAttribute(Constants.PROFILE_ID, member.getId());
 								session.setAttribute(Constants.LOGIN, true);
 								session.setAttribute(Constants.U_PROFILE, member.getProfile());
 								session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
-
 								resetAttempt(this.get(request, "username"));
 
 								logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());

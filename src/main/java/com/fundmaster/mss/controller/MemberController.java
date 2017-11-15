@@ -99,7 +99,8 @@ public class MemberController extends BaseServlet implements Serializable {
 
 
 					try {
-						schemeId = request.getParameter("scheme_id");
+						//schemeId = request.getParameter("scheme_id");
+						schemeId = this.getSessKey(request ,Constants.SCHEME_ID);
 						 jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -562,7 +563,7 @@ public class MemberController extends BaseServlet implements Serializable {
 				+ " to sponsor #" + this.get(request, "sponsorID"));
 		jLogger.i("Switched between sponsor from sponsor #" + this.getSessKey(request, Constants.SPONSOR_ID)
 				+ " to sponsor #" + this.get(request, "sponsorID"));
-		session.setAttribute("sponsor_id", this.get(request, "sponsorID"));
+		session.setAttribute(Constants.SPONSOR_ID, this.get(request, "sponsorID"));
 
 		this.respond(response, true, "Sponsor changed successfully", null);
 	}

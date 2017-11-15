@@ -154,7 +154,28 @@ public class Register extends BaseServlet implements Serializable {
                 PasswordPolicy policy = passwordPolicyBeanI.find();
                 jLogger.i(" >>>>>>>>>>>> The idnumber is: " + this.get(request, "idNumber") + " <<<<<<<<<<<<<<<");
 
-                XiMember member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
+                String idNumber = this.get(request, "idNumber");
+                if (helper.isValidPhone(idNumber)){
+
+                    String code = "+233";
+                    String zero = "0";
+                    String plus = "+";
+                    String memberPhone=idNumber;
+                    if(memberPhone.startsWith(zero)){
+                        idNumber = code + memberPhone.substring(1);
+                    }else if(idNumber.startsWith(plus)){
+                        idNumber =memberPhone;
+                    }else{
+
+                        idNumber= null;
+                    }
+
+
+                }else
+                    idNumber = this.get(request, "idNumber");
+
+
+                XiMember member = apiEJB.memberExists(this.get(request, "category"), idNumber);
 
                 String loginField =this.get(request, "idNumber");
 
