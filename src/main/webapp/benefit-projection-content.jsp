@@ -41,7 +41,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label class="control-label">Present Value  :</label> <input
+                    <label class="control-label">Lump Sum  :</label> <input
                         type="text" name="presentValue" class="form-control" id="presentValue"
                         placeholder="0.00" value="0"  >
                 </div>

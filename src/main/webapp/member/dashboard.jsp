@@ -56,16 +56,16 @@
 
 	<div class="col-md-12 border-top">
 
-		<c:forEach var="planType" items="${ planType }">
-			<c:choose>
-				<c:when test="${planType == 'Defined Benefit' }">
-				<h3 class="text-center"><small>ACCUMMULATED ANNUAL PENSION TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp;
-				</c:when>
-				<c:otherwise>
-				<h3 class="text-center"><small>ACCUMMULATED BENEFITS TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp;
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
+		<%--<c:forEach var="planType" items="${ planType }">--%>
+			<%--<c:choose>--%>
+				<%--<c:when test="${planType == 'Defined Benefit' }">--%>
+				<%--<h3 class="text-center"><small>ACCUMMULATED ANNUAL PENSION TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp;--%>
+				<%--</c:when>--%>
+				<%--<c:otherwise>--%>
+				<%--<h3 class="text-center"><small>ACCUMMULATED BENEFITS TO DATE:</small> <span id="accummulated-benefits"></span> &nbsp;--%>
+				<%--</c:otherwise>--%>
+			<%--</c:choose>--%>
+		<%--</c:forEach>--%>
 
 		<c:choose>
 			<c:when test="${planType == 'Defined Benefit' && contrGraph.interestActive == 'TRUE'}">
