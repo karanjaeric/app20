@@ -59,6 +59,8 @@ public interface ApiEJB {
     boolean saveSMS(String recepient, String msg, boolean status);
 
     void sendSMS(String recipient, String message );
+    boolean sendSMSR(String recipient, String message );
+
 
     JSONObject getAgentCommission(String agentID);
     JSONObject getExitsInYear(String schemeID);

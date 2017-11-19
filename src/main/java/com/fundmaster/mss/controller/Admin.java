@@ -1336,17 +1336,16 @@ public class Admin extends BaseServlet implements Serializable {
 
         if (u != null) {
             if (u.getSecurityCode().equalsIgnoreCase(securityCode)) {
-                if (!(usedPasswordBeanI.isUsed(new_password) && policy.isPassword_reuse())) {
-                    u.setPassword(helper.hash(new_password));
-                    Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
-                    u.setPassword_expiry(password_expiry);
-                    userBeanI.edit(u);
-                    audit(session, "Changed password");
-                    this.respond(response, true, "Your password was changed successfully", null);
-                } else {
-                    this.respond(response, false, "", null);
-                }
-            } else {
+            setNewPassword(request,response,session,new_password,u);
+            } else if (u.getSmsActivationCode().equalsIgnoreCase(securityCode)){
+
+                setNewPassword(request,response,session,new_password,u);
+
+
+            }
+
+            else {
+
                 this.respond(response, false, "Sorry, your security code is invalid. Please enter a valid security code.", null);
             }
         } else {
@@ -2251,6 +2250,20 @@ public class Admin extends BaseServlet implements Serializable {
     private void switchScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         session.setAttribute(Constants.SCHEME_ID, this.get(request, "schemeID"));
         this.respond(response, true, "success", null);
+    }
+
+    private void setNewPassword(HttpServletRequest request, HttpServletResponse response,HttpSession session, String newPass, User user){
+        PasswordPolicy policy = passwordPolicyBeanI.find();
+        if (!(usedPasswordBeanI.isUsed(newPass) && policy.isPassword_reuse())) {
+            user.setPassword(helper.hash(newPass));
+            Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
+            user.setPassword_expiry(password_expiry);
+            userBeanI.edit(user);
+            audit(session, "Changed password");
+            this.respond(response, true, "Your password was changed successfully", null);
+        } else {
+            this.respond(response, false, "", null);
+        }
     }
     /**
      * Extracts file name from HTTP header content-disposition

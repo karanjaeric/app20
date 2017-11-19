@@ -140,9 +140,9 @@
 								placeholder="Current Password">
 						</div>
 						<div class="form-group">
-							<label class="control-label" for="securityCode">Security Code:</label> <input type="password" class="form-control"
+							<label class="control-label" for="securityCode">Security Code/ SMS code:</label> <input type="password" class="form-control"
 								id="securityCode" name="securityCode"
-								placeholder="Security Code (Get from your email)">
+								placeholder="Security Code / SMS code (Get from your email or phone)">
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="newPassword">New

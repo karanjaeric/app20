@@ -510,17 +510,56 @@ public class MemberController extends BaseServlet implements Serializable {
 
     private void preChangePassword(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
-        User u = userBeanI.findUserByUsernameAndProfile(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
+		String userName = this.getSessKey(request, Constants.USER);
 
-		String securityCode = UUID.randomUUID().toString();
-		u.setSecurityCode(securityCode);
-        userBeanI.edit(u);
 
-        XiMember m = null;
+
+		String securityCode = "";
+		String smsCode = "";
+		User u = new User();
+
+		jLogger.i("The Username has Been Found " + userName);
+
+		final String code = "233";
+		final String zero = "0";
+		final String plus = "+";
+		String clientNumber=userName;
+
+		if(clientNumber.startsWith(plus)){
+
+			userName = zero + clientNumber.substring(4);
+			jLogger.i("The Username has Been Found again " + userName);
+
+		}
+
+
+
+		if (helper.isValidPhone(userName)) {
+			u = userBeanI.findUserByUsernameAndProfile(userName, this.getSessKey(request, Constants.U_PROFILE));
+
+			jLogger.i("User found "+ u.getUserProfile() +" Username " + u.getUsername());
+
+			smsCode = helper.randomNumber().toString();
+			jLogger.i("Am here");
+			u.setSmsActivationCode(smsCode);
+			userBeanI.edit(u);
+
+		} else if (helper.isEmailAddress(userName)) {
+
+			u = userBeanI.findUserByUsernameAndProfile(userName, this.getSessKey(request, Constants.U_PROFILE));
+
+			securityCode = UUID.randomUUID().toString();
+			u.setSecurityCode(securityCode);
+			userBeanI.edit(u);
+
+		}
+
+
+		XiMember m = null;
 
 		//m = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
 
-        List<Scheme> schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
+		List<Scheme> schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
 
         /*if(schemes != null && schemes.size() > 0) {
             if(this.getSessKey(request, Constants.SCHEME_ID) == null)
@@ -536,37 +575,54 @@ public class MemberController extends BaseServlet implements Serializable {
 
 		m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
 
-        if(m != null)
-            session.setAttribute(Constants.PROFILE_ID,m.getId());
-        try {
-			Emails emails = emailsBeanI.find();
+		if (m != null)
+			jLogger.i("Am here with this Username " + userName);
+		session.setAttribute(Constants.PROFILE_ID, m.getId());
 
-			List<String> recipients = new ArrayList<>();
-			recipients.add(m.getEmailAddress());
+		try {
+		if (helper.isEmailAddress(userName)) {
 
-			jLogger.i("Member email is: " + m.getEmailAddress());
+				Emails emails = emailsBeanI.find();
 
-            boolean status = apiEJB.sendEmail(recipients ,emails.getDefaultEmail(), null,"Change Password Request", "Dear " + u.getUsername() + ", " +
-                    "You recently requested to change your password. " +
-                    "Here is your security code:" +
-                    "" + securityCode +
-                    " You will require it to be able to change your password", this.getSessKey(request, Constants.SCHEME_ID), false, "");
-            if(status)
-            {
-                    this.respond(response, true, "The change password instructions have been sent to your email address", null);
+				List<String> recipients = new ArrayList<>();
+				recipients.add(m.getEmailAddress());
 
-            }
-            else
-            {
-                this.respond(response, false, "We are sorry, we were unable to send you the change password instructions", null);
+				jLogger.i("Member email is: " + m.getEmailAddress());
 
-            }
-        } catch (NullPointerException jnpe) {
+				boolean status = apiEJB.sendEmail(recipients, emails.getDefaultEmail(), null, "Change Password Request", "Dear " + u.getUsername() + ", " +
+						"You recently requested to change your password. " +
+						"Here is your security code:" +
+						"" + securityCode +
+						" You will require it to be able to change your password", this.getSessKey(request, Constants.SCHEME_ID), false, "");
+				if (status) {
+					this.respond(response, true, "The change password instructions have been sent to your email address", null);
 
-            this.respond(response, false, "We are sorry, we encountered a problem obtaining your email address. Please try again", null);
+				} else {
+					this.respond(response, false, "We are sorry, we were unable to send you the change password instructions", null);
 
-        }
-    }
+				}
+			}
+		 else if (helper.isValidPhone(userName)) {
+
+
+				String memberPhone = m.getPhoneNumber();
+				jLogger.i("The Phone Number Is " + memberPhone);
+
+			  apiEJB.sendSMS(memberPhone, "Dear " + u.getUsername() + ", You recently requested to change your password.Here is your sms code:" + smsCode +
+						" You will require it to be able to change your password");
+
+
+					this.respond(response, true, "The change password instructions have been sent to your phone number", null);
+
+
+		}
+
+	} catch (NullPointerException jnpe) {
+
+			this.respond(response, false, "We are sorry, we encountered a problem obtaining your email address / phone. Please try again", null);
+
+		}
+	}
 
     private void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         logActivity("", "logged out", this.getSessKey(request, Constants.UID), null, this.getSessKey(request, Constants.U_PROFILE));

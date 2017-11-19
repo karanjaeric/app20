@@ -969,9 +969,49 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
+    public boolean sendSMSR(String recipient,   String message ) {
+        final String code = "233";
+        final String zero = "0";
+        final String plus = "+";
+        String clientNumber=recipient;
+
+        if(clientNumber.startsWith(zero)){
+            recipient = code + clientNumber.substring(1);
+        }else if(clientNumber.startsWith(plus)){
+            recipient =clientNumber.substring(1);
+        }
+
+
+        ClientRequest request=new ClientRequest("https://api.hubtel.com/v1/messages/send?From=XI&To="+recipient+"&Content="
+                +message+"&ClientId=rlmjklyk&ClientSecret=egzjdxiw&RegisteredDelivery=true");
+
+        try {
+            ClientResponse<String> response = request.get(String.class);
+            System.out.println("Status is"+response.getStatus());
+            int status = response.getStatus();
+            boolean status1;
+
+            if (status==201){
+                status1 = true;
+            }else  status1=false;
+
+            saveSMS(recipient,message,status1);
+
+            return true;
+
+
+        } catch (Exception ex) {
+            // Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+
+    }
+
+    @Override
     public void sendSMS(String recipient,   String message ) {
 
-                final String code = "233";
+        final String code = "233";
         final String zero = "0";
         final String plus = "+";
         String clientNumber=recipient;
