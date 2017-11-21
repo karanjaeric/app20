@@ -36,6 +36,11 @@ public class Banner extends BaseServlet implements Serializable {
 	ImageBannerBeanI imageBannerBeanI;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
 		
 		ImageBanner bn = imageBannerBeanI.findById(helper.toLong(request.getPathInfo().substring(1)));
 		

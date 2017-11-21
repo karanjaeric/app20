@@ -6,16 +6,40 @@
   <welcome-file-list>
     <welcome-file>index</welcome-file>
   </welcome-file-list>
-  <display-name>Mss</display-name>
+  <display-name>MssUg</display-name>
 
-  <!--<security-constraint>
-    <web-resource-collection>
-      <web-resource-name>SECURE</web-resource-name>
-      <url-pattern>/*</url-pattern>
-    </web-resource-collection>
-    <user-data-constraint>
-      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>-->
+  <session-config>
+    <cookie-config>
+      <http-only>true</http-only>
+      <!--<secure>true</secure>-->
+    </cookie-config>
+  </session-config>
 
+ <error-page>
+  
+    
+    <!--handling bad request errors-->
+    <error-code>400</error-code>
+    <location>/400.jsp</location>
+    
+    <!--handling unauthorized requests-->
+    <error-code>401</error-code>
+    <location>/401.jsp</location>
+    
+    <!--handling forbidden requests-->
+    <error-code>403</error-code>
+    <location>/403.jsp</location>
+    
+      <!--handling method not found requests-->
+    <error-code>405</error-code>
+    <location>/405.jsp</location>
+    
+    <!--handling unacceptable(Not acceptable) requests-->
+    <error-code>406</error-code>
+    <location>/406.jsp</location>
+    
+    <!--handling 404 errors-->
+    <error-code>404</error-code>
+    <location>/404.jsp</location>
+</error-page>
 </web-app>

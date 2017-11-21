@@ -45,6 +45,11 @@ public class BenefitProjectionController  extends BaseServlet implements Seriali
      private final JLogger jLogger = new JLogger(this.getClass());
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        /* configuring the http headers */
+        response.addHeader("X-XSS-Protection", "1; mode=block");
+        response.addHeader("X-Frame-Options", "DENY");
+        response.addHeader("X-Content-Type-Options", "nosniff");
+
         response.setContentType( "text/html" );
 
         Company company = companyBeanI.find();
@@ -99,6 +104,11 @@ public class BenefitProjectionController  extends BaseServlet implements Seriali
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        /* configuring the http headers */
+        response.addHeader("X-XSS-Protection", "1; mode=block");
+        response.addHeader("X-Frame-Options", "DENY");
+        response.addHeader("X-Content-Type-Options", "nosniff");
 
         String presentValue = this.get(request, "presentValue");
         if(presentValue.equalsIgnoreCase("")){

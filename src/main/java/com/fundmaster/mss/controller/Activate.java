@@ -92,8 +92,16 @@ public class Activate extends BaseServlet implements Serializable {
 		Help help = helpBeanI.findHelp(Constants.PAGE_HOME);
 		request.setAttribute("help", help);
 		PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_HOME);
+
+		/* configuring the http headers */
+
 		request.setAttribute("content", content);
 		request.setAttribute("noMenu", false);
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
+
+
 		request.getRequestDispatcher("activate.jsp").forward(request, response);
 	}
 }

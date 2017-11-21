@@ -66,7 +66,11 @@ private static final String REQUEST_ACTION = "ACTION";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
+
 		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
 		Social social = socialBeanI.find();
@@ -105,6 +109,11 @@ private static final String REQUEST_ACTION = "ACTION";
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
 			
 			if (this.get(request, REQUEST_ACTION).equals("ADD_SPONSOR")) {
 				this.addSponsor(response, request);

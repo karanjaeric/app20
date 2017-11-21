@@ -35,7 +35,12 @@ public class Capture extends BaseServlet{
 	  protected void doGet( HttpServletRequest request, HttpServletResponse response ) 
 	  throws ServletException, IOException
 	  {
-		  HttpSession session = request.getSession(true);
+		  /* configuring the http headers */
+		  response.addHeader("X-XSS-Protection", "1; mode=block");
+		  response.addHeader("X-Frame-Options", "DENY");
+		  response.addHeader("X-Content-Type-Options", "nosniff");
+
+	  	  HttpSession session = request.getSession(true);
 	      Captcha captcha = new Captcha.Builder(250, 50).addText().build();
 	      CaptchaServletUtil.writeImage(response, captcha.getImage());
 	      session.setAttribute(Captcha.NAME, captcha);

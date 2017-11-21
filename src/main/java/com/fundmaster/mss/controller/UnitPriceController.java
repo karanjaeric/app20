@@ -63,6 +63,11 @@ public class UnitPriceController  extends BaseServlet implements Serializable {
 
      protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+       /* configuring the http headers */
+         response.addHeader("X-XSS-Protection", "1; mode=block");
+         response.addHeader("X-Frame-Options", "DENY");
+         response.addHeader("X-Content-Type-Options", "nosniff");
+
         List<Scheme> schemes = apiEJB.getSchemes(0, 10000);
         request.setAttribute("schemes", schemes);
         Social social = socialBeanI.find();
@@ -84,6 +89,11 @@ public class UnitPriceController  extends BaseServlet implements Serializable {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+         /* configuring the http headers */
+        response.addHeader("X-XSS-Protection", "1; mode=block");
+        response.addHeader("X-Frame-Options", "DENY");
+        response.addHeader("X-Content-Type-Options", "nosniff");
 
         String action = this.get(request, REQUEST_ACTION);
 

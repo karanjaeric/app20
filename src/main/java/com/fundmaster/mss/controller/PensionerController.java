@@ -67,6 +67,11 @@ public class PensionerController extends BaseServlet implements Serializable {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        /* configuring the http headers */
+        response.addHeader("X-XSS-Protection", "1; mode=block");
+        response.addHeader("X-Frame-Options", "DENY");
+        response.addHeader("X-Content-Type-Options", "nosniff");
+
         /* Check if user is already authenticated */
         HttpSession session = request.getSession(false);
         try {
@@ -201,6 +206,11 @@ public class PensionerController extends BaseServlet implements Serializable {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
+
+        /* configuring the http headers */
+        response.addHeader("X-XSS-Protection", "1; mode=block");
+        response.addHeader("X-Frame-Options", "DENY");
+        response.addHeader("X-Content-Type-Options", "nosniff");
 
         HttpSession session = request.getSession(false);
         jLogger.i(">>>>>>>>>>>> Tumeingia hapa <<<<<<<<<<<<<");

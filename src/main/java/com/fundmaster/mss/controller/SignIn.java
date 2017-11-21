@@ -66,7 +66,13 @@ public class SignIn extends BaseServlet implements Serializable {
 		super();
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {  
+			throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
+
 			HttpSession session = request.getSession(false);
 			boolean proceed;
 			
@@ -127,6 +133,12 @@ public class SignIn extends BaseServlet implements Serializable {
 	SchemeManagerBeanI schemeManagerBeanI;
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
+
 		if(this.get(request, "ACTION").equals("ACTIVATE_ACCOUNT")) {
 
 			String code  = this.get(request, "code");
