@@ -1992,17 +1992,35 @@ $(document).ready(function() {
 													success : function(json) {
 														stop_wait();
 														if(json.success)
-														{
-															$("form#form-sponsor-existing")[0]
-																	.reset();
-															setTimeout(
-																	function() {
-																		window.location.href = $(
-																				'#base_url')
-																				.val()
-																				+ 'admin';
-																	}, 5000);
-														}
+                                                        {
+                                                            if (isNaN(($('#sponsorIdNumber').val()))){
+
+                                                                $("form#form-sponsor-existing")[0]
+                                                                    .reset();
+                                                                setTimeout(
+                                                                    function() {
+                                                                        window.location.href = $(
+                                                                            '#base_url')
+                                                                                .val()
+                                                                            + 'admin';
+                                                                    }, 5000);
+
+                                                            }else{
+
+                                                                $("form#form-sponsor-existing")[0]
+                                                                    .reset();
+                                                                setTimeout(
+                                                                    function() {
+                                                                        window.location.href = $(
+                                                                            '#base_url')
+                                                                                .val()
+                                                                            + 'activate-account';
+                                                                    }, 5000);
+
+                                                            }
+
+
+                                                        }
 														bootbox
 																.alert('<p class="text-center">'
 																		+ json.message
@@ -2201,18 +2219,36 @@ $(document).ready(function() {
 													dataType : 'json',
 													success : function(json) {
 														stop_wait();
-														if(json.success)
-														{
-															$("form#form-admin")[0]
-																	.reset();
-															setTimeout(
-																	function() {
-																		window.location.href = $(
-																				'#base_url')
-																				.val()
-																				+ 'admin';
-																	}, 5000);
-														}
+                                                        if(json.success)
+                                                        {
+                                                            if (isNaN(($('#adminIdNumber').val()))){
+
+                                                                $("form#form-admin")[0]
+                                                                    .reset();
+                                                                setTimeout(
+                                                                    function() {
+                                                                        window.location.href = $(
+                                                                            '#base_url')
+                                                                                .val()
+                                                                            + 'admin';
+                                                                    }, 5000);
+
+                                                            }else{
+
+                                                                $("form#form-admin")[0]
+                                                                    .reset();
+                                                                setTimeout(
+                                                                    function() {
+                                                                        window.location.href = $(
+                                                                            '#base_url')
+                                                                                .val()
+                                                                            + 'activate-account';
+                                                                    }, 5000);
+
+                                                            }
+
+
+                                                        }
 														bootbox.alert('<p class="text-center">'
 																		+ json.message
 																		+ '</p>');
@@ -2401,15 +2437,33 @@ $(document).ready(function() {
 														stop_wait();
 														if(json.success)
 														{
-															$("form#form-member")[0]
-																	.reset();
-															setTimeout(
-																	function() {
-																		window.location.href = $(
-																				'#base_url')
-																				.val()
-																				+ 'sign-in';
-																	}, 5000);
+															if (isNaN(($('#eMIdNumber').val()))){
+
+                                                                $("form#form-member")[0]
+                                                                    .reset();
+                                                                setTimeout(
+                                                                    function() {
+                                                                        window.location.href = $(
+                                                                            '#base_url')
+                                                                                .val()
+                                                                            + 'sign-in';
+                                                                    }, 5000);
+
+                                                            }else{
+
+                                                                $("form#form-member")[0]
+                                                                    .reset();
+                                                                setTimeout(
+                                                                    function() {
+                                                                        window.location.href = $(
+                                                                            '#base_url')
+                                                                                .val()
+                                                                            + 'activate-account';
+                                                                    }, 5000);
+
+															}
+
+
 														}
 														bootbox
 																.alert('<p class="text-center">'

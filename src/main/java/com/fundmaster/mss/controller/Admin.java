@@ -632,19 +632,51 @@ public class Admin extends BaseServlet implements Serializable {
         jLogger.i("SENDER ID ========================> " + senderId);*/
 
         String userName = this.getSessKey(request, Constants.USER);
+
+
+
+        if (helper.isValidPhone(userName)){
+
+
+
+
+            String zero = "0";
+            String plus = "+";
+            String xiMemPhone=userName;
+            if(xiMemPhone.startsWith(plus)){
+                userName = zero + xiMemPhone.substring(4);
+            }else if(userName.startsWith(zero)){
+                userName =xiMemPhone;
+            }else{
+
+                userName= null;
+            }
+
+
+        }
         jLogger.i("Username is ===============> " + userName);
+
+
+
 
         User usr = userBeanI.findByUsername(userName);
         String userProfile = usr.getUserProfile();
 
+
+
         //XiMember mbr = apiEJB.getMemberDetails(senderId, null);
+        String code = "+233";
+        userName =code+userName.substring(1);
+        jLogger.i("Username is ===============> " + userName);
+
 
         XiMember mbr = apiEJB.memberExists(userProfile, userName);
+
 
         String senderEmail = mbr.getEmailAddress();
         jLogger.i("SENDER NAME ======================> " + senderEmail);
 
-        boolean status = apiEJB.sendEmail(recipients, this.getSessKey(request, Constants.USER), senderEmail, subject, message,
+        boolean status = apiEJB.sendEmail(recipients, senderEmail, senderEmail, subject, message,
                 this.getSessKey(request, Constants.SCHEME_ID), attachment, attachment_url);
 
         if (status) {

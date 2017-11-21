@@ -327,15 +327,17 @@ public class Register extends BaseServlet implements Serializable {
 
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> " +
-
                                         "Congratulations! Your account has been created on the portal. A SMS notification has been sent", null);
 
 
 
-                            } else {
+
+
+                             } else {
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! " +
                                         "Your account has been created on the portal. We were however unable to send the activation instructions to your email or Phone. " +
                                         "Please contact the administrator", null);
+
 
 
 

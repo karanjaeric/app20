@@ -216,10 +216,10 @@ $(document).ready(function(){
 		$('#modal-pwd-reset').modal('show');
 	});
 
-    $('#sms-btn').click(function(){
-        $('#modal-sms-code').modal('show');
-
-    });
+    // $('#sms-btn').click(function(){
+    //     $('#modal-sms-code').modal('show');
+    //
+    // });
 	$('#content-main-li').click(function(){
 		
 		$('#main-menu.nav li').removeClass('active');
@@ -984,7 +984,16 @@ $('#form-password-reset').bootstrapValidator({
                     stop_wait();
                     bootbox.alert(json.message);
                     if(json.success)
-                        $('#modal-sms-code').modal('hide');
+
+                        $("form#form-sms-code")[0]
+                            .reset();
+                    setTimeout(
+                        function() {
+                            window.location.href = $(
+                                '#base_url')
+                                    .val()
+                                + 'sign-in';
+                        }, 5000);
                 }
             });
 

@@ -1022,17 +1022,16 @@ public Double getMemberTotalUnits(String memberId) {
             recipient =clientNumber.substring(1);
         }
 
-
         ClientRequest request=new ClientRequest("https://api.hubtel.com/v1/messages/send?From=XI&To="+recipient+"&Content="
                 +message+"&ClientId=rlmjklyk&ClientSecret=egzjdxiw&RegisteredDelivery=true");
 
         try {
             ClientResponse<String> response = request.get(String.class);
-            System.out.println("Status is"+response.getStatus());
+//            System.out.println("Status is"+response.getStatus());
             int status = response.getStatus();
             boolean status1;
 
-            if (status==201){
+            if (status==502){
                   status1 = true;
             }else  status1=false;
 

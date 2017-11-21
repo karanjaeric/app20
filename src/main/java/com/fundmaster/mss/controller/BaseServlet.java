@@ -351,11 +351,13 @@ public class BaseServlet extends HttpServlet {
             jLogger.i("Object is : " + json.toString());
         try {
             String response = helper.result(status, message, json);
-            jLogger.i(response);
+             jLogger.i(response);
             resp.getWriter().write(response);
+
         } catch (IOException ioe) {
             jLogger.e("Problem sending response" + ioe.getMessage());
         }
+
 
     }
 
