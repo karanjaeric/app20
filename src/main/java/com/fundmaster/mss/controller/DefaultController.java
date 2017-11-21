@@ -59,6 +59,12 @@ public class DefaultController extends BaseServlet implements Serializable {
 	PermissionBeanI permissionBeanI;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
+
 		logActivity("HOME", "accesed home page", "0", null, null);
 		List<Country> countries = countryBeanI.find();
 		request.setAttribute("countries",  countries);
@@ -97,6 +103,11 @@ public class DefaultController extends BaseServlet implements Serializable {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
  
 	}
 

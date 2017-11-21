@@ -49,7 +49,13 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 	private final JLogger jLogger = new JLogger(this.getClass());
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {  
+            throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
+
 		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
 		Social social = socialBeanI.find();
@@ -71,6 +77,10 @@ public class WhatIfAnalysis extends BaseServlet implements Serializable {
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
 
 		Setting settings = settingBeanI.find();
 		String formula = settings.getWhatIfAnalysisFormula();

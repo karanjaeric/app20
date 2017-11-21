@@ -68,7 +68,13 @@ public class MemberController extends BaseServlet implements Serializable {
 	@EJB
 	ApiEJB apiEJB;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {  
+            throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
+
 		/* Check if user is already authenticated */
 		HttpSession session = request.getSession(false);
 		try {
@@ -297,6 +303,15 @@ public class MemberController extends BaseServlet implements Serializable {
 	ContactCategoryBeanI contactCategoryBeanI;
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		//Enable and block pages with XSS
+		response.addHeader("X-Frame-Options", "DENY");
+		// prevents any domain from framing the content
+		response.addHeader("X-Content-Type-Options", "nosniff");
+		/* Used to stop browser from using MIME-sniffing
+		     to determine content-type of a resource  */
 
 		HttpSession session = request.getSession(false);
 

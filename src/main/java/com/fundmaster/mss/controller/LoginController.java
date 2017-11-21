@@ -63,7 +63,12 @@ public class LoginController extends BaseServlet implements Serializable {
 	ApiEJB apiEJB;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {  
+            throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
 		
 		/* Check if user is already authenticated */
 		HttpSession session = request.getSession(false);
@@ -112,6 +117,11 @@ public class LoginController extends BaseServlet implements Serializable {
 	JLogger jLogger = new JLogger(this.getClass());
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
 		/* On Successful Authentication */
 		HttpSession session = request.getSession();
     	

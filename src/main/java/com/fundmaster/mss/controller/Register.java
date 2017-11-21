@@ -66,6 +66,12 @@ public class Register extends BaseServlet implements Serializable {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        /* configuring the http headers */
+        response.addHeader("X-XSS-Protection", "1; mode=block");
+        response.addHeader("X-Frame-Options", "DENY");
+        response.addHeader("X-Content-Type-Options", "nosniff");
+
         List<Country> countries = countryBeanI.find();
         request.setAttribute("countries", countries);
         List<Gender> genders = genderBeanI.find();
@@ -109,6 +115,11 @@ public class Register extends BaseServlet implements Serializable {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
+
+        /* configuring the http headers */
+        response.addHeader("X-XSS-Protection", "1; mode=block");
+        response.addHeader("X-Frame-Options", "DENY");
+        response.addHeader("X-Content-Type-Options", "nosniff");
 
         // Get the request params.
         @SuppressWarnings("rawtypes")

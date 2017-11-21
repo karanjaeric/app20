@@ -69,7 +69,12 @@ public class PasswordResetController extends BaseServlet implements Serializable
 	@EJB
 	ApiEJB apiEJB;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {  
+            throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
 		
 		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
@@ -87,6 +92,12 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		/* configuring the http headers */
+		response.addHeader("X-XSS-Protection", "1; mode=block");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-Content-Type-Options", "nosniff");
+
 		if(this.get(request, "ACTION").equals("RESET_PASSWORD"))
 		{
 			PasswordPolicy policy = passwordPolicyBeanI.find();

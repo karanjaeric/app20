@@ -31,11 +31,22 @@ public class SmsAccountActivationController extends BaseServlet implements Seria
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        /* configuring the http headers */
+        response.addHeader("X-XSS-Protection", "1; mode=block");
+        response.addHeader("X-Frame-Options", "DENY");
+        response.addHeader("X-Content-Type-Options", "nosniff");
         
      }
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
+
+
+            /* configuring the http headers */
+        response.addHeader("X-XSS-Protection", "1; mode=block");
+        response.addHeader("X-Frame-Options", "DENY");
+        response.addHeader("X-Content-Type-Options", "nosniff");
 
              if(this.get(request, "ACTION").equals("ACTIVATE_ACCOUNT"))
         {
