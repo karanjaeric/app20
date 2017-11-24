@@ -983,17 +983,22 @@ $('#form-password-reset').bootstrapValidator({
                 success: function(json) {
                     stop_wait();
                     bootbox.alert(json.message);
-                    if(json.success)
+
+                     if(json.success)
 
                         $("form#form-sms-code")[0]
                             .reset();
-                    setTimeout(
-                        function() {
-                            window.location.href = $(
-                                '#base_url')
-                                    .val()
-                                + 'sign-in';
-                        }, 5000);
+                        setTimeout(
+                            function() {
+                                window.location.href = $(
+                                    '#base_url')
+                                        .val()
+                                    + 'sign-in';
+                            }, 5000);
+
+
+
+
                 }
             });
 
@@ -1010,7 +1015,7 @@ $('#form-password-reset').bootstrapValidator({
         },
         excluded: ':disabled',
         fields: {
-            code: {
+            phoneNumber: {
                 validators: {
                     notEmpty: {
                         message: 'Please enter your Phone Number'
@@ -1033,8 +1038,20 @@ $('#form-password-reset').bootstrapValidator({
                 success: function(json) {
                     stop_wait();
                     bootbox.alert(json.message);
+
                     if(json.success)
-                        $('#modal-resend-code').modal('hide');
+                        // $('#modal-resend-code').modal('hide');
+
+                    $("form#form-sms-code")[0]
+                        .reset();
+                    setTimeout(
+                        function() {
+                            window.location.href = $(
+                                '#base_url')
+                                    .val()
+                                + 'activate-account';
+                        }, 5000);
+
                 }
             });
 

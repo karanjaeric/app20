@@ -88,6 +88,7 @@ public class MemberController extends BaseServlet implements Serializable {
 				else
 				{
 					String schemeId = "";
+					String productId ="";
 					List<ActivityLog> activityLogs = activityLogBeanI.findAllByUserID(this.getSessKey(request, Constants.UID));
 					request.setAttribute("activityLogs", activityLogs);
 					Company company = companyBeanI.find();
@@ -111,7 +112,9 @@ public class MemberController extends BaseServlet implements Serializable {
 //						schemeId = request.getParameter("scheme_id");
 						schemeId =this.getSessKey(request, Constants.SCHEME_ID);
 
- 						 jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
+
+						jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
+						jLogger.i("The Product passed::::::::::::::::: " + productId);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
@@ -159,7 +162,18 @@ public class MemberController extends BaseServlet implements Serializable {
 
 					String memberEmail=m.getEmailAddress();
 					List<Sponsor> sponsors = apiEJB.getMemberSchemeProducts(memberEmail,this.getSessKey(request, Constants.SCHEME_ID));
+
 					request.getSession().setAttribute("sponsors", sponsors);
+					try {
+ 						productId=this.getSessKey(request, Constants.SPONSOR_ID);
+
+						jLogger.i("The Product passed::::::::::::::::: " + productId);
+
+
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+
 
 					if(schemes != null && schemes.size() > 0) {
 						jLogger.i("Scheme is not null. email/phone: "+ this.getSessKey(request, Constants.USER));
@@ -266,6 +280,110 @@ public class MemberController extends BaseServlet implements Serializable {
 									{
 										jLogger.e("NullPointerException was detected: " + npe.getMessage());
 										session.setAttribute(Constants.SCHEME_ID, String.valueOf(scheme.getId()));
+									}
+								}
+							}
+					}
+
+
+
+					if(sponsors != null && sponsors.size() == 1)
+
+
+
+					{
+
+
+						jLogger.i(" 1 :SPONSOR Name" + sponsors.get(0).getCompanyName().toString());
+
+						request.setAttribute("sponsor_id", sponsors.get(0).getId().toString());
+
+						request.setAttribute("companyName", sponsors.get(0).getCompanyName().toString());
+
+						jLogger.i("Executing this script: 1 :SPONSOR" );
+
+						try {
+
+							if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
+							{
+ 								session.setAttribute(Constants.SPONSOR_ID, sponsors.get(0).getId().toString());
+								request.setAttribute("sponsor_id", sponsors.get(0).getId().toString());
+								jLogger.i(" 1 :SPONSOR IS" + sponsors.get(0).getId().toString() );
+
+								request.setAttribute("companyName", sponsors.get(0).getCompanyName().toString());
+								request.setAttribute("scheme", sponsors.get(0).getScheme());
+
+							}
+							else
+							{
+								request.setAttribute("sponsor_id", this.getSessKey(request, Constants.SPONSOR_ID));
+ 							}
+						} catch(NullPointerException npe)
+						{
+							jLogger.e("NullPointerException was detected: " + npe.getMessage());
+							session.setAttribute(Constants.SPONSOR_ID, String.valueOf(sponsors.get(0).getId()));
+						}
+					}else if (sponsors != null  && sponsors.size() > 1){
+						try {
+
+ 								for (Sponsor sponsor : sponsors) {
+
+									request.setAttribute("sponsor_id", sponsor.getId().toString());
+
+									request.setAttribute("companyName", sponsor.getCompanyName().toString());
+									request.setAttribute("scheme", sponsor.getScheme());
+
+									try {
+
+										if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
+
+
+										{
+											session.setAttribute(Constants.SPONSOR_ID, sponsor.getId().toString());
+											request.setAttribute("sponsor_id", sponsor.getId().toString());
+
+										}
+											else
+										{
+											request.setAttribute("sponsor_id", this.getSessKey(request, Constants.SPONSOR_ID));
+										}
+									} catch (NullPointerException npe) {
+										jLogger.e("NullPointerException was detected: " + npe.getMessage());
+										session.setAttribute(Constants.SPONSOR_ID, String.valueOf(sponsor.getId()));
+									}
+
+								}
+
+						} catch(NullPointerException npe)
+						{
+							jLogger.e("NullPointerException was detected: " + npe.getMessage());
+							session.setAttribute(Constants.SPONSOR_ID, String.valueOf(sponsors.get(0).getId()));
+						}
+					}
+
+					else if(this.getSessKey(request, Constants.SPONSOR_ID) != null)
+					{
+						jLogger.i("Executing this script: 2 :SPONSOR" );
+						if(sponsors != null)
+							for(Sponsor sponsor : sponsors)
+							{
+								if(sponsor.getId() == helper.toLong(this.getSessKey(request, Constants.SPONSOR_ID)))
+								{
+									try {
+
+										if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
+										{
+ 											session.setAttribute(Constants.SPONSOR_ID, sponsor.getId().toString());
+											request.setAttribute("sponsor_id", sponsor.getId().toString());
+										}
+										else
+										{
+											request.setAttribute("sponsor_id", this.getSessKey(request, Constants.SPONSOR_ID));
+ 										}
+									} catch(NullPointerException npe)
+									{
+										jLogger.e("NullPointerException was detected: " + npe.getMessage());
+										session.setAttribute(Constants.SPONSOR_ID, String.valueOf(sponsor.getId()));
 									}
 								}
 							}
