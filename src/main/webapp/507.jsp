@@ -11,4 +11,4 @@
   <h1 style="color: red;">Error: An error occurred while processing your request</h1>
 </center>
 
-<jsp:include page="includes/partial/footer.jsp" />
+<%--<jsp:include page="includes/partial/footer.jsp" />--%>

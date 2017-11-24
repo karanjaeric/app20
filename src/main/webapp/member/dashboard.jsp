@@ -47,7 +47,7 @@
 				</c:if>
 
 					<c:if test="${sponsor_id!=null}">
-						<tr><td>COMPANY</td><td>${companyName }</td></tr>
+						<tr><td>COMPANY</td><td>${companyName}</td></tr>
 					</c:if>
 
 

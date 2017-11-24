@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="includes/partial/header.jsp" />
 <center>
-    <h1>Error: Gateway Timeout</h1>
+    <h1 style="color: red">Error: Gateway Timeout</h1>
 </center>
 
-<jsp:include page="includes/partial/footer.jsp" />
+<%--<jsp:include page="includes/partial/footer.jsp" />--%>

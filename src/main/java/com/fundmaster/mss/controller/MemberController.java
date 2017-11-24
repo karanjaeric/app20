@@ -311,7 +311,6 @@ public class MemberController extends BaseServlet implements Serializable {
 								jLogger.i(" 1 :SPONSOR IS" + sponsors.get(0).getId().toString() );
 
 								request.setAttribute("companyName", sponsors.get(0).getCompanyName().toString());
-								request.setAttribute("scheme", sponsors.get(0).getScheme());
 
 							}
 							else
@@ -331,7 +330,6 @@ public class MemberController extends BaseServlet implements Serializable {
 									request.setAttribute("sponsor_id", sponsor.getId().toString());
 
 									request.setAttribute("companyName", sponsor.getCompanyName().toString());
-									request.setAttribute("scheme", sponsor.getScheme());
 
 									try {
 

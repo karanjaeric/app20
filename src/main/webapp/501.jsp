@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="includes/partial/header.jsp" />
 <center>
-    <h1>Error: Server lacks the ability to fulfill this request</h1>
+    <h1 style="color: red">Error: Server lacks the ability to fulfill this request</h1>
 </center>
 
-<jsp:include page="includes/partial/footer.jsp" />
+<%--<jsp:include page="includes/partial/footer.jsp" />--%>
