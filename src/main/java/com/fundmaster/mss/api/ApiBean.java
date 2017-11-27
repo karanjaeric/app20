@@ -798,6 +798,25 @@ public Double getMemberTotalUnits(String memberId) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
         }
+    }    @Override
+    public XiMember getMemberDetailsBySponsor(String productId, String email) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_MEMBER_DETAILS_BY_SPONSOR_AND_EMAIL + productId + "/" + email);
+            jLogger.i("Member details respone >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                JSONArray jsonArray = (JSONArray) response.get(Constants.ROWS);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                return this.xiMemberFromJson(jsonObject);
+            }
+            else {
+                return null;
+            }
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
     }
 
 
@@ -806,6 +825,26 @@ public Double getMemberTotalUnits(String memberId) {
         JSONObject response;
         try {
             response = URLGet(APICall.GET_MEMBER_DETAILS_BY_SCHEME_AND_PHONE + schemeId + "/" + phone);
+            jLogger.i("Member details respone >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                JSONArray jsonArray = (JSONArray) response.get(Constants.ROWS);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                return this.xiMemberFromJson(jsonObject);
+            }
+            else {
+                return null;
+            }
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
+    @Override
+    public XiMember getMemberDetailsBySponsorAndPhone(String productId, String phone) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_MEMBER_DETAILS_BY_SPONSOR_AND_PHONE + productId + "/" + phone);
             jLogger.i("Member details respone >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
             if(response.getBoolean(Fields.SUCCESS))
             {
@@ -2509,7 +2548,7 @@ public Double getMemberTotalUnits(String memberId) {
                 jLogger.i("The sponsor name >>>>>>>>>>>>> " + jsonObject.getString("name"));
                 sponsors.add(sponsor);
             }
-            jLogger.i("Sponsprs found are " + sponsors.size());
+            jLogger.i("Sponsors found are " + sponsors.size());
             return sponsors;
         } catch (JSONException je) {
             jLogger.e("We have a json exception extracting sponsors" + je.getMessage());

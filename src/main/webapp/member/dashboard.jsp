@@ -6,7 +6,7 @@
 	</h3>
 	<div class="col-md-6">
 	<h3 class="text-center"><small>MEMBER DETAILS</small></h3>
-				<table class="table table-responsive table-condensed">
+				<table class="table table-responsive table-striped">
 
 				<c:if test="${memberDashboard.name == 'TRUE'}">
 					<tr><td>NAME</td><td>${member.name }</td></tr>

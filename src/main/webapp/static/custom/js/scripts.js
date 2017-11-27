@@ -983,13 +983,13 @@ $('#form-password-reset').bootstrapValidator({
                 success: function(json) {
                     stop_wait();
                     bootbox.alert(json.message);
+                    var status = json.success;
 
-                     if(json.success)
-
+                    if (status) {
                         $("form#form-sms-code")[0]
                             .reset();
                         setTimeout(
-                            function() {
+                            function () {
                                 window.location.href = $(
                                     '#base_url')
                                         .val()
@@ -997,8 +997,7 @@ $('#form-password-reset').bootstrapValidator({
                             }, 5000);
 
 
-
-
+                    }
                 }
             });
 
@@ -1038,8 +1037,11 @@ $('#form-password-reset').bootstrapValidator({
                 success: function(json) {
                     stop_wait();
                     bootbox.alert(json.message);
+                    var status= json.success;
 
-                    if(json.success)
+                    if(status){
+
+
                         // $('#modal-resend-code').modal('hide');
 
                     $("form#form-sms-code")[0]
@@ -1052,6 +1054,7 @@ $('#form-password-reset').bootstrapValidator({
                                 + 'activate-account';
                         }, 5000);
 
+                }
                 }
             });
 
@@ -1205,6 +1208,7 @@ $('#form-password-reset').bootstrapValidator({
         success: function(json) {
         	stop_wait();
            bootbox.alert(json.message);
+
            if(json.success)
            	setTimeout(function() {
                	window.location.href = $('#base_url').val();

@@ -57,7 +57,9 @@ public class APICall {
     public static final String SEARCH_FOR_SPONSOR_MEMBER_DETAILS = "searchForSponsorMemberDetails/";
     public static final String GET_MEMBER_DETAILS = "getmemberdetails/";
     public static final String GET_MEMBER_DETAILS_BY_SCHEME_AND_EMAIL = "getmemberdetailsbyschemeandemail/";
+    public static final String GET_MEMBER_DETAILS_BY_SPONSOR_AND_EMAIL = "getmemberdetailsbysponsorandemail/";
     public static final String GET_MEMBER_DETAILS_BY_SCHEME_AND_PHONE = "getmemberdetailsbyschemeandphone/";
+    public static final String GET_MEMBER_DETAILS_BY_SPONSOR_AND_PHONE = "getmemberdetailsbysponsorandphone/";
     public static final String GET_PENSIONER_DETAILS = "getpensionerdetails/";
     public static final String GET_MEMBER_ID_FROM_MAIL = "getmemberIdfromMail/";
     public static final String GET_MEMBER_LISTING = "getmemberlisting/";
