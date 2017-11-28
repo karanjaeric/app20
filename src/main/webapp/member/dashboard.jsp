@@ -45,6 +45,12 @@
 				<c:if test="${memberDashboard.town == 'TRUE'}">
 					<tr><td>CITY/TOWN</td><td>${member.town }</td></tr>
 				</c:if>
+
+					<c:if test="${sponsor_id!=null}">
+						<tr><td>COMPANY</td><td>${companyName}</td></tr>
+					</c:if>
+
+
 				</table>
 	</div>
 	<div class="col-md-6 border-left">

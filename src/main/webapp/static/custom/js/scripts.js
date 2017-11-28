@@ -984,7 +984,8 @@ $('#form-password-reset').bootstrapValidator({
                     stop_wait();
                     bootbox.alert(json.message);
                     if (json.success){
-
+                    var status = json.success;
+                    if (status) {
                         $("form#form-sms-code")[0]
                             .reset();
                     setTimeout(
@@ -994,6 +995,8 @@ $('#form-password-reset').bootstrapValidator({
                                     .val()
                                 + 'sign-in';
                         }, 5000);
+
+                    }
                 }
                 }
             });
@@ -1011,7 +1014,7 @@ $('#form-password-reset').bootstrapValidator({
         },
         excluded: ':disabled',
         fields: {
-            code: {
+            phoneNumber: {
                 validators: {
                     notEmpty: {
                         message: 'Please enter your Phone Number'
@@ -1034,8 +1037,24 @@ $('#form-password-reset').bootstrapValidator({
                 success: function(json) {
                     stop_wait();
                     bootbox.alert(json.message);
-                    if(json.success)
-                        $('#modal-resend-code').modal('hide');
+                    var status= json.success;
+
+                    if(status){
+
+
+                        // $('#modal-resend-code').modal('hide');
+
+                    $("form#form-sms-code")[0]
+                        .reset();
+                    setTimeout(
+                        function() {
+                            window.location.href = $(
+                                '#base_url')
+                                    .val()
+                                + 'activate-account';
+                        }, 5000);
+
+                }
                 }
             });
 
@@ -1189,6 +1208,7 @@ $('#form-password-reset').bootstrapValidator({
         success: function(json) {
         	stop_wait();
            bootbox.alert(json.message);
+
            if(json.success)
            	setTimeout(function() {
                	window.location.href = $('#base_url').val();

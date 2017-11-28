@@ -2,44 +2,122 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
-  <display-name>FundMaster Mss Portal</display-name>
-  <welcome-file-list>
-    <welcome-file>index</welcome-file>
-  </welcome-file-list>
-  <display-name>MssUg</display-name>
+    <display-name>FundMaster Mss Portal</display-name>
+    <welcome-file-list>
+        <welcome-file>index</welcome-file>
+    </welcome-file-list>
+    <display-name>MssUg</display-name>
 
-  <session-config>
-    <cookie-config>
-      <http-only>true</http-only>
-      <!--<secure>true</secure>-->
-    </cookie-config>
-  </session-config>
+    <session-config>
+        <cookie-config>
+            <http-only>true</http-only>
+            <!--<secure>true</secure>-->
+        </cookie-config>
+    </session-config>
 
- <error-page>
-  
-    
-    <!--handling bad request errors-->
-    <error-code>400</error-code>
-    <location>/400.jsp</location>
-    
-    <!--handling unauthorized requests-->
-    <error-code>401</error-code>
-    <location>/401.jsp</location>
-    
-    <!--handling forbidden requests-->
-    <error-code>403</error-code>
-    <location>/403.jsp</location>
-    
-      <!--handling method not found requests-->
-    <error-code>405</error-code>
-    <location>/405.jsp</location>
-    
-    <!--handling unacceptable(Not acceptable) requests-->
-    <error-code>406</error-code>
-    <location>/406.jsp</location>
-    
-    <!--handling 404 errors-->
-    <error-code>404</error-code>
-    <location>/404.jsp</location>
-</error-page>
+    <error-page>
+        <!--handling bad request errors-->
+        <error-code>400</error-code>
+        <location>/400.jsp</location>
+
+    </error-page>
+
+    <error-page>
+        <!--handling unauthorized requests-->
+        <error-code>401</error-code>
+        <location>/401.jsp</location>
+    </error-page>
+
+    <error-page>
+        <!--handling forbidden requests-->
+        <error-code>403</error-code>
+        <location>/403.jsp</location>
+    </error-page>
+
+    <error-page>
+        <!--handling method not found requests-->
+        <error-code>405</error-code>
+        <location>/405.jsp</location>
+    </error-page>
+
+    <error-page>
+
+        <!--handling unacceptable(Not acceptable) requests-->
+        <error-code>406</error-code>
+        <location>/406.jsp</location>
+    </error-page>
+
+    <error-page>
+
+        <!--handling Too many Requests errors-->
+        <error-code>429</error-code>
+        <location>/429.jsp</location>
+    </error-page>
+
+    <error-page>
+
+        <!--Server related errors-->
+        <!--handling internal server errors-->
+        <error-code>500</error-code>
+        <location>/500.jsp</location>
+    </error-page>
+
+    <error-page>
+        <!--handling Not implemented errors-->
+        <error-code>501</error-code>
+        <location>/501.jsp</location>
+    </error-page>
+    <error-page>
+        <!--handling Bad Gateway errors-->
+        <error-code>502</error-code>
+        <location>/502.jsp</location>
+    </error-page>
+
+    <error-page>
+        <!--handling Service Unavailable errors-->
+        <error-code>503</error-code>
+        <location>/503.jsp</location>
+    </error-page>
+    <error-page>
+        <!--handling 404 errors-->
+        <error-code>504</error-code>
+        <location>/504.jsp</location>
+    </error-page>
+
+    <error-page>
+
+        <!--handling 404 errors-->
+        <error-code>505</error-code>
+        <location>/506.jsp</location>
+    </error-page>
+
+    <error-page>
+        <!--handling 404 errors-->
+        <error-code>507</error-code>
+        <location>/507.jsp</location>
+    </error-page>
+
+    <error-page>
+        <!--handling Loop detection errors-->
+        <error-code>508</error-code>
+        <location>/508.jsp</location>
+    </error-page>
+
+    <error-page>
+        <!--handling Not Extended errors-->
+        <error-code>510</error-code>
+        <location>/510.jsp</location>
+    </error-page>
+
+    <error-page>
+        <!--handling network authentication errors-->
+        <error-code>511</error-code>
+        <location>/511.jsp</location>
+
+    </error-page>
+    <error-page>
+        <!--handling 404 errors-->
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
 </web-app>

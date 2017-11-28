@@ -73,7 +73,9 @@ public interface ApiEJB {
     JSONObject searchProfilesJSON(String search, String identifier, String profile, String schemeID, int start, int end);
     XiMember getMemberDetails(String memberID, String schemeId);
     XiMember getMemberDetailsByScheme(String schemeId, String email);
-    XiMember getMemberDetailsBySchemeAndPhone(String schemeId, String phone);
+    XiMember getMemberDetailsBySponsor(String productId, String email);
+     XiMember getMemberDetailsBySchemeAndPhone(String schemeId, String phone);
+     XiMember getMemberDetailsBySponsorAndPhone(String productId, String phone);
     XiPensioner getPensionerDetails(String pensionerId, String schemeId);
     List<XiMember> getMemberListing(String profileID, String profile, String schemeID, int start, int size);
     JSONObject listMembers(String schemeID, String profileID);
