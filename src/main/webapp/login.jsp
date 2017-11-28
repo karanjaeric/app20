@@ -14,9 +14,9 @@
 						<img class="profile-img-card" src="static/images/avatar_2x.png">
 
 						<div class="form-group">
-							<label class="control-label">Username</label> <input
+							<label class="control-label">Phone Number</label> <input
 								class="form-control" type="text"
-								placeholder="Username" name="username" id="username">
+								placeholder="Phone Number" name="username" id="username">
 						</div>
 
 						<div class="form-group">

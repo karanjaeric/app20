@@ -72,8 +72,9 @@ public class ResendCodeController extends BaseServlet implements Serializable {
 
 
                     apiEJB.sendSMS(phoneNumber, "Dear " + usr.getUserProfile() + ", " +
-                            "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
-                            "Your Verification Code is " + activationCode + " to complete the activation process enter the provided code");
+                            "Your account has been created by Enterprise Trustees  Member Self Service Portal. " +
+                            "Your Verification Code is " + activationCode + ". To complete the activation process enter the provided code." +
+                            " Our call center no is 0302634704");
 
                     this.respond(response, true, "<strong>Code Resend Successful</strong><br /> " +
 
