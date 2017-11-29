@@ -1021,7 +1021,7 @@ public Double getMemberTotalUnits(String memberId) {
         }
 
 
-        ClientRequest request=new ClientRequest("https://api.hubtel.com/v1/messages/send?From=XI&To="+recipient+"&Content="
+        ClientRequest request=new ClientRequest("https://api.hubtel.com/v1/messages/send?From=ENTTRUSTEES&To="+recipient+"&Content="
                 +message+"&ClientId=rlmjklyk&ClientSecret=egzjdxiw&RegisteredDelivery=true");
 
         try {
@@ -1063,7 +1063,7 @@ public Double getMemberTotalUnits(String memberId) {
             recipient =clientNumber;
         }
 
-        ClientRequest request=new ClientRequest("https://api.hubtel.com/v1/messages/send?From=XI&To="+recipient+"&Content="
+        ClientRequest request=new ClientRequest("https://api.hubtel.com/v1/messages/send?From=ENTTRUSTEES&To="+recipient+"&Content="
                 +message+"&ClientId=rlmjklyk&ClientSecret=egzjdxiw&RegisteredDelivery=true");
 
         try {

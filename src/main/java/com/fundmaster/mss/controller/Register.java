@@ -328,12 +328,25 @@ public class Register extends BaseServlet implements Serializable {
                             }
                              if (proceedSms) {
 
+                                 final String code = "233";
+                                 final String zero = "0";
+                                 final String plus = "+";
+                                 String clientNumber=phone;
+
+                                 if(clientNumber.startsWith(plus)){
+
+                                     clientNumber = zero + clientNumber.substring(4);
+                                     jLogger.i("The Client Login Number is " + loginField);
+
+                                 }
+
 
                                 String smsrecipient = phone;
 
-                                apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", " +
-                                        "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
-                                        "Your Verification Code is " + activationCode + " .To complete the activation process enter the provided code and log in using your username as "+ phone+" and the Password that you Provided during Registration Process");
+                                 apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", " +
+                                         "Your account has been created by Enterprise Trustees  Member Self Service Portal. " +
+                                         "Your Verification Code is " + activationCode + " .To complete the activation process, enter the provided code and log in using your cell phone as "+ loginField+" and the Password that you provided during Registration Process." +
+                                         "In Case of any challenges, please contact our Call Center 0302634704");
 
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> " +

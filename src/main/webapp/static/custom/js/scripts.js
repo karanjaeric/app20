@@ -983,21 +983,21 @@ $('#form-password-reset').bootstrapValidator({
                 success: function(json) {
                     stop_wait();
                     bootbox.alert(json.message);
+                    if (json.success){
                     var status = json.success;
-
                     if (status) {
                         $("form#form-sms-code")[0]
                             .reset();
-                        setTimeout(
-                            function () {
-                                window.location.href = $(
+                    setTimeout(
+                        function () {
+                            window.location.href = $(
                                     '#base_url')
-                                        .val()
-                                    + 'sign-in';
-                            }, 5000);
-
+                                    .val()
+                                + 'sign-in';
+                        }, 5000);
 
                     }
+                }
                 }
             });
 

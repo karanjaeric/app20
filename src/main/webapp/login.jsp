@@ -13,7 +13,8 @@
 						<legend class="text-center">Please Login To Access Your Account</legend>
 						<img class="profile-img-card" src="static/images/avatar_2x.png">
 						<div class="form-group">
-							<label class="control-label">Username</label>
+
+ 							<label class="control-label">Username</label>
 							<c:forEach var="field" items="${loginFields}">
 								<c:choose>
 								<c:when test="${field.profile == 'MEMBER' }">
