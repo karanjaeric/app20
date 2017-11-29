@@ -1050,6 +1050,8 @@ public Double getMemberTotalUnits(String memberId) {
     @Override
     public void sendSMS(String recipient,   String message ) {
 
+        jLogger.i("Trying to send SMS");
+
         final String code = "233";
         final String zero = "0";
         final String plus = "+";
@@ -1058,7 +1060,7 @@ public Double getMemberTotalUnits(String memberId) {
         if(clientNumber.startsWith(zero)){
             recipient = code + clientNumber.substring(1);
         }else if(clientNumber.startsWith(plus)){
-            recipient =clientNumber.substring(1);
+            recipient =clientNumber;
         }
 
         ClientRequest request=new ClientRequest("https://api.hubtel.com/v1/messages/send?From=XI&To="+recipient+"&Content="

@@ -166,29 +166,28 @@ public class Register extends BaseServlet implements Serializable {
                 jLogger.i(" >>>>>>>>>>>> The idnumber is: " + this.get(request, "idNumber") + " <<<<<<<<<<<<<<<");
 
                 String idNumber = this.get(request, "idNumber");
+                jLogger.i("The idnumber is "+idNumber);
                 if (helper.isValidPhone(idNumber)){
 
-                    String code = "+233";
                     String zero = "0";
                     String plus = "+";
                     String memberPhone=idNumber;
                     if(memberPhone.startsWith(zero)){
-                        idNumber = code + memberPhone.substring(1);
+                        idNumber =memberPhone.substring(1);
                     }else if(idNumber.startsWith(plus)){
                         idNumber =memberPhone;
                     }else{
 
-                        idNumber= null;
+                        idNumber = this.get(request, "idNumber");
+
                     }
 
-
-                }else
-                    idNumber = this.get(request, "idNumber");
+                }
 
 
-                XiMember member = apiEJB.memberExists(this.get(request, "category"), idNumber);
+                 XiMember member = apiEJB.memberExists(this.get(request, "category"), idNumber);
 
-                String loginField =this.get(request, "idNumber");
+                String loginField =idNumber;
 
                 if (helper.isEmailAddress(loginField)) {
 
@@ -284,7 +283,7 @@ public class Register extends BaseServlet implements Serializable {
                             User u = new User();
                             u.setProfileID(member.getId());
                             u.setUserProfile(member.getProfile());
-                            u.setUsername(this.get(request, "idNumber"));
+                            u.setUsername(idNumber);
                             u.setPassword(helper.hash(this.get(request, "password")));
                             Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
                             u.setPassword_expiry(password_expiry);

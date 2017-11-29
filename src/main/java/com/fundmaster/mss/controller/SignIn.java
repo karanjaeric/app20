@@ -17,7 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 @WebServlet(name = "SignIn", urlPatterns = {"/sign-in"})
 public class SignIn extends BaseServlet implements Serializable {
 
@@ -116,7 +120,9 @@ public class SignIn extends BaseServlet implements Serializable {
 					Setting settings = settingBeanI.find();
 					request.setAttribute("settings", settings);
 					List<ProfileLoginField> plf = profileLoginFieldBeanI.find();
-					request.setAttribute("loginFields", plf);
+					Set set = new HashSet(plf);
+					request.setAttribute("loginFields", set);
+
 					Menu menu = menuBeanI.find();
 					request.setAttribute("menu", menu);
 					Theme theme = themeBeanI.find();
@@ -166,28 +172,35 @@ public class SignIn extends BaseServlet implements Serializable {
 		}else {
 
 			HttpSession session = request.getSession();
+			String code=this.get(request,"countryCode");
 
-			User u = userBeanI.findUser(this.get(request, "username"), this.get(request, "password"));
+
+			String userId = this.get(request, "username");
+//			userId=code+userId;
+			jLogger.i("USER ID" +userId);
+
+
+			User u = userBeanI.findUser(userId, this.get(request, "password"));
+			jLogger.i("FOUND USER");
 
 
 			if (u != null) {
 
 				String userName =  u.getUsername();
-				jLogger.i("USERNAME" + userName);
 
-				String code = "+233";
+				jLogger.i("=============USERNAME" + userName);
 				String zero = "0";
 				String plus = "+";
 				String memberPhone=userName;
 				if(memberPhone.startsWith(zero)){
-					userName = code + memberPhone.substring(1);
+					userName = memberPhone.substring(1);
 					jLogger.i("Appending");
 				}else if(userName.startsWith(plus)){
 					userName =memberPhone;
 				}else{
 
 
-					userName= null;
+					userName= u.getUsername();
 				}
 
 				if (u.isStatus()) {
