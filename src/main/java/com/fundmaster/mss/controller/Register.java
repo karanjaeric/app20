@@ -173,17 +173,16 @@ public class Register extends BaseServlet implements Serializable {
                     String plus = "+";
                     String memberPhone=idNumber;
                     if(memberPhone.startsWith(zero)){
-                        idNumber =memberPhone.substring(1);
+//                        idNumber =memberPhone.substring(1);
                     }else if(idNumber.startsWith(plus)){
                         idNumber =memberPhone;
                     }else{
 
-                        idNumber = this.get(request, "idNumber");
+                        idNumber = memberPhone;
 
                     }
 
                 }
-
 
                  XiMember member = apiEJB.memberExists(this.get(request, "category"), idNumber);
 
@@ -308,7 +307,9 @@ public class Register extends BaseServlet implements Serializable {
                                  phone = m.getPhoneNumber();
                                 schemeId = member.getSchemeId();
                                  proceedSms = helper.isValidPhone(phone);
-                            } else {
+                            }
+
+                            else {
                                 member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
                                 if (member != null) {
@@ -328,7 +329,6 @@ public class Register extends BaseServlet implements Serializable {
                             }
                              if (proceedSms) {
 
-                                 final String code = "233";
                                  final String zero = "0";
                                  final String plus = "+";
                                  String clientNumber=phone;
@@ -339,7 +339,6 @@ public class Register extends BaseServlet implements Serializable {
                                      jLogger.i("The Client Login Number is " + loginField);
 
                                  }
-
 
                                 String smsrecipient = phone;
 

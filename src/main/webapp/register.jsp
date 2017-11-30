@@ -77,8 +77,8 @@
 																		<label for="adminIdNumber" class="control-label">${ field.ordinal }:</label>
 																		<c:if test="${ field.ordinal== 'PHONE' }">
 																			<div class="form-inline">
-																				<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
-																				<input type="text" name="adminIdNumber" class="form-control input-sm"
+																				<select class="form-control pull-left admin-country-code" name="country-code" style="width: 25%;"></select>
+																				<input type="text" name="adminIdNumber" class="form-control"
 																					   id="adminIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
 																			</div>
 																		</c:if>
@@ -262,7 +262,7 @@
 																<label for="sponsorIdNumber" class="control-label">${ field.ordinal }:</label>
 																<c:if test="${ field.ordinal== 'PHONE' }">
 																	<div class="form-inline">
-																		<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																		<select class="form-control pull-left sponsor-country-code" name="country-code" style="width: 25%;"></select>
 																		<input type="text" name="sponsorIdNumber" class="form-control"
 																			   id="sponsorIdNumber" placeholder="${ field.ordinal}"  style="width: 75%;">
 																	</div>

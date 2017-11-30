@@ -20,7 +20,7 @@
 								<c:when test="${field.profile == 'MEMBER' }">
 								<c:if test="${ field.ordinal== 'PHONE' }">
 						   <div class="form-inline">
-							   <select class="form-control pull-left"id="country-code" name="country-code" style="width: 25%;"></select>
+							   <select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
 							   <input type="text" name="username" class="form-control pull-right"
 									  id="username" placeholder="${ field.ordinal}" style="width: 75%;">
 						   </div>

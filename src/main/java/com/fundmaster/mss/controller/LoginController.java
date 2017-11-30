@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
@@ -85,7 +86,10 @@ public class LoginController extends BaseServlet implements Serializable {
 		request.setAttribute("settings", settings);
 		Help help = helpBeanI.findHelp(Constants.PAGE_LOGIN);
 		request.setAttribute("help", help);
-		
+		List<ProfileLoginField> plf = profileLoginFieldBeanI.find();
+		jLogger.i("The profile size is "+plf.size());
+		request.setAttribute("loginFields", plf);
+
 		if(session != null)
 		{ 
 			try {
@@ -150,7 +154,6 @@ public class LoginController extends BaseServlet implements Serializable {
 							session.setAttribute(Constants.PROFILE_ID, xiMember.getId());
 							session.setAttribute(Constants.LOGIN, true);
 							session.setAttribute(Constants.U_PROFILE, u.getUserProfile());
-							
 							resetAttempt(this.get(request, "username"));
 							logActivity(Constants.AL, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
 							

@@ -33,7 +33,7 @@ var uppercase = $('#uppercase').val();
 var numbers = $('#numbers').val();
 
 $(document).ready(function() {
-$(".country-code").html(
+$(".country-code,.admin-country-code,.sponsor-country-code").append(
     "        <option data-countryCode='GB' value='+44' Selected>UK (+44)</option>\n" +
     "        <option data-countryCode='US' value='+1'>USA (+1)</option>\n" +
     "        <option data-countryCode='DZ' value='+213'>Algeria (+213)</option>\n" +
@@ -443,6 +443,9 @@ $(".country-code").html(
 													type : 'post',
 													data : {
 														username : $(
+                                                            '.admin-country-code')
+                                                            .val()+
+														        $(
 																'#username')
 																.val(),
 														password : $(
@@ -2199,6 +2202,9 @@ $(".country-code").html(
 														type : 'EXISTING',
 														category : 'SPONSOR',
 														idNumber : $(
+                                                            '.sponsor-country-code')
+                                                            .val()+
+															$(
 																'#sponsorIdNumber')
 																.val(),
 														password : $(
@@ -2426,7 +2432,9 @@ $(".country-code").html(
 													data : {
 														type : 'EXISTING',
 														category : 'ADMINISTRATOR',
-														idNumber : $(
+														idNumber :
+                                                        $('.admin-country-code').val()+
+															$(
 																'#adminIdNumber')
 																.val(),
 														password : $(

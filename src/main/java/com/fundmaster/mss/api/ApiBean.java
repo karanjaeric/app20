@@ -1051,14 +1051,12 @@ public Double getMemberTotalUnits(String memberId) {
     public void sendSMS(String recipient,   String message ) {
 
         jLogger.i("Trying to send SMS");
-
-        final String code = "233";
         final String zero = "0";
         final String plus = "+";
         String clientNumber=recipient;
 
         if(clientNumber.startsWith(zero)){
-            recipient = code + clientNumber.substring(1);
+//            recipient = code + clientNumber.substring(1);
         }else if(clientNumber.startsWith(plus)){
             recipient =clientNumber;
         }
@@ -1776,11 +1774,11 @@ public Double getMemberTotalUnits(String memberId) {
             } else {
                 xiMember.setEmailAddress(response.getString(Fields.EMAIL));
             }
-//            if (response.getString(Fields.CELL_PHONE) == null || response.getString(Fields.CELL_PHONE).isEmpty()) {
-//                xiMember.setPhoneNumber("");
-//            } else {
-//                xiMember.setPhoneNumber(response.getString(Fields.CELL_PHONE));
-//            }
+            if (response.getString(Fields.CELL_PHONE) == null || response.getString(Fields.CELL_PHONE).isEmpty()) {
+                xiMember.setPhoneNumber("");
+            } else {
+                xiMember.setPhoneNumber(response.getString(Fields.CELL_PHONE));
+            }
 
             try {
                 
