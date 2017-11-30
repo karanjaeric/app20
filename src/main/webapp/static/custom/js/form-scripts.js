@@ -2289,11 +2289,6 @@ if(typeof adminCountryCode=="undefined")
 					        }
 					    });
 					}
-    var adminRegCountryCode=$('.admin-reg-country-code').val();
-    if(typeof adminRegCountryCode=="undefined")
-    {
-        adminRegCountryCode='';
-    }
 					$('#form-admin')
 							.bootstrapValidator(
 									{
@@ -2442,6 +2437,11 @@ if(typeof adminCountryCode=="undefined")
 									function(e) {
 										start_wait();
 										// Prevent form submission
+                                        var adminRegCountryCode=$('.admin-reg-country-code').val();
+                                        if(typeof adminRegCountryCode=="undefined")
+                                        {
+                                            adminRegCountryCode='';
+                                        }
 										e.preventDefault();
 										// Get the form instance
 										$
