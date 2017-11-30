@@ -33,7 +33,7 @@ var uppercase = $('#uppercase').val();
 var numbers = $('#numbers').val();
 
 $(document).ready(function() {
-$(".country-code,.admin-country-code,.sponsor-country-code").append(
+$(".member-country-code,.admin-country-code,.sponsor-country-code").append(
     "        <option data-countryCode='GB' value='+44' Selected>UK (+44)</option>\n" +
     "        <option data-countryCode='US' value='+1'>USA (+1)</option>\n" +
     "        <option data-countryCode='DZ' value='+213'>Algeria (+213)</option>\n" +
@@ -397,7 +397,11 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 										});
 
 							});
-
+					var adminCountryCode=$('.admin-country-code').val();
+if(typeof adminCountryCode=="undefined")
+{
+    adminCountryCode='';
+}
 					$('#form-login')
 							.bootstrapValidator(
 									{
@@ -442,9 +446,7 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 															+ 'login',
 													type : 'post',
 													data : {
-														username : $(
-                                                            '.admin-country-code')
-                                                            .val()+
+														username : adminCountryCode +
 														        $(
 																'#username')
 																.val(),
@@ -508,6 +510,14 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 									'success.form.bv',
 									function(e) {
 										start_wait();
+                                        var memberCountryCode=$('.member-country-code').val();
+                                        if(memberCountryCode==null)
+                                        {
+                                            memberCountryCode='';
+                                        }
+                                        else {
+                                            memberCountryCode=$('.member-country-code').val();
+                                        }
 										// Prevent form submission
 										e.preventDefault();
 										// Get the form instance
@@ -521,13 +531,8 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 															+ 'sign-in',
 													type : 'post',
 													data : {
-                                                        // countryCode : $(
-                                                        // 	 '#country-code')
-															// .val(),
-														username : $(
-																'.country-code')
-																.val()+
-														        $('#username').val(),
+														username : memberCountryCode+
+														$('#username').val(),
 														password : $(
 																'#password')
 																.val()
@@ -2191,6 +2196,14 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 									function(e) {
 										start_wait();
 										// Prevent form submission
+                                        var sponsorCountryCode=$('.sponsor-country-code').val();
+                                        if(sponsorCountryCode==null)
+                                        {
+                                            sponsorCountryCode='';
+                                        }
+                                        else {
+                                            sponsorCountryCode=$('.sponsor-country-code').val();
+                                        }
 										e.preventDefault();
 										// Get the form instance
 										$
@@ -2201,9 +2214,7 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 													data : {
 														type : 'EXISTING',
 														category : 'SPONSOR',
-														idNumber : $(
-                                                            '.sponsor-country-code')
-                                                            .val()+
+														idNumber : sponsorCountryCode+
 															$(
 																'#sponsorIdNumber')
 																.val(),
@@ -2274,6 +2285,11 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 					        }
 					    });
 					}
+    var adminRegCountryCode=$('.admin-reg-country-code').val();
+    if(typeof adminRegCountryCode=="undefined")
+    {
+        adminRegCountryCode='';
+    }
 					$('#form-admin')
 							.bootstrapValidator(
 									{
@@ -2433,7 +2449,7 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 														type : 'EXISTING',
 														category : 'ADMINISTRATOR',
 														idNumber :
-                                                        $('.admin-country-code').val()+
+                                                        adminRegCountryCode+
 															$(
 																'#adminIdNumber')
 																.val(),
@@ -2490,7 +2506,6 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 													}
 												});
 									});
-
 					$('#form-member')
 							.bootstrapValidator(
 									{
@@ -2639,6 +2654,14 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 									function(e) {
 										start_wait();
 										// Prevent form submission
+                                        var memberCountryCode=$('.member-country-code').val();
+                                        if(memberCountryCode==null)
+                                        {
+                                            memberCountryCode='';
+                                        }
+                                        else {
+                                            memberCountryCode=$('.member-country-code').val();
+                                        }
 										e.preventDefault();
 										// Get the form instance
 										$
@@ -2651,9 +2674,7 @@ $(".country-code,.admin-country-code,.sponsor-country-code").append(
 														category : 'MEMBER',
 														// countryCode : $(
 														// 	'#country-code').val(),
-														idNumber : $(
-                                                            '.country-code')
-                                                            .val()+
+														idNumber : memberCountryCode +
 														         $(
 																'#eMIdNumber')
 																.val(),

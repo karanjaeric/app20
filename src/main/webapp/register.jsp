@@ -138,7 +138,7 @@
 																	<label for="eMIdNumber" class="control-label">${ field.ordinal }:</label>
 																		<c:if test="${ field.ordinal== 'PHONE' }">
 																			<div class="form-inline">
-																					<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																					<select class="form-control pull-left member-country-code" name="country-code" style="width: 25%;"></select>
 																					<input type="text" name="eMIdNumber" class="form-control pull-right"
 																						   id="eMIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
 																			</div>
@@ -200,7 +200,7 @@
 																	  <label for="pensionerIdNumber" class="control-label">${ field.ordinal }:</label>
 																	  <c:if test="${ field.ordinal== 'PHONE' }">
 																	  <div class="form-inline">
-																		  <select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																		  <select class="form-control pull-left pensioner-country-code" name="country-code" style="width: 25%;"></select>
 																		  <input type="text" name="pensionerIdNumber" class="form-control"
 																				 id="pensionerIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
 																	  </div>

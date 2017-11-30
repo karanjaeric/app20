@@ -125,7 +125,8 @@ public class MemberController extends BaseServlet implements Serializable {
 					try {
 						if (schemeId != null) {
 							if (helper.isEmailAddress(user)) {
-								m = apiEJB.getMemberDetailsByScheme(schemeId, user);
+								m = apiEJB.getMemberDetails(this.getSessKey(request,Constants.PROFILE_ID), schemeId);
+//								m = apiEJB.getMemberDetailsByScheme(schemeId, user);
 							}else if (helper.isValidPhone(user)){
 
 								m=apiEJB.getMemberDetailsBySchemeAndPhone(schemeId,user);
