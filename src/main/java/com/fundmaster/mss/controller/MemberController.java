@@ -110,8 +110,10 @@ public class MemberController extends BaseServlet implements Serializable {
 
 					try {
  						schemeId =this.getSessKey(request, Constants.SCHEME_ID);
+ 						productId = this.getSessKey(request, Constants.SPONSOR_ID);
 
 						jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
+						jLogger.i("The scheme passed::::::::::::::::: " + productId);
 
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -126,6 +128,8 @@ public class MemberController extends BaseServlet implements Serializable {
 						if (schemeId != null) {
 							if (helper.isEmailAddress(user)) {
 								m = apiEJB.getMemberDetailsByScheme(schemeId, user);
+//								m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
+
 							}else if (helper.isValidPhone(user)){
 
 								m=apiEJB.getMemberDetailsBySchemeAndPhone(schemeId,user);
@@ -138,6 +142,23 @@ public class MemberController extends BaseServlet implements Serializable {
 						ex.printStackTrace();
 					}
 
+					try {
+						if (productId != null) {
+							if (helper.isEmailAddress(user)) {
+								m = apiEJB.getMemberDetailsBySponsor(productId, user);
+//								m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
+
+							}else if (helper.isValidPhone(user)){
+
+								m=apiEJB.getMemberDetailsBySponsorAndPhone(productId,user);
+							}
+						} else {
+
+							m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 
 					request.setAttribute("member_id", m.getId());
 					session.setAttribute(Constants.PROFILE_ID,m.getId());
@@ -162,9 +183,6 @@ public class MemberController extends BaseServlet implements Serializable {
 					List<Sponsor> sponsors = apiEJB.getMemberSchemeProducts(memberEmail,this.getSessKey(request, Constants.SCHEME_ID));
 
 					request.getSession().setAttribute("sponsors", sponsors);
-
-
-
 
 
 					if(schemes != null && schemes.size() > 0) {
@@ -277,62 +295,79 @@ public class MemberController extends BaseServlet implements Serializable {
 							}
 					}
 
+					if(sponsors != null && sponsors.size() > 0) {
+						jLogger.i("Sponsor is not null. email/phone: "+ this.getSessKey(request, Constants.USER));
+						jLogger.i("SponsorId " + productId);
+
+						if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
+						{
+							try {
+								if (productId != null) {
+
+									if (helper.isEmailAddress(user)) {
+										jLogger.i("I FOUND AN EMAIL");
+
+										m = apiEJB.getMemberDetailsBySponsor(productId, user);
+
+
+
+									}else if (helper.isValidPhone(user)){
+										jLogger.i("I FOUND A PHONE");
+
+										m=apiEJB.getMemberDetailsBySponsorAndPhone(productId,user);
+									}
+								} else {
+									m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),schemes.get(0).getId().toString());
+								}
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
+						}
+						else
+						{
+							try {
+								if (productId != null) {
+									if (helper.isEmailAddress(user)) {
+										m = apiEJB.getMemberDetailsBySponsor(productId, user);
+										jLogger.i("I FOUND AN EMAIL 2");
+									}else if (helper.isValidPhone(user)){
+
+										jLogger.i("I FOUND PHONE 2");
+
+										m=apiEJB.getMemberDetailsBySponsorAndPhone(productId,user);
+									}								} else {
+									m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.SCHEME_ID));
+								}
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
+						}
+					}
+					if(m==null)
+					{
+						m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
+					}
+					request.setAttribute("member", m);
+					session.setAttribute(Constants.PROFILE_ID,m.getId());
+
 
 					if(sponsors != null && sponsors.size() == 1)
-
 					{
-						 		productId=sponsors.get(0).getId().toString();
-						  	    request.setAttribute("companyName", sponsors.get(0).getCompanyName().toString());
-								session.setAttribute(Constants.SPONSOR_ID, sponsors.get(0).getId().toString());
-
-						        request.setAttribute("sponsor_id", sponsors.get(0).getId().toString());
-
+						jLogger.i("Executing this script: 1" );
+						jLogger.i("Member is " + m.getId());
 						try {
 
 							if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
 							{
-
-								jLogger.i(" 1 :SPONSOR IS" + sponsors.get(0).getId().toString() );
-
-
-
+								session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
+								session.setAttribute(Constants.SPONSOR_ID, sponsors.get(0).getId().toString());
+								request.setAttribute("sponsor_id", sponsors.get(0).getId().toString());
 							}
 							else
 							{
 								request.setAttribute("sponsor_id", this.getSessKey(request, Constants.SPONSOR_ID));
+								session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
 							}
-						} catch(NullPointerException npe)
-						{
-							jLogger.e("NullPointerException was detected: " + npe.getMessage());
-							session.setAttribute(Constants.SPONSOR_ID, String.valueOf(sponsors.get(0).getId()));
-						}
-					}else if (sponsors != null  && sponsors.size() > 1){
-
-
-								try {
-
-									if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
-
-
-									{
-										for (Sponsor sponsor : sponsors) {
-
-										request.setAttribute("sponsor_id", sponsor.getId().toString());
-										request.setAttribute("companyName", sponsor.getCompanyName().toString());
-										session.setAttribute(Constants.SPONSOR_ID, sponsor.getId().toString());
-										request.setAttribute("sponsor_id", sponsor.getId().toString());
-										productId =sponsor.getId().toString();
-
-									}
-									}
-									else
-									{
-										request.setAttribute("sponsor_id", this.getSessKey(request, Constants.SPONSOR_ID));
-									}
-
-
-
-
 						} catch(NullPointerException npe)
 						{
 							jLogger.e("NullPointerException was detected: " + npe.getMessage());
@@ -342,57 +377,34 @@ public class MemberController extends BaseServlet implements Serializable {
 
 					else if(this.getSessKey(request, Constants.SPONSOR_ID) != null)
 					{
-
-						jLogger.i("Executing this script: 2 :SPONSOR" );
+						jLogger.i("Executing this script: 2" );
 						if(sponsors != null)
 							for(Sponsor sponsor : sponsors)
 							{
 								if(sponsor.getId() == helper.toLong(this.getSessKey(request, Constants.SPONSOR_ID)))
 								{
 									try {
-											request.setAttribute("companyName", sponsor.getCompanyName().toString());
-										    session.setAttribute(Constants.SPONSOR_ID, sponsor.getId().toString());
+
+										if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
+										{
+										//	session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
+											session.setAttribute(Constants.SPONSOR_ID, sponsor.getId().toString());
 											request.setAttribute("sponsor_id", sponsor.getId().toString());
-
-
+										}
+										else
+										{
+											request.setAttribute("sponsor_id", this.getSessKey(request, Constants.SPONSOR_ID));
+											//session.setAttribute(Constants.SCHEME_TYPE, sponsor.getPlanType());
+										}
 									} catch(NullPointerException npe)
 									{
 										jLogger.e("NullPointerException was detected: " + npe.getMessage());
 										session.setAttribute(Constants.SPONSOR_ID, String.valueOf(sponsor.getId()));
 									}
 								}
-									else
-								{
-								}
 							}
 					}
 
-					try {
-						//productId= productId;
-
-
-						jLogger.i("The Product passed::::::::::::::::: " + productId);
-
-
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-
-					try {
-						if (productId != null) {
-							if (helper.isEmailAddress(user)) {
-								m = apiEJB.getMemberDetailsBySponsor(productId, user);
-							}else if (helper.isValidPhone(user)){
-
-								m=apiEJB.getMemberDetailsBySponsorAndPhone(productId,user);
-							}
-						} else {
-
-							m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
-						}
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
 
 
 					request.setAttribute("member_id", m.getId());

@@ -92,6 +92,9 @@ public class SponsorBenProjectionController  extends BaseServlet implements Seri
         response.addHeader("X-Content-Type-Options", "nosniff");
 
         String presentValue = this.get(request, "presentValue");
+        String userName = this.getSessKey(request, Constants.USER);
+        jLogger.i("Username is ===============> " + userName);
+
         if(presentValue.equalsIgnoreCase("")){
             presentValue ="0";
         }
@@ -99,7 +102,7 @@ public class SponsorBenProjectionController  extends BaseServlet implements Seri
 
         this.respond(response, true, "", apiEJB.calculateBenefitProjection(this.get(request, "interestRate"),
                 this.get(request, "years"), this.get(request, "paymentFrequency"), this.get(request, "paymentAmount"),
-                presentValue));
+                presentValue,userName));
 
     }
 

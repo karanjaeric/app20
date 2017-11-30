@@ -110,15 +110,23 @@ public class BenefitProjectionController  extends BaseServlet implements Seriali
         response.addHeader("X-Frame-Options", "DENY");
         response.addHeader("X-Content-Type-Options", "nosniff");
 
-        String presentValue = this.get(request, "presentValue");
-        if(presentValue.equalsIgnoreCase("")){
-            presentValue ="0";
+        String PV = this.get(request, "presentValue");
+        String user = this.getSessKey(request, Constants.USER);
+        jLogger.i("Username is ===============> " + user);
+
+        if(PV.equalsIgnoreCase("")){
+            PV ="0";
         }
 
+            this.respond(response, true, "", apiEJB.calculateBenefitProjection(this.get(request, "interestRate"),
+                    this.get(request, "years"), this.get(request, "paymentFrequency"), this.get(request, "paymentAmount"),
+                    PV, user));
 
-        this.respond(response, true, "", apiEJB.calculateBenefitProjection(this.get(request, "interestRate"),
-                this.get(request, "years"), this.get(request, "paymentFrequency"), this.get(request, "paymentAmount"),
-                presentValue));
+
+
+
+
+
 
     }
 

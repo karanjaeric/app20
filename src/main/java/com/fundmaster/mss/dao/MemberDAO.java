@@ -79,4 +79,13 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
 
         return entities;
     }
+
+    public Member findByPhoneNumber(String phoneNumber) {
+
+
+            // TODO Auto-generated method stub
+            return  (Member) em.createQuery("SELECT u FROM Member u WHERE u.phoneNumber=:phoneNumber").setParameter("phoneNumber", phoneNumber).getSingleResult();
+
+
+    }
 }

@@ -23,7 +23,7 @@ import java.util.UUID;
 public class PasswordResetController extends BaseServlet implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -6085562604717440895L;
 
@@ -68,14 +68,15 @@ public class PasswordResetController extends BaseServlet implements Serializable
 	PasswordPolicyBeanI passwordPolicyBeanI;
 	@EJB
 	ApiEJB apiEJB;
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+			throws ServletException, IOException {
 
 		/* configuring the http headers */
 		response.addHeader("X-XSS-Protection", "1; mode=block");
 		response.addHeader("X-Frame-Options", "DENY");
 		response.addHeader("X-Content-Type-Options", "nosniff");
-		
+
 		Company company = companyBeanI.find();
 		request.setAttribute("company", company);
 		Setting settings = settingBeanI.find();
@@ -91,113 +92,147 @@ public class PasswordResetController extends BaseServlet implements Serializable
 	}
 
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+						  HttpServletResponse response) throws ServletException, IOException {
 
 		/* configuring the http headers */
 		response.addHeader("X-XSS-Protection", "1; mode=block");
 		response.addHeader("X-Frame-Options", "DENY");
 		response.addHeader("X-Content-Type-Options", "nosniff");
 
-		if(this.get(request, "ACTION").equals("RESET_PASSWORD"))
-		{
+		if (this.get(request, "ACTION").equals("RESET_PASSWORD")) {
 			PasswordPolicy policy = passwordPolicyBeanI.find();
 			String securityCode = this.get(request, "securityCode");
 			User u = userBeanI.findBySecurityCode(securityCode);
-			if(u != null) {
-				if(u.getSecurityCode().equalsIgnoreCase(securityCode))
-				{
-					if(!(usedPasswordBeanI.isUsed(this.get(request, "newPassword")) && policy.isPassword_reuse()))
-					{
-							Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
-							u.setPassword_expiry(password_expiry);
-							u.setPassword(helper.hash(this.get(request, "newPassword")));
-							u.setSecurityCode(null);
-							if(userBeanI.edit(u) != null)
-								this.respond(response, true, "Your password has been reset successfully", null);
-							else
-								this.respond(response, false, "Sorry, your password could not be reset", null);
-					}
-					else
-					{
+			if (u != null) {
+				if (u.getSecurityCode().equalsIgnoreCase(securityCode)) {
+					if (!(usedPasswordBeanI.isUsed(this.get(request, "newPassword")) && policy.isPassword_reuse())) {
+						Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
+						u.setPassword_expiry(password_expiry);
+						u.setPassword(helper.hash(this.get(request, "newPassword")));
+						u.setSecurityCode(null);
+						if (userBeanI.edit(u) != null)
+							this.respond(response, true, "Your password has been reset successfully", null);
+						else
+							this.respond(response, false, "Sorry, your password could not be reset", null);
+					} else {
 						this.respond(response, false, "Sorry, the new password entered has already been used once. You cannot re-use the password.", null);
 
 					}
-					
-				}
-				else
-				{
+
+				} else {
 					this.respond(response, false, "Sorry, your security code is invalid. Please enter a valid security code.", null);
 
 				}
-			}
-			else
-			{
+			} else {
 				this.respond(response, false, "The security code you entered is wrong. Please try again.", null);
 
 			}
-		}
-		else if(this.get(request, "ACTION").equals("REQUEST_RESET"))
-		{
+		} else if (this.get(request, "ACTION").equals("REQUEST_RESET")) {
 			Setting settings = settingBeanI.find();
 			Constants.BASE_URL = request.getContextPath() + "password-reset";
 
-			String userEmail = this.get(request, "email");
-			User usr = userBeanI.findByUsername(userEmail);
+			String username = this.get(request, "username");
+			User usr = userBeanI.findByUsername(username);
 			String userProfile = usr.getUserProfile();
 
-			if(usr != null)
-			{
-				String securityCode = UUID.randomUUID().toString();
-				usr.setSecurityCode(securityCode);
-				Company company = companyBeanI.find();
-				Emails emails = emailsBeanI.find();
+			if (helper.isEmailAddress(username)) {
 
-				String sender = emails.getDefaultEmail();
-				XiMember m = null;
+				if (usr != null) {
+					String securityCode = UUID.randomUUID().toString();
+					usr.setSecurityCode(securityCode);
+					Company company = companyBeanI.find();
+					Emails emails = emailsBeanI.find();
 
-				if (usr.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
-					 m = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
-				}
-				else {
-					 m = apiEJB.memberExists(userProfile, userEmail);
+					String sender = emails.getDefaultEmail();
+					XiMember m = null;
 
-				}
+					if (usr.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+						m = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
+					} else {
+						m = apiEJB.memberExists(userProfile, username);
 
-				boolean status = false;
-				List<String> recipients = new ArrayList<>();
+					}
 
-				try {
-					recipients.add(m.getEmailAddress());
-					status = apiEJB.sendEmail(recipients,sender, null, "Password Reset Instructions", "Dear " + usr.getUserProfile() + ", " +
+					boolean status = false;
+					List<String> recipients = new ArrayList<>();
 
-							"You recently requested to change your password. " +
-							"Your security code is: " + securityCode +
-							" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);
-					jLogger.i("Your Status is ====== " + status);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+					try {
+						recipients.add(m.getEmailAddress());
+						status = apiEJB.sendEmail(recipients, sender, null, "Password Reset Instructions", "Dear " + usr.getUserProfile() + ", " +
+
+								"You recently requested to change your password. " +
+								"Your security code is: " + securityCode +
+								" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);
+						jLogger.i("Your Status is ====== " + status);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 
 
-				if(status)
-				{
-					if(userBeanI.edit(usr) != null)
-						this.respond(response, true, "The password reset instructions have been sent to your email address", null);
-					else
+					if (status) {
+						if (userBeanI.edit(usr) != null)
+							this.respond(response, true, "The password reset instructions have been sent to your email address", null);
+						else
+							this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
+					} else {
 						this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
-				}
-				else
-				{
-					this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
 
+					}
 				}
-			}
-			else
-			{
+			} else if (helper.isValidPhone(username)) {
+
+				if (usr != null) {
+					String securityCode = UUID.randomUUID().toString();
+					usr.setSecurityCode(securityCode);
+					Company company = companyBeanI.find();
+					String recipient = null;
+					;
+
+					XiMember m = null;
+
+					if (usr.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+						m = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
+						recipient = m.getPhoneNumber();
+					} else {
+						m = apiEJB.memberExists(userProfile, username);
+						recipient = m.getPhoneNumber();
+
+					}
+
+
+					boolean status = false;
+
+					try {
+
+						apiEJB.sendSMS(recipient, "Dear " + usr.getUserProfile() + " ," +
+								"You recently requested to change your password. " +
+								"Your security code is: " + securityCode +
+								" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request."
+						);
+						status = true;
+
+						jLogger.i("Your Status is ====== " + status);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+
+
+					if (status) {
+						if (userBeanI.edit(usr) != null)
+							this.respond(response, true, "The password reset instructions have been sent to your Phone Number", null);
+						else
+							this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
+					} else {
+						this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
+
+					}
+
+				} else {
 					this.respond(response, false, "Sorry, the username you entered is invalid. Please try again", null);
 
+				}
 			}
 		}
-	}
 
+	}
 }

@@ -16,5 +16,6 @@ public interface MemberBeanI {
     List<Member> findAll(String agentId, String search, int offset, int limit);
     boolean delete(Member member);
     Member findById(long id);
+    Member findByPhoneNumber(String phoneNumber);
     int countAll(String search);
 }

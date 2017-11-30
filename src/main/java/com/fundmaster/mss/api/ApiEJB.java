@@ -12,6 +12,7 @@ import java.util.List;
 @Local
 public interface ApiEJB {
     XiMember memberExists(String profile, String value);
+    XiMember checkMemberAccount(String profile, String value);
     //BalancesHistory getBalancesHistory(String memberId);
     JSONObject getBalancesHistory(String memberId);
     JSONObject getPensionAdvice(String memberId, String year);
@@ -97,7 +98,7 @@ public interface ApiEJB {
     JSONObject calculateWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate,
                                        String inflationRate,String email,String phone,String yourAge, String formula);
 
-    JSONObject calculateBenefitProjection(String interestRate,String years,String paymentFrequency,String paymentAmount, String presentValue);
+    JSONObject calculateBenefitProjection(String interestRate,String years,String paymentFrequency,String paymentAmount, String presentValue, String email);
     Double getCurrentUnitPrice(String schemeId);
     Double getMemberLatestContribution(String memberId);
     Double getMemberTotalUnits(String memberId);

@@ -243,6 +243,20 @@ public class BaseServlet extends HttpServlet {
         }
         return member;
     }
+    JSONObject xtractMemberAccount(HttpServletRequest request, HttpSession session)
+    {
+
+
+        JSONObject member = new JSONObject();
+        try {
+             member.put("member.address.email", String.valueOf(session.getAttribute("email")));
+             member.put("member.address.email", String.valueOf(session.getAttribute("phone")));
+
+        } catch (JSONException je) {
+            jLogger.e("We have a JSOn Exception" + je.getMessage());
+        }
+        return member;
+    }
     void addSponsor(HttpServletResponse response, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -310,6 +324,60 @@ public class BaseServlet extends HttpServlet {
             }
         }
     }
+
+
+    void recoverAccount ( HttpServletRequest request,HttpServletResponse response){
+        HttpSession session = request.getSession(false);
+
+        jLogger.i("Being passed from frontend ======================>  " + session.getAttribute("memberId"));
+        jLogger.i("Being passed from frontend ======================>  " + session.getAttribute("phone"));
+        jLogger.i("Being passed from frontend ======================>  " + session.getAttribute("email"));
+
+
+
+         JSONObject result = null;
+      //  String memberId = String.valueOf(session.getAttribute("memberId"));
+        String phone = String.valueOf(session.getAttribute("phone"));
+        String email  = String.valueOf(session.getAttribute("email"));
+
+        Member m = new Member();
+        m=  memberBeanI.findByPhoneNumber(phone);
+        m.setEmailAddress(email);
+        m.setPhoneNumber(phone);
+
+        Setting settings = settingBeanI.find();
+        if (m!=null) {
+
+            if (settings != null) {
+                boolean status;
+                switch (settings.getSponsorOnboarding()) {
+                    case Constants.MSS: {
+                        if (memberBeanI.add(m) != null)
+                            this.respond(response, true, "Member details have been successfully saved.", null);
+                        else
+                            this.respond(response, false, "Member details could not be saved. We apologise for the inconvenience.", null);
+                    }
+                    case Constants.XI:
+                        status = apiEJB.saveOrUpdateSponsor(xtractMemberAccount(request, session).toString());
+                        this.respond(response, status, status ? "Member details have been successfully saved." : "Member details could not be saved. We apologise for the inconvenience.", null);
+                        break;
+                    case Constants.BOTH: {
+                        status = apiEJB.saveOrUpdateSponsor(xtractMemberAccount(request, session).toString());
+                        if (status) {
+                            if (memberBeanI.add(m) != null)
+                                this.respond(response, true, "Member details have been successfully saved.", null);
+                            else
+                                this.respond(response, false, "Member details could not be saved. We apologise for the inconvenience.", null);
+                        } else
+                            this.respond(response, false, "Member details could not be saved. We apologise for the inconvenience.", null);
+
+                    }
+                }
+            }
+        }else this.respond(response, false, "Member Details Could Not be Updated" , null);
+
+    }
+
     JSONObject xtractSponsorFromRequest(HttpServletRequest request) {
         Country ctry = countryBeanI.findById(helper.toLong(this.get(request, "country")));
         jLogger.i("Being passed from frontend ======================>  " + this.get(request, "country"));

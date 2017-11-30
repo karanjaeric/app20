@@ -216,8 +216,8 @@ $(document).ready(function(){
 		$('#modal-pwd-reset').modal('show');
 	});
 
-    // $('#sms-btn').click(function(){
-    //     $('#modal-sms-code').modal('show');
+    // $('#acc-recover-btn').click(function(){
+    //     $('#modal-acc-recover').modal('show');
     //
     // });
 	$('#content-main-li').click(function(){
@@ -947,6 +947,53 @@ $('#form-password-reset').bootstrapValidator({
         }
     });
 
+});$('#form-find-member-account').bootstrapValidator({
+    message: 'This value is not valid',
+    feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+    },
+    excluded: ':disabled',
+    fields: {
+        memberNo: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter your Membership Number'
+                }
+            }
+        }
+    }
+})
+
+.on('success.form.bv', function(e) {
+
+    // Prevent form submission
+    e.preventDefault();
+    start_wait();
+    $.ajax({
+        url: $('#base_url').val() + 'find-member-account',
+        type: 'get',
+        data: {ACTION: 'FIND_MEMBER', category : 'MEMBER', memberNo: $('#memberNo').val()},
+        dataType: 'json',
+        success: function(json) {
+             stop_wait();
+           bootbox.alert(json.message);
+           var status = json.success;
+           if(status){
+
+               setTimeout(
+                   function() {
+                       window.location.href = $(
+                           '#base_url')
+                               .val()
+                           + 'recover-account';
+                   }, 5000);
+		   }
+
+        }
+    });
+
 });
 
     //form-sms-code
@@ -1002,6 +1049,8 @@ $('#form-password-reset').bootstrapValidator({
             });
 
         });
+
+
 
     //modal-resend-code
 
