@@ -52,6 +52,7 @@ public class Activate extends BaseServlet implements Serializable {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
 		User u = userBeanI.findBySecurityCode(request.getQueryString());
+                //u.getProfileID();
 		if(u != null && !u.isStatus())
 		{
 			u.setStatus(true);
@@ -92,6 +93,13 @@ public class Activate extends BaseServlet implements Serializable {
 		Help help = helpBeanI.findHelp(Constants.PAGE_HOME);
 		request.setAttribute("help", help);
 		PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_HOME);
+                String memberId=u.getProfileID().toString();
+                String operationType="ACCOUNT_ACTIVATION";
+                String operationStatus="SUCCESS";
+                
+                //api call
+                apiEJB.mssAccountOperation(memberId,operationType,operationStatus);
+                
 
 		/* configuring the http headers */
 

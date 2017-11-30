@@ -20,6 +20,7 @@ import java.util.*;
 
 @WebServlet(name = "Register", urlPatterns = {"/register"})
 public class Register extends BaseServlet implements Serializable {
+
     private static final String INDIVIDUAL_PENSION_FUND = "INDIVIDUAL_PENSION_FUND";
     private static final String UMBRELLA = "UMBRELLA";
 
@@ -114,7 +115,7 @@ public class Register extends BaseServlet implements Serializable {
     }
 
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+            HttpServletResponse response) throws ServletException, IOException {
 
         /* configuring the http headers */
         response.addHeader("X-XSS-Protection", "1; mode=block");
@@ -159,24 +160,23 @@ public class Register extends BaseServlet implements Serializable {
                 this.createMember(request, response);
             } else if (this.get(request, "type").equalsIgnoreCase("sponsor")) {
                 this.addSponsor(response, request);
-            }
-            else if (this.get(request, "type").equals("EXISTING")) {
+            } else if (this.get(request, "type").equals("EXISTING")) {
 
                 PasswordPolicy policy = passwordPolicyBeanI.find();
                 jLogger.i(" >>>>>>>>>>>> The idnumber is: " + this.get(request, "idNumber") + " <<<<<<<<<<<<<<<");
 
                 String idNumber = this.get(request, "idNumber");
-                jLogger.i("The idnumber is "+idNumber);
-                if (helper.isValidPhone(idNumber)){
+                jLogger.i("The idnumber is " + idNumber);
+                if (helper.isValidPhone(idNumber)) {
 
                     String zero = "0";
                     String plus = "+";
-                    String memberPhone=idNumber;
-                    if(memberPhone.startsWith(zero)){
+                    String memberPhone = idNumber;
+                    if (memberPhone.startsWith(zero)) {
 //                        idNumber =memberPhone.substring(1);
-                    }else if(idNumber.startsWith(plus)){
-                        idNumber =memberPhone;
-                    }else{
+                    } else if (idNumber.startsWith(plus)) {
+                        idNumber = memberPhone;
+                    } else {
 
                         idNumber = memberPhone;
 
@@ -184,9 +184,9 @@ public class Register extends BaseServlet implements Serializable {
 
                 }
 
-                 XiMember member = apiEJB.memberExists(this.get(request, "category"), idNumber);
+                XiMember member = apiEJB.memberExists(this.get(request, "category"), idNumber);
 
-                String loginField =idNumber;
+                String loginField = idNumber;
 
                 if (helper.isEmailAddress(loginField)) {
 
@@ -203,9 +203,8 @@ public class Register extends BaseServlet implements Serializable {
                             u.setSecurityCode(securityCode);
                             userBeanI.edit(u);
                             String email_address = null;
-                             String schemeId = null;
+                            String schemeId = null;
                             boolean proceed;
-
 
                             if (u.getUserProfile().equals(Constants.PENSIONER)) {
                                 /*email_address = this.get(request, "pensionerEmail");
@@ -214,29 +213,29 @@ public class Register extends BaseServlet implements Serializable {
                                 jLogger.i("Proceed is " + proceed);*/
                                 XiPensioner p = apiEJB.getPensionerDetails(u.getProfileID().toString(), null);
                                 email_address = p.getEmail();
-                                 jLogger.i("Pensioner email: " + email_address);
+                                jLogger.i("Pensioner email: " + email_address);
                                 proceed = helper.isEmailAddress(email_address);
-                             } else if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+                            } else if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 email_address = m.getEmailAddress();
-                                 schemeId = member.getSchemeId();
+                                schemeId = member.getSchemeId();
                                 proceed = helper.isEmailAddress(email_address);
-                             } else {
+                            } else {
                                 member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
                                 if (member != null) {
 
                                     email_address = member.getEmailAddress();
-                                        /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
+                                    /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
 
-                                        /*JSONArray json = (JSONArray) resp.get("rows");
+ /*JSONArray json = (JSONArray) resp.get("rows");
                                         JSONObject provider = json.getJSONObject(0);
                                         email_address = provider.getString("user.email");
                                         schemeId = provider.get("user.schemeId").toString();*/
-
                                     proceed = helper.isEmailAddress(email_address);
-                                 } else
+                                } else {
                                     proceed = false;
+                                }
 
                             }
                             jLogger.i("The email is: " + email_address);
@@ -247,22 +246,27 @@ public class Register extends BaseServlet implements Serializable {
                                 String sender = emails.getDefaultEmail();
                                 List<String> recipients = new ArrayList<>();
                                 recipients.add(email_address);
+                                String memberId = u.getProfileID().toString();
+                                String operationType = "ACCOUNT_ACTIVATION";
+                                String operationStatus = "SUCCESS";
+
+                                //api call
+                                apiEJB.mssAccountOperation(memberId, operationType, operationStatus);
 
                                 apiEJB.sendEmail(recipients, sender, null, "MSS Portal Account Activation Instructions",
-                                        "Dear " + u.getUserProfile() + ", " +
-                                                "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
-                                                "Please click this link " + settings.getPortalBaseURL() + "activate?" + securityCode +
-                                                " to complete the activation process", schemeId, false, null);
+                                        "Dear " + u.getUserProfile() + ", "
+                                        + "Your account has been created on the FundMaster Xi Member Self Service Portal. "
+                                        + "Please click this link " + settings.getPortalBaseURL() + "activate?" + securityCode
+                                        + " to complete the activation process", schemeId, false, null);
 
+                                this.respond(response, true, "<strong>Registration Successful</strong><br /> "
+                                        + "Congratulations! Your account has been created on the portal. "
+                                        + "An email has been sent to your email address with account activation instructions.", null);
 
-                                this.respond(response, true, "<strong>Registration Successful</strong><br /> " +
-                                        "Congratulations! Your account has been created on the portal. " +
-                                        "An email has been sent to your email address with account activation instructions.", null);
-
-                            }  else {
-                                this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! " +
-                                        "Your account has been created on the portal. We were however unable to send the activation instructions to your email or Phone. " +
-                                        "Please contact the administrator", null);
+                            } else {
+                                this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! "
+                                        + "Your account has been created on the portal. We were however unable to send the activation instructions to your email or Phone. "
+                                        + "Please contact the administrator", null);
 
                             }
 
@@ -275,7 +279,7 @@ public class Register extends BaseServlet implements Serializable {
                         this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are not an existing " + this.get(request, "category").toLowerCase() + ". Please contact the administrator.", null);
 
                     }
-                }else if (helper.isValidPhone(loginField)){
+                } else if (helper.isValidPhone(loginField)) {
 
                     if (member != null && member.getId() > 0) {
                         if (userBeanI.findUserByUsernameAndProfile(this.get(request, "idNumber"), member.getProfile()) == null) {
@@ -291,8 +295,7 @@ public class Register extends BaseServlet implements Serializable {
                             userBeanI.edit(u);
                             String phone = null;
                             String schemeId = null;
-                             boolean proceedSms;
-
+                            boolean proceedSms;
 
                             if (u.getUserProfile().equals(Constants.PENSIONER)) {
                                 /*email_address = this.get(request, "pensionerEmail");
@@ -300,68 +303,58 @@ public class Register extends BaseServlet implements Serializable {
                                 proceed = helper.isEmailAddress(email_address);
                                 jLogger.i("Proceed is " + proceed);*/
                                 XiPensioner p = apiEJB.getPensionerDetails(u.getProfileID().toString(), null);
-                                 phone = p.getCellPhone();
-                                 proceedSms = helper.isValidPhone(phone);
+                                phone = p.getCellPhone();
+                                proceedSms = helper.isValidPhone(phone);
                             } else if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
-                                 phone = m.getPhoneNumber();
+                                phone = m.getPhoneNumber();
                                 schemeId = member.getSchemeId();
-                                 proceedSms = helper.isValidPhone(phone);
-                            }
-
-                            else {
+                                proceedSms = helper.isValidPhone(phone);
+                            } else {
                                 member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
                                 if (member != null) {
 
-                                         /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
+                                    /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
                                     phone = member.getPhoneNumber();
 
-                                        /*JSONArray json = (JSONArray) resp.get("rows");
+                                    /*JSONArray json = (JSONArray) resp.get("rows");
                                         JSONObject provider = json.getJSONObject(0);
                                         email_address = provider.getString("user.email");
                                         schemeId = provider.get("user.schemeId").toString();*/
-
-                                     proceedSms = helper.isValidPhone(phone);
-                                } else
-                                 proceedSms = false;
+                                    proceedSms = helper.isValidPhone(phone);
+                                } else {
+                                    proceedSms = false;
+                                }
 
                             }
-                             if (proceedSms) {
+                            if (proceedSms) {
 
-                                 final String zero = "0";
-                                 final String plus = "+";
-                                 String clientNumber=phone;
+                                final String zero = "0";
+                                final String plus = "+";
+                                String clientNumber = phone;
 
-                                 if(clientNumber.startsWith(plus)){
+                                if (clientNumber.startsWith(plus)) {
 
-                                     clientNumber = zero + clientNumber.substring(4);
-                                     jLogger.i("The Client Login Number is " + loginField);
+                                    clientNumber = zero + clientNumber.substring(4);
+                                    jLogger.i("The Client Login Number is " + loginField);
 
-                                 }
+                                }
 
                                 String smsrecipient = phone;
 
-                                 apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", " +
-                                         "Your account has been created by Enterprise Trustees  Member Self Service Portal. " +
-                                         "Your Verification Code is " + activationCode + " .To complete the activation process, enter the provided code and log in using your cell phone as "+ loginField+" and the Password that you provided during Registration Process." +
-                                         "In Case of any challenges, please contact our Call Center 0302634704");
+                                apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", "
+                                        + "Your account has been created by Enterprise Trustees  Member Self Service Portal. "
+                                        + "Your Verification Code is " + activationCode + " .To complete the activation process, enter the provided code and log in using your cell phone as " + loginField + " and the Password that you provided during Registration Process."
+                                        + "In Case of any challenges, please contact our Call Center 0302634704");
 
+                                this.respond(response, true, "<strong>Registration Successful</strong><br /> "
+                                        + "Congratulations! Your account has been created on the portal. A SMS notification has been sent", null);
 
-                                this.respond(response, true, "<strong>Registration Successful</strong><br /> " +
-                                        "Congratulations! Your account has been created on the portal. A SMS notification has been sent", null);
-
-
-
-
-
-                             } else {
-                                this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! " +
-                                        "Your account has been created on the portal. We were however unable to send the activation instructions to your email or Phone. " +
-                                        "Please contact the administrator", null);
-
-
-
+                            } else {
+                                this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! "
+                                        + "Your account has been created on the portal. We were however unable to send the activation instructions to your email or Phone. "
+                                        + "Please contact the administrator", null);
 
                             }
 
@@ -375,8 +368,6 @@ public class Register extends BaseServlet implements Serializable {
 
                     }
 
-
-
                 }
 
             }
@@ -386,6 +377,5 @@ public class Register extends BaseServlet implements Serializable {
         }
 
     }
-
 
 }
