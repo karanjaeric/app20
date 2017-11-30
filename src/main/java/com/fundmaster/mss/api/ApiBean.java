@@ -1725,6 +1725,22 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
+    public boolean saveMemberAccountBySchemeAndMembershipNumber(String email, String phone, String ssnitNumber, String membershipNumber, String schemeId) {
+        JSONObject response;
+        try {
+            response = URLPost(APICall.SAVE_MEMBER_ACCOUNT_BY_SCHEME_AND_MEMBERSHIP_NUMBER
+                    + email  + "/" + phone + "/" + ssnitNumber + "/" + membershipNumber + "/" + schemeId, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            return response.getBoolean(Fields.SUCCESS);
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return false;
+        }
+    }
+
+
+
+
+    @Override
     public XiMember memberExistsInScheme(String profile, String value, String schemeID) {
         String ordinal = profileLoginFieldBeanI.findByProfile(profile);
         JSONObject response;

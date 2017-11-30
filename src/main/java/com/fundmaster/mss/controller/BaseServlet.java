@@ -329,7 +329,7 @@ public class BaseServlet extends HttpServlet {
     void recoverAccount ( HttpServletRequest request,HttpServletResponse response){
         HttpSession session = request.getSession(false);
 
-        jLogger.i("Being passed from frontend ======================>  " + session.getAttribute("memberId"));
+        jLogger.i("Being passed from frontend ======================>  " + session.getAttribute("membershipNumber"));
         jLogger.i("Being passed from frontend ======================>  " + session.getAttribute("phone"));
         jLogger.i("Being passed from frontend ======================>  " + session.getAttribute("email"));
 
@@ -340,41 +340,18 @@ public class BaseServlet extends HttpServlet {
         String phone = String.valueOf(session.getAttribute("phone"));
         String email  = String.valueOf(session.getAttribute("email"));
 
-        Member m = new Member();
-        m=  memberBeanI.findByPhoneNumber(phone);
-        m.setEmailAddress(email);
-        m.setPhoneNumber(phone);
+//        User  u = new User();
+//        u=  userBeanI.findByUsername(String.valueOf(session.getAttribute("existingPhoneNumber")));
+//      //  m.setEmailAddress(email);
+//       u.setUsername(phone);
 
-        Setting settings = settingBeanI.find();
-        if (m!=null) {
+        boolean status;
+        status = apiEJB.saveOrUpdateSponsor(xtractMemberAccount(request, session).toString());
+        this.respond(response, status, status ? "Member details have been successfully saved." : "Member details could not be saved. We apologise for the inconvenience.", null);
 
-            if (settings != null) {
-                boolean status;
-                switch (settings.getSponsorOnboarding()) {
-                    case Constants.MSS: {
-                        if (memberBeanI.add(m) != null)
-                            this.respond(response, true, "Member details have been successfully saved.", null);
-                        else
-                            this.respond(response, false, "Member details could not be saved. We apologise for the inconvenience.", null);
-                    }
-                    case Constants.XI:
-                        status = apiEJB.saveOrUpdateSponsor(xtractMemberAccount(request, session).toString());
-                        this.respond(response, status, status ? "Member details have been successfully saved." : "Member details could not be saved. We apologise for the inconvenience.", null);
-                        break;
-                    case Constants.BOTH: {
-                        status = apiEJB.saveOrUpdateSponsor(xtractMemberAccount(request, session).toString());
-                        if (status) {
-                            if (memberBeanI.add(m) != null)
-                                this.respond(response, true, "Member details have been successfully saved.", null);
-                            else
-                                this.respond(response, false, "Member details could not be saved. We apologise for the inconvenience.", null);
-                        } else
-                            this.respond(response, false, "Member details could not be saved. We apologise for the inconvenience.", null);
 
-                    }
-                }
-            }
-        }else this.respond(response, false, "Member Details Could Not be Updated" , null);
+
+
 
     }
 

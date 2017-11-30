@@ -18,6 +18,7 @@ public class APICall {
     public static final String SAVE_OR_UPDATE_BENEFICIARY_DETAILS = "saveorupdatebeneficiarydetails";
     public static final String CHECK_MEMBER_EXISTS_IN_SCHEME = "checkMemberExistsInScheme/";
     public static final String UPLOAD = "upload/";
+    public static final String SAVE_MEMBER_ACCOUNT_BY_SCHEME_AND_MEMBERSHIP_NUMBER ="savememberaccountbyschemeandmembershipnumber/";
     public static final String GET_MEMBER_SCHEMES = "getmemberschemes/";
     public static final String GET_MEMBER_PRODUCTS = "getmemberproducts/";
     public static final String GET_MEMBER_AVERAGE_INTEREST = "getmemberaverageinterest/";

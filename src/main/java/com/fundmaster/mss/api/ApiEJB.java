@@ -24,6 +24,8 @@ public interface ApiEJB {
     boolean saveOrUpdateBeneficiary(String params);
     XiMember memberExistsInScheme(String profile, String value, String schemeID);
     boolean uploadMemberDocument(String memberId, String docName, String docNotes, String docNum, String docTypeId);
+    boolean saveMemberAccountBySchemeAndMembershipNumber(String email, String phone, String ssnitNumber, String membershipNumber, String schemeId);
+
     List<Scheme> getProfileSchemes(String user, String profile);
     List<Sponsor>  getMemberSchemeProducts(String email,String schemeId);
     JSONObject getMemberAverageInterest(String memberID);
@@ -111,5 +113,7 @@ public interface ApiEJB {
     List<Scheme> getSchemeByPlanType(String planType);
     JSONObject getAnnuityQuote(String calculationMode, String productID, String lastName, String firstName, String otherNames, String idNumber, String address, String email, String phoneNumber, String purchaseDate, String pensionStartDate, String dateOfBirth, String gender, String guaranteedPercentage, String annuityIncrement, String paymentMode, String paymentFrequency, String registeredPurchasePrice, String unRegisteredPurchasePrice, String targetPension, String annuityMode, String spouseReversal, Boolean displayable, String spouseGender, String spouseDateOfBirth);
     List<Scheme> getSchemes(int start, int count);
+
      void mssAccountOperation(String memberId,String operationType,String operationStatus);
+
 }
