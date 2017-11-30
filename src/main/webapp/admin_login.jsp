@@ -21,7 +21,7 @@
 								   <div class="form-inline">
 									   <select class="form-control pull-left admin-country-code" name="country-code" style="width: 30%;"></select>
 									   <input class="form-control pull-right" type="text"
-											  placeholder="Username" name="username" id="username" style="width: 70%;">
+											  placeholder="Username" name="username" id="username" style="width: 70%;" maxlength="9">
 								   </div>
 							   </c:if>
 							   <c:if test="${ field.ordinal== 'EMAIL'}">
