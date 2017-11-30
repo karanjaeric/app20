@@ -34,7 +34,7 @@ var numbers = $('#numbers').val();
 
 $(document).ready(function() {
 
-$(".member-country-code,.admin-country-code,.sponsor-country-code").append(
+$(".member-country-code,.admin-country-code,.sponsor-country-code,.trustee-country-code,.agent-country-code,.pensioner-country-code").append(
     "        <option data-countryCode='GB' value='+44' Selected>UK (+44)</option>\n" +
     "        <option data-countryCode='US' value='+1'>USA (+1)</option>\n" +
     "        <option data-countryCode='DZ' value='+213'>Algeria (+213)</option>\n" +
@@ -823,6 +823,14 @@ if(typeof adminCountryCode=="undefined")
 										start_wait();
 
 										// Prevent form submission
+                                        var pensionerCountryCode=$(' .pensioner-country-code').val();
+                                        if(pensionerCountryCode==null)
+                                        {
+                                            pensionerCountryCode='';
+                                        }
+                                        else {
+                                            pensionerCountryCode=$(' .pensioner-country-code').val();
+                                        }
 										e.preventDefault();
 										// Get the form instance
 										$.ajax({
@@ -833,7 +841,8 @@ if(typeof adminCountryCode=="undefined")
 													data : {
 														type : 'EXISTING',
 														category : 'PENSIONER',
-														idNumber : $(
+														idNumber : pensionerCountryCode+
+															$(
 															'#pensionerIdNumber')
 															.val(),
 														password : $(
@@ -1813,6 +1822,14 @@ if(typeof adminCountryCode=="undefined")
 									function(e) {
 										start_wait();
 										// Prevent form submission
+                                        var agentCountryCode=$('.agent-country-code').val();
+                                        if(agentCountryCode==null)
+                                        {
+                                            agentCountryCode='';
+                                        }
+                                        else {
+                                            agentCountryCode=$('.agent-country-code').val();
+                                        }
 										e.preventDefault();
 										// Get the form instance
 										$
@@ -1823,7 +1840,8 @@ if(typeof adminCountryCode=="undefined")
 													data : {
 														type : 'EXISTING',
 														category : 'AGENT',
-														idNumber : $(
+														idNumber :agentCountryCode+
+															$(
 																'#agentIdNumber')
 																.val(),
 														password : $(
@@ -2011,6 +2029,14 @@ if(typeof adminCountryCode=="undefined")
 									function(e) {
 										start_wait();
 										// Prevent form submission
+                                        var trusteeCountryCode=$('.trustee-country-code').val();
+                                        if(trusteeCountryCode==null)
+                                        {
+                                            trusteeCountryCode='';
+                                        }
+                                        else {
+                                            trusteeCountryCode=$('.trustee-country-code').val();
+                                        }
 										e.preventDefault();
 										// Get the form instance
 										$
@@ -2021,7 +2047,8 @@ if(typeof adminCountryCode=="undefined")
 													data : {
 														type : 'EXISTING',
 														category : 'TRUSTEE',
-														idNumber : $(
+														idNumber :trusteeCountryCode+
+															$(
 																'#trusteeIdNumber')
 																.val(),
 														password : $(
