@@ -45,7 +45,7 @@
 							<strong>SIGN IN</strong>
 						</button><br />
 						<a href="javascript:void(0);" id="pwd-reset-btn" class="btn btn-info pull-left" style="font-size: 12px">Forgot Your Password?</a>
-						<%--<a href="javascript:void(0);" id="sms-btn" class="btn btn-info pull-right" style="font-size: 12px">Activate Your Account (SMS ONLY)</a>--%>
+						<a  href="<%=request.getContextPath()%>/find-member-account.jsp"  class="btn btn-info pull-right" style="font-size: 12px">Account Recovery</a>
 						<%--<sss--%>
 					</fieldset>
 				</form>

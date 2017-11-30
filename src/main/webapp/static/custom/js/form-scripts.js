@@ -33,6 +33,7 @@ var uppercase = $('#uppercase').val();
 var numbers = $('#numbers').val();
 
 $(document).ready(function() {
+
 $(".member-country-code,.admin-country-code,.sponsor-country-code").append(
     "        <option data-countryCode='GB' value='+44' Selected>UK (+44)</option>\n" +
     "        <option data-countryCode='US' value='+1'>USA (+1)</option>\n" +
@@ -253,6 +254,7 @@ $(".member-country-code,.admin-country-code,.sponsor-country-code").append(
     "    </optgroup>\n"
 
 );
+
 					$('#form-analysis')
 					.bootstrapValidator(
 							{
@@ -446,9 +448,9 @@ if(typeof adminCountryCode=="undefined")
 															+ 'login',
 													type : 'post',
 													data : {
+
 														username : adminCountryCode +
-														        $(
-																'#username')
+														        $('#username')
 																.val(),
 														password : $(
 																'#password')
@@ -531,8 +533,10 @@ if(typeof adminCountryCode=="undefined")
 															+ 'sign-in',
 													type : 'post',
 													data : {
+
 														username : memberCountryCode+
 														$('#username').val(),
+
 														password : $(
 																'#password')
 																.val()
@@ -2214,9 +2218,9 @@ if(typeof adminCountryCode=="undefined")
 													data : {
 														type : 'EXISTING',
 														category : 'SPONSOR',
+
 														idNumber : sponsorCountryCode+
-															$(
-																'#sponsorIdNumber')
+															$('#sponsorIdNumber')
 																.val(),
 														password : $(
 																'#sponsorPassword')
@@ -2448,10 +2452,10 @@ if(typeof adminCountryCode=="undefined")
 													data : {
 														type : 'EXISTING',
 														category : 'ADMINISTRATOR',
+
 														idNumber :
                                                         adminRegCountryCode+
-															$(
-																'#adminIdNumber')
+															$('#adminIdNumber')
 																.val(),
 														password : $(
 																'#adminPassword')
@@ -2672,11 +2676,11 @@ if(typeof adminCountryCode=="undefined")
 													data : {
 														type : 'EXISTING',
 														category : 'MEMBER',
+
 														// countryCode : $(
 														// 	'#country-code').val(),
 														idNumber : memberCountryCode +
-														         $(
-																'#eMIdNumber')
+														         $('#eMIdNumber')
 																.val(),
 														password : $(
 																'#eMPassword')
@@ -2989,7 +2993,7 @@ if(typeof adminCountryCode=="undefined")
 														inCaptchaChars : $(
 														'#memberCaptchaChars')
 														.val(),
-														
+
 													},
 													dataType : 'json',
 													success : function(json) {
@@ -3040,7 +3044,7 @@ if(typeof adminCountryCode=="undefined")
 													}
 												}
 											},*/
-											
+
 											firstName : {
 												validators : {
 													notEmpty : {
@@ -3048,7 +3052,7 @@ if(typeof adminCountryCode=="undefined")
 													}
 												}
 											},
-											
+
 											lastName : {
 												validators : {
 													notEmpty : {
@@ -3056,7 +3060,7 @@ if(typeof adminCountryCode=="undefined")
 													}
 												}
 											},
-											
+
 											dateOfBirth : {
 												validators : {
 													notEmpty : {
@@ -3064,7 +3068,7 @@ if(typeof adminCountryCode=="undefined")
 													}
 												}
 											},
-											
+
 											emailAddress : {
 												validators : {
 													notEmpty : {
@@ -3152,7 +3156,7 @@ if(typeof adminCountryCode=="undefined")
 													}
 												}
 											},
-											
+
 											displayable : {
 												validators : {
 													notEmpty : {
@@ -3160,7 +3164,7 @@ if(typeof adminCountryCode=="undefined")
 													}
 												}
 											},
-											
+
 											commencementDate : {
 												validators : {
 													notEmpty : {
@@ -3277,23 +3281,23 @@ if(typeof adminCountryCode=="undefined")
 														emailAddress : $(
 																'#emailAddress')
 																.val(),
-																
+
 														/*fullName : $(
 																'#fullName')
 																.val(),*/
-																
+
 														firstName : $(
 																'#firstName')
 																.val(),
-																
+
 														lastName : $(
 																'#lastName')
 																.val(),
-																
+
 														otherNames : $(
 																'#otherNames')
 																.val(),
-																
+
 														gender : $('#gender')
 																.val(),
 														guaranteePeriod : $(
@@ -3347,7 +3351,7 @@ if(typeof adminCountryCode=="undefined")
 												});
 
 									});
-					
+
 					$('#form-new-member')
 					.bootstrapValidator(
 							{
@@ -3462,9 +3466,9 @@ if(typeof adminCountryCode=="undefined")
 								start_wait();
 								// Prevent form submission
 								e.preventDefault();
-								
+
 								 var form = "form-new-member";
-								
+
 								// Get the form instance
 								$
 										.ajax({
@@ -3544,7 +3548,7 @@ if(typeof adminCountryCode=="undefined")
 										});
 
 							});
-					
+
 					$('#form-new-sponsor')
 					.bootstrapValidator(
 							{
@@ -3648,9 +3652,9 @@ if(typeof adminCountryCode=="undefined")
 								start_wait();
 								// Prevent form submission
 								e.preventDefault();
-								
+
 								var form = "form-new-sponsor";
-								
+
 								// Get the form instance
 								$
 										.ajax({
@@ -3672,7 +3676,7 @@ if(typeof adminCountryCode=="undefined")
 												scheme: $('#pension_scheme').val(),
 												type : 'sponsor'
 											}
-												
+
 												,
 											dataType : 'json',
 											/*success : function(json) {
@@ -3692,9 +3696,9 @@ if(typeof adminCountryCode=="undefined")
 														.alert('<p class="text-center">'
 																+ json.message
 																+ '</p>');
-												
+
 											}*/
-												
+
 												success : function(json) {
 													stop_wait();
 													if (json.success) {
@@ -3718,8 +3722,8 @@ if(typeof adminCountryCode=="undefined")
 										});
 
 							});
-					
-					
+
+
 					$('#companyApplicationDate')
 			        .datetimepicker({
 			        	 language:  'en',
@@ -3869,7 +3873,7 @@ if(typeof adminCountryCode=="undefined")
 														'#sponsor1CaptchaChars')
 														.val()
 													}
-														
+
 														,
 													dataType : 'json',
 													success : function(json) {

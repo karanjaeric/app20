@@ -50,6 +50,8 @@
                 </div>
             </div>
 
+
+
             <div class="col-md-3">
                 <p>&nbsp;</p>
                 <button class="btn btn-primary">Calculate</button>
@@ -202,6 +204,7 @@
                                     html = "<tr><th>PROJECTED RESULTS</th></tr>";
                                     stop_wait();
                                     if (json.success) {
+
 
                                           console.log("The JSON is  " + json);
 

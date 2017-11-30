@@ -1,9 +1,6 @@
 package com.fundmaster.mss.api;
 
-import com.fundmaster.mss.beans.BenefitsCalculationBeanI;
-import com.fundmaster.mss.beans.InterestRateColumnBeanI;
-import com.fundmaster.mss.beans.ProfileLoginFieldBeanI;
-import com.fundmaster.mss.beans.SettingBeanI;
+import com.fundmaster.mss.beans.*;
 import com.fundmaster.mss.common.*;
 import com.fundmaster.mss.model.*;
 import org.json.JSONArray;
@@ -20,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -47,6 +45,12 @@ public class ApiBean implements ApiEJB {
     InterestRateColumnBeanI interestRateColumnBeanI;
     @EJB
     BenefitsCalculationBeanI benefitsCalculationBeanI;
+
+    @EJB
+    ApiEJB apiEJB;
+
+    @EJB
+    EmailsBeanI emailsBeanI;
 
     @Override
     public List<Scheme> getSchemes(int start, int count) {
@@ -179,12 +183,13 @@ public class ApiBean implements ApiEJB {
     }
 
     @Override
-    public JSONObject calculateBenefitProjection(String IR,String yrs,String paymentFrequency,String paymentAmount, String PV) {
+    public JSONObject calculateBenefitProjection(String IR,String yrs,String paymentFrequency,String paymentAmount, String PV,String user) {
         jLogger.i("The interestRate is: " + IR);
         jLogger.i("The No of Years is: " + yrs);
         jLogger.i("The paymentFrequency is: " + paymentFrequency);
         jLogger.i("The paymentAmount is: " + paymentAmount);
         jLogger.i(" The presentValue is " + PV);
+        jLogger.i(" The UserName is " + user);
 
 
         BigDecimal rate = BigDecimal.valueOf(Double.parseDouble(IR));
@@ -196,7 +201,7 @@ public class ApiBean implements ApiEJB {
         BigDecimal divider = new BigDecimal("100");
         BigDecimal interestRate = rate.divide(divider);
 
-        BigDecimal factor1=BigDecimal.ONE.add(interestRate.divide(freq));
+        BigDecimal factor1=BigDecimal.ONE.add(interestRate.divide(freq),MathContext.UNLIMITED);
         BigDecimal powerFactor=freq.multiply(years);
 
         BigDecimal factor2=factor1.pow(powerFactor.intValue(), MathContext.UNLIMITED);
@@ -214,12 +219,35 @@ public class ApiBean implements ApiEJB {
         BigDecimal futureValue=base.add(base3).setScale(2,BigDecimal.ROUND_HALF_EVEN);
         JSONObject jsonObject = new JSONObject();
 
+        if(helper.isEmailAddress(user)){
 
-                  try {
+            Emails emails = emailsBeanI.find();
+            String sender = emails.getDefaultEmail();
+
+            List<String> recipients = new ArrayList<>();
+            recipients.add(user);
+
+            apiEJB.sendEmail(recipients, sender, null, "MSS Portal Benefit Projection Results",
+                    "Dear Member here is Your Benefit Projection Results. " +futureValue+
+                            " Thank you For using Our Portal", null, false, null);
+
+
+        }else if (helper.isValidPhone(user)){
+            String recipient =user;
+            apiEJB.sendSMS(recipient,"Dear Member, Your Benefit Projection Results. " +futureValue+
+            "Thank You for using Our Portal ");
+        }
+
+
+
+
+         try {
 
                      return jsonObject.put("futureValue", futureValue);
 
-                 } catch (JSONException e1) {
+
+
+                  } catch (JSONException e1) {
                      e1.printStackTrace();
                      return null;
 
@@ -2556,6 +2584,56 @@ public Double getMemberTotalUnits(String memberId) {
         }
     }
 
+
+    @Override
+    public XiMember checkMemberAccount(String profile, String value) {
+
+        String  ordinal = "MEMBERSHIP_NO";
+
+        jLogger.i("Ordinal is >>>>>>>>> " + ordinal + " <<<<<<<<<<<<<");
+
+        JSONObject response;
+        try {
+            response = URLPost(APICall.CHECK_MEMBER_EXISTS + ordinal  + "/" + value + "/" + profile, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+
+            jLogger.i("Response of member exists is: " + response);
+
+            XiMember xiMember = new XiMember();
+
+            xiMember.setId(helper.toLong(response.get(Fields.MEMBER_ID)));
+            xiMember.setProfile(response.getString(Fields.PROFILE));
+
+            if (response.getString(Fields.EMAIL) == null || response.getString(Fields.EMAIL).isEmpty()) {
+                xiMember.setEmailAddress("");
+            } else {
+                xiMember.setEmailAddress(response.getString(Fields.EMAIL));
+            }
+//            if (response.getString(Fields.CELL_PHONE) == null || response.getString(Fields.CELL_PHONE).isEmpty()) {
+//                xiMember.setPhoneNumber("");
+//            } else {
+//                xiMember.setPhoneNumber(response.getString(Fields.CELL_PHONE));
+//            }
+
+            try {
+
+                if (response.getString(Fields.NAME) == null || response.getString(Fields.NAME).isEmpty()) {
+                    xiMember.setName("");
+                } else {
+                    xiMember.setName(response.getString(Fields.NAME));
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            Long Scheme_id = helper.toLong(response.get(Fields.SCHEME_ID));
+            xiMember.setSchemeId(Long.toString(Scheme_id));
+            return xiMember;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception checking if the member exists" + je.getMessage());
+            return null;
+        }
+    }
 
 
 }

@@ -85,6 +85,7 @@ public class BenProjectionHomeController  extends BaseServlet implements Seriali
         response.addHeader("X-Content-Type-Options", "nosniff");
 
         String presentValue = this.get(request, "presentValue");
+        String email = this.get(request, "email");
         if(presentValue.equalsIgnoreCase("")){
             presentValue ="0";
         }
@@ -92,7 +93,7 @@ public class BenProjectionHomeController  extends BaseServlet implements Seriali
 
         this.respond(response, true, "", apiEJB.calculateBenefitProjection(this.get(request, "interestRate"),
                 this.get(request, "years"), this.get(request, "paymentFrequency"), this.get(request, "paymentAmount"),
-                presentValue));
+                presentValue,email));
 
     }
 

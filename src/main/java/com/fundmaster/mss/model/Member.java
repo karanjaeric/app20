@@ -34,7 +34,7 @@ public class Member extends GenericModel<Member>  implements Serializable {
 	@Column(name="emailAddress", nullable=false)
 	private
 	String emailAddress;
-	@Column(name="phoneNumber", nullable=false)
+	@Column(name="phoneNumber", nullable=false,unique = true)
 	private
 	String phoneNumber;
 	@Column(name="residentialAddress", nullable=false)

@@ -36,6 +36,13 @@ public class MemberBean implements MemberBeanI {
         MemberDAO dao = new MemberDAO(entityManager);
         return dao.findById(id);
     }
+
+    @Override
+    public Member findByPhoneNumber(String phoneNumber) {
+        MemberDAO dao = new MemberDAO(entityManager);
+        return dao.findByPhoneNumber(phoneNumber);
+     }
+
     @Override
     public int countAll(String search) {
         MemberDAO dao = new MemberDAO(entityManager);

@@ -38,8 +38,8 @@
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="user" class="control-label">Username:</label>
-							<input type="text" name="email" class="form-control"
-										id="email" placeholder="Your username">
+							<input type="text" name="username" class="form-control"
+										id="username" placeholder="EMAIL/PHONE NUMBER">
 						</div>
 						<p>We will send you instructions on how to reset your password</p>
 					</div>
@@ -50,6 +50,8 @@
 			</div>
 		</form>
 	</div>
+
+
 
 <%--&lt;%&ndash;ACTIVATE ACCOUNT USING SMS CODE&ndash;%&gt;--%>
 <%--<div class="modal fade" id="modal-sms-code" tabindex="-1"--%>

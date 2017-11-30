@@ -184,6 +184,8 @@ public class SignIn extends BaseServlet implements Serializable {
 			jLogger.i("FOUND USER");
 
 
+
+
 			if (u != null) {
 
 				String userName =  u.getUsername();
@@ -211,20 +213,32 @@ public class SignIn extends BaseServlet implements Serializable {
 
 
 							XiMember member = apiEJB.memberExists(u.getUserProfile(),userName);
+
 							if (member != null && member.getId() > 0) {
+
+								String memberEmail=member.getEmailAddress();
+								List<Sponsor> sponsors = apiEJB.getMemberSchemeProducts(memberEmail,this.getSessKey(request, Constants.SCHEME_ID));
 
 								session.setAttribute(Constants.USER, userName);
 								session.setAttribute(Constants.UID, u.getId());
 								session.setAttribute(Constants.PROFILE_ID, member.getId());
 								session.setAttribute(Constants.LOGIN, true);
-								session.setAttribute(Constants.U_PROFILE, member.getProfile());
+ 								session.setAttribute(Constants.U_PROFILE, member.getProfile());
+
 								session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
+								if (sponsors!=null) {
+									session.setAttribute(Constants.SPONSOR_ID, sponsors.get(0).getId().toString());
+								}else {
+									session.setAttribute(Constants.SPONSOR_ID, null);
+
+								}
+
 								resetAttempt(this.get(request, "username"));
 
 								logActivity(Constants.ML, "successfully logged in", u.getId().toString(), null, u.getUserProfile());
 
-
 								SchemeMemberManager smm = schemeManagerBeanI.findByUserID(u.getId());
+
 								String link = "member";
 								if (smm != null) {
 									session.setAttribute(Constants.MANAGER_PROFILE, Constants.MANAGER);

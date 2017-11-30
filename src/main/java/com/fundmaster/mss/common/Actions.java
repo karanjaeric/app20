@@ -93,4 +93,6 @@ public class Actions {
 
     public static final String ADMIN_FEE_LISTING = "ADMIN_FEE_LISTING";
 
+    public static final String RECOVER_ACCOUNT = "RECOVER_ACCOUNT";
+
 }

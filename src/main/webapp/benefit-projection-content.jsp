@@ -47,6 +47,13 @@
                 </div>
             </div>
 
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Email  :</label> <input
+                        type="email" name="email" class="form-control" id="email"
+                        placeholder="EMAIL"   >
+                </div>
+            </div>
 
             <div class="col-md-3">
                 <p>&nbsp;</p>
@@ -123,6 +130,16 @@
                                         message : 'This value can and must only be a number'
                                     }
                                 }
+                            },
+                            email : {
+                                validators : {
+                                    notEmpty : {
+                                        message : 'Please enter the Email Value'
+                                    },
+                                    email : {
+                                        message : 'Sorry, your residential address is required'
+                                    }
+                                }
                             }
                         }
                     })
@@ -151,7 +168,9 @@
                                         .val(),
                                     presentValue: $(
                                         '#presentValue')
-                                        .val()
+                                        .val(),
+                                    email:$(
+                                        '#email').val()
                                 },
 
                                 dataType : 'json',
