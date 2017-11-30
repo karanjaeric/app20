@@ -77,10 +77,13 @@ public class FindMemberAccount extends BaseServlet implements Serializable {
 
 
                 request.getSession().setAttribute("sponsorName", sponsors.get(0).getCompanyName());
+
+
+                this.respond(response, true, "<strong>Member Account Found  </strong><br /> " +
+                        " You will be redirected to Account recovery Page", null);
             }else this.respond(response,false,"Member NOT found" , null);
         }
-        this.respond(response, true, "<strong>Member Account Found  </strong><br /> " +
-                " You will be redirected to Account recovery Page", null);
+
         /* configuring the http headers */
         response.addHeader("X-XSS-Protection", "1; mode=block");
         response.addHeader("X-Frame-Options", "DENY");

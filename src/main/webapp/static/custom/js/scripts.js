@@ -977,7 +977,7 @@ $('#form-password-reset').bootstrapValidator({
         data: {ACTION: 'FIND_MEMBER', category : 'MEMBER', memberNo: $('#memberNo').val()},
         dataType: 'json',
         success: function(json) {
-             stop_wait();
+            stop_wait();
            bootbox.alert(json.message);
            var status = json.success;
            if(status){
