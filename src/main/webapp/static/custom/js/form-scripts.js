@@ -437,7 +437,16 @@ if(typeof adminCountryCode=="undefined")
 										start_wait();
 										// Prevent form submission
 										e.preventDefault();
-										// Get the form instance
+                                        var adminRegCountryCode=$('.admin-country-code').val();
+                                        if(adminRegCountryCode==null)
+                                        {
+                                            adminRegCountryCode='';
+                                        }
+                                        else {
+                                            adminRegCountryCode=$('.admin-country-code').val();
+                                        }
+
+                                        // Get the form instance
 										var btn = "btn-login";
 										var form = "form-login";
 										var modal = "modal-login";
@@ -449,7 +458,7 @@ if(typeof adminCountryCode=="undefined")
 													type : 'post',
 													data : {
 
-														username : adminCountryCode +
+														username : adminRegCountryCode +
 														        $('#username')
 																.val(),
 														password : $(
@@ -2437,11 +2446,15 @@ if(typeof adminCountryCode=="undefined")
 									function(e) {
 										start_wait();
 										// Prevent form submission
-                                        var adminRegCountryCode=$('.admin-reg-country-code').val();
-                                        if(typeof adminRegCountryCode=="undefined")
+                                        var adminRegCountryCode=$('.admin-country-code').val();
+                                        if(adminRegCountryCode==null)
                                         {
                                             adminRegCountryCode='';
                                         }
+                                        else {
+                                            adminRegCountryCode=$('.admin-country-code').val();
+                                        }
+
 										e.preventDefault();
 										// Get the form instance
 										$
