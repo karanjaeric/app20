@@ -12,11 +12,28 @@
 					<fieldset>
 						<legend class="text-center">Please Login To Access Your Account</legend>
 						<img class="profile-img-card" src="static/images/avatar_2x.png">
-
 						<div class="form-group">
-							<label class="control-label">Username</label> <input
+
+ 							<label class="control-label">Username</label>
+							<c:forEach var="field" items="${loginFields}">
+								<c:choose>
+								<c:when test="${field.profile == 'MEMBER' }">
+								<c:if test="${ field.ordinal== 'PHONE' }">
+						   <div class="form-inline">
+							   <select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+							   <input type="text" name="username" class="form-control pull-right"
+									  id="username" placeholder="${ field.ordinal}" style="width: 75%;">
+						   </div>
+								</c:if>
+                       <c:if test="${ field.ordinal== 'EMAIL'}">
+						   <span class="form-helper">${field.ordinal}</span>
+							 <input
 								class="form-control" type="text"
 								placeholder="Username" name="username" id="username">
+					   </c:if>
+								</c:when>
+								</c:choose>
+                     </c:forEach>
 						</div>
 
 						<div class="form-group">

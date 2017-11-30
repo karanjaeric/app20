@@ -166,29 +166,27 @@ public class Register extends BaseServlet implements Serializable {
                 jLogger.i(" >>>>>>>>>>>> The idnumber is: " + this.get(request, "idNumber") + " <<<<<<<<<<<<<<<");
 
                 String idNumber = this.get(request, "idNumber");
+                jLogger.i("The idnumber is "+idNumber);
                 if (helper.isValidPhone(idNumber)){
 
-                    String code = "+233";
                     String zero = "0";
                     String plus = "+";
                     String memberPhone=idNumber;
                     if(memberPhone.startsWith(zero)){
-                        idNumber = code + memberPhone.substring(1);
+//                        idNumber =memberPhone.substring(1);
                     }else if(idNumber.startsWith(plus)){
                         idNumber =memberPhone;
                     }else{
 
-                        idNumber= null;
+                        idNumber = memberPhone;
+
                     }
 
+                }
 
-                }else
-                    idNumber = this.get(request, "idNumber");
+                 XiMember member = apiEJB.memberExists(this.get(request, "category"), idNumber);
 
-
-                XiMember member = apiEJB.memberExists(this.get(request, "category"), idNumber);
-
-                String loginField =this.get(request, "idNumber");
+                String loginField =idNumber;
 
                 if (helper.isEmailAddress(loginField)) {
 
@@ -284,7 +282,7 @@ public class Register extends BaseServlet implements Serializable {
                             User u = new User();
                             u.setProfileID(member.getId());
                             u.setUserProfile(member.getProfile());
-                            u.setUsername(this.get(request, "idNumber"));
+                            u.setUsername(idNumber);
                             u.setPassword(helper.hash(this.get(request, "password")));
                             Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
                             u.setPassword_expiry(password_expiry);
@@ -309,7 +307,9 @@ public class Register extends BaseServlet implements Serializable {
                                  phone = m.getPhoneNumber();
                                 schemeId = member.getSchemeId();
                                  proceedSms = helper.isValidPhone(phone);
-                            } else {
+                            }
+
+                            else {
                                 member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
 
                                 if (member != null) {
@@ -329,12 +329,23 @@ public class Register extends BaseServlet implements Serializable {
                             }
                              if (proceedSms) {
 
+                                 final String zero = "0";
+                                 final String plus = "+";
+                                 String clientNumber=phone;
+
+                                 if(clientNumber.startsWith(plus)){
+
+                                     clientNumber = zero + clientNumber.substring(4);
+                                     jLogger.i("The Client Login Number is " + loginField);
+
+                                 }
 
                                 String smsrecipient = phone;
 
-                                apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", " +
-                                        "Your account has been created on the FundMaster Xi Member Self Service Portal. " +
-                                        "Your Verification Code is " + activationCode + " .To complete the activation process enter the provided code and log in using your username as "+ phone+" and the Password that you Provided during Registration Process");
+                                 apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", " +
+                                         "Your account has been created by Enterprise Trustees  Member Self Service Portal. " +
+                                         "Your Verification Code is " + activationCode + " .To complete the activation process, enter the provided code and log in using your cell phone as "+ loginField+" and the Password that you provided during Registration Process." +
+                                         "In Case of any challenges, please contact our Call Center 0302634704");
 
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> " +

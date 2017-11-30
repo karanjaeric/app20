@@ -1375,17 +1375,29 @@ public class Admin extends BaseServlet implements Serializable {
         String username = this.getSessKey(request, Constants.USER);
         String password = this.get(request, "currentPassword");
         String new_password = this.get(request, "newPassword");
+        final String code = "233";
+        final String zero = "0";
+        final String plus = "+";
+
+        if(username.startsWith(plus)){
+
+            username = zero + username.substring(4);
+            jLogger.i("The Client Login Number is " + username);
+
+        }
         User u = userBeanI.findUser(username, password);
-        jLogger.i("User found: " + u.getUsername());
 
         if (u != null) {
-            if (u.getSecurityCode().equalsIgnoreCase(securityCode)) {
-            setNewPassword(request,response,session,new_password,u);
-            } else if (u.getSmsActivationCode().equalsIgnoreCase(securityCode)){
-
-                setNewPassword(request,response,session,new_password,u);
-
-
+            if(u.getSecurityCode()!=null) {
+                if(u.getSecurityCode().equalsIgnoreCase(securityCode))
+                    setNewPassword(request,response,session,new_password,u);
+                else
+                    this.respond(response, false, "Sorry, your security code is invalid. Please enter a valid security code.", null);
+            }else if(u.getSmsActivationCode()!=null) {
+                if(u.getSmsActivationCode().equalsIgnoreCase(securityCode))
+                    setNewPassword(request,response,session,new_password,u);
+                else
+                    this.respond(response, false, "Sorry, your security code is invalid. Please enter a valid security code.", null);
             }
 
             else {

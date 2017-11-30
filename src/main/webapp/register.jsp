@@ -75,8 +75,18 @@
 																<c:choose>
 																	<c:when test="${field.profile == 'ADMINISTRATOR' }">
 																		<label for="adminIdNumber" class="control-label">${ field.ordinal }:</label>
-																		<input type="text" name="adminIdNumber" class="form-control input-sm"
-																			id="adminIdNumber" placeholder="${ field.ordinal}">
+																		<c:if test="${ field.ordinal== 'PHONE' }">
+																			<div class="form-inline">
+																				<select class="form-control pull-left admin-country-code" name="country-code" style="width: 25%;"></select>
+																				<input type="text" name="adminIdNumber" class="form-control"
+																					   id="adminIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
+																			</div>
+																		</c:if>
+																		<c:if test="${ field.ordinal== 'EMAIL'}">
+																			<input type="text" name="adminIdNumber" class="form-control input-sm"
+																				   id="adminIdNumber" placeholder="${ field.ordinal}">
+																		</c:if>
+
 																	</c:when>
 																</c:choose>
 															</c:forEach>
@@ -126,8 +136,17 @@
 															<c:choose>
 																<c:when test="${field.profile == 'MEMBER' }">
 																	<label for="eMIdNumber" class="control-label">${ field.ordinal }:</label>
-																	<input type="text" name="eMIdNumber" class="form-control input-sm"
-																		id="eMIdNumber" placeholder="${ field.ordinal}">
+																		<c:if test="${ field.ordinal== 'PHONE' }">
+																			<div class="form-inline">
+																					<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																					<input type="text" name="eMIdNumber" class="form-control pull-right"
+																						   id="eMIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
+																			</div>
+																				</c:if>
+																	    <c:if test="${ field.ordinal== 'EMAIL'}">
+																			<input type="text" name="eMIdNumber" class="form-control input-sm"
+																				   id="eMIdNumber" placeholder="${ field.ordinal}">
+																		</c:if>
 																</c:when>
 															</c:choose>
 														</c:forEach>
@@ -179,8 +198,17 @@
 															  <c:choose>
 																  <c:when test="${field.profile == 'PENSIONER' }">
 																	  <label for="pensionerIdNumber" class="control-label">${ field.ordinal }:</label>
+																	  <c:if test="${ field.ordinal== 'PHONE' }">
+																	  <div class="form-inline">
+																		  <select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																		  <input type="text" name="pensionerIdNumber" class="form-control"
+																				 id="pensionerIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
+																	  </div>
+																	  </c:if>
+																	  <c:if test="${ field.ordinal== 'EMAIL'}">
 																	  <input type="text" name="pensionerIdNumber" class="form-control input-sm"
 																			 id="pensionerIdNumber" placeholder="${ field.ordinal}">
+																	  </c:if>
 																  </c:when>
 															  </c:choose>
 														  </c:forEach>
@@ -232,8 +260,17 @@
 														<c:choose>
 															<c:when test="${field.profile == 'SPONSOR' }">
 																<label for="sponsorIdNumber" class="control-label">${ field.ordinal }:</label>
-																<input type="text" name="sponsorIdNumber" class="form-control input-sm"
-																	id="sponsorIdNumber" placeholder="${ field.ordinal}">
+																<c:if test="${ field.ordinal== 'PHONE' }">
+																	<div class="form-inline">
+																		<select class="form-control pull-left sponsor-country-code" name="country-code" style="width: 25%;"></select>
+																		<input type="text" name="sponsorIdNumber" class="form-control"
+																			   id="sponsorIdNumber" placeholder="${ field.ordinal}"  style="width: 75%;">
+																	</div>
+																</c:if>
+																<c:if test="${ field.ordinal== 'EMAIL'}">
+																	<input type="text" name="sponsorIdNumber" class="form-control input-sm"
+																		   id="sponsorIdNumber" placeholder="${ field.ordinal}">
+																</c:if>
 															</c:when>
 														</c:choose>
 													</c:forEach>
@@ -283,8 +320,18 @@
 															<c:choose>
 																<c:when test="${field.profile == 'TRUSTEE' }">
 																	<label for="trusteeIdNumber" class="control-label">${ field.ordinal }:</label>
-																	<input type="text" name="trusteeIdNumber" class="form-control input-sm"
-																		id="trusteeIdNumber" placeholder="${ field.ordinal}">
+																	<c:if test="${ field.ordinal== 'PHONE' }">
+																		<div class="form-inline">
+																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																			<input type="text" name="trusteeIdNumber" class="form-control"
+																				   id="trusteeIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
+																		</div>
+																	</c:if>
+																	<c:if test="${ field.ordinal== 'EMAIL'}">
+																		<input type="text" name="trusteeIdNumber" class="form-control input-sm"
+																			   id="trusteeIdNumber" placeholder="${ field.ordinal}">
+																	</c:if>
+
 																</c:when>
 															</c:choose>
 														</c:forEach>
@@ -334,8 +381,17 @@
 															<c:choose>
 																<c:when test="${field.profile == 'AGENT' }">
 																	<label for="agentIdNumber" class="control-label">${ field.ordinal }:</label>
-																	<input type="text" name="agentIdNumber" class="form-control input-sm"
-																		id="agentIdNumber" placeholder="${ field.ordinal}">
+																	<c:if test="${ field.ordinal== 'PHONE' }">
+																		<div class="form-inline">
+																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																			<input type="text" name="agentIdNumber" class="form-control"
+																				   id="agentIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
+																		</div>
+																	</c:if>
+																	<c:if test="${ field.ordinal== 'EMAIL'}">
+																		<input type="text" name="agentIdNumber" class="form-control input-sm"
+																			   id="agentIdNumber" placeholder="${ field.ordinal}">
+																	</c:if>
 																</c:when>
 															</c:choose>
 														</c:forEach>
@@ -385,8 +441,17 @@
 															<c:choose>
 																<c:when test="${field.profile == 'CUSTODIAN' }">
 																	<label for="custodianIdNumber" class="control-label">${ field.ordinal }:</label>
-																	<input type="text" name="custodianIdNumber" class="form-control input-sm"
-																		id="custodianIdNumber" placeholder="${ field.ordinal}">
+																	<c:if test="${ field.ordinal== 'PHONE' }">
+																		<div class="form-inline">
+																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																			<input type="text" name="custodianIdNumber" class="form-control"
+																				   id="custodianIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
+																		</div>
+																	</c:if>
+																	<c:if test="${ field.ordinal== 'EMAIL'}">
+																		<input type="text" name="custodianIdNumber" class="form-control input-sm"
+																			   id="custodianIdNumber" placeholder="${ field.ordinal}">
+																	</c:if>
 																</c:when>
 															</c:choose>
 														</c:forEach>
@@ -436,11 +501,22 @@
 															<c:choose>
 																<c:when test="${field.profile == 'CUSTOMER_RELATIONSHIP_MANAGER' }">
 																	<label for="crmIdNumber" class="control-label">${ field.ordinal }:</label>
-																	<input type="text" name="crmIdNumber" class="form-control input-sm"
-																		id="crmIdNumber" placeholder="${ field.ordinal}">
+																	<c:if test="${ field.ordinal== 'PHONE' }">
+																		<div class="form-inline">
+																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																			<input type="text" name="crmIdNumber" class="form-control input-sm"
+																				   id="crmIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
+																		</div>
+																	</c:if>
+																	<c:if test="${ field.ordinal== 'EMAIL'}">
+																		<input type="text" name="crmIdNumber" class="form-control input-sm"
+																			   id="crmIdNumber" placeholder="${ field.ordinal}">
+																	</c:if>
+
 																</c:when>
 															</c:choose>
 														</c:forEach>
+
 													</div>
 													<div class="form-group">
 														<label for="crmPassword" class="control-label">Password:</label>
@@ -487,8 +563,18 @@
 															<c:choose>
 																<c:when test="${field.profile == 'CUSTOMER_RELATIONSHIP_EXECUTIVE' }">
 																	<label for="creIdNumber" class="control-label">${ field.ordinal }:</label>
-																	<input type="text" name="creIdNumber" class="form-control input-sm"
-																		id="creIdNumber" placeholder="${ field.ordinal}">
+																	<c:if test="${ field.ordinal== 'PHONE' }">
+																		<div class="form-inline">
+																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																			<input type="text" name="creIdNumber" class="form-control"
+																				   id="creIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
+																		</div>
+																	</c:if>
+																	<c:if test="${ field.ordinal== 'EMAIL'}">
+																		<input type="text" name="creIdNumber" class="form-control input-sm"
+																			   id="creIdNumber" placeholder="${ field.ordinal}">
+																	</c:if>
+
 																</c:when>
 															</c:choose>
 														</c:forEach>
@@ -537,8 +623,17 @@
 															<c:choose>
 																<c:when test="${field.profile == 'FUND_MANAGER' }">
 																	<label for="fmIdNumber" class="control-label">${ field.ordinal }:</label>
-																	<input type="text" name="fmIdNumber" class="form-control input-sm"
-																		id="fmIdNumber" placeholder="${ field.ordinal}">
+																	<c:if test="${ field.ordinal== 'PHONE' }">
+																		<div class="form-inline">
+																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
+																			<input type="text" name="fmIdNumber" class="form-control"
+																				   id="fmIdNumber" placeholder="${ field.ordinal}" style="width: 75%;">
+																		</div>
+																	</c:if>
+																	<c:if test="${ field.ordinal== 'EMAIL'}">
+																		<input type="text" name="fmIdNumber" class="form-control input-sm"
+																			   id="fmIdNumber" placeholder="${ field.ordinal}">
+																	</c:if>
 																</c:when>
 															</c:choose>
 														</c:forEach>

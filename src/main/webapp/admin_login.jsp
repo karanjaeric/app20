@@ -13,10 +13,25 @@
 						<legend class="text-center">Please Login Here</legend>
 						<img class="profile-img-card" src="static/images/avatar_2x.png">
 						<div class="form-group">
-							<label class="control-label">Username</label> <input
-								class="form-control" type="text"
-								placeholder="Username" name="username" id="username">
-						</div>
+               <label class="control-label">Username</label>
+                   <c:forEach var="field" items="${loginFields}">
+	                    <c:choose>
+		                   <c:when test="${field.profile == 'ADMINISTRATOR' }">
+							   <c:if test="${ field.ordinal== 'PHONE' }">
+								   <div class="form-inline">
+									   <select class="form-control pull-left admin-country-code" name="country-code" style="width: 30%;"></select>
+									   <input class="form-control pull-right" type="text"
+											  placeholder="Username" name="username" id="username" style="width: 70%;">
+								   </div>
+							   </c:if>
+							   <c:if test="${ field.ordinal== 'EMAIL'}">
+								   <input class="form-control" type="text"
+										  placeholder="Username" name="username" id="username">
+							   </c:if>
+						   </c:when>
+						</c:choose>
+				   </c:forEach>
+							   </div>
 						<div class="form-group">
 							<label class="control-label">Password</label> <input
 								class="form-control" type="password" placeholder="Password" id="password"
