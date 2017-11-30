@@ -113,7 +113,7 @@ public class MemberController extends BaseServlet implements Serializable {
  						productId = this.getSessKey(request, Constants.SPONSOR_ID);
 
 						jLogger.i("The scheme passed::::::::::::::::: " + schemeId);
-						jLogger.i("The scheme passed::::::::::::::::: " + productId);
+						jLogger.i("The sponsor passed::::::::::::::::: " + productId);
 
 					} catch (Exception ex) {
 						ex.printStackTrace();

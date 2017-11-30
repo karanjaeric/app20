@@ -226,7 +226,12 @@ public class SignIn extends BaseServlet implements Serializable {
  								session.setAttribute(Constants.U_PROFILE, member.getProfile());
 
 								session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
-								session.setAttribute(Constants.SPONSOR_ID, sponsors.get(0).getId().toString());
+								if (sponsors!=null) {
+									session.setAttribute(Constants.SPONSOR_ID, sponsors.get(0).getId().toString());
+								}else {
+									session.setAttribute(Constants.SPONSOR_ID, null);
+
+								}
 
 								resetAttempt(this.get(request, "username"));
 
