@@ -71,6 +71,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.payments = payments;
 	}
 
+	public boolean isMemberpayments() {
+		return memberpayments;
+	}
+
+	public void setMemberpayments(boolean memberpayments) {
+		this.memberpayments = memberpayments;
+	}
+
 	public boolean isMembers() {
 		return members;
 	}
@@ -439,7 +447,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	private String profile;
 	
-	private boolean setup, content, schemes, receipts, payments, members, member_listing, corporate_statement, operations, media, uac, analytics,benefitProjectionPage, sponsorBenefitProjectionPage,calculator_log ;
+	private boolean setup, content, schemes, receipts, payments,memberpayments, members, member_listing, corporate_statement, operations, media, uac, analytics,benefitProjectionPage, sponsorBenefitProjectionPage,calculator_log ;
 	
 	private boolean portal_members, portal_member_view, portal_member_process, portal_member_delete, portal_member_add;
 	
@@ -540,7 +548,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	}
 
 	public Permission(long id, String profile, boolean setup, boolean content,
-			boolean schemes, boolean receipts, boolean payments,
+			boolean schemes, boolean receipts, boolean payments,boolean memberpayments,
 			boolean members, boolean member_listing, boolean corporate_statement, boolean operations, boolean media, boolean uac,
 			boolean analytics, boolean benefitProjectionPage, boolean sponsorBenefitProjectionPage,boolean calculator_log, boolean setup_company, boolean setup_email, boolean setup_logo,
 			boolean setup_menu, boolean db_menu, boolean setup_social, boolean setup_theme,
@@ -576,6 +584,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.schemes = schemes;
 		this.receipts = receipts;
 		this.payments = payments;
+		this.memberpayments =memberpayments;
 		this.members = members;
 		this.member_listing = member_listing;
 		this.corporate_statement = corporate_statement;

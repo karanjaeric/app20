@@ -26,9 +26,13 @@
                                 name="employerId" id="employerId" value="${sponsorName}">
                         </div>
                         <div class="form-group">
-                            <label class="control-label">PHONE:</label> <input
-                                class="form-control" type="text" placeholder="PHONE NUMBER"
-                                name="phoneNumber" id="phoneNumber">
+                            <label class="control-label">PHONE:</label>
+                            <div class="form-inline">
+                                <select class="form-control pull-left country-code-for-recovery" name="country-code" style="width: 25%;"></select>
+                                <input
+                                        class="form-control pull-right" type="text" placeholder="PHONE NUMBER"
+                                        name="phoneNumber" id="phoneNumber" style="width: 75%;">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label">EMAIL:</label> <input

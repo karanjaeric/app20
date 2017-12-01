@@ -554,6 +554,24 @@ public Double getMemberTotalUnits(String memberId) {
             return null;
         }
     }
+    @Override
+    public List<BenefitPayment> getMemberBenefitPayments(String memberId,int start, int count) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall.MEMBER_GET_MEMBER_BENEFIT_PAYMENTS + memberId+ "/?start=" + start + "&size=" + count);
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                return this.benefitPaymentsFromJSON(response);
+            }
+            else
+            {
+                return null;
+            }
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
 
     @Override
     public List<BenefitPayment> getBenefitPayments(String schemeID, int start, int count) {
