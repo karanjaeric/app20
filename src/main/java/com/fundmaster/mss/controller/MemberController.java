@@ -143,6 +143,7 @@ public class MemberController extends BaseServlet implements Serializable {
 						ex.printStackTrace();
 					}
 
+
 //					try {
 //						if (productId != null) {
 //							if (helper.isEmailAddress(user)) {

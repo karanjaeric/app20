@@ -78,6 +78,7 @@ public class RecoverAccountController extends BaseServlet implements Serializabl
 
         status =apiEJB.saveMemberAccountBySchemeAndMembershipNumber(email,phone,ssnitNumber,membershipNumber,schemeId);
         if (status) {
+            apiEJB.sendSMS(phone,"Member details have been successfully saved. You Can Now Register To MSS Portal");
 
             this.respond(response, true, "Member details have been successfully saved. You Can Now Register To MSS Portal" , null);
         }

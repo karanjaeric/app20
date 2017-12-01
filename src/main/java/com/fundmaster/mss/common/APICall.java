@@ -69,6 +69,7 @@ public class APICall {
     public static final String SCHEME_GET_SPONSOR_RECEIPTS = "scheme/getsponsorschemereceipts/";
     public static final String GET_REPORT_DETAILS = "getreportdetails/";
     public static final String SCHEME_GET_SCHEME_BENEFIT_PAYMENTS = "scheme/getschemebenefitpayments/";
+    public static final String MEMBER_GET_MEMBER_BENEFIT_PAYMENTS = "getmemberbenefitpayments/";
     public static final String SCHEME_GET_SCHEME_BENEFIT_PAYMENTS_PER_SPONSOR ="scheme/getschemebenefitpaymentspersponsor/";
     public static final String GET_DC_MEMBER_BALANCES = "getmemberbalances/";
     public static final String  GET_DB_MEMBER_BALANCES = "22206.00 msgetmemberaccruedpension/";

@@ -49,6 +49,13 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     @Column(name="benefitsProjectionPage", nullable=false)
     private boolean benefitsProjectionPage;
 
+
+
+    @Column(name="memberBenefit", nullable=false)
+    private boolean memberBenefit;
+
+
+
     @Column(name="sponsorBenefitsProjectionPage", nullable=false)
     private boolean sponsorBenefitsProjectionPage;
 
@@ -170,6 +177,15 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.benefitsProjectionPage = benefitsProjectionPage;
     }
 
+
+    public boolean isMemberBenefit() {
+        return memberBenefit;
+    }
+
+    public void setMemberBenefit(boolean memberBenefit) {
+        this.memberBenefit = memberBenefit;
+    }
+
     public boolean isSponsorBenefitsProjectionPage() {
         return sponsorBenefitsProjectionPage;
     }
@@ -203,7 +219,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     }
 
     public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
-                      boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection,boolean benefitsProjectionPage, boolean sponsorBenefitsProjectionPage,boolean benefitProjectionGrid, boolean media,
+                      boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection,boolean benefitsProjectionPage,boolean memberBenefit, boolean sponsorBenefitsProjectionPage,boolean benefitProjectionGrid, boolean media,
                       boolean annualContributionStatement, boolean provisionalMemberStatement, boolean annualContributionStatementGrid) {
         super();
         this.id = id;
@@ -217,6 +233,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.whatIfAnalysis = whatIfAnalysis;
         this.benefitsProjection = benefitsProjection;
         this.benefitsProjectionPage=benefitsProjectionPage;
+        this.memberBenefit =memberBenefit;
         this.sponsorBenefitsProjectionPage=sponsorBenefitsProjectionPage;
         this.benefitProjectionGrid = benefitProjectionGrid;
         this.annualContributionStatementGrid = annualContributionStatementGrid;
