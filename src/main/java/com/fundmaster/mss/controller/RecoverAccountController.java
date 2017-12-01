@@ -66,11 +66,11 @@ public class RecoverAccountController extends BaseServlet implements Serializabl
         String membershipNumber = String.valueOf(session.getAttribute("membershipNumber"));
         String schemeId = String.valueOf(session.getAttribute(Constants.SCHEME_ID));
 
-        jLogger.i("The date set is===================================> " + email);
-        jLogger.i("The date set is===================================> " + phone);
-        jLogger.i("The date set is===================================> " + ssnitNumber);
-        jLogger.i("The date set is===================================> " + membershipNumber);
-        jLogger.i("The date set is===================================> " + schemeId);
+        jLogger.i("The email set is===================================> " + email);
+        jLogger.i("The phone set is===================================> " + phone);
+        jLogger.i("The ssnitNumber set is===================================> " + ssnitNumber);
+        jLogger.i("The membershipNumber set is===================================> " + membershipNumber);
+        jLogger.i("The schemeId is===================================> " + schemeId);
 
 
         boolean status;

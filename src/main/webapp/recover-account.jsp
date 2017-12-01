@@ -28,10 +28,10 @@
                         <div class="form-group">
                             <label class="control-label">PHONE:</label>
                             <div class="form-inline">
-                                <select class="form-control pull-left country-code-for-recovery" name="country-code" style="width: 25%;"></select>
+                                <select class="form-control pull-left country-code-for-recovery" name="country-code" style="width: 30%;"></select>
                                 <input
                                         class="form-control pull-right" type="text" placeholder="PHONE NUMBER"
-                                        name="phoneNumber" id="phoneNumber" style="width: 75%;">
+                                        name="phoneNumber" id="phoneNumber" style="width: 70%;">
                             </div>
                         </div>
                         <div class="form-group">

@@ -247,11 +247,9 @@ public class Register extends BaseServlet implements Serializable {
                                 List<String> recipients = new ArrayList<>();
                                 recipients.add(email_address);
                                 String memberId = u.getProfileID().toString();
-                                String operationType = "ACCOUNT_ACTIVATION";
-                                String operationStatus = "SUCCESS";
+
 
                                 //api call
-                                apiEJB.mssAccountOperation(memberId, operationType, operationStatus);
 
                                 apiEJB.sendEmail(recipients, sender, null, "MSS Portal Account Activation Instructions",
                                         "Dear " + u.getUserProfile() + ", "
@@ -262,6 +260,13 @@ public class Register extends BaseServlet implements Serializable {
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> "
                                         + "Congratulations! Your account has been created on the portal. "
                                         + "An email has been sent to your email address with account activation instructions.", null);
+
+
+                                String operationType = "ACCOUNT_REGISTRATION";
+                                String operationStatus = "SUCCESS";
+
+                                apiEJB.mssAccountOperation(memberId, operationType, operationStatus);
+
 
                             } else {
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> Congratulations! "

@@ -3642,6 +3642,14 @@ if(typeof adminCountryCode=="undefined")
             function(e) {
                 start_wait();
                 // Prevent form submission
+                var recoverCountryCode=$('.country-code-for-recovery').val();
+                if(recoverCountryCode==null)
+                {
+                    recoverCountryCode='';
+                }
+                else {
+                    recoverCountryCode=$('.country-code-for-recovery').val();
+                }
                 e.preventDefault();
                 // Get the form instance
                 $
@@ -3658,7 +3666,7 @@ if(typeof adminCountryCode=="undefined")
                             employerId : $(
                                 '#employerId')
                                 .val(),
-                            phoneNumber : $(
+                            phoneNumber : recoverCountryCode+$(
                                 '#phoneNumber')
                                 .val(),
                             email : $(
