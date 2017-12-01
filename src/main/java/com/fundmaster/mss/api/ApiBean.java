@@ -2679,21 +2679,14 @@ public Double getMemberTotalUnits(String memberId) {
                 jLogger.i("op type is "+ operationType);
                 jLogger.i("op status is "+ operationStatus);
                 
-
+                    JSONObject response;
 
         try {
-            JSONObject response;
-            JSONObject requestParams = new JSONObject();
-
-   
-            requestParams.put("operation.memberId", memberId)
-                    .put("operation.operationType", operationType)
-                    .put("operation.operationStatus", operationStatus);
-            response = URLPost(APICall.MSS_ACCOUNT_OPERATION, requestParams.toString(), Constants.APPLICATION_JSON);
-            
+            response = URLPost(APICall.MSS_ACCOUNT_OPERATION + memberId  + "/" + operationType + "/" + operationStatus,"", Constants.APPLICATION_JSON);
         } catch (JSONException ex) {
             Logger.getLogger(ApiBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
 
