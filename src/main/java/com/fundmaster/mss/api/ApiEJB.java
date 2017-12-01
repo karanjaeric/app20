@@ -89,6 +89,7 @@ public interface ApiEJB {
     List<AgentClient> getAgentClients(String agentId, int start, int count);
     List<MemberClaims>getMemberClaims(String memberId, long schemeId);
     List<BenefitPayment> getBenefitPayments(String schemeID, int start, int count);
+    List<BenefitPayment> getMemberBenefitPayments(String memberId,int start, int count);
     List<BenefitPayment> getBenefitPaymentsPerSponsor(String schemeID, String sponsorId, int start, int count);
 
     JSONObject getDcMemberBalances(String memberID);
@@ -113,5 +114,7 @@ public interface ApiEJB {
     List<Scheme> getSchemeByPlanType(String planType);
     JSONObject getAnnuityQuote(String calculationMode, String productID, String lastName, String firstName, String otherNames, String idNumber, String address, String email, String phoneNumber, String purchaseDate, String pensionStartDate, String dateOfBirth, String gender, String guaranteedPercentage, String annuityIncrement, String paymentMode, String paymentFrequency, String registeredPurchasePrice, String unRegisteredPurchasePrice, String targetPension, String annuityMode, String spouseReversal, Boolean displayable, String spouseGender, String spouseDateOfBirth);
     List<Scheme> getSchemes(int start, int count);
+
+     void mssAccountOperation(String memberId,String operationType,String operationStatus);
 
 }

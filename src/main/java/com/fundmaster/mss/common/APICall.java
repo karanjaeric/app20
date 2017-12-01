@@ -10,7 +10,7 @@ public class APICall {
     public static final String UPLOAD_MEMBER_DOCUMENT = "uploadmemberdocument";
     public static final String GET_PAYROLL_YEARS = "getpayrollyears";
     public static final String CHECK_MEMBER_EXISTS = "checkMemberExists/";
-     public static final String CHECK_MEMBER_EXISTS_PHONE = "checkMemberExistsPhone";
+    public static final String CHECK_MEMBER_EXISTS_PHONE = "checkMemberExistsPhone";
     public static final String GET_BALANCES_HISTORY = "getbalanceshistory/";
     public static final String GET_PENSION_ADVICE = "getpensioneradvice/";
     public static final String GET_MEMBER_STATEMENT = "getmemberstatement/";
@@ -69,6 +69,7 @@ public class APICall {
     public static final String SCHEME_GET_SPONSOR_RECEIPTS = "scheme/getsponsorschemereceipts/";
     public static final String GET_REPORT_DETAILS = "getreportdetails/";
     public static final String SCHEME_GET_SCHEME_BENEFIT_PAYMENTS = "scheme/getschemebenefitpayments/";
+    public static final String MEMBER_GET_MEMBER_BENEFIT_PAYMENTS = "getmemberbenefitpayments/";
     public static final String SCHEME_GET_SCHEME_BENEFIT_PAYMENTS_PER_SPONSOR ="scheme/getschemebenefitpaymentspersponsor/";
     public static final String GET_DC_MEMBER_BALANCES = "getmemberbalances/";
     public static final String  GET_DB_MEMBER_BALANCES = "22206.00 msgetmemberaccruedpension/";
@@ -91,4 +92,5 @@ public class APICall {
     public static final String SCHEME_GETSCHEMES = "scheme/getschemes";
     public static final String GET_EXITS_BENEFITS = "getexitbenefits/";
     public static final String SAVESMS = "savesms/";
+    public static final String MSS_ACCOUNT_OPERATION  = "mssAccountOperation/";
 }

@@ -124,6 +124,9 @@ public class Dashboard extends BaseServlet implements Serializable {
                 case Actions.PAYMENT:
                     showPayments(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
                     break;
+                case Actions.MEMBERPAYMENT:
+                    showMemberPayments(request, response, session);
+                    break;
                 case Actions.MEDIA:
                     showMedia(request, response, session, REPO_FOLDER);
                     break;
@@ -1349,6 +1352,35 @@ SocialBeanI socialBeanI;
             return 1;
         }
     }
+    private void showMemberPayments(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Company company = companyBeanI.find();
+        request.setAttribute("company", company);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+
+        XiMember m;
+        String member_id;
+        member_id = this.get(request, "memberID");
+        if (member_id == null || member_id.isEmpty())
+            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("Member ID is: " + member_id);
+        m = apiEJB.getMemberDetails(member_id, null);
+        request.setAttribute("member", m);
+
+        String memberNumber = m.getMemberNo();
+        jLogger.i("Member Number found is " + memberNumber);
+
+        long schemeId = Long.parseLong(this.getSessKey(request, Constants.SCHEME_ID)) ;
+        jLogger.i("Scheme Id found is " + schemeId);
+
+        List<BenefitPayment> benefitPayments = apiEJB.getMemberBenefitPayments(member_id,0,50);
+        request.setAttribute("claims", benefitPayments);
+
+        logActivity("MEMBER PAYMENTS", "Viewed member Payments", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member Payments");
+        request.getRequestDispatcher("member/memberpayments.jsp").forward(request, response);
+    }
     private void showPayments(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
         List<BenefitPayment> payments;
         int page;
@@ -1365,6 +1397,11 @@ SocialBeanI socialBeanI;
 
             sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
             jLogger.i("Sponsor ID " + sponsorId);
+        }
+        else
+        if(this.getSessKey(request,Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)){
+           String memberId=this.getSessKey(request,Constants.PROFILE_ID);
+           jLogger.i("This is memnerid" +memberId);
         }
 
         if (sponsorId!= null) {

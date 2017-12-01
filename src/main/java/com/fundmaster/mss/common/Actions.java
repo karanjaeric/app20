@@ -37,6 +37,7 @@ public class Actions {
     public static final String MEMBER_STATEMENT_OF_ACCOUNT_GRID = "SA_GRID";
     public static final String MEMBER_UNITIZED_STATEMENT = "US";
     public static final String MEMBER_BENEFIT_PROJECTIONS = "BP";
+    public static final String MEMBER_BENEFIT_PAYMENT = "MEMBERPAYMENT";
     public static final String ANNUAL_CONTRIBUTION_STATEMENT = "AC";
     public static final String PROVISIONAL_MEMBER_STATEMENT = "PMS";
 
@@ -72,6 +73,7 @@ public class Actions {
     public static final String RECEIPT = "RECEIPT";
     public static final String CONTENT = "CONTENT";
     public static final String PAYMENT = "PAYMENT";
+    public static final String MEMBERPAYMENT = "MEMBERPAYMENT";
     public static final String MEDIA = "MEDIA";
     public static final String PORTAL_MEMBER = "PORTAL_MEMBER";
     public static final String SPONSOR = "SPONSOR";

@@ -636,6 +636,13 @@
 							<td>
 								<input type="checkbox" name="benefitsProjectionPage" id="benefitsProjectionPage" ${memberMenu.benefitsProjectionPage == 'TRUE' ? 'checked' : ''}/>
 							</td>
+						</tr>	<tr>
+							<td>
+								<label class="control-label"> MEMBER PAYMENT </label>
+							</td>
+							<td>
+								<input type="checkbox" name="memberBenefit" id="memberBenefit" ${memberMenu.memberBenefit == 'TRUE' ? 'checked' : ''}/>
+							</td>
 						</tr>
 						<tr>
 							<td>
@@ -1250,6 +1257,8 @@
 								UnitizedStatement: $('#UnitizedStatement').prop('checked'),
 								WhatIfAnalysis: $('#WhatIfAnalysis').prop('checked'),
                                 benefitsProjectionPage: $('#benefitsProjectionPage').prop('checked'),
+                                memberBenefit: $('#memberBenefit').prop('checked'),
+
                                 benefitsProjection: $('#benefitsProjection').prop('checked'),
 								benefitProjectionGrid: $('#benefitProjectionGrid').prop('checked'),
 								annualContributionStatement: $('#annualContributionStatement').prop('checked'),

@@ -34,7 +34,7 @@ var numbers = $('#numbers').val();
 
 $(document).ready(function() {
 
-$(".member-country-code,.admin-country-code,.sponsor-country-code,.trustee-country-code,.agent-country-code,.pensioner-country-code").append(
+$(".member-country-code,.admin-country-code,.sponsor-country-code,.trustee-country-code,.agent-country-code,.pensioner-country-code,.country-code-for-recovery").append(
     "        <option data-countryCode='GB' value='+44' Selected>UK (+44)</option>\n" +
     "        <option data-countryCode='US' value='+1'>USA (+1)</option>\n" +
     "        <option data-countryCode='DZ' value='+213'>Algeria (+213)</option>\n" +

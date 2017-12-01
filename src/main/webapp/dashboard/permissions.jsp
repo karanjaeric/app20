@@ -58,6 +58,9 @@
       <h2 class="accordion-header">SCHEME PAYMENTS<span class="pull-right"><input type="checkbox" id="payments" class="form-control input-sm"  ${permissions.payments == 'TRUE' ? 'checked' : ''}/></span></h2>
      <div class="accordion-content">
           <p>Access to the schemes payments</p>
+     </div> <h2 class="accordion-header">MEMBER  PAYMENTS<span class="pull-right"><input type="checkbox" id="memberpayments" class="form-control input-sm"  ${permissions.memberpayments == 'TRUE' ? 'checked' : ''}/></span></h2>
+     <div class="accordion-content">
+          <p>Access to the schemes payments</p>
      </div>
 
 	<h2 class="accordion-header">REPORTS<span class="pull-right"><input type="checkbox" id="reports" class="form-control input-sm"  ${permissions.reports == 'TRUE' ? 'checked' : ''}/></span></h2>

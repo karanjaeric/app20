@@ -390,6 +390,15 @@ $(document).ready(function(){
 		m_switch('SPONSOR_BENEFIT_PAYMENT');
 		
     });
+	$('#memberpayments-main-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#memberpayments-main-li').addClass('active');
+
+		m_switch('MEMBERPAYMENT');
+
+    });
 	
 	$('#registered-main-li').click(function(){
 		
@@ -598,6 +607,14 @@ $(document).ready(function(){
         $('#calculate-benefit-projection-li').addClass('active');
 
         m_switch("CBP");
+
+    });    $('#member-benefits-li').click(function(){
+
+        $('#main-menu.nav li').removeClass('active');
+
+        $('#member-benefits-li').addClass('active');
+
+        m_switch("MEMBERPAYMENT");
     });
 
     $('#sponsor-calculate-benefit-projection-li').click(function(){
