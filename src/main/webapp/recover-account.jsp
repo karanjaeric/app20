@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label class="control-label">MEMBERSHIP NUMBER:</label> <input
                                 class="form-control disabled" type="text"
-                                placeholder="MEMBERSHIP NUMBER" name="memberid" id="memberid" value="${memberNumber}"
+                                placeholder="MEMBERSHIP NUMBER" name="memberid" id="memberid" value="${membershipNumber}"
                         >
                         </div>
 
@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <label class="control-label">SSNIT:</label> <input
                                 class="form-control" type="text" placeholder="SSNIT"
-                                name="ssnit" id="ssnit" value="${nationalPenNo}">
+                                name="ssnit" id="ssnit">
                         </div>
                         <button class="btn btn-warning btn-block" type="submit">
                             <strong>SUBMIT</strong>

@@ -998,7 +998,6 @@ $('#form-password-reset').bootstrapValidator({
            bootbox.alert(json.message);
            var status = json.success;
            if(status){
-
                setTimeout(
                    function() {
                        window.location.href = $(

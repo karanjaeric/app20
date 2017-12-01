@@ -24,6 +24,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 
@@ -191,7 +193,7 @@ public class ApiBean implements ApiEJB {
         jLogger.i(" The presentValue is " + PV);
         jLogger.i(" The UserName is " + user);
 
-
+        MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
         BigDecimal rate = BigDecimal.valueOf(Double.parseDouble(IR));
         BigDecimal years = BigDecimal.valueOf(Double.parseDouble(yrs));
         BigDecimal freq = BigDecimal.valueOf(Double.parseDouble(paymentFrequency));
@@ -199,21 +201,21 @@ public class ApiBean implements ApiEJB {
         BigDecimal presentValue = BigDecimal.valueOf(Double.parseDouble(PV));
 
         BigDecimal divider = new BigDecimal("100");
-        BigDecimal interestRate = rate.divide(divider);
+        BigDecimal interestRate = rate.divide(divider,mc);
 
-        BigDecimal factor1=BigDecimal.ONE.add(interestRate.divide(freq),MathContext.UNLIMITED);
+        BigDecimal factor1=BigDecimal.ONE.add(interestRate.divide(freq,mc),MathContext.UNLIMITED);
         BigDecimal powerFactor=freq.multiply(years);
 
         BigDecimal factor2=factor1.pow(powerFactor.intValue(), MathContext.UNLIMITED);
         BigDecimal base=presentValue.multiply(factor2);
 
-        BigDecimal den=interestRate.divide(freq);
-        BigDecimal factor4=interestRate.divide(freq);
+        BigDecimal den=interestRate.divide(freq,mc);
+        BigDecimal factor4=interestRate.divide(freq,mc);
         BigDecimal factor3=BigDecimal.ONE.add(factor4);
         BigDecimal powerFactor2=years.multiply(freq);
         BigDecimal num=factor3.pow(powerFactor2.intValue(), MathContext.UNLIMITED);
         BigDecimal base1=num.subtract(BigDecimal.ONE);
-        BigDecimal base2=base1.divide(den);
+        BigDecimal base2=base1.divide(den,mc);
         BigDecimal base3=PMT.multiply(base2);
 
         BigDecimal futureValue=base.add(base3).setScale(2,BigDecimal.ROUND_HALF_EVEN);
@@ -1741,6 +1743,22 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
+    public boolean saveMemberAccountBySchemeAndMembershipNumber(String email, String phone, String ssnitNumber, String membershipNumber, String schemeId) {
+        JSONObject response;
+        try {
+            response = URLPost(APICall.SAVE_MEMBER_ACCOUNT_BY_SCHEME_AND_MEMBERSHIP_NUMBER
+                    + email  + "/" + phone + "/" + ssnitNumber + "/" + membershipNumber + "/" + schemeId, "", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            return response.getBoolean(Fields.SUCCESS);
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return false;
+        }
+    }
+
+
+
+
+    @Override
     public XiMember memberExistsInScheme(String profile, String value, String schemeID) {
         String ordinal = profileLoginFieldBeanI.findByProfile(profile);
         JSONObject response;
@@ -2650,6 +2668,31 @@ public Double getMemberTotalUnits(String memberId) {
         } catch (JSONException je) {
             jLogger.e("We have a json exception checking if the member exists" + je.getMessage());
             return null;
+        }
+    }
+
+    @Override
+    public void mssAccountOperation(String memberId,String operationType,String operationStatus) {
+        
+        
+                jLogger.i("member id is "+ memberId);
+                jLogger.i("op type is "+ operationType);
+                jLogger.i("op status is "+ operationStatus);
+                
+
+
+        try {
+            JSONObject response;
+            JSONObject requestParams = new JSONObject();
+
+   
+            requestParams.put("operation.memberId", memberId)
+                    .put("operation.operationType", operationType)
+                    .put("operation.operationStatus", operationStatus);
+            response = URLPost(APICall.MSS_ACCOUNT_OPERATION, requestParams.toString(), Constants.APPLICATION_JSON);
+            
+        } catch (JSONException ex) {
+            Logger.getLogger(ApiBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

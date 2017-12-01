@@ -47,10 +47,10 @@ public class FindMemberAccount extends BaseServlet implements Serializable {
             XiMember member = new XiMember();
             String memberId = this.get(request, "memberNo");//membershipNumber
 
-            request.getSession().setAttribute("memberNumber", memberId);
+            request.getSession().setAttribute("membershipNumber", memberId);
             //  String ssnit = this.get(request, "ssnit");
 
-            jLogger.i("The Membershp Number is " + memberId);
+            jLogger.i("The Membership Number is " + memberId);
             // jLogger.i("The SSNIT Number is " + ssnit);
 
 
@@ -65,11 +65,8 @@ public class FindMemberAccount extends BaseServlet implements Serializable {
 
                 String memberExistingEmail = member.getEmailAddress();
                 session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
-                session.setAttribute("nationalPenNo" , member.getNationalPenNo());
-                session.setAttribute("memberId" , member.getId());
                 session.setAttribute("existingPhoneNumber" , member.getPhoneNumber());
                 session.setAttribute("memberExistingEmail" , memberExistingEmail);
-
 
 
                 List<Sponsor> sponsors = apiEJB.getMemberSchemeProducts(memberExistingEmail, this.getSessKey(request, Constants.SCHEME_ID));
@@ -81,6 +78,7 @@ public class FindMemberAccount extends BaseServlet implements Serializable {
 
                 this.respond(response, true, "<strong>Member Account Found  </strong><br /> " +
                         " You will be redirected to Account recovery Page", null);
+
             }else this.respond(response,false,"Member NOT found" , null);
         }
 

@@ -3589,6 +3589,110 @@ if(typeof adminCountryCode=="undefined")
 
 							});
 
+    $('#form-recover-account').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        excluded: ':disabled',
+        fields: {
+            memberId: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter your Member Id'
+                    }
+                }
+            },
+            employerId: {
+                validators: {
+                    notEmpty: {
+                        message: 'This field Should not be Empty'
+                    }
+                }
+            },
+
+            phoneNumber : {
+                validators : {
+                    notEmpty : {
+                        message : 'Please enter your Phone Number'
+                    }
+                }
+            },
+            email : {
+                validators : {
+                    notEmpty : {
+                        message : 'Please enter your Email'
+                    }
+                }
+            },
+            ssnit : {
+                validators : {
+                    notEmpty : {
+                        message : 'Please enter your SSNIT Number'
+                    }
+                }
+            }
+        }
+    })
+
+        .on(
+            'success.form.bv',
+            function(e) {
+                start_wait();
+                // Prevent form submission
+                e.preventDefault();
+                // Get the form instance
+                $
+                    .ajax({
+                        url : $('#base_url').val()
+                        + 'recover-account',
+                        type : 'post',
+                        data : {
+                            category : 'MEMBER',
+
+                            memberId : $(
+                                '#memberid')
+                                .val(),
+                            employerId : $(
+                                '#employerId')
+                                .val(),
+                            phoneNumber : $(
+                                '#phoneNumber')
+                                .val(),
+                            email : $(
+                                '#email')
+                                .val(),
+                            ssnit:$(
+                                '#ssnit')
+                                .val()
+                        },
+                        dataType : 'json',
+                        success : function(json) {
+                              stop_wait();
+                            if(json.success)
+                            {
+                                $("form#form-recover-account")[0]
+                                    .reset();
+                                setTimeout(
+                                    function() {
+                                        window.location.href = $(
+                                            '#base_url')
+                                            .val() + 'register';
+                                    }, 5000);
+                            }
+                            bootbox
+                                .alert('<p class="text-center">'
+                                    + json.message
+                                    + '</p>');
+
+
+
+                        }
+                    });
+            });
+
 					$('#form-new-sponsor')
 					.bootstrapValidator(
 							{
