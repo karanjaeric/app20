@@ -91,5 +91,5 @@ public class APICall {
     public static final String SCHEME_GETSCHEMES = "scheme/getschemes";
     public static final String GET_EXITS_BENEFITS = "getexitbenefits/";
     public static final String SAVESMS = "savesms/";
-    public static final String MSS_ACCOUNT_OPERATION  = "mssAccountOperation/";
+    public static final String MSS_ACCOUNT_OPERATION  = "mssAccountOperation/saveOrUpdate/";
 }
