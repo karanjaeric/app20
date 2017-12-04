@@ -136,9 +136,10 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
 
             String username = this.get(request, "username-admin");
             User usr = userBeanI.findByUsername(username);
+            if (usr != null) {
             String userProfile = usr.getUserProfile();
 
-                if (usr != null) {
+
                     if (helper.isEmailAddress(username)) {
 
                         String securityCode = UUID.randomUUID().toString();
