@@ -661,6 +661,14 @@
 								<input type="checkbox" name="Media" id="Media" ${memberMenu.media == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<label class="control-label"> DOCUMENTS </label>
+							</td>
+							<td>
+								<input type="checkbox" name="document" id="document" ${memberMenu.document == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
 
 					</table>
 				</div>
@@ -1258,13 +1266,13 @@
 								WhatIfAnalysis: $('#WhatIfAnalysis').prop('checked'),
                                 benefitsProjectionPage: $('#benefitsProjectionPage').prop('checked'),
                                 memberBenefit: $('#memberBenefit').prop('checked'),
-
                                 benefitsProjection: $('#benefitsProjection').prop('checked'),
 								benefitProjectionGrid: $('#benefitProjectionGrid').prop('checked'),
 								annualContributionStatement: $('#annualContributionStatement').prop('checked'),
 								annualContributionStatementGrid: $('#annualContributionStatementGrid').prop('checked'),
                                 provisionalMemberStatement: $('#provisionalMemberStatement').prop('checked'),
-								Media: $('#Media').prop('checked')
+								Media: $('#Media').prop('checked'),
+								document: $('#document').prop('checked')
 							},
 							dataType: 'json',
 							success: function(json) {

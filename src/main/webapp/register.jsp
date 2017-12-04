@@ -79,7 +79,7 @@
 																			<div class="form-inline">
 																				<select class="form-control pull-left admin-country-code" name="country-code" style="width: 25%;"></select>
 																				<input type="text" name="adminIdNumber" class="form-control"
-																					   id="adminIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+																					   id="adminIdNumber" placeholder="${ field.ordinal}" style="width: 75%;"   >
 																			</div>
 																		</c:if>
 																		<c:if test="${ field.ordinal== 'EMAIL'}">
@@ -140,7 +140,7 @@
 																			<div class="form-inline">
 																					<select class="form-control pull-left member-country-code" name="country-code" style="width: 25%;"></select>
 																					<input type="text" name="eMIdNumber" class="form-control pull-right"
-																						   id="eMIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+																						   id="eMIdNumber" placeholder="${ field.ordinal}" style="width: 75%;"   >
 																			</div>
 																				</c:if>
 																	    <c:if test="${ field.ordinal== 'EMAIL'}">
@@ -205,7 +205,7 @@
 																	  <div class="form-inline">
 																		  <select class="form-control pull-left pensioner-country-code" name="country-code" style="width: 25%;"></select>
 																		  <input type="text" name="pensionerIdNumber" class="form-control"
-																				 id="pensionerIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9" >
+																				 id="pensionerIdNumber" placeholder="${ field.ordinal}" style="width: 75%;"    >
 																	  </div>
 																	  </c:if>
 																	  <c:if test="${ field.ordinal== 'EMAIL'}">
@@ -267,7 +267,7 @@
 																	<div class="form-inline">
 																		<select class="form-control pull-left sponsor-country-code" name="country-code" style="width: 25%;"></select>
 																		<input type="text" name="sponsorIdNumber" class="form-control"
-																			   id="sponsorIdNumber" placeholder="${ field.ordinal}"  style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+																			   id="sponsorIdNumber" placeholder="${ field.ordinal}"  style="width: 75%;"   >
 																	</div>
 																</c:if>
 																<c:if test="${ field.ordinal== 'EMAIL'}">
@@ -327,7 +327,7 @@
 																		<div class="form-inline">
 																			<select class="form-control pull-left trustee-country-code" name="country-code" style="width: 25%;"></select>
 																			<input type="text" name="trusteeIdNumber" class="form-control"
-																				   id="trusteeIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+																				   id="trusteeIdNumber" placeholder="${ field.ordinal}" style="width: 75%;"   >
 																		</div>
 																	</c:if>
 																	<c:if test="${ field.ordinal== 'EMAIL'}">
@@ -388,7 +388,7 @@
 																		<div class="form-inline">
 																			<select class="form-control pull-left agent-country-code" name="country-code" style="width: 25%;"></select>
 																			<input type="text" name="agentIdNumber" class="form-control"
-																				   id="agentIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+																				   id="agentIdNumber" placeholder="${ field.ordinal}" style="width: 75%;"   >
 																		</div>
 																	</c:if>
 																	<c:if test="${ field.ordinal== 'EMAIL'}">
@@ -448,7 +448,7 @@
 																		<div class="form-inline">
 																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
 																			<input type="text" name="custodianIdNumber" class="form-control"
-																				   id="custodianIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+																				   id="custodianIdNumber" placeholder="${ field.ordinal}" style="width: 75%;"   >
 																		</div>
 																	</c:if>
 																	<c:if test="${ field.ordinal== 'EMAIL'}">
@@ -508,7 +508,7 @@
 																		<div class="form-inline">
 																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
 																			<input type="text" name="crmIdNumber" class="form-control input-sm"
-																				   id="crmIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+																				   id="crmIdNumber" placeholder="${ field.ordinal}" style="width: 75%;"   >
 																		</div>
 																	</c:if>
 																	<c:if test="${ field.ordinal== 'EMAIL'}">
@@ -570,7 +570,7 @@
 																		<div class="form-inline">
 																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
 																			<input type="text" name="creIdNumber" class="form-control"
-																				   id="creIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+																				   id="creIdNumber" placeholder="${ field.ordinal}" style="width: 75%;"   >
 																		</div>
 																	</c:if>
 																	<c:if test="${ field.ordinal== 'EMAIL'}">
@@ -630,7 +630,7 @@
 																		<div class="form-inline">
 																			<select class="form-control pull-left country-code" name="country-code" style="width: 25%;"></select>
 																			<input type="text" name="fmIdNumber" class="form-control"
-																				   id="fmIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" maxlength="9">
+																				   id="fmIdNumber" placeholder="${ field.ordinal}" style="width: 75%;" >
 																		</div>
 																	</c:if>
 																	<c:if test="${ field.ordinal== 'EMAIL'}">

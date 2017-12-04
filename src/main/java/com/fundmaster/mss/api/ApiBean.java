@@ -1860,6 +1860,11 @@ public Double getMemberTotalUnits(String memberId) {
             } else {
                 xiMember.setPhoneNumber(response.getString(Fields.CELL_PHONE));
             }
+            if (response.getString(Fields.NATIONAL_PEN_NO) == null || response.getString(Fields.NATIONAL_PEN_NO).isEmpty()) {
+                xiMember.setNationalPenNo("");
+            } else {
+                xiMember.setNationalPenNo(response.getString(Fields.NATIONAL_PEN_NO));
+            }
 
             try {
                 

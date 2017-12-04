@@ -114,9 +114,16 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	public boolean isMedia() {
 		return media;
 	}
+	public boolean isDocument() {
+		return document;
+	}
 
 	public void setMedia(boolean media) {
 		this.media = media;
+	}
+
+	public void setDocument(boolean document) {
+		this.document = document;
 	}
 
 	public boolean isUac() {
@@ -447,7 +454,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	private String profile;
 	
-	private boolean setup, content, schemes, receipts, payments,memberpayments, members, member_listing, corporate_statement, operations, media, uac, analytics,benefitProjectionPage, sponsorBenefitProjectionPage,calculator_log ;
+	private boolean setup, content, schemes, receipts, payments,memberpayments, members, member_listing, corporate_statement, operations, media,document, uac, analytics,benefitProjectionPage, sponsorBenefitProjectionPage,calculator_log ;
 	
 	private boolean portal_members, portal_member_view, portal_member_process, portal_member_delete, portal_member_add;
 	
@@ -549,7 +556,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	public Permission(long id, String profile, boolean setup, boolean content,
 			boolean schemes, boolean receipts, boolean payments,boolean memberpayments,
-			boolean members, boolean member_listing, boolean corporate_statement, boolean operations, boolean media, boolean uac,
+			boolean members, boolean member_listing, boolean corporate_statement, boolean operations, boolean media,boolean document, boolean uac,
 			boolean analytics, boolean benefitProjectionPage, boolean sponsorBenefitProjectionPage,boolean calculator_log, boolean setup_company, boolean setup_email, boolean setup_logo,
 			boolean setup_menu, boolean db_menu, boolean setup_social, boolean setup_theme,
 			boolean setup_banner, boolean setup_interest_rate,
@@ -590,6 +597,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.corporate_statement = corporate_statement;
 		this.operations = operations;
 		this.media = media;
+		this.document = document;
 		this.reports = reports;
 		this.member_movement = member_movement;
 		this.fund_movement = fund_movement;
