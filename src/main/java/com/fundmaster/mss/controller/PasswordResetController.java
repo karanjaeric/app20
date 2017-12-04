@@ -101,15 +101,15 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
 		if (this.get(request, "ACTION").equals("RESET_PASSWORD")) {
 			PasswordPolicy policy = passwordPolicyBeanI.find();
-			String securityCode = this.get(request, "securityCode");
-			User u = userBeanI.findBySecurityCode(securityCode);
+			String resetCode = this.get(request, "resetCode");
+			User u = userBeanI.findByActivationCode(resetCode);
 			if (u != null) {
-				if (u.getSecurityCode().equalsIgnoreCase(securityCode)) {
+				if (u.getSmsActivationCode().equalsIgnoreCase(resetCode)) {
 					if (!(usedPasswordBeanI.isUsed(this.get(request, "newPassword")) && policy.isPassword_reuse())) {
 						Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
 						u.setPassword_expiry(password_expiry);
 						u.setPassword(helper.hash(this.get(request, "newPassword")));
-						u.setSecurityCode(null);
+						u.setSmsActivationCode(null);
 						if (userBeanI.edit(u) != null)
 							this.respond(response, true, "Your password has been reset successfully", null);
 						else
@@ -131,59 +131,17 @@ public class PasswordResetController extends BaseServlet implements Serializable
 			Setting settings = settingBeanI.find();
 			Constants.BASE_URL = request.getContextPath() + "password-reset";
 
-			String username = this.get(request, "username");
+			String username = this.get(request, "userPhone");
+			jLogger.i("The Username (PHONE) " + username);
 			User usr = userBeanI.findByUsername(username);
-			String userProfile = usr.getUserProfile();
+			 String userProfile = usr.getUserProfile();
+			if (usr != null) {
 
-			if (helper.isEmailAddress(username)) {
-
-				if (usr != null) {
-					String securityCode = UUID.randomUUID().toString();
-					usr.setSecurityCode(securityCode);
-					Company company = companyBeanI.find();
-					Emails emails = emailsBeanI.find();
-
-					String sender = emails.getDefaultEmail();
-					XiMember m = null;
-
-					if (usr.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
-						m = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
-					} else {
-						m = apiEJB.memberExists(userProfile, username);
-
-					}
-
-					boolean status = false;
-					List<String> recipients = new ArrayList<>();
-
-					try {
-						recipients.add(m.getEmailAddress());
-						status = apiEJB.sendEmail(recipients, sender, null, "Password Reset Instructions", "Dear " + usr.getUserProfile() + ", " +
-
-								"You recently requested to change your password. " +
-								"Your security code is: " + securityCode +
-								" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);
-						jLogger.i("Your Status is ====== " + status);
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
+	    if (helper.isValidPhone(username)) {
 
 
-					if (status) {
-						if (userBeanI.edit(usr) != null)
-							this.respond(response, true, "The password reset instructions have been sent to your email address", null);
-						else
-							this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
-					} else {
-						this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
-
-					}
-				}
-			} else if (helper.isValidPhone(username)) {
-
-				if (usr != null) {
-					String securityCode = UUID.randomUUID().toString();
-					usr.setSecurityCode(securityCode);
+					String resetCode = helper.randomNumber().toString();
+					usr.setSmsActivationCode(resetCode);
 					Company company = companyBeanI.find();
 					String recipient = null;
 					;
@@ -206,7 +164,7 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
 						apiEJB.sendSMS(recipient, "Dear " + usr.getUserProfile() + " ," +
 								"You recently requested to change your password. " +
-								"Your security code is: " + securityCode +
+								"Your Reset code is: " + resetCode +
 								" Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request."
 						);
 						status = true;
@@ -232,7 +190,16 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
 				}
 			}
+			else {
+				this.respond(response, true, "We are sorry, We coul not Find the User with the Username provided", null);
+
+			}
 		}
+
+
+
+
+
 
 	}
 }

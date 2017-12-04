@@ -69,7 +69,7 @@ public class FindMemberAccount extends BaseServlet implements Serializable {
                 session.setAttribute("memberExistingEmail" , memberExistingEmail);
 
 
-                List<Sponsor> sponsors = apiEJB.getMemberSchemeProducts(memberExistingEmail, this.getSessKey(request, Constants.SCHEME_ID));
+                List<Sponsor> sponsors = apiEJB.getMemberSponsor(memberId);
                 session.setAttribute(Constants.SPONSOR_ID, sponsors.get(0).getId().toString());
 
 

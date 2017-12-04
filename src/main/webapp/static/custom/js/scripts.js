@@ -216,6 +216,11 @@ $(document).ready(function(){
 		$('#modal-pwd-reset').modal('show');
 	});
 
+
+	$('#pwd-reset-btn-admin').click(function(){
+		$('#modal-pwd-reset-admin').modal('show');
+	});
+
     // $('#acc-recover-btn').click(function(){
     //     $('#modal-acc-recover').modal('show');
     //
@@ -936,6 +941,54 @@ $('#form-password-reset').bootstrapValidator({
     },
     excluded: ':disabled',
     fields: {
+        userPhone: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter your phone number'
+                }
+            }
+        }
+    }
+})
+
+.on('success.form.bv', function(e) {
+   
+    // Prevent form submission
+    var resetCountryCode=$('.reset-country-code').val();
+    if(resetCountryCode==null)
+    {
+        resetCountryCode='';
+    }
+    else {
+        resetCountryCode=$('.reset-country-code').val();
+    }
+    e.preventDefault();
+    start_wait();
+    $.ajax({
+        url: $('#base_url').val() + 'password-reset',
+        type: 'POST',
+        data: {ACTION: 'REQUEST_RESET',  userPhone: resetCountryCode+$('#userPhone').val()},
+        dataType: 'json',
+        success: function(json) {
+        	stop_wait();
+           bootbox.alert(json.message);
+           if(json.success)
+           	$('#modal-pwd-reset').modal('hide');
+        }
+    });
+
+});
+
+
+$('#form-password-reset-admin').bootstrapValidator({
+    message: 'This value is not valid',
+    feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+    },
+    excluded: ':disabled',
+    fields: {
         email: {
             validators: {
                 notEmpty: {
@@ -947,24 +1000,27 @@ $('#form-password-reset').bootstrapValidator({
 })
 
 .on('success.form.bv', function(e) {
-   
+
     // Prevent form submission
     e.preventDefault();
     start_wait();
     $.ajax({
-        url: $('#base_url').val() + 'password-reset',
+        url: $('#base_url').val() + 'password-reset-admin',
         type: 'POST',
-        data: {ACTION: 'REQUEST_RESET', email: $('#email').val()},
+        data: {ACTION: 'REQUEST_RESET_ADMIN', email: $('#username-admin').val()},
         dataType: 'json',
         success: function(json) {
         	stop_wait();
            bootbox.alert(json.message);
            if(json.success)
-           	$('#modal-pwd-reset').modal('hide');
+           	$('#modal-pwd-reset-admin').modal('hide');
+
         }
     });
 
-});$('#form-find-member-account').bootstrapValidator({
+});
+
+$('#form-find-member-account').bootstrapValidator({
     message: 'This value is not valid',
     feedbackIcons: {
         valid: 'glyphicon glyphicon-ok',
@@ -1127,7 +1183,7 @@ $('#form-password-reset').bootstrapValidator({
 
 
 
-    $('#form-reset-password').bootstrapValidator({
+    $('#form-reset-password-admin').bootstrapValidator({
     message: 'This value is not valid',
     feedbackIcons: {
         valid: 'glyphicon glyphicon-ok',
@@ -1266,9 +1322,165 @@ $('#form-password-reset').bootstrapValidator({
     e.preventDefault();
     start_wait();
     $.ajax({
-        url: $('#base_url').val() + 'password-reset',
+        url: $('#base_url').val() + 'password-reset-admin',
         type: 'POST',
         data: {ACTION: 'RESET_PASSWORD', securityCode: $('#securityCode').val(), newPassword: $('#newPassword').val()},
+        dataType: 'json',
+        success: function(json) {
+        	stop_wait();
+           bootbox.alert(json.message);
+
+           if(json.success)
+           	setTimeout(function() {
+               	window.location.href = $('#base_url').val();
+               	}, 3000);
+        }
+    });
+
+});
+
+    $('#form-reset-password').bootstrapValidator({
+    message: 'This value is not valid',
+    feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+    },
+    fields: {
+        resetCode: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter the reset code'
+                }
+            }
+        },
+        newPassword: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter your new password'
+                },
+				identical : {
+					field : 'confirmPassword',
+					message : 'Your passwords must match'
+				},
+                callback: {
+                    message: 'Invalid password entered',
+                    callback: function (value, validator, $field) {
+                    	if (value === '') {
+                            return true;
+                        }
+
+                        // Check the password strength
+                        if (value.length < minimum && minimum > 0) {
+                        	console.log("minimum....");
+                            return {
+                                valid: false,
+                                message: 'It must be at least ' + minimum + ' characters long'
+                            };
+                        }
+
+                        // The password doesn't contain any uppercase character
+                        if (value === value.toLowerCase() && uppercase == "true") {
+                        	console.log("uppercase....");
+                            return {
+                                valid: false,
+                                message: 'It must contain at least one upper case character'
+                            }
+                        }
+
+                        // The password doesn't contain any uppercase character
+                        if (value === value.toUpperCase() && lowercase == "true") {
+                        	console.log("lowercase....");
+                            return {
+                                valid: false,
+                                message: 'It must contain at least one lower case character'
+                            }
+                        }
+
+                        // The password doesn't contain any digit
+                        if (value.search(/[0-9]/) < 0 && numbers == "true") {
+
+                        	console.log("numbers....");
+                            return {
+                                valid: false,
+                                message: 'It must contain at least one digit'
+                            }
+                        }
+
+                        return true;
+                    }
+                }
+            }
+        },
+        confirmPassword: {
+            validators: {
+                notEmpty: {
+                    message: 'Please confirm the new password'
+                },
+				identical : {
+					field : 'newPassword',
+					message : 'Your passwords must match'
+				},
+                callback: {
+                    message: 'Invalid password entered',
+                    callback: function (value, validator, $field) {
+                    	if (value === '') {
+                            return true;
+                        }
+
+                        // Check the password strength
+                        if (value.length < minimum && minimum > 0) {
+                        	console.log("minimum....");
+                            return {
+                                valid: false,
+                                message: 'It must be at least ' + minimum + ' characters long'
+                            };
+                        }
+
+                        // The password doesn't contain any uppercase character
+                        if (value === value.toLowerCase() && uppercase == "true") {
+                        	console.log("uppercase....");
+                            return {
+                                valid: false,
+                                message: 'It must contain at least one upper case character'
+                            }
+                        }
+
+                        // The password doesn't contain any uppercase character
+                        if (value === value.toUpperCase() && lowercase == "true") {
+                        	console.log("lowercase....");
+                            return {
+                                valid: false,
+                                message: 'It must contain at least one lower case character'
+                            }
+                        }
+
+                        // The password doesn't contain any digit
+                        if (value.search(/[0-9]/) < 0 && numbers == "true") {
+
+                        	console.log("numbers....");
+                            return {
+                                valid: false,
+                                message: 'It must contain at least one digit'
+                            }
+                        }
+
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+})
+.on('success.form.bv', function(e) {
+
+    // Prevent form submission
+    e.preventDefault();
+    start_wait();
+    $.ajax({
+        url: $('#base_url').val() + 'password-reset',
+        type: 'POST',
+        data: {ACTION: 'RESET_PASSWORD', resetCode: $('#resetCode').val(), newPassword: $('#newPassword').val()},
         dataType: 'json',
         success: function(json) {
         	stop_wait();

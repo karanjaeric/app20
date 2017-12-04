@@ -38,8 +38,12 @@
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="user" class="control-label">Username:</label>
-							<input type="text" name="username" class="form-control"
-										id="username" placeholder="EMAIL/PHONE NUMBER">
+							<div class="form-inline">
+							<select class="form-control pull-left reset-country-code" name="country-code" style="width: 25%;"></select>
+
+							<input type="text" name="userPhone" class="form-control"
+										id="userPhone" placeholder="PHONE NUMBER" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+						</div>
 						</div>
 						<p>We will send you instructions on how to reset your password</p>
 					</div>
@@ -50,6 +54,42 @@
 			</div>
 		</form>
 	</div>
+
+
+
+
+
+
+<%--RESET PASSWORD ADMIN--%>
+
+
+
+<div class="modal fade "  id="modal-pwd-reset-admin" tabindex="-1"
+	 role="dialog" aria-labelledby="myModalLabelReset" aria-hidden="true">
+	<form role="form" id="form-password-reset-admin">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title text-center" id="myModalLabelResetAdmin">
+						<i class="fa fa-bookmark"></i>&nbsp;&nbsp;<small>Please provide your username</small>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="user" class="control-label">Username:</label>
+						<input type="text" name="username-admin" class="form-control"
+							   id="username-admin" placeholder="EMAIL">
+					</div>
+					<p>We will send you instructions on how to reset your password</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-success">REQUEST PASSWORD RESET</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
 
 
 

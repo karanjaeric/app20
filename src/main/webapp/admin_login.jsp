@@ -40,7 +40,7 @@
 						<button class="btn btn-warning btn-block" type="submit">
 							<strong>LOGIN</strong>
 						</button><br />
-						<a href="javascript:void(0);" id="pwd-reset-btn" class="btn btn-info">Forgot Your Password?</a>
+						<a href="javascript:void(0);" id="pwd-reset-btn-admin" class="btn btn-info">Forgot Your Password?</a>
 					</fieldset>
 				</form>
 

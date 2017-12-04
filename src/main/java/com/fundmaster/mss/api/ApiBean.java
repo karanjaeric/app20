@@ -1728,6 +1728,23 @@ public Double getMemberTotalUnits(String memberId) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
         }
+    }  @Override
+    public   List<Sponsor>  getMemberSponsor(String membershipNumber) {
+        JSONObject response;
+        try {
+            response = URLGet(APICall. GET_MEMBER_SPONSORS + membershipNumber);
+            jLogger.i("Member Sponsor response >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
+            if(response.get(Fields.SUCCESS).equals(true))
+            {
+                jLogger.i("Member Sponsor response >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
+                return this.productsFromJSON(response);
+            }
+            else
+                return null;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
     }
 
     @Override

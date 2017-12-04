@@ -28,6 +28,7 @@ public interface ApiEJB {
 
     List<Scheme> getProfileSchemes(String user, String profile);
     List<Sponsor>  getMemberSchemeProducts(String email,String schemeId);
+    List<Sponsor>  getMemberSponsor(String membershipNumber);
     JSONObject getMemberAverageInterest(String memberID);
     JSONObject getSchemeCurrency(String schemeID);
     JSONObject getSchemeMode(String schemeID);
