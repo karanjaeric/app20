@@ -90,7 +90,7 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
         Theme theme = themeBeanI.find();
         request.setAttribute("theme", theme);
         request.setAttribute("noMenu", false);
-        request.getRequestDispatcher("password-reset.jsp").forward(request, response);
+        request.getRequestDispatcher("password-reset-admin.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request,
@@ -101,7 +101,7 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
         response.addHeader("X-Frame-Options", "DENY");
         response.addHeader("X-Content-Type-Options", "nosniff");
 
-        if (this.get(request, "ACTION").equals("RESET_PASSWORD")) {
+        if (this.get(request, "ACTION").equals("RESET_PASSWORD_ADMIN")) {
             PasswordPolicy policy = passwordPolicyBeanI.find();
             String securityCode = this.get(request, "securityCode");
             User u = userBeanI.findBySecurityCode(securityCode);
@@ -132,16 +132,16 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
         } else if (this.get(request,"ACTION").equals("REQUEST_RESET_ADMIN")){
 
             Setting settings = settingBeanI.find();
-            Constants.BASE_URL = request.getContextPath() + "password-reset";
+            Constants.BASE_URL = request.getContextPath() + "password-reset-admin";
 
-            String username = this.get(request, "username-admin");
-            User usr = userBeanI.findByUsername(username);
+            String userEmail = this.get(request, "email");
+            jLogger.i("The UserName{ Email } " + userEmail);
+            User usr = userBeanI.findByUsername(userEmail);
             if (usr != null) {
             String userProfile = usr.getUserProfile();
 
 
-                    if (helper.isEmailAddress(username)) {
-
+                    if (helper.isEmailAddress(userEmail)) {
                         String securityCode = UUID.randomUUID().toString();
                     usr.setSecurityCode(securityCode);
                     Company company = companyBeanI.find();
@@ -153,7 +153,7 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
                     if (usr.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                         m = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
                     } else {
-                        m = apiEJB.memberExists(userProfile, username);
+                        m = apiEJB.memberExists(userProfile, userEmail);
 
                     }
 
@@ -184,9 +184,9 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
                     }
                 }
             }else {
-                    this.respond(response, true, "We are sorry, We coul not Find the User with the Username provided", null);
+                this.respond(response, true, "We are sorry, We could not Find the User with the Username provided", null);
 
-                }
+            }
 
 
         }

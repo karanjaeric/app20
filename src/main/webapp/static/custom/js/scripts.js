@@ -1007,7 +1007,7 @@ $('#form-password-reset-admin').bootstrapValidator({
     $.ajax({
         url: $('#base_url').val() + 'password-reset-admin',
         type: 'POST',
-        data: {ACTION: 'REQUEST_RESET_ADMIN', email: $('#username-admin').val()},
+        data: {ACTION: 'REQUEST_RESET_ADMIN', email: $('#email').val()},
         dataType: 'json',
         success: function(json) {
         	stop_wait();
@@ -1324,7 +1324,7 @@ $('#form-find-member-account').bootstrapValidator({
     $.ajax({
         url: $('#base_url').val() + 'password-reset-admin',
         type: 'POST',
-        data: {ACTION: 'RESET_PASSWORD', securityCode: $('#securityCode').val(), newPassword: $('#newPassword').val()},
+        data: {ACTION: 'RESET_PASSWORD_ADMIN', securityCode: $('#securityCode').val(), newPassword: $('#newPassword').val()},
         dataType: 'json',
         success: function(json) {
         	stop_wait();
