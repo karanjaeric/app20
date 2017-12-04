@@ -25,6 +25,7 @@
                                            id="memberNo" placeholder="MEMBERSHIP NUMBER">
                                 </div>
                                 <p>We will Help you Recover Your Account</p>
+                                 <p>Kindly Contact us on info.trustees@enterprisegroup.com.gh /0302634704 if you don't have your Membership Number</p>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-success" >SUBMIT</button>
