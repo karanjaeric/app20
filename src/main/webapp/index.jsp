@@ -34,9 +34,12 @@
 				action="<%=request.getContextPath()%>/sign-in" method="post"
 				id="form-sign-in-mobile">
 				<div class="form-group">
-					<label class="control-label">${ plf }</label> <input
-						class="form-control" type="text" placeholder="${ plf }"
-						name="usernameMobile" id="usernameMobile">
+					<label class="control-label">${ plf }</label>
+					<div class="form-inline">
+						<select class="form-control pull-left user-country-code" name="country-code" style="width: 25%;"></select>
+						<input type="text" name="usernameMobile" class="form-control"
+							   id="usernameMobile" placeholder="${ plf }" style="width: 75%;">
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">Password</label> <input
@@ -64,9 +67,12 @@
 				action="<%=request.getContextPath()%>/sign-in" method="post"
 				id="form-sign-in">
 				<div class="form-group">
-					<label class="control-label">${ plf }</label> <input
-						class="form-control" type="text" placeholder="${ plf }"
-						name="username" id="username">
+					<label class="control-label">${ plf }</label>
+					<div class="form-inline">
+						<select class="form-control pull-left member-country-code" name="country-code" style="width: 30%;"></select>
+						<input type="text" name="username" class="form-control"
+							   id="username" placeholder="${ plf }" style="width: 70%;">
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">Password</label> <input

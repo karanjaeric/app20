@@ -177,6 +177,7 @@ public class Admin extends BaseServlet implements Serializable {
     SectorBeanI sectorBeanI;
     Helper helper = new Helper();
     private static final long serialVersionUID = 1L;
+    private File[] fileUpload;
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -975,6 +976,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean AnnualContributionStatement = this.get(request, "annualContributionStatement").equalsIgnoreCase("true");
         boolean ProvisionalMemberStatement = this.get(request, "provisionalMemberStatement").equalsIgnoreCase("true");
         boolean Media = this.get(request, "Media").equalsIgnoreCase("true");
+        boolean document = this.get(request, "document").equalsIgnoreCase("true");
 
         memberMenu.setContributionHistoryReport(contributionHistoryReport);
         memberMenu.setContributionHistoryGrid(contributionHistoryGrid);
@@ -992,6 +994,7 @@ public class Admin extends BaseServlet implements Serializable {
         memberMenu.setAnnualContributionStatement(AnnualContributionStatement);
         memberMenu.setProvisionalMemberStatement(ProvisionalMemberStatement);
         memberMenu.setMedia(Media);
+        memberMenu.setDocument(document);
 
         if (memberMenuBeanI.edit(memberMenu) != null) {
             audit(session, "Updated Member Menu configuration settings");
@@ -1828,6 +1831,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setWithdrawal_settlements(this.get(request, "withdrawal_settlements").equalsIgnoreCase("true"));
         perm.setMembers(this.get(request, "members").equalsIgnoreCase("true"));
         perm.setMedia(this.get(request, "media").equalsIgnoreCase("true"));
+        perm.setDocument(this.get(request, "document").equalsIgnoreCase("true"));
         perm.setReports(this.get(request, "reports").equalsIgnoreCase("true"));
         perm.setMember_movement(this.get(request, "member_movement").equalsIgnoreCase("true"));
         perm.setMember_listing(this.get(request, "member_listing").equalsIgnoreCase("true"));

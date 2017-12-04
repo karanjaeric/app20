@@ -33,9 +33,13 @@ var uppercase = $('#uppercase').val();
 var numbers = $('#numbers').val();
 
 $(document).ready(function() {
+    $("#username,#adminIdNumber,#eMIdNumber,#pensionerIdNumber,#sponsorIdNumber,#trusteeIdNumber,#agentIdNumber,#custodianIdNumber,#crmIdNumber,#creIdNumber,#fmIdNumber").on("keypress keyup",function(){
+        if($(this).val() == '0'){
+            $(this).val('');
+        }
+    });
 
-
-$(".member-country-code,.admin-country-code,.sponsor-country-code,.trustee-country-code,.agent-country-code,.pensioner-country-code,.country-code-for-recovery,.reset-country-code").append(
+$(".member-country-code,.admin-country-code,.sponsor-country-code,.trustee-country-code,.agent-country-code,.pensioner-country-code,.country-code-for-recovery,.reset-country-code,.user-country-code,.user-lg-country-code").append(
     "        <option data-countryCode='GH' value='+233' Selected>Ghana (+233)</option>\n" +
      "        <option data-countryCode='US' value='+1'>USA (+1)</option>\n" +
     "        <option data-countryCode='DZ' value='+213'>Algeria (+213)</option>\n" +
@@ -620,6 +624,14 @@ if(typeof adminCountryCode=="undefined")
 											start_wait();
 											// Prevent form submission
 											e.preventDefault();
+                                            var userCountryCode=$('.user-country-code').val();
+                                            if(userCountryCode==null)
+                                            {
+                                                userCountryCode='';
+                                            }
+                                            else {
+                                                userCountryCode=$('.user-country-code').val();
+                                            }
 											// Get the form instance
 											var btn = "btn-sign-in";
 											var form = "form-sign-in";
@@ -631,7 +643,7 @@ if(typeof adminCountryCode=="undefined")
 													+ 'sign-in',
 													type : 'post',
 													data : {
-														username : $(
+														username : userCountryCode+$(
 															'#usernameMobile')
 															.val(),
 														password : $(

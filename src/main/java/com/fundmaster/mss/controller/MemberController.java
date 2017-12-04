@@ -183,7 +183,6 @@ public class MemberController extends BaseServlet implements Serializable {
 
 					String memberEmail=m.getEmailAddress();
 					List<Sponsor> sponsors = apiEJB.getMemberSchemeProducts(memberEmail,this.getSessKey(request, Constants.SCHEME_ID));
-
 					request.getSession().setAttribute("sponsors", sponsors);
 
 

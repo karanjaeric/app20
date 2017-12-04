@@ -29,7 +29,7 @@
 						</c:choose>
 						<div class="form-group">
 							<label class="control-label">Select File to Upload</label>
-							 <input type="file" class="filestyle" data-buttonName="btn-primary" id="media_file" name="media_file" data-buttonBefore="true" />
+							 <input type="file" class="filestyle" data-buttonName="btn-primary" id="media_file" name="media_file" data-buttonBefore="true" multiple/>
 						</div>
 						<input name="access" id="access" type="hidden" value="Public"/>
 						<div class="form-group">

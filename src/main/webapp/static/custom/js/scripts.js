@@ -685,6 +685,14 @@ $(document).ready(function(){
 		
 		m_switch("MF");
 	});
+    $('#document-files-li').click(function(){
+
+        $('#main-menu.nav li').removeClass('active');
+
+        $('#document-files-li').addClass('active');
+
+        m_switch("DOCUMENTS");
+    });
 
 	$('#member-claims-li').click(function(){
 
