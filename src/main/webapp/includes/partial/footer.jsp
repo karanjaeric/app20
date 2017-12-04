@@ -37,7 +37,7 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label for="user" class="control-label">Username:</label>
+							<label for="userPhone" class="control-label">Username:</label>
 							<div class="form-inline">
 							<select class="form-control pull-left reset-country-code" name="country-code" style="width: 25%;"></select>
 
@@ -77,9 +77,9 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="user" class="control-label">Username:</label>
-						<input type="text" name="username-admin" class="form-control"
-							   id="username-admin" placeholder="EMAIL">
+						<label for="email" class="control-label">Username:</label>
+						<input type="email" name="email" class="form-control"
+							   id="email" placeholder="EMAIL">
 					</div>
 					<p>We will send you instructions on how to reset your password</p>
 				</div>

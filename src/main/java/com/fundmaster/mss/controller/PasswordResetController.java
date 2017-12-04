@@ -134,8 +134,9 @@ public class PasswordResetController extends BaseServlet implements Serializable
 			String username = this.get(request, "userPhone");
 			jLogger.i("The Username (PHONE) " + username);
 			User usr = userBeanI.findByUsername(username);
-			 String userProfile = usr.getUserProfile();
 			if (usr != null) {
+			 String userProfile = usr.getUserProfile();
+
 
 	    if (helper.isValidPhone(username)) {
 
