@@ -265,7 +265,7 @@ public class Register extends BaseServlet implements Serializable {
                                 String operationType = "ACCOUNT_REGISTRATION";
                                 String operationStatus = "SUCCESS";
 
-                                apiEJB.mssAccountOperation(memberId, operationType, operationStatus);
+                                apiEJB.mssAccountOperation(memberId, operationType, operationStatus,null,null,null);
 
 
                             } else {
