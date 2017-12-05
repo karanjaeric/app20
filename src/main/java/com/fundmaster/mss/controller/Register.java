@@ -254,9 +254,16 @@ public class Register extends BaseServlet implements Serializable {
 
                                 apiEJB.sendEmail(recipients, sender, null, "MSS Portal Account Activation Instructions",
                                         "Dear " + u.getUserProfile() + ", "
-                                        + "Your account has been created on the FundMaster Xi Member Self Service Portal. "
-                                        + "Please click this link " + settings.getPortalBaseURL() + "activate?" + securityCode
-                                        + " to complete the activation process", schemeId, false, null);
+                                        + "Your account has been created on the Enterprise Trustees FundMaster Member Self Service Portal. "
+
+                                        + "Please click this link or Copy this link to your browser" +
+                                                " " + settings.getPortalBaseURL() + "activate?" + securityCode
+                                        + " to complete the activation process." +
+
+                                                "Once you Activate your Account, proceed to login to your account using your email as the username and the password" +
+                                                "you provided during this registration process. " +
+
+                                                "In case you might have any enquiries, kindly contact Enterprise Trustees through our Call Center Number 0302634704 ", schemeId, false, null);
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> "
                                         + "Congratulations! Your account has been created on the portal. "
