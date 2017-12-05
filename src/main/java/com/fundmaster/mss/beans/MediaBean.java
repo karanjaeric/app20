@@ -91,6 +91,23 @@ public class MediaBean implements MediaBeanI {
     }
 
     @Override
+    public List<Media> findByNationalPenNo(String nationalPenNo) {
+        String nationalPenNoPdf=nationalPenNo+".pdf";
+        jLogger.i("nationalPenNoPdf is "+nationalPenNoPdf);
+
+        List<Media> medias = new ArrayList<Media>();
+        Session session = (Session) entityManager.getDelegate();
+        Criteria crit = session.createCriteria(Media.class);
+
+        if (nationalPenNoPdf != null && !nationalPenNoPdf.isEmpty()) {
+
+            crit.add(Restrictions.eq("name", nationalPenNoPdf));
+        }
+        medias = crit.list();
+        return medias;
+    }
+
+    @Override
     public List<Media> findByMemberId(String schemeId, String memberId) {
 
         jLogger.i("The schemeId: " + schemeId);

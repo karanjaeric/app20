@@ -73,6 +73,8 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
 
     @Column(name="media", nullable=false)
     private boolean media;
+    @Column(name="document", nullable=false)
+    private boolean document;
 
 
     public boolean isContributionHistoryReport() {
@@ -224,13 +226,22 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     public boolean isMedia() {
         return media;
     }
+    public boolean isDocument() {
+        return document;
+    }
+
+    public void setDocument(boolean document) {
+        this.document = document;
+    }
 
     public void setMedia(boolean media) {
         this.media = media;
     }
 
     public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
+
                       boolean statementOfAccountGrid,boolean memberCertificate, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection,boolean benefitsProjectionPage,boolean memberBenefit, boolean sponsorBenefitsProjectionPage,boolean benefitProjectionGrid, boolean media,
+
                       boolean annualContributionStatement, boolean provisionalMemberStatement, boolean annualContributionStatementGrid) {
         super();
         this.id = id;
@@ -252,6 +263,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.annualContributionStatement = annualContributionStatement;
         this.provisionalMemberStatement = provisionalMemberStatement;
         this.media = media;
+        this.document = document;
     }
 
     public MemberMenu() {

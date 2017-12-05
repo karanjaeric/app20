@@ -42,7 +42,7 @@
 							<select class="form-control pull-left reset-country-code" name="country-code" style="width: 25%;"></select>
 
 							<input type="text" name="userPhone" class="form-control"
-										id="userPhone" placeholder="PHONE NUMBER" style="width: 75%;" maxlength="9" maxlength="9" maxlength="9">
+										id="userPhone" placeholder="PHONE NUMBER" style="width: 75%;"   >
 						</div>
 						</div>
 						<p>We will send you instructions on how to reset your password</p>

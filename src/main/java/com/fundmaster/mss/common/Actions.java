@@ -47,6 +47,7 @@ public class Actions {
     public static final String MEMBER_BENEFIT_PROJECTIONS_GRID = "BP_GRID";
     public static final String ANNUAL_CONTRIBUTIONS_GRID = "AC_GRID";
     public static final String MEMBER_MEDIA_FILES = "MF";
+    public static final String DOCUMENTS = "DOCUMENTS";
     public static final String MEMBER_CLAIMS = "MC";
     public static final String MEMBER_WHAT_IF_ANALYSIS = "WIA";
     public static final String CALCULATE_BENEFIT_PROJECTION = "CBP";

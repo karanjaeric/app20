@@ -129,6 +129,11 @@
                 class="glyphicon glyphicon-briefcase"></i>&nbsp;<i
                 class="fa fa-chevron-right"></i> MEDIA &amp; FILES</a></li>
         </c:if>
+        <c:if test="${memberMenu.document == 'TRUE'}">
+            <li id="document-files-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-briefcase"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> DOCUMENTS</a></li>
+        </c:if>
 
         <%--<c:if test="${MemberStatus != 'Active' }">--%>
             <%--<li id="member-claims-li"><a href="javascript:void(0);"><i--%>
