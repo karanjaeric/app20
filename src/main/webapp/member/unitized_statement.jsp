@@ -108,9 +108,17 @@
 
 
                         $("#us-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
+
+
                     }
+                       stop_wait();
+
+
+
                 }
             });
+
+
 
         });
     });
