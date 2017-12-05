@@ -196,6 +196,7 @@ public class Register extends BaseServlet implements Serializable {
                             u.setProfileID(member.getId());
                             u.setUserProfile(member.getProfile());
                             u.setUsername(this.get(request, "idNumber"));
+                            jLogger.i("am here registering");
                             u.setPassword(helper.hash(this.get(request, "password")));
                             Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
                             u.setPassword_expiry(password_expiry);

@@ -31,6 +31,9 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     @Column(name="unitizedStatement", nullable=false)
     private boolean unitizedStatement;
 
+    @Column(name="memberCertificate", nullable=false)
+    private boolean memberCertificate;
+
     @Column(name="balancesHistory", nullable=false)
     private boolean balancesHistory;
 
@@ -146,6 +149,14 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.unitizedStatement = unitizedStatement;
     }
 
+    public boolean isMemberCertificate() {
+        return memberCertificate;
+    }
+
+    public void setMemberCertificate(boolean memberCertificate) {
+        this.memberCertificate = memberCertificate;
+    }
+
     public boolean isWhatIfAnalysis() {
         return whatIfAnalysis;
     }
@@ -228,7 +239,9 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
     }
 
     public MemberMenu(Long id, boolean contributionHistoryReport, boolean contributionHistoryGrid, boolean balancesHistory, boolean balancesHistoryGrid, boolean statementOfAccount,
-                      boolean statementOfAccountGrid, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection,boolean benefitsProjectionPage,boolean memberBenefit, boolean sponsorBenefitsProjectionPage,boolean benefitProjectionGrid, boolean media,boolean document,
+
+                      boolean statementOfAccountGrid,boolean memberCertificate, boolean unitizedStatement, boolean whatIfAnalysis, boolean benefitsProjection,boolean benefitsProjectionPage,boolean memberBenefit, boolean sponsorBenefitsProjectionPage,boolean benefitProjectionGrid, boolean media,
+
                       boolean annualContributionStatement, boolean provisionalMemberStatement, boolean annualContributionStatementGrid) {
         super();
         this.id = id;
@@ -239,6 +252,7 @@ public class MemberMenu extends GenericModel<MemberMenu>   implements Serializab
         this.statementOfAccount = statementOfAccount;
         this.statementOfAccountGrid = statementOfAccountGrid;
         this.unitizedStatement = unitizedStatement;
+        this.memberCertificate =memberCertificate;
         this.whatIfAnalysis = whatIfAnalysis;
         this.benefitsProjection = benefitsProjection;
         this.benefitsProjectionPage=benefitsProjectionPage;
