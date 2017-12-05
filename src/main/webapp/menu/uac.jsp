@@ -542,6 +542,15 @@
 
 						<tr>
 							<td>
+								<label class="control-label"> MEMBER CERTIFICATE </label>
+							</td>
+							<td>
+								<input type="checkbox" name="memberCertificate" id="memberCertificate" ${memberMenu.memberCertificate == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
 								<label class="control-label"> BALANCES HISTORY REPORT</label>
 							</td>
 							<td>
@@ -1255,6 +1264,7 @@
 								StatementOfAccount: $('#StatementOfAccount').prop('checked'),
 								StatementOfAccountGrid: $('#StatementOfAccountGrid').prop('checked'),
 								UnitizedStatement: $('#UnitizedStatement').prop('checked'),
+								memberCertificate:$('#memberCertificate').prop('checked'),
 								WhatIfAnalysis: $('#WhatIfAnalysis').prop('checked'),
                                 benefitsProjectionPage: $('#benefitsProjectionPage').prop('checked'),
                                 memberBenefit: $('#memberBenefit').prop('checked'),

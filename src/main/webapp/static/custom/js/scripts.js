@@ -597,6 +597,15 @@ $(document).ready(function(){
 		m_switch("US");
 	});
 
+	$('#member-certificate-li').click(function(){
+
+		$('#main-menu.nav li').removeClass('active');
+
+		$('#member-certificate-li').addClass('active');
+
+		m_switch("MCE");
+	});
+
 	$('#what-if-analysis-li').click(function(){
 		
 		$('#main-menu.nav li').removeClass('active');
@@ -974,6 +983,13 @@ $('#form-password-reset').bootstrapValidator({
            bootbox.alert(json.message);
            if(json.success)
            	$('#modal-pwd-reset').modal('hide');
+            setTimeout(
+                function() {
+                    window.location.href = $(
+                        '#base_url')
+                            .val()
+                        + 'password-reset';
+                }, 5000);
         }
     });
 

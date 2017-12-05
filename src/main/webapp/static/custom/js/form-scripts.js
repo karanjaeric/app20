@@ -2770,6 +2770,8 @@ if(typeof adminCountryCode=="undefined")
 																.alert('<p class="text-center">'
 																		+ json.message
 																		+ '</p>');
+
+
 														if(json.captcha || !json.success)
 														{
 															reload_captcha();
