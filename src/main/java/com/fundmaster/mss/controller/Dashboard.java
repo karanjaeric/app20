@@ -202,6 +202,10 @@ public class Dashboard extends BaseServlet implements Serializable {
                  case Actions.MEMBER_UNITIZED_STATEMENT:
                      showMemberUnitizedStatement(request, response, session);
                      break;
+
+                 case Actions.MEMBERSHIP_CERTIFICATE:
+                     showMemberCertificate(request, response, session);
+                     break;
                  case Actions.MEMBER_BENEFIT_PROJECTIONS:
                      showMemberBenefitProjections(request, response, session);
                      break;
@@ -864,6 +868,25 @@ MediaBeanI mediaBeanI;
         logActivity("MEMBER UNITIZED STATEMENT", "Viewed member unitized statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member unitized statement");
         request.getRequestDispatcher("member/unitized_statement.jsp").forward(request, response);
+    }
+
+    private void showMemberCertificate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Setting setting = settingBeanI.find();
+        request.setAttribute("settings", setting);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String memberId;
+        memberId = this.get(request, "memberID");
+        if (memberId == null)
+            memberId = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("member_id", memberId);
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
+        logActivity("MEMBER CERTIFICATE STATEMENT", "Viewed member Certificate statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member unitized statement");
+        request.getRequestDispatcher("member/member_certificate.jsp").forward(request, response);
     }
 
     private void showMemberContributionHistory(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {

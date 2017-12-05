@@ -36,6 +36,7 @@ public class Actions {
     public static final String MEMBER_STATEMENT_OF_ACCOUNT = "SA";
     public static final String MEMBER_STATEMENT_OF_ACCOUNT_GRID = "SA_GRID";
     public static final String MEMBER_UNITIZED_STATEMENT = "US";
+    public static final String MEMBERSHIP_CERTIFICATE = "MCE";
     public static final String MEMBER_BENEFIT_PROJECTIONS = "BP";
     public static final String MEMBER_BENEFIT_PAYMENT = "MEMBERPAYMENT";
     public static final String ANNUAL_CONTRIBUTION_STATEMENT = "AC";

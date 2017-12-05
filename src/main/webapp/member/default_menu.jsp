@@ -37,6 +37,12 @@
                     class="fa fa-chevron-right"></i> UNITIZED STATEMENT</a></li>
         </c:if>
 
+        <c:if test="${memberMenu.memberCertificate == 'TRUE'}">
+            <li id="member-certificate-li"><a href="javascript:void(0);"><i
+                    class="glyphicon glyphicon-user"></i>&nbsp;<i
+                    class="fa fa-chevron-right"></i> MEMBER CERTIFICATE</a></li>
+        </c:if>
+
         <c:if test="${memberMenu.balancesHistory == 'TRUE'}">
         <li id="balances-history-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-list"></i>&nbsp;<i
