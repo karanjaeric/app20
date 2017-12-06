@@ -57,7 +57,7 @@ public class FindMemberAccount extends BaseServlet implements Serializable {
             if (memberId != null) {
 
                 member = apiEJB.checkMemberAccount(this.get(request, "category"), memberId);
-
+               // String memberId1=member.getId();
 
             }else this.respond(response,false,"MemberId is Null" ,null);
 
@@ -67,6 +67,7 @@ public class FindMemberAccount extends BaseServlet implements Serializable {
                 session.setAttribute(Constants.SCHEME_ID, member.getSchemeId());
                 session.setAttribute("existingPhoneNumber" , member.getPhoneNumber());
                 session.setAttribute("memberExistingEmail" , memberExistingEmail);
+                session.setAttribute("memberId" , member.getId());
 
 
                 List<Sponsor> sponsors = apiEJB.getMemberSponsor(memberId);
