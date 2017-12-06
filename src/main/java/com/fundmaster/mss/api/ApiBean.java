@@ -2694,7 +2694,7 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
-    public void mssAccountOperation(String memberId,String operationType,String operationStatus) {
+    public void mssAccountOperation(String memberId,String operationType,String operationStatus,String emailAddress,String phoneNumber,String ssnit) {
         
         
                 jLogger.i("member id is "+ memberId);
@@ -2704,7 +2704,7 @@ public Double getMemberTotalUnits(String memberId) {
                     JSONObject response;
 
         try {
-            response = URLPost(APICall.MSS_ACCOUNT_OPERATION + memberId  + "/" + operationType + "/" + operationStatus,"", Constants.APPLICATION_JSON);
+            response = URLPost(APICall.MSS_ACCOUNT_OPERATION + memberId  + "/" + operationType + "/" + operationStatus+"/"+emailAddress+"/"+phoneNumber+"/"+ssnit,"", Constants.APPLICATION_JSON);
         } catch (JSONException ex) {
             Logger.getLogger(ApiBean.class.getName()).log(Level.SEVERE, null, ex);
         }

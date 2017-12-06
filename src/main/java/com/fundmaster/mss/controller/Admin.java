@@ -967,6 +967,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean StatementOfAccount = this.get(request, "StatementOfAccount").equalsIgnoreCase("true");
         boolean StatementOfAccountGrid = this.get(request, "StatementOfAccountGrid").equalsIgnoreCase("true");
         boolean UnitizedStatement = this.get(request, "UnitizedStatement").equalsIgnoreCase("true");
+        boolean memberCertificate = this.get(request,"memberCertificate").equalsIgnoreCase("true");
         boolean WhatIfAnalysis = this.get(request, "WhatIfAnalysis").equalsIgnoreCase("true");
         boolean BenefitsProjection = this.get(request, "benefitsProjection").equalsIgnoreCase("true");
         boolean BenefitsProjectionPage = this.get(request, "benefitsProjectionPage").equalsIgnoreCase("true");
@@ -985,6 +986,7 @@ public class Admin extends BaseServlet implements Serializable {
         memberMenu.setStatementOfAccount(StatementOfAccount);
         memberMenu.setStatementOfAccountGrid(StatementOfAccountGrid);
         memberMenu.setUnitizedStatement(UnitizedStatement);
+        memberMenu.setMemberCertificate(memberCertificate);
         memberMenu.setWhatIfAnalysis(WhatIfAnalysis);
         memberMenu.setBenefitsProjection(BenefitsProjection);
         memberMenu.setBenefitsProjectionPage(BenefitsProjectionPage);
