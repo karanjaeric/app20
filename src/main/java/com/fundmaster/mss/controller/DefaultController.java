@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @WebServlet(name = "DefaultController", urlPatterns = {"/index"})
 public class DefaultController extends BaseServlet implements Serializable {
@@ -96,6 +98,8 @@ public class DefaultController extends BaseServlet implements Serializable {
 		Help help = helpBeanI.findHelp(Constants.PAGE_HOME);
 		request.setAttribute("help", help);
 		PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_HOME);
+		List<ProfileLoginField> plf2 = profileLoginFieldBeanI.find();
+		request.setAttribute("loginFields", plf2);
 		request.setAttribute("content", content);
 		request.setAttribute("noMenu", false);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
