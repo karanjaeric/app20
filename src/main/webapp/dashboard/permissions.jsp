@@ -10,6 +10,7 @@
 			<tr><td>SETUP LOGO</td><td><input type="checkbox" id="setup_logo" class="form-control input-sm"  ${permissions.setup_logo == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>CONFIGURE HOMEPAGE MENU</td><td><input type="checkbox" id="setup_menu" class="form-control input-sm"  ${permissions.setup_menu == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>CONFIGURE DB SCHEME MENU</td><td><input type="checkbox" id="db_menu" class="form-control input-sm"  ${permissions.db_menu == 'TRUE' ? 'checked' : ''}/></td></tr>
+			<tr><td>CONFIGURE ACCOUNT RECOVERY</td><td><input type="checkbox" id="enable_acc_recovery" class="form-control input-sm"  ${permissions.enable_acc_recovery == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>SOCIAL NETWORK LINKS</td><td><input type="checkbox" id="setup_social" class="form-control input-sm"  ${permissions.setup_social == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>THEME SETTINGS</td><td><input type="checkbox" id="setup_theme" class="form-control input-sm"  ${permissions.setup_theme == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>MANAGE BANNERS</td><td><input type="checkbox" id="setup_banner" class="form-control input-sm"  ${permissions.setup_banner == 'TRUE' ? 'checked' : ''}/></td></tr>
@@ -96,7 +97,7 @@
 				<tr><td>VIEW CONTRIBUTION HISTORY</td><td><input type="checkbox" id="operation_contribution_history" class="form-control input-sm"  ${permissions.operation_contribution_history == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>VIEW BALANCES HISTORY</td><td><input type="checkbox" id="operation_balance_history" class="form-control input-sm"  ${permissions.operation_balance_history == 'TRUE' ? 'checked' : ''}/></td></tr>
 				<tr><td>VIEW STATEMENT OF ACCOUNT</td><td><input type="checkbox" id="operation_statement_of_account" class="form-control input-sm"  ${permissions.operation_statement_of_account == 'TRUE' ? 'checked' : ''}/></td></tr>
-			   <tr><td>VIEW UNITIZED STATEMENT</td><td><input type="checkbox" id="operation_unitized_statement" class="form-control input-sm"  ${permissions.operation_unitized_statement == 'TRUE' ? 'checked' : ''}/></td></tr>
+			   <tr><td>VIEW MEMBER STATEMENT</td><td><input type="checkbox" id="operation_unitized_statement" class="form-control input-sm"  ${permissions.operation_unitized_statement == 'TRUE' ? 'checked' : ''}/></td></tr>
 			   <tr><td>VIEW BENEFITS PROJECTIONS</td><td><input type="checkbox" id="operation_benefit_projection" class="form-control input-sm"  ${permissions.operation_benefit_projection == 'TRUE' ? 'checked' : ''}/></td></tr>
 			    <tr><td>VIEW ANNUAL CONTRIBUTION STATEMENT</td><td><input type="checkbox" id="operation_annual_contribution" class="form-control input-sm"  ${permissions.operation_annual_contribution == 'TRUE' ? 'checked' : ''}/></td></tr>
 			    <tr><td>VIEW CLAIM STATUS</td><td><input type="checkbox" id="operation_claim_status" class="form-control input-sm"  ${permissions.operation_claim_status == 'TRUE' ? 'checked' : ''}/></td></tr>

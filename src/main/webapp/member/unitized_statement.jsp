@@ -9,7 +9,7 @@
 
 <div class="container-fluid section">
     <h3 class="text-center main-title">
-        <i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp; UNITIZED STATEMENT
+        <i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp; MEMBER STATEMENT
     </h3>
 
     <form class="form-inline" role="form" id="sa-form">

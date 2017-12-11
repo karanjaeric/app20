@@ -56,6 +56,8 @@ public class Register extends BaseServlet implements Serializable {
     @EJB
     PermissionBeanI permissionBeanI;
     @EJB
+    AccountRecoveryBeanI accountRecoveryBeanI;
+    @EJB
     SectorBeanI sectorBeanI;
     @EJB
     UserBeanI userBeanI;
@@ -95,6 +97,10 @@ public class Register extends BaseServlet implements Serializable {
 
         Menu menu = menuBeanI.find();
         request.setAttribute("menu", menu);
+
+        AccountRecovery accountRecovery = accountRecoveryBeanI.find();
+        request.setAttribute("accountRecovery", accountRecovery);
+
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         List<ProfileLoginField> plf = profileLoginFieldBeanI.find();

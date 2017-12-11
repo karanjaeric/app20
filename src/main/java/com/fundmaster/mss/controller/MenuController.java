@@ -44,6 +44,8 @@ public class MenuController extends BaseServlet implements Serializable {
     @EJB
     MenuBeanI menuBeanI;
     @EJB
+    AccountRecoveryBeanI accountRecoveryBeanI;
+    @EJB
     DBMenuBeanI dbMenuBeanI;
     @EJB
     DBGraphBeanI dbGraphBeanI;
@@ -183,6 +185,8 @@ public class MenuController extends BaseServlet implements Serializable {
         Social social = socialBeanI.find();
         request.setAttribute("social", social);
         Menu menu = menuBeanI.find();
+        AccountRecovery accountRecovery =accountRecoveryBeanI.find();
+        request.setAttribute("accountRecovery", accountRecovery);
         request.setAttribute("menu", menu);
         DBMenu dbMenu = dbMenuBeanI.find();
         request.setAttribute("dbMenu", dbMenu);

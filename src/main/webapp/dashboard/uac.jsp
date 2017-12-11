@@ -57,7 +57,7 @@ $(document).ready(function(){
     	        type: 'post',
     	        data: {ACTION: 'SAVE_PERMISSION', profile: prof, setup_company: $('#setup_company').prop('checked'), setup_email: $('#setup_email').prop('checked'), setup_logo: $('#setup_logo').prop('checked'),
 					setup_menu: $('#setup_menu').prop('checked'), db_menu: $('#db_menu').prop('checked'), setup_social: $('#setup_social').prop('checked'), setup_theme: $('#setup_theme').prop('checked'),
-					setup_banner: $('#setup_banner').prop('checked'), setup_interest_rate: $('#setup_interest_rate').prop('checked'), setup_other: $('#setup_other').prop('checked'),
+					setup_banner: $('#setup_banner').prop('checked'), setup_interest_rate: $('#setup_interest_rate').prop('checked'),enable_acc_recovery:$('#enable_acc_recovery').prop('checked'), setup_other: $('#setup_other').prop('checked'),
 					setup_contact_reason: $('#setup_contact_reason').prop('checked'), member_edit: $('#member_edit').prop('checked'), member_view: $('#member_view').prop('checked'),
 					operation_personal_info: $('#operation_personal_info').prop('checked'), operation_contribution_history: $('#operation_contribution_history').prop('checked'),
 					operation_balance_history: $('#operation_balance_history').prop('checked'), operation_statement_of_account: $('#operation_statement_of_account').prop('checked'),operation_unitized_statement: $('#operation_unitized_statement').prop('checked'),

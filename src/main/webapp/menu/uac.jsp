@@ -533,7 +533,7 @@
 
 						<tr>
 							<td>
-								<label class="control-label"> UNITIZED STATEMENT </label>
+								<label class="control-label"> MEMBER STATEMENT </label>
 							</td>
 							<td>
 								<input type="checkbox" name="UnitizedStatement" id="UnitizedStatement" ${memberMenu.unitizedStatement == 'TRUE' ? 'checked' : ''}/>
@@ -647,7 +647,7 @@
 							</td>
 						</tr>	<tr>
 							<td>
-								<label class="control-label"> MEMBER PAYMENT </label>
+								<label class="control-label"> WITHDRAWALS MADE </label>
 							</td>
 							<td>
 								<input type="checkbox" name="memberBenefit" id="memberBenefit" ${memberMenu.memberBenefit == 'TRUE' ? 'checked' : ''}/>

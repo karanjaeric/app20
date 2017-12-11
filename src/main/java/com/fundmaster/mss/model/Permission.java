@@ -198,6 +198,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.setup_menu = setup_menu;
 	}
 
+	public boolean isEnable_acc_recovery() {
+		return enable_acc_recovery;
+	}
+
+	public void setEnable_acc_recovery(boolean enable_acc_recovery) {
+		this.enable_acc_recovery = enable_acc_recovery;
+	}
+
 	public boolean isDb_menu() {
 		return db_menu;
 	}
@@ -558,7 +566,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean schemes, boolean receipts, boolean payments,boolean memberpayments,
 			boolean members, boolean member_listing, boolean corporate_statement, boolean operations, boolean media,boolean document, boolean uac,
 			boolean analytics, boolean benefitProjectionPage, boolean sponsorBenefitProjectionPage,boolean calculator_log, boolean setup_company, boolean setup_email, boolean setup_logo,
-			boolean setup_menu, boolean db_menu, boolean setup_social, boolean setup_theme,
+			boolean setup_menu, boolean enable_acc_recovery,boolean db_menu, boolean setup_social, boolean setup_theme,
 			boolean setup_banner, boolean setup_interest_rate,
 			boolean setup_other, boolean setup_contact_reason,
 			boolean content_help, boolean content_page, boolean faq_page,
@@ -612,6 +620,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.setup_email = setup_email;
 		this.setup_logo = setup_logo;
 		this.setup_menu = setup_menu;
+		this.enable_acc_recovery=enable_acc_recovery;
 		this.db_menu = db_menu;
 		this.setup_social = setup_social;
 		this.setup_theme = setup_theme;
@@ -663,7 +672,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.audit_trail = audit_trail;
 	}
 
-	private boolean setup_company, setup_email, setup_logo, setup_menu, db_menu, setup_social, setup_theme, setup_banner, setup_interest_rate, setup_other, setup_contact_reason;
+	private boolean setup_company, setup_email, setup_logo, setup_menu, enable_acc_recovery,db_menu, setup_social, setup_theme, setup_banner, setup_interest_rate, setup_other, setup_contact_reason;
 	
 	private boolean content_help, content_page, faq_page;
 	

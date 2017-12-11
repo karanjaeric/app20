@@ -55,7 +55,7 @@
 								<option>STATEMENT OF ACCOUNT</option>
 							</c:if>
 							<c:if test="${ permissions.operation_unitized_statement }">
-								<option>UNITIZED STATEMENT</option>
+								<option>MEMBER STATEMENT</option>
 							</c:if>
 							<c:if test="${ permissions.operation_benefit_projection }">
 								<option>BENEFITS PROJECTION</option>
@@ -154,7 +154,7 @@ function do_function()
 	        }
 		});
 	}
-    else if($('#operation').val() == 'UNITIZED STATEMENT')
+    else if($('#operation').val() == 'MEMBER STATEMENT')
     {
         start_wait();
         $.ajax({
