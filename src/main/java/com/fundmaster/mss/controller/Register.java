@@ -360,12 +360,12 @@ public class Register extends BaseServlet implements Serializable {
                             }
 
                         } else {
-                            this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are already registered to use the portal", null);
+                            this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are already registered to use the portal. Please use the Sign In Button above to access your account", null);
 
                         }
 
                     } else {
-                        this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are not an existing " + this.get(request, "category").toLowerCase() + ". Please contact the administrator.", null);
+                        this.respond(response, false, "<strong>Registration Failed!</strong><br /> Sorry Your Cell Phone Number does not Exist in Our Database. Please Use the Account Recovery Button below to recover your Account", null);
 
                     }
 
