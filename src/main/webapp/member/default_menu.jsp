@@ -34,7 +34,7 @@
         <c:if test="${memberMenu.unitizedStatement == 'TRUE'}">
             <li id="unitized-statement-li"><a href="javascript:void(0);"><i
                     class="glyphicon glyphicon-user"></i>&nbsp;<i
-                    class="fa fa-chevron-right"></i> UNITIZED STATEMENT</a></li>
+                    class="fa fa-chevron-right"></i> MEMBER STATEMENT</a></li>
         </c:if>
 
         <c:if test="${memberMenu.memberCertificate == 'TRUE'}">
@@ -113,10 +113,10 @@
                     <%--class="glyphicon glyphicon-equalizer"></i>&nbsp;<i--%>
                     <%--class="fa fa-chevron-right"></i> MEMBER BENEFIT</a></li>--%>
         <%--</c:if>--%>
-        <c:if test="${MemberStatus != 'Active' }">
+        <c:if test="${memberMenu.memberBenefit == 'TRUE' }">
             <li id="member-benefits-li"><a href="javascript:void(0);"><i
                     class="glyphicon glyphicon-folder-close"></i>&nbsp;<i
-                    class="fa fa-chevron-right"></i> MEMBER BENEFIT</a></li>
+                    class="fa fa-chevron-right"></i> WITHDRAWALS MADE</a></li>
         </c:if>
         <c:if test="${memberMenu.sponsorBenefitsProjectionPage == 'TRUE'}">
             <li id="sponsor-calculate-benefit-projection-li"><a href="javascript:void(0);"><i

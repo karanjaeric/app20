@@ -57,7 +57,7 @@
 						</c:if>	<c:if test="${ permissions.memberpayments == 'TRUE' }">
 							<li id="memberpayments-main-li"><a href="javascript:void(0);"><i
 								class="glyphicon glyphicon-gift"></i>&nbsp;<i
-								class="fa fa-chevron-right"></i> MEMBER PAYMENTS</a></li>
+								class="fa fa-chevron-right"></i> WITHDRAWALS MADE</a></li>
 						</c:if>
 						<c:if test="${ permissions.members == 'TRUE' }">
 							<li id="member-main-li"><a href="javascript:void(0);"><i
