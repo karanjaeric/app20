@@ -93,12 +93,13 @@ public class Activate extends BaseServlet implements Serializable {
 		Help help = helpBeanI.findHelp(Constants.PAGE_HOME);
 		request.setAttribute("help", help);
 		PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_HOME);
+                
                 String memberId=u.getProfileID().toString();
                 String operationType="ACCOUNT_ACTIVATION";
                 String operationStatus="SUCCESS";
                 
                 //api call
-                apiEJB.mssAccountOperation(memberId,operationType,operationStatus);
+                apiEJB.mssAccountOperation(memberId,operationType,operationStatus,null,null,null);
                 
 
 		/* configuring the http headers */

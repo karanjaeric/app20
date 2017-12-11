@@ -15,7 +15,7 @@
     <input type="hidden" id="orientation" value="${ report_details.orientation }" />
 
     <p>&nbsp;</p>
-    <div class="col-md-12" id="bh-results">
+    <div class="col-md-12" id="mce-results">
 
     </div>
 </div>
@@ -43,7 +43,7 @@
                         + $("#username").val() + '&passwd=' + $("#password").val() + '&_paramsblankImage=' + alternativeUrl +'&_paramsalternativeUrl=' + alternativeUrl + '&_paramsorientation=' + orientation;
                     console.log("BI After: " + url);
                     console.log("============= Done Fetching report ===================");
-                    $("#bh-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
+                    $("#mce-results").html('<object width="100%" height="700px" data="' + url + '"><h2 class="text-center"><small>Could not load report. Check that the report server is correctly configured and running</small></h2></object>');
                 }
             }
         });

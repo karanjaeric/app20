@@ -36,11 +36,23 @@
 				id="form-sign-in-mobile">
 				<div class="form-group">
 					<label class="control-label">${ plf }</label>
-					<div class="form-inline">
-						<select class="form-control pull-left user-country-code" name="country-code" style="width: 25%;"></select>
-						<input type="text" name="usernameMobile" class="form-control"
-							   id="usernameMobile" placeholder="${ plf }" style="width: 75%;">
-					</div>
+					<c:forEach var="field" items="${loginFields}">
+						<c:choose>
+							<c:when test="${field.profile == 'MEMBER' }">
+								<c:if test="${ field.ordinal== 'PHONE' }">
+									<div class="form-inline">
+										<select class="form-control pull-left user-country-code" name="country-code" style="width: 25%;"></select>
+										<input type="text" name="usernameMobile" class="form-control"
+											   id="usernameMobile" placeholder="CELL ${ plf }" style="width: 75%;">
+									</div>
+								</c:if>
+								<c:if test="${ field.ordinal== 'EMAIL'}">
+									<input class="form-control" type="text"
+										   placeholder="EMAIL" name="usernameMobile" id="usernameMobile">
+								</c:if>
+							</c:when>
+						</c:choose>
+					</c:forEach>
 				</div>
 				<div class="form-group">
 					<label class="control-label">Password</label> <input
@@ -70,11 +82,23 @@
 				id="form-sign-in">
 				<div class="form-group">
 					<label class="control-label">${ plf }</label>
-					<div class="form-inline">
-						<select class="form-control pull-left member-country-code" name="country-code" style="width: 30%;"></select>
-						<input type="text" name="username" class="form-control"
-							   id="username" placeholder="${ plf }" style="width: 70%;">
-					</div>
+					<c:forEach var="field" items="${loginFields}">
+						<c:choose>
+							<c:when test="${field.profile == 'MEMBER' }">
+								<c:if test="${ field.ordinal== 'PHONE' }">
+									<div class="form-inline">
+										<select class="form-control pull-left member-country-code" name="country-code" style="width: 30%;"></select>
+										<input type="text" name="username" class="form-control"
+											   id="username" placeholder="CELL ${ plf }" style="width: 70%;">
+									</div>
+								</c:if>
+								<c:if test="${ field.ordinal== 'EMAIL'}">
+									<input class="form-control" type="text"
+										   placeholder="EMAIL" name="username" id="username">
+								</c:if>
+							</c:when>
+						</c:choose>
+					</c:forEach>
 				</div>
 				<div class="form-group">
 					<label class="control-label">Password</label> <input

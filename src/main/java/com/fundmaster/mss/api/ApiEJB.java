@@ -62,7 +62,7 @@ public interface ApiEJB {
     boolean sendEmail(List<String> recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url);
     boolean saveSMS(String recepient, String msg, boolean status);
 
-    void sendSMS(String recipient, String message );
+    boolean sendSMS(String recipient, String message );
     boolean sendSMSR(String recipient, String message );
 
 
@@ -116,6 +116,6 @@ public interface ApiEJB {
     JSONObject getAnnuityQuote(String calculationMode, String productID, String lastName, String firstName, String otherNames, String idNumber, String address, String email, String phoneNumber, String purchaseDate, String pensionStartDate, String dateOfBirth, String gender, String guaranteedPercentage, String annuityIncrement, String paymentMode, String paymentFrequency, String registeredPurchasePrice, String unRegisteredPurchasePrice, String targetPension, String annuityMode, String spouseReversal, Boolean displayable, String spouseGender, String spouseDateOfBirth);
     List<Scheme> getSchemes(int start, int count);
 
-     void mssAccountOperation(String memberId,String operationType,String operationStatus);
+     void mssAccountOperation(String memberId,String operationType,String operationStatus,String email,String phone,String ssnit);
 
 }

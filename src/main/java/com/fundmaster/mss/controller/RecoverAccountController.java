@@ -64,13 +64,18 @@ public class RecoverAccountController extends BaseServlet implements Serializabl
         String phone = this.get(request, "phoneNumber");//membershipNumber
         String ssnitNumber  =this.get(request, "ssnit");
         String membershipNumber = String.valueOf(session.getAttribute("membershipNumber"));
+        String memberId = String.valueOf(session.getAttribute("memberId"));
         String schemeId = String.valueOf(session.getAttribute(Constants.SCHEME_ID));
+        String operationType = "ACCOUNT_RECOVERY";
+        String operationStatus = "";
+
 
         jLogger.i("The email set is===================================> " + email);
         jLogger.i("The phone set is===================================> " + phone);
         jLogger.i("The ssnitNumber set is===================================> " + ssnitNumber);
         jLogger.i("The membershipNumber set is===================================> " + membershipNumber);
         jLogger.i("The schemeId is===================================> " + schemeId);
+        jLogger.i("The memberId is===================================> " + memberId);
 
 
         boolean status;
@@ -80,11 +85,20 @@ public class RecoverAccountController extends BaseServlet implements Serializabl
         if (status) {
             apiEJB.sendSMS(phone,"Member details have been successfully saved. You Can Now Register To MSS Portal");
 
-            this.respond(response, true, "Member details have been successfully saved. You Can Now Register To MSS Portal" , null);
+            
+             operationStatus="SUCCESS";
+        
+              apiEJB.mssAccountOperation(memberId, operationType, operationStatus,email,phone,ssnitNumber);
+              this.respond(response, true, "Member details have been successfully saved. You Can Now Register To MSS Portal" , null);
         }
-            else
-                this.respond(response, false, "Member details could not be saved. We apologise for the inconvenience.", null);
-
+        else{
+              operationStatus="FAILED";
+        
+              apiEJB.mssAccountOperation(memberId, operationType, operationStatus,email,phone,ssnitNumber);
+              this.respond(response, false, "Member details could not be saved. We apologise for the inconvenience.", null);
+             
+        
+        }
 
      //   this.recoverAccount(request,response);
 
