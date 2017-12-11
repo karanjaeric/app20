@@ -23,6 +23,12 @@
 				class="glyphicon glyphicon-pushpin"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> HOMEPAGE MENU OPTIONS</a></li>
 		</c:if>
+
+		<c:if test="${ permissions.enable_acc_recovery }">
+		<li id="recovery-li"><a href="javascript:void(0);"><i
+				class="glyphicon glyphicon-pushpin"></i>&nbsp;<i
+				class="fa fa-chevron-right"></i> ACCOUNT RECOVERY CONFIG</a></li>
+		</c:if>
 		<c:if test="${ permissions.db_menu }">
 			<li id="db_menu-li"><a href="javascript:void(0);"><i
 					class="glyphicon glyphicon-menu-hamburger"></i>&nbsp;<i
@@ -530,7 +536,47 @@
 		</form>
 	</div>
 
+<!--Recovery Config-->
 
+<div class="modal fade" id="modal-recovery" tabindex="-1" role="dialog" aria-labelledby="myModalLabelMenu" aria-hidden="true">
+	<form role="form" id="form-recovery">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabelRecovery">
+						<i class="glyphicon glyphicon-pushpin"></i>&nbsp;&nbsp;WEBSITE PORTAL ACCOUNT RECOVERY FEATURE
+					</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="recovery_id" value="${ accountRecovery.id }" id="recovery_id"/>
+					<table class="table">
+						<tr><th> ITEM</th><th>RECOVERY BUTTON TEXT</th><th>VISIBLE</th></tr>
+
+						<tr>
+							<td>
+								<label class="control-label">ACCOUNT RECOVERY OPTION</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" class="form-control" name="accountRecoveryName" id="accountRecoveryName" placeholder="ACCOUNT RECOVERY" value="${ accountRecovery.accountRecoveryName }"/>
+								</div>
+							</td>
+							<td>
+								<input type="checkbox" name="accountRecoveryActive" id="accountRecoveryActive" ${accountRecovery.accountRecoveryActive == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+					<input class="btn btn-primary" type="submit"
+						   value="Save Changes" id="btn-recovery">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
 		<!-- DB SCHEME MENU ITEMS -->
 <div class="modal fade" id="modal-dbMenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDbMenu" aria-hidden="true">
 
@@ -1035,6 +1081,10 @@
 		        $('#modal-menu').modal('show');
 		    });
 
+		    $('#recovery-li').click(function(){
+		        $('#modal-recovery').modal('show');
+		    });
+
 			$('#db_menu-li').click(function(){
 				$('#modal-dbMenu').modal('show');
 			});
@@ -1221,6 +1271,62 @@
 			});
 
 			/* End Homepage Menu Form */
+
+            /* Homepage Menu Form */
+
+            $('#form-recovery').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    accountRecoveryName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'A title for the Account Recovery Name  is required'
+                            }
+                        }
+                    }
+
+                }
+            })
+                .on('success.form.bv', function(e) {
+                    // Prevent form submission
+                    e.preventDefault();
+
+                    var btn = "btn-recovery";
+                    var form = "form-recovery";
+                    var modal = "modal-recovery";
+                    var btn_text = $('#' + btn).val();
+
+                    $('#' + btn).val('Please wait...');
+                    $.ajax({
+                        url: $('#base_url').val() + 'admin',
+                        type: 'post',
+                        data: {recovery_id: $('#recovery_id').val(), accountRecoveryName: $('#accountRecoveryName').val(),
+                            accountRecoveryActive: $('#accountRecoveryActive').prop('checked') ,
+                            ACTION: 'RECOVERY'},
+                           dataType: 'json',
+                         success: function(json) {
+                            $('#' + btn).val('Done');
+                            if(json.success)
+                            {
+                                $('#' + form)[0].reset();
+                                $('#' + modal).modal('hide');
+                                html = 'Recovery settings successfully saved';
+                            }
+                            else
+                                html = 'Recovery settings could not be saved';
+                            bootbox.alert(html);
+                            $('#' + btn).val(btn_text);
+                        }
+                    });
+
+                });
+
+            /* End Homepage Menu Form */
 
 			/* DB Menu Form */
 

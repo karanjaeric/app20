@@ -169,8 +169,15 @@
 														<input type="text" class="form-control" name="eMCaptchaChars" id="eMCaptchaChars" />
 													</div>
 													<button class="btn btn-warning pull-left" >REGISTER NOW</button>
-													<a  href="<%=request.getContextPath()%>/find-member-account.jsp"  class="btn btn-info pull-right"
-														style="font-size: 12px">Account Recovery</a>
+
+													<c:if test="${accountRecovery.accountRecoveryActive == 'TRUE'}">
+														 <a
+																href="<%=request.getContextPath()%>/find-member-account.jsp" class="btn btn-info pull-right"
+																style="font-size: 12px"
+														>${ accountRecovery.accountRecoveryName }</a>
+													</c:if>
+													<%--<a  href="<%=request.getContextPath()%>/find-member-account.jsp"  class="btn btn-info pull-right"--%>
+														<%--style="font-size: 12px">Account Recovery</a>--%>
 
 												</fieldset>
 													

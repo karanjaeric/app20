@@ -10,6 +10,7 @@
 			<tr><td>SETUP LOGO</td><td><input type="checkbox" id="setup_logo" class="form-control input-sm"  ${permissions.setup_logo == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>CONFIGURE HOMEPAGE MENU</td><td><input type="checkbox" id="setup_menu" class="form-control input-sm"  ${permissions.setup_menu == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>CONFIGURE DB SCHEME MENU</td><td><input type="checkbox" id="db_menu" class="form-control input-sm"  ${permissions.db_menu == 'TRUE' ? 'checked' : ''}/></td></tr>
+			<tr><td>CONFIGURE ACCOUNT RECOVERY</td><td><input type="checkbox" id="enable_acc_recovery" class="form-control input-sm"  ${permissions.enable_acc_recovery == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>SOCIAL NETWORK LINKS</td><td><input type="checkbox" id="setup_social" class="form-control input-sm"  ${permissions.setup_social == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>THEME SETTINGS</td><td><input type="checkbox" id="setup_theme" class="form-control input-sm"  ${permissions.setup_theme == 'TRUE' ? 'checked' : ''}/></td></tr>
 			<tr><td>MANAGE BANNERS</td><td><input type="checkbox" id="setup_banner" class="form-control input-sm"  ${permissions.setup_banner == 'TRUE' ? 'checked' : ''}/></td></tr>
