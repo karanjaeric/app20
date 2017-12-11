@@ -179,7 +179,7 @@
 				<c:if test="${ isManager }">					
 					<button class="btn btn-success btn-block" id="switch_profile">SWITCH TO PERSONAL PROFILE</button>
 				</c:if>
-				<h2><small>Active Scheme</small></h2>
+				<h2><small>Choose Schemes</small></h2>
 				<select class="form-control" name="scheme_id" id="scheme_id" onchange="reload();">
 					<c:forEach var="scheme" items="${ schemes }">
 						<c:choose>
