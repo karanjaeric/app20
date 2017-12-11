@@ -1096,41 +1096,9 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
-    public void sendSMS(String recipient,   String message ) {
-
-        jLogger.i("Trying to send SMS");
-        final String zero = "0";
-        final String plus = "+";
-        String clientNumber=recipient;
-
-        if(clientNumber.startsWith(zero)){
-//            recipient = code + clientNumber.substring(1);
-        }else if(clientNumber.startsWith(plus)){
-            recipient =clientNumber;
-        }
-
-        ClientRequest request=new ClientRequest("https://api.hubtel.com/v1/messages/send?From=ENTTRUSTEES&To="+recipient+"&Content="
-                +message+"&ClientId=rlmjklyk&ClientSecret=egzjdxiw&RegisteredDelivery=true");
-
-        try {
-            ClientResponse<String> response = request.get(String.class);
-//            System.out.println("Status is"+response.getStatus());
-            int status = response.getStatus();
-            boolean status1;
-
-            if (status==502){
-                  status1 = true;
-            }else  status1=false;
-
-            saveSMS(recipient,message,status1);
-
-
-        } catch (Exception ex) {
-            // Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-//        final String code = "233";
+    public boolean sendSMS(String recipient,   String message ) {
+//
+//        jLogger.i("Trying to send SMS");
 //        final String zero = "0";
 //        final String plus = "+";
 //        String clientNumber=recipient;
@@ -1138,30 +1106,31 @@ public Double getMemberTotalUnits(String memberId) {
 //        if(clientNumber.startsWith(zero)){
 //            recipient = code + clientNumber.substring(1);
 //        }else if(clientNumber.startsWith(plus)){
-//            recipient =clientNumber.substring(1);
-//        }
-//
-//
-//        BasicAuth auth = new BasicAuth("rlmjklyk", "egzjdxiw");
-//        ApiHost host = new ApiHost(auth);
-//        MessagingApi messagingApi = new MessagingApi(host);
-//
-//        try {
-//            MessageResponse response = messagingApi.sendQuickMessage("XI", recipient, message, "123");
-//           jLogger.i("Server Response status " + response.getStatus());
-//            jLogger.i("Server Response network id " + response.getNetworkId());
-//            jLogger.i("Server Response detail" + response.getDetail());
-//            jLogger.i("Server Response rate " + response.getRate());
-//            jLogger.i("Server Response message id" + response.getMessageId());
-//
-//         } catch (HttpRequestException ex) {
-//
-//            jLogger.i("Exception Server Response Status " + ex.getHttpResponse().getStatus());
-//            jLogger.i("Exception Server Response Body " + ex.getHttpResponse().getBodyAsString());
-//
+//            recipient =clientNumber;
 //        }
 
 
+        try {
+            ClientRequest request=new ClientRequest("https://api.hubtel.com/v1/messages/send?From=ENTTRUSTEES&To="+recipient+"&Content="
+                    +message+"&ClientId=rlmjklyk&ClientSecret=egzjdxiw&RegisteredDelivery=true");
+
+            ClientResponse<String> response = request.get(String.class);
+             int status = response.getStatus();
+             jLogger.i("Response " + status);
+            boolean status1;
+
+            if (status==502 || status == 201){
+                  status1 = true;
+            }else  status1=false;
+
+            saveSMS(recipient,message,status1);
+
+            return true;
+
+        } catch (Exception ex) {
+            return false;
+
+        }
 
 
     }
@@ -1691,8 +1660,16 @@ public Double getMemberTotalUnits(String memberId) {
     @Override
     public List<Scheme> getProfileSchemes(String user, String profile) {
         String ordinal = profileLoginFieldBeanI.findByProfile(profile);
+
+        jLogger.i("Ordinal is >>>>>>>>> " + ordinal + " <<<<<<<<<<<<<");
         if (ordinal.equals("TAX_NUMBER")) {
             ordinal = "PIN";
+        }else if (ordinal.equals("EMPLOYER_ID")){
+
+            ordinal ="SPONSOR_PROD_NO";
+        }else
+        if (ordinal.isEmpty()){
+            ordinal = "";
         }
 
         jLogger.i(" Ordinal is >>>>>>>>>>>> " + ordinal + " <<<<<<<<<<<<<<<<<<<<<");
@@ -1834,7 +1811,10 @@ public Double getMemberTotalUnits(String memberId) {
         jLogger.i("Ordinal is >>>>>>>>> " + ordinal + " <<<<<<<<<<<<<");
         if (ordinal.equals("TAX_NUMBER")) {
             ordinal = "PIN";
-        }
+        }else if (ordinal.equals("EMPLOYER_ID")){
+
+            ordinal ="SPONSOR_PROD_NO";
+        }else
         if (ordinal.isEmpty()){
             ordinal = "";
         }

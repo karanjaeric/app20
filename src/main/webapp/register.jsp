@@ -274,6 +274,11 @@
 																	<input type="text" name="sponsorIdNumber" class="form-control input-sm"
 																		   id="sponsorIdNumber" placeholder="${ field.ordinal}">
 																</c:if>
+
+																<c:if test="${ field.ordinal== 'EMPLOYER_ID'}">
+																	<input type="text" name="sponsorIdNumber" class="form-control input-sm"
+																		   id="sponsorIdNumber" placeholder="${ field.ordinal}">
+																</c:if>
 															</c:when>
 														</c:choose>
 													</c:forEach>

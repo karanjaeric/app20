@@ -285,7 +285,7 @@ public class Register extends BaseServlet implements Serializable {
                         this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are not an existing " + this.get(request, "category").toLowerCase() + ". Please contact the administrator.", null);
 
                     }
-                } else if (helper.isValidPhone(loginField)) {
+                } else if (helper.isValidPhone(loginField) || loginField!=null) {
 
                     if (member != null && member.getId() > 0) {
                         if (userBeanI.findUserByUsernameAndProfile(this.get(request, "idNumber"), member.getProfile()) == null) {
@@ -300,7 +300,7 @@ public class Register extends BaseServlet implements Serializable {
                             u.setSmsActivationCode(activationCode);
                             userBeanI.edit(u);
                             String phone = null;
-                            String schemeId = null;
+                            //String schemeId = null;
                             boolean proceedSms;
 
                             if (u.getUserProfile().equals(Constants.PENSIONER)) {
@@ -314,7 +314,7 @@ public class Register extends BaseServlet implements Serializable {
                             } else if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 phone = m.getPhoneNumber();
-                                schemeId = member.getSchemeId();
+                              //  schemeId = member.getSchemeId();
                                 proceedSms = helper.isValidPhone(phone);
                             } else {
                                 member = apiEJB.memberExists(this.get(request, "category"), this.get(request, "idNumber"));
@@ -336,20 +336,8 @@ public class Register extends BaseServlet implements Serializable {
                             }
                             if (proceedSms) {
 
-                                final String zero = "0";
-                                final String plus = "+";
-                                String clientNumber = phone;
 
-                                if (clientNumber.startsWith(plus)) {
-
-                                    clientNumber = zero + clientNumber.substring(4);
-                                    jLogger.i("The Client Login Number is " + loginField);
-
-                                }
-
-                                String smsrecipient = phone;
-
-                                apiEJB.sendSMS(smsrecipient, "Dear " + u.getUserProfile() + ", "
+                                apiEJB.sendSMS(phone, "Dear " + u.getUserProfile() + ", "
                                         + "Your account has been created by Enterprise Trustees  Member Self Service Portal. "
                                         + "Your Verification Code is " + activationCode + " .To complete the activation process, enter the provided code and log in using your cell phone as " + loginField + " and the Password that you provided during Registration Process."
                                         + "In Case of any challenges, please contact our Call Center 0302634704");

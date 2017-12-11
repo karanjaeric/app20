@@ -62,7 +62,7 @@ public interface ApiEJB {
     boolean sendEmail(List<String> recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url);
     boolean saveSMS(String recepient, String msg, boolean status);
 
-    void sendSMS(String recipient, String message );
+    boolean sendSMS(String recipient, String message );
     boolean sendSMSR(String recipient, String message );
 
 

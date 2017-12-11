@@ -2286,7 +2286,8 @@ if(typeof adminCountryCode=="undefined")
 														stop_wait();
 														if(json.success)
                                                         {
-                                                            if (isNaN(($('#sponsorIdNumber').val()))){
+
+                                                             if (!validateEmail(($('#sponsorIdNumber').val()))){
 
                                                                 $("form#form-sponsor-existing")[0]
                                                                     .reset();
@@ -2295,7 +2296,7 @@ if(typeof adminCountryCode=="undefined")
                                                                         window.location.href = $(
                                                                             '#base_url')
                                                                                 .val()
-                                                                            + 'admin';
+                                                                            + 'activate-account';
                                                                     }, 5000);
 
                                                             }else{
@@ -2307,7 +2308,7 @@ if(typeof adminCountryCode=="undefined")
                                                                         window.location.href = $(
                                                                             '#base_url')
                                                                                 .val()
-                                                                            + 'activate-account';
+                                                                            + 'admin';
                                                                     }, 5000);
 
                                                             }
@@ -2337,6 +2338,11 @@ if(typeof adminCountryCode=="undefined")
 					        	$(".CaptchaImage").empty().append(img);
 					        }
 					    });
+					}
+
+					function validateEmail(email) {
+						var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+						return re.test(email);
 					}
 					$('#form-admin')
 							.bootstrapValidator(
@@ -2525,7 +2531,7 @@ if(typeof adminCountryCode=="undefined")
 														stop_wait();
                                                         if(json.success)
                                                         {
-                                                            if (isNaN(($('#adminIdNumber').val()))){
+                                                            if (!validateEmail(($('#adminIdNumber').val()))){
 
                                                                 $("form#form-admin")[0]
                                                                     .reset();
@@ -2534,7 +2540,7 @@ if(typeof adminCountryCode=="undefined")
                                                                         window.location.href = $(
                                                                             '#base_url')
                                                                                 .val()
-                                                                            + 'admin';
+                                                                            + 'activate-account';
                                                                     }, 5000);
 
                                                             }else{
@@ -2546,7 +2552,7 @@ if(typeof adminCountryCode=="undefined")
                                                                         window.location.href = $(
                                                                             '#base_url')
                                                                                 .val()
-                                                                            + 'activate-account';
+                                                                            + 'admin';
                                                                     }, 5000);
 
                                                             }
@@ -2750,7 +2756,7 @@ if(typeof adminCountryCode=="undefined")
 														stop_wait();
 														if(json.success)
 														{
-															if (isNaN(($('#eMIdNumber').val()))){
+															if (!validateEmail(($('#eMIdNumber').val()))){
 
                                                                 $("form#form-member")[0]
                                                                     .reset();
@@ -2759,7 +2765,7 @@ if(typeof adminCountryCode=="undefined")
                                                                         window.location.href = $(
                                                                             '#base_url')
                                                                                 .val()
-                                                                            + 'sign-in';
+                                                                            + 'activate-account';
                                                                     }, 5000);
 
                                                             }else{
@@ -2771,7 +2777,7 @@ if(typeof adminCountryCode=="undefined")
                                                                         window.location.href = $(
                                                                             '#base_url')
                                                                                 .val()
-                                                                            + 'activate-account';
+                                                                            + 'sign-in';
                                                                     }, 5000);
 
 															}
