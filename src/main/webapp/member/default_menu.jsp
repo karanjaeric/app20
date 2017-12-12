@@ -116,7 +116,7 @@
         <c:if test="${MemberStatus != 'Active' }">
             <li id="member-benefits-li"><a href="javascript:void(0);"><i
                     class="glyphicon glyphicon-folder-close"></i>&nbsp;<i
-                    class="fa fa-chevron-right"></i> MEMBER BENEFIT</a></li>
+                    class="fa fa-chevron-right"></i> WITHDRAWALS MADE</a></li>
         </c:if>
         <c:if test="${memberMenu.sponsorBenefitsProjectionPage == 'TRUE'}">
             <li id="sponsor-calculate-benefit-projection-li"><a href="javascript:void(0);"><i

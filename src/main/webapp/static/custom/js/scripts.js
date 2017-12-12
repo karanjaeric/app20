@@ -1512,7 +1512,7 @@ $('#form-find-member-account').bootstrapValidator({
 
            if(json.success)
            	setTimeout(function() {
-               	window.location.href = $('#base_url').val();
+               	window.location.href = $('#base_url').val()+'sign-in';
                	}, 3000);
         }
     });

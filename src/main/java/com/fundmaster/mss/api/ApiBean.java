@@ -560,9 +560,10 @@ public Double getMemberTotalUnits(String memberId) {
     public List<BenefitPayment> getMemberBenefitPayments(String memberId,int start, int count) {
         JSONObject response;
         try {
-            response = URLGet(APICall.MEMBER_GET_MEMBER_BENEFIT_PAYMENTS + memberId+ "/?start=" + start + "&size=" + count);
+            response = URLGet(APICall.MEMBER_GET_MEMBER_BENEFIT_PAYMENTS + memberId);
             if(response.getBoolean(Fields.SUCCESS))
             {
+                jLogger.i("We are here ready to go");
                 return this.benefitPaymentsFromJSON(response);
             }
             else

@@ -1439,7 +1439,7 @@ SocialBeanI socialBeanI;
         jLogger.i("Scheme Id found is " + schemeId);
 
         List<BenefitPayment> benefitPayments = apiEJB.getMemberBenefitPayments(member_id,0,50);
-        request.setAttribute("claims", benefitPayments);
+        request.setAttribute("payments", benefitPayments);
 
         logActivity("MEMBER PAYMENTS", "Viewed member Payments", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member Payments");
