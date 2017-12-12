@@ -28,7 +28,8 @@
 	<div class="col-sm-7 hidden-md hidden-lg ">
 		<div class="register-box-mobile">
 			<h3>You can now access your personalized pension information</h3>
-			<h4>Enter your details below to get started</h4>
+			<h4>Enter your details below to get started.</h4>
+			<h4>For First Time Users, Kindly Register</h4>
 			<hr>
 			<form class="register-form"
 				action="<%=request.getContextPath()%>/sign-in" method="post"
@@ -73,7 +74,8 @@
  	<div class="col-sm-5 register-box-container hidden-sm hidden-xs">
 		<div class="register-box-normal">
 			<h3>You can now access your personalized pension information</h3>
-			<h4>Enter your details below to get started</h4>
+			<h4>Enter your details below to get started.</h4>
+			<h4>For First Time Users, Kindly Register</h4>
 			<hr>
 			<form class="register-form"
 				action="<%=request.getContextPath()%>/sign-in" method="post"

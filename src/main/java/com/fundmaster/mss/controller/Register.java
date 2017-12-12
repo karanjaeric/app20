@@ -56,6 +56,8 @@ public class Register extends BaseServlet implements Serializable {
     @EJB
     PermissionBeanI permissionBeanI;
     @EJB
+    AccountRecoveryBeanI accountRecoveryBeanI;
+    @EJB
     SectorBeanI sectorBeanI;
     @EJB
     UserBeanI userBeanI;
@@ -95,6 +97,10 @@ public class Register extends BaseServlet implements Serializable {
 
         Menu menu = menuBeanI.find();
         request.setAttribute("menu", menu);
+
+        AccountRecovery accountRecovery = accountRecoveryBeanI.find();
+        request.setAttribute("accountRecovery", accountRecovery);
+
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         List<ProfileLoginField> plf = profileLoginFieldBeanI.find();
@@ -254,9 +260,16 @@ public class Register extends BaseServlet implements Serializable {
 
                                 apiEJB.sendEmail(recipients, sender, null, "MSS Portal Account Activation Instructions",
                                         "Dear " + u.getUserProfile() + ", "
-                                        + "Your account has been created on the FundMaster Xi Member Self Service Portal. "
-                                        + "Please click this link " + settings.getPortalBaseURL() + "activate?" + securityCode
-                                        + " to complete the activation process", schemeId, false, null);
+                                        + "Your account has been created on the Enterprise Trustees FundMaster Member Self Service Portal. "
+
+                                        + "Please click this link or Copy this link to your browser" +
+                                                " " + settings.getPortalBaseURL() + "activate?" + securityCode
+                                        + " to complete the activation process." +
+
+                                                "Once you Activate your Account, proceed to login to your account using your email as the username and the password" +
+                                                "you provided during this registration process. " +
+
+                                                "In case you might have any enquiries, kindly contact Enterprise Trustees through our Call Center Number 0302634704 ", schemeId, false, null);
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> "
                                         + "Congratulations! Your account has been created on the portal. "
@@ -353,12 +366,12 @@ public class Register extends BaseServlet implements Serializable {
                             }
 
                         } else {
-                            this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are already registered to use the portal", null);
+                            this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are already registered to use the portal. Please use the Sign In Button above to access your account", null);
 
                         }
 
                     } else {
-                        this.respond(response, false, "<strong>Registration Failed!</strong><br /> You are not an existing " + this.get(request, "category").toLowerCase() + ". Please contact the administrator.", null);
+                        this.respond(response, false, "<strong>Registration Failed!</strong><br /> Sorry Your Cell Phone Number does not Exist in Our Database. Please Use the Account Recovery Button below to recover your Account", null);
 
                     }
 

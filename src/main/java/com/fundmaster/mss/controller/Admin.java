@@ -89,6 +89,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String INTEREST_RATE_COLUMNS = "INTEREST_RATE_COLUMNS";
     private static final String SETTINGS = "SETTINGS";
     private static final String MENU = "MENU";
+    private static final String RECOVERY = "RECOVERY";
     private static final String DB_MENU = "DB_MENU";
     private static final String LOGOUT = "LOGOUT";
     private static final String SOCIAL = "SOCIAL";
@@ -157,6 +158,8 @@ public class Admin extends BaseServlet implements Serializable {
     InterestRateColumnBeanI interestRateColumnBeanI;
     @EJB
     MenuBeanI menuBeanI;
+    @EJB
+    AccountRecoveryBeanI accountRecoveryBeanI;
     @EJB
     DBMenuBeanI dbMenuBeanI;
     @EJB
@@ -507,6 +510,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case MENU:
                 editMenuSettings(request, response, session);
+                break;
+                case RECOVERY:
+                enableAccountRecovery(request, response, session);
                 break;
             case DB_MENU:
                 editDbMenu(request, response, session);
@@ -1163,6 +1169,22 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, true, "Portal menu configurations successfully saved", null);
         } else
             this.respond(response, true, "Portal menu configurations could not be saved", null);
+    }
+
+    private void enableAccountRecovery(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+         boolean accountRecoveryActive = this.get(request, "accountRecoveryActive").equalsIgnoreCase("true");
+
+        AccountRecovery accountRecovery =accountRecoveryBeanI.find();
+         accountRecovery.setAccountRecoveryActive(accountRecoveryActive);
+
+        accountRecovery.setAccountRecoveryName(this.get(request, "accountRecoveryName"));
+
+        if (accountRecoveryBeanI.edit(accountRecovery) != null) {
+            audit(session, "Updated portal Account recovery configuration settings");
+            this.respond(response, true, "Portal Account recovery configurations successfully saved", null);
+        } else
+            this.respond(response, true, "Portal Account recovery configurations could not be saved", null);
     }
     private void editDbMenu(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
     /* DB_Menu Update Request */
@@ -1868,6 +1890,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setSetup_email(this.get(request, "setup_email").equalsIgnoreCase("true"));
         perm.setSetup_contact_reason(this.get(request, "setup_contact_reason").equalsIgnoreCase("true"));
         perm.setSetup_interest_rate(this.get(request, "setup_interest_rate").equalsIgnoreCase("true"));
+        perm.setEnable_acc_recovery(this.get(request,"enable_acc_recovery").equalsIgnoreCase("true"));
         perm.setSetup_logo(this.get(request, "setup_logo").equalsIgnoreCase("true"));
         perm.setSetup_menu(this.get(request, "setup_menu").equalsIgnoreCase("true"));
         perm.setDb_menu(this.get(request,"db_menu").equalsIgnoreCase("true"));

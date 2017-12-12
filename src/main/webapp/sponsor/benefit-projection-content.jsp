@@ -213,7 +213,7 @@
                                         var FV = obj.futureValue;
                                         console.log("FV " + FV);
 
-                                                html = html + "<tr><td><h3>" + FV + "</h3></td> </tr>";
+                                                html = html + "<tr><td><h3>" + "GHC: " + FV + "</h3></td> </tr>";
                                                 stop_wait();
 
 
