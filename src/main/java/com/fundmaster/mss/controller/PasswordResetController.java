@@ -206,7 +206,7 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
                 }
             } else {
-                this.respond(response, true, "We are sorry, We coul not Find the User with the Username provided", null);
+                this.respond(response, true, "We are sorry, We could not Find the User with the Username provided", null);
 
             }
         }
