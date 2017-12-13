@@ -352,8 +352,8 @@ public class Register extends BaseServlet implements Serializable {
 
                                 apiEJB.sendSMS(phone, "Dear " + u.getUserProfile() + ", "
                                         + "Your account has been created by Enterprise Trustees  Member Self Service Portal. "
-                                        + "Your Verification Code is " + activationCode + " .To complete the activation process, enter the provided code and log in using your cell phone as " + loginField + " and the Password that you provided during Registration Process."
-                                        + "In Case of any challenges, please contact our Call Center 0302634704");
+                                        + "Your Verification Code is " + activationCode + "."
+                                        + "In case of any challenges contact us on 0302634704");
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> "
                                         + "Congratulations! Your account has been created on the portal. A SMS notification has been sent", null);
