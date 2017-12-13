@@ -3,7 +3,7 @@
 <div class="container-fluid section">
     <div class="col-md-4">
         <h3>
-            <i class="glyphicon glyphicon-gift"></i>&nbsp;&nbsp;MEMBER BENEFIT PAYMENTS
+            <i class="glyphicon glyphicon-gift"></i>&nbsp;&nbsp;WITHDRAWALS MADE
         </h3>
     </div>
     <div class="col-md-8" align="right">
@@ -14,7 +14,7 @@
     <button class="btn btn-info">Search</button>
     </form>
     </div>
-    <table class="table table-responsive table-striped" id="search-results">
+    <table class="table table-responsive table-striped" id="search-results" STYLE="font-size: 10px;">
     <tr><th>DATE OF PROCESSING</th><th>TYPE</th><th>PAYEE</th><th>MEMBER NO</th><th class="right">GROSS</th><th class="right">TAX FREE</th><th class="right">TAXABLE AMOUNT</th><th class="right">WITHHOLDING TAX</th><th class="right">NET</th></tr>
     <c:forEach var="payment" items="${payments}">
     <tr><td>${ payment.processingDate }</td><td>${ payment.type }</td><td>${ payment.payee }</td><td>${ payment.memberId }</td><td class="right">${ payment.gross }</td><td class="right">${ payment.taxFree }</td><td class="right">${ payment.taxable }</td><td class="right">${payment.withHolding }</td><td class="right">${ payment.net }</td></tr>
