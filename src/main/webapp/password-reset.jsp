@@ -8,11 +8,11 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-body">
-						<h3 class="text-center"><small>You should check your Phone to obtain the code requested herein</small></h3>
+						<h3 class="text-center"><small>You should check your Phone/Email to obtain the code requested herein</small></h3>
 						<div class="form-group">
-							<label class="control-label" for="resetCode">Phone Code:</label> <input type="password" class="form-control"
-								id="resetCode" name="securityCode"
-								placeholder="Reset Code (Get from your phone)">
+							<label class="control-label" for="resetCode">  Code:</label> <input type="password" class="form-control"
+								id="resetCode" name="resetCode"
+								placeholder="Reset Code">
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="newPassword">New

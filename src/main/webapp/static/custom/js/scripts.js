@@ -991,6 +991,7 @@ $('#form-password-reset').bootstrapValidator({
            bootbox.alert(json.message);
            if(json.success)
            	$('#modal-pwd-reset').modal('hide');
+
             setTimeout(
                 function() {
                     window.location.href = $(
@@ -1003,8 +1004,7 @@ $('#form-password-reset').bootstrapValidator({
 
 });
 
-
-$('#form-password-reset-admin').bootstrapValidator({
+ $('#form-password-reset-admin').bootstrapValidator({
     message: 'This value is not valid',
     feedbackIcons: {
         valid: 'glyphicon glyphicon-ok',
@@ -1013,7 +1013,7 @@ $('#form-password-reset-admin').bootstrapValidator({
     },
     excluded: ':disabled',
     fields: {
-        Username: {
+        AUsername: {
             validators: {
                 notEmpty: {
                     message: 'Please enter your username'
@@ -1024,13 +1024,13 @@ $('#form-password-reset-admin').bootstrapValidator({
 })
 
 .on('success.form.bv', function(e) {
-    var resetCountryCode=$('.reset-country-code').val();
+    var resetCountryCode=$('.admin-reset-country-code').val();
     if(resetCountryCode==null)
     {
         resetCountryCode='';
     }
     else {
-        resetCountryCode=$('.reset-country-code').val();
+        resetCountryCode=$('.admin-reset-country-code').val();
     }
     // Prevent form submission
     e.preventDefault();
@@ -1038,13 +1038,20 @@ $('#form-password-reset-admin').bootstrapValidator({
     $.ajax({
         url: $('#base_url').val() + 'password-reset-admin',
         type: 'POST',
-        data: {ACTION: 'REQUEST_RESET_ADMIN', Username: resetCountryCode+$('#Username').val()},
+        data: {ACTION: 'REQUEST_RESET_ADMIN', AUsername: resetCountryCode+$('#AUsername').val()},
         dataType: 'json',
         success: function(json) {
         	stop_wait();
            bootbox.alert(json.message);
            if(json.success)
            	$('#modal-pwd-reset-admin').modal('hide');
+            setTimeout(
+                function() {
+                    window.location.href = $(
+                        '#base_url')
+                            .val()
+                        + 'password-reset-admin';
+                }, 5000);
 
         }
     });
@@ -1153,6 +1160,58 @@ $('#form-find-member-account').bootstrapValidator({
 
         });
 
+    $('#form-sms-code-admin').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        excluded: ':disabled',
+        fields: {
+            code: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter your Activation Code'
+                    }
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function(e) {
+
+            // Prevent form submission
+            e.preventDefault();
+            start_wait();
+            $.ajax({
+                url: $('#base_url').val() + 'sign-in',
+                type: 'POST',
+                data: {ACTION: 'ACTIVATE_ACCOUNT_ADMIN', code: $('#code').val() },
+                dataType: 'json',
+                success: function(json) {
+                    stop_wait();
+                    bootbox.alert(json.message);
+                    if (json.success){
+                        var status = json.success;
+                        if (status) {
+                            $("form#form-sms-code-admin")[0]
+                                .reset();
+                            setTimeout(
+                                function () {
+                                    window.location.href = $(
+                                        '#base_url')
+                                            .val()
+                                        + 'admin';
+                                }, 5000);
+
+                        }
+                    }
+                }
+            });
+
+        });
+
 
 
     //modal-resend-code
@@ -1212,6 +1271,55 @@ $('#form-find-member-account').bootstrapValidator({
 
         });
 
+    $('#form-resend-code-admin').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        excluded: ':disabled',
+        fields: {
+            userName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter your Uername'
+                    }
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function(e) {
+
+            // Prevent form submission
+            e.preventDefault();
+            start_wait();
+            $.ajax({
+                url: $('#base_url').val() + 'resend-code-admin',
+                type: 'POST',
+                data: {ACTION: 'RESEND_CODE_ADMIN', userName: $('#userName').val() },
+                dataType: 'json',
+                success: function(json) {
+                    stop_wait();
+                    bootbox.alert(json.message);
+                    var status= json.success;
+
+                    if(status){
+                        setTimeout(
+                            function() {
+                                window.location.href = $(
+                                    '#base_url')
+                                        .val()
+                                    + 'activate-account-admin';
+                            }, 5000);
+
+                    }
+                }
+            });
+
+        });
+
 
 
     $('#form-reset-password-admin').bootstrapValidator({
@@ -1222,7 +1330,7 @@ $('#form-find-member-account').bootstrapValidator({
         validating: 'glyphicon glyphicon-refresh'
     },
     fields: {
-        securityCode: {
+        resetCodeA: {
             validators: {
                 notEmpty: {
                     message: 'Please enter the security code'
@@ -1355,7 +1463,7 @@ $('#form-find-member-account').bootstrapValidator({
     $.ajax({
         url: $('#base_url').val() + 'password-reset-admin',
         type: 'POST',
-        data: {ACTION: 'RESET_PASSWORD_ADMIN', securityCode: $('#securityCode').val(), newPassword: $('#newPassword').val()},
+        data: {ACTION: 'RESET_PASSWORD_ADMIN', resetCodeA: $('#resetCodeA').val(), newPassword: $('#newPassword').val()},
         dataType: 'json',
         success: function(json) {
         	stop_wait();

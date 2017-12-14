@@ -77,7 +77,7 @@ public class ResendCodeController extends BaseServlet implements Serializable {
 
 
                     apiEJB.sendSMS(phoneNumber, "Dear " + usr.getUserProfile() + ", " +
-                            "Your account has been created by Enterprise Trustees  Member Self Service Portal. " +
+                            "Your Activation Code has been Resend by Enterprise Trustees  Member Self Service Portal. " +
                             "Your Verification Code is " + activationCode + ". To complete the activation process enter the provided code." +
                             " Our call center no is 0302634704");
 
@@ -88,7 +88,7 @@ public class ResendCodeController extends BaseServlet implements Serializable {
 
 
                 } else {
-                    this.respond(response, true, "<strong>Code Resend Unsuccessful</strong><br /> Congratulations! " +
+                    this.respond(response, false, "<strong>Code Resend Unsuccessful</strong><br /> " +
                             "  We were not unable to resend the activation code to your Phone. " +
                             "Please contact the administrator", null);
 

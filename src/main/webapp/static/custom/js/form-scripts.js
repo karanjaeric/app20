@@ -2296,7 +2296,7 @@ if(typeof adminCountryCode=="undefined")
                                                                         window.location.href = $(
                                                                             '#base_url')
                                                                                 .val()
-                                                                            + 'activate-account';
+                                                                            + 'activate-account-admin';
                                                                     }, 5000);
 
                                                             }else{
