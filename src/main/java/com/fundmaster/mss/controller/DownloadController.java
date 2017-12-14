@@ -27,12 +27,10 @@ public class DownloadController extends BaseServlet implements Serializable {
 
     Helper helper = new Helper();
 	private static final long serialVersionUID = 1L;
-
 	@EJB
 	MediaBeanI mediaBeanI;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		/* configuring the http headers */
 		response.addHeader("X-XSS-Protection", "1; mode=block");
 		response.addHeader("X-Frame-Options", "DENY");

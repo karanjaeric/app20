@@ -39,39 +39,39 @@
     </c:if>
     </ul>
 
-    <table class="table table-responsive table-striped"  id="results" style="font-size: 8px">
-        <thead>
-        <tr><th>DATE OF PROCESSING</th><th>TYPE</th><th>PAYEE</th><th>MEMBER NO</th><th class="right">GROSS</th><th class="right">TAX FREE</th><th class="right">TAXABLE AMOUNT</th><th class="right">WITHHOLDING TAX</th><th class="right">NET</th></tr>
-        </thead>
-        <tbody>
-        <c:forEach var="payment" items="${payments}">
-            <tr><td>${ payment.processingDate }</td>
-                <td>${ payment.type }</td>
-                <td>${ payment.payee }</td>
-                <td>${ payment.memberId }</td>
-                <td class="right">${ payment.gross }</td>
-                <td class="right">${ payment.taxFree }</td>
-                <td class="right">${ payment.taxable }</td>
-                <td class="right">${payment.withHolding }</td>
-                <td class="right">${ payment.net }</td></tr>
-        </c:forEach>
-        </tbody>
-    </table>
+    <%--<table class="table table-responsive table-striped"  id="results" style="font-size: 8px">--%>
+        <%--<thead>--%>
+        <%--<tr><th>DATE OF PROCESSING</th><th>TYPE</th><th>PAYEE</th><th>MEMBER NO</th><th class="right">GROSS</th><th class="right">TAX FREE</th><th class="right">TAXABLE AMOUNT</th><th class="right">WITHHOLDING TAX</th><th class="right">NET</th></tr>--%>
+        <%--</thead>--%>
+        <%--<tbody>--%>
+        <%--<c:forEach var="payment" items="${payments}">--%>
+            <%--<tr><td>${ payment.processingDate }</td>--%>
+                <%--<td>${ payment.type }</td>--%>
+                <%--<td>${ payment.payee }</td>--%>
+                <%--<td>${ payment.memberId }</td>--%>
+                <%--<td class="right">${ payment.gross }</td>--%>
+                <%--<td class="right">${ payment.taxFree }</td>--%>
+                <%--<td class="right">${ payment.taxable }</td>--%>
+                <%--<td class="right">${payment.withHolding }</td>--%>
+                <%--<td class="right">${ payment.net }</td></tr>--%>
+        <%--</c:forEach>--%>
+        <%--</tbody>--%>
+    <%--</table>--%>
 
 </div>
-<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+<%--<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>--%>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 
-    $(document).ready(function(){
-        start_wait();
-
-        $('#results').dataTable({
-
-
-        });
-        stop_wait();
-    });
+//    $(document).ready(function(){
+//        start_wait();
+//
+//        $('#results').dataTable({
+//
+//
+//        });
+//        stop_wait();
+//    });
 
     function load_dashboard(page, batch)
     {
