@@ -8,7 +8,7 @@
         <c:forEach var="file" items="${documents}">
 
                 <tr><td>${ file.name }</td><td>${ file.description }</td><td>${ file.access }</td><td>${ file.created }</td><td>
-                    <a class="btn btn-sm btn-info" href="${pageContext.request.contextPath}/downloads/${ file.id }">
+                    <a class="btn btn-sm btn-info" href="static/images/documents/${ file.name }"target="_blank">
                         <i class="glyphicon glyphicon-download"></i>&nbsp;DOWNLOAD</a></td></tr>
 
         </c:forEach>
