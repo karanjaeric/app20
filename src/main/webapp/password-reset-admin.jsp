@@ -8,12 +8,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <h3 class="text-center"><small>You should check your email to obtain the security code requested herein</small></h3>
+                        <h3 class="text-center"><small>You should check your Phone/Email to obtain the code requested herein</small></h3>
                         <div class="form-group">
-                            <label class="control-label" for="securityCode">Security Code:</label>
+                            <label class="control-label" for="resetCodeA"> Code:</label>
                             <input type="password" class="form-control"
-                                   id="securityCode" name="securityCode"
-                                   placeholder="Security Code (Get from your email)">
+                                   id="resetCodeA" name="resetCodeA"
+                                   placeholder="Reset Code">
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="newPassword">New

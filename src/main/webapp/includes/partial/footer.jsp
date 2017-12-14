@@ -30,20 +30,36 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                   <button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title text-center" id="myModalLabelReset">
 							<i class="fa fa-bookmark"></i>&nbsp;&nbsp;<small>Please provide your username</small>
 						</h4>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label for="userPhone" class="control-label">Username:</label>
-							<div class="form-inline">
-							<select class="form-control pull-left reset-country-code" name="country-code" style="width: 25%;"></select>
+							<label for="Username" class="control-label">Username:</label>
+							<c:forEach var="field" items="${loginFields}">
+								<c:choose>
+									<c:when test="${field.profile == 'MEMBER' }">
+										<c:if test="${ field.ordinal== 'PHONE' }">
+											<div class="form-inline">
+												<select class="form-control pull-left reset-country-code" name="country-code" style="width: 25%;"></select>
+												<div class="form-inline">
 
-							<input type="text" name="userPhone" class="form-control"
-										id="userPhone" placeholder="PHONE NUMBER" style="width: 75%;"   >
-						</div>
+													<input type="text" name="Username" class="form-control"
+														   id="Username" placeholder="CELL ${ field.ordinal}" style="width: 75%;"   >
+												</div>
+											</div>
+										</c:if>
+										<c:if test="${ field.ordinal== 'EMAIL'}">
+											<span class="form-helper">${field.ordinal}</span>
+											<input
+													class="form-control" type="text"
+													placeholder="${ field.ordinal}" name="Username" id="Username">
+										</c:if>
+									</c:when>
+								</c:choose>
+							</c:forEach>
 						</div>
 						<p>We will send you instructions on how to reset your password</p>
 					</div>
@@ -62,8 +78,6 @@
 
 <%--RESET PASSWORD ADMIN--%>
 
-
-
 <div class="modal fade "  id="modal-pwd-reset-admin" tabindex="-1"
 	 role="dialog" aria-labelledby="myModalLabelReset" aria-hidden="true">
 	<form role="form" id="form-password-reset-admin">
@@ -77,9 +91,26 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="email" class="control-label">Username:</label>
-						<input type="email" name="email" class="form-control"
-							   id="email" placeholder="EMAIL">
+						<label for="AUsername" class="control-label">Username:</label>
+						<c:forEach var="field" items="${loginFields}">
+							<c:choose>
+								<c:when test="${field.profile == 'ADMINISTRATOR' }">
+									<c:if test="${ field.ordinal== 'PHONE' }">
+										<div class="form-inline">
+											<select class="form-control pull-left admin-reset-country-code" name="country-code" style="width: 25%;"></select>
+											<input type="text" name="AUsername" class="form-control pull-right"
+												   id="AUsername" placeholder="CELL ${ field.ordinal}" style="width: 75%;" >
+										</div>
+									</c:if>
+									<c:if test="${ field.ordinal== 'EMAIL'}">
+										<span class="form-helper">${field.ordinal}</span>
+										<input
+												class="form-control" type="text"
+												placeholder="${ field.ordinal}" name="AUsername" id="AUsername" >
+									</c:if>
+								</c:when>
+							</c:choose>
+						</c:forEach>
 					</div>
 					<p>We will send you instructions on how to reset your password</p>
 				</div>

@@ -134,17 +134,41 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
                 }
             } else {
-                apiEJB.mssAccountOperation(u.getProfileID().toString(), "PASSWORD_RESET", "FAILED", null, null, null);
+                  u = userBeanI.findBySecurityCode(resetCode);
+                if (u != null) {
+                    if (u.getSecurityCode().equalsIgnoreCase(resetCode)) {
+                        if (!(usedPasswordBeanI.isUsed(this.get(request, "newPassword")) && policy.isPassword_reuse())) {
+                            Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
+                            u.setPassword_expiry(password_expiry);
+                            u.setPassword(helper.hash(this.get(request, "newPassword")));
+                            u.setSecurityCode(null);
+                            if (userBeanI.edit(u) != null)
+                                this.respond(response, true, "Your password has been reset successfully", null);
+                            else
+                                this.respond(response, false, "Sorry, your password could not be reset", null);
+                        } else {
+                            this.respond(response, false, "Sorry, the new password entered has already been used once. You cannot re-use the password.", null);
 
-                this.respond(response, false, "The security code you entered is wrong. Please try again.", null);
+                        }
+
+                    } else {
+                        this.respond(response, false, "Sorry, your security code is invalid. Please enter a valid security code.", null);
+
+                    }
+                } else {
+                    apiEJB.mssAccountOperation(u.getProfileID().toString(), "PASSWORD_RESET", "FAILED", null, null, null);
+
+                    this.respond(response, false, "The security code you entered is wrong. Please try again.", null);
+
+                }
 
             }
         } else if (this.get(request, "ACTION").equals("REQUEST_RESET")) {
             Setting settings = settingBeanI.find();
             Constants.BASE_URL = request.getContextPath() + "password-reset";
 
-            String username = this.get(request, "userPhone");
-            jLogger.i("The Username (PHONE) " + username);
+            String username = this.get(request, "Username");
+            jLogger.i("The Username " + username);
             User usr = userBeanI.findByUsername(username);
             if (usr != null) {
                 String userProfile = usr.getUserProfile();
@@ -190,23 +214,64 @@ public class PasswordResetController extends BaseServlet implements Serializable
                         } else {
                             //apiEJB.mssAccountOperation(usr.getProfileID().toString(), " PASSWORD_RESET", "FAILED", null, null, null);
 
-                            this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
+                            this.respond(response, false, "We are sorry,  we were unable to send you the password reset instructions", null);
 
                         }
 
                     } else {
                         //apiEJB.mssAccountOperation(usr.getProfileID().toString(), " PASSWORD_RESET", "FAILED", null, null, null);
 
-                        this.respond(response, true, "We are sorry, but we were unable to send you the password reset instructions", null);
+                        this.respond(response, false, "We are sorry,  we were unable to send you the password reset instructions", null);
 
                     }
 
-                } else {
-                    this.respond(response, false, "Sorry, the username you entered is invalid. Please try again", null);
+                }else  if (helper.isEmailAddress(username)) {
+                    String securityCode = UUID.randomUUID().toString();
+                    usr.setSecurityCode(securityCode);
+                    Company company = companyBeanI.find();
+                    Emails emails = emailsBeanI.find();
+
+                    String sender = emails.getDefaultEmail();
+                    XiMember m = null;
+
+                    if (usr.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
+                        m = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
+                    } else {
+                        m = apiEJB.memberExists(userProfile, username);
+
+                    }
+
+                    boolean status = false;
+                    List<String> recipients = new ArrayList<>();
+
+                    try {
+                        recipients.add(m.getEmailAddress());
+                        status = apiEJB.sendEmail(recipients, sender, null, "Password Reset Instructions", "Dear " + usr.getUserProfile() + ", " +
+
+                                "You recently requested to change your password. " +
+                                "Your security code is: " + securityCode +
+                                " Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request.", null, false, null);
+                        jLogger.i("Your Status is ====== " + status);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+
+                    if (status) {
+                        if (userBeanI.edit(usr) != null)
+                            this.respond(response, true, "The password reset instructions have been sent to your email address", null);
+                        else
+                            this.respond(response, false, "We are sorry, but we were unable to send you the password reset instructions", null);
+                    } else {
+                        this.respond(response, false, "We are sorry, but we were unable to send you the password reset instructions", null);
+
+                    }
+                }else {
+                    this.respond(response, false, "We are sorry, We could not Find the User with the Username provided", null);
 
                 }
             } else {
-                this.respond(response, true, "We are sorry, We could not Find the User with the Username provided", null);
+                this.respond(response, false, "We are sorry, We could not Find the User with the Username provided", null);
 
             }
         }

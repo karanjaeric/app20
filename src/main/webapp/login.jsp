@@ -14,7 +14,7 @@
 						<img class="profile-img-card" src="static/images/avatar_2x.png">
 						<div class="form-group">
 
- 							<label class="control-label">Username</label>
+ 							<label class="control-label">${ field.ordinal }:</label>
 							<c:forEach var="field" items="${loginFields}">
 								<c:choose>
 								<c:when test="${field.profile == 'MEMBER' }">

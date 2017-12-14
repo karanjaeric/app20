@@ -144,7 +144,7 @@ public class SignIn extends BaseServlet implements Serializable {
 		response.addHeader("X-XSS-Protection", "1; mode=block");
 		response.addHeader("X-Frame-Options", "DENY");
 		response.addHeader("X-Content-Type-Options", "nosniff");
-
+//ACTIVATE_ACCOUNT_ADMIN
 		if(this.get(request, "ACTION").equals("ACTIVATE_ACCOUNT")) {
 
 			String code  = this.get(request, "code");
@@ -169,7 +169,32 @@ public class SignIn extends BaseServlet implements Serializable {
 				request.setAttribute("success", false);
 				this.respond(response, false, "Sorry, the Code you entered is invalid. Please try again", null);
 			}
-		}else {
+		}else 	if(this.get(request, "ACTION").equals("ACTIVATE_ACCOUNT_ADMIN")) {
+
+			String code  = this.get(request, "code");
+			jLogger.i("The Code is " + code);
+
+			User usr = userBeanI.findByActivationCode(code);
+
+
+			if(usr != null && !usr.isStatus())
+			{
+				usr.setStatus(true);
+				userBeanI.edit(usr);
+				request.setAttribute("success", true);
+
+				this.respond(response, true, "<strong>Activation Successful</strong><br /> " +
+
+						"Congratulations! Your account has been Activated on the portal. You can now Login", null);
+
+			}
+			else
+			{
+				request.setAttribute("success", false);
+				this.respond(response, false, "Sorry, the Code you entered is invalid. Please try again", null);
+			}
+		}
+		else {
 
 			HttpSession session = request.getSession();
 			String code=this.get(request,"countryCode");

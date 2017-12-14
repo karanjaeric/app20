@@ -13,7 +13,7 @@
 						<legend class="text-center">Please Login Here</legend>
 						<img class="profile-img-card" src="static/images/avatar_2x.png">
 						<div class="form-group">
-               <label class="control-label">Username</label>
+               <label class="control-label">${ field.ordinal }:</label>
                    <c:forEach var="field" items="${loginFields}">
 	                    <c:choose>
 		                   <c:when test="${field.profile == 'ADMINISTRATOR' }">
@@ -27,6 +27,11 @@
 							   <c:if test="${ field.ordinal== 'EMAIL'}">
 								   <input class="form-control" type="text"
 										  placeholder="Username" name="username" id="username">
+							   </c:if>
+
+							   <c:if test="${ field.ordinal== 'EMPLOYER_ID'}">
+								   <input class="form-control" type="text"
+										  placeholder="Employer Id" name="username" id="username">
 							   </c:if>
 						   </c:when>
 						</c:choose>
