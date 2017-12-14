@@ -958,10 +958,10 @@ $('#form-password-reset').bootstrapValidator({
     },
     excluded: ':disabled',
     fields: {
-        userPhone: {
+        Username: {
             validators: {
                 notEmpty: {
-                    message: 'Please enter your phone number'
+                    message: 'Please enter your Username'
                 }
             }
         }
@@ -984,7 +984,7 @@ $('#form-password-reset').bootstrapValidator({
     $.ajax({
         url: $('#base_url').val() + 'password-reset',
         type: 'POST',
-        data: {ACTION: 'REQUEST_RESET',  userPhone: resetCountryCode+$('#userPhone').val()},
+        data: {ACTION: 'REQUEST_RESET',  Username: resetCountryCode+$('#Username').val()},
         dataType: 'json',
         success: function(json) {
         	stop_wait();
@@ -1013,7 +1013,7 @@ $('#form-password-reset-admin').bootstrapValidator({
     },
     excluded: ':disabled',
     fields: {
-        email: {
+        Username: {
             validators: {
                 notEmpty: {
                     message: 'Please enter your username'
@@ -1024,14 +1024,21 @@ $('#form-password-reset-admin').bootstrapValidator({
 })
 
 .on('success.form.bv', function(e) {
-
+    var resetCountryCode=$('.reset-country-code').val();
+    if(resetCountryCode==null)
+    {
+        resetCountryCode='';
+    }
+    else {
+        resetCountryCode=$('.reset-country-code').val();
+    }
     // Prevent form submission
     e.preventDefault();
     start_wait();
     $.ajax({
         url: $('#base_url').val() + 'password-reset-admin',
         type: 'POST',
-        data: {ACTION: 'REQUEST_RESET_ADMIN', email: $('#email').val()},
+        data: {ACTION: 'REQUEST_RESET_ADMIN', Username: resetCountryCode+$('#Username').val()},
         dataType: 'json',
         success: function(json) {
         	stop_wait();
