@@ -25,7 +25,7 @@
     $(document).ready(function(){
 
         $.ajax({
-            url: $('#base_url').val() + 'member',
+            url: $('#base_url').val() + 'admin',
             type: 'post',
             data: {ACTION:'AP'},
             dataType: 'json',
