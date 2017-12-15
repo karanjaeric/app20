@@ -137,7 +137,6 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
 
                 }
             } else {
-                String resetCodeA = this.get(request, "resetCodeA");
 
                 u = userBeanI.findBySecurityCode(resetCode);
                 if (u != null) {
@@ -172,13 +171,13 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
             Setting settings = settingBeanI.find();
             Constants.BASE_URL = request.getContextPath() + "password-reset-admin";
 
-            String username = this.get(request, "AUsername");
+            String username = this.get(request, "AUsername");//case employerid   EF45353535
             jLogger.i("The Username " + username);
             User usr = userBeanI.findByUsername(username);
             if (usr != null) {
                 String userProfile = usr.getUserProfile();
 
-                if (helper.isValidPhone(username)) {
+                if (helper.isValidPhone(username) || username!=null && !helper.isEmailAddress(username)) {
 
                     String resetCode = helper.randomNumber().toString();
                     usr.setSmsActivationCode(resetCode);
@@ -190,9 +189,13 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
                     if (usr.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                         member = apiEJB.getMemberDetails(usr.getProfileID().toString(), null);
                         phone = member.getPhoneNumber();
+                        jLogger.i("PHONENUMBER IS " + phone);
+
                     } else {
                         member = apiEJB.memberExists(userProfile, username);
                         phone = member.getPhoneNumber();
+                        jLogger.i("PHONENUMBER IS " + phone);
+
 
                     }
 
