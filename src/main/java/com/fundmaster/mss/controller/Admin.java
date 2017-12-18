@@ -1441,36 +1441,52 @@ public class Admin extends BaseServlet implements Serializable {
 
         User u = userBeanI.find(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
         String userProfile = u.getUserProfile();
-        String userEmail = u.getUsername();
+        String userName = u.getUsername();
         jLogger.i("User found: " + u.getUsername());
 
-        String securityCode = UUID.randomUUID().toString();
-        u.setSecurityCode(securityCode);
 
-        userBeanI.edit(u);
 
         //XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
 
-        XiMember m = apiEJB.memberExists(userProfile, userEmail);
-        List<String> recipients = new ArrayList<>();
-        recipients.add(m.getEmailAddress());
-        jLogger.i("Our member still: " + m.getEmailAddress());
-
+        XiMember m = apiEJB.memberExists(userProfile, userName);
         try {
-            Emails emails = emailsBeanI.find();
-            boolean status = apiEJB.sendEmail(recipients, emails.getDefaultEmail(), null, "Change Password Request",
-                    "Dear " + u.getUsername() + ", " + "You recently requested to change your password. "
-                            + "Here is your security code:" + "" + securityCode
-                            + "\nYou will require it to be able to change your password",
-                    this.getSessKey(request, Constants.SCHEME_ID), false, "");
-            if (status) {
-                this.respond(response, true, "The change password instructions have been sent to your email address", null);
+        if (helper.isEmailAddress(userName)) {
+            String securityCode = UUID.randomUUID().toString();
+            u.setSecurityCode(securityCode);
+            userBeanI.edit(u);
+            List<String> recipients = new ArrayList<>();
+            recipients.add(m.getEmailAddress());
+            jLogger.i("Our member still: " + m.getEmailAddress());
+
+
+                Emails emails = emailsBeanI.find();
+                boolean status = apiEJB.sendEmail(recipients, emails.getDefaultEmail(), null, "Change Password Request",
+                        "Dear " + u.getUsername() + ", " + "You recently requested to change your password. "
+                                + "Here is your security code:" + "" + securityCode
+                                + "\nYou will require it to be able to change your password",
+                        this.getSessKey(request, Constants.SCHEME_ID), false, "");
+                if (status) {
+                    this.respond(response, true, "The change password instructions have been sent to your email address", null);
+                } else {
+                    this.respond(response, false, "We are sorry, we were unable to send you the change password instructions", null);
+                }
+
+        }else if (helper.isValidPhone(userName)){
+            String smsCode  = helper.randomNumber().toString();
+            u.setSmsActivationCode(smsCode);
+            userBeanI.edit(u);
+            boolean smsStatus = apiEJB.sendSMS(userName,"Dear " + u.getUserProfile() + " , " + " You recently requested to change your password."
+            + " Here is your security code: " + "" + smsCode + "\nYou will require it to be able to change your password");
+            if (smsStatus) {
+                this.respond(response, true, "The change password instructions have been sent to your phone number", null);
             } else {
                 this.respond(response, false, "We are sorry, we were unable to send you the change password instructions", null);
             }
+
+        }
         } catch (NullPointerException e1) {
             this.respond(response, false,
-                    "We are sorry, we encountered a problem obtaining your email address. Please try again", null);
+                    "We are sorry, we encountered a problem obtaining your User Name. Please try again", null);
         }
     }
     private void listMembers(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
