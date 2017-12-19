@@ -13,15 +13,17 @@
 						<legend class="text-center">Please Login Here</legend>
 						<img class="profile-img-card" src="static/images/avatar_2x.png">
 						<div class="form-group">
-               <label class="control-label"> Username </label>
+							<label class="control-label">  Employer ID  </label>
                    <c:forEach var="field" items="${loginFields}">
 	                    <c:choose>
-		                   <c:when test="${field.profile == 'ADMINISTRATOR' }">
+		                   <%--<c:when test="${field.profile == 'ADMINISTRATOR' || field=='SPONSOR' }">--%>
+		                   <c:when test="${ field.profile=='SPONSOR' }">
+
 							   <c:if test="${ field.ordinal== 'PHONE' }">
 								   <div class="form-inline">
 									   <select class="form-control pull-left admin-country-code" name="country-code" style="width: 30%;"></select>
 									   <input class="form-control pull-right" type="text"
-											  placeholder="CELL PHONE" name="username" id="username" style="width: 70%;" >
+											  placeholder="CELL ${ field.ordinal}" name="username" id="username" style="width: 70%;" >
 								   </div>
 							   </c:if>
 							   <c:if test="${ field.ordinal== 'EMAIL'}">
@@ -30,8 +32,9 @@
 							   </c:if>
 
 							   <c:if test="${ field.ordinal== 'EMPLOYER_ID'}">
+								   <%--<span class="form-helper">${field.ordinal}</span>--%>
 								   <input class="form-control" type="text"
-										  placeholder="Employer Id" name="username" id="username">
+										  placeholder=" ${ field.ordinal}" name="username" id="username">
 							   </c:if>
 						   </c:when>
 						</c:choose>
