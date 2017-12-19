@@ -1589,13 +1589,15 @@ SocialBeanI socialBeanI;
         request.setAttribute("identifier", identifier);
         search = this.get(request, "search");
         request.setAttribute("search", search);
+
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
 
 
         if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.SPONSOR)) {
 
             sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
-        }
+            jLogger.i("SponsorId is  " + sponsorId );
+          }
 
         if (identifier != null && profile != null && !Objects.equals(search, "") && sponsorId != null) {
             log("We are Here @ 0 !!!!!!!!");
@@ -1609,6 +1611,7 @@ SocialBeanI socialBeanI;
         }
         else {
             log("We are Here!!!!!!!!");
+
             members = apiEJB.getMemberListing(this.getSessKey(request, Constants.PROFILE_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.SCHEME_ID), 0, 9000);
         }
 

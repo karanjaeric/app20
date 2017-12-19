@@ -342,6 +342,8 @@
 				        success: function(html) {
 							stop_wait();
 							$('#modal-edit-beneficiary').modal('show');
+
+
 							$('#beneficiary-content').html(html);
 
 				        }
@@ -657,6 +659,7 @@
 															{
 																$('form#form-edit-beneficiary')[0].reset();
 																$('#modal-edit-beneficiary').modal('hide');
+                                                                location.reload();
 															}
 															bootbox
 																	.alert('<p class="text-center">'
@@ -747,7 +750,7 @@
 	</form>
 </div>
 
-<div class="modal fade" id="modal-edit-beneficiary" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEditBeneficiary" aria-hidden="true">
+<div class="modal fade"  id="modal-edit-beneficiary" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEditBeneficiary" aria-hidden="true">
 	<form role="form" id="form-edit-beneficiary" enctype="multipart/form-data">
 		<div class="modal-dialog large-modal">
 			<div class="modal-content">
