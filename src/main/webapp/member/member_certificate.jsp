@@ -46,7 +46,7 @@
 
 
                     var url = $('#reportPath').val() + 'members/Individual Membership Certificate.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FIndividual%20Membership%20Certificate.xdo&_xmode=3&_paramsuser_id=' + userId +
-                        '&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsap_id=' + json.accountingPeriodId + '&_paramsmember_id='+ $('#member_id').val() +'&_xt=Individual%20Membership%20Certificate&_xf=analyze&_xana=view'
+                        '&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsap_id=' + json.accountingPeriodId + '&_paramsmember_id='+ $('#member_id').val() +'&_xt=Individual%20Membership%20Certificate&_xf=analyze&_xana=view&id='
                         + $("#username").val() + '&passwd=' + $("#password").val() + '&_paramsblankImage=' + alternativeUrl +'&_paramsalternativeUrl=' + alternativeUrl + '&_paramsorientation=' + orientation;
                     console.log("BI After: " + url);
                     console.log("============= Done Fetching report ===================");
