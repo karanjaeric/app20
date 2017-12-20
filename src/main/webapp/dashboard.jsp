@@ -8,7 +8,7 @@
 	<div class="col-md-12">
 		<input type="hidden" name="profileID" id="profileID" value="${ profileID }" />
 		<div class="col-md-6 border-right">
-		<h3 class="text-center"><small>SCHEME MEMBERSHIP</small></h3>
+		<h3 class="text-center"><small>MEMBERSHIP DETAILS</small></h3>
 		<table class="table table-responsive table-striped">
 			<c:if test="${adminDashboard.activeMembers == 'TRUE'}">
 				<tr><td>ACTIVE MEMBERS</td><td id="active_members">--</td></tr>
@@ -23,7 +23,7 @@
 				<tr><td>EXITS IN CURRENT YEAR</td><td id="exits_in_year">--</td></tr>
 			</c:if>
 			<c:if test="${adminDashboard.newMembers == 'TRUE'}">
-				<tr><td>NEW MEMBERS</td><td id="new_members">--</td></tr>
+				<tr><td>NEW MEMBERS IN CURRENT YEAR</td><td id="new_members">--</td></tr>
 			</c:if>
 			<c:if test="${adminDashboard.membersDueRetirement == 'TRUE'}">
 				<tr><td>MEMBERS DUE FOR RETIREMENT</td><td id="due_for_retirement">${ retirement }</td></tr>

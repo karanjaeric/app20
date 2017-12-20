@@ -1449,6 +1449,9 @@ public class Admin extends BaseServlet implements Serializable {
         //XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
 
         XiMember m = apiEJB.memberExists(userProfile, userName);
+        String recipient =m.getPhoneNumber();
+
+
         try {
         if (helper.isEmailAddress(userName)) {
             String securityCode = UUID.randomUUID().toString();
@@ -1471,12 +1474,12 @@ public class Admin extends BaseServlet implements Serializable {
                     this.respond(response, false, "We are sorry, we were unable to send you the change password instructions", null);
                 }
 
-        }else if (helper.isValidPhone(userName)){
+        }else if (helper.isValidPhone(recipient) && recipient!=null || userName!=null){
             String smsCode  = helper.randomNumber().toString();
             u.setSmsActivationCode(smsCode);
             userBeanI.edit(u);
-            boolean smsStatus = apiEJB.sendSMS(userName,"Dear " + u.getUserProfile() + " , " + " You recently requested to change your password."
-            + " Here is your security code: " + "" + smsCode + "\nYou will require it to be able to change your password");
+            boolean smsStatus = apiEJB.sendSMS(recipient,"Dear " + u.getUserProfile() + " , " + " You recently requested to change your password."
+            + " Here is your security code: " + "" + smsCode + " You will require it to be able to change your password");
             if (smsStatus) {
                 this.respond(response, true, "The change password instructions have been sent to your phone number", null);
             } else {
