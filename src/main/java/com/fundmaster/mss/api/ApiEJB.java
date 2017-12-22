@@ -58,6 +58,7 @@ public interface ApiEJB {
     JSONObject getReceipts(String schemeID, String from, String to, int start, int count);
     List<BenefitPayment> searchPayments(String schemeID, String from, String to, int start, int count);
     List<XiMember> due4Retirement(String schemeID);
+    List<XiMember> due4RetirementPerSponsor(String schemeID , String ProfileId);
     JSONObject searchSchemes(String search);
     boolean sendEmail(List<String> recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url);
     boolean saveSMS(String recepient, String msg, boolean status);

@@ -1162,7 +1162,7 @@ public Double getMemberTotalUnits(String memberId) {
 
         JSONObject response;
         try {
-            response = URLGet(APICall.GET_MEMBERS_DUE_FOR_RETIREMENT + schemeID + "/0/100000");
+            response = URLGet(APICall.GET_MEMBERS_DUE_FOR_RETIREMENT + schemeID  + "/0/100000");
             if (response.getBoolean(Fields.SUCCESS)) {
                 return this.xiMembersFromJSON(response);
             } else {
@@ -1174,6 +1174,26 @@ public Double getMemberTotalUnits(String memberId) {
         }
     }
 
+    @Override
+    public List<XiMember> due4RetirementPerSponsor(String schemeID, String profileId) {
+
+        if (schemeID == null || schemeID.isEmpty()) {
+            schemeID = "0";
+        }
+
+        JSONObject response;
+        try {
+            response = URLGet(APICall.GET_MEMBERS_DUE_FOR_RETIREMENT_PER_SPONSOR + schemeID + "/" + profileId  + "/0/100000");
+            if (response.getBoolean(Fields.SUCCESS)) {
+                return this.xiMembersFromJSON(response);
+            } else {
+                return null;
+            }
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
     @Override
     public List<BenefitPayment> searchPayments(String schemeID, String from, String to, int start, int count) {
         JSONObject response;

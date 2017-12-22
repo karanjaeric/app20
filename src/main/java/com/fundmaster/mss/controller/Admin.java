@@ -301,9 +301,16 @@ public class Admin extends BaseServlet implements Serializable {
                     else {
 
                         List<XiMember> due4retirement = apiEJB.due4Retirement(this.getSessKey(request, Constants.SCHEME_ID));
+                        jLogger.i("The Profile id finding members due for retirement is " + this.getSessKey(request, Constants.PROFILE_ID));
                         request.setAttribute("retirement", due4retirement.size());
                         
                         request.getRequestDispatcher("admin.jsp").forward(request, response);
+                    }if (this.getSessKey(request, Constants.U_PROFILE) =="SPONSOR"){
+                        List<XiMember> due4retirement = apiEJB.due4RetirementPerSponsor(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID));
+
+                        request.setAttribute("retirement", due4retirement.size());
+
+
                     }
                 }
             } else {
