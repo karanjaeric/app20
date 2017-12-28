@@ -91,7 +91,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="AUsername" class="control-label">Username </label>
+						<label for="AUsername" class="control-label"> </label>
 						<c:forEach var="field" items="${loginFields}">
 							<c:choose>
 								<c:when test="${field.profile == 'ADMINISTRATOR' }">
@@ -104,9 +104,10 @@
 									</c:if>
 									<c:if test="${ field.ordinal== 'EMAIL'}">
 										<%--<span class="form-helper">${field.ordinal}</span>--%>
+										<span class="form-helper">EMPLOYER_ID</span>
 										<input
 												class="form-control" type="text"
-												placeholder="Username" name="AUsername" id="AUsername" >
+												placeholder="EMPLOYER_ID" name="AUsername" id="AUsername" >
 									</c:if>
 								</c:when>
 							</c:choose>

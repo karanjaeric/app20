@@ -2,7 +2,8 @@
 <jsp:include page="includes/partial/header.jsp" />
 
 <div class="imageBanner-image container">
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
+<div id="myCarousel" class="carousel slide" data-ride="carousel"  >
+
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">

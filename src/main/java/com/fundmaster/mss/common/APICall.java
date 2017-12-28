@@ -50,10 +50,12 @@ public class APICall {
     public static final String SCHEME_GET_SCHEME_RECEIPTS_BETWEEN_DATES = "scheme/getschemereceiptsbetweendates/";
     public static final String SCHEME_GETS_CHEME_BENEFIT_PAYMENTS_BETWEEN_DATES = "scheme/getschemebenefitpaymentsbetweendates/";
     public static final String GET_MEMBERS_DUE_FOR_RETIREMENT = "getmembersdueforretirement/";
+    public static final String GET_MEMBERS_DUE_FOR_RETIREMENT_PER_SPONSOR = "getmembersdueforretirementpersponsor/";
     public static final String SCHEME_GET_SCHEME_BY_NAME = "scheme/getschemebyname/";
     public static final String NOTIFICATION_PUSH = "notification/push";
     public static final String COMMISSIONS_GET = "commissions/get/";
     public static final String SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR = "scheme/getschemebenefitswithinyear/";
+    public static final String SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR_PER_SPONSOR = "scheme/getschemebenefitswithinyearpersponsor/";
     public static final String SCHEME_GET_REASONS_FOR_EXIT = "scheme/getreasonsforexit/";
     public static final String SEARCH_FOR_MEMBER_DETAILS = "searchForMemberDetails/";
     public static final String SEARCH_FOR_SPONSOR_MEMBER_DETAILS = "searchForSponsorMemberDetails/";

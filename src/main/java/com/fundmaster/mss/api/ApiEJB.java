@@ -58,6 +58,7 @@ public interface ApiEJB {
     JSONObject getReceipts(String schemeID, String from, String to, int start, int count);
     List<BenefitPayment> searchPayments(String schemeID, String from, String to, int start, int count);
     List<XiMember> due4Retirement(String schemeID);
+    List<XiMember> due4RetirementPerSponsor(String schemeID , String ProfileId);
     JSONObject searchSchemes(String search);
     boolean sendEmail(List<String> recipients, String sender, String senderName, String subject, String message, String schemeID, boolean attachment, String attachment_url);
     boolean saveSMS(String recepient, String msg, boolean status);
@@ -68,6 +69,7 @@ public interface ApiEJB {
 
     JSONObject getAgentCommission(String agentID);
     JSONObject getExitsInYear(String schemeID);
+    JSONObject getExitsInYearPerSponsor(String schemeID, String profileId);
     JSONObject getReasonsForExit();
     List<XiMember> searchProfiles(String search, String identifier, String profile, String schemeID, int start, int end);
     List<XiMember> searchProfilesBySponsor(String search, String identifier, String profile, String sponsorID, String schemeID);

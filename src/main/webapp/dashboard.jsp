@@ -8,7 +8,7 @@
 	<div class="col-md-12">
 		<input type="hidden" name="profileID" id="profileID" value="${ profileID }" />
 		<div class="col-md-6 border-right">
-		<h3 class="text-center"><small>SCHEME MEMBERSHIP</small></h3>
+		<h3 class="text-center"><small>MEMBERSHIP DETAILS</small></h3>
 		<table class="table table-responsive table-striped">
 			<c:if test="${adminDashboard.activeMembers == 'TRUE'}">
 				<tr><td>ACTIVE MEMBERS</td><td id="active_members">--</td></tr>
@@ -23,21 +23,21 @@
 				<tr><td>EXITS IN CURRENT YEAR</td><td id="exits_in_year">--</td></tr>
 			</c:if>
 			<c:if test="${adminDashboard.newMembers == 'TRUE'}">
-				<tr><td>NEW MEMBERS</td><td id="new_members">--</td></tr>
+				<tr><td>NEW MEMBERS IN CURRENT YEAR</td><td id="new_members">--</td></tr>
 			</c:if>
 			<c:if test="${adminDashboard.membersDueRetirement == 'TRUE'}">
 				<tr><td>MEMBERS DUE FOR RETIREMENT</td><td id="due_for_retirement">${ retirement }</td></tr>
 			</c:if>
 		</table>
 		</div>
-		<div class="col-md-6">
-					<h3 class="text-center"><small>CURRENT FUND VALUE</small></h3>					
-					<c:set var="now" value="<%=new java.util.Date()%>" />
-						<div align="center">
-							<h1 class="numberCircle" id="fund-value">--</h1>
-						</div>	
-						<h4 class="text-center">AS AT : <fmt:formatDate type="date" value="${now}" /></h4>
-		</div>
+		<%--<div class="col-md-6">--%>
+					<%--<h3 class="text-center"><small>CURRENT FUND VALUE</small></h3>					--%>
+					<%--<c:set var="now" value="<%=new java.util.Date()%>" />--%>
+						<%--<div align="center">--%>
+							<%--<h1 class="numberCircle" id="fund-value">--</h1>--%>
+						<%--</div>	--%>
+						<%--<h4 class="text-center">AS AT : <fmt:formatDate type="date" value="${now}" /></h4>--%>
+		<%--</div>--%>
 	</div>
 	<input type="hidden" name="profile" id="profile" value="${ profile }" />
 	<div class="col-md-12 border-top">
@@ -339,8 +339,10 @@
 			                text: ''
 			            },
 			            xAxis: {
-			                type: 'category'
-			            },
+			                type: 'category',
+                            reversed: true
+
+                        },
 			            yAxis: {
 			                title: {
 			                    text: 'Sponsor Contribution'
