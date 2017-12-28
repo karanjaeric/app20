@@ -996,6 +996,16 @@ public Double getMemberTotalUnits(String memberId) {
             return null;
         }
     }
+   @Override
+    public JSONObject getExitsInYearPerSponsor(String schemeID, String profileID) {
+        try {
+            return URLGet(APICall.SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR_PER_SPONSOR + schemeID + "/" + profileID);
+
+        }  catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+    }
 
     @Override
     public JSONObject getAgentCommission(String agentID) {

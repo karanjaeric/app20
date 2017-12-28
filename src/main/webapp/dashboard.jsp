@@ -339,8 +339,10 @@
 			                text: ''
 			            },
 			            xAxis: {
-			                type: 'category'
-			            },
+			                type: 'category',
+                            reversed: true
+
+                        },
 			            yAxis: {
 			                title: {
 			                    text: 'Sponsor Contribution'

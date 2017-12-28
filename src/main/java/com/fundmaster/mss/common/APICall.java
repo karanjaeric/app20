@@ -55,6 +55,7 @@ public class APICall {
     public static final String NOTIFICATION_PUSH = "notification/push";
     public static final String COMMISSIONS_GET = "commissions/get/";
     public static final String SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR = "scheme/getschemebenefitswithinyear/";
+    public static final String SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR_PER_SPONSOR = "scheme/getschemebenefitswithinyearpersponsor/";
     public static final String SCHEME_GET_REASONS_FOR_EXIT = "scheme/getreasonsforexit/";
     public static final String SEARCH_FOR_MEMBER_DETAILS = "searchForMemberDetails/";
     public static final String SEARCH_FOR_SPONSOR_MEMBER_DETAILS = "searchForSponsorMemberDetails/";

@@ -1617,7 +1617,15 @@ public class Admin extends BaseServlet implements Serializable {
     }
 
     private void getExitsInYear(HttpServletRequest request, HttpServletResponse response) {
-        this.respond(response, true, "", apiEJB.getExitsInYear(this.getSessKey(request, Constants.SCHEME_ID)));
+        if (this.getSessKey(request,Constants.U_PROFILE ) == "SPONSOR"){
+            this.respond(response, true, "", apiEJB.getExitsInYearPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request,Constants.PROFILE_ID)));
+
+
+        }else {
+
+            this.respond(response, true, "", apiEJB.getExitsInYear(this.getSessKey(request, Constants.SCHEME_ID)));
+        }
+
     }
     private void getAgentCommission(HttpServletRequest request, HttpServletResponse response) {
         this.respond(response, true, "", apiEJB.getAgentCommission(this.getSessKey(request, Constants.PROFILE_ID)));
