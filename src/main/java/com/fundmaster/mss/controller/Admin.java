@@ -300,17 +300,20 @@ public class Admin extends BaseServlet implements Serializable {
                         request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
                     else {
 
-                        List<XiMember> due4retirement = apiEJB.due4Retirement(this.getSessKey(request, Constants.SCHEME_ID));
+                        List<XiMember> due4retirement =null;
                         jLogger.i("The Profile id finding members due for retirement is " + this.getSessKey(request, Constants.PROFILE_ID));
-                        request.setAttribute("retirement", due4retirement.size());
-                        
+
+                        if (this.getSessKey(request, Constants.U_PROFILE).equals("SPONSOR")) {
+                            jLogger.i("TRUE");
+                            due4retirement  = apiEJB.due4RetirementPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));
+                            request.setAttribute("retirement", due4retirement.size());
+                        }else {
+                            due4retirement =apiEJB.due4Retirement(this.getSessKey(request,Constants.SCHEME_ID));
+                            request.setAttribute("retirement", due4retirement.size());
+
+                        }
+
                         request.getRequestDispatcher("admin.jsp").forward(request, response);
-                    }if (this.getSessKey(request, Constants.U_PROFILE) =="SPONSOR"){
-                        List<XiMember> due4retirement = apiEJB.due4RetirementPerSponsor(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID));
-
-                        request.setAttribute("retirement", due4retirement.size());
-
-
                     }
                 }
             } else {
@@ -1501,6 +1504,7 @@ public class Admin extends BaseServlet implements Serializable {
     }
     private void listMembers(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         audit(session, "Accessed scheme member listing");
+        jLogger.i("The SchemeId for Stats is " + this.getSessKey(request, Constants.SCHEME_ID));
         this.respond(response, true, "", apiEJB.listMembers(this.getSessKey(request, Constants.SCHEME_ID),
                 this.getSessKey(request, Constants.PROFILE_ID)));
     }
@@ -2318,6 +2322,11 @@ public class Admin extends BaseServlet implements Serializable {
         this.respond(response, true, "success", result);
     }
     private void getSponsorContributions(HttpServletRequest request, HttpServletResponse response) {
+
+        jLogger.i("Getting sponsor Contributions:: ");
+        jLogger.i("The SchemeId is " + this.getSessKey(request, Constants.SCHEME_ID));
+        jLogger.i("The ProfileId is " + this.getSessKey(request, Constants.PROFILE_ID));
+
         JSONObject result = apiEJB.getSponsorContributions(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID));
         this.respond(response, true, "success", result);
     }
