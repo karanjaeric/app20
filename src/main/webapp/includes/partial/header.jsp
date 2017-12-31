@@ -127,7 +127,7 @@ body {
 				<div class="collapse navbar-collapse navbar-right">
 				
 					<p class="top-contact">
-						Contact Us Today! <a href="mailto:${ email.defaultEmail }">${email.defaultEmail}</a>
+						Contact Us Today : <a href="mailto:${ email.defaultEmail }">${email.defaultEmail}</a>
 						| ${company.telephone}
 						 &nbsp;
 						<c:if test="${social.twitter != ''}">
