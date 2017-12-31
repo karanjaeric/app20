@@ -1546,11 +1546,13 @@ SocialBeanI socialBeanI;
         }
         else {
             if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.SPONSOR)) {
+                jLogger.i("getting sponsor scheme receipts");
 
-                receipts = apiEJB.getSponsorReceipts(this.getSessKey(request, Constants.PROFILE_ID), start, PER_PAGE);
+                receipts = apiEJB.getSponsorReceipts(this.getSessKey(request, Constants.PROFILE_ID),this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
 
             } else {
 
+                jLogger.i("getting  scheme receipts");
                 receipts = apiEJB.getSchemeReceipts(this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
             }
         }

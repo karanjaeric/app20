@@ -9,7 +9,7 @@
 					<tr><td class="right">ID/PASSPORT NO:</td><td class="left">${ member.idNumber }</td><td class="right">COUNTRY:</td><td class="left">${member.country }</td></tr>
 					<tr><th colspan="4"><h4 class="text-center">OTHER DETAILS</h4></th></tr>
 					<tr><td class="right">MEMBER NO:</td><td class="left">${ member.memberNo }</td><td class="right">ANNUAL PENSIONABLE SALARY:</td><td class="left">${member.annualPensionableSalary }</td></tr>
-					<tr><td class="right">PARTNER NO:</td><td class="left">${ member.partnerNo }</td><td class="right">STAFF NUMBER:</td><td class="left">${member.staffNo }</td></tr>
+					<tr><td class="right">SOCIAL SECURITY NO:</td><td class="left">${ member.nationalPenNo }</td><td class="right">STAFF NUMBER:</td><td class="left">${member.staffNo }</td></tr>
 					<tr><td class="right">PARTY REF NO:</td><td class="left">${ member.partyRefNo }</td><td class="right">POLICY NUMBER:</td><td class="left">${member.policyNo }</td></tr>
 					<tr><td class="right">PIN NUMBER:</td><td class="left">${ member.pinNo }</td><td class="right"></td><td class="left"></td></tr>
 				</table>

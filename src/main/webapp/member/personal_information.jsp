@@ -208,11 +208,18 @@
 										<input type="text" name="designation" id="designation" placeholder="Desgnation" class="form-control  input-sm" value="${ member.designation }" ${memberPermission.designation == 'TRUE' ? '' : 'disabled'}/>
 									</div>
 								</div>
+								<%--<div class="form-group">--%>
+									<%--<label for="partnerNumber" class="col-sm-6 control-label">Partner Number:</label>--%>
+									<%--<div class="col-sm-6"><input type="text" readonly="readonly" name="partnerNumber"--%>
+										<%--class="form-control  input-sm" id="partnerNumber"--%>
+										<%--placeholder="Partner Number" value="${ member.partnerNo }" ${memberPermission.dateOfBirth == 'TRUE' ? '' : 'disabled'}>--%>
+									<%--</div>--%>
+								<%--</div>--%>
 								<div class="form-group">
-									<label for="partnerNumber" class="col-sm-6 control-label">Partner Number:</label>
-									<div class="col-sm-6"><input type="text" readonly="readonly" name="partnerNumber"
-										class="form-control  input-sm" id="partnerNumber"
-										placeholder="Partner Number" value="${ member.partnerNo }" ${memberPermission.dateOfBirth == 'TRUE' ? '' : 'disabled'}>
+									<label for="ssnitNumber" class="col-sm-6 control-label">Social Security Number:</label>
+									<div class="col-sm-6"><input type="text" readonly="readonly" name="ssnitNumber"
+																 class="form-control  input-sm" id="ssnitNumber"
+																 placeholder="S.Security Number" value="${ member.nationalPenNo }" ${memberPermission.dateOfBirth == 'TRUE' ? '' : 'disabled'}>
 									</div>
 								</div>
 								<div class="form-group">

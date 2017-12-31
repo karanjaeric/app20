@@ -55,7 +55,7 @@ public interface ApiEJB {
     Double getMemberBensTotalEntitlement(String memberID);
     JSONObject getNewMembersInYear(String schemeID,String profileID);
     List<SchemeReceipt> searchReceipts(String schemeID, String from, String to, int start, int count);
-    JSONObject getReceipts(String schemeID, String from, String to, int start, int count);
+    JSONObject getReceipts(String schemeID, String profileId, String from, String to, int start, int count);
     List<BenefitPayment> searchPayments(String schemeID, String from, String to, int start, int count);
     List<XiMember> due4Retirement(String schemeID);
     List<XiMember> due4RetirementPerSponsor(String schemeID , String ProfileId);
@@ -86,7 +86,7 @@ public interface ApiEJB {
     List<XiMember> getMemberListing(String profileID, String profile, String schemeID, int start, int size);
     JSONObject listMembers(String schemeID, String profileID);
     List<SchemeReceipt> getSchemeReceipts(String schemeID, int start, int count);
-    List<SchemeReceipt> getSponsorReceipts(String sponsorId, int start, int count);
+    List<SchemeReceipt> getSponsorReceipts(String sponsorId, String schemeId, int start, int count);
     ReportDetails getReportDetails(String schemeId);
     List<AgentCommission> getAgentCommissions(String agentId, int start, int count);
     List<AgentClient> getAgentClients(String agentId, int start, int count);

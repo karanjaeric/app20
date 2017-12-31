@@ -636,11 +636,11 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
-    public List<SchemeReceipt> getSponsorReceipts(String sponsorId, int start, int count) {
+    public List<SchemeReceipt> getSponsorReceipts(String sponsorId,String schemeID, int start, int count) {
         Constants.RECORD_COUNT = 0;
         JSONObject response;
         try {
-            response = URLGet(APICall.SCHEME_GET_SPONSOR_RECEIPTS + sponsorId);
+            response = URLGet(APICall.SCHEME_GET_SPONSOR_RECEIPTS + sponsorId + "/" + schemeID);
             if(response.get(Fields.SUCCESS).equals(true))
             {
                 return this.schemeReceiptsFromJSON(response);
@@ -1241,11 +1241,11 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
-    public JSONObject getReceipts(String schemeID, String from, String to, int start, int count) {
+    public JSONObject getReceipts(String schemeID, String profileId,  String from, String to, int start, int count) {
         JSONObject response;
         try {
 
-            response = URLGet(APICall.SCHEME_GET_SCHEME_RECEIPTS_BETWEEN_DATES + schemeID + "/" + from + "/" + to);
+            response = URLGet(APICall.SCHEME_GET_SCHEME_RECEIPTS_BETWEEN_DATES + schemeID + "/" + profileId + "/" + from + "/" + to);
 
 
             jLogger.i("Receipts json response >>>>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<");

@@ -1595,7 +1595,8 @@ public class Admin extends BaseServlet implements Serializable {
         MemberPermission memberPermission = memberPermissionBeanI.find();
         request.setAttribute("memberPermission", memberPermission);
         request.setAttribute("member", xm);
-        audit(session, "Accessed editable view for member " + xm.getName());
+
+         audit(session, "Accessed editable view for member " + xm.getName());
         request.getRequestDispatcher("member/personal_information.jsp").forward(request, response);
     }
     private void changeScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1675,10 +1676,13 @@ public class Admin extends BaseServlet implements Serializable {
         DateFormat format_ = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 
         if (date_from != null && date_to != null) {
-         //receipts = apiEJB.searchReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), 0, 0);
+            //receipts = apiEJB.searchReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), 0, 0);
+            jLogger.i("Am here getting scheme receipts");
+            if (this.getSessKey(request, Constants.U_PROFILE).equals("SPONSOR")) {
 
-          this.respond(response, true, "", apiEJB.getReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), 0, 0));
-         }
+                this.respond(response, true, "", apiEJB.getReceipts(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID), format_.format(date_from), format_.format(date_to), 0, 0));
+            }
+        }
 
 
 //        request.setAttribute("receipts", receipts);
