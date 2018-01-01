@@ -233,7 +233,7 @@ body {
 									In</strong></a> <a class="btn btn-sm btn-success"
 								href="<%=request.getContextPath()%>/register"><strong>Register</strong></a>
 							<a class="btn btn-sm btn-success"
-							   href="<%=request.getContextPath()%>/login"><strong>Employer Login</strong></a>
+							   href="<%=request.getContextPath()%>/login"><strong>Employer</strong></a>
 						</div>
 					</div>
 				</div>
