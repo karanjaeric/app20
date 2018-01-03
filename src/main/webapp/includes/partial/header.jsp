@@ -167,7 +167,7 @@ body {
 						</c:if>
 					</p>
 					<div class="row">
-						<div class="col-sm-9">
+						<div class="col-sm-8">
 							<ul class="nav navbar-nav">
 							
 								<li><a href="<%=request.getContextPath()%>">Home</a></li>
@@ -227,11 +227,13 @@ body {
 								</c:if>
 							</ul>
 						</div>
-						<div class="col-sm-3 calls-to-action hidden-sm hidden-xs">
+						<div class="col-sm-4 calls-to-action hidden-sm hidden-xs">
 							<a class="btn btn-sm btn-warning"
 								href="<%=request.getContextPath()%>/sign-in"><strong>Sign
 									In</strong></a> <a class="btn btn-sm btn-success"
 								href="<%=request.getContextPath()%>/register"><strong>Register</strong></a>
+							<a class="btn btn-sm btn-success"
+							   href="<%=request.getContextPath()%>/login"><strong>Employer</strong></a>
 						</div>
 					</div>
 				</div>
