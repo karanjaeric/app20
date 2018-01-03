@@ -6,14 +6,14 @@
     <welcome-file-list>
         <welcome-file>index</welcome-file>
     </welcome-file-list>
-    <display-name>MssUg</display-name>
+    <display-name>Mss</display-name>
 
-    <session-config>
-        <cookie-config>
-            <http-only>true</http-only>
+    <!--<session-config>-->
+        <!--<cookie-config>-->
+            <!--<http-only>true</http-only>-->
             <!--<secure>true</secure>-->
-        </cookie-config>
-    </session-config>
+        <!--</cookie-config>-->
+    <!--</session-config>-->
 
     <error-page>
         <!--handling bad request errors-->

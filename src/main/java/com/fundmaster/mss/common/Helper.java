@@ -1,9 +1,12 @@
 package com.fundmaster.mss.common;
 
+import com.fundmaster.mss.beans.UserBeanI;
 import com.fundmaster.mss.model.Ordinal;
+import com.fundmaster.mss.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -18,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
 
 public class Helper {
 
@@ -45,6 +50,8 @@ public class Helper {
     private final JLogger jLogger = new JLogger(this.getClass());
     public static final long serialVersionUID = 1L;
 
+    @EJB
+    UserBeanI userBeanI;
     public String getOrdinalKey(String ordinal)
     {
         for(int i = 0; i < names.length; i ++)
@@ -359,5 +366,16 @@ public class Helper {
 
         }
         return randomNumber;
+    }
+
+
+    public  User checkUserBySmsCode(User user, String code){
+        if (userBeanI.findByActivationCode(code)!=null){
+            user.setSmsActivationCode(randomNumber().toString());
+         }else  {
+            user.setSmsActivationCode(code);
+        }
+        return user;
+
     }
 }

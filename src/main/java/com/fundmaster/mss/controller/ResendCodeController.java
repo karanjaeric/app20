@@ -69,14 +69,14 @@ public class ResendCodeController extends BaseServlet implements Serializable {
                 usr.setSmsActivationCode(activationCode);
                 userBeanI.edit(usr);
                 boolean proceedSms;
-                proceedSms = helper.isValidPhone(phoneNumber);
+                proceedSms = helper.isValidPhone(usr.getUsername());
 
                 if (proceedSms) {
 
 
 
 
-                    apiEJB.sendSMS(phoneNumber, "Dear " + usr.getUserProfile() + ", " +
+                    apiEJB.sendSMS(usr.getUsername(), "Dear " + usr.getUserProfile() + ", " +
                             "Your Activation Code has been Resend by Enterprise Trustees  Member Self Service Portal. " +
                             "Your Verification Code is " + activationCode + ". To complete the activation process enter the provided code." +
                             " Our call center no is 0302634704");

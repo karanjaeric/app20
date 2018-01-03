@@ -310,12 +310,12 @@ public class Register extends BaseServlet implements Serializable {
                             Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
                             u.setPassword_expiry(password_expiry);
                             String activationCode = helper.randomNumber().toString();
-                            if (userBeanI.findByActivationCode(activationCode)!=null){
+                             if (userBeanI.findByActivationCode(activationCode)!=null){
                                 u.setSmsActivationCode(helper.randomNumber().toString());
                             }else {
                                 u.setSmsActivationCode(activationCode);
                             }
-                            userBeanI.edit(u);
+                             userBeanI.edit(u);
                             String phone = null;
                             //String schemeId = null;
                             boolean proceedSms;
@@ -355,7 +355,7 @@ public class Register extends BaseServlet implements Serializable {
 
 
                                 apiEJB.sendSMS(phone, "Dear " + u.getUserProfile() + ", "
-                                        + "Your account has been created by Enterprise Trustees  Member Self Service Portal. "
+                                        + "Your account has been created by Enterprise Trustees Member Self Service Portal."
                                         + "Your Verification Code is " + activationCode + "."
                                         + "In case of any challenges contact us on 0302634704");
 
