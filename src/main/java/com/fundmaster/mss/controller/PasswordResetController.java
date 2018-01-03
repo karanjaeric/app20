@@ -177,6 +177,9 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
                     String resetCode = helper.randomNumber().toString();
                     usr.setSmsActivationCode(resetCode);
+                    usr.setAttempt(0);
+                    usr.setStatus(true);
+
                     Company company = companyBeanI.find();
                     String recipient = null;
 
@@ -195,12 +198,10 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
                     try {
 
-                        apiEJB.sendSMS(recipient, "Dear " + usr.getUserProfile() + " ,"
+                        status =apiEJB.sendSMS(recipient, "Dear " + usr.getUserProfile() + " ,"
                                 + "You recently requested to change your password. "
                                 + "Your Reset code is: " + resetCode
-                                + " Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request."
                         );
-                        status = true;
 
                         jLogger.i("Your Status is ====== " + status);
                     } catch (Exception ex) {
@@ -228,6 +229,8 @@ public class PasswordResetController extends BaseServlet implements Serializable
                 }else  if (helper.isEmailAddress(username)) {
                     String securityCode = UUID.randomUUID().toString();
                     usr.setSecurityCode(securityCode);
+                    usr.setAttempt(0);
+                    usr.setStatus(true);
                     Company company = companyBeanI.find();
                     Emails emails = emailsBeanI.find();
 

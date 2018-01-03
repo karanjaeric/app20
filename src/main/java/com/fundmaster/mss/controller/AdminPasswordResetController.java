@@ -181,6 +181,9 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
 
                     String resetCode = helper.randomNumber().toString();
                     usr.setSmsActivationCode(resetCode);
+                    usr.setAttempt(0);
+                    usr.setStatus(true);
+
                     Company company = companyBeanI.find();
                     String phone = null;
 
@@ -203,12 +206,10 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
 
                     try {
 
-                        apiEJB.sendSMS(phone, "Dear " + usr.getUserProfile() + " ,"
+                        status = apiEJB.sendSMS(phone, "Dear " + usr.getUserProfile() + " ,"
                                 + "You have requested to change your password. "
                                 + "Your Reset code is: " + resetCode
-                                + " Please click this link: '" + settings.getPortalBaseURL() + "password-reset' to complete your request."
                         );
-                        status = true;
 
                         jLogger.i("Your Status is ====== " + status);
                     } catch (Exception ex) {
@@ -236,6 +237,8 @@ public class AdminPasswordResetController extends BaseServlet implements Seriali
                 }else  if (helper.isEmailAddress(username)) {
                     String securityCode = UUID.randomUUID().toString();
                     usr.setSecurityCode(securityCode);
+                    usr.setAttempt(0);
+                    usr.setStatus(true);
                     Company company = companyBeanI.find();
                     Emails emails = emailsBeanI.find();
 
