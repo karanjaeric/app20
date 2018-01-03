@@ -310,7 +310,11 @@ public class Register extends BaseServlet implements Serializable {
                             Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());
                             u.setPassword_expiry(password_expiry);
                             String activationCode = helper.randomNumber().toString();
-                            u.setSmsActivationCode(activationCode);
+                            if (userBeanI.findByActivationCode(activationCode)!=null){
+                                u.setSmsActivationCode(helper.randomNumber().toString());
+                            }else {
+                                u.setSmsActivationCode(activationCode);
+                            }
                             userBeanI.edit(u);
                             String phone = null;
                             //String schemeId = null;
