@@ -104,6 +104,7 @@ public class PasswordResetController extends BaseServlet implements Serializable
             String resetCode = this.get(request, "resetCode");
             User u = userBeanI.findByActivationCode(resetCode);
             if (u != null) {
+                jLogger.i("User NOT NULL");
                 if (u.getSmsActivationCode().equalsIgnoreCase(resetCode)) {
                     if (!(usedPasswordBeanI.isUsed(this.get(request, "newPassword")) && policy.isPassword_reuse())) {
                         Date password_expiry = helper.addDays(new Date(), policy.getExpiry_days());

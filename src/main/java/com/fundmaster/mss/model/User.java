@@ -35,8 +35,7 @@ public class User extends GenericModel<User>  implements Serializable {
 	}
 	private int attempt;
 	private String securityCode;
-	@Column (unique = true)
-	private String smsActivationCode;
+ 	private String smsActivationCode;
 
 	public String getSmsActivationCode() {
 		return smsActivationCode;
