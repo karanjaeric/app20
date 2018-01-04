@@ -110,6 +110,8 @@ public class PasswordResetController extends BaseServlet implements Serializable
                         u.setPassword_expiry(password_expiry);
                         u.setPassword(helper.hash(this.get(request, "newPassword")));
                         u.setSmsActivationCode(null);
+                        u.setAttempt(0);
+                        u.setStatus(true);
                         if (userBeanI.edit(u) != null) //                                                    PASSWORD_RESET
                         {
                             apiEJB.mssAccountOperation(u.getProfileID().toString(), "PASSWORD_RESET", "SUCCESS", null, null, null);
@@ -142,6 +144,8 @@ public class PasswordResetController extends BaseServlet implements Serializable
                             u.setPassword_expiry(password_expiry);
                             u.setPassword(helper.hash(this.get(request, "newPassword")));
                             u.setSecurityCode(null);
+                            u.setAttempt(0);
+                            u.setStatus(true);
                             if (userBeanI.edit(u) != null)
                                 this.respond(response, true, "Your password has been reset successfully", null);
                             else
@@ -177,8 +181,7 @@ public class PasswordResetController extends BaseServlet implements Serializable
 
                     String resetCode = helper.randomNumber().toString();
                     usr.setSmsActivationCode(resetCode);
-                    usr.setAttempt(0);
-                    usr.setStatus(true);
+
 
                     Company company = companyBeanI.find();
                     String recipient = null;
@@ -229,8 +232,6 @@ public class PasswordResetController extends BaseServlet implements Serializable
                 }else  if (helper.isEmailAddress(username)) {
                     String securityCode = UUID.randomUUID().toString();
                     usr.setSecurityCode(securityCode);
-                    usr.setAttempt(0);
-                    usr.setStatus(true);
                     Company company = companyBeanI.find();
                     Emails emails = emailsBeanI.find();
 
