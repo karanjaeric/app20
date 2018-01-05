@@ -1622,7 +1622,8 @@ public class Admin extends BaseServlet implements Serializable {
     }
 
     private void getExitsInYear(HttpServletRequest request, HttpServletResponse response) {
-        if (this.getSessKey(request,Constants.U_PROFILE ) == "SPONSOR"){
+        if (this.getSessKey(request,Constants.U_PROFILE ).equals("SPONSOR")){
+            jLogger.i("AM a Sponsor");
             this.respond(response, true, "", apiEJB.getExitsInYearPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request,Constants.PROFILE_ID)));
 
 

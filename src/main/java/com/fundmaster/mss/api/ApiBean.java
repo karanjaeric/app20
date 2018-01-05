@@ -656,6 +656,7 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
+
     public ReportDetails getReportDetails(String schemeId) {
         Constants.RECORD_COUNT = 0;
         JSONObject response;
@@ -2412,7 +2413,7 @@ public Double getMemberTotalUnits(String memberId) {
                 {
                     schemeReceipt.setDate(receipt.get(Fields.DATERECEIVED).toString());
                 }
-                schemeReceipt.setValueDate(receipt.get(Fields.VALUEDATE).toString());
+                schemeReceipt.setValueDate(helper.humanReadableDate(receipt.get(Fields.VALUEDATE).toString()));
                 schemeReceipt.setPayee(receipt.get(Fields.PAYEE).toString());
                 schemeReceipt.setAmount(helper.format_no(round(Double.parseDouble(receipt.get(Fields.AMOUNT).toString()))));
                 schemeReceipt.setCategory(receipt.get(Fields.TXNCAT).toString());

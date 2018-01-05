@@ -156,6 +156,7 @@ public class SignIn extends BaseServlet implements Serializable {
 			if(usr != null && !usr.isStatus())
 			{
 				usr.setStatus(true);
+				usr.setSmsActivationCode(null);
 				userBeanI.edit(usr);
 				request.setAttribute("success", true);
 
@@ -180,6 +181,7 @@ public class SignIn extends BaseServlet implements Serializable {
 			if(usr != null && !usr.isStatus())
 			{
 				usr.setStatus(true);
+				usr.setSmsActivationCode(null);
 				userBeanI.edit(usr);
 				request.setAttribute("success", true);
 
