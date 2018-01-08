@@ -11,7 +11,7 @@
         </tr>
         <tr> <td>Comment:</td>
             <td><textarea name="aComment" rows="5" cols="60">
-               We are working on it to make sure that the web portal is back up as soon as possible
+               We are working on it to make sure that THE STABLE is back up as soon as possible.<br>
                 Thank you for your understanding.
           </textarea>
             </td>
