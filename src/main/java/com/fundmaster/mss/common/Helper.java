@@ -358,8 +358,8 @@ public class Helper {
         String randomNumber="";
         //generating a rendom number
         Random random=new Random();
-        for(int i=0;i<4;i++){
-            int max=4;
+        for(int i=0;i<6;i++){
+            int max=6;
             int min=0;
             int randNo= random.nextInt((max - min )+ 1);
             randomNumber=randomNumber+randNo;

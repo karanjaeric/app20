@@ -120,4 +120,26 @@
         <error-code>404</error-code>
         <location>/404.jsp</location>
     </error-page>
+
+    <filter>
+        <filter-name>MaintenanceModeFilter</filter-name>
+        <filter-class>com.fundmaster.mss.controller.MaintenanceModeFilter</filter-class>
+        <init-param>
+            <param-name>maintenanceUrl</param-name>
+            <param-value>/maintenance.jsp</param-value>
+        </init-param>
+        <init-param>
+            <param-name>maintenanceGuiUrl</param-name>
+            <param-value>/maintenance-gui.jsp</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>$y$tecH1</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>MaintenanceModeFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 </web-app>
