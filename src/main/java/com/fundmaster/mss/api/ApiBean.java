@@ -871,9 +871,12 @@ public Double getMemberTotalUnits(String memberId) {
 
 
     @Override
-    public XiMember getMemberDetailsBySchemeAndPhone(String schemeId, String phone) {
+    public XiMember getMemberDetailsBySchemeAndPhone(String schemeID, String phone) {
         JSONObject response;
-        try {
+        String schemeId = schemeID.trim();
+         try {
+
+
             response = URLGet(APICall.GET_MEMBER_DETAILS_BY_SCHEME_AND_PHONE + schemeId + "/" + phone);
             jLogger.i("Member details respone >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");
             if(response.getBoolean(Fields.SUCCESS))
@@ -1109,17 +1112,6 @@ public Double getMemberTotalUnits(String memberId) {
 
     @Override
     public boolean sendSMS(String recipient,   String message ) {
-//
-//        jLogger.i("Trying to send SMS");
-//        final String zero = "0";
-//        final String plus = "+";
-//        String clientNumber=recipient;
-//
-//        if(clientNumber.startsWith(zero)){
-//            recipient = code + clientNumber.substring(1);
-//        }else if(clientNumber.startsWith(plus)){
-//            recipient =clientNumber;
-//        }
 
 
         try {
@@ -1127,17 +1119,12 @@ public Double getMemberTotalUnits(String memberId) {
                     +message+"&ClientId=rlmjklyk&ClientSecret=egzjdxiw&RegisteredDelivery=true");
 
             ClientResponse<String> response = request.get(String.class);
-             int status = response.getStatus();
-             jLogger.i("Response " + status);
-            boolean status1;
-
-            if (status==502 || status == 201){
-                  status1 = true;
-            }else  status1=false;
-
-            saveSMS(recipient,message,status1);
-
-            return true;
+              jLogger.i("Response " + response.getStatus());
+              boolean status=false;
+            if (response.getStatus() == HttpURLConnection.HTTP_OK || response.getStatus() == HttpURLConnection.HTTP_CREATED) {
+                status=true;
+            }
+            return saveSMS(recipient,message,status);
 
         } catch (Exception ex) {
             return false;

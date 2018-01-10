@@ -129,8 +129,21 @@ public class Helper {
     }
 
     public  boolean isValidPhone(String phone) {
-        Matcher matcher = Pattern.compile("\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", Pattern.CASE_INSENSITIVE) .matcher(phone);
-        return matcher.find();
+        Matcher matcher = null;
+               if (phone.startsWith("+")){
+                  matcher = Pattern.compile("^\\+(?:[0-9] ?){6,14}[0-9]$", Pattern.CASE_INSENSITIVE) .matcher(phone);
+
+                return matcher.find();
+
+
+            }else if (phone.startsWith("0")){
+                  matcher = Pattern.compile("\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", Pattern.CASE_INSENSITIVE) .matcher(phone);
+                return matcher.find();
+
+            }
+
+         return false;
+
     }
     public Date addDays(Date date, int days)
     {

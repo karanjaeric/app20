@@ -1414,17 +1414,10 @@ public class Admin extends BaseServlet implements Serializable {
         String username = this.getSessKey(request, Constants.USER);
         String password = this.get(request, "currentPassword");
         String new_password = this.get(request, "newPassword");
-        final String code = "233";
-        final String zero = "0";
-        final String plus = "+";
 
-        if(username.startsWith(plus)){
 
-            username = zero + username.substring(4);
-            jLogger.i("The Client Login Number is " + username);
-
-        }
         User u = userBeanI.findUser(username, password);
+        jLogger.i("Am changing the password for user :" +username);
 
         if (u != null) {
             if(u.getSecurityCode()!=null) {
@@ -1436,7 +1429,7 @@ public class Admin extends BaseServlet implements Serializable {
                 if(u.getSmsActivationCode().equalsIgnoreCase(securityCode))
                     setNewPassword(request,response,session,new_password,u);
                 else
-                    this.respond(response, false, "Sorry, your security code is invalid. Please enter a valid security code.", null);
+                    this.respond(response, false, "Sorry, your sms code is invalid. Please enter a valid  code.", null);
             }
 
             else {

@@ -128,8 +128,7 @@ public class MemberController extends BaseServlet implements Serializable {
 						if (schemeId != null) {
 							if (helper.isEmailAddress(user)) {
 
-								m = apiEJB.getMemberDetails(this.getSessKey(request,Constants.PROFILE_ID), schemeId);
-//								m = apiEJB.getMemberDetailsByScheme(schemeId, user);
+ 								m = apiEJB.getMemberDetailsByScheme(schemeId, user);
 
 							}else if (helper.isValidPhone(user)){
 
@@ -143,30 +142,6 @@ public class MemberController extends BaseServlet implements Serializable {
 						ex.printStackTrace();
 					}
 
-
-//					try {
-//						if (productId != null) {
-//							if (helper.isEmailAddress(user)) {
-//								m = apiEJB.getMemberDetailsBySponsor(productId, user);
-////								m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
-//
-//							}else if (helper.isValidPhone(user)){
-//
-//								m=apiEJB.getMemberDetailsBySponsorAndPhone(productId,user);
-//							}
-//						} else {
-//
-//							m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
-//						}
-//					} catch (Exception ex) {
-//						ex.printStackTrace();
-//					}
-
-					request.setAttribute("member_id", m.getId());
-					session.setAttribute(Constants.PROFILE_ID,m.getId());
-					request.setAttribute("MemberStatus", m.getMbshipStatus());
-					String memberName = m.getFirstname();
-					request.setAttribute("memberName", memberName);
 
 					List<Scheme> schemePlan = apiEJB.getProfileSchemes(user, this.getSessKey(request, Constants.U_PROFILE));
 					String planType = schemePlan.get(0).getPlanType();
@@ -198,9 +173,7 @@ public class MemberController extends BaseServlet implements Serializable {
 									if (helper.isEmailAddress(user)) {
 										jLogger.i("I FOUND AN EMAIL");
 
-										m = apiEJB.getMemberDetails(schemeId, user);
-
-
+										m = apiEJB.getMemberDetailsByScheme(schemeId, user);
 
 									}else if (helper.isValidPhone(user)){
 										jLogger.i("I FOUND A PHONE");
@@ -219,7 +192,7 @@ public class MemberController extends BaseServlet implements Serializable {
 							try {
 								if (schemeId != null) {
 									if (helper.isEmailAddress(user)) {
-										m = apiEJB.getMemberDetails(schemeId, user);
+										m = apiEJB.getMemberDetailsByScheme(schemeId, user);
 										jLogger.i("I FOUND AN EMAIL 2");
 									}else if (helper.isValidPhone(user)){
 
@@ -296,122 +269,10 @@ public class MemberController extends BaseServlet implements Serializable {
 							}
 					}
 
-//					if(sponsors != null && sponsors.size() > 0) {
-//						jLogger.i("Sponsor is not null. email/phone: "+ this.getSessKey(request, Constants.USER));
-//						jLogger.i("SponsorId " + productId);
-//
-//						if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
-//						{
-//							try {
-//								if (productId != null) {
-//
-//									if (helper.isEmailAddress(user)) {
-//										jLogger.i("I FOUND AN EMAIL");
-//
-//										m = apiEJB.getMemberDetailsBySponsor(productId, user);
-//
-//
-//
-//									}else if (helper.isValidPhone(user)){
-//										jLogger.i("I FOUND A PHONE");
-//
-//										m=apiEJB.getMemberDetailsBySponsorAndPhone(productId,user);
-//									}
-//								} else {
-//									m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),schemes.get(0).getId().toString());
-//								}
-//							} catch (Exception ex) {
-//								ex.printStackTrace();
-//							}
-//						}
-//						else
-//						{
-//							try {
-//								if (productId != null) {
-//									if (helper.isEmailAddress(user)) {
-//										m = apiEJB.getMemberDetailsBySponsor(productId, user);
-//										jLogger.i("I FOUND AN EMAIL 2");
-//									}else if (helper.isValidPhone(user)){
-//
-//										jLogger.i("I FOUND PHONE 2");
-//
-//										m=apiEJB.getMemberDetailsBySponsorAndPhone(productId,user);
-//									}								} else {
-//									m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.SCHEME_ID));
-//								}
-//							} catch (Exception ex) {
-//								ex.printStackTrace();
-//							}
-//						}
-//					}
-//					if(m==null)
-//					{
-//						m= apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID),null);
-//					}
-//					request.setAttribute("member", m);
-//					session.setAttribute(Constants.PROFILE_ID,m.getId());
-
-
-//					if(sponsors != null && sponsors.size() == 1)
-//					{
-//						jLogger.i("Executing this script: 1" );
-//						jLogger.i("Member is " + m.getId());
-//						try {
-//
-//							if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
-//							{
-//								session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
-//								session.setAttribute(Constants.SPONSOR_ID, sponsors.get(0).getId().toString());
-//								request.setAttribute("sponsor_id", sponsors.get(0).getId().toString());
-//							}
-//							else
-//							{
-//								request.setAttribute("sponsor_id", this.getSessKey(request, Constants.SPONSOR_ID));
-//								session.setAttribute(Constants.SCHEME_TYPE, schemes.get(0).getPlanType());
-//							}
-//						} catch(NullPointerException npe)
-//						{
-//							jLogger.e("NullPointerException was detected: " + npe.getMessage());
-//							session.setAttribute(Constants.SPONSOR_ID, String.valueOf(sponsors.get(0).getId()));
-//						}
-//					}
-
-				//	else if(this.getSessKey(request, Constants.SPONSOR_ID) != null)
-//					{
-//						jLogger.i("Executing this script: 2" );
-//						if(sponsors != null)
-//							for(Sponsor sponsor : sponsors)
-//							{
-//								if(sponsor.getId() == helper.toLong(this.getSessKey(request, Constants.SPONSOR_ID)))
-//								{
-//									try {
-//
-//										if(this.getSessKey(request, Constants.SPONSOR_ID) == null)
-//										{
-//										//	session.setAttribute(Constants.SCHEME_TYPE, scheme.getPlanType());
-//											session.setAttribute(Constants.SPONSOR_ID, sponsor.getId().toString());
-//											request.setAttribute("sponsor_id", sponsor.getId().toString());
-//										}
-//										else
-//										{
-//											request.setAttribute("sponsor_id", this.getSessKey(request, Constants.SPONSOR_ID));
-//											//session.setAttribute(Constants.SCHEME_TYPE, sponsor.getPlanType());
-//										}
-//									} catch(NullPointerException npe)
-//									{
-//										jLogger.e("NullPointerException was detected: " + npe.getMessage());
-//										session.setAttribute(Constants.SPONSOR_ID, String.valueOf(sponsor.getId()));
-//									}
-//								}
-//							}
-//					}
-
-
-
 					request.setAttribute("member_id", m.getId());
 					session.setAttribute(Constants.PROFILE_ID,m.getId());
 					request.setAttribute("MemberStatus", m.getMbshipStatus());
-					memberName = m.getFirstname();
+					String memberName = m.getFirstname();
 					request.setAttribute("memberName", memberName);
 
 					jLogger.i("Member found is: " + m.getId() );
@@ -670,25 +531,11 @@ public class MemberController extends BaseServlet implements Serializable {
 
 		String userName = this.getSessKey(request, Constants.USER);
 
-
-
 		String securityCode = "";
 		String smsCode = "";
 		User u = new User();
 
 		jLogger.i("The Username has Been Found " + userName);
-
-		final String code = "233";
-		final String zero = "0";
-		final String plus = "+";
-		String clientNumber=userName;
-
-		if(clientNumber.startsWith(plus)){
-
-			userName = zero + clientNumber.substring(4);
-			jLogger.i("The Username has Been Found again " + userName);
-
-		}
 
 
 
@@ -766,7 +613,7 @@ public class MemberController extends BaseServlet implements Serializable {
 				String memberPhone = m.getPhoneNumber();
 				jLogger.i("The Phone Number Is " + memberPhone);
 
-			  apiEJB.sendSMS(memberPhone, "Dear " + u.getUsername() + ", You recently requested to change your password.Here is your sms code:" + smsCode +
+			  apiEJB.sendSMS(memberPhone, "Dear " + u.getUserProfile() + ", You recently requested to change your password.Here is your sms code:" + smsCode +
 						" You will require it to be able to change your password");
 
 
