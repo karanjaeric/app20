@@ -317,6 +317,7 @@ public class Register extends BaseServlet implements Serializable {
                             }
                              userBeanI.edit(u);
                             String phone = null;
+                            String name="";
                             //String schemeId = null;
                             boolean proceedSms;
 
@@ -331,6 +332,12 @@ public class Register extends BaseServlet implements Serializable {
                             } else if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 phone = m.getPhoneNumber();
+                                if (member.getName()!=null) {
+                                    name = member.getName() ;
+                                } else {
+                                    name ="Valued Client";
+                                }
+                                jLogger.i("member name to be attached " + name);
                               //  schemeId = member.getSchemeId();
                                 proceedSms = helper.isValidPhone(phone);
                             } else {
@@ -340,6 +347,7 @@ public class Register extends BaseServlet implements Serializable {
 
                                     /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
                                     phone = member.getPhoneNumber();
+                                    name = member.getName() ;
 
                                     /*JSONArray json = (JSONArray) resp.get("rows");
                                         JSONObject provider = json.getJSONObject(0);
@@ -352,12 +360,14 @@ public class Register extends BaseServlet implements Serializable {
 
                             }
                             if (proceedSms) {
-
-
-                                apiEJB.sendSMS(phone, "Dear " + u.getUserProfile() + ", "
+                            /*    apiEJB.sendSMS(phone, "Dear " + u.getUserProfile() + ", "
                                         + "Your account has been created by Enterprise Trustees Member Self Service Portal."
                                         + "Your Verification Code is " + activationCode + "."
-                                        + "In case of any challenges contact us on 0302634704");
+                                        + "In case of any challenges contact us on 0302634704");*/
+
+                                apiEJB.sendSMS(phone, "Dear "+ name +", Your account has been created by THE STABLE. Your Verification Code is "+activationCode+". " +
+                                        "In case of any challenges contact us on 0302634704 or email us at info.trustees@enterprisegroup.com.gh" +
+                                        "Enterprise Trustees: Your Advantage!");
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> "
                                         + "Congratulations! Your account has been created on the portal. A SMS notification has been sent", null);
