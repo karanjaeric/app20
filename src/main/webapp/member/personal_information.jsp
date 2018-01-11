@@ -266,7 +266,7 @@
 									<c:forEach var="beneficiary" items="${ beneficiaries }">
 										<tr><td> ${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td>
 											<td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td>
-											<td><a class="btn btn-warning btn-sm" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">
+											<td><a class="btn btn-warning btn-sm disabled" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">
 												<i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</a>&nbsp;
 
 												<a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="view_beneficiary('${beneficiary.id}')">
@@ -279,7 +279,7 @@
 									<a class="btn btn-success btn-sm disabled" href="javascript:void(0);" data-toggle="tooltip" title="You CANNOT Add a New Beneficiary!" onclick="add_beneficiary();">ADD BENEFICIARY</a>.
  								</c:when>
 								<c:otherwise>
-									<a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="add_beneficiary();">ADD BENEFICIARY</a>
+									<a class="btn btn-success btn-sm disabled" href="javascript:void(0);" onclick="add_beneficiary();">ADD BENEFICIARY</a>
  								</c:otherwise>
 							</c:choose>
 
