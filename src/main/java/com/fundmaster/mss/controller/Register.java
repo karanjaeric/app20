@@ -192,6 +192,8 @@ public class Register extends BaseServlet implements Serializable {
 
                 XiMember member = apiEJB.memberExists(this.get(request, "category"), idNumber);
 
+
+
                 String loginField = idNumber;
 
                 if (helper.isEmailAddress(loginField)) {
@@ -318,6 +320,7 @@ public class Register extends BaseServlet implements Serializable {
                              userBeanI.edit(u);
                             String phone = null;
                             String name="";
+
                             //String schemeId = null;
                             boolean proceedSms;
 
@@ -332,12 +335,9 @@ public class Register extends BaseServlet implements Serializable {
                             } else if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 phone = m.getPhoneNumber();
-                                if (member.getName()!=null) {
-                                    name = member.getName() ;
-                                } else {
-                                    name ="Valued Client";
-                                }
-                                jLogger.i("member name to be attached " + name);
+                                name =m.getName() == null ? "Valued Client" : m.getName();
+                                 jLogger.i("member name to be attached " + name);
+
                               //  schemeId = member.getSchemeId();
                                 proceedSms = helper.isValidPhone(phone);
                             } else {
@@ -347,7 +347,10 @@ public class Register extends BaseServlet implements Serializable {
 
                                     /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
                                     phone = member.getPhoneNumber();
-                                    name = member.getName() ;
+                                    name =member.getName() == null ? "Valued Client" : member.getName();
+                                    jLogger.i("member name to be attached " + name);
+
+
 
                                     /*JSONArray json = (JSONArray) resp.get("rows");
                                         JSONObject provider = json.getJSONObject(0);
