@@ -306,7 +306,10 @@ public class Admin extends BaseServlet implements Serializable {
                         if (this.getSessKey(request, Constants.U_PROFILE).equals("SPONSOR")) {
                             jLogger.i("TRUE");
                             due4retirement  = apiEJB.due4RetirementPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));
-                            request.setAttribute("retirement", due4retirement.size());
+                            if(due4retirement!=null){
+                                request.setAttribute("retirement", due4retirement.size());
+
+                            }else request.setAttribute("retirement", 0);
                         }else {
                             due4retirement =apiEJB.due4Retirement(this.getSessKey(request,Constants.SCHEME_ID));
                             request.setAttribute("retirement", due4retirement.size());

@@ -335,7 +335,8 @@ public class Register extends BaseServlet implements Serializable {
                             } else if (u.getUserProfile().equals(Constants.MEMBER_PROFILE)) {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 phone = m.getPhoneNumber();
-                                name =m.getName() == null ? "Valued Client" : m.getName();
+                                jLogger.i("this is a member");
+                                name =m.getFirstname() == null ? "Valued Client" : m.getFirstname();
                                  jLogger.i("member name to be attached " + name);
 
                               //  schemeId = member.getSchemeId();
@@ -368,9 +369,9 @@ public class Register extends BaseServlet implements Serializable {
                                         + "Your Verification Code is " + activationCode + "."
                                         + "In case of any challenges contact us on 0302634704");*/
 
-                                apiEJB.sendSMS(phone, "Dear "+ name +", Your account has been created by THE STABLE. Your Verification Code is "+activationCode+". " +
-                                        "In case of any challenges contact us on 0302634704 or email us at info.trustees@enterprisegroup.com.gh" +
-                                        "Enterprise Trustees: Your Advantage!");
+                                apiEJB.sendSMS(phone, "Dear "+name+", Your account has been created by THE STABLE. Your Verification Code is "+activationCode+"." +
+                                        " In case of any challenges contact us on 0302634704 or email us at info.trustees@enterprisegroup.com.gh." +
+                                        " Enterprise Trustees: Your Advantage!");
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> "
                                         + "Congratulations! Your account has been created on the portal. A SMS notification has been sent", null);
