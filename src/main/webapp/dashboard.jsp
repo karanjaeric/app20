@@ -28,7 +28,8 @@
 			<c:if test="${adminDashboard.membersDueRetirement == 'TRUE'}">
 				<tr><td>MEMBERS DUE FOR RETIREMENT</td><td id="due_for_retirement">${ retirement }</td></tr>
 			</c:if>
-		</table>
+			<tr><td>MEMBERS ON NOTICE </td><td id="members_on_notice">0</td></tr>
+ 		</table>
 		</div>
 		<%--<div class="col-md-6">--%>
 					<%--<h3 class="text-center"><small>CURRENT FUND VALUE</small></h3>					--%>
@@ -222,6 +223,7 @@
 			        	if(key == 'stats')
 			           	{
 								$('#active_members').html(format_no(value['Active_Members']));
+								$('#members_on_notice').html(format_no(value['Members_on_Notice']));
 								$('#deferred_members').html(format_no(value['Deferred_Members']));
 								$('#pensioner_members').html(format_no(value['Active_Pensioners']));
 							    $('#exits_in_year').html(format_no(value['Exited_Members']));
