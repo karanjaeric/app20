@@ -28,7 +28,8 @@
                             placeholder="Salary (Monthly)"></label>
         </div>
         </c:if>
-        <div class="col-md-3" id="divReason">
+        <div class="col-md-4">
+            <label class="control-label"></label>
             <select id="reason" name="reason" class="form-control">
                 <option value="">--Select A Reason for Exit--</option>
             </select>
@@ -41,7 +42,7 @@
                 </select>
             </div>
         </c:if>-->
-        <div class="col-md-2">
+        <div class="col-md-4">
             <button class="btn btn-primary">
                 SHOW REPORT
             </button>

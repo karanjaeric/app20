@@ -13,14 +13,14 @@
     </h3>
 
     <form class="form-inline" role="form" id="contribution-form">
-        <div class="form-group col-md-4">
+        <div class="col-md-4">
             <label for="dateFrom" class="control-label">
                 Date From:
             </label> <input type="text" readonly="readonly" name="dateFrom"
                             class="form-control datepicker" id="dateFrom"
                             placeholder="Date From">
         </div>
-        <div class="form-group col-md-4">
+        <div class="col-md-4">
             <label for="dateTo" class="control-label">
                 Date To:
             </label> <input type="text" readonly="readonly" name="dateTo"
@@ -28,6 +28,7 @@
                             placeholder="Date To">
         </div>
         <div class="col-md-4">
+            <label class="control-label"></label><br/>
             <button class="btn btn-primary">
                 SHOW HISTORY
             </button>
