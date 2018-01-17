@@ -96,14 +96,16 @@
                         var alternativeUrl = $('#alternativeUrl').val();
                         console.log("Alternative: " + alternativeUrl);
                         var orientation = $('#orientation').val();
-                        console.log("Orientation: " + orientation)
+                        console.log("Orientation: " + orientation);
+                        console.log("memberId: " + $('#member_id').val());
+                        console.log("scheme_id: " + $('#scheme_id').val());
 
                         json = $.parseJSON(json.data);
                         console.log(json.accountingPeriodId);
 
                         var url =
                                 $('#reportPath').val() +"members/unitizedStatement.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FunitizedStatement.xdo&_xmode=3&_paramsorientation=&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id="
-                                + $('#scheme_id').val() + '&_paramsap_id=' + json.accountingPeriodId +  '&_paramsmember_id=' + $('#member_id').val() + "&_xt=Unitized%20Statement&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
+                                + $('#scheme_id').val() + '&_paramsap_id=' + 0 +  '&_paramsmember_id=' + $('#member_id').val() + "&_xt=Unitized%20Statement&_xf=analyze&_xana=view&id=" + $('#username').val() + "&passwd=" + $('#password').val();
 
 
 

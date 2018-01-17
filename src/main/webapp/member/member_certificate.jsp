@@ -33,7 +33,6 @@
                 if(json.success)
                 {
                     json = $.parseJSON(json.data);
-                    console.log(json.accountingPeriodId);
 
 
                     var alternativeUrl = $('#alternativeUrl').val();
@@ -41,12 +40,18 @@
                     var orientation = $('#orientation').val();
                     console.log("Orientation: " + orientation);
                     var userId =3347;
+                    console.log("memberId: " + $('#member_id').val());
+                    console.log("scheme_id: " + $('#scheme_id').val());
 
                        console.log("BI Path: " + $('#reportPath').val());
 
+                    // members/Individual Membership Certificate.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FIndividual%20Membership%20Certificate.xdo
+                    // &_xmode=3&_paramsblankImage=http%3A%2F%2Flocalhost%3A8080%2FXi%2Freports%2Fblank.png&_paramsalternativeUrl=&_paramsorientation=RIGHT
+                    // &_paramsuser_id=3347&_paramsBASE=http%3A%2F%2Flocalhost%3A8080%2FXi&_paramsscheme_id=2870&_paramsap_id=&_paramsmember_id=13401491&_xt=Individual%20Membership%20Certificate&_xf=analyze&_xana=view
 
-                    var url = $('#reportPath').val() + 'members/Individual Membership Certificate.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FIndividual%20Membership%20Certificate.xdo&_xmode=3&_paramsuser_id=' + userId +
-                        '&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsap_id=' + json.accountingPeriodId + '&_paramsmember_id='+ $('#member_id').val() +'&_xt=Individual%20Membership%20Certificate&_xf=analyze&_xana=view&id='
+                    var url = $('#reportPath').val() + 'members/Individual Membership Certificate.xdo?_xpf=&_xpt=0&_xdo=%2F~weblogic%2Ffundmaster%2Freports%2Fmembers%2FIndividual%20Membership%20Certificate.xdo' +
+                        '&_xmode=3&_paramsuser_id=' + userId +
+                        '&_paramsBASE=' + $('#xiRootPath').val() + '&_paramsscheme_id=' + $('#scheme_id').val() + '&_paramsap_id=' + 0 + '&_paramsmember_id='+ $('#member_id').val() +'&_xt=Individual%20Membership%20Certificate&_xf=analyze&_xana=view&id='
                         + $("#username").val() + '&passwd=' + $("#password").val() + '&_paramsblankImage=' + alternativeUrl +'&_paramsalternativeUrl=' + alternativeUrl + '&_paramsorientation=' + orientation;
                     console.log("BI After: " + url);
                     console.log("============= Done Fetching report ===================");

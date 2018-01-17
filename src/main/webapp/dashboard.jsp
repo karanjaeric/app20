@@ -28,7 +28,9 @@
 			<c:if test="${adminDashboard.membersDueRetirement == 'TRUE'}">
 				<tr><td>MEMBERS DUE FOR RETIREMENT</td><td id="due_for_retirement">${ retirement }</td></tr>
 			</c:if>
-			<tr><td>MEMBERS ON NOTICE </td><td id="members_on_notice">0</td></tr>
+			<c:if test="${adminDashboard.membersOnExitNotice == 'TRUE'}">
+			<tr><td>MEMBERS ON EXIT NOTICE </td><td id="members_on_notice">--</td></tr>
+			</c:if>
  		</table>
 		</div>
 		<%--<div class="col-md-6">--%>

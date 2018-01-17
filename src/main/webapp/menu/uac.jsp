@@ -965,6 +965,14 @@
 								<input type="checkbox" name="membersDueRetirement" id="membersDueRetirement" ${adminDashboard.membersDueRetirement == 'TRUE' ? 'checked' : ''}/>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<label class="control-label"> MEMBERS ON EXIT NOTICE </label>
+							</td>
+							<td>
+								<input type="checkbox" name="membersOnExitNotice" id="membersOnExitNotice" ${adminDashboard.membersOnExitNotice == 'TRUE' ? 'checked' : ''}/>
+							</td>
+						</tr>
 
 					</table>
 				</div>
@@ -1453,7 +1461,8 @@
 								pensioners: $('#pensioners').prop('checked'),
 								exits: $('#exits').prop('checked'),
 								newMembers: $('#newMembers').prop('checked'),
-								membersDueRetirement: $('#membersDueRetirement').prop('checked')
+								membersDueRetirement: $('#membersDueRetirement').prop('checked'),
+                                membersOnExitNotice: $('#membersOnExitNotice').prop('checked')
 							},
 							dataType: 'json',
 							success: function(json) {

@@ -22,7 +22,7 @@
 	{
 		return json.hasOwnProperty(key);
 	}
-	function reload()
+	function adminreload()
 	{
 		if($('#scheme_id').val() != '')
 		{
@@ -56,7 +56,7 @@
 			 setTimeout(function() {
 			 var schemeID = $('#scheme_id').val();
 			 console.log("Scheme Id: " + schemeID);
-			 window.location.href = $('#base_url').val() + "member?scheme_id="+schemeID;
+			 window.location.href = $('#base_url').val() + "member"
 			 }, 0);
 			 }
 		});
@@ -77,7 +77,7 @@
                     setTimeout(function() {
                         var sponsorID = $('#sponsor_id').val();
                         console.log("Sponsor Id: " + sponsorID);
-                        window.location.href = $('#base_url').val() + "member?sponsor_id="+sponsorID;
+                        window.location.href = $('#base_url').val() + "member"
                     }, 0);
             }
         });

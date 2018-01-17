@@ -1322,6 +1322,50 @@ public Double getMemberTotalUnits(String memberId) {
 
     }
 
+    @Override
+    public Long getSchemeSponsorId(String schemeId, String profileId) {
+        JSONObject response ;
+        Long schemeSponsorId;
+        try {
+            response = URLPost(APICall.GET_SCHEME_SPONSOR_ID + schemeId +"/" + profileId,"", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                schemeSponsorId   =  response.getLong("sponsorId");
+                jLogger.i("Returning sponsorId == " + schemeSponsorId);
+                return  schemeSponsorId;
+            } else
+                return null;
+
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+
+
+    }
+
+    @Override
+    public Long getMemberId(String schemeId,String profileId) {
+        JSONObject response ;
+        Long memberId;
+        try {
+            response = URLPost(APICall.GET_MEMBER_ID + schemeId +"/" + profileId,"", Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            if(response.getBoolean(Fields.SUCCESS))
+            {
+                memberId   =  response.getLong("memberId");
+                jLogger.i("Returning sponsorId == " + memberId);
+                return  memberId;
+            } else
+                return null;
+
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+
+
+    }
+
         @Override
     public JSONObject getBeneficiaries(String memberID) {
         JSONObject response;

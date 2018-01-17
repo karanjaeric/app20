@@ -1092,6 +1092,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean exits = this.get(request, "exits").equalsIgnoreCase("true");
         boolean newMembers = this.get(request, "newMembers").equalsIgnoreCase("true");
         boolean membersDueRetirement = this.get(request, "membersDueRetirement").equalsIgnoreCase("true");
+        boolean membersOnExitNotice = this.get(request, "membersOnExitNotice").equalsIgnoreCase("true");
 
 
         adminDashboardItems.setActiveMembers(activeMembers);
@@ -1100,6 +1101,7 @@ public class Admin extends BaseServlet implements Serializable {
         adminDashboardItems.setExits(exits);
         adminDashboardItems.setNewMembers(newMembers);
         adminDashboardItems.setMembersDueRetirement(membersDueRetirement);
+        adminDashboardItems.setMembersOnExitNotice(membersOnExitNotice);
 
         if (adminDashboardI.edit(adminDashboardItems) != null) {
             audit(session, "Updated Admin Dashboard configuration settings");

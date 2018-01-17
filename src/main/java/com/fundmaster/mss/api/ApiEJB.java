@@ -101,6 +101,8 @@ public interface ApiEJB {
     JSONObject getSchemeUnitPrices(String schemeID);
 
     String getSponsorInterestRates(String sponsorId);
+    Long getSchemeSponsorId(String schemeId, String profileId);
+    Long getMemberId(String schemeId, String profileId);
     JSONObject calculateWhatIfAnalysis(String yearsToProject, String contributions, String rateOfReturn, String salaryEscalationRate,
                                        String inflationRate,String email,String phone,String yourAge, String formula);
 

@@ -490,17 +490,27 @@ public class Dashboard extends BaseServlet implements Serializable {
         XiMember mbr = apiEJB.memberExists(userProfile, userName);
         String memberName = mbr.getName();
         request.setAttribute("memberName", memberName);
-        String sponsorId = mbr.getId().toString();
-        jLogger.i("Sponsor Id =============== > " + sponsorId);
-        request.setAttribute("sponsorId", sponsorId);
+        String sponsorId= null;
+        if (usr.getUserProfile().equals("SPONSOR")){
+           sponsorId = String.valueOf(apiEJB.getSchemeSponsorId(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID)));
+            jLogger.i("Sponsor Id =============== > " + sponsorId);
+            request.setAttribute("sponsorId", sponsorId);
 
-        ReportDetails reportDetails;
-        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
-        request.setAttribute("report_details", reportDetails);
+            ReportDetails reportDetails;
+            reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+            request.setAttribute("report_details", reportDetails);
 
-        logActivity("MEMBER LISTING", "Viewed member listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
-        this.audit(session, "Viewed member listing");
-        request.getRequestDispatcher(REPO_FOLDER + "/member_listing.jsp").forward(request, response);
+            logActivity("MEMBER LISTING", "Viewed member listing per sponsor", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+            this.audit(session, "Viewed member listing per sponsor");
+            request.getRequestDispatcher(REPO_FOLDER + "/member_listing_per_sponsor.jsp").forward(request, response);
+        }else {
+
+            logActivity("MEMBER LISTING", "Viewed member listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+            this.audit(session, "Viewed member listing ");
+            request.getRequestDispatcher(REPO_FOLDER + "/member_listing.jsp").forward(request, response);
+
+        }
+
     }
 
 
@@ -514,7 +524,8 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String schemeId = this.getSessKey(request, Constants.SCHEME_ID);
         jLogger.i("Scheme ID: " + schemeId);
-        String sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
+        Long spId = apiEJB.getSchemeSponsorId(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID));
+        String sponsorId = String.valueOf(spId);
         jLogger.i("Sponsor ID: " + sponsorId);
         request.setAttribute("sponsorId", sponsorId);
 
@@ -855,10 +866,11 @@ MediaBeanI mediaBeanI;
         Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
-        String memberId;
-        memberId = this.get(request, "memberID");
-        if (memberId == null)
-            memberId = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("scheme id US " + this.getSessKey(request,Constants.SCHEME_ID));
+
+        String memberId ="";
+        memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request,Constants.PROFILE_ID)));
+        jLogger.i("member id US " + memberId);
         request.setAttribute("member_id", memberId);
 
         ReportDetails reportDetails;
@@ -871,21 +883,23 @@ MediaBeanI mediaBeanI;
     }
 
     private void showMemberCertificate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+
         Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
-        String memberId;
-        memberId = this.get(request, "memberID");
-        if (memberId == null)
-            memberId = this.getSessKey(request, Constants.PROFILE_ID);
+        jLogger.i("scheme id US " + this.getSessKey(request,Constants.SCHEME_ID));
+        String memberId ="";
+         memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request,Constants.PROFILE_ID)));
+        jLogger.i("member id US " + memberId);
         request.setAttribute("member_id", memberId);
+
 
         ReportDetails reportDetails;
         reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("report_details", reportDetails);
 
         logActivity("MEMBER CERTIFICATE STATEMENT", "Viewed member Certificate statement", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
-        this.audit(session, "Viewed member unitized statement");
+        this.audit(session, "Viewed member Member statement");
         request.getRequestDispatcher("member/member_certificate.jsp").forward(request, response);
     }
 

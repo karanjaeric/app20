@@ -28,6 +28,9 @@ public class AdminDashboardItems  extends GenericModel<MemberMenu>   implements 
     @Column(name="exits", nullable=false)
     private boolean exits;
 
+    @Column(name="membersOnExitNotice", nullable=false)
+    private boolean membersOnExitNotice;
+
     @Column(name="newMembers", nullable=false)
     private boolean newMembers;
 
@@ -91,8 +94,16 @@ public class AdminDashboardItems  extends GenericModel<MemberMenu>   implements 
         this.membersDueRetirement = membersDueRetirement;
     }
 
+    public boolean isMembersOnExitNotice() {
+        return membersOnExitNotice;
+    }
+
+    public void setMembersOnExitNotice(boolean membersOnExitNotice) {
+        this.membersOnExitNotice = membersOnExitNotice;
+    }
+
     public AdminDashboardItems(boolean activeMembers, boolean defferedMembers, boolean pensioners, boolean exits, boolean newMembers,
-                               boolean membersDueRetirement) {
+                               boolean membersDueRetirement, boolean membersOnExitNotice) {
         super();
         this.activeMembers = activeMembers;
         this.defferedMembers = defferedMembers;
@@ -100,6 +111,7 @@ public class AdminDashboardItems  extends GenericModel<MemberMenu>   implements 
         this.exits = exits;
         this.newMembers = newMembers;
         this.membersDueRetirement = membersDueRetirement;
+        this.membersOnExitNotice =membersOnExitNotice;
     }
 
     public AdminDashboardItems() {
