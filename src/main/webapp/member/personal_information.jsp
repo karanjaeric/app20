@@ -279,7 +279,14 @@
 									<a class="btn btn-success btn-sm disabled" href="javascript:void(0);" data-toggle="tooltip" title="You CANNOT Add a New Beneficiary!" onclick="add_beneficiary();">ADD BENEFICIARY</a>.
  								</c:when>
 								<c:otherwise>
-									<a class="btn btn-success btn-sm disabled" href="javascript:void(0);" onclick="add_beneficiary();">ADD BENEFICIARY</a>
+									<c:choose>
+										<c:when test="${ profile == 'MEMBER' }">
+											<a class="btn btn-success btn-sm" href="javascript:void(0);" onclick="add_beneficiary();">ADD BENEFICIARY</a>
+										</c:when>
+										<c:otherwise>
+											<a class="btn btn-success btn-sm disabled" href="javascript:void(0);" onclick="add_beneficiary();">ADD BENEFICIARY</a>
+										</c:otherwise>
+									</c:choose>
  								</c:otherwise>
 							</c:choose>
 

@@ -1,17 +1,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid section">
-	<div class="col-md-5">
+	<div class="col-md-3">
 		<h3>
 			<i class="glyphicon glyphicon-gift"></i>&nbsp;&nbsp;RECEIPTS
 		</h3>
 	</div>
-	<div class="col-md-7" align="right">
+	<div class="col-md-9" align="right">
 		<br />
-		<form class="form-inline" id="form-search">
-			<input type="text" class="form-control datepicker" placeholder="Date From" readonly="readonly" name="dateFrom" id="dateFrom"  value="${ dateFrom }"/>
-			<input type="text" class="form-control datepicker" placeholder="Date To" readonly="readonly" name="dateTo" id="dateTo"  value="${ dateTo}" />
-			<button class="btn btn-info" id="btn-search">Search</button>
-		</form>
+		<div class="row">
+			<form class="form-inline" id="form-search">
+			<div class="col-sm-4">
+				<input type="text" class="form-control datepicker" placeholder="Date From" readonly="readonly" name="dateFrom" id="dateFrom"  value="${ dateFrom }"/>
+			</div>
+			<div class="col-sm-4">
+				<input type="text" class="form-control datepicker" placeholder="Date To" readonly="readonly" name="dateTo" id="dateTo"  value="${ dateTo}" />
+			</div>
+			<div class="col-sm-3">
+				<button class="btn btn-info" id="btn-search">Search</button>
+			</div>
+			</form>
+		</div>
 	</div>
 	<table class="table table-responsive table-striped"  id="search-results">
 		<tr><th> DATE RECEIVED</th><th>RECEIPT</th><th>PAYEE</th><th>TRANSACTION CATEGORY</th><th>VALUE DATE </th><th>MODE</th><th>REFERENCE NO</th><th class="right">AMOUNT</th></tr>

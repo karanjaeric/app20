@@ -19,6 +19,7 @@
         
 
         <div class="col-md-3" id="divquarter">
+            <br/>
             <select id="quarter" name="quarter" class="form-control">
                 <option value="" selected disabled>--Select Quarter--</option>
                 <option value="1"> Quarter 1 </option>
@@ -28,6 +29,7 @@
             </select>
         </div>
         <div class="col-md-2">
+            <br/>
             <button class="btn btn-primary">
                 SHOW REPORT
             </button>

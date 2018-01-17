@@ -1012,7 +1012,7 @@ SocialBeanI socialBeanI;
         request.setAttribute("schemes", schemes);
         MemberPermission memberPermission = memberPermissionBeanI.find();
         request.setAttribute("memberPermission", memberPermission);
-
+        request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
         XiMember m;
         String member_id;
         member_id = this.get(request, "memberID");
