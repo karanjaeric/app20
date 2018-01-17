@@ -14,29 +14,38 @@
 						</c:otherwise>
 					</c:choose>
 
-					<div class="col-md-8">
+					<div class="col-md-12">
+						<legend>SEARCH MEMBER</legend>
 						<fieldset>
-							<legend>SEARCH MEMBER</legend>
-							 <select name="identifier" id="identifier" class="form-control">
-						 		<option value="MEMBER_NO">Member No</option>	 	
-						 		<option value="VOTER">Voter No</option>	
-						 		<option value="PASSPORT">Passport No</option>	
-						 		<option value="PENNO">Pension No</option>	
-						 		<option value="NATIONAL">National ID</option>	
-						 		<option value="DRIVER">Driving Lic. No</option>	
-						 		<option value="STAFF">Staff No</option>	
-						 		<option value="PIN">PIN No</option>	
-						 		<option value="EMAIL">Email Address</option>	
-						 		<option value="NHIF">NHIF</option>	
-						 		<option value="PHONE">Phone No</option>	
-						 		<option value="MEMBER_ID">Member ID</option>	
-						 		<option value="FIRST_NAME">First Name</option>	
-						 		<option value="SURNAME">Surname</option>	
-						 		<option value="OTHER_NAMES">Other Names</option>	
-						 		<option value="NAME">Name</option>	
-							 </select>
-							<input type="text" class="form-control" name="search" id="search" placeholder="Search"/>
-							<button class="btn btn-info">Search</button>
+							<div class="row">
+								<div class="col-sm-4">
+									<select name="identifier" id="identifier" class="form-control">
+										<option value="MEMBER_NO">Member No</option>
+										<option value="VOTER">Voter No</option>
+										<option value="PASSPORT">Passport No</option>
+										<option value="PENNO">Pension No</option>
+										<option value="NATIONAL">National ID</option>
+										<option value="DRIVER">Driving Lic. No</option>
+										<option value="STAFF">Staff No</option>
+										<option value="PIN">PIN No</option>
+										<option value="EMAIL">Email Address</option>
+										<option value="NHIF">NHIF</option>
+										<option value="PHONE">Phone No</option>
+										<option value="MEMBER_ID">Member ID</option>
+										<option value="FIRST_NAME">First Name</option>
+										<option value="SURNAME">Surname</option>
+										<option value="OTHER_NAMES">Other Names</option>
+										<option value="NAME">Name</option>
+									</select>
+								</div>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="search" id="search" placeholder="Search"/>
+
+								</div>
+								<div class="col-sm-4">
+									<button class="btn btn-info">Search</button>
+								</div>
+							</div>
 						</fieldset>
 					</div>
 					<div class="col-md-4 hide" id="operations">
