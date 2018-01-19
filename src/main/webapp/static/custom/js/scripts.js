@@ -43,18 +43,18 @@
 		}
 	}
 	function reloadmember()
-	{if($('#scheme_id').val() != '') {
+	{if($('#scheme2_id').val() != '') {
 		start_wait();
 		$.ajax({
 			url: $('#base_url').val() + 'member',
 			type: 'post',
-			data: {ACTION: 'CHANGE_SCHEME', schemeID: $('#scheme_id').val()},
+			data: {ACTION: 'CHANGE_SCHEME', schemeID: $('#scheme2_id').val()},
 			dataType: 'json',
 			success: function(json) {
 			 console.log(json);
 			 if(json.success)
 			 setTimeout(function() {
-			 var schemeID = $('#scheme_id').val();
+			 var schemeID = $('#scheme2_id').val();
 			 console.log("Scheme Id: " + schemeID);
 			 window.location.href = $('#base_url').val() + "member"
 			 }, 0);
