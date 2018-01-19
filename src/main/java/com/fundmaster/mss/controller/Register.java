@@ -131,6 +131,7 @@ public class Register extends BaseServlet implements Serializable {
         response.addHeader("X-XSS-Protection", "1; mode=block");
         response.addHeader("X-Frame-Options", "DENY");
         response.addHeader("X-Content-Type-Options", "nosniff");
+        response.addHeader("Content-type", "text/html; charset=UTF-8");
         ClientSetup clientSetup= new ClientSetup();
         clientSetup = clientSetupI.find().get(0);
 
@@ -268,7 +269,7 @@ public class Register extends BaseServlet implements Serializable {
 
                                 apiEJB.sendEmail(recipients, sender, null, "MSS Portal Account Activation Instructions",
                                         "Dear " + u.getUserProfile() + ", "
-                                        + "Your account has been created on the Enterprise Trustees FundMaster Member Self Service Portal. "
+                                        + "Your account has been created on the Fundmaster Member Self Service Portal. "
 
                                         + "Please click this link or Copy this link to your browser" +
                                                 " " + settings.getPortalBaseURL() + "activate?" + securityCode
