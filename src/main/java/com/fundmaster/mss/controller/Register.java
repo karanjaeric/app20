@@ -28,6 +28,8 @@ public class Register extends BaseServlet implements Serializable {
     @EJB
     ProfileNameBeanI profileNameBeanI;
     @EJB
+    ClientSetupI clientSetupI;
+    @EJB
     CountryBeanI countryBeanI;
     @EJB
     SettingBeanI settingBeanI;
@@ -116,6 +118,8 @@ public class Register extends BaseServlet implements Serializable {
         request.setAttribute("content", content);
         PasswordPolicy policy = passwordPolicyBeanI.find();
         request.setAttribute("policy", policy);
+        List<ClientSetup> clientsetup = clientSetupI.find();
+        request.setAttribute("clientsetups", clientsetup);
         logActivity(Constants.PAGE_REGISTER, "accesed registration page", "0", null, null);
         request.getRequestDispatcher("register.jsp").forward(request, response);
     }
@@ -127,6 +131,8 @@ public class Register extends BaseServlet implements Serializable {
         response.addHeader("X-XSS-Protection", "1; mode=block");
         response.addHeader("X-Frame-Options", "DENY");
         response.addHeader("X-Content-Type-Options", "nosniff");
+        ClientSetup clientSetup= new ClientSetup();
+        clientSetup = clientSetupI.find().get(0);
 
         // Get the request params.
         @SuppressWarnings("rawtypes")
@@ -336,7 +342,7 @@ public class Register extends BaseServlet implements Serializable {
                                 XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
                                 phone = m.getPhoneNumber();
                                 jLogger.i("this is a member");
-                                name =m.getFirstname() == null ? "Valued Client" : m.getFirstname();
+                                name =m.getFirstname() == null ? "Valued ClientSetup" : m.getFirstname();
                                  jLogger.i("member name to be attached " + name);
 
                               //  schemeId = member.getSchemeId();
@@ -348,7 +354,7 @@ public class Register extends BaseServlet implements Serializable {
 
                                     /*helper.isEmailAddress(member.getEmailAddress()) ? member.getEmailAddress() : this.get(request, "idNumber");*/
                                     phone = member.getPhoneNumber();
-                                    name =member.getName() == null ? "Valued Client" : member.getName();
+                                    name =member.getName() == null ? "Valued ClientSetup" : member.getName();
                                     jLogger.i("member name to be attached " + name);
 
 
@@ -369,9 +375,10 @@ public class Register extends BaseServlet implements Serializable {
                                         + "Your Verification Code is " + activationCode + "."
                                         + "In case of any challenges contact us on 0302634704");*/
 
-                                apiEJB.sendSMS(phone, "Dear "+name+", Your account has been created by THE STABLE. Your Verification Code is "+activationCode+"." +
-                                        " In case of any challenges contact us on 0302634704 or email us at info.trustees@enterprisegroup.com.gh." +
-                                        " Enterprise Trustees: Your Advantage!");
+                            String message=clientSetup.getClientRegistrationMessage();
+                            String finalMsg =helper.formatMessage(message,name,activationCode);
+
+                            apiEJB.sendSMS(phone,  finalMsg);
 
                                 this.respond(response, true, "<strong>Registration Successful</strong><br /> "
                                         + "Congratulations! Your account has been created on the portal. A SMS notification has been sent", null);

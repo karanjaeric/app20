@@ -444,6 +444,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.profile_login_username = profile_login_username;
 	}
 
+	public boolean isClient_setup_config() {
+		return client_setup_config;
+	}
+
+	public void setClient_setup_config(boolean client_setup_config) {
+		this.client_setup_config = client_setup_config;
+	}
+
 	public boolean isMedia_remove() {
 		return media_remove;
 	}
@@ -571,7 +579,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 			boolean setup_other, boolean setup_contact_reason,
 			boolean content_help, boolean content_page, boolean faq_page,
 			boolean profile_privileges, boolean member_edit_permissions, boolean show_db_contribution_graph,
-			boolean profile_login_username, boolean scheme_managers, boolean member_menu_config, boolean pensioner_menu_config, boolean member_dashboard_items, boolean admin_dashboard_items,
+			boolean profile_login_username, boolean client_setup_config,boolean scheme_managers, boolean member_menu_config, boolean pensioner_menu_config, boolean member_dashboard_items, boolean admin_dashboard_items,
 			boolean users, boolean user_enable_disable, boolean audit_trail,
 			boolean operation_personal_info,
 			boolean operation_contribution_history,
@@ -639,6 +647,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 		this.member_dashboard_items = member_dashboard_items;
 		this.admin_dashboard_items =admin_dashboard_items;
 		this.profile_login_username = profile_login_username;
+		this.client_setup_config =client_setup_config;
 		this.scheme_managers = scheme_managers;
 		this.users = users;
 		this.user_enable_disable = user_enable_disable;
@@ -676,7 +685,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	
 	private boolean content_help, content_page, faq_page;
 	
-	private boolean profile_privileges, member_edit_permissions, show_db_contribution_graph, member_menu_config, pensioner_menu_config, member_dashboard_items, admin_dashboard_items,  profile_login_username, scheme_managers, users, user_enable_disable, audit_trail;
+	private boolean profile_privileges, member_edit_permissions, show_db_contribution_graph, member_menu_config, pensioner_menu_config, member_dashboard_items, admin_dashboard_items,  profile_login_username, client_setup_config, scheme_managers, users, user_enable_disable, audit_trail;
 	
 	private boolean operation_personal_info, operation_contribution_history, operation_balance_history, operation_statement_of_account,operation_unitized_statement, operation_benefit_projection, operation_claim_status, operation_annual_contribution;
 
@@ -697,7 +706,7 @@ public class Permission extends GenericModel<Permission> implements Serializable
 	private boolean pending_contribution;
 
 	
-	private boolean media_upload, media_remove, profile_names;
+	private boolean media_upload, media_remove, profile_names,client_names;
 
 	public boolean isReports() {
 		return reports;
@@ -769,6 +778,14 @@ public class Permission extends GenericModel<Permission> implements Serializable
 
 	public void setProfile_names(boolean profile_names) {
 		this.profile_names = profile_names;
+	}
+
+	public boolean isClient_names() {
+		return client_names;
+	}
+
+	public void setClient_names(boolean client_names) {
+		this.client_names = client_names;
 	}
 
 	public boolean isUser_enable_disable() {

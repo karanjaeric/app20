@@ -27,6 +27,8 @@ public class MenuController extends BaseServlet implements Serializable {
 
 	@EJB
     ProfileNameBeanI profileNameBeanI;
+	@EJB
+    ClientNameBeanI clientNameBeanI;
     @EJB
     UserBeanI userBeanI;
     @EJB
@@ -67,6 +69,9 @@ public class MenuController extends BaseServlet implements Serializable {
     MaritalStatusBeanI maritalStatusBeanI;
     @EJB
     ProfileLoginFieldBeanI profileLoginFieldBeanI;
+
+    @EJB
+    ClientSetupI clientSetupI;
     @EJB
     ImageBannerBeanI imageBannerBeanI;
     @EJB
@@ -136,12 +141,25 @@ public class MenuController extends BaseServlet implements Serializable {
         request.setAttribute("adminDashboard", adminDashboardItems);
         List<ProfileLoginField> pfs = profileLoginFieldBeanI.find();
         request.setAttribute("plfs", pfs);
+        List<ClientSetup> clientSetups = clientSetupI.find();
+        request.setAttribute("clientSetups", clientSetups);
+        jLogger.i("Client clientSetups are >>>>>>>>>>> " + clientSetups + " <<<<<<<<<<<<<<");
+
         List<ProfileName> profileNames = profileNameBeanI.find();
         request.setAttribute("profileNames", profileNames);
+        List<ClientName> clientNames = clientNameBeanI.find();
+        request.setAttribute("clientNames", clientNames);
+        jLogger.i("Client Names are >>>>>>>>>>> " + clientNames + " <<<<<<<<<<<<<<");
         List<Ordinal> ordinals = helper.getOrdinals();
         jLogger.i("Ordinals are >>>>>>>>>>> " + ordinals + " <<<<<<<<<<<<<<");
         request.setAttribute("ordinals", ordinals);
-        Permission permissions = getPermissions(request);
+        List<ClientOrdinal> clientOrdinals = helper.getClientOrdinals();
+        jLogger.i("Ordinals are >>>>>>>>>>> " + clientOrdinals + " <<<<<<<<<<<<<<");
+        request.setAttribute("clientOrdinals", clientOrdinals);
+        List<ClientSetup> clientsetup = clientSetupI.find();
+        request.setAttribute("clientsetups", clientsetup);
+        request.setAttribute("clientsetupsize",clientsetup.size());
+         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
         PasswordPolicy policy = passwordPolicyBeanI.find();
         request.setAttribute("policy", policy);

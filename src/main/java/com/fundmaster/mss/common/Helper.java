@@ -1,6 +1,7 @@
 package com.fundmaster.mss.common;
 
 import com.fundmaster.mss.beans.UserBeanI;
+import com.fundmaster.mss.model.ClientOrdinal;
 import com.fundmaster.mss.model.Ordinal;
 import com.fundmaster.mss.model.User;
 import org.json.JSONException;
@@ -14,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ClientInfoStatus;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -272,6 +274,33 @@ public class Helper {
         ordinals.add(ordinal15);
         return ordinals;
     }
+ public List<ClientOrdinal> getClientOrdinals()
+
+         //ETL", "UAPUG", "UAPKE", "LAPFUND", "CBK", "BOU", "BRITAM", "KP", "KENGEN
+    {
+        ClientOrdinal clientOrdinal1= new ClientOrdinal(Long.valueOf("1").longValue(), "ETL", "ENTERPRISE TRUSTEES LIMITED");
+        ClientOrdinal clientOrdinal2 = new ClientOrdinal(Long.valueOf("2").longValue(), "UAPUG", "UAP UGANDA");
+        ClientOrdinal clientOrdinal3 = new ClientOrdinal(Long.valueOf("3").longValue(), "UAPKE", "UAP KENYA");
+         ClientOrdinal clientOrdinal4 = new ClientOrdinal(Long.valueOf("5").longValue(), "LAPFUND", "LAPFUND KENYA");
+        ClientOrdinal clientOrdinal5= new ClientOrdinal(Long.valueOf("6").longValue(), "CBK", "CBK");
+        ClientOrdinal clientOrdinal6 = new ClientOrdinal(Long.valueOf("7").longValue(), "BOU", "BOU");
+        ClientOrdinal clientOrdinal7 = new ClientOrdinal(Long.valueOf("8").longValue(), "BRITAM", "BRITAM");
+        ClientOrdinal clientOrdinal8 = new ClientOrdinal(Long.valueOf("9").longValue(), "KP", "KP");
+        ClientOrdinal clientOrdinal9 = new ClientOrdinal(Long.valueOf("9").longValue(), "KENGEN", "KENGEN");
+        List<ClientOrdinal> clientOrdinals = new ArrayList<>();
+        clientOrdinals.add(clientOrdinal1);
+        clientOrdinals.add(clientOrdinal2);
+        clientOrdinals.add(clientOrdinal3);
+        clientOrdinals.add(clientOrdinal4);
+        clientOrdinals.add(clientOrdinal5);
+        clientOrdinals.add(clientOrdinal6);
+        clientOrdinals.add(clientOrdinal7);
+        clientOrdinals.add(clientOrdinal8);
+        clientOrdinals.add(clientOrdinal9);
+
+
+        return clientOrdinals;
+    }
 
     public JSONObject response(boolean status, String message)
     {
@@ -357,6 +386,13 @@ public class Helper {
         return new String[]{"MEMBER", "ADMINISTRATOR", "SPONSOR", "TRUSTEE", "AGENT", "CUSTODIAN", "CUSTOMER_RELATIONSHIP_MANAGER", "CUSTOMER_RELATIONSHIP_EXECUTIVE", "FUND_MANAGER", "PENSIONER"};
     }
 
+    public String[] listClients()
+
+
+    {
+        return new String[]{"ETL","UAPUG", "UAPKE", "LAPFUND", "CBK", "BOU", "BRITAM", "KP", "KENGEN"};
+    }
+
     public boolean isManagerial(String profile)
     {
         String[] profiles = listProfiles();
@@ -389,6 +425,11 @@ public class Helper {
             user.setSmsActivationCode(code);
         }
         return user;
+
+    }
+    public String formatMessage(String message, String name,String activationCode ){
+        String msg1=message.replace("name",name);
+        return msg1.replace("code",activationCode);
 
     }
 }

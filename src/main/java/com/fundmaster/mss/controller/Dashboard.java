@@ -39,6 +39,8 @@ public class Dashboard extends BaseServlet implements Serializable {
     @EJB
     ApiEJB apiEJB;
     @EJB
+    ClientSetupI clientSetupI;
+    @EJB
     DBMenuBeanI dbMenuBeanI;
 
     @EJB
@@ -1646,6 +1648,8 @@ SocialBeanI socialBeanI;
         request.setAttribute("search", search);
         List<Ordinal> ordinals = helper.getOrdinals();
         request.setAttribute("ordinals", ordinals);
+        List<ClientSetup> clientsetup = clientSetupI.find();
+        request.setAttribute("clientsetup", clientsetup);
         request.setAttribute("members", members);
         Permission permissions = getPermissions(request);
         logActivity("MEMBERS", "Viewed members for scheme #" + this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));

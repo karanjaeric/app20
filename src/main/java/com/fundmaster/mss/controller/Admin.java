@@ -36,6 +36,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String ADMIN_SCHEME_CONTRIBUTIONS = "SC";
     private static final String ADMIN_SPONSOR_CONTRIBUTIONS = "SP";
     private static final String ADMIN_PROFILE_NAMES = "PROFILE_NAMES";
+    private static final String ADMIN_CLIENT_NAMES = "CLIENT_NAMES";
     private static final String ADMIN_PWD_RESET = "ADMIN_PWD_RESET";
     private static final String EDIT_BENEFICIARY = "EDIT_BENEFICIARY";
     private static final String UPLOAD_DOCUMENT = "UPLOAD_DOCUMENT";
@@ -45,6 +46,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String SAVE_PERMISSION = "SAVE_PERMISSION";
     private static final String SET_PASSWORD_POLICY = "SET_PASSWORD_POLICY";
     private static final String PROFILE_LOGIN_FIELD = "PROFILE_LOGIN_FIELD";
+    private static final String CLIENT_SETUP_FIELD = "CLIENT_SETUP_FIELD";
     private static final String FRONTPAGE_ACCESS = "FRONTPAGE_ACCESS";
     private static final String DELETE_PORTAL_SPONSOR = "DELETE_PORTAL_SPONSOR";
     private static final String ADD_MEMBER = "ADD_MEMBER";
@@ -102,6 +104,7 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String MEMBER_DASHBOARD_ITEMS = "MEMBER_DASHBOARD_ITEMS";
     private static final String ADMIN_DASHBOARD_ITEMS = "ADMIN_DASHBOARD_ITEMS";
     private static final String PLF = "PLF";
+    private static final String CS = "CS";
     private static final String ADD_CONTACT_REASON = "ADD_CONTACT_REASON";
     private static final String LOGO = "LOGO";
     private static final String BANNER = "BANNER";
@@ -123,7 +126,11 @@ public class Admin extends BaseServlet implements Serializable {
     @EJB
     ProfileNameBeanI profileNameBeanI;
     @EJB
+    ClientNameBeanI clientNameBeanI;
+    @EJB
     ProfileLoginFieldBeanI profileLoginFieldBeanI;
+    @EJB
+    ClientSetupI clientSetupI;
     @EJB
     UserBeanI userBeanI;
     @EJB
@@ -365,6 +372,9 @@ public class Admin extends BaseServlet implements Serializable {
             case ADMIN_PROFILE_NAMES:
                 updateProfileNames(request, response, session);
                 break;
+                case ADMIN_CLIENT_NAMES:
+                updateClientNames(request, response, session);
+                break;
             case ADMIN_PWD_RESET:
                 adminPasswordReset(request, response, session);
                 break;
@@ -391,6 +401,9 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
             case PROFILE_LOGIN_FIELD:
                 editProfileLoginFields(request, response, session);
+                break;
+            case CLIENT_SETUP_FIELD:
+                editClientSetupFields(request, response, session);
                 break;
             case FRONTPAGE_ACCESS:
                 getFrontPageAccessByPage(response);
@@ -563,6 +576,9 @@ public class Admin extends BaseServlet implements Serializable {
             case PLF:
                 updateProfileLoginFields(request, response, session);
                 break;
+            case CS:
+                updateClientSetupConfig(request, response, session);
+                break;
             case ADD_CONTACT_REASON:
                 addContactReason(request, response, session);
                 break;
@@ -605,6 +621,19 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, true, "Profile login ordinals successfully saved", null);
         } else
             this.respond(response, true, "Profile login ordinals could not be saved", null);
+    }
+    private void updateClientSetupConfig(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        List<ClientSetup> clientSetups = clientSetupI.find();
+        boolean status = true;
+        for (ClientSetup clientSetup : clientSetups) {
+            clientSetup.setClientOrdinal(this.get(request, String.valueOf(clientSetup.getId())));
+            status = status && clientSetupI.edit(clientSetup) != null;
+        }
+        if (status) {
+            audit(session, "Updated the client setup configs for the various clients");
+            this.respond(response, true, "client setup configs successfully saved", null);
+        } else
+            this.respond(response, true, "client setup configs could not be saved", null);
     }
     private void sendEmail(HttpServletRequest request, HttpServletResponse response, String MEDIA_DIR) throws IOException, ServletException {
         String url = request.getRequestURL().toString();
@@ -1868,6 +1897,31 @@ public class Admin extends BaseServlet implements Serializable {
         } else
             this.respond(response, false, "Profile login settings could not be saved", null);
     }
+
+    private void editClientSetupFields(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+         String clientAbb =this.get(request, "client");
+        String message = this.get(request, "msg");
+        message.trim();
+        jLogger.i("The message is "+message);
+        jLogger.i("The client is "+clientAbb);
+        ClientSetup csf =  clientSetupI.find(clientAbb);
+        if(csf!=null) {
+            csf.setClientRegistrationMessage(message);
+            clientSetupI.edit(csf);
+        }else {
+            csf =new ClientSetup();
+            csf.setClientRegistrationMessage(message);
+            csf.setClientOrdinal(clientAbb);
+            clientSetupI.add(csf);
+
+        }
+            if (clientSetupI.edit(csf)!=null || clientSetupI.add(csf)!=null) {
+                audit(session, "Updated Client Setup settings");
+                this.respond(response, true, "Client Setup settings successfully saved", null);
+            } else
+                this.respond(response, false, "Client Setup settings could not be saved", null);
+
+    }
     private void editPasswordPolicy(HttpServletRequest request, HttpServletResponse response) {
         PasswordPolicy p = passwordPolicyBeanI.find();
         p.setExpiry_days(Integer.parseInt(this.get(request, "expiry_days")));
@@ -1924,8 +1978,10 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setMember_dashboard_items(this.get(request, "member_dashboard_items").equalsIgnoreCase("true"));
         perm.setAdmin_dashboard_items(this.get(request, "admin_dashboard_items").equalsIgnoreCase("true"));
         perm.setProfile_login_username(this.get(request, "profile_login_username").equalsIgnoreCase("true"));
+        perm.setClient_setup_config(this.get(request, "client_setup_config").equalsIgnoreCase("true"));
         perm.setProfile_privileges(this.get(request, "profile_privileges").equalsIgnoreCase("true"));
         perm.setProfile_names(this.get(request, "profile_names").equalsIgnoreCase("true"));
+        perm.setClient_names(this.get(request, "client_names").equalsIgnoreCase("true"));
         perm.setSetup_banner(this.get(request, "setup_banner").equalsIgnoreCase("true"));
         perm.setSetup_company(this.get(request, "setup_company").equalsIgnoreCase("true"));
         perm.setSetup_email(this.get(request, "setup_email").equalsIgnoreCase("true"));
@@ -2319,6 +2375,19 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, true, "Profile name settings successfully saved", null);
         } else
             this.respond(response, false, "Profile name settings could not be saved", null);
+    }
+    private void updateClientNames(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        List<ClientName> cNames = clientNameBeanI.find();
+        boolean status = true;
+        for (ClientName cName : cNames) {
+            cName.setClientName(this.get(request, cName.getClientName()));
+            status = status && clientNameBeanI.edit(cName) != null;
+        }
+        if (status) {
+            audit(session, "Updated Client name settings");
+            this.respond(response, true, "Client name settings successfully saved", null);
+        } else
+            this.respond(response, false, "Client name settings could not be saved", null);
     }
     private void getSchemeContributions(HttpServletRequest request, HttpServletResponse response) {
         JSONObject result = apiEJB.getSchemeContributions(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));

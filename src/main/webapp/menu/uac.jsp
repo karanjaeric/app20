@@ -40,11 +40,21 @@
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> PROFILE LOGIN FIELDS</a></li>
 		</c:if>
+		<%--<c:if test="${ permissions.client_setup_config }">--%>
+		<li id="client-setup-li"><a href="javascript:void(0);"><i
+				class="glyphicon glyphicon-lock"></i>&nbsp;<i
+				class="fa fa-chevron-right"></i> CLIENT SETUP CONFIGS</a></li>
+		<%--</c:if>--%>
 		<c:if test="${ permissions.profile_names }">
 		<li id="profile-names-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> PROFILE NAMES</a></li>
 		</c:if>
+		<%--<c:if test="${ permissions.client_names }">--%>
+		<li id="client_names-li"><a href="javascript:void(0);"><i
+				class="glyphicon glyphicon-lock"></i>&nbsp;<i
+				class="fa fa-chevron-right"></i> CLIENT NAMES</a></li>
+		<%--</c:if>--%>
 		<c:if test="${ permissions.scheme_managers }">
 		<li id="scheme-managers-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
@@ -101,6 +111,40 @@
 			</div>
 		</form>
 	</div>
+
+<div class="modal fade" id="modal-client_names" tabindex="-1" role="dialog" aria-labelledby="myModalLabelClientNames" aria-hidden="true">
+		<form role="form" id="form-client-names">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabelClientNames">
+							<i class="glyphicon glyphicon-pushpin"></i>&nbsp;&nbsp;CLIENT NAMES
+						</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table">
+							<tr><th>CLIENT</th><th>NAME TO USE</th></tr>
+							<c:forEach var="cn" items="${clientNames}">
+								<tr>
+								<td>
+								 <label class="control-label">${ cn.clientName }</label>
+								</td>
+								<td>
+								 <input type="text" class="form-control" id="${cn.clientName }_NAME" name="${cn.clientName }_NAME" value="${cn.fullName }"/>
+								</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+						<input class="btn btn-primary" type="submit"
+							value="Save Settings" id="btn-client-names">
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 	
 	
 	<div class="modal fade" id="modal-profile-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabelProfileLogin" aria-hidden="true">
@@ -139,19 +183,19 @@
 									 <select class="form-control" name="${ plf.profile }_published" id="${ plf.profile }_published">
 									 <c:choose>
 									 	 <c:when test="${plf.published }">
-										 	<option value="true" selected="selected">Allowed</option>									  
+										 	<option value="true" selected="selected">Allowed</option>
 										  </c:when>
 										  <c:otherwise>
-										  	<option value="true">Allowed</option>	
+										  	<option value="true">Allowed</option>
 										  </c:otherwise>
 									 </c:choose>
-									  
+
 									 <c:choose>
 									 	 <c:when test="${plf.published == 'FALSE'}">
-										 	<option value="false" selected="selected">Disallowed</option>									  
+										 	<option value="false" selected="selected">Disallowed</option>
 										  </c:when>
 										  <c:otherwise>
-										  	<option value="false">Disallowed</option>	
+										  	<option value="false">Disallowed</option>
 										  </c:otherwise>
 									 </c:choose>
 									 </select>
@@ -169,6 +213,80 @@
 			</div>
 		</form>
 	</div>
+
+<div class="modal fade" id="modal-client-setup" tabindex="-1" role="dialog" aria-labelledby="myModalLabelClientSetup" aria-hidden="true">
+	<form role="form" id="form-client-setup">
+		<input type="hidden" name="ACTION" id="ACTION" value="CS" />
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabelClientSetup">
+						<i class="glyphicon glyphicon-pushpin"></i>&nbsp;&nbsp;CLIENT SETUP CONFIGURATION
+					</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<tr><th>CLIENT</th>
+							<th>MESSAGE</th>
+						</tr>
+						   <c:if test="${clientsetupsize>0}">
+							   <tr>
+								   <td>
+									   <select class="form-control" id="client" name="client">
+										   <c:forEach var="field" items="${clientOrdinals}">
+										   <c:forEach var="clientsetup" items="${clientsetups}">
+											   <c:choose>
+												   <c:when test="${field.abbreviation==clientsetup.clientOrdinal}">
+													   <option selected="selected">${field.abbreviation}</option>
+												   </c:when>
+												   <c:otherwise>
+													   <option>${field.abbreviation}</option>
+												   </c:otherwise>
+											   </c:choose>
+										   </c:forEach>
+										   </c:forEach>
+									   </select>
+								   </td>
+								   <td>
+									   <c:forEach var="field" items="${clientOrdinals}">
+										   <c:forEach var="clientsetup" items="${clientsetups}">
+											   <c:if test="${field.abbreviation==clientsetup.clientOrdinal}">
+									<textarea class="form-control" id="msg" name="msg">
+											${clientsetup.clientRegistrationMessage}
+									</textarea>
+											   </c:if>
+										   </c:forEach>
+									   </c:forEach>
+								   </td>
+							   </tr>
+						   </c:if>
+						   <c:if test="${clientsetupsize<=0}">
+							   <tr>
+								   <td>
+									   <select class="form-control" id="client" name="client">
+										   <c:forEach var="field" items="${clientOrdinals}">
+											   <option>${field.abbreviation}</option>
+										   </c:forEach>
+									   </select>
+								   </td>
+								   <td>
+									<textarea class="form-control" id="msg" name="msg">
+
+									</textarea>
+								   </td>
+							   </tr>
+						   </c:if>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-warning" data-dismiss="modal">Cancel</a>
+					<input class="btn btn-primary" type="submit"
+						   value="Save Settings" id="btn-client-setup">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
 	
 	<div class="modal fade" id="modal-password-policy" tabindex="-1" role="dialog" aria-labelledby="myModalLabelPasswordPolicy" aria-hidden="true">
 		<form role="form" id="form-password-policy">
@@ -1034,7 +1152,17 @@
         		$.ajax({
         	        url: $('#base_url').val() + 'admin',
         	        type: 'post',
-        	        data: {ACTION: 'PROFILE_LOGIN_FIELD', MEMBER: $('#MEMBER').val(), MEMBER_PUBLISHED: $('#MEMBER_published').val(), ADMINISTRATOR: $('#ADMINISTRATOR').val(), ADMINISTRATOR_PUBLISHED: $('#ADMINISTRATOR_published').val(), SPONSOR: $('#SPONSOR').val(), SPONSOR_PUBLISHED: $('#SPONSOR_published').val(), TRUSTEE: $('#TRUSTEE').val(), TRUSTEE_PUBLISHED: $('#TRUSTEE_published').val(), AGENT: $('#AGENT').val(), AGENT_PUBLISHED: $('#AGENT_published').val(), CUSTODIAN: $('#CUSTODIAN').val(), CUSTODIAN_PUBLISHED: $('#CUSTODIAN_published').val(), CUSTOMER_RELATIONSHIP_MANAGER: $('#CUSTOMER_RELATIONSHIP_MANAGER').val(), CUSTOMER_RELATIONSHIP_MANAGER_PUBLISHED: $('#CUSTOMER_RELATIONSHIP_MANAGER_published').val(), CUSTOMER_RELATIONSHIP_EXECUTIVE: $('#CUSTOMER_RELATIONSHIP_EXECUTIVE').val(), CUSTOMER_RELATIONSHIP_EXECUTIVE_PUBLISHED: $("#CUSTOMER_RELATIONSHIP_EXECUTIVE_published").val(), FUND_MANAGER: $('#FUND_MANAGER').val(), FUND_MANAGER_PUBLISHED: $('#FUND_MANAGER_published').val(), PENSIONER: $('#PENSIONER').val(), PENSIONER_PUBLISHED: $("#PENSIONER_published").val()},
+        	        data: {ACTION: 'PROFILE_LOGIN_FIELD', MEMBER: $('#MEMBER').val(),
+						MEMBER_PUBLISHED: $('#MEMBER_published').val(), ADMINISTRATOR: $('#ADMINISTRATOR').val(),
+						ADMINISTRATOR_PUBLISHED: $('#ADMINISTRATOR_published').val(), SPONSOR: $('#SPONSOR').val(),
+						SPONSOR_PUBLISHED: $('#SPONSOR_published').val(), TRUSTEE: $('#TRUSTEE').val(), TRUSTEE_PUBLISHED: $('#TRUSTEE_published').val(),
+						AGENT: $('#AGENT').val(), AGENT_PUBLISHED: $('#AGENT_published').val(), CUSTODIAN: $('#CUSTODIAN').val(),
+						CUSTODIAN_PUBLISHED: $('#CUSTODIAN_published').val(), CUSTOMER_RELATIONSHIP_MANAGER: $('#CUSTOMER_RELATIONSHIP_MANAGER').val(),
+						CUSTOMER_RELATIONSHIP_MANAGER_PUBLISHED: $('#CUSTOMER_RELATIONSHIP_MANAGER_published').val(),
+						CUSTOMER_RELATIONSHIP_EXECUTIVE: $('#CUSTOMER_RELATIONSHIP_EXECUTIVE').val(),
+						CUSTOMER_RELATIONSHIP_EXECUTIVE_PUBLISHED: $("#CUSTOMER_RELATIONSHIP_EXECUTIVE_published").val(),
+						FUND_MANAGER: $('#FUND_MANAGER').val(), FUND_MANAGER_PUBLISHED: $('#FUND_MANAGER_published').val(),
+						PENSIONER: $('#PENSIONER').val(), PENSIONER_PUBLISHED: $("#PENSIONER_published").val()},
         	        dataType: 'json',
         	        success: function(json) {
         	            $('#' + btn).val('Done');
@@ -1052,6 +1180,53 @@
         	    });
 
 			});
+
+			$('#form-client-setup').bootstrapValidator({
+		        message: 'This value is not valid',
+		        feedbackIcons: {
+		            valid: 'glyphicon glyphicon-ok',
+		            invalid: 'glyphicon glyphicon-remove',
+		            validating: 'glyphicon glyphicon-refresh'
+		        },
+                fields:  {}
+
+			})
+			.on('success.form.bv', function(e) {
+
+                // Prevent form submission
+                e.preventDefault();
+
+                var btn = "btn-client-setup";
+                var form = "form-client-setup";
+                var modal = "modal-client-setup";
+                var btn_text = $('#' + btn).val();
+
+                $('#' + btn).val('Please wait...');
+        		$.ajax({
+        	        url: $('#base_url').val() + 'admin',
+        	        type: 'post',
+        	        data: {ACTION: 'CLIENT_SETUP_FIELD',
+                        client: $('#client').val(), msg: $('#msg').val(),
+                    },
+
+
+        	        dataType: 'json',
+        	        success: function(json) {
+        	            $('#' + btn).val('Done');
+        	            if(json.success)
+        	            {
+        	                $('#' + form)[0].reset();
+        	                $('#' + modal).modal('hide');
+        	                html = 'Client setup details successfully saved';
+        	            }
+        	            else
+        	                html = 'Client setup details could not be saved';
+        	            bootbox.alert(html);
+        	            $('#' + btn).val(btn_text);
+                    }
+                    });
+
+            });
 			
 			$('#form-profile-names').bootstrapValidator({
 		        message: 'This value is not valid',
@@ -1090,6 +1265,59 @@
         	            }
         	            else
         	                html = 'Profile names could not be saved';
+        	            bootbox.alert(html);
+        	            $('#' + btn).val(btn_text);
+        	        }
+        	    });
+
+			});
+
+			$('#form-client-names').bootstrapValidator({
+		        message: 'This value is not valid',
+		        feedbackIcons: {
+		            valid: 'glyphicon glyphicon-ok',
+		            invalid: 'glyphicon glyphicon-remove',
+		            validating: 'glyphicon glyphicon-refresh'
+		        },
+		        fields: {
+
+		        }
+			})
+			.on('success.form.bv', function(e) {
+
+                // Prevent form submission
+                e.preventDefault();
+
+                var btn = "btn-client-names";
+                var form = "form-client-names";
+                var modal = "modal-client-names";
+                var btn_text = $('#' + btn).val();
+
+                $('#' + btn).val('Please wait...');
+        		$.ajax({
+        	        url: $('#base_url').val() + 'admin',
+        	        type: 'post',
+        	        data: {ACTION: 'CLIENT_NAMES',
+						ETL: $('#ETL_NAME').val(),
+						UAPUG: $('#UAPUG_NAME').val(),
+						UAPKE: $('#UAPKE_NAME').val(),
+						LAPFUND: $('#LAPFUND_NAME').val(),
+						CBK: $('#CBK_NAME').val(),
+						BOU: $('#BOU_NAME').val(),
+						BRITAM: $('#BRITAM_NAME').val(),
+						KP: $('#KP_NAME').val(),
+						KENGEN: $('#KENGEN_NAME').val()},
+        	        dataType: 'json',
+        	        success: function(json) {
+        	            $('#' + btn).val('Done');
+        	            if(json.success)
+        	            {
+        	                $('#' + form)[0].reset();
+        	                $('#' + modal).modal('hide');
+        	                html = 'Client names successfully saved';
+        	            }
+        	            else
+        	                html = 'Client names could not be saved';
         	            bootbox.alert(html);
         	            $('#' + btn).val(btn_text);
         	        }
@@ -1511,11 +1739,18 @@
 		    $('#profile-login-li').click(function(){
 		        $('#modal-profile-login').modal('show');
 		    });
+		    $('#client-setup-li').click(function(){
+		        $('#modal-client-setup').modal('show');
+		    });
 		    
 		    $('#profile-names-li').click(function(){
 		        $('#modal-profile-names').modal('show');
 		    });
-		    
+
+		    $('#client_names-li').click(function(){
+		        $('#modal-client_names').modal('show');
+		    });
+
 
 		    $('#password-policy-li').click(function(){
 		        $('#modal-password-policy').modal('show');

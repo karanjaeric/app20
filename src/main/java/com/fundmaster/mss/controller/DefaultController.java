@@ -32,6 +32,8 @@ public class DefaultController extends BaseServlet implements Serializable {
 	@EJB
 	UserBeanI userBeanI;
 	@EJB
+	ClientSetupI clientSetupI;
+	@EJB
 	CountryBeanI countryBeanI;
 	@EJB
 	SettingBeanI settingBeanI;
@@ -102,6 +104,8 @@ public class DefaultController extends BaseServlet implements Serializable {
 		request.setAttribute("loginFields", plf2);
 		request.setAttribute("content", content);
 		request.setAttribute("noMenu", false);
+		List<ClientSetup> clientsetup = clientSetupI.find();
+		request.setAttribute("clientsetups", clientsetup);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 

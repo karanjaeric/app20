@@ -38,6 +38,8 @@ public class LoginController extends BaseServlet implements Serializable {
 	@EJB
 	GenderBeanI genderBeanI;
 	@EJB
+	ClientSetupI clientSetupI;
+	@EJB
 	CompanyBeanI companyBeanI;
 	@EJB
 	SocialBeanI socialBeanI;
@@ -89,6 +91,8 @@ public class LoginController extends BaseServlet implements Serializable {
 		List<ProfileLoginField> plf = profileLoginFieldBeanI.find();
 		jLogger.i("The profile size is "+plf.size());
 		request.setAttribute("loginFields", plf);
+		List<ClientSetup> clientsetup = clientSetupI.find();
+		request.setAttribute("clientsetups", clientsetup);
 
 		if(session != null)
 		{ 
