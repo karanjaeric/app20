@@ -550,7 +550,8 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String schemeId = this.getSessKey(request, Constants.SCHEME_ID);
         jLogger.i("Scheme ID: " + schemeId);
-        String sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
+        String sponsorId = String.valueOf(apiEJB.getSchemeSponsorId(this.getSessKey(request,
+                Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID)));
         jLogger.i("Sponsor ID: " + sponsorId);
         request.setAttribute("sponsorId", sponsorId);
 
