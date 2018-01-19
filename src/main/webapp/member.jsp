@@ -33,7 +33,7 @@
 					<button class="btn btn-danger btn-block" id="switch_profile">SWITCH TO MANAGERIAL PROFILE</button>
 				</c:if>
 				<h2><small>Choose Schemes</small></h2>
-				<select class="form-control" name="scheme_id" id="scheme_id" onchange="reloadmember();">
+				<select class="form-control" name="scheme_id" id="scheme2_id" onchange="reloadmember();">
 					<c:forEach var="scheme" items="${ schemes }">
 						<c:choose>
 							<c:when test="${scheme_id == scheme.id }">
