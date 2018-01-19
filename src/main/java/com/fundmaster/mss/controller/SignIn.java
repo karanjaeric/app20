@@ -326,7 +326,7 @@ public class SignIn extends BaseServlet implements Serializable {
 				} else {
 					logAttempt(this.get(request, "username"));
 
-					this.respond(response, false, "Login Failed!<br />You account has been locked or de-activated. Contact the administrator", null);
+					this.respond(response, false, "Login Failed!<br />You account has been locked or de-activated. Please use the forget password button to reset your account", null);
 
 				}
 
