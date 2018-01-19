@@ -266,7 +266,13 @@
 									<c:forEach var="beneficiary" items="${ beneficiaries }">
 										<tr><td> ${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td>
 											<td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td>
-											<td><a class="btn btn-warning btn-sm disabled" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">
+											<td>
+												<c:choose>
+												<c:when test="${ profile == 'MEMBER' }">
+													<a class="btn btn-warning btn-sm" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">												</c:when>
+												<c:otherwise>
+														<a class="btn btn-warning btn-sm disabled" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">												</c:otherwise>
+												</c:choose>
 												<i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</a>&nbsp;
 
 												<a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="view_beneficiary('${beneficiary.id}')">
