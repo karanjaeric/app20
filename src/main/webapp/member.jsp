@@ -45,19 +45,28 @@
 						</c:choose>
 					</c:forEach>
 				</select>
-				<h2><small>Companies</small></h2>
-				<select class="form-control" name="sponsor_id" id="sponsor_id" onchange="reloadproductmember();">
-					<c:forEach var="sponsor" items="${ sponsors }">
-						<c:choose>
-							<c:when test="${sponsor_id == sponsor.id }">
-								<option value="${sponsor.id }" selected="selected">${ sponsor.companyName }</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${sponsor.id }">${ sponsor.companyName }</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
+				<c:forEach var="client" items="${clientsetup}">
+					<c:choose>
+						<c:when test="${client.clientOrdinal=='ETL'}">
+							<h2><small>Companies</small></h2>
+							<select class="form-control" name="sponsor_id" id="sponsor_id" onchange="reloadproductmember();">
+								<c:forEach var="sponsor" items="${ sponsors }">
+									<c:choose>
+										<c:when test="${sponsor_id == sponsor.id }">
+											<option value="${sponsor.id }" selected="selected">${ sponsor.companyName }</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${sponsor.id }">${ sponsor.companyName }</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</select>
+						</c:when>
+						<c:otherwise>
+
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
 			</div>
 			<p>&nbsp;</p>
 			<div class="sidebar-right section text-center">

@@ -35,6 +35,8 @@ public class MemberController extends BaseServlet implements Serializable {
 	@EJB
 	CountryBeanI countryBeanI;
 	@EJB
+	ClientSetupI clientSetupI;
+	@EJB
 	SettingBeanI settingBeanI;
 	@EJB
 	GenderBeanI genderBeanI;
@@ -155,6 +157,8 @@ public class MemberController extends BaseServlet implements Serializable {
 
 					MemberMenu memberMenu = memberMenuBeanI.find();
 					request.setAttribute("memberMenu", memberMenu);
+					List<ClientSetup> clientsetup = clientSetupI.find();
+					request.setAttribute("clientsetup", clientsetup);
 
 					String memberEmail=m.getEmailAddress();
 					List<Sponsor> sponsors = apiEJB.getMemberSchemeProducts(memberEmail,this.getSessKey(request, Constants.SCHEME_ID));
