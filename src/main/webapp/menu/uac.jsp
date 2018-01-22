@@ -40,21 +40,21 @@
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> PROFILE LOGIN FIELDS</a></li>
 		</c:if>
-		<%--<c:if test="${ permissions.client_setup_config }">--%>
+		<c:if test="${ permissions.client_setup_config }">
 		<li id="client-setup-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> CLIENT SETUP CONFIGS</a></li>
-		<%--</c:if>--%>
+		</c:if>
 		<c:if test="${ permissions.profile_names }">
 		<li id="profile-names-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> PROFILE NAMES</a></li>
 		</c:if>
-		<%--<c:if test="${ permissions.client_names }">--%>
+		<c:if test="${ permissions.client_names }">
 		<li id="client_names-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
 				class="fa fa-chevron-right"></i> CLIENT NAMES</a></li>
-		<%--</c:if>--%>
+		</c:if>
 		<c:if test="${ permissions.scheme_managers }">
 		<li id="scheme-managers-li"><a href="javascript:void(0);"><i
 				class="glyphicon glyphicon-lock"></i>&nbsp;<i
