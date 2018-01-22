@@ -232,7 +232,7 @@
 						   <c:if test="${clientsetupsize>0}">
 							   <tr>
 								   <td>
-									   <select class="form-control" id="client" name="client">
+									   <select class="form-control" id="client" name="client" disabled>
 										   <c:forEach var="field" items="${clientOrdinals}">
 										   <c:forEach var="clientsetup" items="${clientsetups}">
 											   <c:choose>
