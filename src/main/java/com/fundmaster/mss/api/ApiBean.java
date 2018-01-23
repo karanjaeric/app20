@@ -23,6 +23,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -193,7 +195,7 @@ public class ApiBean implements ApiEJB {
         jLogger.i(" The presentValue is " + PV);
         jLogger.i(" The UserName is " + user);
 
-        MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
+        MathContext mc = new MathContext(16, RoundingMode.HALF_EVEN);
         BigDecimal rate = BigDecimal.valueOf(Double.parseDouble(IR));
         BigDecimal years = BigDecimal.valueOf(Double.parseDouble(yrs));
         BigDecimal freq = BigDecimal.valueOf(Double.parseDouble(paymentFrequency));
@@ -203,23 +205,26 @@ public class ApiBean implements ApiEJB {
         BigDecimal divider = new BigDecimal("100");
         BigDecimal interestRate = rate.divide(divider,mc);
 
-        BigDecimal factor1=BigDecimal.ONE.add(interestRate.divide(freq,mc),MathContext.UNLIMITED);
+        BigDecimal factor1=BigDecimal.ONE.add(interestRate.divide(freq,mc),MathContext.DECIMAL64);
         BigDecimal powerFactor=freq.multiply(years);
 
-        BigDecimal factor2=factor1.pow(powerFactor.intValue(), MathContext.UNLIMITED);
+        BigDecimal factor2=factor1.pow(powerFactor.intValue(), MathContext.DECIMAL64);
         BigDecimal base=presentValue.multiply(factor2);
 
         BigDecimal den=interestRate.divide(freq,mc);
         BigDecimal factor4=interestRate.divide(freq,mc);
         BigDecimal factor3=BigDecimal.ONE.add(factor4);
         BigDecimal powerFactor2=years.multiply(freq);
-        BigDecimal num=factor3.pow(powerFactor2.intValue(), MathContext.UNLIMITED);
+        BigDecimal num=factor3.pow(powerFactor2.intValue(), MathContext.DECIMAL64);
         BigDecimal base1=num.subtract(BigDecimal.ONE);
         BigDecimal base2=base1.divide(den,mc);
         BigDecimal base3=PMT.multiply(base2);
 
         BigDecimal futureValue=base.add(base3).setScale(2,BigDecimal.ROUND_HALF_EVEN);
         JSONObject jsonObject = new JSONObject();
+        DecimalFormat df = new DecimalFormat();
+        String formattedResult=  df.format(futureValue);
+         jLogger.i("The Formatted " + formattedResult);
 
         if(helper.isEmailAddress(user)){
 
@@ -230,7 +235,7 @@ public class ApiBean implements ApiEJB {
             recipients.add(user);
 
             apiEJB.sendEmail(recipients, sender, null, "MSS Portal Benefit Projection Results",
-                    "Dear Member here is Your Benefit Projection Results. " +futureValue+
+                    "Dear Member here is Your Benefit Projection Results. GHC: " +formattedResult+
                             " Thank you For using Our Portal", null, false, null);
 
 
@@ -245,7 +250,7 @@ public class ApiBean implements ApiEJB {
 
          try {
 
-                     return jsonObject.put("futureValue", futureValue);
+                     return jsonObject.put("futureValue", formattedResult);
 
 
 
