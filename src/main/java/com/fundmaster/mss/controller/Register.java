@@ -23,6 +23,8 @@ public class Register extends BaseServlet implements Serializable {
 
     private static final String INDIVIDUAL_PENSION_FUND = "INDIVIDUAL_PENSION_FUND";
     private static final String UMBRELLA = "UMBRELLA";
+    private static final String DEFINED_CONTRIBUTION = "DEFINED_CONTRIBUTION";
+
 
     Helper helper = new Helper();
     @EJB
@@ -94,7 +96,7 @@ public class Register extends BaseServlet implements Serializable {
         List<Scheme> sponsorSchemes = apiEJB.getSchemeBySchemeModeAndPlanType(UMBRELLA, INDIVIDUAL_PENSION_FUND);
         request.setAttribute("sponsorSchemes", sponsorSchemes);
 
-        List<Scheme> memberSchemes = apiEJB.getSchemeByPlanType(INDIVIDUAL_PENSION_FUND);
+        List<Scheme> memberSchemes = (apiEJB.getSchemeByPlanType(INDIVIDUAL_PENSION_FUND)!=null ? apiEJB.getSchemeByPlanType(INDIVIDUAL_PENSION_FUND) : apiEJB.getSchemeByPlanType(DEFINED_CONTRIBUTION));
         request.setAttribute("memberSchemes", memberSchemes);
 
         Menu menu = menuBeanI.find();
@@ -133,7 +135,7 @@ public class Register extends BaseServlet implements Serializable {
         response.addHeader("X-Content-Type-Options", "nosniff");
         response.addHeader("Content-type", "text/html; charset=UTF-8");
         ClientSetup clientSetup= new ClientSetup();
-        clientSetup = clientSetupI.find().get(0);
+//        clientSetup = clientSetupI.find().get(0);
 
         // Get the request params.
         @SuppressWarnings("rawtypes")
@@ -217,6 +219,16 @@ public class Register extends BaseServlet implements Serializable {
                             u.setPassword_expiry(password_expiry);
                             String securityCode = UUID.randomUUID().toString();
                             u.setSecurityCode(securityCode);
+                            List<ClientSetup> clientsetup = clientSetupI.find();
+                            ClientSetup setup=new ClientSetup();
+                            if( !clientsetup.isEmpty()) {
+                                setup = clientsetup.get(0);
+
+                                if (setup.getClientOrdinal().equals("KP")) {
+                                    u.setStatus(Boolean.TRUE);
+                                }
+                            }
+                            jLogger.i("The client is "+setup.getClientOrdinal());
                             userBeanI.edit(u);
                             String email_address = null;
                             String schemeId = null;
