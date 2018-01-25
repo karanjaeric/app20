@@ -35,16 +35,79 @@
 				            		</li>
 				            	</c:if>
 				            	<c:if test="${ count > 0 }">
-				            		<li>
-				            			<a href="#${field.profile }" data-toggle="tab">
-							            			<c:forEach var="pn" items="${profileNames }">
-							            				<c:if test="${ pn.profile == field.profile }">
-							            					${ pn.name }
-							            				</c:if>
-							            			</c:forEach>
-				            			</a>
-				            		</li>
-				            	</c:if>
+									<c:if test="${clientsetupsize>0}">
+										<c:forEach var="client" items="${clientsetups}">
+											<c:choose>
+												<c:when test="${client.clientOrdinal=='KP'}">
+													<c:choose>
+														<c:when test="${admincounts>2}">
+															<c:choose>
+																<c:when test="${field.profile=='ADMINISTRATOR'}">
+
+																</c:when>
+																<c:otherwise>
+																	<li>
+																		<a href="#${field.profile }" data-toggle="tab">
+																			<c:forEach var="pn" items="${profileNames }">
+																				<c:if test="${ pn.profile == field.profile }">
+																					${ pn.name }
+																				</c:if>
+																			</c:forEach>
+																		</a>
+																	</li>
+																</c:otherwise>
+															</c:choose>
+														</c:when>
+														<c:otherwise>
+															<li>
+																<a href="#${field.profile }" data-toggle="tab">
+																	<c:forEach var="pn" items="${profileNames }">
+																		<c:if test="${ pn.profile == field.profile }">
+																			${ pn.name }
+																		</c:if>
+																	</c:forEach>
+																</a>
+															</li>
+														</c:otherwise>
+													</c:choose>
+												</c:when>
+												<c:when test="${client.clientOrdinal==null}">
+													<li>
+														<a href="#${field.profile }" data-toggle="tab">
+															<c:forEach var="pn" items="${profileNames }">
+																<c:if test="${ pn.profile == field.profile }">
+																	${ pn.name }
+																</c:if>
+															</c:forEach>
+														</a>
+													</li>
+												</c:when>
+												<c:otherwise>
+													<li>
+														<a href="#${field.profile }" data-toggle="tab">
+															<c:forEach var="pn" items="${profileNames }">
+																<c:if test="${ pn.profile == field.profile }">
+																	${ pn.name }
+																</c:if>
+															</c:forEach>
+														</a>
+													</li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:if>
+									<c:if test="${clientsetupsize==0}">
+										<li>
+											<a href="#${field.profile }" data-toggle="tab">
+												<c:forEach var="pn" items="${profileNames }">
+													<c:if test="${ pn.profile == field.profile }">
+														${ pn.name }
+													</c:if>
+												</c:forEach>
+											</a>
+										</li>
+									</c:if>
+									</c:if>
 				            	<c:set var="count" value="${count + 1}" scope="page"/>
 			            	</c:if>
 						</c:forEach>

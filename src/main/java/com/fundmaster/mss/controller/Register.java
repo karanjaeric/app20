@@ -30,6 +30,8 @@ public class Register extends BaseServlet implements Serializable {
     @EJB
     ProfileNameBeanI profileNameBeanI;
     @EJB
+    LogoBeanI logoBeanI;
+    @EJB
     ClientSetupI clientSetupI;
     @EJB
     CountryBeanI countryBeanI;
@@ -122,6 +124,11 @@ public class Register extends BaseServlet implements Serializable {
         request.setAttribute("policy", policy);
         List<ClientSetup> clientsetup = clientSetupI.find();
         request.setAttribute("clientsetups", clientsetup);
+        request.setAttribute("clientsetupsize",clientsetup.size());
+        int adminCounts=userBeanI.countAdministrators(Constants.ADMIN_PROFILE);
+        request.setAttribute("admincounts",adminCounts);
+        List<Logo> logos = logoBeanI.find();
+        request.setAttribute("logos", logos);
         logActivity(Constants.PAGE_REGISTER, "accesed registration page", "0", null, null);
         request.getRequestDispatcher("register.jsp").forward(request, response);
     }

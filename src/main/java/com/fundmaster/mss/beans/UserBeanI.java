@@ -1,6 +1,7 @@
 package com.fundmaster.mss.beans;
 
 import com.fundmaster.mss.model.User;
+import com.fundmaster.mss.model.UserProfile;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -22,4 +23,5 @@ public interface UserBeanI {
     User find(String username, String profile);
     User findById(long id);
     User edit(User user);
+    int countAdministrators(String userProfile);
 }

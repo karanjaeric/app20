@@ -837,6 +837,8 @@ public Double getMemberTotalUnits(String memberId) {
     @Override
     public XiMember getMemberDetailsByScheme(String schemeId, String email) {
         JSONObject response;
+
+
         try {
             response = URLGet(APICall.GET_MEMBER_DETAILS_BY_SCHEME_AND_EMAIL + schemeId + "/" + email);
             jLogger.i("Member details respone >>>>>>>>>>> " + response + " <<<<<<<<<<<<<<<<<<<<");

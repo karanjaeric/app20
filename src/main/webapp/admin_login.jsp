@@ -13,17 +13,22 @@
 						<legend class="text-center">Please Login Here</legend>
 						<img class="profile-img-card" src="static/images/avatar_2x.png">
 						<div class="form-group">
-							<c:forEach var="client" items="${clientsetups}">
-								<c:choose>
-									<c:when test="${client.clientOrdinal=='ETL'}">
-										<label class="control-label">  Employer ID  </label>
-									</c:when>
-									<c:otherwise>
-										<label class="control-label">EMAIL:</label>
-									</c:otherwise>
-								</c:choose>
+							<c:if test="${clientsetupsize>0}">
+								<c:forEach var="client" items="${clientsetups}">
+									<c:choose>
+										<c:when test="${client.clientOrdinal=='ETL'}">
+											<label class="control-label">  Employer ID  </label>
+										</c:when>
+										<c:otherwise>
+											<label class="control-label">EMAIL:</label>
+										</c:otherwise>
+									</c:choose>
 
-							</c:forEach>
+								</c:forEach>
+							</c:if>
+							<c:if test="${clientsetupsize==0}">
+								<label class="control-label">EMAIL:</label>
+							</c:if>
                    <c:forEach var="field" items="${loginFields}">
 	                    <c:choose>
 		                   <%--<c:when test="${field.profile == 'ADMINISTRATOR' || field=='SPONSOR' }">--%>
