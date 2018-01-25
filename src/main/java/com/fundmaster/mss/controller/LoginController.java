@@ -93,6 +93,7 @@ public class LoginController extends BaseServlet implements Serializable {
 		request.setAttribute("loginFields", plf);
 		List<ClientSetup> clientsetup = clientSetupI.find();
 		request.setAttribute("clientsetups", clientsetup);
+		request.setAttribute("clientsetupsize",clientsetup.size());
 
 		if(session != null)
 		{ 

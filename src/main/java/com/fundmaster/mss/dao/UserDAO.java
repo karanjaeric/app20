@@ -145,6 +145,12 @@ public class UserDAO extends GenericDAOImpl<User, Long> {
         }
     }
     @SuppressWarnings("unchecked")
+    public int countAdmins(String userProfile)
+    {
+        List<User> adminusers= em.createQuery("SELECT u FROM User u WHERE u.userProfile=:profile").setParameter("profile", userProfile).getResultList();
+        return adminusers.size();
+    }
+    @SuppressWarnings("unchecked")
     public int countAll(String search)
     {
         List<User> users;

@@ -62,6 +62,12 @@ public class UserBean implements UserBeanI {
     }
 
     @Override
+    public int countAdministrators(String userProfile) {
+        UserDAO dao = new UserDAO(entityManager);
+        return dao.countAdmins(userProfile);
+    }
+
+    @Override
     public List<User> findByStatus() {
         UserDAO dao = new UserDAO(entityManager);
         return dao.findByStatus();

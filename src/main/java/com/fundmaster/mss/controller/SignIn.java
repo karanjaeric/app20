@@ -35,6 +35,8 @@ public class SignIn extends BaseServlet implements Serializable {
 	@EJB
 	ProfileNameBeanI profileNameBeanI;
 	@EJB
+	LogoBeanI logoBeanI;
+	@EJB
 	UserBeanI userBeanI;
 	@EJB
 	CountryBeanI countryBeanI;
@@ -130,6 +132,8 @@ public class SignIn extends BaseServlet implements Serializable {
 					request.setAttribute("noMenu", false);
 					Help help = helpBeanI.findHelp(Constants.PAGE_SIGN_IN);
 					request.setAttribute("help", help);
+					List<Logo> logos = logoBeanI.find();
+					request.setAttribute("logos", logos);
 					logActivity(Constants.PAGE_SIGN_IN, "accesed home page", "0", null, null);
 					request.getRequestDispatcher("login.jsp").forward(request, response);
 					
