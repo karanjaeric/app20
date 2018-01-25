@@ -72,7 +72,7 @@
 					<c:set var="relationshipCategory" value="${ ben.relShipCategory}"/>
 					<c:set var="relationshipCategory2" value="${fn:toUpperCase(relationshipCategory)}" />
 					<option hidden >${relationshipCategory2}</option>
-					<option ${ ben.relShipCategory == 'NEXT_OF_KIN' ? 'selected="selected"' : '' }>NEXT_OF_KIN</option>
+					<option ${ relationshipCategory2 == 'NEXT OF KIN' ? 'selected="selected"' : '' }>NEXT_OF_KIN</option>
 					<option ${ ben.relShipCategory == 'BENEFICIARY' ? 'selected="selected"' : '' }>BENEFICIARY</option>
 					<option ${ ben.relShipCategory == 'BOTH' ? 'selected="selected"' : '' }>BOTH</option>
 				</select>

@@ -159,8 +159,10 @@ function do_function()
 	        dataType: 'html',
 	        success: function(html) {
 		        $('#page-info').html(html);
+                console.log("MemberId = " + member_id);
 		        stop_wait();
 	        }
+
 		});
 	}
     else if($('#operation').val() == 'MEMBER STATEMENT')

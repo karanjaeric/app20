@@ -176,6 +176,9 @@
                                             for ( var i = 0; i < json.rows.length; i++) {
 
                                                 var row = json.rows[i];
+                                                if (row!=null){
+
+
 
                                                 console.log(row['open_ee_reg']);
                                                 console.log(row['open_er_reg']);
@@ -243,6 +246,10 @@
 
                                                 }
 
+                                            }else {
+                                                    stop_wait();
+
+                                                }
                                             }
 
                                             grandTotal = contr_total + open_total_final + interest_total_final;

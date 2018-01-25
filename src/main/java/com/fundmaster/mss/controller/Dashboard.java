@@ -872,8 +872,10 @@ MediaBeanI mediaBeanI;
         jLogger.i("scheme id US " + this.getSessKey(request,Constants.SCHEME_ID));
 
         String memberId ="";
-        memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request,Constants.PROFILE_ID)));
+        memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.get(request, "memberID")));
         jLogger.i("member id US " + memberId);
+        if (memberId == null)
+            memberId = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("member_id", memberId);
 
         ReportDetails reportDetails;
@@ -892,8 +894,11 @@ MediaBeanI mediaBeanI;
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         jLogger.i("scheme id US " + this.getSessKey(request,Constants.SCHEME_ID));
         String memberId ="";
+        //this.get(request, "memberID")
          memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request,Constants.PROFILE_ID)));
         jLogger.i("member id US " + memberId);
+        if (memberId == null)
+            memberId = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("member_id", memberId);
 
 

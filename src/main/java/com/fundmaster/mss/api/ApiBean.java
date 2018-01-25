@@ -1358,7 +1358,7 @@ public Double getMemberTotalUnits(String memberId) {
             if(response.getBoolean(Fields.SUCCESS))
             {
                 memberId   =  response.getLong("memberId");
-                jLogger.i("Returning sponsorId == " + memberId);
+                jLogger.i("Returning MemberId == " + memberId);
                 return  memberId;
             } else
                 return null;
