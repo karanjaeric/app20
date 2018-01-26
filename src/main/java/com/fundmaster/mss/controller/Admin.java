@@ -1007,7 +1007,7 @@ public class Admin extends BaseServlet implements Serializable {
 
     private void editMemberMenu(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
-        MemberMenu memberMenu = memberMenuBeanI.find();
+        MemberMenu memberMenu = memberMenuBeanI.find()==null?new MemberMenu():memberMenuBeanI.find();
         boolean contributionHistoryReport = this.get(request, "contributionHistoryReport").equalsIgnoreCase("true");
         boolean contributionHistoryGrid = this.get(request, "contributionHistoryGrid").equalsIgnoreCase("true");
         boolean BalancesHistory = this.get(request, "BalancesHistory").equalsIgnoreCase("true");
@@ -1078,8 +1078,8 @@ public class Admin extends BaseServlet implements Serializable {
 
     private void configureMemberDashboard(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
-        MemberDashboardItems memberDashboardItems = memberDashboardBeanI.find();
-        boolean name = this.get(request, "memberName").equalsIgnoreCase("true");
+        MemberDashboardItems memberDashboardItems = memberDashboardBeanI.find()==null?new MemberDashboardItems():memberDashboardBeanI.find();
+        boolean name = this.get(request, "memberName2").equalsIgnoreCase("true");
         boolean dateOfBirth = this.get(request, "dateOfBirth2").equalsIgnoreCase("true");
         boolean dateOfJoiningScheme = this.get(request, "dateOfJoiningScheme").equalsIgnoreCase("true");
         boolean gender = this.get(request, "gender2").equalsIgnoreCase("true");
