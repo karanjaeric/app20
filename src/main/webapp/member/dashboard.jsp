@@ -25,7 +25,10 @@
 
             <c:if test="${memberDashboard.name == 'TRUE'}">
                 <tr><td>NAME</td><td>${member.name }</td></tr>
-            </     <            <c:if test="${memberDashboard.dateOfBirth == 'TRUE'}">
+
+            </c:if>
+
+            <c:if test="${memberDashboard.dateOfBirth == 'TRUE'}">
                 <tr><td>DATE OF BIRTH</td><td>${member.dateOfBirth }</td></tr>
             </c:if>
             <tr><td>MEMBER AGE</td><td>
