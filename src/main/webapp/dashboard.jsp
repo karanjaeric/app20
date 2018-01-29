@@ -10,6 +10,7 @@
 		<div class="col-md-6 border-right">
 		<h3 class="text-center"><small>MEMBERSHIP DETAILS</small></h3>
 		<table class="table table-responsive table-striped">
+
 			<c:if test="${adminDashboard.activeMembers == 'TRUE'}">
 				<tr><td>ACTIVE MEMBERS</td><td id="active_members">--</td></tr>
 			</c:if>

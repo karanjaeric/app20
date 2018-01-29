@@ -859,7 +859,7 @@ MediaBeanI mediaBeanI;
         String member_id;
         member_id = this.get(request, "memberID");
         if (member_id == null)
-            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+            member_id = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID)));
         request.setAttribute("member_id", member_id);
         logActivity("MEMBER STATEMENT OF ACCOUNT GRID", "Viewed member statement of account grid", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member statement of account grid");
@@ -872,12 +872,11 @@ MediaBeanI mediaBeanI;
         jLogger.i("scheme id US " + this.getSessKey(request,Constants.SCHEME_ID));
 
         String memberId ="";
-        memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.get(request, "memberID")));
+        memberId = this.get(request, "memberID");
         jLogger.i("member id US " + memberId);
         if (memberId == null)
-            memberId = this.getSessKey(request, Constants.PROFILE_ID);
+            memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID)));
         request.setAttribute("member_id", memberId);
-
         ReportDetails reportDetails;
         reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("report_details", reportDetails);

@@ -15,10 +15,17 @@
         <%--<fmt:parseDate value = "${now}" var = "parsedEmpDate" pattern = "dd-MM-yyyy" />--%>
         <table class="table table-responsive table-striped">
 
+
+            <c:if test="${memberDashboard.idNumber == 'TRUE'}">
+                <tr><td>ID/PPT NUMBER</td><td>${member.idNumber }</td></tr>
+            </c:if>
+            <c:if test="${memberDashboard.memberNo == 'TRUE'}">
+                <tr><td>MEMBER NUMBER</td><td>${member.memberNo }</td></tr>
+            </c:if>
+
             <c:if test="${memberDashboard.name == 'TRUE'}">
                 <tr><td>NAME</td><td>${member.name }</td></tr>
-            </c:if>
-            <c:if test="${memberDashboard.dateOfBirth == 'TRUE'}">
+            </     <            <c:if test="${memberDashboard.dateOfBirth == 'TRUE'}">
                 <tr><td>DATE OF BIRTH</td><td>${member.dateOfBirth }</td></tr>
             </c:if>
             <tr><td>MEMBER AGE</td><td>
@@ -28,7 +35,7 @@
 
                         var dob = "${myVal}";
                         var d = Date.parse(dob);
-                        
+
                         var agediff=Date.now()-d;
                         var ageDate=new Date(agediff);
                         document.write(Math.abs(ageDate.getUTCFullYear()-1970));
@@ -42,18 +49,14 @@
             <c:if test="${memberDashboard.gender == 'TRUE'}">
                 <tr><td>GENDER</td><td>${member.gender }</td></tr>
             </c:if>
-            <c:if test="${memberDashboard.idNumber == 'TRUE'}">
-                <tr><td>ID/PPT NUMBER</td><td>${member.idNumber }</td></tr>
-            </c:if>
+
             <c:if test="${memberDashboard.phoneNumber == 'TRUE'}">
                 <tr><td>PHONE NUMBER</td><td>${member.phoneNumber }</td></tr>
             </c:if>
             <c:if test="${memberDashboard.emailAddress == 'TRUE'}">
                 <tr><td>EMAIL ADDRESS</td><td>${member.emailAddress }</td></tr>
             </c:if>
-            <c:if test="${memberDashboard.memberNo == 'TRUE'}">
-                <tr><td>MEMBER NUMBER</td><td>${member.memberNo }</td></tr>
-            </c:if>
+
             <c:if test="${memberDashboard.pinNumber == 'TRUE'}">
                 <tr><td>TAX NUMBER</td><td>${member.pinNo }</td></tr>
             </c:if>
