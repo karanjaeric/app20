@@ -215,25 +215,9 @@
 										<%--placeholder="Partner Number" value="${ member.partnerNo }" ${memberPermission.dateOfBirth == 'TRUE' ? '' : 'disabled'}>--%>
 									<%--</div>--%>
 								<%--</div>--%>
-								<div class="form-group">
-									<label for="ssnitNumber" class="col-sm-6 control-label">Social Security Number:</label>
-									<div class="col-sm-6"><input type="text" readonly="readonly" name="ssnitNumber"
-																 class="form-control  input-sm" id="ssnitNumber"
-																 placeholder="S.Security Number" value="${ member.nationalPenNo }" ${memberPermission.dateOfBirth == 'TRUE' ? '' : 'disabled'}>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="partyRefNo" class="col-sm-6 control-label">Party Ref. No.:</label>
-									<div class="col-sm-6">
-									<input type="text" name="partyRefNo" id="partyRefNo" placeholder="Party Ref. No" class="form-control  input-sm" value="${ member.partyRefNo }" ${memberPermission.partyRefNo == 'TRUE' ? '' : 'disabled'}/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="pinNo" class="col-sm-6 control-label">TAX Number:</label>
-									<div class="col-sm-6">
-									<input type="text" name="pinNo" id="pinNo" placeholder="PIN Number" class="form-control  input-sm" value="${ member.pinNo }" ${memberPermission.pinNo == 'TRUE' ? '' : 'disabled'}/>
-									</div>
-								</div>
+
+
+
 								<!--<div class="form-group">
 									<label for="currentAnnualPensionableSalary" class="col-sm-6 control-label">Annual Pen. Sal:</label>
 									<div class="col-sm-6"><input type="text" name="currentAnnualPensionableSalary" class="form-control  input-sm"
@@ -246,12 +230,54 @@
 									<input type="text" name="staffNo" id="staffNo" placeholder="Staff Number" class="form-control  input-sm" value="${ member.staffNo }" ${memberPermission.staffNo == 'TRUE' ? '' : 'disabled'}/>
 									</div>
 								</div>-->
-								<div class="form-group">
-									<label for="policyNo" class="col-sm-6 control-label">Policy Number:</label>
-									<div class="col-sm-6">
-									<input type="text" name="policyNo" id="policyNo" placeholder="Policy Number" class="form-control  input-sm" value="${ member.policyNo }" ${memberPermission.policyNo == 'TRUE' ? '' : 'disabled'}/>
+
+
+
+
+<c:choose>
+								<c:when test="${clientSetup.clientOrdinal == 'KP' }">
+
+									<div class="form-group">
+										<label for="pinNo" class="col-sm-6 control-label">PIN NUMBER:</label>
+										<div class="col-sm-6">
+											<input type="text" name="pinNo" id="pinNo" placeholder="PIN Number" class="form-control  input-sm" value="${ member.pinNo }" ${memberPermission.pinNo == 'TRUE' ? '' : 'disabled'}/>
+										</div>
 									</div>
-								</div>
+								</c:when>
+
+									<c:otherwise>
+										<div class="form-group">
+											<label for="ssnitNumber" class="col-sm-6 control-label">Social Security Number:</label>
+											<div class="col-sm-6"><input type="text" readonly="readonly" name="ssnitNumber"
+																		 class="form-control  input-sm" id="ssnitNumber"
+																		 placeholder="S.Security Number" value="${ member.nationalPenNo }" ${memberPermission.dateOfBirth == 'TRUE' ? '' : 'disabled'}>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="policyNo" class="col-sm-6 control-label">Policy Number:</label>
+											<div class="col-sm-6">
+												<input type="text" name="policyNo" id="policyNo" placeholder="Policy Number" class="form-control  input-sm" value="${ member.policyNo }" ${memberPermission.policyNo == 'TRUE' ? '' : 'disabled'}/>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="partyRefNo" class="col-sm-6 control-label">Party Ref. No.:</label>
+											<div class="col-sm-6">
+												<input type="text" name="partyRefNo" id="partyRefNo" placeholder="Party Ref. No" class="form-control  input-sm" value="${ member.partyRefNo }" ${memberPermission.partyRefNo == 'TRUE' ? '' : 'disabled'}/>
+											</div>
+										</div>
+
+										<div class="form-group">
+										<label for="pinNo" class="col-sm-6 control-label">TAX NUMBER:</label>
+										<div class="col-sm-6">
+										<input type="text" name="pinNo" id="pinNo" placeholder="PIN Number" class="form-control  input-sm" value="${ member.pinNo }" ${memberPermission.pinNo == 'TRUE' ? '' : 'disabled'}/>
+										</div>
+										</div>
+									</c:otherwise>
+
+</c:choose>
+
+
 							</fieldset>
 							<button class="btn btn-primary"  type="submit">UPDATE DETAILS</button>
 						</div>
@@ -262,7 +288,7 @@
 									<i class="fa fa-user"></i> &nbsp;Beneficiaries
 								</legend>
 								<table class="table table-responsive table-striped">
-									<tr><th>NAME</th><th>RELATIONSHIP</th><th>ENTITLEMENT</th><th>ACTIONS</th></tr>
+									<tr style="font-size: smaller"><th>NAME</th><th>RELATIONSHIP</th><th>ENTITLEMENT</th><th>ACTIONS</th></tr>
 									<c:forEach var="beneficiary" items="${ beneficiaries }">
 										<tr><td> ${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td>
 											<td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td>
@@ -276,7 +302,7 @@
 												<i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</a>&nbsp;
 
 												<a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="view_beneficiary('${beneficiary.id}')">
-													<i class="glyphicon glyphicon-eye-open">&nbsp;VIEW</i></a>
+													<i class="glyphicon glyphicon-apple">&nbsp;VIEW</i></a>&nbsp;
 											</td></tr>
 									</c:forEach>
 								</table>
@@ -679,7 +705,9 @@
 															{
 																$('form#form-edit-beneficiary')[0].reset();
 																$('#modal-edit-beneficiary').modal('hide');
-                                                                location.reload();
+                                                                $('#personal-information-li').addClass('active');
+
+                                                                m_switch("PI");
 															}
 															bootbox
 																	.alert('<p class="text-center">'
@@ -690,6 +718,13 @@
 								        	        contentType: false,
 								        	        processData: false
 												});
+
+                                function m_switch(MODULE)
+                                {
+                                    menu_done = true;
+                                    start_wait();
+                                    loadDashboard(MODULE);
+                                }
 									});
 					$('#form-upload-document').bootstrapValidator({
 						message: 'This value is not valid',
