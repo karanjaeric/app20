@@ -46,8 +46,8 @@
                         <i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;CONTRIBUTION HISTORY
                     </h4>
                 </div>
-                <div class="modal-body">
-                    <table class="table table-responsive table-striped table-bordered" id="select-results">
+                <div class="modal-body" style=" width: 750px;margin: auto">
+                    <table  class="table table-responsive table-striped table-bordered" id="select-results">
                     </table>
                 </div>
             </div>

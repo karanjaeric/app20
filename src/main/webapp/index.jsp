@@ -61,7 +61,7 @@
 						name="passwordMobile">
 				</div>
 			<img src="<%=request.getContextPath() %>/static/images/logo-brand.png" class="img-brand"/>
-				<button class="btn btn-sm btn-warning btn-block" type="submit">
+				<button class="btn btn-sm btn-success btn-block" type="submit">
 					<strong>SIGN IN</strong>
 				</button>
 				<p class="br-separator">-- OR --</p>

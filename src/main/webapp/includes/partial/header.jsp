@@ -228,10 +228,12 @@ body {
 							</ul>
 						</div>
 						<div class="col-sm-5 calls-to-action hidden-sm hidden-xs" style="font-size: 7px;">
-							<a class="btn btn-sm btn-warning"login
+							<a class="btn btn-sm btn-success"login
 							   href="<%=request.getContextPath()%>/sign-in"><strong>Member SignIn</strong></a>
+                                                           
 							 <a class="btn btn-sm btn-success"
 								href="<%=request.getContextPath()%>/register"><strong>Register</strong></a>
+                                                                
 							<c:forEach var="client" items="${clientsetups}">
 								<c:if test="${client.clientOrdinal=='ETL'}">
 									<a class="btn btn-sm btn-success"
