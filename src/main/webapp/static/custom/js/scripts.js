@@ -37,7 +37,7 @@
 	                if(json.success)
 	                	setTimeout(function() {
 	                    	window.location.href = $('#base_url').val() + "admin";
-	                    	}, 0);
+ 	                    	}, 0);
 	            }
 	        });
 		}

@@ -142,7 +142,7 @@ public class Register extends BaseServlet implements Serializable {
         response.addHeader("X-Content-Type-Options", "nosniff");
         response.addHeader("Content-type", "text/html; charset=UTF-8");
         ClientSetup clientSetup= new ClientSetup();
-//        clientSetup = clientSetupI.find().get(0);
+        clientSetup = clientSetupI.find().get(0);
 
         // Get the request params.
         @SuppressWarnings("rawtypes")
@@ -226,16 +226,12 @@ public class Register extends BaseServlet implements Serializable {
                             u.setPassword_expiry(password_expiry);
                             String securityCode = UUID.randomUUID().toString();
                             u.setSecurityCode(securityCode);
-                            List<ClientSetup> clientsetup = clientSetupI.find();
-                            ClientSetup setup=new ClientSetup();
-                            if( !clientsetup.isEmpty()) {
-                                setup = clientsetup.get(0);
 
-                                if (setup.getClientOrdinal().equals("KP")) {
+                                if (clientSetup.getClientOrdinal().equals("KP")) {
                                     u.setStatus(Boolean.TRUE);
                                 }
-                            }
-                            jLogger.i("The client is "+setup.getClientOrdinal());
+
+                            jLogger.i("The client is "+clientSetup.getClientOrdinal());
                             userBeanI.edit(u);
                             String email_address = null;
                             String schemeId = null;
@@ -396,7 +392,9 @@ public class Register extends BaseServlet implements Serializable {
                                         + "In case of any challenges contact us on 0302634704");*/
 
                             String message=clientSetup.getClientRegistrationMessage();
+                            jLogger.i("the client Msg is " + message);
                             String finalMsg =helper.formatMessage(message,name,activationCode);
+                            jLogger.i("the Final Msg is " + finalMsg);
 
                             apiEJB.sendSMS(phone,  finalMsg);
 

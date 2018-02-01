@@ -428,7 +428,7 @@ public class Helper {
 
     }
     public String formatMessage(String message, String name,String activationCode ){
-        String msg1=message.replace("name",name);
+         String msg1=message.replace("name",name);
         return msg1.replace("code",activationCode);
 
     }
