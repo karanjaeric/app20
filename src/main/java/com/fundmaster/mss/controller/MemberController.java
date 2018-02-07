@@ -386,6 +386,9 @@ public class MemberController extends BaseServlet implements Serializable {
             case Actions.AI:
                 averageInterest(response, apiEJB.getMemberAverageInterest(this.getSessKey(request, Constants.PROFILE_ID)));
                 break;
+                  case Actions.BI:
+                benefitsInfo(response, apiEJB.getMemberBenefitsDetails(this.getSessKey(request, Constants.PROFILE_ID),this.getSessKey(request, Constants.SCHEME_ID)));
+                break;
         }
 	}
 
@@ -670,12 +673,7 @@ public class MemberController extends BaseServlet implements Serializable {
         String date_string = this.get(request, "date");
 		jLogger.i("Date from frontend ============> " + date_string);
         Date date = null;
-        try {
-            date = format_from.parse(date_string);
-        } catch (ParseException pe) {
-            // TODO Auto-generated catch block
-            jLogger.e("ParseException was detected: " + pe.getMessage());
-        }
+        date = new Date(); // TODO Auto-generated catch block
         this.respond(response, true, "", apiEJB.getAccountingPeriod(format.format(date), this.getSessKey(request, Constants.SCHEME_ID)));
     }
 
@@ -720,6 +718,11 @@ public class MemberController extends BaseServlet implements Serializable {
 
     private void averageInterest(HttpServletResponse response, JSONObject memberAverageInterest) {
         this.respond(response, true, "", memberAverageInterest);
+    }
+    
+    private void benefitsInfo(HttpServletResponse response, JSONObject benefitInformation){
+        this.respond(response, true, "", benefitInformation);
+    
     }
 
 

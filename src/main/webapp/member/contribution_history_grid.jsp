@@ -46,8 +46,8 @@
                         <i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;CONTRIBUTION HISTORY
                     </h4>
                 </div>
-                <div class="modal-body" style=" width: 750px;margin: auto">
-                    <table  class="table table-responsive table-striped table-bordered" id="select-results">
+                <div class="modal-body" style=" width: 900px;margin: 5px">
+                    <table style="width: 900px;"  class="table table-responsive table-striped table-bordered" id="select-results">
                     </table>
                 </div>
             </div>
@@ -58,10 +58,10 @@
 <script type="text/javascript">
 
     function format_no(yourNumber) {
-        if(typeof	yourNumber != 'undefined')
+        if (typeof yourNumber != 'undefined')
         {
             //Seperates the components of the number
-            var n= yourNumber.toString().split(".");
+            var n = yourNumber.toString().split(".");
             //Comma-fies the first part
             n[0] = n[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             //Combines the two sections
@@ -70,32 +70,32 @@
         return yourNumber;
     }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         $('.datepicker').datetimepicker(
-        $('#dateFrom').datetimepicker({
+                $('#dateFrom').datetimepicker({
+            format: 'mm-dd-yyyy',
+            startView: 'month',
+            minView: 'month',
+            autoclose: true
+        })
+                .on('changeDate', function (e) {
+                    $(this).datetimepicker('hide');
+                    // Revalidate the date field
+                    $('#contribution-form').bootstrapValidator('revalidateField', 'dateTo');
+                }),
+                $('#dateTo')
+                .datetimepicker({
                     format: 'mm-dd-yyyy',
                     startView: 'month',
                     minView: 'month',
                     autoclose: true
                 })
-        .on('changeDate', function(e) {
-                            $(this).datetimepicker('hide');
-                            // Revalidate the date field
-                            $('#contribution-form').bootstrapValidator('revalidateField', 'dateTo');
-                        }),
-        $('#dateTo')
-         .datetimepicker({
-                            format: 'mm-dd-yyyy',
-                            startView: 'month',
-                            minView: 'month',
-                            autoclose: true
-                        })
-                        .on('changeDate', function(e) {
-                            $(this).datetimepicker('hide');
-                            // Revalidate the date field
-                            $('#contribution-form').bootstrapValidator('revalidateField', 'dateTo');
-                        }));
+                .on('changeDate', function (e) {
+                    $(this).datetimepicker('hide');
+                    // Revalidate the date field
+                    $('#contribution-form').bootstrapValidator('revalidateField', 'dateTo');
+                }));
 
 
         $('#contribution-form').bootstrapValidator({
@@ -122,63 +122,68 @@
                 }
             }
         })
-                .on('success.form.bv', function(e) {
+                .on('success.form.bv', function (e) {
 
-                        start_wait();
+                    start_wait();
 
-                        $.ajax({
-                            url: $('#base_url').val() + 'member',
-                            type: 'post',
-                            data: {ACTION:'CH_GRID',
-                                dateFrom: $('#dateFrom').val(),
-                                dateTo: $('#dateTo').val()},
-                            dataType: 'json',
-                            success: function(json) {
+                    $.ajax({
+                        url: $('#base_url').val() + 'member',
+                        type: 'post',
+                        data: {ACTION: 'CH_GRID',
+                            dateFrom: $('#dateFrom').val(),
+                            dateTo: $('#dateTo').val()},
+                        dataType: 'json',
+                        success: function (json) {
+                            console.log(json);
+                            html = "<tr><th>DATE</th><th>MONTH</th><th>YEAR</th><th>EE</th><th>ER</th><th>AVC</th><th>AVCER</th><th>SALARY</th><th>TYPE</th><th>TOTAL</th><th>REGISTERED/<br>UNREGISTERED</th></tr>";
+                            var eeSum = 0;
+                            var erSum = 0;
+                            var avcSum = 0;
+                            var avcErSum = 0;
+                            var salSum = 0;
+                            var totalSum = 0;
+                            if (json.success)
+                            {
+
+                                json = $.parseJSON(json.data);
                                 console.log(json);
-                                html = "<tr><th>DATE</th><th>MONTH</th><th>YEAR</th><th>EE</th><th>ER</th><th>AVC</th><th>AVCER</th><th>SALARY</th><th>TYPE</th><th>TOTAL</th><th>REGISTERED/<br>UNREGISTERED</th></tr>";
-                                var eeSum = 0;
-                                var erSum = 0;
-                                var avcSum = 0;
-                                var avcErSum = 0;
-                                var salSum = 0;
-                                var totalSum = 0;
-                                if(json.success)
-                                {
+                                $.each(json, function (key, value) {
+                                    if (key == 'rows')
+                                    {
+                                        for (var i = 0; i < json.rows.length; i++) {
+                                            var row = json.rows[i];
+                                            html = html + "<tr><td>" + row['datePaid'] + "</td><td>" + row['month'] + "</td><td>" + row['year'] + "</td><td>" + format_no(row['ee']) + "</td><td>" + format_no(row['er']) +
+                                                    "</td><td>" + format_no(row['avc']) + "</td><td>" + format_no(row['avcer']) + "</td><td>" + format_no(row['salary']) + "</td><td>" + row['type'] +
+                                                    "</td><td>" + format_no(row['total']) + "</td><td>" + row['status'] + "</td></tr>";
 
-                                    json = $.parseJSON(json.data);
-                                    console.log(json);
-                                    $.each(json, function(key, value) {
-                                        if(key == 'rows')
-                                        {
-                                            for ( var i = 0; i < json.rows.length; i++) {
-                                                var row = json.rows[i];
-                                                html = html + "<tr><td>" + row['datePaid'] + "</td><td>" + row['month'] + "</td><td>" + row['year'] + "</td><td>" + format_no(row['ee']) + "</td><td>" + format_no(row['er']) +
-                                                        "</td><td>" + format_no(row['avc']) + "</td><td>" + format_no(row['avcer']) + "</td><td>" + format_no(row['salary']) + "</td><td>" + row['type'] +
-                                                        "</td><td>" + format_no(row['total']) + "</td><td>" + row['status'] + "</td></tr>";
+                                            eeSum += row['ee'];
+                                            erSum += row['er'];
+                                            salSum += row['salary'];
+                                            totalSum += row['total'];
+                                            avcSum += row['avc'];
+                                            avcErSum += row['avcer'];
 
-                                                eeSum += row['ee'];
-                                                erSum += row['er'];
-                                                salSum += row['salary'];
-                                                totalSum += row['total'];
-                                                avcSum += row['avc'];
-                                                avcErSum += row['avcer'];
-
-                                            }
-                                            empty = "<tr><th></th><th></th><th></th><th>TOTAL EE</th><th>TOTAL ER</th><th>TOTAL AVC</th><th>TOTAL AVCER</th><th>TOTAL SALARY</th><th></th><th>GRAND TOTAL</th><th></th></tr>";
-                                            totals = "<tr><td></td><td></td><td></td><td>" + format_no(eeSum) + "</td><td>" + format_no(erSum) + "</td><td>" + format_no(avcSum) + "</td><td>" + format_no(avcErSum) + "</td><td>" + format_no(salSum) +
-                                                    "</td><td></td><td>" + format_no(totalSum) + "</td><td></td></tr>";
-                                            console.log("EE SUM IS: " + format_no(eeSum));
-                                            html = html + empty + totals;
-                                            stop_wait();
                                         }
-                                    });
-                                }
-                                $('#select-results').html(html);
-                                stop_wait();
-                                $('#modal-view-contribution').modal('show');
+                                        empty = "<tr><th></th><th></th><th></th><th>TOTAL EE</th><th>TOTAL ER</th><th>TOTAL AVC</th><th>TOTAL AVCER</th><th>TOTAL SALARY</th><th></th><th>GRAND TOTAL</th><th></th></tr>";
+                                        totals = "<tr><td></td><td></td><td></td><td>" + format_no(precisionRound( eeSum,1)) + "</td><td>" + format_no(precisionRound(erSum,1)) + "</td><td>" + format_no(avcSum) + "</td><td>" + format_no(avcErSum) + "</td><td>" + format_no(salSum) +
+                                                "</td><td></td><td>" + format_no(precisionRound(totalSum,1)) + "</td><td></td></tr>";
+                                        console.log("EE SUM IS: " + format_no(eeSum));
+                                        html = html + empty + totals;
+                                        stop_wait();
+                                    }
+                                });
                             }
-                        });
+                            $('#select-results').html(html);
+                            stop_wait();
+                            $('#modal-view-contribution').modal('show');
+                        }
+                    });
                 });
     });
+
+    function precisionRound(number, precision) {
+        var factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
+    }
 
 </script>

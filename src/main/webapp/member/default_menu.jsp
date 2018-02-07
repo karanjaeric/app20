@@ -52,7 +52,7 @@
         <c:if test="${memberMenu.balancesHistoryGrid == 'TRUE'}">
             <li id="balances-history-grid-li"><a href="javascript:void(0);"><i
                     class="glyphicon glyphicon-record"></i>&nbsp;<i
-                    class="fa fa-chevron-right"></i> BALANCES HISTORY (GRID)</a></li>
+                    class="fa fa-chevron-right"></i>CLOSING BALANCES HISTORY (GRID)</a></li>
         </c:if>
 
         <c:if test="${memberMenu.statementOfAccount == 'TRUE'}">
@@ -64,7 +64,7 @@
         <c:if test="${memberMenu.statementOfAccountGrid == 'TRUE'}">
             <li id="statement-of-account-grid-li"><a href="javascript:void(0);"><i
                     class="glyphicon glyphicon-user"></i>&nbsp;<i
-                    class="fa fa-chevron-right"></i> STATEMENT OF ACCOUNT (GRID)</a></li>
+                    class="fa fa-chevron-right"></i> PROVISIONAL STATEMENT(GRID)</a></li>
         </c:if>
 
         <c:if test="${memberMenu.benefitsProjection == 'TRUE'}">
@@ -88,7 +88,7 @@
         <c:if test="${memberMenu.annualContributionStatementGrid == 'TRUE'}">
             <li id="annual-contributions-grid-li"><a href="javascript:void(0);"><i
                     class="glyphicon glyphicon-list-alt"></i>&nbsp;<i
-                    class="fa fa-chevron-right"></i> ANNUAL CONTRIBUTION STATEMENT (GRID)</a></li>
+                    class="fa fa-chevron-right"></i>CONTRIBUTION STATEMENT (GRID)</a></li>
         </c:if>
 
 
@@ -101,7 +101,7 @@
         <c:if test="${memberMenu.whatIfAnalysis == 'TRUE'}">
         <li id="what-if-analysis-li"><a href="javascript:void(0);"><i
                 class="glyphicon glyphicon-equalizer"></i>&nbsp;<i
-                class="fa fa-chevron-right"></i> WHAT IF ANALYSIS</a></li>
+                class="fa fa-chevron-right"></i> BENEFITS PROJECTION</a></li>
         </c:if>
         <c:if test="${memberMenu.benefitsProjectionPage == 'TRUE'}">
             <li id="calculate-benefit-projection-li"><a href="javascript:void(0);"><i

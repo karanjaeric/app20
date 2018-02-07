@@ -565,6 +565,20 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        
+        
+        String schemeId = "";
+        schemeId = this.getSessKey(request, Constants.SCHEME_ID);
+        jLogger.i("============ Member Scheme ID is: " + schemeId + " ===================");
+        request.setAttribute("scheme_id", schemeId);
+        
+           String member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        request.setAttribute("member_id", member_id);
+        String schemeType=Constants.SCHEME_TYPE;
+        request.setAttribute("scheme_type", schemeType);
+                
+        
+        
         PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_WHAT_IF_ANALYSIS);
         request.setAttribute("content", content);
         Setting settings = settingBeanI.find();
@@ -574,6 +588,10 @@ public class Dashboard extends BaseServlet implements Serializable {
         this.audit(session, "Accessed what if analysis page");
         request.getRequestDispatcher("what-if-content.jsp").forward(request, response);
     }
+    
+    
+    
+    
  private void showBenefitProjectionPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
     PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_BENEFIT_PROJECTION);
     request.setAttribute("content", content);

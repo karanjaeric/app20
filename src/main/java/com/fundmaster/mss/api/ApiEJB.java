@@ -30,12 +30,14 @@ public interface ApiEJB {
     List<Sponsor>  getMemberSchemeProducts(String email,String schemeId);
     List<Sponsor>  getMemberSponsor(String membershipNumber);
     JSONObject getMemberAverageInterest(String memberID);
+    JSONObject getMemberBenefitsDetails(String memberID,String schemeId);
     JSONObject getSchemeCurrency(String schemeID);
     JSONObject getSchemeMode(String schemeID);
     JSONObject getFundValueAsAt(String date,String periodType, String schemeID, String sponsorID, String profileID);
     JSONObject getSponsorFundValue(String date,String periodType, String schemeID, String sponsorID, String profileID);
     JSONObject getAccountingPeriod(String date, String schemeID);
     JSONObject getAllAccountingPeriods(String schemeID);
+    JSONObject getAllReasonsForExit(String schemeID);
     JSONObject getAllSchemeSponsors(String schemeID);
     JSONObject getPayrollYears();
     JSONObject getMemberCummulativeInterest(String memberID);
@@ -120,6 +122,8 @@ public interface ApiEJB {
     JSONObject getAnnuityQuote(String calculationMode, String productID, String lastName, String firstName, String otherNames, String idNumber, String address, String email, String phoneNumber, String purchaseDate, String pensionStartDate, String dateOfBirth, String gender, String guaranteedPercentage, String annuityIncrement, String paymentMode, String paymentFrequency, String registeredPurchasePrice, String unRegisteredPurchasePrice, String targetPension, String annuityMode, String spouseReversal, Boolean displayable, String spouseGender, String spouseDateOfBirth);
     List<Scheme> getSchemes(int start, int count);
 
-     void mssAccountOperation(String memberId,String operationType,String operationStatus,String email,String phone,String ssnit);
+   void mssAccountOperation(String memberId,String operationType,String operationStatus,String email,String phone,String ssnit);
+   JSONObject calculateBenefitsProjections(String schemeId,String memberId,String dateOfCalc,String dateOfExit,String reasonforexitid,String projectionType, String isDcScheme,String memberIdFrom,String memberIdTo);
+                                       
 
 }

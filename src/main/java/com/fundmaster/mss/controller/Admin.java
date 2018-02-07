@@ -26,9 +26,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 @WebServlet(name = "Admin", urlPatterns = {"/admin"})
 @MultipartConfig
 public class Admin extends BaseServlet implements Serializable {
+
     private static final String REQUEST_ACTION = "ACTION";
     private static final String ADMIN_SWITCH_SCHEME = "SWITCH_SCHEME";
     private static final String ADMIN_COMPANY = "COMPANY";
@@ -81,6 +83,8 @@ public class Admin extends BaseServlet implements Serializable {
     private static final String CHANGE_PASSWORD = "CHANGE_PASSWORD";
     private static final String AP = "AP";
     private static final String PERIODS = "PERIODS";
+    private static final String EXITREASONS = "EXITREASONS";
+    
     private static final String FV = "FV";
     private static final String HELP = "HELP";
     private static final String REMOVE_BANNER = "REMOVE_BANNER";
@@ -170,7 +174,7 @@ public class Admin extends BaseServlet implements Serializable {
     @EJB
     DBMenuBeanI dbMenuBeanI;
     @EJB
-     DBGraphBeanI dbGraphBeanI;
+    DBGraphBeanI dbGraphBeanI;
     @EJB
     MemberMenuBeanI memberMenuBeanI;
     @EJB
@@ -188,10 +192,11 @@ public class Admin extends BaseServlet implements Serializable {
     Helper helper = new Helper();
     private static final long serialVersionUID = 1L;
     private File[] fileUpload;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        	/* configuring the http headers */
+        /* configuring the http headers */
         response.addHeader("X-XSS-Protection", "1; mode=block");
         response.addHeader("X-Frame-Options", "DENY");
         response.addHeader("X-Content-Type-Options", "nosniff");
@@ -214,15 +219,12 @@ public class Admin extends BaseServlet implements Serializable {
                         try {
                             schemes = apiEJB.getSchemes(0, 10000);
 
-
                         } catch (Exception e) {
-                             schemes = null;
+                            schemes = null;
                             e.printStackTrace();
                         }
 
-
-                    }
-                    else {
+                    } else {
                         schemes = apiEJB.getProfileSchemes(this.getSessKey(request, Constants.USER),
                                 this.getSessKey(request, Constants.U_PROFILE));
 
@@ -264,7 +266,7 @@ public class Admin extends BaseServlet implements Serializable {
                         }
                     } else if (this.getSessKey(request, Constants.SCHEME_ID) != null && !this.getSessKey(request, Constants.SCHEME_ID).isEmpty()) {
                         jLogger.i("Scheme ID is null here");
-                        if (schemes != null)
+                        if (schemes != null) {
                             for (Scheme scheme : schemes) {
                                 if (scheme.getId() == helper.toLong(this.getSessKey(request, Constants.SCHEME_ID))) {
                                     if (this.getSessKey(request, Constants.SCHEME_ID) == null) {
@@ -285,6 +287,7 @@ public class Admin extends BaseServlet implements Serializable {
                                     break;
                                 }
                             }
+                        }
                     }
 
                     jLogger.i("Scheme Set for " + this.getSessKey(request, Constants.SCHEME_ID));
@@ -303,22 +306,24 @@ public class Admin extends BaseServlet implements Serializable {
                     AdminDashboardItems adminDashboardItems = adminDashboardI.find();
                     request.setAttribute("adminDashboard", adminDashboardItems);
 
-                    if ((schemes != null ? schemes.size() : 0) > 1 && this.getSessKey(request, Constants.SCHEME_ID) == null)
+                    if ((schemes != null ? schemes.size() : 0) > 1 && this.getSessKey(request, Constants.SCHEME_ID) == null) {
                         request.getRequestDispatcher("select_scheme.jsp").forward(request, response);
-                    else {
+                    } else {
 
-                        List<XiMember> due4retirement =null;
+                        List<XiMember> due4retirement = null;
                         jLogger.i("The Profile id finding members due for retirement is " + this.getSessKey(request, Constants.PROFILE_ID));
 
                         if (this.getSessKey(request, Constants.U_PROFILE).equals("SPONSOR")) {
                             jLogger.i("TRUE");
-                            due4retirement  = apiEJB.due4RetirementPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));
-                            if(due4retirement!=null){
+                            due4retirement = apiEJB.due4RetirementPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));
+                            if (due4retirement != null) {
                                 request.setAttribute("retirement", due4retirement.size());
 
-                            }else request.setAttribute("retirement", 0);
-                        }else {
-                            due4retirement =apiEJB.due4Retirement(this.getSessKey(request,Constants.SCHEME_ID));
+                            } else {
+                                request.setAttribute("retirement", 0);
+                            }
+                        } else {
+                            due4retirement = apiEJB.due4Retirement(this.getSessKey(request, Constants.SCHEME_ID));
                             request.setAttribute("retirement", due4retirement.size());
 
                         }
@@ -336,10 +341,11 @@ public class Admin extends BaseServlet implements Serializable {
             response.sendRedirect(getServletContext().getContextPath() + "/login");
         }
     }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        	/* configuring the http headers */
+        /* configuring the http headers */
         response.addHeader("X-XSS-Protection", "1; mode=block");
         response.addHeader("X-Frame-Options", "DENY");
         response.addHeader("X-Content-Type-Options", "nosniff");
@@ -372,7 +378,7 @@ public class Admin extends BaseServlet implements Serializable {
             case ADMIN_PROFILE_NAMES:
                 updateProfileNames(request, response, session);
                 break;
-                case ADMIN_CLIENT_NAMES:
+            case ADMIN_CLIENT_NAMES:
                 updateClientNames(request, response, session);
                 break;
             case ADMIN_PWD_RESET:
@@ -507,6 +513,9 @@ public class Admin extends BaseServlet implements Serializable {
             case PERIODS:
                 getAllAccountingPeriods(request, response);
                 break;
+            case EXITREASONS:
+                getReasonsForExit(request, response);
+                break;
             case FV:
                 getFundValueAsAt(request, response);
                 break;
@@ -537,7 +546,7 @@ public class Admin extends BaseServlet implements Serializable {
             case MENU:
                 editMenuSettings(request, response, session);
                 break;
-                case RECOVERY:
+            case RECOVERY:
                 enableAccountRecovery(request, response, session);
                 break;
             case DB_MENU:
@@ -596,6 +605,7 @@ public class Admin extends BaseServlet implements Serializable {
                 break;
         }
     }
+
     private void mostAccessedByMembers(HttpServletResponse response) {
 
         List<PieObject> poList = activityLogBeanI.mostAccessedByMembers();
@@ -609,6 +619,7 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "Json exception just occured", null);
         }
     }
+
     private void updateProfileLoginFields(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<ProfileLoginField> pfs = profileLoginFieldBeanI.find();
         boolean status = true;
@@ -619,9 +630,11 @@ public class Admin extends BaseServlet implements Serializable {
         if (status) {
             audit(session, "Updated the profile unique login fields for the various user profiles");
             this.respond(response, true, "Profile login ordinals successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "Profile login ordinals could not be saved", null);
+        }
     }
+
     private void updateClientSetupConfig(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<ClientSetup> clientSetups = clientSetupI.find();
         boolean status = true;
@@ -632,9 +645,11 @@ public class Admin extends BaseServlet implements Serializable {
         if (status) {
             audit(session, "Updated the client setup configs for the various clients");
             this.respond(response, true, "client setup configs successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "client setup configs could not be saved", null);
+        }
     }
+
     private void sendEmail(HttpServletRequest request, HttpServletResponse response, String MEDIA_DIR) throws IOException, ServletException {
         String url = request.getRequestURL().toString();
         String baseURL = url.substring(0, url.length() - request.getRequestURI().length())
@@ -681,7 +696,7 @@ public class Admin extends BaseServlet implements Serializable {
             } else if (recipient.equalsIgnoreCase("supportEmail")) {
                 recipients.add(emails.getSupportEmail());
                 //sendTo = emails.getSupportEmail();
-            } else if (recipient.equalsIgnoreCase("crmEmail")){
+            } else if (recipient.equalsIgnoreCase("crmEmail")) {
                 recipients.add(emails.getCrmEmail());
 
             }
@@ -691,48 +706,34 @@ public class Admin extends BaseServlet implements Serializable {
 
         /*String senderId = this.getSessKey(request, Constants.PROFILE_ID);
         jLogger.i("SENDER ID ========================> " + senderId);*/
-
         String userName = this.getSessKey(request, Constants.USER);
 
-
-
-        if (helper.isValidPhone(userName)){
-
-
-
+        if (helper.isValidPhone(userName)) {
 
             String zero = "0";
             String plus = "+";
-            String xiMemPhone=userName;
-            if(xiMemPhone.startsWith(plus)){
+            String xiMemPhone = userName;
+            if (xiMemPhone.startsWith(plus)) {
                 userName = zero + xiMemPhone.substring(4);
-            }else if(userName.startsWith(zero)){
-                userName =xiMemPhone;
-            }else{
+            } else if (userName.startsWith(zero)) {
+                userName = xiMemPhone;
+            } else {
 
-                userName= null;
+                userName = null;
             }
-
 
         }
         jLogger.i("Username is ===============> " + userName);
 
-
-
-
         User usr = userBeanI.findByUsername(userName);
         String userProfile = usr.getUserProfile();
 
-
-
         //XiMember mbr = apiEJB.getMemberDetails(senderId, null);
         String code = "+233";
-        userName =code+userName.substring(1);
+        userName = code + userName.substring(1);
         jLogger.i("Username is ===============> " + userName);
 
-
         XiMember mbr = apiEJB.memberExists(userProfile, userName);
-
 
         String senderEmail = mbr.getEmailAddress();
         jLogger.i("SENDER NAME ======================> " + senderEmail);
@@ -746,6 +747,7 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, true, "We are sorry, but we were unable to send the email address", null);
         }
     }
+
     private void addMediaFile(HttpServletRequest request, HttpServletResponse response, HttpSession session, String MEDIA_DIR) throws IOException, ServletException {
         for (Part part : request.getParts()) {
             String fileName = extractFileName(part);
@@ -786,7 +788,7 @@ public class Admin extends BaseServlet implements Serializable {
                     String schemeId = this.get(request, "scheme");
                     jLogger.i("============ Scheme Id passed: " + schemeId + " ====================");
 
-                    if(schemeId == null || schemeId.isEmpty()) {
+                    if (schemeId == null || schemeId.isEmpty()) {
                         schemeId = this.getSessKey(request, Constants.SCHEME_ID);
                     }
 
@@ -821,8 +823,9 @@ public class Admin extends BaseServlet implements Serializable {
                     if (mediaBeanI.add(media) != null) {
                         audit(session, "Uploaded a media file");
                         this.respond(response, true, "Media file successfully uploaded", null);
-                    } else
+                    } else {
                         this.respond(response, true, "Media file was not uploaded", null);
+                    }
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -830,6 +833,7 @@ public class Admin extends BaseServlet implements Serializable {
             }
         }
     }
+
     private void addBanner(HttpServletRequest request, HttpServletResponse response, HttpSession session, String BANNER_DIR) throws IOException, ServletException {
         for (Part part : request.getParts()) {
             String fileName = extractFileName(part);
@@ -872,14 +876,16 @@ public class Admin extends BaseServlet implements Serializable {
                     if (imageBannerBeanI.add(imageBanner) != null) {
                         audit(session, "Uploaded a imageBanner for the portal");
                         this.respond(response, true, "ImageBanner image was successfully uploaded", null);
-                    } else
+                    } else {
                         this.respond(response, false, "ImageBanner image could not be uploaded", null);
+                    }
                 } catch (SQLException sqe) {
                     this.respond(response, false, "ImageBanner image could not be uploaded", null);
                 }
             }
         }
     }
+
     private void addLogo(HttpServletRequest request, HttpServletResponse response, HttpSession session, String LOGO_DIR) throws IOException, ServletException {
         for (Part part : request.getParts()) {
             String fileName = extractFileName(part);
@@ -930,14 +936,16 @@ public class Admin extends BaseServlet implements Serializable {
                     if (logoBeanI.add(logo) != null) {
                         audit(session, "Uploaded a logo for the portal");
                         this.respond(response, true, "Logo was successfully uploaded", null);
-                    } else
+                    } else {
                         this.respond(response, false, "Logo could not be uploaded", null);
+                    }
                 } catch (SQLException sqe) {
                     this.respond(response, false, "Logo could not be uploaded", null);
                 }
             }
         }
     }
+
     private void addContactReason(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         if (this.get(request, "type").equalsIgnoreCase("ADD")) {
             ContactCategory cc = new ContactCategory();
@@ -945,18 +953,21 @@ public class Admin extends BaseServlet implements Serializable {
             if (contactCategoryBeanI.add(cc) != null) {
                 audit(session, "Added a new contact category " + this.get(request, "name"));
                 this.respond(response, true, "Contact category successfully saved", null);
-            } else
+            } else {
                 this.respond(response, true, "Contact category could not be saved", null);
+            }
         } else {
             ContactCategory cc = contactCategoryBeanI.findById(helper.toLong(this.get(request, "id")));
             cc.setName(this.get(request, "name"));
             if (contactCategoryBeanI.edit(cc) != null) {
                 audit(session, "Updated a contact category " + this.get(request, "name"));
                 this.respond(response, true, "Contact category successfully saved", null);
-            } else
+            } else {
                 this.respond(response, true, "Contact category could not be saved", null);
+            }
         }
     }
+
     private void editMemberPermissions(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         MemberPermission mp = new MemberPermission(
                 helper.toLong(this.get(request, "member_permission_id")),
@@ -985,8 +996,9 @@ public class Admin extends BaseServlet implements Serializable {
         if (memberPermissionBeanI.edit(mp) != null) {
             audit(session, "Updated member edit permissions");
             this.respond(response, true, "Member edit permissions successfully saved", null);
-        } else
+        } else {
             this.respond(response, false, "Member edit permissions could not be saved", null);
+        }
     }
 
     private void editContributionGraph(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1001,13 +1013,14 @@ public class Admin extends BaseServlet implements Serializable {
         if (dbGraphBeanI.edit(dbContributionGraph) != null) {
             audit(session, "Updated DB Scheme configuration settings");
             this.respond(response, true, "DB Scheme configurations successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "DB Scheme configurations could not be saved", null);
+        }
     }
 
     private void editMemberMenu(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
-        MemberMenu memberMenu = memberMenuBeanI.find()==null?new MemberMenu():memberMenuBeanI.find();
+        MemberMenu memberMenu = memberMenuBeanI.find() == null ? new MemberMenu() : memberMenuBeanI.find();
         boolean contributionHistoryReport = this.get(request, "contributionHistoryReport").equalsIgnoreCase("true");
         boolean contributionHistoryGrid = this.get(request, "contributionHistoryGrid").equalsIgnoreCase("true");
         boolean BalancesHistory = this.get(request, "BalancesHistory").equalsIgnoreCase("true");
@@ -1015,7 +1028,7 @@ public class Admin extends BaseServlet implements Serializable {
         boolean StatementOfAccount = this.get(request, "StatementOfAccount").equalsIgnoreCase("true");
         boolean StatementOfAccountGrid = this.get(request, "StatementOfAccountGrid").equalsIgnoreCase("true");
         boolean UnitizedStatement = this.get(request, "UnitizedStatement").equalsIgnoreCase("true");
-        boolean memberCertificate = this.get(request,"memberCertificate").equalsIgnoreCase("true");
+        boolean memberCertificate = this.get(request, "memberCertificate").equalsIgnoreCase("true");
         boolean WhatIfAnalysis = this.get(request, "WhatIfAnalysis").equalsIgnoreCase("true");
         boolean BenefitsProjection = this.get(request, "benefitsProjection").equalsIgnoreCase("true");
         boolean BenefitsProjectionPage = this.get(request, "benefitsProjectionPage").equalsIgnoreCase("true");
@@ -1049,8 +1062,9 @@ public class Admin extends BaseServlet implements Serializable {
         if (memberMenuBeanI.edit(memberMenu) != null) {
             audit(session, "Updated Member Menu configuration settings");
             this.respond(response, true, "Member Menu configurations successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "Member Menu configurations could not be saved", null);
+        }
     }
 
     private void editPensionerMenu(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1072,13 +1086,14 @@ public class Admin extends BaseServlet implements Serializable {
         if (pensionerMenuBeanI.edit(pensionerMenu) != null) {
             audit(session, "Updated Pensioner Menu configuration settings");
             this.respond(response, true, "Pensioner Menu configurations successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "Pensioner Menu configurations could not be saved", null);
+        }
     }
 
     private void configureMemberDashboard(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
-        MemberDashboardItems memberDashboardItems = memberDashboardBeanI.find()==null?new MemberDashboardItems():memberDashboardBeanI.find();
+        MemberDashboardItems memberDashboardItems = memberDashboardBeanI.find() == null ? new MemberDashboardItems() : memberDashboardBeanI.find();
         boolean name = this.get(request, "memberName2").equalsIgnoreCase("true");
         boolean dateOfBirth = this.get(request, "dateOfBirth2").equalsIgnoreCase("true");
         boolean dateOfJoiningScheme = this.get(request, "dateOfJoiningScheme").equalsIgnoreCase("true");
@@ -1108,8 +1123,9 @@ public class Admin extends BaseServlet implements Serializable {
         if (memberDashboardBeanI.edit(memberDashboardItems) != null) {
             audit(session, "Updated Member Dashboard configuration settings");
             this.respond(response, true, "Member Dashboard configurations successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "Member Dashboard configurations could not be saved", null);
+        }
     }
 
     private void configureAdminDashboard(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1123,7 +1139,6 @@ public class Admin extends BaseServlet implements Serializable {
         boolean membersDueRetirement = this.get(request, "membersDueRetirement").equalsIgnoreCase("true");
         boolean membersOnExitNotice = this.get(request, "membersOnExitNotice").equalsIgnoreCase("true");
 
-
         adminDashboardItems.setActiveMembers(activeMembers);
         adminDashboardItems.setDefferedMembers(defferedMembers);
         adminDashboardItems.setPensioners(pensioners);
@@ -1135,8 +1150,9 @@ public class Admin extends BaseServlet implements Serializable {
         if (adminDashboardI.edit(adminDashboardItems) != null) {
             audit(session, "Updated Admin Dashboard configuration settings");
             this.respond(response, true, "Admin Dashboard configurations successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "Admin Dashboard configurations could not be saved", null);
+        }
     }
 
     private void deleteMediaFile(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1144,19 +1160,23 @@ public class Admin extends BaseServlet implements Serializable {
         if (mediaBeanI.delete(m)) {
             audit(session, "Deleted a media/file: " + m.getName());
             this.respond(response, true, "Media/File was successfully deleted", null);
-        } else
+        } else {
             this.respond(response, true, "Media/File could not be deleted", null);
+        }
     }
+
     private void deleteContactReason(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         ContactCategory cc = contactCategoryBeanI.findById(helper.toLong(this.get(request, "id")));
         if (contactCategoryBeanI.delete(cc)) {
             audit(session, "Deleted a contact category: " + cc.getName());
             this.respond(response, true, "Contact category was successfully deleted", null);
-        } else
+        } else {
             this.respond(response, false, "Contact category could not be deleted", null);
+        }
     }
+
     private void editSocialMediaSettings(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-    /* Social Media Links Update Request */
+        /* Social Media Links Update Request */
         Social social = socialBeanI.find();
         social.setTwitter(this.get(request, "twitter"));
         social.setFacebook(this.get(request, "facebook"));
@@ -1167,19 +1187,22 @@ public class Admin extends BaseServlet implements Serializable {
         if (socialBeanI.edit(social) != null) {
             audit(session, "Updated portal social network settings");
             this.respond(response, true, "Social network details successfully saved", null);
-        } else
+        } else {
             this.respond(response, false, "Social network details could not be saved", null);
+        }
     }
+
     private void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-    /* Logout Request */
+        /* Logout Request */
         logActivity("", "logged out", this.getSessKey(request, Constants.UID), null,
                 this.getSessKey(request, Constants.U_PROFILE));
         audit(session, "Logged out of the portal");
         session.invalidate();
         this.respond(response, true, "You have been successfully logged out", null);
     }
+
     private void editMenuSettings(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-    /* Menu Update Request */
+        /* Menu Update Request */
         boolean annuityQuotationActive = this.get(request, "annuityQuotationActive").equalsIgnoreCase("true");
         boolean benefitProjectionActive = this.get(request, "benefitProjectionActive").equalsIgnoreCase("true");
         boolean potentialMemberActive = this.get(request, "potentialMemberActive").equalsIgnoreCase("true");
@@ -1200,38 +1223,41 @@ public class Admin extends BaseServlet implements Serializable {
         menu.setContactUsActive(contactUsActive);
         menu.setFaqActive(faqActive);
         menu.setAnnuityQuotationName(this.get(request, "annuityQuotationName"));
-        menu.setBenefitProjectionName(this.get(request,"benefitProjectionName"));
+        menu.setBenefitProjectionName(this.get(request, "benefitProjectionName"));
         menu.setPotentialMemberName(this.get(request, "potentialMemberName"));
         menu.setPotentialSponsorName(this.get(request, "potentialSponsorName"));
         menu.setInterestRatesName(this.get(request, "interestRatesName"));
-        menu.setUnitPriceName(this.get(request,"unitPriceName"));
+        menu.setUnitPriceName(this.get(request, "unitPriceName"));
         menu.setWhatIfAnalysisName(this.get(request, "whatIfAnalysisName"));
         menu.setContactUsName(this.get(request, "contactUsName"));
         menu.setFaqName(this.get(request, "faqName"));
         if (menuBeanI.edit(menu) != null) {
             audit(session, "Updated portal menu configuration settings");
             this.respond(response, true, "Portal menu configurations successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "Portal menu configurations could not be saved", null);
+        }
     }
 
     private void enableAccountRecovery(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
-         boolean accountRecoveryActive = this.get(request, "accountRecoveryActive").equalsIgnoreCase("true");
+        boolean accountRecoveryActive = this.get(request, "accountRecoveryActive").equalsIgnoreCase("true");
 
-        AccountRecovery accountRecovery =accountRecoveryBeanI.find();
-         accountRecovery.setAccountRecoveryActive(accountRecoveryActive);
+        AccountRecovery accountRecovery = accountRecoveryBeanI.find();
+        accountRecovery.setAccountRecoveryActive(accountRecoveryActive);
 
         accountRecovery.setAccountRecoveryName(this.get(request, "accountRecoveryName"));
 
         if (accountRecoveryBeanI.edit(accountRecovery) != null) {
             audit(session, "Updated portal Account recovery configuration settings");
             this.respond(response, true, "Portal Account recovery configurations successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "Portal Account recovery configurations could not be saved", null);
+        }
     }
+
     private void editDbMenu(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-    /* DB_Menu Update Request */
+        /* DB_Menu Update Request */
 
         boolean contributionHistoryActive = this.get(request, "contributionHistoryActive").equalsIgnoreCase("true");
         boolean contributionHistoryGridActive = this.get(request, "contributionHistoryGridActive").equalsIgnoreCase("true");
@@ -1255,22 +1281,24 @@ public class Admin extends BaseServlet implements Serializable {
         dbMenu.setBenefitsProjectionGridActive(benefitsProjectionGridActive);
         dbMenu.setWhatIfAnalysisActiveDb(whatIfAnalysisActiveDb);
 
-        dbMenu.setContributionHistoryName(this.get(request,"contributionHistoryName"));
-        dbMenu.setContributionHistoryGridName(this.get(request,"contributionHistoryGridName"));
-        dbMenu.setBalancesHistoryName(this.get(request,"balancesHistoryName"));
-        dbMenu.setBalancesHistoryGridName(this.get(request,"balancesHistoryGridName"));
-        dbMenu.setStatementOfAccountName(this.get(request,"statementOfAccountName"));
-        dbMenu.setStatementOfAccountGridName(this.get(request,"statementOfAccountGridName"));
-        dbMenu.setBenefitsProjectionName(this.get(request,"benefitsProjectionName"));
-        dbMenu.setBenefitsProjectionGridName(this.get(request,"benefitsProjectionGridName"));
-        dbMenu.setWhatIfAnalysisNameDb(this.get(request,"whatIfAnalysisNameDb"));
+        dbMenu.setContributionHistoryName(this.get(request, "contributionHistoryName"));
+        dbMenu.setContributionHistoryGridName(this.get(request, "contributionHistoryGridName"));
+        dbMenu.setBalancesHistoryName(this.get(request, "balancesHistoryName"));
+        dbMenu.setBalancesHistoryGridName(this.get(request, "balancesHistoryGridName"));
+        dbMenu.setStatementOfAccountName(this.get(request, "statementOfAccountName"));
+        dbMenu.setStatementOfAccountGridName(this.get(request, "statementOfAccountGridName"));
+        dbMenu.setBenefitsProjectionName(this.get(request, "benefitsProjectionName"));
+        dbMenu.setBenefitsProjectionGridName(this.get(request, "benefitsProjectionGridName"));
+        dbMenu.setWhatIfAnalysisNameDb(this.get(request, "whatIfAnalysisNameDb"));
 
         if (dbMenuBeanI.edit(dbMenu) != null) {
             audit(session, "Updated DB Scheme menu configuration settings");
             this.respond(response, true, "DB Scheme menu configurations successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "DB Scheme menu configurations could not be saved", null);
+        }
     }
+
     private void editPortalSettings(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Setting settings = settingBeanI.find();
         if (this.get(request, "encrypt").equalsIgnoreCase("true")) {
@@ -1298,9 +1326,11 @@ public class Admin extends BaseServlet implements Serializable {
         if (settingBeanI.edit(settings) != null) {
             audit(session, "Updated other portal settings and configurations");
             this.respond(response, true, "Portal Settings & Configurations successfully saved", null);
-        } else
+        } else {
             this.respond(response, true, "Portal Settings & Configurations could not be saved", null);
+        }
     }
+
     private void editInterestRateColumns(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         boolean accountingPeriod = this.get(request, "accountingPeriod").equalsIgnoreCase("true");
         boolean contributions = this.get(request, "contributions").equalsIgnoreCase("true");
@@ -1324,9 +1354,11 @@ public class Admin extends BaseServlet implements Serializable {
         if (interestRateColumnBeanI.edit(irc) != null) {
             audit(session, "Updated interest rate column settings");
             this.respond(response, true, "Interest rate settings successfully saved", null);
-        } else
+        } else {
             this.respond(response, false, "Interest rate settings could not be saved", null);
+        }
     }
+
     private void editTheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Theme theme = themeBeanI.findById(helper.toLong(this.get(request, "theme_id")));
         theme.setMajor(this.get(request, "major"));
@@ -1339,9 +1371,11 @@ public class Admin extends BaseServlet implements Serializable {
         if (themeBeanI.edit(theme) != null) {
             audit(session, "Updated portal theme settings");
             this.respond(response, true, "Theme settings saved", null);
-        } else
+        } else {
             this.respond(response, false, "Theme settings not saved", null);
+        }
     }
+
     private void editPageContent(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         PageContent pc = pageContentBeanI.findById(helper.toLong(this.get(request, "ID")));
         pc.setPage(this.get(request, "page"));
@@ -1351,8 +1385,9 @@ public class Admin extends BaseServlet implements Serializable {
         if (pageContentBeanI.edit(pc) != null) {
             audit(session, "Updated portal page content for page " + this.get(request, "page"));
             this.respond(response, true, "Content was successfully updated", null);
-        } else
+        } else {
             this.respond(response, true, "Content could not be updated", null);
+        }
     }
 
     private void editFaqContent(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -1374,28 +1409,32 @@ public class Admin extends BaseServlet implements Serializable {
             fc.setPublish(this.get(request, "publish").equalsIgnoreCase("true"));
         }
 
-
         if (faqContentBeanI.edit(fc) != null) {
             audit(session, "Updated portal faq content");
             this.respond(response, true, "Content was successfully updated", null);
-        } else
+        } else {
             this.respond(response, true, "Content could not be updated", null);
+        }
     }
 
     private void deleteLogo(HttpServletRequest request, HttpServletResponse response) {
         Logo lg = logoBeanI.findById(helper.toLong(this.get(request, "id")));
-        if (logoBeanI.delete(lg))
+        if (logoBeanI.delete(lg)) {
             this.respond(response, true, "Logo successfully deleted", null);
-        else
+        } else {
             this.respond(response, false, "Logo could not be deleted", null);
+        }
     }
+
     private void deleteImageBanner(HttpServletRequest request, HttpServletResponse response) {
         ImageBanner b = imageBannerBeanI.findById(helper.toLong(this.get(request, "id")));
-        if (imageBannerBeanI.delete(b))
+        if (imageBannerBeanI.delete(b)) {
             this.respond(response, true, "ImageBanner image successfully deleted", null);
-        else
+        } else {
             this.respond(response, false, "ImageBanner image could not be deleted", null);
+        }
     }
+
     private void updateHelpContent(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Help h = helpBeanI.findById(helper.toLong(this.get(request, "ID")));
         h.setPage(this.get(request, "page"));
@@ -1404,6 +1443,7 @@ public class Admin extends BaseServlet implements Serializable {
         audit(session, "Updated portal help content for page " + this.get(request, "page"));
         this.respond(response, true, "content edited", null);
     }
+
     private void getFundValueAsAt(HttpServletRequest request, HttpServletResponse response) {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = new Date();
@@ -1425,12 +1465,12 @@ public class Admin extends BaseServlet implements Serializable {
         } else {
             jLogger.i(" Am here (Profile Not Sponsor) ");
             this.respond(response, true, "", apiEJB.getFundValueAsAt(format.format(date), this.get(request, "accountingPeriodId"),
-
-                    this.getSessKey(request, Constants.SCHEME_ID),"0",
+                    this.getSessKey(request, Constants.SCHEME_ID), "0",
                     this.getSessKey(request, Constants.PROFILE_ID)));
         }
 
     }
+
     private void getAccountingPeriod(HttpServletRequest request, HttpServletResponse response) {
         DateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         Date date = new Date();
@@ -1441,6 +1481,14 @@ public class Admin extends BaseServlet implements Serializable {
 
         this.respond(response, true, "", apiEJB.getAllAccountingPeriods(this.getSessKey(request, Constants.SCHEME_ID)));
     }
+    
+     private void getReasonsForExit(HttpServletRequest request, HttpServletResponse response) {
+
+        this.respond(response, true, "", apiEJB.getReasonsForExit());
+    }
+    
+    
+    
 
     private void changePassword(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         PasswordPolicy policy = passwordPolicyBeanI.find();
@@ -1449,24 +1497,23 @@ public class Admin extends BaseServlet implements Serializable {
         String password = this.get(request, "currentPassword");
         String new_password = this.get(request, "newPassword");
 
-
         User u = userBeanI.findUser(username, password);
-        jLogger.i("Am changing the password for user :" +username);
+        jLogger.i("Am changing the password for user :" + username);
 
         if (u != null) {
-            if(u.getSecurityCode()!=null) {
-                if(u.getSecurityCode().equalsIgnoreCase(securityCode))
-                    setNewPassword(request,response,session,new_password,u);
-                else
+            if (u.getSecurityCode() != null) {
+                if (u.getSecurityCode().equalsIgnoreCase(securityCode)) {
+                    setNewPassword(request, response, session, new_password, u);
+                } else {
                     this.respond(response, false, "Sorry, your security code is invalid. Please enter a valid security code.", null);
-            }else if(u.getSmsActivationCode()!=null) {
-                if(u.getSmsActivationCode().equalsIgnoreCase(securityCode))
-                    setNewPassword(request,response,session,new_password,u);
-                else
+                }
+            } else if (u.getSmsActivationCode() != null) {
+                if (u.getSmsActivationCode().equalsIgnoreCase(securityCode)) {
+                    setNewPassword(request, response, session, new_password, u);
+                } else {
                     this.respond(response, false, "Sorry, your sms code is invalid. Please enter a valid  code.", null);
-            }
-
-            else {
+                }
+            } else {
 
                 this.respond(response, false, "Sorry, your security code is invalid. Please enter a valid security code.", null);
             }
@@ -1474,6 +1521,7 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "The current password you entered is wrong. Please try again.", null);
         }
     }
+
     private void preChangeUserPassword(HttpServletRequest request, HttpServletResponse response) {
 
         User u = userBeanI.find(this.getSessKey(request, Constants.USER), this.getSessKey(request, Constants.U_PROFILE));
@@ -1481,29 +1529,24 @@ public class Admin extends BaseServlet implements Serializable {
         String userName = u.getUsername();
         jLogger.i("User found: " + u.getUsername());
 
-
-
         //XiMember m = apiEJB.getMemberDetails(u.getProfileID().toString(), null);
-
         XiMember m = apiEJB.memberExists(userProfile, userName);
-        String recipient =m.getPhoneNumber();
-
+        String recipient = m.getPhoneNumber();
 
         try {
-        if (helper.isEmailAddress(userName)) {
-            String securityCode = UUID.randomUUID().toString();
-            u.setSecurityCode(securityCode);
-            userBeanI.edit(u);
-            List<String> recipients = new ArrayList<>();
-            recipients.add(m.getEmailAddress());
-            jLogger.i("Our member still: " + m.getEmailAddress());
-
+            if (helper.isEmailAddress(userName)) {
+                String securityCode = UUID.randomUUID().toString();
+                u.setSecurityCode(securityCode);
+                userBeanI.edit(u);
+                List<String> recipients = new ArrayList<>();
+                recipients.add(m.getEmailAddress());
+                jLogger.i("Our member still: " + m.getEmailAddress());
 
                 Emails emails = emailsBeanI.find();
                 boolean status = apiEJB.sendEmail(recipients, emails.getDefaultEmail(), null, "Change Password Request",
                         "Dear " + u.getUsername() + ", " + "You recently requested to change your password. "
-                                + "Here is your security code:" + "" + securityCode
-                                + "\nYou will require it to be able to change your password",
+                        + "Here is your security code:" + "" + securityCode
+                        + "\nYou will require it to be able to change your password",
                         this.getSessKey(request, Constants.SCHEME_ID), false, "");
                 if (status) {
                     this.respond(response, true, "The change password instructions have been sent to your email address", null);
@@ -1511,33 +1554,36 @@ public class Admin extends BaseServlet implements Serializable {
                     this.respond(response, false, "We are sorry, we were unable to send you the change password instructions", null);
                 }
 
-        }else if (helper.isValidPhone(recipient) && recipient!=null || userName!=null){
-            String smsCode  = helper.randomNumber().toString();
-            u.setSmsActivationCode(smsCode);
-            userBeanI.edit(u);
-            boolean smsStatus = apiEJB.sendSMS(recipient,"Dear " + u.getUserProfile() + " , " + " You recently requested to change your password."
-            + " Here is your security code: " + "" + smsCode + " You will require it to be able to change your password");
-            if (smsStatus) {
-                this.respond(response, true, "The change password instructions have been sent to your phone number", null);
-            } else {
-                this.respond(response, false, "We are sorry, we were unable to send you the change password instructions", null);
-            }
+            } else if (helper.isValidPhone(recipient) && recipient != null || userName != null) {
+                String smsCode = helper.randomNumber().toString();
+                u.setSmsActivationCode(smsCode);
+                userBeanI.edit(u);
+                boolean smsStatus = apiEJB.sendSMS(recipient, "Dear " + u.getUserProfile() + " , " + " You recently requested to change your password."
+                        + " Here is your security code: " + "" + smsCode + " You will require it to be able to change your password");
+                if (smsStatus) {
+                    this.respond(response, true, "The change password instructions have been sent to your phone number", null);
+                } else {
+                    this.respond(response, false, "We are sorry, we were unable to send you the change password instructions", null);
+                }
 
-        }
+            }
         } catch (NullPointerException e1) {
             this.respond(response, false,
                     "We are sorry, we encountered a problem obtaining your User Name. Please try again", null);
         }
     }
+
     private void listMembers(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         audit(session, "Accessed scheme member listing");
         jLogger.i("The SchemeId for Stats is " + this.getSessKey(request, Constants.SCHEME_ID));
         this.respond(response, true, "", apiEJB.listMembers(this.getSessKey(request, Constants.SCHEME_ID),
                 this.getSessKey(request, Constants.PROFILE_ID)));
     }
+
     private void getSchemeCurrency(HttpServletRequest request, HttpServletResponse response) {
         this.respond(response, true, "", apiEJB.getSchemeCurrency(this.getSessKey(request, Constants.SCHEME_ID)));
     }
+
     private void showMemberInformationView(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         XiMember xm = apiEJB.getMemberDetails(this.get(request, "memberID"), null);
         List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(this.get(request, "memberID"));
@@ -1584,6 +1630,7 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "Scheme member could not be added as a scheme manager", null);
         }
     }
+
     private void removeSchemeManager(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         SchemeMemberManager smm = schemeManagerBeanI.findById(helper.toLong(this.get(request, "id")));
         if (schemeManagerBeanI.delete(smm)) {
@@ -1595,6 +1642,7 @@ public class Admin extends BaseServlet implements Serializable {
     }
     @EJB
     GenderBeanI genderBeanI;
+
     private void showMemberPersonalInformation(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         XiMember xm;
         xm = apiEJB.getMemberDetails(this.get(request, "memberID"), null);
@@ -1616,26 +1664,28 @@ public class Admin extends BaseServlet implements Serializable {
 
         List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(this.get(request, "memberID"));
 
-
         request.setAttribute("beneficiaries", beneficiaries);
         request.setAttribute("schemes", schemes);
         MemberPermission memberPermission = memberPermissionBeanI.find();
         request.setAttribute("memberPermission", memberPermission);
         request.setAttribute("member", xm);
 
-         audit(session, "Accessed editable view for member " + xm.getName());
+        audit(session, "Accessed editable view for member " + xm.getName());
         request.getRequestDispatcher("member/personal_information.jsp").forward(request, response);
     }
+
     private void changeScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         audit(session, "Switched between schemes from scheme #" + this.getSessKey(request, Constants.SCHEME_ID)
                 + " to scheme #" + this.get(request, "schemeID"));
         session.setAttribute(Constants.SCHEME_ID, this.get(request, "schemeID"));
         this.respond(response, true, "Scheme changed successfully", null);
     }
+
     private void searchSchemes(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         audit(session, "Searched schemes with parameter " + this.get(request, "search"));
         this.respond(response, true, "", apiEJB.searchSchemes(this.get(request, "search")));
     }
+
     private void getSchemeMode(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String scheme = this.get(request, "scheme");
         jLogger.i("Scheme from frontend ============> " + scheme);
@@ -1649,24 +1699,26 @@ public class Admin extends BaseServlet implements Serializable {
     }
 
     private void getExitsInYear(HttpServletRequest request, HttpServletResponse response) {
-        if (this.getSessKey(request,Constants.U_PROFILE ).equals("SPONSOR")){
+        if (this.getSessKey(request, Constants.U_PROFILE).equals("SPONSOR")) {
             jLogger.i("AM a Sponsor");
-            this.respond(response, true, "", apiEJB.getExitsInYearPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request,Constants.PROFILE_ID)));
+            this.respond(response, true, "", apiEJB.getExitsInYearPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID)));
 
-
-        }else {
+        } else {
 
             this.respond(response, true, "", apiEJB.getExitsInYear(this.getSessKey(request, Constants.SCHEME_ID)));
         }
 
     }
+
     private void getAgentCommission(HttpServletRequest request, HttpServletResponse response) {
         this.respond(response, true, "", apiEJB.getAgentCommission(this.getSessKey(request, Constants.PROFILE_ID)));
     }
+
     private void getNewMembersInYear(HttpServletRequest request, HttpServletResponse response) {
         this.respond(response, true, "", apiEJB.getNewMembersInYear(this.getSessKey(request, Constants.SCHEME_ID),
                 this.getSessKey(request, Constants.PROFILE_ID)));
     }
+
     private void toggleUserStatus(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         User u = userBeanI.findById(helper.toLong(this.get(request, "userID")));
         u.setStatus(!u.isStatus());
@@ -1674,13 +1726,13 @@ public class Admin extends BaseServlet implements Serializable {
         if (u != null) {
             audit(session, "Updated user status for " + u.getUserProfile() + " " + u.getUsername());
             this.respond(response, true, "The user status was successfully changed", null);
-        } else
+        } else {
             this.respond(response, false, "We are sorry, the user status could not be changed", null);
+        }
     }
 
-
     private void showReceipts(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-     // List<SchemeReceipt> receipts =new ArrayList<>();
+        // List<SchemeReceipt> receipts =new ArrayList<>();
 
         String date_from_string = this.get(request, "dateFrom");
         jLogger.i("Date from string: " + date_from_string);
@@ -1688,14 +1740,14 @@ public class Admin extends BaseServlet implements Serializable {
         String date_to_string = this.get(request, "dateTo");
         jLogger.i("Date to string: " + date_to_string);
 
-        Date date_from =null;
-        Date date_to = null ;
+        Date date_from = null;
+        Date date_to = null;
 
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
         try {
             date_from = format.parse(date_from_string);
-            date_to= format.parse(date_to_string);
+            date_to = format.parse(date_to_string);
         } catch (ParseException pe) {
 
             pe.printStackTrace();
@@ -1711,7 +1763,6 @@ public class Admin extends BaseServlet implements Serializable {
                 this.respond(response, true, "", apiEJB.getReceipts(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID), format_.format(date_from), format_.format(date_to), 0, 0));
             }
         }
-
 
 //        request.setAttribute("receipts", receipts);
 //       logActivity("SCHEME RECEIPTS", "Viewed scheme receipts for scheme #" + this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
@@ -1733,6 +1784,7 @@ public class Admin extends BaseServlet implements Serializable {
     }
     @EJB
     ActivityLogBeanI activityLogBeanI;
+
     private void getProfileAccess(HttpServletResponse response) {
 
         List<PieObject> poList = activityLogBeanI.findAccessByProfile();
@@ -1746,6 +1798,7 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "Json exception just occured", null);
         }
     }
+
     private void searchMember(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         JSONObject result = apiEJB.searchProfilesJSON(this.get(request, "search"),
                 this.get(request, "identifier"), this.get(request, "profile"),
@@ -1763,17 +1816,17 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "", null);
         }
     }
-   // List<XiMember> searchProfilesBySponsor(String search, String identifier, String profile, String sponsorID, String schemeID);
+    // List<XiMember> searchProfilesBySponsor(String search, String identifier, String profile, String sponsorID, String schemeID);
 
     private void searchMemberBySponsor(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        String sponsorId= "";
+        String sponsorId = "";
         if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.SPONSOR)) {
 
             sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
             jLogger.i("Searching Using SponsorId " + sponsorId);
         }
         JSONObject result = apiEJB.searchProfilesBySponsorJSON(this.get(request, "search"),
-                this.get(request, "identifier"), this.get(request, "profile"),sponsorId,
+                this.get(request, "identifier"), this.get(request, "profile"), sponsorId,
                 this.getSessKey(request, Constants.SCHEME_ID));
         jLogger.i(result.toString());
 
@@ -1789,13 +1842,16 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "", null);
         }
     }
+
     private void deletePortalMember(HttpServletRequest request, HttpServletResponse response) {
         Member m = memberBeanI.findById(helper.toLong(this.get(request, "id")));
-        if (memberBeanI.delete(m))
+        if (memberBeanI.delete(m)) {
             this.respond(response, true, "Potential member record successfully deleted", null);
-        else
+        } else {
             this.respond(response, false, "Potential member record could not be deleted", null);
+        }
     }
+
     private void forwardSponsorToXi(HttpServletRequest request, HttpServletResponse response) {
         String sponsorID = this.get(request, "id");
         Sponsor sp = sponsorBeanI.findById(helper.toLong(sponsorID));
@@ -1819,6 +1875,7 @@ public class Admin extends BaseServlet implements Serializable {
             jLogger.e("We encountered a JSON Exception " + je.getMessage());
         }
     }
+
     private void submitSponsorToXi(HttpServletResponse response, HttpServletRequest request) {
         JSONObject jsponsor = xtractSponsorFromRequest(request);
         boolean status = apiEJB.saveOrUpdateSponsor(jsponsor.toString());
@@ -1830,10 +1887,11 @@ public class Admin extends BaseServlet implements Serializable {
         Member m = memberBeanI.findById(helper.toLong(memberID));
         DateFormat format_ = new SimpleDateFormat(Constants.MMM_d_yyyy, Locale.ENGLISH);
         String title;
-        if(m.getGender().getName().equalsIgnoreCase("male"))
+        if (m.getGender().getName().equalsIgnoreCase("male")) {
             title = "Mr";
-        else
+        } else {
             title = "Mrs";
+        }
         JSONObject member = new JSONObject();
         boolean status = false;
         try {
@@ -1858,17 +1916,21 @@ public class Admin extends BaseServlet implements Serializable {
         }
         this.respond(response, status, status ? "Member details were successfully saved" : "Member details could not be saved", null);
     }
+
     private void submitPortalMemberToXi(HttpServletResponse response, HttpServletRequest request) {
         boolean status = apiEJB.saveOrUpdateMember(xtractMemberFromRequest(request).toString());
         this.respond(response, status, status ? "Member details were successfully saved" : "Could not save the member details", null);
     }
+
     private void deletePortalSponsor(HttpServletRequest request, HttpServletResponse response) {
         Sponsor s = sponsorBeanI.findById(helper.toLong(this.get(request, "id")));
-        if (sponsorBeanI.delete(s))
+        if (sponsorBeanI.delete(s)) {
             this.respond(response, true, "Potential sponsor record successfully deleted", null);
-        else
+        } else {
             this.respond(response, false, "Potential sponsor record could not be deleted", null);
+        }
     }
+
     private void getFrontPageAccessByPage(HttpServletResponse response) {
         List<PieObject> poList = activityLogBeanI.findByFrontPageAccess();
         try {
@@ -1881,6 +1943,7 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "Json exception just occured", null);
         }
     }
+
     private void editProfileLoginFields(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String[] profiles = helper.listProfiles();
         boolean status = true;
@@ -1894,34 +1957,37 @@ public class Admin extends BaseServlet implements Serializable {
         if (status) {
             audit(session, "Updated profile login settings");
             this.respond(response, true, "Profile login settings successfully saved", null);
-        } else
+        } else {
             this.respond(response, false, "Profile login settings could not be saved", null);
+        }
     }
 
     private void editClientSetupFields(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-         String clientAbb =this.get(request, "client");
+        String clientAbb = this.get(request, "client");
         String message = this.get(request, "msg");
         message.trim();
-        jLogger.i("The message is "+message);
-        jLogger.i("The client is "+clientAbb);
-        ClientSetup csf =  clientSetupI.find(clientAbb);
-        if(csf!=null) {
+        jLogger.i("The message is " + message);
+        jLogger.i("The client is " + clientAbb);
+        ClientSetup csf = clientSetupI.find(clientAbb);
+        if (csf != null) {
             csf.setClientRegistrationMessage(message);
             clientSetupI.edit(csf);
-        }else {
-            csf =new ClientSetup();
+        } else {
+            csf = new ClientSetup();
             csf.setClientRegistrationMessage(message);
             csf.setClientOrdinal(clientAbb);
             clientSetupI.add(csf);
 
         }
-            if (clientSetupI.edit(csf)!=null || clientSetupI.add(csf)!=null) {
-                audit(session, "Updated Client Setup settings");
-                this.respond(response, true, "Client Setup settings successfully saved", null);
-            } else
-                this.respond(response, false, "Client Setup settings could not be saved", null);
+        if (clientSetupI.edit(csf) != null || clientSetupI.add(csf) != null) {
+            audit(session, "Updated Client Setup settings");
+            this.respond(response, true, "Client Setup settings successfully saved", null);
+        } else {
+            this.respond(response, false, "Client Setup settings could not be saved", null);
+        }
 
     }
+
     private void editPasswordPolicy(HttpServletRequest request, HttpServletResponse response) {
         PasswordPolicy p = passwordPolicyBeanI.find();
         p.setExpiry_days(Integer.parseInt(this.get(request, "expiry_days")));
@@ -1931,11 +1997,13 @@ public class Admin extends BaseServlet implements Serializable {
         p.setNumbers(this.get(request, "numbers").equalsIgnoreCase("true"));
         p.setPassword_reuse(this.get(request, "password_reuse").equalsIgnoreCase("true"));
         p.setUppercase(this.get(request, "uppercase").equalsIgnoreCase("true"));
-        if (passwordPolicyBeanI.edit(p) != null)
+        if (passwordPolicyBeanI.edit(p) != null) {
             this.respond(response, true, "Password policy successfully saved", null);
-        else
+        } else {
             this.respond(response, false, "Password policy could not be saved", null);
+        }
     }
+
     private void savePermissions(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         audit(session, "Updated permissions and privileges for " + this.get(request, "profile"));
         Permission perm = permissionBeanI.findByProfile(this.get(request, "profile"));
@@ -1987,10 +2055,10 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setSetup_email(this.get(request, "setup_email").equalsIgnoreCase("true"));
         perm.setSetup_contact_reason(this.get(request, "setup_contact_reason").equalsIgnoreCase("true"));
         perm.setSetup_interest_rate(this.get(request, "setup_interest_rate").equalsIgnoreCase("true"));
-        perm.setEnable_acc_recovery(this.get(request,"enable_acc_recovery").equalsIgnoreCase("true"));
+        perm.setEnable_acc_recovery(this.get(request, "enable_acc_recovery").equalsIgnoreCase("true"));
         perm.setSetup_logo(this.get(request, "setup_logo").equalsIgnoreCase("true"));
         perm.setSetup_menu(this.get(request, "setup_menu").equalsIgnoreCase("true"));
-        perm.setDb_menu(this.get(request,"db_menu").equalsIgnoreCase("true"));
+        perm.setDb_menu(this.get(request, "db_menu").equalsIgnoreCase("true"));
         perm.setSetup_other(this.get(request, "setup_other").equalsIgnoreCase("true"));
         perm.setSetup_social(this.get(request, "setup_social").equalsIgnoreCase("true"));
         perm.setSetup_theme(this.get(request, "setup_theme").equalsIgnoreCase("true"));
@@ -2007,7 +2075,7 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setOperation_personal_info(this.get(request, "operation_personal_info").equalsIgnoreCase("true"));
         perm.setOperation_statement_of_account(
                 this.get(request, "operation_statement_of_account").equalsIgnoreCase("true"));
-        perm.setOperation_unitized_statement(this.get(request,"operation_unitized_statement").equalsIgnoreCase("true"));
+        perm.setOperation_unitized_statement(this.get(request, "operation_unitized_statement").equalsIgnoreCase("true"));
         perm.setUsers(this.get(request, "users").equalsIgnoreCase("true"));
         perm.setUser_enable_disable(this.get(request, "user_enable_disable").equalsIgnoreCase("true"));
         perm.setAudit_trail(this.get(request, "audit_trail").equalsIgnoreCase("true"));
@@ -2022,16 +2090,19 @@ public class Admin extends BaseServlet implements Serializable {
         perm.setPortal_sponsor_view(this.get(request, "portal_sponsor_view").equalsIgnoreCase("true"));
         perm.setPortal_sponsors(this.get(request, "portal_sponsors").equalsIgnoreCase("true"));
         perm.setPassword_policy(this.get(request, "password_policy").equalsIgnoreCase("true"));
-        if (permissionBeanI.edit(perm) != null)
+        if (permissionBeanI.edit(perm) != null) {
             this.respond(response, true, "Permissions successfully saved", null);
-        else
+        } else {
             this.respond(response, false, "Permissions could not be saved", null);
+        }
     }
+
     private void showPermissions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Permission perm = permissionBeanI.findByProfile(this.get(request, "profile"));
         request.setAttribute("permissions", perm);
         request.getRequestDispatcher("dashboard/permissions.jsp").forward(request, response);
     }
+
     private void showMemberBeneficiary(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (this.get(request, "type").equals("EDIT")) {
             List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(this.get(request, "memberID"));
@@ -2041,8 +2112,8 @@ public class Admin extends BaseServlet implements Serializable {
         request.setAttribute("type", this.get(request, "type"));
         request.getRequestDispatcher("member/beneficiary.jsp").forward(request, response);
     }
-    private void updateMember(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String FILE_SEPERATOR, String SCHEME_DOC_ROOT_FOLDER, String scheme_doc_folder) {
 
+    private void updateMember(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String FILE_SEPERATOR, String SCHEME_DOC_ROOT_FOLDER, String scheme_doc_folder) {
 
         try {
 
@@ -2059,7 +2130,7 @@ public class Admin extends BaseServlet implements Serializable {
             if (surname == "" || surname == null) {
                 surname = mbr.getSurname();
             }
-            jLogger.i( " Surname  & firstname " + surname + " " + firstname);
+            jLogger.i(" Surname  & firstname " + surname + " " + firstname);
 
             String othernames = this.get(request, "othernames");
             if (othernames == "" || othernames == null) {
@@ -2095,7 +2166,6 @@ public class Admin extends BaseServlet implements Serializable {
             if (salary == "" || salary == null) {
                 salary = mbr.getAnnualPensionableSalary();
             }*/
-
             String city = this.get(request, "city");
             if (city == "" || city == null) {
                 city = mbr.getTown();
@@ -2173,7 +2243,7 @@ public class Admin extends BaseServlet implements Serializable {
                         helper.createFolderIfNotExists(scheme_doc_folder);
                     }
                     try {
-                       // String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
+                        // String url = scheme_doc_folder + FILE_SEPERATOR + fileName;
                         String fullpath = scheme_doc_folder + FILE_SEPERATOR + fileName;
                         jLogger.i("full path is:" + fullpath);
                         part.write(fullpath);
@@ -2200,10 +2270,11 @@ public class Admin extends BaseServlet implements Serializable {
             try {
                 member.put("member.attachmentname", attachment_name)
                         .put("member.id", memberID);
-                if (attachment)
+                if (attachment) {
                     member.put("member.attachment", attachment_url);
-                else
+                } else {
                     member.put("member.attachment", new ArrayList<String>());
+                }
 
                 boolean status_ = apiEJB.uploadMemberDocument(member.toString());
 
@@ -2278,10 +2349,11 @@ public class Admin extends BaseServlet implements Serializable {
                             .put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
                             .put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
                             .put("ben.physicalCondition", "").put("ben.status", status);
-                    if (attachment)
+                    if (attachment) {
                         b.put("ben.attachment", attachment_url);
-                    else
+                    } else {
                         b.put("ben.attachment", new ArrayList<String>());
+                    }
                 } else if (this.get(request, "type").equalsIgnoreCase("ADD")) {
                     b.put("ben.memberId", memberID).put("beneficiary.id", beneficiary_id)
                             .put("ben.relationship", relationship).put("ben.attachmentname", attachment_name)
@@ -2291,10 +2363,11 @@ public class Admin extends BaseServlet implements Serializable {
                             .put("ben.monthlyEntitlement", 0).put("ben.lumpsumEntitlement", lumpsum).put("ben.idNo", "")
                             .put("ben.address.postalAddress", "").put("ben.mstatus", maritalStatus)
                             .put("ben.physicalCondition", "").put("ben.status", status);
-                    if (attachment)
+                    if (attachment) {
                         b.put("ben.attachment", attachment_url);
-                    else
+                    } else {
                         b.put("ben.attachment", new ArrayList<String>());
+                    }
                 }
                 boolean done = apiEJB.saveOrUpdateBeneficiary(b.toString());
                 this.respond(response, done, done ? "Beneficiary information was successfully updated" : "Beneficiary information could not be updated", null);
@@ -2306,6 +2379,7 @@ public class Admin extends BaseServlet implements Serializable {
             e.printStackTrace();
         }
     }
+
     private void adminPasswordReset(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String userID = this.get(request, "userID");
         User u = userBeanI.findById(helper.toLong(userID));
@@ -2335,8 +2409,9 @@ public class Admin extends BaseServlet implements Serializable {
                         email_address = member.getEmailAddress();
                         schemeId = member.getSchemeId();
                         proceed = helper.isEmailAddress(email_address);
-                    } else
+                    } else {
                         proceed = false;
+                    }
                 }
                 if (proceed) {
                     Setting settings = settingBeanI.find();
@@ -2344,25 +2419,28 @@ public class Admin extends BaseServlet implements Serializable {
                     recipients.add(email_address);
                     apiEJB.sendEmail(recipients, emails.getDefaultEmail(), null, "MSS Portal Password Reset",
                             "Dear " + u.getUserProfile() + ",<br />"
-                                    + "Your password has been reset on the FundMaster Xi Member Self Service Portal. Your new password is "
-                                    + password + ".<br />Please click this <a href='" + settings.getPortalBaseURL()
-                                    + "sign-in'>link</a> to gain access to the Self Service Portal",
+                            + "Your password has been reset on the FundMaster Xi Member Self Service Portal. Your new password is "
+                            + password + ".<br />Please click this <a href='" + settings.getPortalBaseURL()
+                            + "sign-in'>link</a> to gain access to the Self Service Portal",
                             schemeId, false, null);
-                    if (userBeanI.edit(u) != null)
+                    if (userBeanI.edit(u) != null) {
                         this.respond(response, true,
                                 "<strong>Password Reset Successful</strong><br /> Success! The user's password has been reset. An email has been sent to the user with the new password.", null);
-                    else
+                    } else {
                         this.respond(response, false,
                                 "We could not complete the requested action as we were unable to obtain the user's email address", null);
+                    }
                 } else {
                     this.respond(response, false,
                             "We could not complete the requested action as we were unable to obtain the user's email address", null);
                 }
-            } else
+            } else {
                 this.respond(response, false,
                         "We could not complete the requested action as we were unable to obtain the user's email address", null);
+            }
         }
     }
+
     private void updateProfileNames(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<ProfileName> pNames = profileNameBeanI.find();
         boolean status = true;
@@ -2373,9 +2451,11 @@ public class Admin extends BaseServlet implements Serializable {
         if (status) {
             audit(session, "Updated profile name settings");
             this.respond(response, true, "Profile name settings successfully saved", null);
-        } else
+        } else {
             this.respond(response, false, "Profile name settings could not be saved", null);
+        }
     }
+
     private void updateClientNames(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<ClientName> cNames = clientNameBeanI.find();
         boolean status = true;
@@ -2386,24 +2466,28 @@ public class Admin extends BaseServlet implements Serializable {
         if (status) {
             audit(session, "Updated Client name settings");
             this.respond(response, true, "Client name settings successfully saved", null);
-        } else
+        } else {
             this.respond(response, false, "Client name settings could not be saved", null);
+        }
     }
+
     private void getSchemeContributions(HttpServletRequest request, HttpServletResponse response) {
         JSONObject result = apiEJB.getSchemeContributions(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));
         this.respond(response, true, "success", result);
     }
+
     private void getSponsorContributions(HttpServletRequest request, HttpServletResponse response) {
 
         jLogger.i("Getting sponsor Contributions:: ");
         jLogger.i("The SchemeId is " + this.getSessKey(request, Constants.SCHEME_ID));
         jLogger.i("The ProfileId is " + this.getSessKey(request, Constants.PROFILE_ID));
 
-        JSONObject result = apiEJB.getSponsorContributions(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID));
+        JSONObject result = apiEJB.getSponsorContributions(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));
         this.respond(response, true, "success", result);
     }
+
     private void updateCompany(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-    /* Company Details Update Request */
+        /* Company Details Update Request */
         Country country = countryBeanI.findById(helper.toLong(this.get(request, "country")));
         Company company = new Company(helper.toLong(this.get(request, "company_id")),
                 this.get(request, "companyName"), this.get(request, "streetAddress"),
@@ -2412,12 +2496,13 @@ public class Admin extends BaseServlet implements Serializable {
         if (companyBeanI.edit(company) != null) {
             audit(session, "Updated company details");
             this.respond(response, true, "success", null);
-        } else
+        } else {
             this.respond(response, false, "failed", null);
+        }
     }
 
     private void updateEmails(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-    /* Email Addresses Update Request */
+        /* Email Addresses Update Request */
 
         boolean defaultEmailActive = this.get(request, "defaultEmailActive").equalsIgnoreCase("true");
         boolean marketingEmailActive = this.get(request, "marketingEmailActive").equalsIgnoreCase("true");
@@ -2441,12 +2526,12 @@ public class Admin extends BaseServlet implements Serializable {
 
         /*Emails emails = new Emails(helper.toLong(this.get(request, "email_id")), this.get(request, "defaultEmail"),
         this.get(request, "marketingEmail"), this.get(request, "supportEmail"), this.get(request, "sendWhatifEmail").equalsIgnoreCase("true"));*/
-
         if (emailsBeanI.edit(emails) != null) {
             audit(session, "Updated Email Addresses");
             this.respond(response, true, "success", null);
-        } else
+        } else {
             this.respond(response, false, "failed", null);
+        }
     }
 
     private void switchScheme(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -2454,7 +2539,7 @@ public class Admin extends BaseServlet implements Serializable {
         this.respond(response, true, "success", null);
     }
 
-    private void setNewPassword(HttpServletRequest request, HttpServletResponse response,HttpSession session, String newPass, User user){
+    private void setNewPassword(HttpServletRequest request, HttpServletResponse response, HttpSession session, String newPass, User user) {
         PasswordPolicy policy = passwordPolicyBeanI.find();
         if (!(usedPasswordBeanI.isUsed(newPass) && policy.isPassword_reuse())) {
             user.setPassword(helper.hash(newPass));
@@ -2467,6 +2552,7 @@ public class Admin extends BaseServlet implements Serializable {
             this.respond(response, false, "", null);
         }
     }
+
     /**
      * Extracts file name from HTTP header content-disposition
      */

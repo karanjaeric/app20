@@ -87,13 +87,19 @@
                     <th>Amount</th>
                 <tr>
                     <tr>
-                        <td>Employee</td><td></td>
+                        <td>Employee</td><td><span id="benefits-ee"></span></td>
                         </tr>
                         <tr>
-                        <td>Employer</td><td></td>
+                        <td>Employer</td><td><span id="benefits-er"></td>
                         </tr>
                         <tr>
-                        <td>Additional Voluntary Contribution</td><td></td>
+                        <td>Additional Voluntary Contribution</td><td><span id="benefits-avc"></td>
+                        </tr>
+                        <tr>
+                        <td>Interest:</td><td><span id="benefits-interest"></td>
+                        </tr>
+                         <tr>
+                        <td>Grand Total:</td><td><span id="benefits-grandTotal"></td>
                         </tr>
                         
             </table>
@@ -186,7 +192,7 @@
                 success: function (json) {
                     if (json.success)
                     {
-
+//cummulative-interests
                         json = $.parseJSON(json.data);
                         currency = hasKey(json, "code") ? json.code : "KES";
 
@@ -287,6 +293,34 @@
                                                                 }
                                                             }
                                                         });
+                                                        
+                                                        //load member benefits info
+                                                        
+                                                        
+                                                             $.ajax({
+                                                            url: $('#base_url').val() + 'member',
+                                                            type: 'post',
+                                                            data: {ACTION: 'BI'},
+                                                            dataType: 'json',
+                                                            success: function (json) {
+                                                                if (json.success)
+                                                                {
+
+                                                                    json = $.parseJSON(json.data);
+                                                                    $('#benefits-ee').html(format_no(json.ee));
+                                                                    $('#benefits-er').html(format_no(json.er));
+                                                                    $('#benefits-avc').html(format_no(json.avc));
+                                                                    $('#benefits-grandTotal').html(format_no(json.grandTotal));
+                                                                     $('#benefits-interest').html(format_no(json.interest));
+                                                                } else
+                                                                {
+                                                                  stop_wait();
+                                                                   // bootbox.alert('<p class="text-center">' + json.message + '</p>');
+                                                                }
+                                                            }
+                                                        });
+                                                        
+                                                        
                                                     }
                                                 });
                                             }

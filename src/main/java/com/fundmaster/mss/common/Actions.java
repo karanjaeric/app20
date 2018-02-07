@@ -26,6 +26,7 @@ public class Actions {
     public static final String AB = "AB";
     public static final String CI = "CI";
     public static final String AI = "AI";
+     public static final String BI = "BI";
     public static final String MEMBER_PERSONAL_INFORMATION = "PI";
     public static final String PENSIONER_PERSONAL_INFORMATION = "PENSIONER_INFO";
     public static final String PENSION_DETAILS = "PENSION_DETAILS";

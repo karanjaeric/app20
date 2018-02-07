@@ -209,8 +209,12 @@
 <script type="text/javascript" src="static/custom/js/highcharts-custom.js"></script>
 <script type="text/javascript" src="static/custom/js/core.js"></script>
 <script type="text/javascript" src="static/custom/js/plugins/jquery.appear/jquery.appear.js"></script>
+
+<script src="static/custom/assets/jspdf.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
+            
 
         $("#resendCodeBtn").click(function() {
 

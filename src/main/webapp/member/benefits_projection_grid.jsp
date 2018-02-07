@@ -32,16 +32,21 @@
             <label class="control-label"></label>
             <select id="reason" name="reason" class="form-control">
                 <option value="">--Select A Reason for Exit--</option>
+                  <option>WITHDRAWAL</option>
+                    <option>DEATH IN SERVICE</option>
+                     <option>RETIREMENT</option
             </select>
         </div>
-        <!--<c:if test="${ planType == 'Defined Benefit' }">
+        
             <div class="col-md-2">
                 <select id="option" name="option" class="form-control">
+                    <option>Select Projection Type</option>
                     <option>Reduced</option>
                     <option>UnReduced</option>
+                     <option>Surrender</option>
                 </select>
             </div>
-        </c:if>-->
+        
         <div class="col-md-4">
             <button class="btn btn-primary">
                 SHOW REPORT

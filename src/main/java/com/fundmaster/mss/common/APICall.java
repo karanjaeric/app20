@@ -58,7 +58,7 @@ public class APICall {
     public static final String COMMISSIONS_GET = "commissions/get/";
     public static final String SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR = "scheme/getschemebenefitswithinyear/";
     public static final String SCHEME_GET_SCHEME_BENEFITS_WITHIN_YEAR_PER_SPONSOR = "scheme/getschemebenefitswithinyearpersponsor/";
-    public static final String SCHEME_GET_REASONS_FOR_EXIT = "scheme/getreasonsforexit/";
+    public static final String SCHEME_GET_REASONS_FOR_EXIT = "getReasonsForExit/";
     public static final String SEARCH_FOR_MEMBER_DETAILS = "searchForMemberDetails/";
     public static final String SEARCH_FOR_SPONSOR_MEMBER_DETAILS = "searchForSponsorMemberDetails/";
     public static final String GET_MEMBER_DETAILS = "getmemberdetails/";
@@ -89,6 +89,7 @@ public class APICall {
     //GET_CURRENT_UNIT_PRICE
     public static final String GET_SPONSOR_INTEREST_RATES = "sponsor/getsponsorinterestrates/";
     public static final String WHAT_IF_ANALYSIS = "whatifanalysis/";
+    public static final String BENEFITS_PROJECTIONS = "calculateBenefitProjections/";
     public static final String SCHEME_GET_SCHEME_BY_SCHEME_MODE_AND_PLAN_TYPE = "scheme/getschemebyschememodeandplantype/";
     public static final String SCHEME_GET_SCHEME_BY_SCHEME_MODE = "scheme/getschemebyschememode/";
     public static final String ANNUITY_QUOTE_GET_ANNUITY_PRODUCTS = "annuity_quote/getannuityproducts";
@@ -98,4 +99,5 @@ public class APICall {
     public static final String GET_EXITS_BENEFITS = "getexitbenefits/";
     public static final String SAVESMS = "savesms/";
     public static final String MSS_ACCOUNT_OPERATION  = "mssAccountOperation/saveOrUpdate/";
+    public static final String BENEFIT_DETAILS  = "getMemberBenefitsDetails/";
 }

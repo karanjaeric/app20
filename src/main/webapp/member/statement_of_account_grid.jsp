@@ -8,14 +8,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container-fluid section">
     <h3 class="text-center main-title">
-        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;MY STATEMENT OF ACCOUNT
+        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;PROVISIONAL STATEMENT
     </h3>
     <form class="form-inline" role="form" id="sa-form">
-        <div class="form-group col-md-6">
+<!--        <div class="form-group col-md-6">
             <label for="asAt" class="control-label">As At:</label> <input type="text" readonly="readonly" name="asAt"
                                                                           class="form-control datepicker" id="asAt"
                                                                           placeholder="As At">
-        </div>
+        </div>-->
         <div class="col-md-6">
             <button class="btn btn-primary btn-sm">SHOW STATEMENT</button>
         </div>
@@ -258,7 +258,8 @@
                                             html1 = html_head + html_subhead + op_row;
                                             html2 = intr_head + intr_row;
                                             html3 = "<tr><th scope='row' colspan='6' class='text-center'>GRAND TOTAL: </td><td>" + format_no(parseFloat(Math.round(grandTotal * 100) / 100).toFixed(2)) + "</td></tr>";
-                                            //html = html;
+                                            //html = html;row;
+                                            html2 = intr_head + intr_row;
 
                                             stop_wait();
                                         }

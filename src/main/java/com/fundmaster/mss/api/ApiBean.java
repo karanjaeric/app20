@@ -989,7 +989,7 @@ public Double getMemberTotalUnits(String memberId) {
     public JSONObject getReasonsForExit() {
         JSONObject response;
         try {
-            response = URLGet(APICall.SCHEME_GET_REASONS_FOR_EXIT + Constants.ALL);
+            response = URLGet(APICall.SCHEME_GET_REASONS_FOR_EXIT);
             return response;
         }  catch (JSONException je) {
             jLogger.e("We have a json exception " + je.getMessage());
@@ -2760,6 +2760,47 @@ public Double getMemberTotalUnits(String memberId) {
         }
 
     }
+
+    @Override
+    public JSONObject getMemberBenefitsDetails(String memberID,String schemeId) {
+        JSONObject response;
+         try {
+            response = URLGet(APICall.BENEFIT_DETAILS + memberID +"/"+schemeId);
+            response = response.getJSONArray("rows").getJSONObject(0);
+            jLogger.i("This is the response for member benefits >>>>>>>>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+        
+        
+    }
+
+    @Override
+    public JSONObject getAllReasonsForExit(String schemeID) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public JSONObject calculateBenefitsProjections(String schemeId, String memberId, String dateOfCalc, String dateOfExit, String reasonforexitid, String projectionType, String isDcScheme, String memberIdFrom, String memberIdTo) {
+
+     JSONObject response;
+         try {
+             //String params=schemeId +"/"+memberId+"/"+dateOfCalc+"/"+dateOfExit+"/"+reasonforexitid+"/"+projectionType+"/"+isDcScheme+"/"+memberIdFrom+"/"+memberIdTo;
+            response = URLGet(APICall.BENEFITS_PROJECTIONS+schemeId +"/"+memberId+"/"+dateOfCalc+"/"+dateOfExit+"/"+reasonforexitid+"/"+projectionType+"/"+isDcScheme+"/"+memberIdFrom+"/"+memberIdTo);
+            response = response.getJSONArray("rows").getJSONObject(0);
+            jLogger.i("This is the response for member benefits >>>>>>>>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+
+
+    }
+
+ 
 
 
 }
