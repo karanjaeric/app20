@@ -23,8 +23,11 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -2691,6 +2694,24 @@ public Double getMemberTotalUnits(String memberId) {
             return null;
         }
     }
+    
+    @Override
+public String getSchemeType(String schemeId) {
+    JSONObject response;
+    String planType;
+
+    try {
+        response = URLGet(APICall.GET_PLAN_TYPE + schemeId );
+       
+
+            planType   = response.getString("planType");
+            return  planType;
+      
+    } catch (JSONException je) {
+        jLogger.e("We have a json exception " + je.getMessage());
+        return null;
+    }
+}
 
 
     @Override
@@ -2783,12 +2804,17 @@ public Double getMemberTotalUnits(String memberId) {
     }
 
     @Override
-    public JSONObject calculateBenefitsProjections(String schemeId, String memberId, String dateOfCalc, String dateOfExit, String reasonforexitid, String projectionType, String isDcScheme, String memberIdFrom, String memberIdTo) {
+    public JSONObject calculateBenefitsProjections(String schemeId,String memberId,String dateOfExit,String reasonforexitid) {
 
-     JSONObject response;
+     
+		
+        
+        
+        
+        JSONObject response;
          try {
              //String params=schemeId +"/"+memberId+"/"+dateOfCalc+"/"+dateOfExit+"/"+reasonforexitid+"/"+projectionType+"/"+isDcScheme+"/"+memberIdFrom+"/"+memberIdTo;
-            response = URLGet(APICall.BENEFITS_PROJECTIONS+schemeId +"/"+memberId+"/"+dateOfCalc+"/"+dateOfExit+"/"+reasonforexitid+"/"+projectionType+"/"+isDcScheme+"/"+memberIdFrom+"/"+memberIdTo);
+            response = URLGet(APICall.BENEFITS_PROJECTIONS+dateOfExit+"/"+memberId+"/"+reasonforexitid+"/"+schemeId);
             response = response.getJSONArray("rows").getJSONObject(0);
             jLogger.i("This is the response for member benefits >>>>>>>>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<");
             return response;
@@ -2796,6 +2822,25 @@ public Double getMemberTotalUnits(String memberId) {
             jLogger.e("We have a json exception " + je.getMessage());
             return null;
         }
+
+
+    }
+
+    @Override
+    public JSONObject calculateDBBenefitsProjections(String schemeId, String memberId, String dateOfExit, String reasonforexitid) {
+
+           JSONObject response;
+         try {
+             //String params=schemeId +"/"+memberId+"/"+dateOfCalc+"/"+dateOfExit+"/"+reasonforexitid+"/"+projectionType+"/"+isDcScheme+"/"+memberIdFrom+"/"+memberIdTo;
+            response = URLGet(APICall.DB_BENEFITS_PROJECTIONS+dateOfExit+"/"+memberId+"/"+reasonforexitid+"/"+schemeId);
+            response = response.getJSONArray("rows").getJSONObject(0);
+            jLogger.i("This is the response for member benefits >>>>>>>>>>>>>>>>>>>>>>>> " + response + " <<<<<<<<<<<<");
+            return response;
+        } catch (JSONException je) {
+            jLogger.e("We have a json exception " + je.getMessage());
+            return null;
+        }
+
 
 
     }

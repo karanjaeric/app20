@@ -7,10 +7,10 @@
             <legend>Calculation Parameters</legend>
             <input type="hidden" name="projectedROR" id="projectedROR" value="${ settings.projectedROR }" />
             <input type="hidden" name="sid" id="sid" value="${scheme_id}">
-              <input type="hidden" name="mid" id="mid" value="${member_id}">
-               <input type="hidden" name="schemeType" id="stype" value="${scheme_type}">
-           
-            
+            <input type="hidden" name="mid" id="mid" value="${member_id}">
+            <input type="hidden" name="schemeType" id="stype" value="Defined Contribution">
+
+
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="dateOfExit" class="control-label">Exit Date:</label>
@@ -21,25 +21,14 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="projectionType" class="control-label">Projection Type:</label>
-
-                    <select id="projectionType" class="form-control">
-                        <option value="Reduced">Reduced</option>
-                        <option value="Unreduced">Unreduced</option>
-
-                    </select>
-                </div>
-            </div>
 
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="reasonForExit" class="control-label">Reason For Exit:</label>
 
                     <select id="reasonForExit" class="form-control">
-                        
-                        
+
+
 
                     </select>
                 </div>
@@ -57,32 +46,137 @@
         ${ content.text }
 
     </div>
+</div>
+<div class="container">
     <h3>PROJECTED RESULTS</h3>
 
-    <table class="table table-responsive table-striped results hide">
-        <tr><td class="right">PROJECTED ROR:</td><td class="left" id="ror">${ settings.projectedROR }</td><td class="right">PROJECTED CONTRIBUTIONS:</td><td class="left" id="projectedContrs">0.00</td><td class="right">PROJECTED ANNUAL CONTRIBUTIONS:</td><td class="left" id="projectedMonthlyContrs">0.00</td></tr>
-    </table>
+    <div class='col-md-8'>
+        <h3>EXIT DETAILS</h3>
+        <table class="table table-responsive table-striped results">
+            <tr>
+                <td>Date of Exit:</td>
+                <td><span id="date_of_exit"></span></td>
+
+            </tr>
+            <tr>
+                <td>Date of Calculation:</td>
+                <td><span id="date_of_calculation"></span></td>
+            </tr>
+            <tr>
+                <td>Reason for Exit:</td>
+                <td><span id="reason_for_exit"></span></td>
+
+            </tr>
+            <tr>
+                <td>Age at Exit:</td>
+                <td><span id="age_at_exit"></span></td>
+
+            </tr>
+            <tr>
+                <td>Pensionable Service:</td>
+                <td><span id="pensionable_service"></span></td>
+
+            </tr>
+            <tr>
+                <td>Total Benefits:</td>
+                <td><span id="total_benefits"></span></td>
+
+            </tr>
+        </table>
+
+
+
+
+
+        <h3>PENSION CALCULATION</h3>
+        <table class="table table-responsive table-striped results ">
+            <tr>
+                <td>Pension Purchase Price:</td>
+                <td><span id="pension_purchase_price"></span></td>
+
+            </tr>
+            <tr>
+                <td>Annual Pension:</td>
+                <td><span id="annual_pension"></span></td>
+            </tr>
+            <tr>
+                <td>Gross Monthly Pension:</td>
+                <td><span id="gross_monthly_pension"></span></td>
+
+            </tr>
+            <tr>
+                <td>Tax on Pension:</td>
+                <td><span id="tax_on_pension"></span></td>
+
+            </tr>
+            <tr>
+                <td>Net Monthly Pension:</td>
+                <td><span id="net_monthly_pension"></span></td>
+
+            </tr>
+
+        </table>
+
+
+        <h3>COMMUTED LUMPSUM</h3>
+        <table class="table table-responsive table-striped results">
+            <tr>
+                <td>Commuted Lumpsum:</td>
+                <td><span id="commuted_lumpsum"></span></td>
+
+            </tr>
+            <tr>
+                <td>Tax Free Lumpsum:</td>
+                <td><span id="tax_free_lumpsum"></span></td>
+            </tr>
+            <tr>
+                <td>Taxable Amount:</td>
+                <td><span id="taxable_amount"></span></td>
+
+            </tr>
+            <tr>
+                <td>Withholding Tax:</td>
+                <td><span id="withholding_tax"></span></td>
+
+            </tr>
+            <tr>
+                <td>Member's Liability:</td>
+                <td><span id="member_liability"></span></td>
+
+            </tr>
+            <tr>
+                <td>Lumpsum Payable:</td>
+                <td><span id="lumpsum_payable"></span></td>
+
+            </tr>
+
+
+        </table>
+    </div>
 </div>
+
+
+
 <c:if test="${ showScript }">
     <script type="text/javascript">
         $(document).ready(function () {
-            
-                  $.ajax({
+
+            $.ajax({
                 url: $('#base_url').val() + 'admin',
                 type: 'post',
-                data: {ACTION:'EXITREASONS'},
+                data: {ACTION: 'EXITREASONS'},
                 dataType: 'json',
-                success: function(json) {
-                    if(json.success)
+                success: function (json) {
+                    if (json.success)
                     {
                         json = $.parseJSON(json.data);
                         console.log(json);
 
                         var combo = "<select id=\"reasonForExit\" name=\"reasonForExit\" class=\"form-control\"><option>--Select Reason For Exit--</option>";
-                        $.each(json, function(key, value) {
-                            if(key === 'rows')
+                        $.each(json, function (key, value) {
+                            if (key === 'rows')
                             {
-                                for ( var i = 0; i < json.rows.length; i++) {
+                                for (var i = 0; i < json.rows.length; i++) {
                                     var row = json.rows[i];
                                     combo = combo + "<option value = " + row['id'] + ">" + row['reason'] + "</option>";
                                     array = json.rows;
@@ -92,17 +186,16 @@
                             }
                         });
                         $('#reasonForExit').html(combo);
-                    }
-                    else
+                    } else
                     {
                         stop_wait();
                         bootbox.alert('<p class="text-center">' + json.message + '</p>');
                     }
                 }
             });
-            
-            
-            
+
+
+
 
 
             $('.datepicker').datetimepicker(
@@ -253,11 +346,11 @@
                                                 isDcScheme: $(
                                                         '#stype')
                                                         .val(),
-                                                memberIdFrom:$('#mid')
+                                                memberIdFrom: $('#mid')
                                                         .val(),
-                                                memberIdTo:$('#mid')
+                                                memberIdTo: $('#mid')
                                                         .val()
-                                               
+
                                             },
                                             dataType: 'json',
                                             success: function (json) {
@@ -265,14 +358,40 @@
                                                 if (json.success) {
 
                                                     //console.log("ROR from settings: " + $('#projectedROR').val());
-                                                    console.log(json)
+                                                    console.log(json);
 
                                                     json = $.parseJSON(json.data);
+                                                     //alert(json.pensionable_service);
+                                                    $('#date_of_exit').html(json.calc_date);
+                                                        
+                                                    $('#date_of_calculation').html(json.calc_date);
+                                                       
+                                                    $('#reason_for_exit').html(json.exit_reason);
+                                                    $('#age_at_exit').html(precisionRound(json.age_at_exit,0));
+                                                    $('#pensionable_service').html(format_no(precisionRound(json.pensionable_service,1)));
+                                                    $('#total_benefits').html(format_no(precisionRound(json.total_benefits,1)));
+
+                                                    $('#pension_purchase_price').html(format_no(precisionRound(json.pension_purchase_price,1)));
+                                                    $('#annual_pension').html(format_no(precisionRound(json.annual_pension,1)));
+                                                    $('#gross_monthly_pension').html(format_no(precisionRound(json.gross_monthly_pension,1)));
+                                                    $('#tax_on_pension').html(format_no(precisionRound(json.tax_on_pension,1)));
+                                                    $('#net_monthly_pension').html(format_no(precisionRound(json.net_monthly_monthly,1)));
+
+                                                    $('#commuted_lumpsum').html(format_no(precisionRound(json.commuted_lumpsum,1)));
+                                                    $('#tax_free_lumpsum').html(format_no(precisionRound(json.tax_free_lumpsum,1)));
+                                                    $('#taxable_amount').html(format_no(precisionRound(json.taxable_income,1)));
+                                                    $('#withholding_tax').html(format_no(precisionRound(json.withholding_tax,1)));
+                                                    $('#member_liability').html(format_no(precisionRound(json.member_liability,1)));
+                                                    $('#lumpsum_payable').html(format_no(precisionRound(json.lumpsum_payable,1)));
 
 
-                                                    $('.results').removeClass('hide');
-                                                    $('#projectedContrs').html(format_no(json.projectedContrs));
-                                                    $('#projectedMonthlyContrs').html(format_no(json.projectedMonthlyContrs));
+
+
+
+
+                                                    //  $('.results').removeClass('hide');
+                                                    //$('#projectedContrs').html(format_no(json.projectedContrs));
+                                                    // $('#projectedMonthlyContrs').html(format_no(json.projectedMonthlyContrs));
                                                 } else {
                                                     bootbox
                                                             .alert(json.message);
@@ -282,5 +401,11 @@
 
                             });
         });
+        
+        
+            function precisionRound(number, precision) {
+        var factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
+    }
     </script>
 </c:if>

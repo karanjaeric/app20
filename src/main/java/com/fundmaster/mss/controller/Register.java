@@ -232,9 +232,9 @@ public class Register extends BaseServlet implements Serializable {
 
                                 
                             
-//                            if (clientSetup.getClientOrdinal() !=null && clientSetup.getClientOrdinal().equals("KP")) {
-//                                    u.setStatus(Boolean.TRUE);
-//                                }
+                            if (clientSetup.getClientOrdinal() !=null && clientSetup.getClientOrdinal().equals("KP")) {
+                                    u.setStatus(Boolean.TRUE);
+                                }
 
                             jLogger.i("The client is "+clientSetup.getClientOrdinal());
                             userBeanI.edit(u);
@@ -301,22 +301,22 @@ public class Register extends BaseServlet implements Serializable {
                                                 "In case you might have any enquiries, kindly contact Enterprise Trustees through our Call Center Number 0302634704 ", schemeId, false, null);
 
 
-                                emailsBeanI.sendEmail(
-                                     "Dear " + u.getUserProfile() + ", "
-                                     + "Your account has been created on the Fundmaster Member Self Service Portal. "
-
-                                      + "Please click this link or Copy this link to your browser" +
-                                              " " + settings.getPortalBaseURL() + "activate?" + securityCode
-                                      + " to complete the activation process." +
-
-                                              "Once you Activate your Account, proceed to login to your account using your email as the username and the password" +
-                                             "you provided during this registration process. " +
-
-                                                "In case you might have any enquiries, kindly contact Enterprise Trustees through our Call Center Number 0302634704 ");
-
-                                this.respond(response, true, "<strong>Registration Successful</strong><br /> "
-                                        + "Congratulations! Your account has been created on the portal. "
-                                        + "An email has been sent to your email address with account activation instructions.", null);
+//                                emailsBeanI.sendEmail(
+//                                     "Dear " + u.getUserProfile() + ", "
+//                                     + "Your account has been created on the Fundmaster Member Self Service Portal. "
+//
+//                                      + "Please click this link or Copy this link to your browser" +
+//                                              " " + settings.getPortalBaseURL() + "activate?" + securityCode
+//                                      + " to complete the activation process." +
+//
+//                                              "Once you Activate your Account, proceed to login to your account using your email as the username and the password" +
+//                                             "you provided during this registration process. " +
+//
+//                                                "In case you might have any enquiries, kindly contact Enterprise Trustees through our Call Center Number 0302634704 ");
+//
+//                                this.respond(response, true, "<strong>Registration Successful</strong><br /> "
+//                                        + "Congratulations! Your account has been created on the portal. "
+//                                        + "An email has been sent to your email address with account activation instructions.", null);
 
 
                                 String operationType = "ACCOUNT_REGISTRATION";

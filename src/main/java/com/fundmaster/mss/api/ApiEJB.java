@@ -123,7 +123,9 @@ public interface ApiEJB {
     List<Scheme> getSchemes(int start, int count);
 
    void mssAccountOperation(String memberId,String operationType,String operationStatus,String email,String phone,String ssnit);
-   JSONObject calculateBenefitsProjections(String schemeId,String memberId,String dateOfCalc,String dateOfExit,String reasonforexitid,String projectionType, String isDcScheme,String memberIdFrom,String memberIdTo);
-                                       
+   JSONObject calculateBenefitsProjections(String schemeId,String memberId,String dateOfExit,String reasonforexitid);
+         String getSchemeType(String schemeId);    
+            JSONObject calculateDBBenefitsProjections(String schemeId,String memberId,String dateOfExit,String reasonforexitid);
+
 
 }

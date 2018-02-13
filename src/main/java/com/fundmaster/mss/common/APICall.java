@@ -84,12 +84,14 @@ public class APICall {
     public static final String GET_MEMBER_LATEST_CONTRIBUTION="getmemberlatestcontribution/";
     //GET_MEMBER_TOTAL_UNITS
     public static final String GET_MEMBER_TOTAL_UNITS="getmembertotalunits/";
+    public static final String GET_PLAN_TYPE="getschemetype/";
 
 
     //GET_CURRENT_UNIT_PRICE
     public static final String GET_SPONSOR_INTEREST_RATES = "sponsor/getsponsorinterestrates/";
     public static final String WHAT_IF_ANALYSIS = "whatifanalysis/";
-    public static final String BENEFITS_PROJECTIONS = "calculateBenefitProjections/";
+    public static final String BENEFITS_PROJECTIONS = "benefitsprojectioncalculation/";
+    public static final String DB_BENEFITS_PROJECTIONS = "DBbenefitsprojectioncalculation/";
     public static final String SCHEME_GET_SCHEME_BY_SCHEME_MODE_AND_PLAN_TYPE = "scheme/getschemebyschememodeandplantype/";
     public static final String SCHEME_GET_SCHEME_BY_SCHEME_MODE = "scheme/getschemebyschememode/";
     public static final String ANNUITY_QUOTE_GET_ANNUITY_PRODUCTS = "annuity_quote/getannuityproducts";

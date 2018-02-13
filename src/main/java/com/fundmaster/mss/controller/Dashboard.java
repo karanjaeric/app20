@@ -570,12 +570,14 @@ public class Dashboard extends BaseServlet implements Serializable {
         String schemeId = "";
         schemeId = this.getSessKey(request, Constants.SCHEME_ID);
         jLogger.i("============ Member Scheme ID is: " + schemeId + " ===================");
+        String planType=apiEJB.getSchemeType(this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("scheme_id", schemeId);
         
            String member_id = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("member_id", member_id);
         String schemeType=Constants.SCHEME_TYPE;
         request.setAttribute("scheme_type", schemeType);
+        jLogger.i("============ Member Scheme type is: " + planType + " ===================");
                 
         
         
@@ -586,7 +588,13 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
         logActivity("WHAT IF ANALYSIS", "Accessed what if analysis page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed what if analysis page");
+        if(planType.equalsIgnoreCase("Defined Benefit")){
+            request.getRequestDispatcher("dbprojection.jsp").forward(request, response);
+            return;
+        }else{
         request.getRequestDispatcher("what-if-content.jsp").forward(request, response);
+        }
+        
     }
     
     

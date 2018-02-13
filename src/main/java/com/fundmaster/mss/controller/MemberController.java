@@ -653,6 +653,7 @@ public class MemberController extends BaseServlet implements Serializable {
         jLogger.i("Switched between schemes from scheme #" + this.getSessKey(request, Constants.SCHEME_ID)
                 + " to scheme #" + this.get(request, "schemeID"));
         session.setAttribute(Constants.SCHEME_ID, this.get(request, "schemeID"));
+        session.setAttribute(Constants.SCHEME_TYPE, this.get(request, "schemeType"));
 
 		this.respond(response, true, "Scheme changed successfully", null);
     }

@@ -39,9 +39,9 @@
                         var dob = "${myVal}";
                         var d = Date.parse(dob);
 
-                        var agediff=Date.now()-d;
-                        var ageDate=new Date(agediff);
-                        document.write(Math.abs(ageDate.getUTCFullYear()-1970));
+                        var agediff = Date.now() - d;
+                        var ageDate = new Date(agediff);
+                        document.write(Math.abs(ageDate.getUTCFullYear() - 1970));
 
                     </script>
 
@@ -80,29 +80,29 @@
 
 
         </table>
-            <h3 class="text-center"><small>MEMBER BENEFITS DETAILS</small></h3>
-            <table class="table table-responsive table-striped">
-                <tr>
-                    <th>Contribution Category</th>
-                    <th>Amount</th>
-                <tr>
-                    <tr>
-                        <td>Employee</td><td><span id="benefits-ee"></span></td>
-                        </tr>
-                        <tr>
-                        <td>Employer</td><td><span id="benefits-er"></td>
-                        </tr>
-                        <tr>
-                        <td>Additional Voluntary Contribution</td><td><span id="benefits-avc"></td>
-                        </tr>
-                        <tr>
-                        <td>Interest:</td><td><span id="benefits-interest"></td>
-                        </tr>
-                         <tr>
-                        <td>Grand Total:</td><td><span id="benefits-grandTotal"></td>
-                        </tr>
-                        
-            </table>
+        <h3 class="text-center"><small>MEMBER BENEFITS DETAILS</small></h3>
+        <table class="table table-responsive table-striped">
+            <tr>
+                <th>Contribution Category</th>
+                <th>Amount</th>
+            <tr>
+            <tr>
+                <td>Employee</td><td><span id="benefits-ee"></span></td>
+            </tr>
+            <tr>
+                <td>Employer</td><td><span id="benefits-er"></td>
+            </tr>
+            <tr>
+                <td>Additional Voluntary Contribution</td><td><span id="benefits-avc"></td>
+            </tr>
+            <tr>
+                <td>Interest:</td><td><span id="benefits-interest"></td>
+            </tr>
+            <tr>
+                <td>Grand Total:</td><td><span id="benefits-grandTotal"></td>
+            </tr>
+
+        </table>
     </div>
     <div class="col-md-6 border-left">
         <h3 class="text-center"><small>DISTRIBUTION TO BENEFICIARIES</small></h3>
@@ -181,6 +181,29 @@
         function initialize()
         {
             start_wait();
+
+            $.ajax({
+                url: $('#base_url').val() + 'member',
+                type: 'post',
+                data: {ACTION: 'BI'},
+                dataType: 'json',
+                success: function (json) {
+                    if (json.success)
+                    {
+
+                        json = $.parseJSON(json.data);
+                        $('#benefits-ee').html(format_no(json.ee));
+                        $('#benefits-er').html(format_no(json.er));
+                        $('#benefits-avc').html(format_no(json.avc));
+                        $('#benefits-grandTotal').html(format_no(json.grandTotal));
+                        $('#benefits-interest').html(format_no(json.interest));
+                    } else
+                    {
+                        //stop_wait();
+                        // bootbox.alert('<p class="text-center">' + json.message + '</p>');
+                    }
+                }
+            });
 
             var currency = null;
             /* Load Currency */
@@ -293,34 +316,9 @@
                                                                 }
                                                             }
                                                         });
-                                                        
-                                                        //load member benefits info
-                                                        
-                                                        
-                                                             $.ajax({
-                                                            url: $('#base_url').val() + 'member',
-                                                            type: 'post',
-                                                            data: {ACTION: 'BI'},
-                                                            dataType: 'json',
-                                                            success: function (json) {
-                                                                if (json.success)
-                                                                {
 
-                                                                    json = $.parseJSON(json.data);
-                                                                    $('#benefits-ee').html(format_no(json.ee));
-                                                                    $('#benefits-er').html(format_no(json.er));
-                                                                    $('#benefits-avc').html(format_no(json.avc));
-                                                                    $('#benefits-grandTotal').html(format_no(json.grandTotal));
-                                                                     $('#benefits-interest').html(format_no(json.interest));
-                                                                } else
-                                                                {
-                                                                  stop_wait();
-                                                                   // bootbox.alert('<p class="text-center">' + json.message + '</p>');
-                                                                }
-                                                            }
-                                                        });
-                                                        
-                                                        
+
+
                                                     }
                                                 });
                                             }
