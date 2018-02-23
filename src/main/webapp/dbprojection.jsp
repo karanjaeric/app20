@@ -8,7 +8,7 @@
             <input type="hidden" name="projectedROR" id="projectedROR" value="${ settings.projectedROR }" />
             <input type="hidden" name="sid" id="dbsid" value="${scheme_id}">
             <input type="hidden" name="mid" id="dbmid" value="${member_id}">
-      
+
 
 
             <div class="col-md-3">
@@ -52,106 +52,102 @@
 
     <div class='col-md-8'>
         <h3>EXIT DETAILS</h3>
-        <table class="table table-responsive table-striped results">
-            <tr>
-                <td>Date of Exit:</td>
-                <td><span id="DBdate_of_exit"></span></td>
+        <table class="table table-responsive table-striped results" id="dbProjections">
+            <thead>
+                <tr>
+                    <th>Heading</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Date of Exit:</td>
+                    <td><span id="DBdate_of_exit"></span></td>
 
-            </tr>
-            <tr>
-                <td>Date of Calculation:</td>
-                <td><span id="DBdate_of_calculation"></span></td>
-            </tr>
-            <tr>
-                <td>Reason for Exit:</td>
-                <td><span id="DBreason_for_exit"></span></td>
+                </tr>
+                <tr>
+                    <td>Date of Calculation:</td>
+                    <td><span id="DBdate_of_calculation"></span></td>
+                </tr>
+                <tr>
+                    <td>Reason for Exit:</td>
+                    <td><span id="DBreason_for_exit"></span></td>
 
-            </tr>
-            <tr>
-                <td>Age at Exit:</td>
-                <td><span id="DBage_at_exit"></span></td>
+                </tr>
+                <tr>
+                    <td>Age at Exit:</td>
+                    <td><span id="DBage_at_exit"></span></td>
 
-            </tr>
-            <tr>
-                <td>Pensionable Service:</td>
-                <td><span id="DBpensionable_service"></span></td>
+                </tr>
+                <tr>
+                    <td>Pensionable Service:</td>
+                    <td><span id="DBpensionable_service"></span></td>
 
-            </tr>
-            <tr>
-                <td>Final Pensionable Salary:</td>
-                <td><span id="DBfinal_pensionable_salary"></span></td>
+                </tr>
+                <tr>
+                    <td>Final Pensionable Salary:</td>
+                    <td><span id="DBfinal_pensionable_salary"></span></td>
 
-            </tr>
+                </tr>
+                <tr><td><h3>PENSION CALCULATION</h3></td><td></td></tr>
+                <tr>
+                    <td>Target Pension:</td>
+                    <td><span id="DBtarget_pension"></span></td>
+
+                </tr>
+                <tr>
+                    <td>Annual Pension:</td>
+                    <td><span id="DBannual_pension"></span></td>
+                </tr>
+                <tr>
+                    <td>Gross Monthly Pension:</td>
+                    <td><span id="DBgross_monthly_pension"></span></td>
+
+                </tr>
+                <tr>
+                    <td>Tax on Pension:</td>
+                    <td><span id="DBtax_on_pension"></span></td>
+
+                </tr>
+                <tr>
+                    <td>Net Monthly Pension:</td>
+                    <td><span id="DBnet_monthly_pension"></span></td>
+
+                </tr>
+
+                <tr><td><h3>COMMUTED LUMPSUM</h3></td><td></td></tr>
+                <tr>
+                    <td>Commuted Lumpsum:</td>
+                    <td><span id="DBcommuted_lumpsum"></span></td>
+
+                </tr>
+                <tr>
+                    <td>Tax Free Lumpsum:</td>
+                    <td><span id="DBtax_free_lumpsum"></span></td>
+                </tr>
+                <tr>
+                    <td>Taxable Amount:</td>
+                    <td><span id="DBtaxable_amount"></span></td>
+
+                </tr>
+                <tr>
+                    <td>Withholding Tax:</td>
+                    <td><span id="DBwithholding_tax"></span></td>
+
+                </tr>
+                <tr>
+                    <td>Member's Liability:</td>
+                    <td><span id="DBmember_liability"></span></td>
+
+                </tr>
+                <tr>
+                    <td>Lumpsum Payable:</td>
+                    <td><span id="DBlumpsum_payable"></span></td>
+
+                </tr>
+            </tbody>
         </table>
 
-
-
-
-
-        <h3>PENSION CALCULATION</h3>
-        <table class="table table-responsive table-striped results ">
-            <tr>
-                <td>Target Pension:</td>
-                <td><span id="DBtarget_pension"></span></td>
-
-            </tr>
-            <tr>
-                <td>Annual Pension:</td>
-                <td><span id="DBannual_pension"></span></td>
-            </tr>
-            <tr>
-                <td>Gross Monthly Pension:</td>
-                <td><span id="DBgross_monthly_pension"></span></td>
-
-            </tr>
-            <tr>
-                <td>Tax on Pension:</td>
-                <td><span id="DBtax_on_pension"></span></td>
-
-            </tr>
-            <tr>
-                <td>Net Monthly Pension:</td>
-                <td><span id="DBnet_monthly_pension"></span></td>
-
-            </tr>
-
-        </table>
-
-
-        <h3>COMMUTED LUMPSUM</h3>
-        <table class="table table-responsive table-striped results">
-            <tr>
-                <td>Commuted Lumpsum:</td>
-                <td><span id="DBcommuted_lumpsum"></span></td>
-
-            </tr>
-            <tr>
-                <td>Tax Free Lumpsum:</td>
-                <td><span id="DBtax_free_lumpsum"></span></td>
-            </tr>
-            <tr>
-                <td>Taxable Amount:</td>
-                <td><span id="DBtaxable_amount"></span></td>
-
-            </tr>
-            <tr>
-                <td>Withholding Tax:</td>
-                <td><span id="DBwithholding_tax"></span></td>
-
-            </tr>
-            <tr>
-                <td>Member's Liability:</td>
-                <td><span id="DBmember_liability"></span></td>
-
-            </tr>
-            <tr>
-                <td>Lumpsum Payable:</td>
-                <td><span id="DBlumpsum_payable"></span></td>
-
-            </tr>
-
-
-        </table>
     </div>
 </div>
 
@@ -361,30 +357,48 @@
                                                     console.log(json);
 
                                                     json = $.parseJSON(json.data);
-                                                     //alert(json.annualSalary);
+                                                    //alert(json.annualSalary);
                                                     $('#DBdate_of_exit').html(json.dateOfExit);
-                                                        
+
                                                     $('#DBdate_of_calculation').html(json.dateOfCalculation);
-                                                       
+
                                                     $('#DBreason_for_exit').html(json.reasonForExit);
-                                                    $('#DBage_at_exit').html(precisionRound(json.ageAtExit,0));
-                                                    $('#DBpensionable_service').html(format_no(precisionRound(json.yearsWorked,1)));
-                                                    $('#DBfinal_pensionable_salary').html(format_no(precisionRound(json.annualSalary,1)));
+                                                    $('#DBage_at_exit').html(precisionRound(json.ageAtExit, 0));
+                                                    $('#DBpensionable_service').html(format_no(precisionRound(json.yearsWorked, 1)));
+                                                    $('#DBfinal_pensionable_salary').html(format_no(precisionRound(json.annualSalary, 1)));
 
-                                                    $('#DBtarget_pension').html(format_no(precisionRound(json.targetPension,1)));
-                                                    $('#DBannual_pension').html(format_no(precisionRound(json.annualPension,1)));
-                                                    $('#DBgross_monthly_pension').html(format_no(precisionRound(json.monthlyPension,1)));
-                                                    $('#DBtax_on_pension').html(format_no(precisionRound(json.taxOnPension,1)));
-                                                    $('#DBnet_monthly_pension').html(format_no(precisionRound(json.totMonthlyPens,1)));
+                                                    $('#DBtarget_pension').html(format_no(precisionRound(json.targetPension, 1)));
+                                                    $('#DBannual_pension').html(format_no(precisionRound(json.annualPension, 1)));
+                                                    $('#DBgross_monthly_pension').html(format_no(precisionRound(json.monthlyPension, 1)));
+                                                    $('#DBtax_on_pension').html(format_no(precisionRound(json.taxOnPension, 1)));
+                                                    $('#DBnet_monthly_pension').html(format_no(precisionRound(json.totMonthlyPens, 1)));
 
-                                                    $('#DBcommuted_lumpsum').html(format_no(precisionRound(json.totBen,1)));
-                                                    $('#DBtax_free_lumpsum').html(format_no(precisionRound(json.lumpsumTaxFree,1)));
-                                                    $('#DBtaxable_amount').html(format_no(precisionRound(json.taxableAmount,1)));
-                                                    $('#DBwithholding_tax').html(format_no(precisionRound(json.withHTax,1)));
-                                                    $('#DBmember_liability').html(format_no(precisionRound(json.totLiabilities,1)));
-                                                    $('#DBlumpsum_payable').html(format_no(precisionRound(json.netPay,1)));
+                                                    $('#DBcommuted_lumpsum').html(format_no(precisionRound(json.totBen, 1)));
+                                                    $('#DBtax_free_lumpsum').html(format_no(precisionRound(json.lumpsumTaxFree, 1)));
+                                                    $('#DBtaxable_amount').html(format_no(precisionRound(json.taxableAmount, 1)));
+                                                    $('#DBwithholding_tax').html(format_no(precisionRound(json.withHTax, 1)));
+                                                    $('#DBmember_liability').html(format_no(precisionRound(json.totLiabilities, 1)));
+                                                    $('#DBlumpsum_payable').html(format_no(precisionRound(json.netPay, 1)));
+
+                                                    $('#dbProjections').DataTable({
+                                                        dom: 'Bfrtip',
+                                                        "searching": false,
+                                                        "bSort": false,
+                                                        //bFilter: false,
+                                                        paging: false,
+                                                        buttons: [
+
+                                                            {
+                                                                extend: 'pdfHtml5',
+                                                                title: 'DC Projection',
+                                                                orientation: 'landscape', //landscape give you more space
+                                                                pageSize: 'A5'//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
 
 
+                                                            }
+
+                                                        ]
+                                                    });
 
 
 
@@ -401,11 +415,11 @@
 
                             });
         });
-        
-        
-            function precisionRound(number, precision) {
-        var factor = Math.pow(10, precision);
-        return Math.round(number * factor) / factor;
-    }
+
+
+        function precisionRound(number, precision) {
+            var factor = Math.pow(10, precision);
+            return Math.round(number * factor) / factor;
+        }
     </script>
 </c:if>

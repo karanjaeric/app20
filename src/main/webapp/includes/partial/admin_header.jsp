@@ -32,25 +32,28 @@
 	media="screen">
 <link rel="stylesheet" type="text/css"
 	href="static/bootstrap-3.3.5/css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="static/bootstrap-3.3.5/css/bootstrap-colorpicker.min.css" />
 <link rel="stylesheet" type="text/css" href="static/font-awesome-4.3.0/css/font-awesome.min.css" />
 <!--<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>-->
 <link href='static/custom/css/fonts.css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+
 <link rel="icon" href="static/images/favicon.ico">
 <script src="static/custom/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 <script type="text/javascript" src="static/jquery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="static/jquery/datePicker.js"></script>
 <script type="text/javascript" src="static/bootstrap-3.3.5/js/colorpicker-color.js"></script>
+<link href="DataTables/datatables.css" rel="stylesheet" type="text/css"/>
 
-	<!-- DataTables JS-->
-<script type="text/javascript" src="static/datatables/js/datatables.min.js"></script>
-<script type="text/javascript" src="static/datatables/js/dataTables.bootstrap.min.js"></script>
+
+
+    
+   
+
+<script src="DataTables/datatables.min.js" type="text/javascript"></script>
+
 
 </head>
 

@@ -2,6 +2,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate var="year" value="${now}" pattern="yyyy" />
+
 <div class="container-fluid section">
     <h3 class="text-center main-title">
         <i
@@ -81,26 +82,61 @@
 
         </table>
         <h3 class="text-center"><small>MEMBER BENEFITS DETAILS</small></h3>
-        <table class="table table-responsive table-striped">
-            <tr>
-                <th>Contribution Category</th>
-                <th>Amount</th>
-            <tr>
-            <tr>
-                <td>Employee</td><td><span id="benefits-ee"></span></td>
-            </tr>
-            <tr>
-                <td>Employer</td><td><span id="benefits-er"></td>
-            </tr>
-            <tr>
-                <td>Additional Voluntary Contribution</td><td><span id="benefits-avc"></td>
-            </tr>
-            <tr>
-                <td>Interest:</td><td><span id="benefits-interest"></td>
-            </tr>
-            <tr>
-                <td>Grand Total:</td><td><span id="benefits-grandTotal"></td>
-            </tr>
+        <table class="table table-responsive table-striped" id="memberBenefitsDetails">
+            <thead>
+                <tr>
+                    <th>Contribution Category</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+
+                <tr>
+                    <td>Employee</td>
+                    <td>
+                        <fmt:formatNumber value = "${memberBenefitsDto.employee}"  type = "number"/>
+                  
+                    </td>
+                </tr>
+                <tr>
+                    <td>Employer</td>
+                    <td>
+                        <fmt:formatNumber value = "${memberBenefitsDto.employer}"  type = "number"/>
+                                                  
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Additional Voluntary Contribution</td>
+                    <td>
+                        <fmt:formatNumber value = "${memberBenefitsDto.avc}"  type = "number"/>
+                    
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Interest:</td>
+                    <td>
+                         <fmt:formatNumber value = "${memberBenefitsDto.interest}"  type = "number"/>
+                    
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Grand Total:</td>
+                    <td>
+                         <fmt:formatNumber value = "${memberBenefitsDto.grandTotal}"  type = "number"/>
+                  
+
+
+                    </td>
+                </tr>
+
+         
+            </tbody>
 
         </table>
     </div>
@@ -150,21 +186,35 @@
         </c:otherwise>
     </c:choose>
 
-    <!-- <div class="col-md-4 border-top">
-            <h2 class="text-center">BENEFIT SUMMARY</h2>
-                                    <h3 class="text-center"><small>ACCUMMULATED BENEFITS</small></h3>
-                                            <div align="center">
-                                                    <h1 class="numberCircle" id="accummulated-benefit">--</h1>
-                                            </div>	
-    <h3 class="text-center"><small>INTEREST SUMMARY</small></h3>
-            <table class="table table-responsive">
-                    <tr><td>CUMMULATIVE INTEREST</td><td id="cummulative-interest"></td></tr>
-                    <tr><td>AVERAGE INTEREST RATE</td><td id="average-interest"></td></tr>
-            </table>
-    </div>-->
+
 </div>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('#memberBenefitsDetails').DataTable({
+
+            dom: 'Bfrtip',
+            "searching": false,
+            "bSort" : false,
+            //bFilter: false,
+            paging: false,
+
+            buttons: [
+
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Benefit Details',
+                    orientation: 'landscape', //landscape give you more space
+                    pageSize: 'A5' //A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+
+
+
+                }
+
+            ]
+        });
+    });
+
     $(document).ready(function () {
 
         function start_wait()
@@ -182,28 +232,7 @@
         {
             start_wait();
 
-            $.ajax({
-                url: $('#base_url').val() + 'member',
-                type: 'post',
-                data: {ACTION: 'BI'},
-                dataType: 'json',
-                success: function (json) {
-                    if (json.success)
-                    {
 
-                        json = $.parseJSON(json.data);
-                        $('#benefits-ee').html(format_no(json.ee));
-                        $('#benefits-er').html(format_no(json.er));
-                        $('#benefits-avc').html(format_no(json.avc));
-                        $('#benefits-grandTotal').html(format_no(json.grandTotal));
-                        $('#benefits-interest').html(format_no(json.interest));
-                    } else
-                    {
-                        //stop_wait();
-                        // bootbox.alert('<p class="text-center">' + json.message + '</p>');
-                    }
-                }
-            });
 
             var currency = null;
             /* Load Currency */

@@ -125,64 +125,7 @@
 
 
 
-<%--&lt;%&ndash;ACTIVATE ACCOUNT USING SMS CODE&ndash;%&gt;--%>
-<%--<div class="modal fade" id="modal-sms-code" tabindex="-1"--%>
-	 <%--role="dialog" aria-labelledby="myModalLabelSms" aria-hidden="true">--%>
-	<%--<form role="form" id="form-sms-code">--%>
-		<%--<div class="modal-dialog">--%>
-			<%--<div class="modal-content">--%>
-				<%--<div class="modal-header">--%>
-					<%--<button type="button" class="close" data-dismiss="modal">&times;</button>--%>
-					<%--<h4 class="modal-title text-center" id="myModalLabelSms">--%>
-						<%--<i class="fa fa-bookmark"></i>&nbsp;&nbsp;<small>Please Enter the received code</small>--%>
-					<%--</h4>--%>
-				<%--</div>--%>
-				<%--<div class="modal-body">--%>
 
-					<%--<div class="form-group">--%>
-						<%--<label for="code" class="control-label">Activation Code:</label>--%>
-						<%--<input type="text" name="code" class="form-control"--%>
-							   <%--id="code" placeholder="Your Activation code">--%>
-					<%--</div>--%>
-					<%--<p>We will Activate your Account</p>--%>
-				<%--</div>--%>
-				<%--<div class="modal-footer">--%>
-					<%--<button class="btn btn-success pull-right" >ACTIVATE</button>--%>
-					<%--<button class="btn btn-danger pull-left" id="resendCodeBtn">RESEND CODE</button>--%>
-				<%--</div>--%>
-			<%--</div>--%>
-		<%--</div>--%>
-	<%--</form>--%>
-<%--</div>--%>
-<%--&lt;%&ndash;//modal-resend-code&ndash;%&gt;--%>
-
-<%--<div class="modal fade" id="modal-resend-code" tabindex="-1"--%>
-	 <%--role="dialog" aria-labelledby="myModalLabelSms" aria-hidden="true">--%>
-	<%--<form role="form" id="form-resend-code">--%>
-		<%--<div class="modal-dialog">--%>
-			<%--<div class="modal-content">--%>
-				<%--<div class="modal-header">--%>
-					<%--<button type="button" class="close" data-dismiss="modal">&times;</button>--%>
-					<%--<h4 class="modal-title text-center" id="myModalLabelSmsResend">--%>
-						<%--<i class="fa fa-bookmark"></i>&nbsp;&nbsp;<small>Please Enter Your Phone Number </small>--%>
-					<%--</h4>--%>
-				<%--</div>--%>
-				<%--<div class="modal-body">--%>
-
-					<%--<div class="form-group">--%>
-						<%--<label for="code" class="control-label">Phone Number:</label>--%>
-						<%--<input type="text" name="phoneNumber" class="form-control"--%>
-							   <%--id="phoneNumber" placeholder="Your Phone Number code">--%>
-					<%--</div>--%>
-					<%--<p>We will Resend your Code</p>--%>
-				<%--</div>--%>
-				<%--<div class="modal-footer">--%>
-					<%--<button class="btn btn-success pull-right" >RESEND</button>--%>
- 				<%--</div>--%>
-			<%--</div>--%>
-		<%--</div>--%>
-	<%--</form>--%>
-<%--</div>--%>
 <div class="container-fluid footer">
 	<p>&copy; Copyright <c:out value="${currentYear}" />. All Rights Reserved. Systech Ltd.</p>
 </div>
@@ -193,6 +136,7 @@
 </div>
 <input type="hidden" id="base_url" value="<%=request.getContextPath()%>/" />
 <script src="static/custom/vendors/jquery-1.9.1.min.js"></script>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
 <script type="text/javascript"
 	src="static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script type="text/javascript"
@@ -210,7 +154,11 @@
 <script type="text/javascript" src="static/custom/js/core.js"></script>
 <script type="text/javascript" src="static/custom/js/plugins/jquery.appear/jquery.appear.js"></script>
 
-<script src="static/custom/assets/jspdf.min.js" type="text/javascript"></script>
+<!--<script src="static/jspdf.js" type="text/javascript"></script>-->
+
+
+
+
 
 <script type="text/javascript">
 	$(document).ready(function(){

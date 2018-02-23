@@ -208,28 +208,7 @@
                             <input type="text" name="designation" id="designation" placeholder="Desgnation" class="form-control  input-sm" value="${ member.designation }" ${memberPermission.designation == 'TRUE' ? '' : 'disabled'}/>
                         </div>
                     </div>
-                    <%--<div class="form-group">--%>
-                    <%--<label for="partnerNumber" class="col-sm-6 control-label">Partner Number:</label>--%>
-                    <%--<div class="col-sm-6"><input type="text" readonly="readonly" name="partnerNumber"--%>
-                    <%--class="form-control  input-sm" id="partnerNumber"--%>
-                    <%--placeholder="Partner Number" value="${ member.partnerNo }" ${memberPermission.dateOfBirth == 'TRUE' ? '' : 'disabled'}>--%>
-                    <%--</div>--%>
-                    <%--</div>--%>
 
-
-
-                    <!--<div class="form-group">
-                            <label for="currentAnnualPensionableSalary" class="col-sm-6 control-label">Annual Pen. Sal:</label>
-                            <div class="col-sm-6"><input type="text" name="currentAnnualPensionableSalary" class="form-control  input-sm"
-                                    id="currentAnnualPensionableSalary" value="${ member.annualPensionableSalary }" placeholder="Annual Pensionable Salary" ${memberPermission.annualPensionableSalary == 'TRUE' ? '' : 'disabled'}>
-                            </div>
-                    </div>
-                    <div class="form-group">
-                            <label for="staffNo" class="col-sm-6 control-label">Staff Number:</label>
-                            <div class="col-sm-6">
-                            <input type="text" name="staffNo" id="staffNo" placeholder="Staff Number" class="form-control  input-sm" value="${ member.staffNo }" ${memberPermission.staffNo == 'TRUE' ? '' : 'disabled'}/>
-                            </div>
-                    </div>-->
 
 
 
@@ -288,25 +267,32 @@
                     <legend>
                         <i class="fa fa-user"></i> &nbsp;Beneficiaries
                     </legend>
-                    <table class="table table-responsive table-striped">
-                        <!--<button type="button" class="btn btn-success" onclick="genBeneficiariesPDF()">Download Beneficiaries</button>-->
-                        <tr style="font-size: smaller"><th>NAME</th><th>RELATIONSHIP</th><th>ENTITLEMENT</th><th>ACTIONS</th></tr>
-                                <c:forEach var="beneficiary" items="${ beneficiaries }">
-                            <tr><td> ${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td>
-                                <td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${ profile == 'MEMBER' }">
-                                            <a class="btn btn-warning btn-sm" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">												</c:when>
-                                            <c:otherwise>
-                                                <a class="btn btn-warning btn-sm disabled" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">												</c:otherwise>
-                                            </c:choose>
-                                            <i class="glyphicon glyphicon-pencil"></i>&nbsp;EDIT</a>&nbsp;
+                    <table style="font-size: 12px" class="table table-responsive table-condensed table-hover table-striped" id="beneficiariesTbl">
+                        <thead>
+                            <!--<button type="button" class="btn btn-success" onclick="genBeneficiariesPDF()">Download Beneficiaries</button>-->
+                            <tr style="font-size: smaller"><th>Name</th><th>Relationship</th><th>Entitlement</th><th>Actions</th></tr>
 
-                                        <a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="view_beneficiary('${beneficiary.id}')">
-                                            <i class="glyphicon glyphicon-apple">&nbsp;VIEW</i></a>&nbsp;
-                                </td></tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="beneficiary" items="${ beneficiaries }">
+                                <tr><td> ${beneficiary.surname } ${ beneficiary.firstname } ${ beneficiary.othernames }</td>
+                                    <td>${ beneficiary.relationship }</td><td>${ beneficiary.lumpsumEntitlement }</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${ profile == 'MEMBER' }">
+                                                <a class="btn btn-warning btn-sm" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">												</c:when>
+                                                <c:otherwise>
+                                                    <a class="btn btn-warning btn-sm disabled" href="javascript:void(0);"  onclick="edit_beneficiary('${ beneficiary.id }')">												</c:otherwise>
+                                                </c:choose>
+                                                <i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit</a>&nbsp;
+
+                                            <a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="view_beneficiary('${beneficiary.id}')">
+                                                <i class="glyphicon glyphicon-apple"></i>&nbsp;View</a>&nbsp;
+                                    </td>
+                                </tr>
+
                             </c:forEach>
+                        </tbody>
                     </table>
                     <c:choose>
                         <c:when test="${totalPercentageLumpsum ==100}">
@@ -360,459 +346,438 @@
 
     </div>
 </div>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
 
-    function add_beneficiary()
-    {
-        start_wait();
-        $.ajax({
-            url: $('#base_url').val() + 'admin',
-            type: 'post',
-            data: {ACTION: 'GET_BENEFICIARY', memberID: $('#member_id').val(), type: 'ADD'},
-            dataType: 'html',
-            success: function (html) {
-                stop_wait();
-                $('#modal-edit-beneficiary').modal('show');
-                $('#beneficiary-content').html(html);
-
-            }
-        });
-    }
-    function edit_beneficiary(id)
-    {
-        start_wait();
-        $.ajax({
-            url: $('#base_url').val() + 'admin',
-            type: 'post',
-            data: {ACTION: 'GET_BENEFICIARY', beneficiaryID: id, memberID: $('#member_id').val(), type: 'EDIT'},
-            dataType: 'html',
-            success: function (html) {
-                stop_wait();
-                $('#modal-edit-beneficiary').modal('show');
-
-
-                $('#beneficiary-content').html(html);
-
-            }
-        });
-    }
-
-    function view_beneficiary(id)
-    {
-        start_wait();
-        $.ajax({
-            url: $('#base_url').val() + 'admin',
-            type: 'post',
-            data: {ACTION: 'VIEW_BENEFICIARY', beneficiaryID: id, memberID: $('#member_id').val()},
-            dataType: 'html',
-            success: function (html) {
-                $('#beneficiary-content2').html(html);
-                $('#modal-view-beneficiary').modal('show');
-
-                stop_wait();
-            }
-        });
-    }
-
-    $(document).ready(function () {
-        $('#pi-form')
-                .bootstrapValidator(
-                        {
-                            excluded: ':disabled',
-                            message: 'This value is not valid',
-                            feedbackIcons: {
-                                valid: 'glyphicon glyphicon-ok',
-                                invalid: 'glyphicon glyphicon-remove',
-                                validating: 'glyphicon glyphicon-refresh'
-                            },
-                            fields: {
-                                firstname: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter your firstname'
+                                        function add_beneficiary()
+                                        {
+                                            start_wait();
+                                            $.ajax({
+                                                url: $('#base_url').val() + 'admin',
+                                                type: 'post',
+                                                data: {ACTION: 'GET_BENEFICIARY', memberID: $('#member_id').val(), type: 'ADD'},
+                                                dataType: 'html',
+                                                success: function (html) {
+                                                    stop_wait();
+                                                    $('#modal-edit-beneficiary').modal('show');
+                                                    $('#beneficiary-content').html(html);
+                                                }
+                                            });
                                         }
-                                    }
-                                },
-                                surname: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter your surname'
+                                        function edit_beneficiary(id)
+                                        {
+                                            start_wait();
+                                            $.ajax({
+                                                url: $('#base_url').val() + 'admin',
+                                                type: 'post',
+                                                data: {ACTION: 'GET_BENEFICIARY', beneficiaryID: id, memberID: $('#member_id').val(), type: 'EDIT'},
+                                                dataType: 'html',
+                                                success: function (html) {
+                                                    stop_wait();
+                                                    $('#modal-edit-beneficiary').modal('show');
+                                                    $('#beneficiary-content').html(html);
+                                                }
+                                            });
                                         }
-                                    }
-                                },
-                                othernames: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter your other names'
+
+                                        function view_beneficiary(id)
+                                        {
+                                            start_wait();
+                                            $.ajax({
+                                                url: $('#base_url').val() + 'admin',
+                                                type: 'post',
+                                                data: {ACTION: 'VIEW_BENEFICIARY', beneficiaryID: id, memberID: $('#member_id').val()},
+                                                dataType: 'html',
+                                                success: function (html) {
+                                                    $('#beneficiary-content2').html(html);
+                                                    $('#modal-view-beneficiary').modal('show');
+                                                    stop_wait();
+                                                }
+                                            });
                                         }
-                                    }
-                                },
-                                currentAnnualPensionableSalary: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter your current salary'
-                                        }
-                                    }
-                                },
-                                gender: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select your gender'
-                                        }
-                                    }
-                                },
-                                dateOfBirth: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select your date of birth'
-                                        }
-                                    }
-                                },
-                                idNumber: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter your ID Number'
-                                        }
-                                    }
-                                },
-                                emailAddress: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter your email address'
-                                        }
-                                    }
-                                },
-                                maritalStatus: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select the marital status'
-                                        }
-                                    }
-                                },
-                                phoneNumber: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter your phone number'
-                                        }
-                                    }
-                                },
-                                postalAddress: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select your postal/residential address'
-                                        }
-                                    }
-                                },
-                                city: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter your town/city'
-                                        }
-                                    }
-                                },
-                                country: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select your country'
-                                        }
-                                    }
-                                },
-                            }
-                        })
-                .on(
-                        'success.form.bv',
-                        function (e) {
-                            start_wait();
-                            // Prevent form submission
-                            e.preventDefault();
 
-                            // Get the form instance
-                            var form = "pi-form";
-                            console.log('The form is: ' + form);
+                                        $(document).ready(function () {
+                                            $('#pi-form')
+                                                    .bootstrapValidator(
+                                                            {
+                                                                excluded: ':disabled',
+                                                                message: 'This value is not valid',
+                                                                feedbackIcons: {
+                                                                    valid: 'glyphicon glyphicon-ok',
+                                                                    invalid: 'glyphicon glyphicon-remove',
+                                                                    validating: 'glyphicon glyphicon-refresh'
+                                                                },
+                                                                fields: {
+                                                                    firstname: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter your firstname'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    surname: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter your surname'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    othernames: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter your other names'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    currentAnnualPensionableSalary: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter your current salary'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    gender: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select your gender'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    dateOfBirth: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select your date of birth'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    idNumber: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter your ID Number'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    emailAddress: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter your email address'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    maritalStatus: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select the marital status'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    phoneNumber: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter your phone number'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    postalAddress: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select your postal/residential address'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    city: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter your town/city'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    country: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select your country'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                }
+                                                            })
+                                                    .on(
+                                                            'success.form.bv',
+                                                            function (e) {
+                                                                start_wait();
+                                                                // Prevent form submission
+                                                                e.preventDefault();
+                                                                // Get the form instance
+                                                                var form = "pi-form";
+                                                                console.log('The form is: ' + form);
+                                                                /*var formData = new FormData($(this)[0]);
+                                                                 
+                                                                 memberID = $('#member_id').val();
+                                                                 formData.append("memberID", memberID);
+                                                                 
+                                                                 memberNo = $('#member_no').val();
+                                                                 formData.append("memberNo", memberNo);*/
 
-                            /*var formData = new FormData($(this)[0]);
-                             
-                             memberID = $('#member_id').val();
-                             formData.append("memberID", memberID);
-                             
-                             memberNo = $('#member_no').val();
-                             formData.append("memberNo", memberNo);*/
+                                                                $.ajax({
+                                                                    url: $('#base_url').val() + 'admin',
+                                                                    type: 'post',
+                                                                    data: {
+                                                                        ACTION: 'UPDATE_MEMBER',
+                                                                        memberID: $('#member_id')
+                                                                                .val(),
+                                                                        memberNo: $('#member_no')
+                                                                                .val(),
+                                                                        firstname: $('#firstname')
+                                                                                .val(),
+                                                                        surname: $('#surname')
+                                                                                .val(),
+                                                                        othernames: $('#otherNames')
+                                                                                .val(),
+                                                                        gender: $('#gender')
+                                                                                .val(),
+                                                                        idNumber: $('#idNumber')
+                                                                                .val(),
+                                                                        dateOfBirth: $('#dateOfBirth')
+                                                                                .val(),
+                                                                        emailAddres: $('#emailAddress')
+                                                                                .val(),
+                                                                        maritalStatus: $("#maritalStatus")
+                                                                                .val(),
+                                                                        phoneNumber: $('#phoneNumber')
+                                                                                .val(),
+                                                                        postalAddress: $('#postalAddress')
+                                                                                .val(),
+                                                                        city: $('#city')
+                                                                                .val(),
+                                                                        country: $('#country')
+                                                                                .val(),
+                                                                        currentAnnualPensionableSalary: $('#currentAnnualPensionableSalary')
+                                                                                .val()
+                                                                    },
+                                                                    dataType: 'json',
+                                                                    success: function (json) {
+                                                                        stop_wait();
+                                                                        bootbox
+                                                                                .alert('<p class="text-center">'
+                                                                                        + json.message
+                                                                                        + '</p>');
+                                                                    }
+                                                                });
+                                                            });
+                                            $('#form-edit-beneficiary')
+                                                    .bootstrapValidator(
+                                                            {
+                                                                excluded: ':disabled',
+                                                                message: 'This value is not valid',
+                                                                feedbackIcons: {
+                                                                    valid: 'glyphicon glyphicon-ok',
+                                                                    invalid: 'glyphicon glyphicon-remove',
+                                                                    validating: 'glyphicon glyphicon-refresh'
+                                                                },
+                                                                fields: {
+                                                                    firstname: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter the firstname'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    surname: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter the surname'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    othernames: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter the othername'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    lumpsumEntitlement: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please enter the lumpsum entitlement'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    gender: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select the gender'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    relationship: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select the relationship'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    relationshipCategory: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select the relationship category'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    maritalStatus: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select the marital status'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    status: {
+                                                                        validators: {
+                                                                            notEmpty: {
+                                                                                message: 'Please select the status'
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    file: {
+                                                                        validators: {
+                                                                            extension: 'jpeg,jpg,png,doc,docx,pdf,xls,txt',
+                                                                            type: 'image/jpeg,image/png,application/msword,application/pdf,application/vnd.ms-excel,',
+                                                                            maxSize: 2097152, // 2048 * 1024
+                                                                            message: 'The selected file is not valid'
+                                                                        }
+                                                                    }
+                                                                }
+                                                            })
 
-                            $.ajax({
-                                url: $('#base_url').val() + 'admin',
-                                type: 'post',
-                                data: {
-                                    ACTION: 'UPDATE_MEMBER',
-                                    memberID: $('#member_id')
-                                            .val(),
-                                    memberNo: $('#member_no')
-                                            .val(),
-                                    firstname: $('#firstname')
-                                            .val(),
-                                    surname: $('#surname')
-                                            .val(),
-                                    othernames: $('#otherNames')
-                                            .val(),
-                                    gender: $('#gender')
-                                            .val(),
-                                    idNumber: $('#idNumber')
-                                            .val(),
-                                    dateOfBirth: $('#dateOfBirth')
-                                            .val(),
-                                    emailAddres: $('#emailAddress')
-                                            .val(),
-                                    maritalStatus: $("#maritalStatus")
-                                            .val(),
-                                    phoneNumber: $('#phoneNumber')
-                                            .val(),
-                                    postalAddress: $('#postalAddress')
-                                            .val(),
-                                    city: $('#city')
-                                            .val(),
-                                    country: $('#country')
-                                            .val(),
-                                    currentAnnualPensionableSalary: $('#currentAnnualPensionableSalary')
-                                            .val()
-                                },
-                                dataType: 'json',
-                                success: function (json) {
-                                    stop_wait();
-                                    bootbox
-                                            .alert('<p class="text-center">'
-                                                    + json.message
-                                                    + '</p>');
-                                }
-                            });
-                        });
-        $('#form-edit-beneficiary')
-                .bootstrapValidator(
-                        {
-                            excluded: ':disabled',
-                            message: 'This value is not valid',
-                            feedbackIcons: {
-                                valid: 'glyphicon glyphicon-ok',
-                                invalid: 'glyphicon glyphicon-remove',
-                                validating: 'glyphicon glyphicon-refresh'
-                            },
-                            fields: {
-                                firstname: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter the firstname'
-                                        }
-                                    }
-                                },
-                                surname: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter the surname'
-                                        }
-                                    }
-                                },
-                                othernames: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter the othername'
-                                        }
-                                    }
-                                },
-                                lumpsumEntitlement: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please enter the lumpsum entitlement'
-                                        }
-                                    }
-                                },
-                                gender: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select the gender'
-                                        }
-                                    }
-                                },
-                                relationship: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select the relationship'
-                                        }
-                                    }
-                                },
-                                relationshipCategory: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select the relationship category'
-                                        }
-                                    }
-                                },
-                                maritalStatus: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select the marital status'
-                                        }
-                                    }
-                                },
-                                status: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Please select the status'
-                                        }
-                                    }
-                                },
-                                file: {
-                                    validators: {
-                                        extension: 'jpeg,jpg,png,doc,docx,pdf,xls,txt',
-                                        type: 'image/jpeg,image/png,application/msword,application/pdf,application/vnd.ms-excel,',
-                                        maxSize: 2097152, // 2048 * 1024
-                                        message: 'The selected file is not valid'
-                                    }
-                                }
-                            }
-                        })
+                                                    .on('success.form.bv', function (e) {
+                                                        start_wait();
+                                                        // Prevent form submission
+                                                        e.preventDefault();
+                                                        // Get the form instance
+                                                        var modal = "modal-edit-beneficiary";
+                                                        //Define formData object
+                                                        var formData = new FormData($(this)[0]);
+                                                        type = $('#type').val();
+                                                        formData.append("type", type);
+                                                        memberID = $('#member_id').val();
+                                                        formData.append("memberID", memberID);
+                                                        beneficiary_id = $('#beneficiary_id').val();
+                                                        formData.append("beneficiary_id", beneficiary_id);
+                                                        firstname = $('#firstName').val();
+                                                        formData.append("firstname", firstname);
+                                                        //firstname = $('#firstname').val();
+                                                        //formData.append("firstname", firstname);
 
-                .on('success.form.bv', function (e) {
-                    start_wait();
-                    // Prevent form submission
-                    e.preventDefault();
+                                                        $.ajax({
+                                                            url: $('#base_url').val() + 'admin',
+                                                            type: 'post',
+                                                            data: formData,
+                                                            dataType: 'json',
+                                                            success: function (json) {
+                                                                stop_wait();
+                                                                if (json.success)
+                                                                {
+                                                                    $('form#form-edit-beneficiary')[0].reset();
+                                                                    $('#modal-edit-beneficiary').modal('hide');
+                                                                    $('#personal-information-li').addClass('active');
+                                                                    m_switch("PI");
+                                                                }
+                                                                bootbox
+                                                                        .alert('<p class="text-center">'
+                                                                                + json.message
+                                                                                + '</p>');
+                                                            },
+                                                            cache: false,
+                                                            contentType: false,
+                                                            processData: false
+                                                        });
+                                                        function m_switch(MODULE)
+                                                        {
+                                                            menu_done = true;
+                                                            start_wait();
+                                                            loadDashboard(MODULE);
+                                                        }
+                                                    });
+                                            $('#form-upload-document').bootstrapValidator({
+                                                message: 'This value is not valid',
+                                                feedbackIcons: {
+                                                    valid: 'glyphicon glyphicon-ok',
+                                                    invalid: 'glyphicon glyphicon-remove',
+                                                    validating: 'glyphicon glyphicon-refresh'
+                                                },
+                                                fields: {
+                                                    attachment: {
 
-                    // Get the form instance
-                    var modal = "modal-edit-beneficiary";
+                                                        extension: 'doc,docx,xls,xlsx,pdf,jpg,jpeg,png,gif',
+                                                        type: 'image/png,image/gif,image/jpg,image/jpeg',
+                                                        maxSize: 100 * 1024 * 1024, // 100 MB
+                                                        message: 'The selected file is not valid, it should be (png,gif,jpg,jpeg) and 5 MB at maximum.'
 
-                    //Define formData object
-                    var formData = new FormData($(this)[0]);
+                                                    }
+                                                }
+                                            })
+                                                    .on('success.form.bv', function (e) {
 
-                    type = $('#type').val();
-                    formData.append("type", type);
+                                                        start_wait();
+                                                        // Prevent form submission
+                                                        e.preventDefault();
+                                                        // Get the form instance
+                                                        var form = "form-upload-document";
+                                                        var formData = new FormData($(this)[0]);
+                                                        memberID = $('#member_id').val();
+                                                        formData.append("memberID", memberID);
+                                                        memberNo = $('#member_no').val();
+                                                        formData.append("memberNo", memberNo);
+                                                        //$('#' + btn).val('Please wait...');
 
-                    memberID = $('#member_id').val();
-                    formData.append("memberID", memberID);
+                                                        $.ajax({
+                                                            url: $('#base_url').val() + 'admin',
+                                                            type: 'post',
+                                                            data: formData,
+                                                            dataType: 'json',
+                                                            async: false,
+                                                            cache: false,
+                                                            contentType: false,
+                                                            processData: false,
+                                                            success: function (json) {
+                                                                stop_wait();
+                                                                bootbox
+                                                                        .alert('<p class="text-center">'
+                                                                                + json.message
+                                                                                + '</p>');
+                                                            }
+                                                        });
+                                                    });
+                                        });
+                                        $(document).ready(function () {
+                                            $('#beneficiariesTbl').DataTable({
 
-                    beneficiary_id = $('#beneficiary_id').val();
-                    formData.append("beneficiary_id", beneficiary_id);
+                                                dom: 'Bfrtip',
+                                                "searching": false,
+                                                "bSort": false,
+                                                //bFilter: false,
+                                                paging: false,
+                                                "bInfo" : false,
 
-                    firstname = $('#firstName').val();
-                    formData.append("firstname", firstname);
+                                                buttons: [
 
-                    //firstname = $('#firstname').val();
-                    //formData.append("firstname", firstname);
-
-                    $.ajax({
-                        url: $('#base_url').val() + 'admin',
-                        type: 'post',
-                        data: formData,
-                        dataType: 'json',
-                        success: function (json) {
-                            stop_wait();
-                            if (json.success)
-                            {
-                                $('form#form-edit-beneficiary')[0].reset();
-                                $('#modal-edit-beneficiary').modal('hide');
-                                $('#personal-information-li').addClass('active');
-
-                                m_switch("PI");
-                            }
-                            bootbox
-                                    .alert('<p class="text-center">'
-                                            + json.message
-                                            + '</p>');
-                        },
-                        cache: false,
-                        contentType: false,
-                        processData: false
-                    });
-
-                    function m_switch(MODULE)
-                    {
-                        menu_done = true;
-                        start_wait();
-                        loadDashboard(MODULE);
-                    }
-                });
-        $('#form-upload-document').bootstrapValidator({
-            message: 'This value is not valid',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                attachment: {
-
-                    extension: 'doc,docx,xls,xlsx,pdf,jpg,jpeg,png,gif',
-                    type: 'image/png,image/gif,image/jpg,image/jpeg',
-                    maxSize: 100 * 1024 * 1024, // 100 MB
-                    message: 'The selected file is not valid, it should be (png,gif,jpg,jpeg) and 5 MB at maximum.'
-
-                }
-            }
-        })
-                .on('success.form.bv', function (e) {
-
-                    start_wait();
-
-                    // Prevent form submission
-                    e.preventDefault();
-
-                    // Get the form instance
-                    var form = "form-upload-document";
-                    var formData = new FormData($(this)[0]);
-
-                    memberID = $('#member_id').val();
-                    formData.append("memberID", memberID);
-
-                    memberNo = $('#member_no').val();
-                    formData.append("memberNo", memberNo);
-
-                    //$('#' + btn).val('Please wait...');
-
-                    $.ajax({
-                        url: $('#base_url').val() + 'admin',
-                        type: 'post',
-                        data: formData,
-                        dataType: 'json',
-                        async: false,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        success: function (json) {
-                            stop_wait();
-                            bootbox
-                                    .alert('<p class="text-center">'
-                                            + json.message
-                                            + '</p>');
-                        }
-                    });
-
-                });
-
-    });
+                                                    {
+                                                        extend: 'pdfHtml5',
+                                                        title: 'Beneficiaries',
+                                                        orientation: 'landscape', //landscape give you more space
+                                                        pageSize: 'A4', //A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+                                                        exportOptions: {
+                                                            columns: [0, 1, 2]
+                                                        }
 
 
-    function genBeneficiariesPDF() {
+                                                    }
 
-      
-var doc = new htm;
-var specialElementHandlers = {
-    '#editor': function (element, renderer) {
-        return true;
-    }
-};
+                                                ]
+                                            });
+                                        });
 
-
-    doc.fromHTML(document.getElementById('beneficiaries'), 15, 15, {
-        'width': 170,
-            'elementHandlers': specialElementHandlers
-    });
-    doc.save('sample-file.pdf');
-
-// This code is collected but useful, click below to jsfiddle link.
-
-        
-
-
-
-    };
-    
 </script>
 
 

@@ -6,7 +6,11 @@ import com.fundmaster.mss.common.Actions;
 import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.common.Helper;
 import com.fundmaster.mss.common.JLogger;
+import com.fundmaster.mss.dto.BalanceHistoryDTO;
+import com.fundmaster.mss.dto.ContributionHistorySummary;
+import com.fundmaster.mss.dto.ContributionsHistoryDTO;
 import com.fundmaster.mss.model.*;
+import com.fundmaster.mss.util.MssUtil;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -16,10 +20,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @WebServlet(name = "Dashboard", urlPatterns = {"/dashboard"})
 public class Dashboard extends BaseServlet implements Serializable {
@@ -27,7 +37,6 @@ public class Dashboard extends BaseServlet implements Serializable {
     private static final String YYYY_MM_DD = "yyyy-MM-dd";
     private static final String DD_MM_YYYY = "dd-MM-yyyy";
     private static final long serialVersionUID = 1L;
-
 
     Helper helper = new Helper();
     JLogger jLogger = new JLogger(this.getClass());
@@ -45,6 +54,7 @@ public class Dashboard extends BaseServlet implements Serializable {
 
     @EJB
     InterestRateColumnBeanI interestRateColumnBeanI;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -102,7 +112,7 @@ public class Dashboard extends BaseServlet implements Serializable {
                     showMemberListing(request, response, session, REPO_FOLDER);
                     break;
                 case Actions.SPONSOR_BENEFIT_PAYMENT:
-                    showSponsorBenefitPayments(request,response,session,REPO_FOLDER);
+                    showSponsorBenefitPayments(request, response, session, REPO_FOLDER);
                     break;
                 case Actions.CORPORATE_STATEMENT:
                     showCorporateStatement(request, response, session, REPO_FOLDER);
@@ -181,81 +191,83 @@ public class Dashboard extends BaseServlet implements Serializable {
 
             }
         }
-         if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)
-                 || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
-             int BATCH = 20;
-             int PER_PAGE = 20;
-             switch (action) {
-                 case Actions.MEMBER_PERSONAL_INFORMATION:
-                     showMemberPersonalInformation(request, response, session);
-                     break;
-                 case Actions.MEMBER_CONTRIBUTION_HISTORY:
-                     showMemberContributionHistory(request, response, session);
-                     break;
-                 case Actions.MEMBER_CONTRIBUTION_HISTORY_GRID:
-                     showMemberContributionHistoryGrid(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
-                     break;
-                 case Actions.MEMBER_STATEMENT_OF_ACCOUNT:
-                     showMemberStatementOfAccount(request, response, session);
-                     break;
-                 case Actions.MEMBER_STATEMENT_OF_ACCOUNT_GRID:
-                     showMemberStatementOfAccountGrid(request, response, session);
-                     break;
-                 case Actions.MEMBER_UNITIZED_STATEMENT:
-                     showMemberUnitizedStatement(request, response, session);
-                     break;
+        if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)
+                || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
+            int BATCH = 20;
+            int PER_PAGE = 20;
+            switch (action) {
+                case Actions.MEMBER_PERSONAL_INFORMATION:
+                    showMemberPersonalInformation(request, response, session);
+                    break;
+                case Actions.MEMBER_CONTRIBUTION_HISTORY:
+                    showMemberContributionHistory(request, response, session);
+                    break;
+                case Actions.MEMBER_CONTRIBUTION_HISTORY_GRID:
+                    showMemberContributionHistoryGrid(request, response, session, REPO_FOLDER, BATCH, PER_PAGE);
+                    break;
+                case Actions.MEMBER_STATEMENT_OF_ACCOUNT:
+                    showMemberStatementOfAccount(request, response, session);
+                    break;
+                case Actions.MEMBER_STATEMENT_OF_ACCOUNT_GRID:
+                    showMemberStatementOfAccountGrid(request, response, session);
+                    break;
+                case Actions.MEMBER_UNITIZED_STATEMENT:
+                    showMemberUnitizedStatement(request, response, session);
+                    break;
 
-                 case Actions.MEMBERSHIP_CERTIFICATE:
-                     showMemberCertificate(request, response, session);
-                     break;
-                 case Actions.MEMBER_BENEFIT_PROJECTIONS:
-                     showMemberBenefitProjections(request, response, session);
-                     break;
-                 case Actions.ANNUAL_CONTRIBUTION_STATEMENT:
-                     showAnnualContributionStatement(request, response, session);
-                     break;
-                 case Actions.PROVISIONAL_MEMBER_STATEMENT:
-                     showProvisionalMemberStatement(request, response, session);
-                     break;
-                 case Actions.MEMBER_BENEFIT_PROJECTIONS_GRID:
-                     showMemberBenefitProjectionsGrid(request, response, session);
-                     break;
-                 case Actions.ANNUAL_CONTRIBUTIONS_GRID:
-                     showAnnualContributionsGrid(request, response, session);
-                     break;
-                 case Actions.MEMBER_MEDIA_FILES:
-                     showMemberMedia(request, response, session);
-                     break;
-                 case Actions.DOCUMENTS:
-                     showMemberDocument(request, response, session);
-                     break;
-                 case Actions.MEMBER_CLAIMS:
-                     showMemberClaims(request, response, session);
-                     break;
-                 case Actions.MEMBER_WHAT_IF_ANALYSIS:
-                     showWhatIfAnalysis(request, response, session);
+                case Actions.MEMBERSHIP_CERTIFICATE:
+                    showMemberCertificate(request, response, session);
+                    break;
+                case Actions.MEMBER_BENEFIT_PROJECTIONS:
+                    showMemberBenefitProjections(request, response, session);
+                    break;
+                case Actions.ANNUAL_CONTRIBUTION_STATEMENT:
+                    showAnnualContributionStatement(request, response, session);
+                    break;
+                case Actions.PROVISIONAL_MEMBER_STATEMENT:
+                    showProvisionalMemberStatement(request, response, session);
+                    break;
+                case Actions.MEMBER_BENEFIT_PROJECTIONS_GRID:
+                    showMemberBenefitProjectionsGrid(request, response, session);
+                    break;
+                case Actions.ANNUAL_CONTRIBUTIONS_GRID:
+                    showAnnualContributionsGrid(request, response, session);
+                    break;
+                case Actions.MEMBER_MEDIA_FILES:
+                    showMemberMedia(request, response, session);
+                    break;
+                case Actions.DOCUMENTS:
+                    showMemberDocument(request, response, session);
+                    break;
+                case Actions.MEMBER_CLAIMS:
+                    showMemberClaims(request, response, session);
+                    break;
+                case Actions.MEMBER_WHAT_IF_ANALYSIS:
+                    showWhatIfAnalysis(request, response, session);
 
-                     break;
-                 case Actions.CALCULATE_BENEFIT_PROJECTION:
-                     showBenefitProjectionPage(request, response, session);
+                    break;
+                case Actions.CALCULATE_BENEFIT_PROJECTION:
+                    showBenefitProjectionPage(request, response, session);
 
-                     break;
-                 case Actions.SPONSOR_BENEFIT_PROJECTION:
-                     showSponsorBenefitProjectionPage(request, response, session);
+                    break;
+                case Actions.SPONSOR_BENEFIT_PROJECTION:
+                    showSponsorBenefitProjectionPage(request, response, session);
 
-                     break;
+                    break;
 
+                case Actions.MEMBER_BALANCE_HISTORY:
+                    showMemberBalanceHistory(request, response, session);
+                    break;
+                case Actions.MEMBER_BALANCE_HISTORY_GRID:
+                    showMemberBalanceHistoryGrid(request, response, session);
+                    break;
+                case Actions.MEMBER_BALANCE_HISTORY_GRID1:
+                    showMemberBalanceHistoryGrid1(request, response, session);
+                    break;
 
-                 case Actions.MEMBER_BALANCE_HISTORY:
-                     showMemberBalanceHistory(request, response, session);
-                     break;
-                 case Actions.MEMBER_BALANCE_HISTORY_GRID:
-                     showMemberBalanceHistoryGrid(request, response, session);
-                     break;
-
-             }
-         }
-        if(session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.PENSIONER)
+            }
+        }
+        if (session.getAttribute("LOGIN").equals(true) && (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.PENSIONER)
                 || helper.isManager(request) || helper.isManagerial(this.getSessKey(request, Constants.U_PROFILE)))) {
 
             jLogger.i("Good, we here!!");
@@ -277,10 +289,8 @@ public class Dashboard extends BaseServlet implements Serializable {
         }
     }
 
-
-
     private void showAgentCommissions(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                      String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
+            String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
 
         int page;
         int batch;
@@ -301,8 +311,9 @@ public class Dashboard extends BaseServlet implements Serializable {
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         request.setAttribute("begin", begin);
         request.setAttribute("pages", pages);
         request.setAttribute("per_page", PER_PAGE);
@@ -312,8 +323,9 @@ public class Dashboard extends BaseServlet implements Serializable {
         String agent_id;
         agent_id = this.get(request, "memberID");
 
-        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE)) {
             agent_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("agent_id", agent_id);
 
         List<AgentCommission> agentCommissions = new ArrayList<>();
@@ -335,7 +347,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showWithdrawalStatements(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                          String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -353,7 +365,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showWithdrawalSettlements(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                          String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -372,7 +384,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showMemberMovements(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                           String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -406,7 +418,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showFundMovement(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                     String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -424,7 +436,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showPendingContributions(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                  String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -442,7 +454,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showReceiptSummary(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                  String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -460,7 +472,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showAdminFeeListing(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                     String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -477,7 +489,7 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showMemberListing(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                     String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -492,9 +504,9 @@ public class Dashboard extends BaseServlet implements Serializable {
         XiMember mbr = apiEJB.memberExists(userProfile, userName);
         String memberName = mbr.getName();
         request.setAttribute("memberName", memberName);
-        String sponsorId= null;
-        if (usr.getUserProfile().equals("SPONSOR")){
-           sponsorId = String.valueOf(apiEJB.getSchemeSponsorId(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID)));
+        String sponsorId = null;
+        if (usr.getUserProfile().equals("SPONSOR")) {
+            sponsorId = String.valueOf(apiEJB.getSchemeSponsorId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID)));
             jLogger.i("Sponsor Id =============== > " + sponsorId);
             request.setAttribute("sponsorId", sponsorId);
 
@@ -505,7 +517,7 @@ public class Dashboard extends BaseServlet implements Serializable {
             logActivity("MEMBER LISTING", "Viewed member listing per sponsor", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
             this.audit(session, "Viewed member listing per sponsor");
             request.getRequestDispatcher(REPO_FOLDER + "/member_listing_per_sponsor.jsp").forward(request, response);
-        }else {
+        } else {
 
             logActivity("MEMBER LISTING", "Viewed member listing", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
             this.audit(session, "Viewed member listing ");
@@ -515,9 +527,8 @@ public class Dashboard extends BaseServlet implements Serializable {
 
     }
 
-
     private void showSponsorBenefitPayments(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                     String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -526,7 +537,7 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String schemeId = this.getSessKey(request, Constants.SCHEME_ID);
         jLogger.i("Scheme ID: " + schemeId);
-        Long spId = apiEJB.getSchemeSponsorId(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID));
+        Long spId = apiEJB.getSchemeSponsorId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID));
         String sponsorId = String.valueOf(spId);
         jLogger.i("Sponsor ID: " + sponsorId);
         request.setAttribute("sponsorId", sponsorId);
@@ -540,9 +551,8 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.getRequestDispatcher(REPO_FOLDER + "/sponsorBenefitPayments.jsp").forward(request, response);
     }
 
-
     private void showCorporateStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                   String REPO_FOLDER) throws ServletException, IOException {
+            String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Setting settings = settingBeanI.find();
@@ -551,7 +561,7 @@ public class Dashboard extends BaseServlet implements Serializable {
         String schemeId = this.getSessKey(request, Constants.SCHEME_ID);
         jLogger.i("Scheme ID: " + schemeId);
         String sponsorId = String.valueOf(apiEJB.getSchemeSponsorId(this.getSessKey(request,
-                Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID)));
+                Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID)));
         jLogger.i("Sponsor ID: " + sponsorId);
         request.setAttribute("sponsorId", sponsorId);
 
@@ -565,22 +575,19 @@ public class Dashboard extends BaseServlet implements Serializable {
     }
 
     private void showWhatIfAnalysis(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-        
-        
+
         String schemeId = "";
         schemeId = this.getSessKey(request, Constants.SCHEME_ID);
         jLogger.i("============ Member Scheme ID is: " + schemeId + " ===================");
-        String planType=apiEJB.getSchemeType(this.getSessKey(request, Constants.SCHEME_ID));
+        String planType = apiEJB.getSchemeType(this.getSessKey(request, Constants.SCHEME_ID));
         request.setAttribute("scheme_id", schemeId);
-        
-           String member_id = this.getSessKey(request, Constants.PROFILE_ID);
+
+        String member_id = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("member_id", member_id);
-        String schemeType=Constants.SCHEME_TYPE;
+        String schemeType = Constants.SCHEME_TYPE;
         request.setAttribute("scheme_type", schemeType);
         jLogger.i("============ Member Scheme type is: " + planType + " ===================");
-                
-        
-        
+
         PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_WHAT_IF_ANALYSIS);
         request.setAttribute("content", content);
         Setting settings = settingBeanI.find();
@@ -588,39 +595,37 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
         logActivity("WHAT IF ANALYSIS", "Accessed what if analysis page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Accessed what if analysis page");
-        if(planType.equalsIgnoreCase("Defined Benefit")){
+        if (planType.equalsIgnoreCase("Defined Benefit")) {
             request.getRequestDispatcher("dbprojection.jsp").forward(request, response);
             return;
-        }else{
-        request.getRequestDispatcher("what-if-content.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("what-if-content.jsp").forward(request, response);
         }
-        
+
     }
-    
-    
-    
-    
- private void showBenefitProjectionPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-    PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_BENEFIT_PROJECTION);
-    request.setAttribute("content", content);
-    Setting settings = settingBeanI.find();
-    request.setAttribute("settings", settings);
+
+    private void showBenefitProjectionPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_BENEFIT_PROJECTION);
+        request.setAttribute("content", content);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
 //    request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
-    logActivity("BENEFIT PROJECTION", "Accessed benefit projection calculator page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
-    this.audit(session, "Accessed benefit projection calculator page");
-    request.getRequestDispatcher("member/benefit-projection-content.jsp").forward(request, response);
-}
+        logActivity("BENEFIT PROJECTION", "Accessed benefit projection calculator page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Accessed benefit projection calculator page");
+        request.getRequestDispatcher("member/benefit-projection-content.jsp").forward(request, response);
+    }
 //showSponsorBenefitProjectionPage
-private void showSponsorBenefitProjectionPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-    PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_BENEFIT_PROJECTION);
-    request.setAttribute("content", content);
-    Setting settings = settingBeanI.find();
-    request.setAttribute("settings", settings);
+
+    private void showSponsorBenefitProjectionPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        PageContent content = pageContentBeanI.findPageContent(Constants.PAGE_BENEFIT_PROJECTION);
+        request.setAttribute("content", content);
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
 //    request.setAttribute("showScript", this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE));
-    logActivity("SPONSOR BENEFIT PROJECTION", "Accessed benefit projection calculator page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
-    this.audit(session, "Accessed benefit projection calculator page as Sponsor");
-    request.getRequestDispatcher("sponsor/benefit-projection-content.jsp").forward(request, response);
-}
+        logActivity("SPONSOR BENEFIT PROJECTION", "Accessed benefit projection calculator page", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Accessed benefit projection calculator page as Sponsor");
+        request.getRequestDispatcher("sponsor/benefit-projection-content.jsp").forward(request, response);
+    }
 
     private void showMemberBalanceHistory(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         Setting settings = settingBeanI.find();
@@ -633,11 +638,74 @@ private void showSponsorBenefitProjectionPage(HttpServletRequest request, HttpSe
         request.setAttribute("report_details", reportDetails);
 
         member_id = this.get(request, "memberID");
-        if (member_id == null)
+        if (member_id == null) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", member_id);
         logActivity("MEMBER BALANCES HISTORY", "Viewed member balances history", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member balances history");
+
+        JSONArray balancesHistory1 = null;
+        List<BalanceHistoryDTO> balancesHistoryDTOList = new ArrayList<>();
+        try {
+            balancesHistory1 = apiEJB.getBalancesHistory(session.getAttribute(Constants.PROFILE_ID).toString()).getJSONArray("rows");
+        } catch (JSONException ex) {
+            Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < balancesHistory1.length(); i++) {
+            try {
+                BalanceHistoryDTO balanceHistoryDTO = new BalanceHistoryDTO();
+                String asAt = balancesHistory1.getJSONObject(i).get("as_at").toString();
+                System.err.println("as at is" + asAt);
+
+                // String eeBaltr = balancesHistory1.get(1).toString();
+                BigDecimal eeBal = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("ee_bal"));
+                System.err.println("eebal  is" + eeBal);
+
+                // String eeContrStr = balancesHistory1.get(2).toString();
+                BigDecimal eeContr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_contr"));
+                System.err.println("eeContrib  is" + eeContr);
+
+                //  String eeIntrStr = balancesHistory1.get(3).toString();
+                BigDecimal eeIntr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("ee_intr"));
+                System.err.println("eeIntr is " + eeIntr);
+
+                //String erBaltr = balancesHistory1.get(4).toString();
+                BigDecimal erBal = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_bal"));
+                System.err.println("erBal is" + erBal);
+
+                //String erContrStr = balancesHistory1.get(5).toString();
+                BigDecimal erContr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_contr"));
+                System.err.println("ercontr  is" + erContr);
+
+                // String erIntrStr = balancesHistory1.get(6).toString();
+                BigDecimal erIntr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_intr"));
+                System.err.println("erIntr  is" + erIntr);
+
+                asAt = asAt.substring(0, 10);
+
+                BigDecimal eeClose = eeBal.add(eeContr).add(eeIntr);
+                BigDecimal erClose = erBal.add(erContr).add(erIntr);
+                balanceHistoryDTO.setAsAt(asAt);
+                balanceHistoryDTO.setEeClose(eeClose);
+                balanceHistoryDTO.setErClose(erClose);
+                balanceHistoryDTO.setEeBal(eeBal);
+                balanceHistoryDTO.setEeContr(eeContr);
+                balanceHistoryDTO.setEeIntr(eeIntr);
+                balanceHistoryDTO.setErBal(erBal);
+                balanceHistoryDTO.setErContr(erContr);
+                balanceHistoryDTO.setErIntr(erIntr);
+                balanceHistoryDTO.setGrandTotal(eeClose.add(erClose));
+                balancesHistoryDTOList.add(balanceHistoryDTO);
+
+            } catch (JSONException ex) {
+                Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        System.out.print("size of list is" + balancesHistoryDTOList.size());
+
+        request.setAttribute("closingBalancesList", balancesHistoryDTOList);
         request.getRequestDispatcher("member/balance_history.jsp").forward(request, response);
     }
 
@@ -650,22 +718,100 @@ private void showSponsorBenefitProjectionPage(HttpServletRequest request, HttpSe
         String member_id;
 
         member_id = this.get(request, "memberID");
-        if (member_id == null)
+        if (member_id == null) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", member_id);
 
         /*BalancesHistory balancesHistory = apiEJB.getBalancesHistory(member_id);
         jLogger.i("Member Balances Returned ================ > " + balancesHistory);
         request.setAttribute("balances", balancesHistory);*/
+        JSONArray balancesHistory1 = null;
+        List<BalanceHistoryDTO> balancesHistoryDTOList = new ArrayList<>();
+        try {
+            balancesHistory1 = apiEJB.getBalancesHistory(session.getAttribute(Constants.PROFILE_ID).toString()).getJSONArray("rows");
+        } catch (JSONException ex) {
+            Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < balancesHistory1.length(); i++) {
+            try {
+                BalanceHistoryDTO balanceHistoryDTO = new BalanceHistoryDTO();
+                String asAt = balancesHistory1.getJSONObject(i).get("as_at").toString();
+                System.err.println("as at is" + asAt);
 
+                // String eeBaltr = balancesHistory1.get(1).toString();
+                BigDecimal eeBal = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("ee_bal"));
+                System.err.println("eebal  is" + eeBal);
+
+                // String eeContrStr = balancesHistory1.get(2).toString();
+                BigDecimal eeContr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_contr"));
+                System.err.println("eeContrib  is" + eeContr);
+
+                //  String eeIntrStr = balancesHistory1.get(3).toString();
+                BigDecimal eeIntr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("ee_intr"));
+                System.err.println("eeIntr is " + eeIntr);
+
+                //String erBaltr = balancesHistory1.get(4).toString();
+                BigDecimal erBal = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_bal"));
+                System.err.println("erBal is" + erBal);
+
+                //String erContrStr = balancesHistory1.get(5).toString();
+                BigDecimal erContr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_contr"));
+                System.err.println("ercontr  is" + erContr);
+
+                // String erIntrStr = balancesHistory1.get(6).toString();
+                BigDecimal erIntr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_intr"));
+                System.err.println("erIntr  is" + erIntr);
+
+                asAt = asAt.substring(0, 10);
+
+                BigDecimal eeClose = eeBal.add(eeContr).add(eeIntr);
+                BigDecimal erClose = erBal.add(erContr).add(erIntr);
+                balanceHistoryDTO.setAsAt(asAt);
+                balanceHistoryDTO.setEeClose(eeClose);
+                balanceHistoryDTO.setErClose(erClose);
+                balanceHistoryDTO.setEeBal(eeBal);
+                balanceHistoryDTO.setEeContr(eeContr);
+                balanceHistoryDTO.setEeIntr(eeIntr);
+                balanceHistoryDTO.setErBal(erBal);
+                balanceHistoryDTO.setErContr(erContr);
+                balanceHistoryDTO.setErIntr(erIntr);
+                balanceHistoryDTO.setGrandTotal(eeClose.add(erClose));
+                balancesHistoryDTOList.add(balanceHistoryDTO);
+
+            } catch (JSONException ex) {
+                Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        System.out.print("size of list is" + balancesHistoryDTOList.size());
+        request.setAttribute("closingBalancesList", balancesHistoryDTOList);
 
         logActivity("MEMBER BALANCES HISTORY GRID", "Viewed member balances history grid", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member balances history grid");
         request.getRequestDispatcher("member/balance_history_grid.jsp").forward(request, response);
     }
 
-@EJB
-MediaBeanI mediaBeanI;
+    private void showMemberBalanceHistoryGrid1(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String member_id;
+
+        member_id = this.get(request, "memberID");
+        if (member_id == null) {
+            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
+        request.setAttribute("member_id", member_id);
+
+        request.getRequestDispatcher("testDT/test.jsp").forward(request, response);
+    }
+
+    @EJB
+    MediaBeanI mediaBeanI;
+
     private void showMemberMedia(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
         String schemeId = "";
@@ -678,11 +824,11 @@ MediaBeanI mediaBeanI;
         String profile = this.getSessKey(request, Constants.U_PROFILE);
         String memberId = this.getSessKey(request, Constants.PROFILE_ID);
         jLogger.i("Member ID: " + memberId);
-        List<Media> medias = mediaBeanI.findByStatusAndProfile(schemeId,status,profile);
+        List<Media> medias = mediaBeanI.findByStatusAndProfile(schemeId, status, profile);
         jLogger.i("Medias found: " + medias.size());
 
         if (medias == null || medias.size() < 1) {
-            medias = mediaBeanI.findByMemberId(schemeId,memberId);
+            medias = mediaBeanI.findByMemberId(schemeId, memberId);
         }
         jLogger.i("Medias found 2: " + medias.size());
         request.setAttribute("medias", medias);
@@ -697,8 +843,8 @@ MediaBeanI mediaBeanI;
         this.audit(session, "Accessed media & files (documents)");
         request.getRequestDispatcher("member/media_files.jsp").forward(request, response);
     }
-    private void showMemberDocument(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
+    private void showMemberDocument(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
         String schemeId = "";
         schemeId = this.getSessKey(request, Constants.SCHEME_ID);
@@ -711,7 +857,7 @@ MediaBeanI mediaBeanI;
         String memberId = this.getSessKey(request, Constants.PROFILE_ID);
         request.setAttribute("member_id", memberId);
         //
-        XiMember member =apiEJB.memberExists(profile,this.getSessKey(request,Constants.USER));
+        XiMember member = apiEJB.memberExists(profile, this.getSessKey(request, Constants.USER));
         String nationalPenNo = member.getNationalPenNo();
         jLogger.i("The Pen NO IS " + nationalPenNo);
 
@@ -720,7 +866,7 @@ MediaBeanI mediaBeanI;
         jLogger.i("Medias found: " + documents.size());
 
         if (documents == null || documents.size() < 1) {
-            documents = mediaBeanI.findByMemberId(schemeId,memberId);
+            documents = mediaBeanI.findByMemberId(schemeId, memberId);
         }
         jLogger.i("Medias found 2: " + documents.size());
         request.setAttribute("documents", documents);
@@ -746,8 +892,9 @@ MediaBeanI mediaBeanI;
         XiMember m;
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null || member_id.isEmpty())
+        if (member_id == null || member_id.isEmpty()) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         jLogger.i("Member ID is: " + member_id);
         m = apiEJB.getMemberDetails(member_id, null);
         request.setAttribute("member", m);
@@ -755,7 +902,7 @@ MediaBeanI mediaBeanI;
         String memberNumber = m.getMemberNo();
         jLogger.i("Member Number found is " + memberNumber);
 
-        long schemeId = Long.parseLong(this.getSessKey(request, Constants.SCHEME_ID)) ;
+        long schemeId = Long.parseLong(this.getSessKey(request, Constants.SCHEME_ID));
         jLogger.i("Scheme Id found is " + schemeId);
 
         List<MemberClaims> memberClaims = apiEJB.getMemberClaims(member_id, schemeId);
@@ -773,8 +920,9 @@ MediaBeanI mediaBeanI;
         request.setAttribute("planType", this.getSessKey(request, Constants.SCHEME_TYPE));
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null)
+        if (member_id == null) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", member_id);
 
         ReportDetails reportDetails;
@@ -793,8 +941,9 @@ MediaBeanI mediaBeanI;
 
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null)
+        if (member_id == null) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", member_id);
 
         ReportDetails reportDetails;
@@ -805,6 +954,7 @@ MediaBeanI mediaBeanI;
         this.audit(session, "Viewed annual contribution statement");
         request.getRequestDispatcher("member/annual_contributions.jsp").forward(request, response);
     }
+
     private void showProvisionalMemberStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);
@@ -812,8 +962,9 @@ MediaBeanI mediaBeanI;
 
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null)
+        if (member_id == null) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", member_id);
 
         ReportDetails reportDetails;
@@ -825,7 +976,6 @@ MediaBeanI mediaBeanI;
         request.getRequestDispatcher("member/provisional_member.jsp").forward(request, response);
     }
 
-
     private void showMemberBenefitProjectionsGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);
@@ -834,8 +984,9 @@ MediaBeanI mediaBeanI;
         jLogger.i("Plan type is: " + this.getSessKey(request, Constants.SCHEME_TYPE));
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null)
+        if (member_id == null) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", member_id);
         logActivity("MEMBER BENEFITS PROJECTION GRID", "Viewed member benefits projection grid", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member benefits projection grid");
@@ -851,8 +1002,9 @@ MediaBeanI mediaBeanI;
         String member_id;
         member_id = this.get(request, "memberID");
 
-        if (member_id == null)
+        if (member_id == null) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", member_id);
 
         logActivity("ANNUAL CONTRIBUTION STATEMENT GRID", "Viewed annual contribution statement grid", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
@@ -866,8 +1018,9 @@ MediaBeanI mediaBeanI;
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null)
+        if (member_id == null) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", member_id);
 
         ReportDetails reportDetails;
@@ -878,30 +1031,34 @@ MediaBeanI mediaBeanI;
         this.audit(session, "Viewed member statement of account");
         request.getRequestDispatcher("member/statement_of_account.jsp").forward(request, response);
     }
+
     private void showMemberStatementOfAccountGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null)
-            member_id = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID)));
+        if (member_id == null) {
+            member_id = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID)));
+        }
         request.setAttribute("member_id", member_id);
         logActivity("MEMBER STATEMENT OF ACCOUNT GRID", "Viewed member statement of account grid", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member statement of account grid");
         request.getRequestDispatcher("member/statement_of_account_grid.jsp").forward(request, response);
     }
+
     private void showMemberUnitizedStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
-        jLogger.i("scheme id US " + this.getSessKey(request,Constants.SCHEME_ID));
+        jLogger.i("scheme id US " + this.getSessKey(request, Constants.SCHEME_ID));
 
-        String memberId ="";
+        String memberId = "";
         memberId = this.get(request, "memberID");
         jLogger.i("member id US " + memberId);
-        if (memberId == null)
-            memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID),this.getSessKey(request, Constants.PROFILE_ID)));
+        if (memberId == null) {
+            memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID)));
+        }
         request.setAttribute("member_id", memberId);
         ReportDetails reportDetails;
         reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
@@ -917,15 +1074,15 @@ MediaBeanI mediaBeanI;
         Setting setting = settingBeanI.find();
         request.setAttribute("settings", setting);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
-        jLogger.i("scheme id US " + this.getSessKey(request,Constants.SCHEME_ID));
-        String memberId ="";
+        jLogger.i("scheme id US " + this.getSessKey(request, Constants.SCHEME_ID));
+        String memberId = "";
         //this.get(request, "memberID")
-         memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request,Constants.PROFILE_ID)));
+        memberId = String.valueOf(apiEJB.getMemberId(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.PROFILE_ID)));
         jLogger.i("member id US " + memberId);
-        if (memberId == null)
+        if (memberId == null) {
             memberId = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", memberId);
-
 
         ReportDetails reportDetails;
         reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
@@ -947,8 +1104,9 @@ MediaBeanI mediaBeanI;
         request.setAttribute("report_details", reportDetails);
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null)
+        if (member_id == null) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("member_id", member_id);
         logActivity("MEMBER CONTRIBUTION HISTORY", "Viewed member contribution history", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member contribution history");
@@ -956,7 +1114,7 @@ MediaBeanI mediaBeanI;
     }
 
     private void showAgentClients(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                  String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
+            String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
 
         int page;
         int batch;
@@ -977,8 +1135,9 @@ MediaBeanI mediaBeanI;
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         request.setAttribute("begin", begin);
         request.setAttribute("pages", pages);
         request.setAttribute("per_page", PER_PAGE);
@@ -988,8 +1147,9 @@ MediaBeanI mediaBeanI;
         String agent_id;
         agent_id = this.get(request, "memberID");
 
-        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE)) {
             agent_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         request.setAttribute("agent_id", agent_id);
 
         List<AgentClient> agentClients = apiEJB.getAgentClients(agent_id, start, PER_PAGE);
@@ -1002,33 +1162,112 @@ MediaBeanI mediaBeanI;
     }
 
     private void showMemberContributionHistoryGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                                   String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
+            String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
 
+        try {
 
-        Setting settings = settingBeanI.find();
-        request.setAttribute("settings", settings);
+            Setting settings = settingBeanI.find();
+            request.setAttribute("settings", settings);
 
-        Company company = companyBeanI.find();
-        request.setAttribute("company", company);
+            Company company = companyBeanI.find();
+            request.setAttribute("company", company);
 
-        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
-        String member_id;
+            request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+            String member_id;
 
-        member_id = this.get(request, "memberID");
-        if (member_id == null)
-            member_id = this.getSessKey(request, Constants.PROFILE_ID);
-        request.setAttribute("member_id", member_id);
+            member_id = this.get(request, "memberID");
+            if (member_id == null) {
+                member_id = this.getSessKey(request, Constants.PROFILE_ID);
+            }
+            request.setAttribute("member_id", member_id);
 
-        /*JSONObject memberContributions = apiEJB.getMemberContributions(member_id);
-        jLogger.i("Member Contributions Returned ================ > " + memberContributions);*/
+            //use dto to get contributions
+            DateFormat format_from = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+            DateFormat format = new SimpleDateFormat("MMM-dd-yyyy", Locale.ENGLISH);
 
-        logActivity("MEMBER CONTRIBUTION HISTORY", "Viewed member contribution history", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
-        this.audit(session, "Viewed member contribution history");
-        request.getRequestDispatcher("member/contribution_history_grid.jsp").forward(request, response);
+            String fromDate_String = this.get(request, "dateFrom");
+            String toDate_String = this.get(request, "dateTo");
+
+            Date fromDate = null;
+            Date toDate = null;
+
+            try {
+                fromDate = format_from.parse(fromDate_String);
+                toDate = format_from.parse(toDate_String);
+            } catch (ParseException pe) {
+                // TODO Auto-generated catch block
+                jLogger.e("ParseException was detected: " + pe.getMessage());
+            }
+
+            jLogger.i("From Date ================ > " + fromDate);
+            jLogger.i("To Date ================ > " + toDate);
+
+            JSONArray contributionsBetweenDates = null;
+            List<ContributionsHistoryDTO> contributionsHistoryDtoList = new ArrayList<>();
+
+            //JSONObject memberContributions = apiEJB.getMemberFullContributions(member_id);
+            JSONObject memberContributions = apiEJB.getContributionsBetweenDates(format.format(fromDate), format.format(toDate), session.getAttribute(Constants.PROFILE_ID).toString());
+
+            BigDecimal eeSum = BigDecimal.ZERO;
+            BigDecimal erSum = BigDecimal.ZERO;
+            BigDecimal avcSum = BigDecimal.ZERO;
+            BigDecimal avcErSum = BigDecimal.ZERO;
+            BigDecimal salarySum = BigDecimal.ZERO;
+            BigDecimal totalSum = BigDecimal.ZERO;
+
+            contributionsBetweenDates = memberContributions.getJSONArray("rows");
+            for (int i = 0; i < contributionsBetweenDates.length(); i++) {
+
+                ContributionsHistoryDTO contributionsHistoryDTO = new ContributionsHistoryDTO();
+                contributionsHistoryDTO.setDatePaid(contributionsBetweenDates.getJSONObject(i).get("datePaid").toString());
+                contributionsHistoryDTO.setMonth(contributionsBetweenDates.getJSONObject(i).get("month").toString());
+                contributionsHistoryDTO.setYear(contributionsBetweenDates.getJSONObject(i).get("year").toString());
+                contributionsHistoryDTO.setEe(MssUtil.castToBigDecimal(contributionsBetweenDates.getJSONObject(i).get("ee")));
+                contributionsHistoryDTO.setEr(MssUtil.castToBigDecimal(contributionsBetweenDates.getJSONObject(i).get("er")));
+                contributionsHistoryDTO.setAvc(MssUtil.castToBigDecimal(contributionsBetweenDates.getJSONObject(i).get("avc")));
+                contributionsHistoryDTO.setAvcer(MssUtil.castToBigDecimal(contributionsBetweenDates.getJSONObject(i).get("avcer")));
+                contributionsHistoryDTO.setSalary(MssUtil.castToBigDecimal(contributionsBetweenDates.getJSONObject(i).get("salary")));
+                contributionsHistoryDTO.setType(contributionsBetweenDates.getJSONObject(i).get("type").toString());
+                contributionsHistoryDTO.setTotal(MssUtil.castToBigDecimal((contributionsBetweenDates.getJSONObject(i).get("total").toString())));
+                contributionsHistoryDTO.setRegUnreg(contributionsBetweenDates.getJSONObject(i).get("status").toString());
+
+                //do appropriate calculations
+                eeSum.add(contributionsHistoryDTO.getEe());
+                erSum.add(contributionsHistoryDTO.getEr());
+                avcSum.add(contributionsHistoryDTO.getAvc());
+                avcErSum.add(contributionsHistoryDTO.getAvcer());
+                salarySum.add(contributionsHistoryDTO.getSalary());
+                totalSum.add(contributionsHistoryDTO.getTotal());
+
+                System.err.println(contributionsHistoryDTO.getEe());
+                System.err.println(contributionsHistoryDTO.getEr());
+                System.err.println(contributionsHistoryDTO.getTotal());
+
+                contributionsHistoryDtoList.add(contributionsHistoryDTO);
+            }
+            ContributionHistorySummary contributionHistorySummary = new ContributionHistorySummary();
+
+            contributionHistorySummary.setEeSum(eeSum);
+            contributionHistorySummary.setErSum(erSum);
+            contributionHistorySummary.setAvcSum(avcSum);
+            contributionHistorySummary.setAvcErSum(avcErSum);
+            contributionHistorySummary.setSalarySum(salarySum);
+            contributionHistorySummary.setTotalSum(totalSum);
+
+            request.setAttribute("contributionsHistoryDtoLists", contributionsHistoryDtoList);
+            request.setAttribute("contributionHistorySummary", contributionHistorySummary);
+            /*JSONObject memberContributions = apiEJB.getMemberContributions(member_id);
+            jLogger.i("Member Contributions Returned ================ > " + memberContributions);*/
+            logActivity("MEMBER CONTRIBUTION HISTORY", "Viewed member contribution history", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+            this.audit(session, "Viewed member contribution history");
+            request.getRequestDispatcher("member/contribution_history_grid.jsp").forward(request, response);
+        } catch (JSONException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-@EJB
-SocialBeanI socialBeanI;
+    @EJB
+    SocialBeanI socialBeanI;
     @EJB
     SectorBeanI sectorBeanI;
     @EJB
@@ -1041,6 +1280,7 @@ SocialBeanI socialBeanI;
     EmailsBeanI emailsBeanI;
     @EJB
     MemberPermissionBeanI memberPermissionBeanI;
+
     private void showMemberPersonalInformation(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         //System.out.println("request.getParameter  "+this.get(request, "memberID") +" Alt: "+ this.getSessKey(request, Constants.PROFILE_ID));
         List<Country> countries = countryBeanI.find();
@@ -1061,13 +1301,14 @@ SocialBeanI socialBeanI;
         request.setAttribute("memberPermission", memberPermission);
         request.setAttribute("profile", this.getSessKey(request, Constants.U_PROFILE));
         ClientSetup clientSetup = new ClientSetup();
-        clientSetup =clientSetupI.find().get(0);
-        request.setAttribute("clientSetup",clientSetup);
+        clientSetup = clientSetupI.find().get(0);
+        request.setAttribute("clientSetup", clientSetup);
         XiMember m;
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null || member_id.isEmpty())
+        if (member_id == null || member_id.isEmpty()) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         jLogger.i("Member ID is: " + member_id);
         m = apiEJB.getMemberDetails(member_id, null);
         request.setAttribute("member", m);
@@ -1078,8 +1319,7 @@ SocialBeanI socialBeanI;
         Double totalPercentageLumpsum = apiEJB.getMemberBensTotalEntitlement(member_id);
 
         jLogger.i("totalPercentageLumpsum" + totalPercentageLumpsum);
-        request.setAttribute("totalPercentageLumpsum",totalPercentageLumpsum);
-
+        request.setAttribute("totalPercentageLumpsum", totalPercentageLumpsum);
 
         logActivity("MEMBER PERSONAL INFORMATION", "Viewed editable member personal information", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed  editable  member personal information");
@@ -1106,8 +1346,9 @@ SocialBeanI socialBeanI;
         XiPensioner p;
         String pensioner_id;
         pensioner_id = this.get(request, "pensionerID");
-        if (pensioner_id == null || pensioner_id.isEmpty())
+        if (pensioner_id == null || pensioner_id.isEmpty()) {
             pensioner_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         jLogger.i("Pensioner ID is: " + pensioner_id);
         p = apiEJB.getPensionerDetails(pensioner_id, null);
         request.setAttribute("pensioner", p);
@@ -1120,7 +1361,6 @@ SocialBeanI socialBeanI;
         List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(memberId);
         jLogger.i(" Are we on the right track 2 ????? ");
         request.setAttribute("beneficiaries", beneficiaries);
-
 
         logActivity("PENSIONER PERSONAL INFORMATION", "Viewed editable pensioner personal information", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed  editable  pensioner personal information");
@@ -1140,8 +1380,9 @@ SocialBeanI socialBeanI;
         XiPensioner p;
         String pensioner_id;
         pensioner_id = this.get(request, "pensionerID");
-        if (pensioner_id == null || pensioner_id.isEmpty())
+        if (pensioner_id == null || pensioner_id.isEmpty()) {
             pensioner_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         jLogger.i("Pensioner ID is: " + pensioner_id);
 
         p = apiEJB.getPensionerDetails(pensioner_id, null);
@@ -1155,7 +1396,6 @@ SocialBeanI socialBeanI;
         List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(memberId);
         jLogger.i(" Are we on the right track 2 ????? ");
         request.setAttribute("beneficiaries", beneficiaries);
-
 
         logActivity("PENSIONER DETAILS", "Viewed pension details", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed  pension details");
@@ -1177,8 +1417,9 @@ SocialBeanI socialBeanI;
         XiPensioner p;
         String pensioner_id;
         pensioner_id = this.get(request, "pensionerID");
-        if (pensioner_id == null || pensioner_id.isEmpty())
+        if (pensioner_id == null || pensioner_id.isEmpty()) {
             pensioner_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         jLogger.i("Pensioner ID is: " + pensioner_id);
 
         p = apiEJB.getPensionerDetails(pensioner_id, null);
@@ -1217,8 +1458,9 @@ SocialBeanI socialBeanI;
         XiPensioner p;
         String pensioner_id;
         pensioner_id = this.get(request, "pensionerID");
-        if (pensioner_id == null || pensioner_id.isEmpty())
+        if (pensioner_id == null || pensioner_id.isEmpty()) {
             pensioner_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         jLogger.i("Pensioner ID is: " + pensioner_id);
 
         p = apiEJB.getPensionerDetails(pensioner_id, null);
@@ -1230,8 +1472,6 @@ SocialBeanI socialBeanI;
         request.setAttribute("memberId", memberId);
         List<Beneficiary> beneficiaries = apiEJB.getBeneficiariesList(memberId);
         request.setAttribute("beneficiaries", beneficiaries);*/
-
-
         logActivity("PENSION ADVICE GRID", "Viewed pension advice grid", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed  pension advice grid");
         request.getRequestDispatcher("pensioner/pension_advice_grid.jsp").forward(request, response);
@@ -1273,8 +1513,9 @@ SocialBeanI socialBeanI;
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         request.setAttribute("begin", begin);
         request.setAttribute("pages", pages);
         request.setAttribute("batch", batch);
@@ -1312,8 +1553,9 @@ SocialBeanI socialBeanI;
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         request.setAttribute("begin", begin);
         request.setAttribute("pages", pages);
         request.setAttribute("batch", batch);
@@ -1354,8 +1596,9 @@ SocialBeanI socialBeanI;
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         request.setAttribute("begin", begin);
         request.setAttribute("pages", pages);
         request.setAttribute("batch", batch);
@@ -1363,8 +1606,9 @@ SocialBeanI socialBeanI;
         request.setAttribute("per_page", PER_PAGE);
         request.setAttribute("search", search);
         String agentId = null;
-        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE)) {
             agentId = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         List<Sponsor> sponsors = sponsorBeanI.findAll(agentId, search, start, PER_PAGE);
         request.setAttribute("sponsors", sponsors);
 
@@ -1401,8 +1645,9 @@ SocialBeanI socialBeanI;
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         request.setAttribute("begin", begin);
         request.setAttribute("pages", pages);
         request.setAttribute("batch", batch);
@@ -1410,8 +1655,9 @@ SocialBeanI socialBeanI;
         request.setAttribute("per_page", PER_PAGE);
         request.setAttribute("search", search);
         String agentId = null;
-        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
+        if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE)) {
             agentId = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         List<Member> members = memberBeanI.findAll(agentId, search, start, PER_PAGE);
         request.setAttribute("members", members);
         request.setAttribute("pages", pages);
@@ -1437,13 +1683,12 @@ SocialBeanI socialBeanI;
         boolean status = true;
         String schemeId = "";
 
-        if (!profile.equalsIgnoreCase(Constants.ADMIN_PROFILE)){
+        if (!profile.equalsIgnoreCase(Constants.ADMIN_PROFILE)) {
 
             schemeId = this.getSessKey(request, Constants.SCHEME_ID);
             jLogger.i("============ Scheme ID is: " + schemeId + " ===================");
             medias = mediaBeanI.findByStatusAndProfile(schemeId, status, profile);
-        }
-        else {
+        } else {
 
             medias = mediaBeanI.findAll(this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.PROFILE_ID));
         }
@@ -1458,14 +1703,15 @@ SocialBeanI socialBeanI;
         this.audit(session, "Accessed media & files (documents)");
         request.getRequestDispatcher(REPO_FOLDER + "/media.jsp").forward(request, response);
     }
-    private int getIntegerFromString(String value)
-    {
+
+    private int getIntegerFromString(String value) {
         try {
             return Integer.parseInt(value);
-        } catch( NumberFormatException nfe) {
+        } catch (NumberFormatException nfe) {
             return 1;
         }
     }
+
     private void showMemberPayments(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
@@ -1476,8 +1722,9 @@ SocialBeanI socialBeanI;
         XiMember m;
         String member_id;
         member_id = this.get(request, "memberID");
-        if (member_id == null || member_id.isEmpty())
+        if (member_id == null || member_id.isEmpty()) {
             member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
         jLogger.i("Member ID is: " + member_id);
         m = apiEJB.getMemberDetails(member_id, null);
         request.setAttribute("member", m);
@@ -1485,23 +1732,24 @@ SocialBeanI socialBeanI;
         String memberNumber = m.getMemberNo();
         jLogger.i("Member Number found is " + memberNumber);
 
-        long schemeId = Long.parseLong(this.getSessKey(request, Constants.SCHEME_ID)) ;
+        long schemeId = Long.parseLong(this.getSessKey(request, Constants.SCHEME_ID));
         jLogger.i("Scheme Id found is " + schemeId);
 
-        List<BenefitPayment> benefitPayments = apiEJB.getMemberBenefitPayments(member_id,0,50);
+        List<BenefitPayment> benefitPayments = apiEJB.getMemberBenefitPayments(member_id, 0, 50);
         request.setAttribute("payments", benefitPayments);
 
         logActivity("MEMBER PAYMENTS", "Viewed member Payments", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member Payments");
         request.getRequestDispatcher("member/memberpayments.jsp").forward(request, response);
     }
+
     private void showPayments(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER, int BATCH, int PER_PAGE) throws ServletException, IOException {
         List<BenefitPayment> payments;
         int page;
         int batch;
         Date date_from = getDateFromString(request, "dateFrom", "from");
         Date date_to = getDateFromString(request, "dateTo", "to");
-        String sponsorId ="";
+        String sponsorId = "";
         batch = getIntegerFromString(this.get(request, "batch"));
         page = getIntegerFromString(this.get(request, "page"));
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
@@ -1511,32 +1759,28 @@ SocialBeanI socialBeanI;
 
             sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
             jLogger.i("Sponsor ID " + sponsorId);
-        }
-        else
-        if(this.getSessKey(request,Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)){
-           String memberId=this.getSessKey(request,Constants.PROFILE_ID);
-           jLogger.i("This is memnerid" +memberId);
+        } else if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.MEMBER_PROFILE)) {
+            String memberId = this.getSessKey(request, Constants.PROFILE_ID);
+            jLogger.i("This is memnerid" + memberId);
         }
 
-        if (sponsorId!= null) {
+        if (sponsorId != null) {
             jLogger.i("::::::::: Fetching Sponsor Benefits :::::::::");
             payments = apiEJB.getBenefitPaymentsPerSponsor(this.getSessKey(request, Constants.SCHEME_ID), sponsorId, start, PER_PAGE);
 
-        } else if (date_from != null && date_to != null ) {
+        } else if (date_from != null && date_to != null) {
 
-                payments = apiEJB.searchPayments(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), start, PER_PAGE);
-            } else {
+            payments = apiEJB.searchPayments(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), start, PER_PAGE);
+        } else {
 
             payments = apiEJB.getBenefitPayments(this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
         }
 
-
-
-
         int count = Constants.RECORD_COUNT;
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         int pages = (count / PER_PAGE);
         request.setAttribute("begin", begin);
         request.setAttribute("pages", pages);
@@ -1580,8 +1824,9 @@ SocialBeanI socialBeanI;
         int pages = (count / PER_PAGE);
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         request.setAttribute("begin", begin);
         request.setAttribute("pages", pages);
         request.setAttribute("per_page", PER_PAGE);
@@ -1590,15 +1835,13 @@ SocialBeanI socialBeanI;
         DateFormat format_ = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 
         //if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.AGENT_PROFILE))
-
         if (date_from != null && date_to != null) {
             receipts = apiEJB.searchReceipts(this.getSessKey(request, Constants.SCHEME_ID), format_.format(date_from), format_.format(date_to), start, PER_PAGE);
-        }
-        else {
+        } else {
             if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.SPONSOR)) {
                 jLogger.i("getting sponsor scheme receipts");
 
-                receipts = apiEJB.getSponsorReceipts(this.getSessKey(request, Constants.PROFILE_ID),this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
+                receipts = apiEJB.getSponsorReceipts(this.getSessKey(request, Constants.PROFILE_ID), this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
 
             } else {
 
@@ -1644,35 +1887,30 @@ SocialBeanI socialBeanI;
 
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
 
-
         if (this.getSessKey(request, Constants.U_PROFILE).equals(Constants.SPONSOR)) {
 
             sponsorId = this.getSessKey(request, Constants.PROFILE_ID);
-            jLogger.i("SponsorId is  " + sponsorId );
-          }
+            jLogger.i("SponsorId is  " + sponsorId);
+        }
 
         if (identifier != null && profile != null && !Objects.equals(search, "") && sponsorId != null) {
             log("We are Here @ 0 !!!!!!!!");
             members = apiEJB.searchProfilesBySponsor(search, identifier, profile, sponsorId, this.getSessKey(request, Constants.SCHEME_ID));
-        }
-
-        else if (identifier != null && profile != null && !Objects.equals(search, "")) {
+        } else if (identifier != null && profile != null && !Objects.equals(search, "")) {
 
             members = apiEJB.searchProfiles(search, identifier, profile, this.getSessKey(request, Constants.SCHEME_ID), start, PER_PAGE);
 
-        }
-        else {
+        } else {
             log("We are Here!!!!!!!!");
 
             members = apiEJB.getMemberListing(this.getSessKey(request, Constants.PROFILE_ID), this.getSessKey(request, Constants.U_PROFILE), this.getSessKey(request, Constants.SCHEME_ID), 0, 9000);
         }
 
-
-
         int count = Constants.RECORD_COUNT;
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         int pages = (count / PER_PAGE);
         request.setAttribute("begin", begin);
         request.setAttribute("pages", pages);
@@ -1709,8 +1947,9 @@ SocialBeanI socialBeanI;
         }
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         request.setAttribute("begin", begin);
         request.setAttribute("batch", batch);
         request.setAttribute("page", page);
@@ -1725,8 +1964,9 @@ SocialBeanI socialBeanI;
         this.audit(session, "Viewed Schemes");
         request.getRequestDispatcher(REPO_FOLDER + "/scheme.jsp").forward(request, response);
     }
-@EJB
-SchemeManagerBeanI schemeManagerBeanI;
+    @EJB
+    SchemeManagerBeanI schemeManagerBeanI;
+
     private void showSchemeManagers(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         List<SchemeMemberManager> schememanagers = schemeManagerBeanI.findAll();
         request.setAttribute("schememanagers", schememanagers);
@@ -1750,6 +1990,7 @@ SchemeManagerBeanI schemeManagerBeanI;
 
     @EJB
     PageContentBeanI pageContentBeanI;
+
     private void showPageContent(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         List<PageContent> contents = pageContentBeanI.find();
         request.setAttribute("contents", contents);
@@ -1760,6 +2001,7 @@ SchemeManagerBeanI schemeManagerBeanI;
 
     @EJB
     FaqContentBeanI faqContentBeanI;
+
     private void showFaqContent(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         List<FaqContent> contents = faqContentBeanI.find();
         request.setAttribute("contents", contents);
@@ -1770,6 +2012,7 @@ SchemeManagerBeanI schemeManagerBeanI;
 
     @EJB
     ContactCategoryBeanI contactCategoryBeanI;
+
     private void showContactReasons(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         List<ContactCategory> contactReasons = contactCategoryBeanI.find();
         request.setAttribute("contactReasons", contactReasons);
@@ -1834,6 +2077,7 @@ SchemeManagerBeanI schemeManagerBeanI;
 
     @EJB
     HelpBeanI helpBeanI;
+
     private void showHelp(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         List<Help> helps = helpBeanI.find();
         request.setAttribute("helps", helps);
@@ -1859,8 +2103,9 @@ SchemeManagerBeanI schemeManagerBeanI;
         }
         int start = (PER_PAGE * (page - 1)) * (batch - 1);
         int begin = ((batch * BATCH) - BATCH) + 1;
-        if (begin < 1)
+        if (begin < 1) {
             begin = 1;
+        }
         request.setAttribute("begin", begin);
         request.setAttribute("batch", batch);
         request.setAttribute("page", page);
@@ -1879,6 +2124,7 @@ SchemeManagerBeanI schemeManagerBeanI;
     BenefitsCalculationBeanI benefitsCalculationBeanI;
     @EJB
     MenuBeanI menuBeanI;
+
     private void showSetup(HttpServletRequest request, HttpServletResponse response, HttpSession session, String REPO_FOLDER) throws ServletException, IOException {
         Company company = companyBeanI.find();
         request.setAttribute("company", company);

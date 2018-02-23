@@ -25,6 +25,8 @@
 <link rel="stylesheet" type="text/css"
 	href="static/custom/css/bootstrap.vertical-tabs.css" />
 <link rel="icon" href="static/images/favicon.ico">
+   
+    
 <style type="text/css">
 body {
 	font-family: '${theme.font}';

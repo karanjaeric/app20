@@ -4,6 +4,7 @@ import com.fundmaster.mss.common.Constants;
 import com.fundmaster.mss.dao.EmailsDAO;
 import com.fundmaster.mss.model.Emails;
 import java.util.Properties;
+import javax.ejb.EJB;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -24,6 +25,9 @@ import javax.persistence.PersistenceContext;
 @Local
 @Stateless
 public class EmailsBean implements EmailsBeanI {
+    
+      @EJB
+    SmtpI smtpBean;
 
     @PersistenceContext(unitName = Constants.MYSQL_PERSISTENCE_UNIT)
     private EntityManager entityManager;
@@ -40,29 +44,29 @@ public class EmailsBean implements EmailsBeanI {
     }
 
     @Override
-    public void sendEmail(String message1) {
+    public void sendEmail(String message1,String to) {
         
        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.host", smtpBean.getSmtpSetup().getSmtpHost()==null?"":smtpBean.getSmtpSetup().getSmtpHost());
+        props.put("mail.smtp.socketFactory.port", smtpBean.getSmtpSetup().getSmtpPort()==null?465:smtpBean.getSmtpSetup().getSmtpPort());
         props.put("mail.smtp.socketFactory.class",
                 "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
-       props.put("mail.smtp.port", "465");  
+       props.put("mail.smtp.port", smtpBean.getSmtpSetup().getSmtpPort()==null?465:smtpBean.getSmtpSetup().getSmtpPort());  
   
       Session session = Session.getInstance(props,  
     new javax.mail.Authenticator() {  
      @Override
      protected PasswordAuthentication getPasswordAuthentication() {  
-      return new PasswordAuthentication("pentacrew4@gmail.com","pentacrew");  
+      return new PasswordAuthentication(smtpBean.getSmtpSetup().getSmtpUsername(),smtpBean.getSmtpSetup().getSmtpPassword());  
      }  
       });  
         
       try{  
          MimeMessage message = new MimeMessage(session);  
-         message.setFrom(new InternetAddress("pentacrew4@gmail.com"));  
+         message.setFrom(new InternetAddress(smtpBean.getSmtpSetup().getSmtpUsername()));  
          message.addRecipient(Message.RecipientType.TO,  
-                                  new InternetAddress("muthike789@gmail.com"));  
+                                  new InternetAddress(to));  
   
         message.setSubject("Mss Portal Account Activation");  
         message.setContent(message1,"text/html" );  
