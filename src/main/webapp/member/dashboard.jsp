@@ -159,17 +159,6 @@
         <%--</c:otherwise>--%>
         <%--</c:choose>--%>
         <%--</c:forEach>--%>
-
-        <c:choose>
-            <c:when test="${planType == 'Defined Benefit' && contrGraph.interestActive == 'TRUE'}">
-                <p>&nbsp;</p>
-            </c:when>
-            <c:otherwise>
-                <br>
-                <small>CUMMULATIVE INTEREST TO DATE:</small> <span id="cummulative-interests"></span></h3>
-                <p>&nbsp;</p>
-            </c:otherwise>
-        </c:choose>
     </div>
 
     <c:choose>
@@ -198,12 +187,14 @@
             "bSort" : false,
             //bFilter: false,
             paging: false,
+            "bInfo" : false,
 
             buttons: [
 
                 {
                     extend: 'pdfHtml5',
                     title: 'Benefit Details',
+                    text:'Download Benefits Details',
                     orientation: 'landscape', //landscape give you more space
                     pageSize: 'A5' //A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
 
@@ -305,51 +296,7 @@
                                                     bootbox.alert('<p class="text-center">' + json.message + '</p>');
                                                 }
 
-                                                /* Load Cummulative Interest */
-                                                $.ajax({
-                                                    url: $('#base_url').val() + 'member',
-                                                    type: 'post',
-                                                    data: {ACTION: 'CI'},
-                                                    dataType: 'json',
-                                                    success: function (json) {
-                                                        if (json.success)
-                                                        {
-
-                                                            json = $.parseJSON(json.data);
-                                                            console.log("CI " + json.cummulativeInterest);
-
-                                                            $('#cummulative-interests').html(currency + ' ' + format_no(json.cummulativeInterest));
-
-                                                            //$('#cummulative-interests').html(currency + ' ' + format_no(json.cummulativeInterest));
-                                                        } else
-                                                        {
-                                                            stop_wait();
-                                                            bootbox.alert('<p class="text-center">' + json.message + '</p>');
-                                                        }
-                                                        /* Load Average Interest */
-                                                        $.ajax({
-                                                            url: $('#base_url').val() + 'member',
-                                                            type: 'post',
-                                                            data: {ACTION: 'AI'},
-                                                            dataType: 'json',
-                                                            success: function (json) {
-                                                                if (json.success)
-                                                                {
-
-                                                                    json = $.parseJSON(json.data);
-                                                                    $('#average-interests').html(format_no(json.averageInterest));
-                                                                } else
-                                                                {
-                                                                    stop_wait();
-                                                                    bootbox.alert('<p class="text-center">' + json.message + '</p>');
-                                                                }
-                                                            }
-                                                        });
-
-
-
-                                                    }
-                                                });
+                                                
                                             }
                                         });
                                     }

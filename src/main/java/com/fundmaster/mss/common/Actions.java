@@ -58,6 +58,7 @@ public class Actions {
 
     public static final String MEMBER_BALANCE_HISTORY = "BH";
     public static final String MEMBER_BALANCE_HISTORY_GRID = "BAL_HISTORY_GRID";
+      public static final String MEMBER_CUMULATIVE_STATEMENT_GRID = "CUMULATIVE_STATEMENT";
       public static final String MEMBER_BALANCE_HISTORY_GRID1 = "BAL_HISTORY_GRID1";
     public static final String DASHBOARD_SETUP = "SETUP";
     public static final String DASHBOARD_CALC_LOGS = "CALC-LOG";

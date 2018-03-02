@@ -49,14 +49,21 @@
                             class="fa fa-chevron-right"></i> BALANCES HISTORY (REPORT)</a></li>
                     </c:if>
 
+            <li id="cumulative-statement-grid-li"><a href="javascript:void(0);"><i
+                        class="glyphicon glyphicon-list"></i>&nbsp;<i
+                        class="fa fa-chevron-right"></i> CUMULATIVE STATEMENT(GRID)</a></li>
+
+
+            
+
             <c:if test="${memberMenu.balancesHistoryGrid == 'TRUE'}">
                 <li id="balances-history-grid-li"><a href="javascript:void(0);"><i
                             class="glyphicon glyphicon-record"></i>&nbsp;<i
                             class="fa fa-chevron-right"></i>CLOSING BALANCES HISTORY (GRID)</a></li>
                     </c:if>
-<!--            <li id=""><a href="closingBalances"><i
-                        class="glyphicon glyphicon-record"></i>&nbsp;<i
-                        class="fa fa-chevron-right"></i>CLOSING BALANCES HISTORY (Downloadable)</a></li>-->
+            <!--            <li id=""><a href="closingBalances"><i
+                                    class="glyphicon glyphicon-record"></i>&nbsp;<i
+                                    class="fa fa-chevron-right"></i>CLOSING BALANCES HISTORY (Downloadable)</a></li>-->
 
             <c:if test="${memberMenu.statementOfAccount == 'TRUE'}">
                 <li id="statement-of-account-li"><a href="javascript:void(0);"><i

@@ -15,19 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+
 @WebServlet(name = "MenuController", urlPatterns = {"/menu"})
 public class MenuController extends BaseServlet implements Serializable {
-	public MenuController() {
-		// TODO Auto-generated constructor stub
-	}
-	private static final long serialVersionUID = 1L;
+
+    public MenuController() {
+        // TODO Auto-generated constructor stub
+    }
+    private static final long serialVersionUID = 1L;
 
     Helper helper = new Helper();
     JLogger jLogger = new JLogger(this.getClass());
 
-	@EJB
+    @EJB
     ProfileNameBeanI profileNameBeanI;
-	@EJB
+    @EJB
     ClientNameBeanI clientNameBeanI;
     @EJB
     UserBeanI userBeanI;
@@ -80,19 +82,23 @@ public class MenuController extends BaseServlet implements Serializable {
     PermissionBeanI permissionBeanI;
     @EJB
     PasswordPolicyBeanI passwordPolicyBeanI;
-	@EJB
+    @EJB
     InterestRateColumnBeanI interestRateColumnBeanI;
     @EJB
+    SmtpI smtpBean;
+    @EJB
+
     MemberPermissionBeanI memberPermissionBeanI;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-	    /* configuring the http headers */
+        /* configuring the http headers */
         response.addHeader("X-XSS-Protection", "1; mode=block");
         response.addHeader("X-Frame-Options", "DENY");
         response.addHeader("X-Content-Type-Options", "nosniff");
 
-		String REPO_FOLDER = "menu";
+        String REPO_FOLDER = "menu";
         String action = this.get(request, REPO_FOLDER);
         switch (action) {
             case Actions.DASHBOARD_SETUP:
@@ -121,9 +127,11 @@ public class MenuController extends BaseServlet implements Serializable {
                 break;
         }
     }
+
     private void showAnalytics(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         request.getRequestDispatcher(REPO_FOLDER + "/analytics.jsp").forward(request, response);
     }
+
     private void showUserAccessControl(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         MemberPermission memberPermission = memberPermissionBeanI.find();
         request.setAttribute("memberPermission", memberPermission);
@@ -158,13 +166,14 @@ public class MenuController extends BaseServlet implements Serializable {
         request.setAttribute("clientOrdinals", clientOrdinals);
         List<ClientSetup> clientsetup = clientSetupI.find();
         request.setAttribute("clientsetups", clientsetup);
-        request.setAttribute("clientsetupsize",clientsetup.size());
-         Permission permissions = getPermissions(request);
+        request.setAttribute("clientsetupsize", clientsetup.size());
+        Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
         PasswordPolicy policy = passwordPolicyBeanI.find();
         request.setAttribute("policy", policy);
         request.getRequestDispatcher(REPO_FOLDER + "/uac.jsp").forward(request, response);
     }
+
     private void showMedia(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         List<ProfileName> profiles = profileNameBeanI.find();
         request.setAttribute("profiles", profiles);
@@ -177,25 +186,30 @@ public class MenuController extends BaseServlet implements Serializable {
 
         request.getRequestDispatcher(REPO_FOLDER + "/media.jsp").forward(request, response);
     }
+
     private void showMember(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         MemberMenu memberMenu = memberMenuBeanI.find();
         request.setAttribute("memberMenu", memberMenu);
         request.getRequestDispatcher(REPO_FOLDER + "/member.jsp").forward(request, response);
     }
+
     private void showContent(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
         request.getRequestDispatcher(REPO_FOLDER + "/content.jsp").forward(request, response);
     }
+
     private void showCalcLog(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         request.getRequestDispatcher(REPO_FOLDER + "/calc-log.jsp").forward(request, response);
     }
+
     private void showScheme(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         request.getRequestDispatcher(REPO_FOLDER + "/scheme.jsp").forward(request, response);
     }
+
     private void showSetup(HttpServletRequest request, HttpServletResponse response, String REPO_FOLDER) throws ServletException, IOException {
         List<Country> countries = countryBeanI.find();
-        request.setAttribute("countries",  countries);
+        request.setAttribute("countries", countries);
         Company company = companyBeanI.find();
         request.setAttribute("company", company);
         Emails email = emailsBeanI.find();
@@ -203,7 +217,7 @@ public class MenuController extends BaseServlet implements Serializable {
         Social social = socialBeanI.find();
         request.setAttribute("social", social);
         Menu menu = menuBeanI.find();
-        AccountRecovery accountRecovery =accountRecoveryBeanI.find();
+        AccountRecovery accountRecovery = accountRecoveryBeanI.find();
         request.setAttribute("accountRecovery", accountRecovery);
         request.setAttribute("menu", menu);
         DBMenu dbMenu = dbMenuBeanI.find();
@@ -220,6 +234,10 @@ public class MenuController extends BaseServlet implements Serializable {
         request.setAttribute("ordinals", ordinals);
         InterestRateColumns irc = interestRateColumnBeanI.find();
         request.setAttribute("interestRateColumns", irc);
+        SmtpSetup setup = smtpBean.getSmtpSetup();
+        if(setup==null)
+            setup=new SmtpSetup();
+        request.setAttribute("setup",setup);
         Permission permissions = getPermissions(request);
         request.setAttribute("permissions", permissions);
         request.getRequestDispatcher(REPO_FOLDER + "/setup.jsp").forward(request, response);

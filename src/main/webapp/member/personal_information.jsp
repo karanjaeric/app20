@@ -74,7 +74,7 @@
                             Status:</label>
                         <div class="col-sm-6">
                             <select name="maritalStatus" id="maritalStatus"
-                                    class="form-control  input-sm" ${memberPermission.maritalStatus == 'TRUE' ? '' : 'disabled'}>
+                                    class="form-control  input-sm" disabled>
                                 <option value="">Select marital status...</option>
                                 <c:forEach var="maritalStatus" items="${maritalStatuses}">
                                     <c:choose>
@@ -98,7 +98,7 @@
                             Number:</label>
                         <div class="col-sm-6">
                             <input type="text" name="idNumber" class="form-control  input-sm"
-                                   id="idNumber" value="${ member.idNumber }" placeholder="ID/Passport Number" ${memberPermission.idNumber == 'TRUE' ? '' : 'disabled'}>
+                                   id="idNumber" value="${ member.idNumber }" placeholder="ID/Passport Number" disabled>
                         </div>
                     </div>
                 </fieldset>
@@ -113,7 +113,7 @@
                             Address:</label>
                         <div class="col-sm-6"><input type="text" name="emailAddress"
                                                      class="form-control  input-sm" id="emailAddress"
-                                                     placeholder="Email Address" value="${ member.emailAddress }" ${memberPermission.emailAddress == 'TRUE' ? '' : 'disabled'}>
+                                                     placeholder="Email Address" value="${ member.emailAddress }" disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -148,7 +148,7 @@
                         <label for="county" class="col-sm-6 control-label">County:</label>
                         <div class="col-sm-6"><input
                                 type="text" value="${ member.county }" name="county" class="form-control  input-sm" id="county"
-                                placeholder="County" ${memberPermission.county == 'TRUE' ? '' : 'disabled'}>
+                                placeholder="County" disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -161,7 +161,7 @@
                     <div class="form-group">
                         <label for="country" class="col-sm-6 control-label">Country:</label>
                         <div class="col-sm-6"><select
-                                name="country" id="country" class="form-control  input-sm" ${memberPermission.country == 'TRUE' ? '' : 'disabled'}>
+                                name="country" id="country" class="form-control  input-sm" disabled>
                                 <option value="">Select country...</option>
                                 <c:forEach var="country" items="${countries}">
                                     <c:choose>
@@ -193,7 +193,7 @@
                         <label for="memberNo" class="col-sm-6 control-label">Member No:</label>
                         <div class="col-sm-6"><input
                                 type="text" name="memberNo" class="form-control  input-sm" id="memberNo"
-                                placeholder="Member No" value="${ member.memberNo }"  ${memberPermission.memberNo == 'TRUE' ? '' : 'disabled'}>
+                                placeholder="Member No" value="${ member.memberNo }" disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -765,6 +765,7 @@
                                                     {
                                                         extend: 'pdfHtml5',
                                                         title: 'Beneficiaries',
+                                                        text:'Download Beneficiaries',
                                                         orientation: 'landscape', //landscape give you more space
                                                         pageSize: 'A4', //A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
                                                         exportOptions: {

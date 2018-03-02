@@ -18,6 +18,12 @@
             <table class="table table-responsive table-bordered table-condensed table-striped" id="select-results1" style="font-size: 12px">
 
                 <thead>
+                    <tr>
+                        <th></th>
+                        <th colspan="4">Employee</th>
+                        <th colspan="4">Employer</th>
+                        <th></th>
+                    </tr>
 
                     <tr>
                         <th style="padding: 0;text-align: center;">Period Ending</th>
@@ -182,10 +188,16 @@
     $(document).ready(function () {
         $('#select-results1').DataTable({
             dom: 'Bfrtip',
+            "searching": false,
+            "bSort": false,
+            "bInfo": false,
+            //bFilter: false,
+            paging: false,
             buttons: [
 
                 {
                     extend: 'pdfHtml5',
+                    text: 'Download Balances History',
                     title: 'Balances History',
                     orientation: 'landscape', //landscape give you more space
                     pageSize: 'A4'//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))

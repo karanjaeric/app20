@@ -314,7 +314,7 @@ public class Register extends BaseServlet implements Serializable {
                                       + " to complete the activation process." +
 
                                               "Once you Activate your Account, proceed to login to your account using your email as the username and the password" +
-                                             "you provided during this registration process. ",u.getUsername());
+                                             "you provided during this registration process. ",u.getUsername(),"MSS REGISTRATION");
 
                                              
 

@@ -8,7 +8,6 @@ package com.fundmaster.mss.controller;
 import com.fundmaster.mss.beans.SmtpI;
 import com.fundmaster.mss.model.SmtpSetup;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -43,6 +42,7 @@ public class SmtpSetupController extends BaseServlet implements Serializable {
         setup.setSmtpPort(this.get(request, "smtpPort"));
         setup.setSmtpUsername(this.get(request, "smtpUsername"));
         setup.setSmtpPassword(this.get(request, "smtpPassword"));
+        setup.setAuthenticatingEmail(this.get(request, "authenticatingEmail"));
         
         smtpBean.saveSmtpSetup(setup);
         

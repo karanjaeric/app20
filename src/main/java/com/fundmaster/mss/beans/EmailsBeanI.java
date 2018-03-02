@@ -12,5 +12,5 @@ public interface EmailsBeanI {
 
     Emails edit(Emails emails);
     Emails find();
-    void sendEmail(String message,String to);
+    void sendEmail(String message,String to,String subject);
 }

@@ -15,6 +15,7 @@ public interface ApiEJB {
     XiMember checkMemberAccount(String profile, String value);
     //BalancesHistory getBalancesHistory(String memberId);
     JSONObject getBalancesHistory(String memberId);
+    JSONObject getCumulativeStatement(String memberId,String schemeId);
     JSONObject getPensionAdvice(String memberId, String year);
     JSONObject getMemberStatement(String memberId, String apId, String schemeId);
     JSONObject getAnnualContribution(String memberId, String apId);

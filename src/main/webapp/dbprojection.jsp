@@ -361,6 +361,7 @@
                                                     $('#DBdate_of_exit').html(json.dateOfExit);
 
                                                     $('#DBdate_of_calculation').html(json.dateOfCalculation);
+                                                   
 
                                                     $('#DBreason_for_exit').html(json.reasonForExit);
                                                     $('#DBage_at_exit').html(precisionRound(json.ageAtExit, 0));
@@ -369,9 +370,9 @@
 
                                                     $('#DBtarget_pension').html(format_no(precisionRound(json.targetPension, 1)));
                                                     $('#DBannual_pension').html(format_no(precisionRound(json.annualPension, 1)));
-                                                    $('#DBgross_monthly_pension').html(format_no(precisionRound(json.monthlyPension, 1)));
+                                                    $('#DBgross_monthly_pension').html(format_no(precisionRound(json.totMonthlyPens, 1)));
                                                     $('#DBtax_on_pension').html(format_no(precisionRound(json.taxOnPension, 1)));
-                                                    $('#DBnet_monthly_pension').html(format_no(precisionRound(json.totMonthlyPens, 1)));
+                                                    $('#DBnet_monthly_pension').html(format_no(precisionRound(json.monthlyPension, 1)));
 
                                                     $('#DBcommuted_lumpsum').html(format_no(precisionRound(json.totBen, 1)));
                                                     $('#DBtax_free_lumpsum').html(format_no(precisionRound(json.lumpsumTaxFree, 1)));
@@ -384,6 +385,7 @@
                                                         dom: 'Bfrtip',
                                                         "searching": false,
                                                         "bSort": false,
+                                                        "bInfo" : false,
                                                         //bFilter: false,
                                                         paging: false,
                                                         buttons: [

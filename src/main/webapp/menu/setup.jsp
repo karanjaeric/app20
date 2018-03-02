@@ -887,25 +887,29 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabelSmtpsetup">
-                        <i class="glyphicon glyphicon-home"></i>&nbsp;&nbsp;SMTP DETAILS
+                        SMTP DETAILS
                     </h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="control-label" for="smtpHost">HOST:</label>
-                        <input type="text" class="form-control" id="smtpHost" name="smtpHost" placeholder="Smtp Host">
+                        <input type="text" class="form-control" id="smtpHost" name="smtpHost" placeholder="Smtp Host" value="${setup.smtpHost}">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="smtpPort">PORT:</label>
-                        <input type="text" class="form-control" id="smtpPort" name="smtpPort" placeholder="Smtp Port">
+                        <input type="text" class="form-control" id="smtpPort" name="smtpPort" placeholder="Smtp Port" value="${setup.smtpPort}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="authenticatingEmail">Authenticating Email:</label>
+                        <input type="text" class="form-control"  id="authenticatingEmail" name="authenticatingEmail"placeholder="Authenticating Email" value="${setup.authenticatingEmail}">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="smtpUsername">Username:</label>
-                        <input type="text" class="form-control"  id="smtpUsername" name="smtpUsername"placeholder="Smtp Username">
+                        <input type="text" class="form-control"  id="smtpUsername" name="smtpUsername"placeholder="Smtp Username" value="${setup.smtpUsername}">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="smtpPassword">Password:</label>
-                        <input type="password" class="form-control" id="smtpPassword" name="smtpPassword" placeholder="Smtp Password" >
+                        <input type="password" class="form-control" id="smtpPassword" name="smtpPassword" placeholder="Smtp Password" value="${setup.smtpPassword}" >
                     </div>
 
 
@@ -1074,7 +1078,7 @@
         $('#company-li').click(function () {
             $('#modal-company').modal('show');
         });
-          $('#smtp-li').click(function () {
+        $('#smtp-li').click(function () {
             $('#modal-smtpsetup').modal('show');
         });
 
@@ -1822,10 +1826,10 @@
                     });
 
                 });
-                
-                
-                
-            $('#form-smtpsetup').bootstrapValidator({
+
+
+
+        $('#form-smtpsetup').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
@@ -1840,21 +1844,21 @@
                         }
                     }
                 },
-                 smtpPort: {
+                smtpPort: {
                     validators: {
                         notEmpty: {
                             message: 'Please provide smtp port'
                         }
                     }
                 },
-                 smtpUsername: {
+                smtpUsername: {
                     validators: {
                         notEmpty: {
                             message: 'Please provide smtp username'
                         }
                     }
                 },
-                 smtpPassword: {
+                smtpPassword: {
                     validators: {
                         notEmpty: {
                             message: 'Please provide smtp password'
@@ -1877,7 +1881,7 @@
                     $.ajax({
                         url: $('#base_url').val() + 'smtpSetup',
                         type: 'post',
-                       data: {smtpHost: $('#smtpHost').val(), smtpPort: $('#smtpPort').val(), smtpUsername: $('#smtpUsername').val(), smtpPassword: $('#smtpPassword').val()},
+                        data: {smtpHost: $('#smtpHost').val(), smtpPort: $('#smtpPort').val(), smtpUsername: $('#smtpUsername').val(), smtpPassword: $('#smtpPassword').val(),authenticatingEmail:$('#authenticatingEmail').val()},
                         dataType: 'json',
                         success: function (json) {
                             $('#' + btn).val('Done');
@@ -1893,27 +1897,27 @@
                         }
                     });
 
-                });  
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-                
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         $('#form-other-settings').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {

@@ -12,6 +12,7 @@ public class APICall {
     public static final String CHECK_MEMBER_EXISTS = "checkMemberExists/";
     public static final String CHECK_MEMBER_EXISTS_PHONE = "checkMemberExistsPhone";
     public static final String GET_BALANCES_HISTORY = "getbalanceshistory/";
+     public static final String GET_CUMULATIVE_STATEMENT = "getcumulativestatement/";
     public static final String GET_PENSION_ADVICE = "getpensioneradvice/";
     public static final String GET_MEMBER_STATEMENT = "getmemberstatement/";
     public static final String GET_MEMBER_ANNUAL_CONTRIBUTION="getannualcontributions/";

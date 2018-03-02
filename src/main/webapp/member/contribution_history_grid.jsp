@@ -148,10 +148,16 @@
                             dom: 'Bfrtip',
                             "bSort": false,
                             paging: false,
+                            "searching": false,
+                           
+                            "bInfo": false,
+                            //bFilter: false,
+                          
                             buttons: [
 
                                 {
                                     extend: 'pdfHtml5',
+                                    text: 'Download Contribution History',
                                     title: 'Contributions History',
                                     orientation: 'landscape', //landscape give you more space
                                     pageSize: 'A4'//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))

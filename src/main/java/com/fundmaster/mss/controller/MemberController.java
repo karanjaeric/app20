@@ -125,24 +125,25 @@ public class MemberController extends BaseServlet implements Serializable {
                     }
 
                     XiMember m = new XiMember();
+                      m = apiEJB.getMemberDetailsByScheme(schemeId, user);
 
-                    try {
-                        if (schemeId != null) {
-                            if (helper.isEmailAddress(user)) {
-
-                                m = apiEJB.getMemberDetailsByScheme(schemeId, user);
-
-                            } else if (helper.isValidPhone(user)) {
-
-                                m = apiEJB.getMemberDetailsBySchemeAndPhone(schemeId, user);
-                            }
-                        } else {
-
-                            m = apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID), null);
-                        }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+//                    try {
+//                        if (schemeId != null) {
+//                            if (helper.isEmailAddress(user)) {
+//
+//                                m = apiEJB.getMemberDetailsByScheme(schemeId, user);
+//
+//                            } else if (helper.isValidPhone(user)) {
+//
+//                                m = apiEJB.getMemberDetailsBySchemeAndPhone(schemeId, user);
+//                            }
+//                        } else {
+//
+//                            m = apiEJB.getMemberDetails(this.getSessKey(request, Constants.PROFILE_ID), null);
+//                        }
+//                    } catch (Exception ex) {
+//                        ex.printStackTrace();
+//                    }
 
                     List<Scheme> schemePlan = apiEJB.getProfileSchemes(user, this.getSessKey(request, Constants.U_PROFILE));
                     String planType = schemePlan.get(0).getPlanType();
@@ -254,6 +255,7 @@ public class MemberController extends BaseServlet implements Serializable {
                         }
                     }
                     
+                   try{
                     MemberBenefitDetailsDTO memberBenefitsDto=new MemberBenefitDetailsDTO();
                     JSONObject obj=apiEJB.getMemberBenefitsDetails(this.getSessKey(request, Constants.PROFILE_ID), this.getSessKey(request, Constants.SCHEME_ID));
 
@@ -266,6 +268,9 @@ public class MemberController extends BaseServlet implements Serializable {
                     memberBenefitsDto.setCumulativeInterestToDate(MssUtil.castToBigDecimal(obj.get("cumulative_interest")));
                     
                     request.setAttribute("memberBenefitsDto", memberBenefitsDto);
+                   }catch(Exception e){
+                   
+                   }
                     
                     request.setAttribute("member_id", m.getId());
                     session.setAttribute(Constants.PROFILE_ID, m.getId());
@@ -294,9 +299,7 @@ public class MemberController extends BaseServlet implements Serializable {
         } catch (NullPointerException npe) {
             jLogger.e("NullPointerException or JSONException was detected: " + npe.getMessage());
             response.sendRedirect(getServletContext().getContextPath() + "/sign-in");
-        } catch (JSONException ex) {
-            Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
     @EJB
     PasswordPolicyBeanI passwordPolicyBeanI;

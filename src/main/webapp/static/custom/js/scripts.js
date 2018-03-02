@@ -773,6 +773,18 @@ $(document).ready(function () {
 
         m_switch("BAL_HISTORY_GRID");
     });
+    
+    
+      $('#cumulative-statement-grid-li').click(function () {
+          //alert("testing cumulative statement");exit();
+
+        $('#main-menu.nav li').removeClass('active');
+
+        $('#cumulative-statement-grid-li').addClass('active');
+        
+
+        m_switch("CUMULATIVE_STATEMENT");
+    });
 
     $('#balances-history-grid-li1').click(function () {
 

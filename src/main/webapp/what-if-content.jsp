@@ -403,6 +403,7 @@
                                                     dom: 'Bfrtip',
                                                     "searching": false,
                                                     "bSort": false,
+                                                    "bInfo" : false,
                                                     //bFilter: false,
                                                     paging: false,
                                                     buttons: [

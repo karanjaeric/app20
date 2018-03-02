@@ -26,6 +26,17 @@ public class SmtpSetup implements Serializable {
     private String smtpPort;
     private String smtpUsername;
     private String smtpPassword;
+    private String authenticatingEmail;
+
+    public String getAuthenticatingEmail() {
+        return authenticatingEmail;
+    }
+
+    public void setAuthenticatingEmail(String authenticatingEmail) {
+        this.authenticatingEmail = authenticatingEmail;
+    }
+    
+    
 
     public String getSmtpHost() {
         return smtpHost;

@@ -248,8 +248,15 @@ public class Dashboard extends BaseServlet implements Serializable {
                     break;
                 case Actions.CALCULATE_BENEFIT_PROJECTION:
                     showBenefitProjectionPage(request, response, session);
+                    
 
                     break;
+                      case Actions. MEMBER_CUMULATIVE_STATEMENT_GRID:
+                    showCumulativeStatement(request, response, session);
+                    
+
+                    break;
+                  
                 case Actions.SPONSOR_BENEFIT_PROJECTION:
                     showSponsorBenefitProjectionPage(request, response, session);
 
@@ -707,6 +714,90 @@ public class Dashboard extends BaseServlet implements Serializable {
 
         request.setAttribute("closingBalancesList", balancesHistoryDTOList);
         request.getRequestDispatcher("member/balance_history.jsp").forward(request, response);
+    }
+    
+    
+    
+     private void showCumulativeStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        Setting settings = settingBeanI.find();
+        request.setAttribute("settings", settings);
+        request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
+        String member_id;
+
+        ReportDetails reportDetails;
+        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
+        request.setAttribute("report_details", reportDetails);
+
+        member_id = this.get(request, "memberID");
+        if (member_id == null) {
+            member_id = this.getSessKey(request, Constants.PROFILE_ID);
+        }
+        request.setAttribute("member_id", member_id);
+        logActivity("MEMBER BALANCES HISTORY", "Viewed member balances history", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
+        this.audit(session, "Viewed member balances history");
+
+        JSONArray balancesHistory1 = null;
+        List<BalanceHistoryDTO> balancesHistoryDTOList = new ArrayList<>();
+        try {
+            balancesHistory1 = apiEJB.getBalancesHistory(session.getAttribute(Constants.PROFILE_ID).toString()).getJSONArray("rows");
+        } catch (JSONException ex) {
+            Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < balancesHistory1.length(); i++) {
+            try {
+                BalanceHistoryDTO balanceHistoryDTO = new BalanceHistoryDTO();
+                String asAt = balancesHistory1.getJSONObject(i).get("as_at").toString();
+                System.err.println("as at is" + asAt);
+
+                // String eeBaltr = balancesHistory1.get(1).toString();
+                BigDecimal eeBal = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("ee_bal"));
+                System.err.println("eebal  is" + eeBal);
+
+                // String eeContrStr = balancesHistory1.get(2).toString();
+                BigDecimal eeContr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_contr"));
+                System.err.println("eeContrib  is" + eeContr);
+
+                //  String eeIntrStr = balancesHistory1.get(3).toString();
+                BigDecimal eeIntr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("ee_intr"));
+                System.err.println("eeIntr is " + eeIntr);
+
+                //String erBaltr = balancesHistory1.get(4).toString();
+                BigDecimal erBal = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_bal"));
+                System.err.println("erBal is" + erBal);
+
+                //String erContrStr = balancesHistory1.get(5).toString();
+                BigDecimal erContr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_contr"));
+                System.err.println("ercontr  is" + erContr);
+
+                // String erIntrStr = balancesHistory1.get(6).toString();
+                BigDecimal erIntr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_intr"));
+                System.err.println("erIntr  is" + erIntr);
+
+                asAt = asAt.substring(0, 10);
+
+                BigDecimal eeClose = eeBal.add(eeContr).add(eeIntr);
+                BigDecimal erClose = erBal.add(erContr).add(erIntr);
+                balanceHistoryDTO.setAsAt(asAt);
+                balanceHistoryDTO.setEeClose(eeClose);
+                balanceHistoryDTO.setErClose(erClose);
+                balanceHistoryDTO.setEeBal(eeBal);
+                balanceHistoryDTO.setEeContr(eeContr);
+                balanceHistoryDTO.setEeIntr(eeIntr);
+                balanceHistoryDTO.setErBal(erBal);
+                balanceHistoryDTO.setErContr(erContr);
+                balanceHistoryDTO.setErIntr(erIntr);
+                balanceHistoryDTO.setGrandTotal(eeClose.add(erClose));
+                balancesHistoryDTOList.add(balanceHistoryDTO);
+
+            } catch (JSONException ex) {
+                Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        System.out.print("size of list is" + balancesHistoryDTOList.size());
+
+        request.setAttribute("closingBalancesList", balancesHistoryDTOList);
+        request.getRequestDispatcher("member/cumulative_statement_grid.jsp").forward(request, response);
     }
 
     private void showMemberBalanceHistoryGrid(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
