@@ -9,6 +9,7 @@ import com.fundmaster.mss.common.JLogger;
 import com.fundmaster.mss.dto.BalanceHistoryDTO;
 import com.fundmaster.mss.dto.ContributionHistorySummary;
 import com.fundmaster.mss.dto.ContributionsHistoryDTO;
+import com.fundmaster.mss.dto.CumulativeMemberStatement;
 import com.fundmaster.mss.model.*;
 import com.fundmaster.mss.util.MssUtil;
 
@@ -248,15 +249,19 @@ public class Dashboard extends BaseServlet implements Serializable {
                     break;
                 case Actions.CALCULATE_BENEFIT_PROJECTION:
                     showBenefitProjectionPage(request, response, session);
-                    
 
                     break;
-                      case Actions. MEMBER_CUMULATIVE_STATEMENT_GRID:
+                case Actions.MEMBER_CUMULATIVE_STATEMENT_GRID:
+            {
+                try {
                     showCumulativeStatement(request, response, session);
-                    
+                } catch (JSONException ex) {
+                    Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
 
                     break;
-                  
+
                 case Actions.SPONSOR_BENEFIT_PROJECTION:
                     showSponsorBenefitProjectionPage(request, response, session);
 
@@ -715,18 +720,12 @@ public class Dashboard extends BaseServlet implements Serializable {
         request.setAttribute("closingBalancesList", balancesHistoryDTOList);
         request.getRequestDispatcher("member/balance_history.jsp").forward(request, response);
     }
-    
-    
-    
-     private void showCumulativeStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+
+    private void showCumulativeStatement(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException, JSONException {
         Setting settings = settingBeanI.find();
         request.setAttribute("settings", settings);
         request.setAttribute("scheme_id", this.getSessKey(request, Constants.SCHEME_ID));
         String member_id;
-
-        ReportDetails reportDetails;
-        reportDetails = apiEJB.getReportDetails(this.getSessKey(request, Constants.SCHEME_ID));
-        request.setAttribute("report_details", reportDetails);
 
         member_id = this.get(request, "memberID");
         if (member_id == null) {
@@ -736,67 +735,89 @@ public class Dashboard extends BaseServlet implements Serializable {
         logActivity("MEMBER BALANCES HISTORY", "Viewed member balances history", this.getSessKey(request, Constants.UID), this.getSessKey(request, Constants.SCHEME_ID), this.getSessKey(request, Constants.U_PROFILE));
         this.audit(session, "Viewed member balances history");
 
-        JSONArray balancesHistory1 = null;
-        List<BalanceHistoryDTO> balancesHistoryDTOList = new ArrayList<>();
+        JSONObject cumulativeObj = null;
+
         try {
-            balancesHistory1 = apiEJB.getBalancesHistory(session.getAttribute(Constants.PROFILE_ID).toString()).getJSONArray("rows");
+            cumulativeObj = (JSONObject) apiEJB.getCumulativeStatement(session.getAttribute(Constants.PROFILE_ID).toString(), session.getAttribute(Constants.SCHEME_ID).toString()).getJSONArray("rows").get(0);
         } catch (JSONException ex) {
             Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = 0; i < balancesHistory1.length(); i++) {
-            try {
-                BalanceHistoryDTO balanceHistoryDTO = new BalanceHistoryDTO();
-                String asAt = balancesHistory1.getJSONObject(i).get("as_at").toString();
-                System.err.println("as at is" + asAt);
 
-                // String eeBaltr = balancesHistory1.get(1).toString();
-                BigDecimal eeBal = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("ee_bal"));
-                System.err.println("eebal  is" + eeBal);
+        CumulativeMemberStatement cumulativeMemberStatement = new CumulativeMemberStatement();
+        //Opening balances
+        cumulativeMemberStatement.setOpeningEEReg(MssUtil.castToBigDecimal(cumulativeObj.get("ob_ee_reg").toString()));
+        cumulativeMemberStatement.setOpeningEEUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("ob_ee_unreg").toString()));
 
-                // String eeContrStr = balancesHistory1.get(2).toString();
-                BigDecimal eeContr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_contr"));
-                System.err.println("eeContrib  is" + eeContr);
+        cumulativeMemberStatement.setOpeningERReg(MssUtil.castToBigDecimal(cumulativeObj.get("ob_er_reg").toString()));
+        cumulativeMemberStatement.setOpeningERUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("ob_er_unreg").toString()));
 
-                //  String eeIntrStr = balancesHistory1.get(3).toString();
-                BigDecimal eeIntr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("ee_intr"));
-                System.err.println("eeIntr is " + eeIntr);
+        cumulativeMemberStatement.setOpeningAVCReg(MssUtil.castToBigDecimal(cumulativeObj.get("ob_avc_reg").toString()));
+        cumulativeMemberStatement.setOpeningAVCUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("ob_avc_unreg").toString()));
+        //interest on opening balances
+        cumulativeMemberStatement.setIntrOpeningEEReg(MssUtil.castToBigDecimal(cumulativeObj.get("int_ee_reg").toString()));
+        cumulativeMemberStatement.setIntrOpeningEEUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("int_ee_unreg").toString()));
 
-                //String erBaltr = balancesHistory1.get(4).toString();
-                BigDecimal erBal = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_bal"));
-                System.err.println("erBal is" + erBal);
+        cumulativeMemberStatement.setIntrOpeningERReg(MssUtil.castToBigDecimal(cumulativeObj.get("int_er_reg").toString()));
+        cumulativeMemberStatement.setIntrOpeningERUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("int_er_unreg").toString()));
 
-                //String erContrStr = balancesHistory1.get(5).toString();
-                BigDecimal erContr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_contr"));
-                System.err.println("ercontr  is" + erContr);
+        cumulativeMemberStatement.setIntrOpeningAVCReg(MssUtil.castToBigDecimal(cumulativeObj.get("int_avc_reg").toString()));
+        cumulativeMemberStatement.setIntrOpeningAVCUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("int_avc_unreg").toString()));
 
-                // String erIntrStr = balancesHistory1.get(6).toString();
-                BigDecimal erIntr = MssUtil.castToBigDecimal(balancesHistory1.getJSONObject(i).get("er_intr"));
-                System.err.println("erIntr  is" + erIntr);
+        //contributions
+        cumulativeMemberStatement.setContrEEReg(MssUtil.castToBigDecimal(cumulativeObj.get("cont_ee_reg").toString()));
+        cumulativeMemberStatement.setContrEEUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("cont_ee_unreg").toString()));
 
-                asAt = asAt.substring(0, 10);
+        cumulativeMemberStatement.setContrERReg(MssUtil.castToBigDecimal(cumulativeObj.get("cont_er_reg").toString()));
+        cumulativeMemberStatement.setContrERUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("cont_er_unreg").toString()));
 
-                BigDecimal eeClose = eeBal.add(eeContr).add(eeIntr);
-                BigDecimal erClose = erBal.add(erContr).add(erIntr);
-                balanceHistoryDTO.setAsAt(asAt);
-                balanceHistoryDTO.setEeClose(eeClose);
-                balanceHistoryDTO.setErClose(erClose);
-                balanceHistoryDTO.setEeBal(eeBal);
-                balanceHistoryDTO.setEeContr(eeContr);
-                balanceHistoryDTO.setEeIntr(eeIntr);
-                balanceHistoryDTO.setErBal(erBal);
-                balanceHistoryDTO.setErContr(erContr);
-                balanceHistoryDTO.setErIntr(erIntr);
-                balanceHistoryDTO.setGrandTotal(eeClose.add(erClose));
-                balancesHistoryDTOList.add(balanceHistoryDTO);
+        cumulativeMemberStatement.setContrAVCReg(MssUtil.castToBigDecimal(cumulativeObj.get("cont_avc_reg").toString()));
+        cumulativeMemberStatement.setContrAVCUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("cont_avc_unreg").toString()));
 
-            } catch (JSONException ex) {
-                Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        //interest on contributions.
+        cumulativeMemberStatement.setIntrContrEEReg(MssUtil.castToBigDecimal(cumulativeObj.get("intcont_ee_reg").toString()));
+        cumulativeMemberStatement.setIntrContrEEUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("intcont_ee_unreg").toString()));
 
-        }
-        System.out.print("size of list is" + balancesHistoryDTOList.size());
+        cumulativeMemberStatement.setIntrContrERReg(MssUtil.castToBigDecimal(cumulativeObj.get("intcont_er_reg").toString()));
+        cumulativeMemberStatement.setIntrContrERUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("intcont_er_unreg").toString()));
 
-        request.setAttribute("closingBalancesList", balancesHistoryDTOList);
+        cumulativeMemberStatement.setIntrContrAVCReg(MssUtil.castToBigDecimal(cumulativeObj.get("intcont_avc_reg").toString()));
+        cumulativeMemberStatement.setIntrContrAVCUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("intcont_avc_unreg").toString()));
+
+        //Transfers
+        cumulativeMemberStatement.setTransferEEReg(MssUtil.castToBigDecimal(cumulativeObj.get("trans_ee_reg").toString()));
+        cumulativeMemberStatement.setTransferEEUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("trans_ee_unreg").toString()));
+
+        cumulativeMemberStatement.setTransferERReg(MssUtil.castToBigDecimal(cumulativeObj.get("trans_er_reg").toString()));
+        cumulativeMemberStatement.setTransferERUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("trans_er_unreg").toString()));
+
+        cumulativeMemberStatement.setTransferAVCReg(MssUtil.castToBigDecimal(cumulativeObj.get("trans_avc_reg").toString()));
+        cumulativeMemberStatement.setTransferAVCUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("trans_avc_unreg").toString()));
+
+        //payments
+        cumulativeMemberStatement.setPayEEReg(MssUtil.castToBigDecimal(cumulativeObj.get("pay_ee_reg").toString()));
+        cumulativeMemberStatement.setPayEEUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("pay_ee_unreg").toString()));
+
+        cumulativeMemberStatement.setPayERReg(MssUtil.castToBigDecimal(cumulativeObj.get("pay_er_reg").toString()));
+        cumulativeMemberStatement.setPayERUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("pay_er_unreg").toString()));
+
+        cumulativeMemberStatement.setPayAVCReg(MssUtil.castToBigDecimal(cumulativeObj.get("pay_avc_reg").toString()));
+        cumulativeMemberStatement.setPayAVCUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("pay_avc_unreg").toString()));
+
+        //totals
+        cumulativeMemberStatement.setTotalEEReg(MssUtil.castToBigDecimal(cumulativeObj.get("total_ee_reg").toString()));
+        cumulativeMemberStatement.setTotalEEUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("total_ee_unreg").toString()));
+
+        cumulativeMemberStatement.setTotalERReg(MssUtil.castToBigDecimal(cumulativeObj.get("total_er_reg").toString()));
+        cumulativeMemberStatement.setTotalERUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("total_er_unreg").toString()));
+
+        cumulativeMemberStatement.setTotalAVCReg(MssUtil.castToBigDecimal(cumulativeObj.get("total_avc_reg").toString()));
+        cumulativeMemberStatement.setTotalAVCUnreg(MssUtil.castToBigDecimal(cumulativeObj.get("total_avc_unreg").toString()));
+        
+        //finally
+        cumulativeMemberStatement.setGrandTotal(MssUtil.castToBigDecimal(cumulativeObj.get("grand_total").toString()));
+         cumulativeMemberStatement.setFinalTotal(MssUtil.castToBigDecimal(cumulativeObj.get("final_total").toString()));
+
+        request.setAttribute("cumulativeMemberStatement", cumulativeMemberStatement);
         request.getRequestDispatcher("member/cumulative_statement_grid.jsp").forward(request, response);
     }
 

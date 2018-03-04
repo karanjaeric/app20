@@ -9,7 +9,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <div class="container-fluid section">
     <h3 class="text-center main-title">
-        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;BALANCES HISTORY (GRID)
+       BALANCES HISTORY (GRID)
     </h3>
 
 
